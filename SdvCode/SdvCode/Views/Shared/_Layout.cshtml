@@ -130,8 +130,7 @@
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-area="" asp-controller="Blog" asp-action="Index">Blog</a></li>
                         <li><a asp-area="" asp-controller="Contact" asp-action="Index">Contact</a></li>
-                        <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
-                        <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+                        <partial name="_FooterLoginPartial" />
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-12 footer-widget footer-about-us">
