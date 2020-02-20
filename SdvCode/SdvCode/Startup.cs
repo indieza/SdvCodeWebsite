@@ -12,6 +12,7 @@ using SdvCode.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SdvCode.Services;
 
 namespace SdvCode
 {
@@ -32,6 +33,7 @@ namespace SdvCode
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IContactsService, ContactsService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

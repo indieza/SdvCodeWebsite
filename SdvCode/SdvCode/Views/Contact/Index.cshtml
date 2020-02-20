@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SdvCode.ViewModels.Contacts
+@model ContactInputModel
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <div id="banner-area">
@@ -27,32 +29,30 @@
 
         <div class="row">
             <div class="col-md-7">
-                <form id="contact-form" action="contact-form.php" method="post" role="form">
+                <form id="contact-form" method="post" role="form">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input class="form-control" name="name" id="name" placeholder="" type="text" required>
+                                <label asp-for="Name">Name</label>
+                                <input class="form-control" asp-for="Name" placeholder="" type="text" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Email</label>
-                                <input class="form-control" name="email" id="email"
-                                       placeholder="" type="email" required>
+                                <label asp-for="Email">Email</label>
+                                <input class="form-control" asp-for="Email" placeholder="" type="email" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Subject</label>
-                                <input class="form-control" name="subject" id="subject"
-                                       placeholder="" required>
+                                <label asp-for="Subject">Subject</label>
+                                <input class="form-control" asp-for="Subject" placeholder="" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Message</label>
-                        <textarea class="form-control" name="message" id="message" placeholder="" rows="10" required></textarea>
+                        <label asp-for="Message">Message</label>
+                        <textarea class="form-control" asp-for="Message" placeholder="" rows="10" required></textarea>
                     </div>
                     <div class="text-right">
                         <br>
