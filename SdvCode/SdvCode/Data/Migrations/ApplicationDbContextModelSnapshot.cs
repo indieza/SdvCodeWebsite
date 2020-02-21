@@ -162,7 +162,7 @@ namespace SdvCode.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Birthdate")
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("City")

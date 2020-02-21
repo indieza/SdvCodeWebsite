@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SdvCode.Models;
+using SdvCode.ViewModels.Users;
 
 namespace SdvCode.Areas.Identity.Pages.Account.Manage
 {
@@ -29,14 +30,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
         public string StatusMessage { get; set; }
 
         [BindProperty]
-        public InputModel Input { get; set; }
-
-        public class InputModel
-        {
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-        }
+        public ManageAccountInputModel Input { get; set; }
 
         private async Task LoadAsync(ApplicationUser user)
         {
@@ -45,9 +39,13 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
-            Input = new InputModel
+            Input = new ManageAccountInputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                City = user.City,
+                Country = user.Country,
+                BirthDate = user.BirthDate,
+                Gender = user.Gender
             };
         }
 
@@ -88,6 +86,27 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if (Input.City != user.City)
+            {
+                user.City = Input.City;
+            }
+
+            if (Input.Country != user.Country)
+            {
+                user.Country = Input.Country;
+            }
+
+            if (Input.BirthDate != user.BirthDate)
+            {
+                user.BirthDate = Input.BirthDate;
+            }
+
+            if (Input.Gender != user.Gender)
+            {
+                user.Gender = Input.Gender;
+            }
+
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

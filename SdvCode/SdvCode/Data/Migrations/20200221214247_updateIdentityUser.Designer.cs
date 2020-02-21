@@ -10,8 +10,8 @@ using SdvCode.Data;
 namespace SdvCode.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200221150502_extendIdentityUser")]
-    partial class extendIdentityUser
+    [Migration("20200221214247_updateIdentityUser")]
+    partial class updateIdentityUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -164,7 +164,7 @@ namespace SdvCode.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Birthdate")
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("City")

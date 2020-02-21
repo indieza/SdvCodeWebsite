@@ -1,4 +1,5 @@
 ﻿@page
+@using SdvCode.Models.Enums
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
@@ -20,7 +21,27 @@
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+            <div class="form-group">
+                <label asp-for="Input.City"></label>
+                <input asp-for="Input.City" class="form-control" />
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Country"></label>
+                <input asp-for="Input.Country" class="form-control" />
+                <span asp-validation-for="Input.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.BirthDate"></label>
+                <input type="date" asp-for="Input.BirthDate" class="form-control">
+                <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"></select>
+            </div>
+            <div class="form-group">
+                <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+            </div>
         </form>
     </div>
 </div>

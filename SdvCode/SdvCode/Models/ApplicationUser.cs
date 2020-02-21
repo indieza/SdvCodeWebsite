@@ -13,7 +13,7 @@ namespace SdvCode.Models
 
         public string City { get; set; }
 
-        public DateTime Birthdate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public Gender Gender { get; set; }
     }
