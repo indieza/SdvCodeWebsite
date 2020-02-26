@@ -45,7 +45,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 City = user.City,
                 Country = user.Country,
                 BirthDate = user.BirthDate,
-                Gender = user.Gender
+                Gender = user.Gender,
+                AboutMe = user.AboutMe
             };
         }
 
@@ -104,6 +105,11 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             if (Input.Gender != user.Gender)
             {
                 user.Gender = Input.Gender;
+            }
+
+            if (Input.AboutMe != user.AboutMe)
+            {
+                user.AboutMe = Input.AboutMe;
             }
 
             await _userManager.UpdateAsync(user);

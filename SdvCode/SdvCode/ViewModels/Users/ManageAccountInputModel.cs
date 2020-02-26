@@ -29,5 +29,9 @@ namespace SdvCode.ViewModels.Users
         [PersonalData]
         [Display(Name = "Gender")]
         public Gender Gender { get; set; }
+
+        [PersonalData]
+        [Display(Name = "About Me")]
+        public string AboutMe { get; set; }
     }
 }
