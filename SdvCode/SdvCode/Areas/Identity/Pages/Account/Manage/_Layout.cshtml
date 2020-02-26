@@ -1,21 +1,33 @@
-﻿@{
-    //Layout = "/Views/Shared/_Layout.cshtml";
-    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+﻿@using SdvCode.Models
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Manage your account</h1>
-
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <!-- Subpage title start -->
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>@UserManager.GetUserName(User) Profile Settings</h2>
+            <ul class="breadcrumb">
+                <partial name="_ManageNav" />
+            </ul>
         </div>
     </div>
+</div>
+<div class="container">
+    <main role="main" class="pb-1">
+        <h1>Manage your account</h1>
+
+        <div>
+            <h4>Change your account settings</h4>
+            <hr />
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>
+    </main>
 </div>
 
 @section Scripts {
