@@ -1,38 +1,12 @@
 ﻿@{
     ViewBag.Title = "404 Not Found";
 }
-<div id="banner-area">
-    <img src="~/images/banner/banner2.jpg" alt="" />
-    <div class="parallax-overlay"></div>
-    <div class="banner-title-content">
-        <div class="text-center">
-            <h2>Error Page</h2>
-            <ul class="breadcrumb">
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
-                </li>
-                <partial name="_LoginPartial" />
-            </ul>
-        </div>
-    </div>
-</div>
-<div id="world">
-    <div id="instructions">
-        <h2>404 Page Not Found</h2>
-        Press and drag to make wind
-        <br />
-        <span class="lightInstructions">
-            the lion will surely
-            appreciate
-        </span>
-    </div>
-</div>
+
+@if (DateTime.UtcNow.Day % 2 == 1)
+{
+    <partial name="_LionNotFoundPartial" />
+}
+else
+{
+    <partial name="_TrainNotFoundPartial" />
+}
