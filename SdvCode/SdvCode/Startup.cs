@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using SdvCode.Services;
 using SdvCode.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using CloudinaryDotNet;
 
 namespace SdvCode
 {
@@ -30,12 +31,14 @@ namespace SdvCode
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+			// Initialize ApplicationUser and DdContext
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+			// Social Network Authentication
             services.AddAuthentication()
                 .AddFacebook(facebookOptions =>
                 {
@@ -54,6 +57,14 @@ namespace SdvCode
                     twitterOptions.RetrieveUserDetails = true;
                 });
 
+			// Cloudinary Authentication
+            var cloudinaryAccount = new CloudinaryDotNet.Account(Configuration["Cloudinary:CloudName"],
+                Configuration["Cloudinary:ApiKey"],
+                Configuration["Cloudinary:ApiSecret"]);
+            var cloudinary = new Cloudinary(cloudinaryAccount);
+            services.AddSingleton(cloudinary);
+
+			// Register Services
             services.AddScoped<IContactsService, ContactsService>();
             services.AddTransient<IEmailSender, EmailSender>();
 

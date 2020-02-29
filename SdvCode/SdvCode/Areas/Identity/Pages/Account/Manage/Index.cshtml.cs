@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SdvCode.Models;
+using SdvCode.Services;
 using SdvCode.ViewModels.Users;
 
 namespace SdvCode.Areas.Identity.Pages.Account.Manage
@@ -15,13 +17,16 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly Cloudinary cloudinary;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            Cloudinary cloudinary)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.cloudinary = cloudinary;
         }
 
         public string Username { get; set; }
@@ -49,6 +54,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 AboutMe = user.AboutMe,
                 FirstName = user.FirstName,
                 LastName = user.LastName
+                // TODO Image URL
             };
         }
 
@@ -122,6 +128,13 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             if (Input.LastName != user.LastName)
             {
                 user.LastName = Input.LastName;
+            }
+
+            var imageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary, Input.ProfilePicture, user.UserName);
+
+            if (imageUrl != user.ImageUrl)
+            {
+                user.ImageUrl = imageUrl;
             }
 
             await _userManager.UpdateAsync(user);

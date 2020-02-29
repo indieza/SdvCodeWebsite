@@ -29,5 +29,7 @@ namespace SdvCode.Models
 
         [MaxLength(15)]
         public string LastName { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }

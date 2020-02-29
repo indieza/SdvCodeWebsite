@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using SdvCode.Models.Enums;
 using System;
 using System.Collections.Generic;
@@ -47,5 +48,9 @@ namespace SdvCode.ViewModels.Users
         [Display(Name = "Last Name")]
         [MaxLength(15)]
         public string LastName { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Profile Picture")]
+        public IFormFile ProfilePicture { get; set; }
     }
 }
