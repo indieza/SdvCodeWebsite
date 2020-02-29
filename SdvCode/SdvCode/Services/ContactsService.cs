@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SdvCode.ViewModels.Contacts;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,37 +22,24 @@ namespace SdvCode.Services
 
         public void SendEmail(ContactInputModel model)
         {
-            var mailBody = $@"Hello website owner,
-            This is a new contact request from your website:
-            Name: {model.Name}
-            Subject: {model.Subject}
-            Email: {model.Email}
-            Message: {model.Message}
-            Have a nice day bro!!!";
-
-            SendMail(mailBody, model);
+            Execute(model).Wait();
         }
 
-        private void SendMail(string mailBody, ContactInputModel model)
+        private async Task Execute(ContactInputModel model)
         {
-            var mailConfigurations = configuration.GetSection("MailLogging");
-            string email = mailConfigurations.GetSection("Email").Value;
-            string password = mailConfigurations.GetSection("Password").Value;
+            var apiKey = configuration.GetSection("SendGrid:ApiKey").Value;
+            var client = new SendGridClient(apiKey);
 
-            using (var message = new MailMessage())
+            var message = new SendGridMessage()
             {
-                message.From = new MailAddress(model.Email);
-                message.To.Add(email);
-                message.Subject = model.Subject;
-                message.Body = mailBody;
+                From = new EmailAddress(model.Email, model.Name),
+                Subject = model.Subject,
+                PlainTextContent = model.Message,
+                HtmlContent = $"<strong>Hello, SDV Code Administrators!</strong><br />{model.Message}",
+            };
 
-                using (var client = new SmtpClient("smtp.gmail.com", 587))
-                {
-                    client.Credentials = new NetworkCredential(email, password);
-                    client.EnableSsl = true;
-                    client.Send(message);
-                }
-            }
+            message.AddTo(new EmailAddress("sdvcodeproject@gmail.com", "Test User"));
+            var response = await client.SendEmailAsync(message);
         }
     }
 }
