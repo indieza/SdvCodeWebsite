@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SdvCode.Models;
+using SdvCode.ViewModels.Users;
 
 namespace SdvCode.Areas.Identity.Pages.Account
 {
@@ -38,7 +39,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public ExternalLoginInputModel Input { get; set; }
 
         public string LoginProvider { get; set; }
 
@@ -46,13 +47,6 @@ namespace SdvCode.Areas.Identity.Pages.Account
 
         [TempData]
         public string ErrorMessage { get; set; }
-
-        public class InputModel
-        {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-        }
 
         public IActionResult OnGetAsync()
         {
@@ -100,7 +94,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
                 LoginProvider = info.LoginProvider;
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 {
-                    Input = new InputModel
+                    Input = new ExternalLoginInputModel
                     {
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email)
                     };
@@ -122,7 +116,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
