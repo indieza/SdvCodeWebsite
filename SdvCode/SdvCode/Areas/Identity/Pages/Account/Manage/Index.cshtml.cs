@@ -46,7 +46,9 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 Country = user.Country,
                 BirthDate = user.BirthDate,
                 Gender = user.Gender,
-                AboutMe = user.AboutMe
+                AboutMe = user.AboutMe,
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
         }
 
@@ -110,6 +112,16 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             if (Input.AboutMe != user.AboutMe)
             {
                 user.AboutMe = Input.AboutMe;
+            }
+
+            if (Input.FirstName != user.FirstName)
+            {
+                user.FirstName = Input.FirstName;
+            }
+
+            if (Input.LastName != user.LastName)
+            {
+                user.LastName = Input.LastName;
             }
 
             await _userManager.UpdateAsync(user);

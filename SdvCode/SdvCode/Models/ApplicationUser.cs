@@ -2,21 +2,32 @@
 using SdvCode.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace SdvCode.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        [MaxLength(20)]
         public string Country { get; set; }
 
+        [MaxLength(20)]
         public string City { get; set; }
 
         public DateTime BirthDate { get; set; }
 
         public Gender Gender { get; set; }
 
+        [MaxLength(250)]
         public string AboutMe { get; set; }
+
+        [MaxLength(15)]
+        public string FirstName { get; set; }
+
+        [MaxLength(15)]
+        public string LastName { get; set; }
     }
 }

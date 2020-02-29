@@ -12,14 +12,17 @@ namespace SdvCode.ViewModels.Users
     {
         [Phone]
         [Display(Name = "Phone number")]
+        [MaxLength(15)]
         public string PhoneNumber { get; set; }
 
         [PersonalData]
         [Display(Name = "Country")]
+        [MaxLength(20)]
         public string Country { get; set; }
 
         [PersonalData]
         [Display(Name = "City")]
+        [MaxLength(20)]
         public string City { get; set; }
 
         [PersonalData]
@@ -32,6 +35,17 @@ namespace SdvCode.ViewModels.Users
 
         [PersonalData]
         [Display(Name = "About Me")]
+        [MaxLength(250)]
         public string AboutMe { get; set; }
+
+        [PersonalData]
+        [Display(Name = "First Name")]
+        [MaxLength(15)]
+        public string FirstName { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Last Name")]
+        [MaxLength(15)]
+        public string LastName { get; set; }
     }
 }
