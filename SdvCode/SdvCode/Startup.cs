@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SdvCode.Services;
 using SdvCode.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace SdvCode
 {
@@ -54,6 +55,8 @@ namespace SdvCode
                 });
 
             services.AddScoped<IContactsService, ContactsService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
