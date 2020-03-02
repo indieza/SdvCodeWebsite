@@ -41,12 +41,20 @@ namespace SdvCode.Controllers
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             var currentUser = this.db.Users.FirstOrDefault(u => u.Id == currentUserId);
 
-            db.FollowUnfollows.Add(new FollowUnfollow
+            if (db.FollowUnfollows.Any(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id) && user.IsFollowed == false)
             {
-                PersonId = user.Id,
-                FollowerId = currentUser.Id
-            });
-            user.IsFollowed = true;
+                user.IsFollowed = true;
+            }
+            else
+            {
+                db.FollowUnfollows.Add(new FollowUnfollow
+                {
+                    PersonId = user.Id,
+                    FollowerId = currentUser.Id
+                });
+
+                user.IsFollowed = true;
+            }
 
             this.db.SaveChanges();
             return this.Redirect($"/Profile/{currentUser.UserName}");
