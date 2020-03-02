@@ -12,8 +12,6 @@
     <Compile Remove="Data\Migrations\20200302162650_test.Designer.cs" />
     <Compile Remove="Data\Migrations\20200302225848_test.cs" />
     <Compile Remove="Data\Migrations\20200302225848_test.Designer.cs" />
-    <Compile Remove="Migrations\20200302230024_InititalCreate.cs" />
-    <Compile Remove="Migrations\20200302230024_InititalCreate.Designer.cs" />
   </ItemGroup>
 
 
@@ -39,11 +37,6 @@
     <Content Update="wwwroot\favicon.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

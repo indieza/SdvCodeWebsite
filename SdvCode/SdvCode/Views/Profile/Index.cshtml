@@ -12,7 +12,14 @@
             <div class="col-md-4">
                 <div class="profile-info-left">
                     <div class="text-center">
-                        <img src=@Model.ImageUrl alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
+                        @if (Model.ImageUrl == null)
+                        {
+                            <img src="~/images//NoAvatarProfileImage.png" alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
+                        }
+                        else
+                        {
+                            <img src=@Model.ImageUrl alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
+                        }
                         <h2>@Model.FirstName @Model.LastName</h2>
                         <h5>@@@Html.DisplayTextFor(model => model.UserName)</h5>
                     </div>

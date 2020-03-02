@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
-namespace SdvCode.Migrations
+namespace SdvCode.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200302230117_InitialCreate")]
+    [Migration("20200302230648_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

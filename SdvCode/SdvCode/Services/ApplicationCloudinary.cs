@@ -13,27 +13,32 @@ namespace SdvCode.Services
     {
         public static async Task<string> UploadImage(Cloudinary cloudinary, IFormFile image, string name)
         {
-            byte[] destinationImage;
-            using (var memoryStream = new MemoryStream())
+            if (image != null)
             {
-                await image.CopyToAsync(memoryStream);
-                destinationImage = memoryStream.ToArray();
-            }
-
-            using (var ms = new MemoryStream(destinationImage))
-            {
-                // Cloudinary doesn't work with &
-                name = name.Replace("&", "And");
-
-                var uploadParams = new ImageUploadParams()
+                byte[] destinationImage;
+                using (var memoryStream = new MemoryStream())
                 {
-                    File = new FileDescription(name, ms),
-                    PublicId = name,
-                };
+                    await image.CopyToAsync(memoryStream);
+                    destinationImage = memoryStream.ToArray();
+                }
 
-                var uploadResult = cloudinary.Upload(uploadParams);
-                return uploadResult.SecureUri.AbsoluteUri;
+                using (var ms = new MemoryStream(destinationImage))
+                {
+                    // Cloudinary doesn't work with &
+                    name = name.Replace("&", "And");
+
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(name, ms),
+                        PublicId = name,
+                    };
+
+                    var uploadResult = cloudinary.Upload(uploadParams);
+                    return uploadResult.SecureUri.AbsoluteUri;
+                }
             }
+
+            return null;
         }
 
         public static void DeleteImage(Cloudinary cloudinary, string name)
