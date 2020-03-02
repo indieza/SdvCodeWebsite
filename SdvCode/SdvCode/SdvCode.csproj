@@ -5,19 +5,6 @@
     <UserSecretsId>aspnet-SdvCode-31933615-E777-4295-B1A4-206E7EC035F7</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Migrations\20200302080046_Initial.cs" />
-    <Compile Remove="Migrations\20200302080046_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200302081306_test.cs" />
-    <Compile Remove="Migrations\20200302081306_test.Designer.cs" />
-    <Compile Remove="Migrations\20200302132250_test1.cs" />
-    <Compile Remove="Migrations\20200302132250_test1.Designer.cs" />
-    <Compile Remove="Migrations\20200302142120_test.cs" />
-    <Compile Remove="Migrations\20200302142120_test.Designer.cs" />
-    <Compile Remove="Migrations\20200302142203_test.cs" />
-    <Compile Remove="Migrations\20200302142203_test.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.10.0" />
