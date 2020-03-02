@@ -5,6 +5,17 @@
     <UserSecretsId>aspnet-SdvCode-31933615-E777-4295-B1A4-206E7EC035F7</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200302143231_InitialCreate.cs" />
+    <Compile Remove="Data\Migrations\20200302143231_InitialCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200302162650_test.cs" />
+    <Compile Remove="Data\Migrations\20200302162650_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200302225848_test.cs" />
+    <Compile Remove="Data\Migrations\20200302225848_test.Designer.cs" />
+    <Compile Remove="Migrations\20200302230024_InititalCreate.cs" />
+    <Compile Remove="Migrations\20200302230024_InititalCreate.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.10.0" />
@@ -28,6 +39,11 @@
     <Content Update="wwwroot\favicon.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

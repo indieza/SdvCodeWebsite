@@ -3,6 +3,7 @@ using SdvCode.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -36,6 +37,13 @@ namespace SdvCode.Models
 
         public string ImageUrl { get; set; }
 
+        [NotMapped]
         public bool IsFollowed { get; set; }
+
+        [NotMapped]
+        public ICollection<ApplicationUser> Followers { get; set; } = new HashSet<ApplicationUser>();
+
+        [NotMapped]
+        public ICollection<ApplicationUser> Followings { get; set; } = new HashSet<ApplicationUser>();
     }
 }

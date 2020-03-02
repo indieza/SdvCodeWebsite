@@ -23,6 +23,12 @@ namespace SdvCode.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<FollowUnfollow>().HasKey(k => new
+            {
+                k.PersonId,
+                k.FollowerId
+            });
+
             base.OnModelCreating(builder);
         }
     }

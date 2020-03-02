@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SdvCode.Data.Migrations
+namespace SdvCode.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -47,8 +47,7 @@ namespace SdvCode.Data.Migrations
                     AboutMe = table.Column<string>(maxLength: 250, nullable: true),
                     FirstName = table.Column<string>(maxLength: 15, nullable: true),
                     LastName = table.Column<string>(maxLength: 15, nullable: true),
-                    ImageUrl = table.Column<string>(nullable: true),
-                    IsFollowed = table.Column<bool>(nullable: false)
+                    ImageUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,11 +59,12 @@ namespace SdvCode.Data.Migrations
                 columns: table => new
                 {
                     PersonId = table.Column<string>(nullable: false),
-                    FollowerId = table.Column<string>(nullable: true)
+                    FollowerId = table.Column<string>(nullable: false),
+                    IsFollowed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FollowUnfollows", x => x.PersonId);
+                    table.PrimaryKey("PK_FollowUnfollows", x => new { x.PersonId, x.FollowerId });
                 });
 
             migrationBuilder.CreateTable(
