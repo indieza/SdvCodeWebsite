@@ -17,7 +17,14 @@
                     <div class="action-buttons">
                         <div class="row">
                             <div class="col-xs-6">
-                                <a href="#" class="btn btn-success btn-block"><i class="fa fa-plus-round"></i> Follow</a>
+                                @if (!Model.IsFollowed)
+                                {
+                                    <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.UserName" class="btn btn-success btn-block"><i class="fa fa-plus-round"></i> Follow</a>
+                                }
+                                else
+                                {
+                                    <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.UserName" class="btn btn-success btn-block"><i class="fa fa-plus-round"></i> Unfollow</a>
+                                }
                             </div>
                             <div class="col-xs-6">
                                 <a href="#" class="btn btn-primary btn-block"><i class="fa fa-android-mail"></i> Message</a>

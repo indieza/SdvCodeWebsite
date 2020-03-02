@@ -5,6 +5,27 @@
     <UserSecretsId>aspnet-SdvCode-31933615-E777-4295-B1A4-206E7EC035F7</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200221214247_updateIdentityUser.cs" />
+    <Compile Remove="Data\Migrations\20200221214247_updateIdentityUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200226220206_addAboutMeSection.cs" />
+    <Compile Remove="Data\Migrations\20200226220206_addAboutMeSection.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200229162726_validateEntities.cs" />
+    <Compile Remove="Data\Migrations\20200229162726_validateEntities.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200229221638_addProfilePictureImageUrl.cs" />
+    <Compile Remove="Data\Migrations\20200229221638_addProfilePictureImageUrl.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200302074851_test.cs" />
+    <Compile Remove="Data\Migrations\20200302074851_test.Designer.cs" />
+    <Compile Remove="Migrations\20200302080046_Initial.cs" />
+    <Compile Remove="Migrations\20200302080046_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200302081306_test.cs" />
+    <Compile Remove="Migrations\20200302081306_test.Designer.cs" />
+    <Compile Remove="Migrations\20200302132250_test1.cs" />
+    <Compile Remove="Migrations\20200302132250_test1.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.10.0" />
@@ -14,8 +35,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="SendGrid" Version="9.12.7" />
   </ItemGroup>
@@ -25,6 +49,11 @@
     <Content Update="wwwroot\favicon.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,10 @@ namespace SdvCode.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+        }
+
         [MaxLength(20)]
         public string Country { get; set; }
 
@@ -31,5 +35,7 @@ namespace SdvCode.Models
         public string LastName { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public bool IsFollowed { get; set; }
     }
 }

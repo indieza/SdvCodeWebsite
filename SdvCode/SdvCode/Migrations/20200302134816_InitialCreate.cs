@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SdvCode.Data.Migrations
+namespace SdvCode.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +39,16 @@ namespace SdvCode.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Country = table.Column<string>(maxLength: 20, nullable: true),
+                    City = table.Column<string>(maxLength: 20, nullable: true),
+                    BirthDate = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    AboutMe = table.Column<string>(maxLength: 250, nullable: true),
+                    FirstName = table.Column<string>(maxLength: 15, nullable: true),
+                    LastName = table.Column<string>(maxLength: 15, nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    IsFollowed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,11 +56,23 @@ namespace SdvCode.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FollowUnfollows",
+                columns: table => new
+                {
+                    PersonId = table.Column<string>(nullable: false),
+                    FollowerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FollowUnfollows", x => x.PersonId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +93,7 @@ namespace SdvCode.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -209,6 +229,9 @@ namespace SdvCode.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "FollowUnfollows");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
