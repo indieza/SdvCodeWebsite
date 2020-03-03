@@ -50,5 +50,12 @@ namespace SdvCode.Controllers
 
             return this.Redirect($"/Profile/{currentUser.UserName}");
         }
+
+        [Authorize]
+        [Route("/Profile/AllUsers")]
+        public IActionResult AllUsers()
+        {
+            return this.View();
+        }
     }
 }

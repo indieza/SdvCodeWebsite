@@ -28,22 +28,29 @@
                             <div class="col-xs-6">
                                 @if (User.Identity.Name == Model.UserName)
                                 {
-                                    <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-info btn-block"><i class="fa fa-plus-round"></i> Edit Profile</a>
+                                    <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-primary btn-info btn-block"><i class="fa fa-edit"></i> Edit Profile</a>
                                 }
                                 else
                                 {
                                     @if (!Model.IsFollowed)
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.UserName" class="btn btn-success btn-block"><i class="fa fa-plus-round"></i> Follow</a>
+                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.UserName" class="btn btn-success btn-block"><i class="fa fa-plus-circle"></i> Follow</a>
                                     }
                                     else
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.UserName" class="btn btn-danger btn-block"><i class="fa fa-plus-round"></i> Unfollow</a>
+                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.UserName" class="btn btn-danger btn-block"><i class="fa fa-minus-circle"></i> Unfollow</a>
                                     }
                                 }
                             </div>
                             <div class="col-xs-6">
-                                <a href="#" class="btn btn-primary btn-block"><i class="fa fa-android-mail"></i> Message</a>
+                                @if (User.Identity.Name == Model.UserName)
+                                {
+                                    <a asp-area="" asp-controller="Profile" asp-action="AllUsers" class="btn btn-primary btn-block"><i class="fa fa-users"></i> All Users</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="btn btn-primary btn-block">Message</a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -223,17 +230,17 @@
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName">@follower.UserName<br><span class="text-muted username">@follower.FirstName  @follower.LastName</span></a>
                                         @if (User.Identity.Name == follower.UserName)
                                         {
-                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fa fa-checkmark-round"></i> <span>It's You</span></a>
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fa fa-check-circle"></i> <span>It's You</span></a>
                                         }
                                         else
                                         {
                                             @if (follower.HasFollow)
                                             {
-                                                <a asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-checkmark-round"></i> <span>Unfollow</span></a>
+                                                <a asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-minus-circle"></i> <span>Unfollow</span></a>
                                             }
                                             else
                                             {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fa fa-checkmark-round"></i> <span>Follow</span></a>
+                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus-circle"></i> <span>Follow</span></a>
                                             }
                                         }
                                     </div>
@@ -258,17 +265,17 @@
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName">@following.UserName<br><span class="text-muted username">@following.FirstName @following.LastName</span></a>
                                         @if (User.Identity.Name == following.UserName)
                                         {
-                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fa fa-checkmark-round"></i> <span>It's You</span></a>
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fa fa-check-circle"></i> <span>It's You</span></a>
                                         }
                                         else
                                         {
                                             @if (following.HasFollow)
                                             {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-checkmark-round"></i> <span>Unfollow</span></a>
+                                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-minus-circle"></i> <span>Unfollow</span></a>
                                             }
                                             else
                                             {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fa fa-checkmark-round"></i> <span>Follow</span></a>
+                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus-circle"></i> <span>Follow</span></a>
                                             }
                                         }
                                     </div>

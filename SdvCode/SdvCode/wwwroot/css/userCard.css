@@ -1,0 +1,96 @@
+﻿.uicard {
+    text-align: center;
+    font-family: veradana, sans-serif;
+    position: relative;
+    background-color: #2b303b;
+    width: 300px;
+    height: 470px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 3px 2px 15px 0px #212129;
+}
+
+.fon img {
+    position: relative;
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+}
+
+.user img {
+    position: relative;
+    margin: 0 auto;
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
+    border: 2px solid #fff;
+    bottom: 50px;
+    overflow: visible;
+    z-index: 5;
+}
+
+.user p {
+    font-size: 1.3em;
+    color: #fff;
+    margin-top: -20px;
+}
+
+.socialinfo {
+    position: relative;
+    margin-top: 45px;
+    cursor: pointer;
+}
+
+.socialtext1 {
+    position: relative;
+    float: left;
+    color: #fff;
+    margin-top: 20px;
+    margin-left: 12px;
+    border-right: 1px solid #fff;
+    padding: 0px 15px 0px 0px;
+    transition: 400ms;
+}
+
+    .socialtext1:hover {
+        color: #ff5577;
+        transition: 400ms;
+    }
+
+.socialtext2 {
+    position: relative;
+    color: #fff;
+    margin-top: 20px;
+    border-right: 1px solid #fff;
+    padding: 0px 15px 0px 0px;
+    display: inline-block;
+    transition: 400ms;
+}
+
+    .socialtext2:hover {
+        color: #ff5577;
+        transition: 400ms;
+    }
+
+.socialtext3 {
+    position: relative;
+    color: #fff;
+    float: right;
+    margin-top: 20px;
+    margin-right: 12px;
+    display: inline-block;
+    transition: 400ms;
+}
+
+    .socialtext3:hover {
+        color: #ff5577;
+        transition: 400ms;
+    }
+
+.allUsersUsername:hover {
+    color: azure;
+}

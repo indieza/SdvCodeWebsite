@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "All Users";
+}
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <!-- Subpage title start -->
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>All Users Page</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li><a asp-area="" asp-controller="Profile" asp-action="AllUsers">All Users</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="uicard">
+                <div class="fon">
+                    <img src="http://s45.radikal.ru/i110/1703/7f/352430671cbd.jpg">
+                </div>
+
+                <div class="user">
+                    <img src="http://s020.radikal.ru/i704/1703/f8/445c49629467.jpg">
+                    <p>Nina Dobrev </p>
+                    <p><a class="allUsersUsername">@@Username</a></p>
+                    <div class="col-md-6">
+                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="" class="btn btn-success btn-block"><i class="fa fa-plus-circle"></i> Follow</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="" class="btn btn-success btn-block"><i class="fa fa-plus-circle"></i> Follow</a>
+                    </div>
+                </div>
+                <div class="socialinfo">
+                    <div class="socialtext1">
+                        <p>725</p>
+                        <p>followers</p>
+                    </div>
+
+                    <div class="socialtext2">
+                        <p>517</p>
+                        <p>following</p>
+                    </div>
+
+                    <div class="socialtext3">
+                        <p>Kazanlak</p>
+                        <p>Bulgaria</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
