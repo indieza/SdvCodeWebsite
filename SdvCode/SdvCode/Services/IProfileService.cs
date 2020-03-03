@@ -1,4 +1,5 @@
 ﻿using SdvCode.Models;
+using SdvCode.ViewModels.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace SdvCode.Services
         ApplicationUser FollowUser(string username, string currentUserId);
 
         ApplicationUser UnfollowUser(string username, string currentUserId);
+
+        AllUsersViewModel GetAllUsers(string currentUserId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using SdvCode.Data;
 using SdvCode.Models;
+using SdvCode.ViewModels.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,39 @@ namespace SdvCode.Services
 
             this.db.SaveChanges();
             return currentUser;
+        }
+
+        public AllUsersViewModel GetAllUsers(string currentUserId)
+        {
+            var users = new AllUsersViewModel();
+
+            foreach (var user in this.db.Users)
+            {
+                users.UsersCards.Add(new UserCardViewModel
+                {
+                    UserId = user.Id,
+                    Username = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Country = user.Country,
+                    City = user.City,
+                    ImageUrl = user.ImageUrl,
+                });
+            }
+
+            foreach (var user in users.UsersCards)
+            {
+                user.FollowingsCount = this.db.FollowUnfollows
+                    .Count(x => x.FollowerId == user.UserId && x.IsFollowed == true);
+
+                user.FollowersCount = this.db.FollowUnfollows
+                    .Count(x => x.PersonId == user.UserId && x.IsFollowed == true);
+
+                user.HasFollowed = this.db.FollowUnfollows
+                    .Any(x => x.FollowerId == currentUserId && x.PersonId == user.UserId && x.IsFollowed == true);
+            }
+
+            return users;
         }
 
         public ApplicationUser UnfollowUser(string username, string currentUserId)

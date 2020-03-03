@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using SdvCode.Data;
 using SdvCode.Models;
 using SdvCode.Services;
+using SdvCode.ViewModels.Users;
 
 namespace SdvCode.Controllers
 {
@@ -55,7 +56,9 @@ namespace SdvCode.Controllers
         [Route("/Profile/AllUsers")]
         public IActionResult AllUsers()
         {
-            return this.View();
+            var currentUserId = this.userManager.GetUserId(HttpContext.User);
+            var allUsers = this.profileService.GetAllUsers(currentUserId);
+            return this.View(allUsers);
         }
     }
 }
