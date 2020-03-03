@@ -67,6 +67,7 @@ namespace SdvCode
             // Register Services
             services.AddScoped<IContactsService, ContactsService>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IProfileService, ProfileService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -100,9 +101,6 @@ namespace SdvCode
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                //endpoints.MapControllerRoute(
-                //    name: "profile",
-                //    pattern: "{controller=Profile}/{action=Index}/{username}");
                 endpoints.MapRazorPages();
             });
         }

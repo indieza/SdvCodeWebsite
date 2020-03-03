@@ -14,7 +14,7 @@
                     <div class="text-center">
                         @if (Model.ImageUrl == null)
                         {
-                            <img src="~/images//NoAvatarProfileImage.png" alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
+                            <img src="~/images/NoAvatarProfileImage.png" alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
                         }
                         else
                         {
@@ -211,7 +211,14 @@
                             @foreach (var follower in Model.Followers)
                             {
                                 <div class="media user-follower">
-                                    <img src=@follower.ImageUrl alt="User Avatar" class="media-object pull-left">
+                                    @if (follower.ImageUrl == null)
+                                    {
+                                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object pull-left">
+                                    }
+                                    else
+                                    {
+                                        <img src=@follower.ImageUrl alt="User Avatar" class="media-object pull-left">
+                                    }
                                     <div class="media-body">
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName">@follower.UserName<br><span class="text-muted username">@follower.FirstName  @follower.LastName</span></a>
                                         <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-toggle-following pull-right"><i class="fa fa-checkmark-round"></i> <span>Following</span></a>
@@ -225,7 +232,14 @@
                             @foreach (var following in Model.Followings)
                             {
                                 <div class="media user-following">
-                                    <img src=@following.ImageUrl alt="User Avatar" class="media-object pull-left">
+                                    @if (following.ImageUrl == null)
+                                    {
+                                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object pull-left">
+                                    }
+                                    else
+                                    {
+                                        <img src=@following.ImageUrl alt="User Avatar" class="media-object pull-left">
+                                    }
                                     <div class="media-body">
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName">@following.UserName<br><span class="text-muted username">@following.FirstName @following.LastName</span></a>
                                         <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-close-round"></i> Unfollow</a>
