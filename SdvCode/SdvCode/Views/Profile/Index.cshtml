@@ -6,7 +6,7 @@
 }
 
 <div class="user-profile">
-    <div class="profile-header-background"><img src="http://demo.thedevelovers.com/dashboard/queenadmin-1.2/assets/img/city.jpg" alt="Profile Header Background"></div>
+    <div class="profile-header-background"><img src="~/images/userProfileCityBackgroundImage.jpg" alt="Profile Header Background"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -53,10 +53,10 @@
                     </div>
                     <div class="section">
                         <h3>Personal Data</h3>
-                        <p>@Model.City</p>
-                        <p>@Model.Country</p>
-                        <p>@Model.BirthDate.ToString("dd-MMMM-yyyy")</p>
-                        <p>@Model.PhoneNumber</p>
+                        <p><i class="fa fa-building"></i> @Model.City</p>
+                        <p><i class="fa fa-flag"></i> @Model.Country</p>
+                        <p><i class="fa fa-birthday-cake"></i> @Model.BirthDate.ToString("dd-MMMM-yyyy")</p>
+                        <p><i class="fa fa-phone"></i> @Model.PhoneNumber</p>
                     </div>
                     <div class="section">
                         <h3>Social</h3>
