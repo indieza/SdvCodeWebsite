@@ -25,11 +25,25 @@
             <div class="col-md-4">
                 <div class="uicard">
                     <div class="fon">
-                        <img src="http://s45.radikal.ru/i110/1703/7f/352430671cbd.jpg">
+                        @if (user.CoverImageUrl == null)
+                        {
+                            <img src="~/images/userCardBackgroundImage.jpg">
+                        }
+                        else
+                        {
+                            <img src=@user.CoverImageUrl>
+                        }
                     </div>
 
                     <div class="user">
-                        <img src=@user.ImageUrl>
+                        @if (user.ImageUrl == null)
+                        {
+                            <img src="~/images/NoAvatarProfileImage.png">
+                        }
+                        else
+                        {
+                            <img src=@user.ImageUrl>
+                        }
                         <p>@user.FirstName @user.LastName</p>
                         <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" class="allUsersUsername">@@@user.Username</a></p>
                         @if (User.Identity.Name == user.Username)

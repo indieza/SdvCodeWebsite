@@ -18,6 +18,8 @@ namespace SdvCode.ViewModels.Users
 
         public string ImageUrl { get; set; }
 
+        public string CoverImageUrl { get; set; }
+
         public int FollowersCount { get; set; }
 
         public int FollowingsCount { get; set; }

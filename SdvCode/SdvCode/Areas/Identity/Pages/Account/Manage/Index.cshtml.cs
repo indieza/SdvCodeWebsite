@@ -130,11 +130,22 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 user.LastName = Input.LastName;
             }
 
-            var imageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary, Input.ProfilePicture, user.UserName);
+            var profileImageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary,
+                Input.ProfilePicture,
+                $"{user.UserName}ProfilePicture");
 
-            if (imageUrl != user.ImageUrl && imageUrl != null)
+            if (profileImageUrl != user.ImageUrl && profileImageUrl != null)
             {
-                user.ImageUrl = imageUrl;
+                user.ImageUrl = profileImageUrl;
+            }
+
+            var coverImageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary,
+                Input.CoverImage,
+                $"{user.UserName}CoverPicture");
+
+            if (coverImageUrl != user.ImageUrl && coverImageUrl != null)
+            {
+                user.CoverImageUrl = coverImageUrl;
             }
 
             await _userManager.UpdateAsync(user);

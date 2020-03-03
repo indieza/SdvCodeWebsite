@@ -89,6 +89,7 @@ namespace SdvCode.Services
                     Country = user.Country,
                     City = user.City,
                     ImageUrl = user.ImageUrl,
+                    CoverImageUrl = user.CoverImageUrl
                 });
             }
 

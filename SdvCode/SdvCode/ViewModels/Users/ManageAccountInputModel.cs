@@ -52,5 +52,9 @@ namespace SdvCode.ViewModels.Users
         [PersonalData]
         [Display(Name = "Profile Picture")]
         public IFormFile ProfilePicture { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Cover Image")]
+        public IFormFile CoverImage { get; set; }
     }
 }

@@ -37,6 +37,8 @@ namespace SdvCode.Models
 
         public string ImageUrl { get; set; }
 
+        public string CoverImageUrl { get; set; }
+
         [NotMapped]
         public bool IsFollowed { get; set; }
 

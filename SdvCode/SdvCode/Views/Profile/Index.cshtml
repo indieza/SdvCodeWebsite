@@ -6,7 +6,16 @@
 }
 
 <div class="user-profile">
-    <div class="profile-header-background"><img src="~/images/userProfileCityBackgroundImage.jpg" alt="Profile Header Background"></div>
+    <div class="profile-header-background">
+        @if (Model.CoverImageUrl == null)
+        {
+            <img src="~/images/userProfileCityBackgroundImage.jpg" alt="Profile Header Background">
+        }
+        else
+        {
+            <img src=@Model.CoverImageUrl alt="Profile Header Background">
+        }
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
