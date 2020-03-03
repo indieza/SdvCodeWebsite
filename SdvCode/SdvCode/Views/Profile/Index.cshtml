@@ -221,7 +221,22 @@
                                     }
                                     <div class="media-body">
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName">@follower.UserName<br><span class="text-muted username">@follower.FirstName  @follower.LastName</span></a>
-                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-toggle-following pull-right"><i class="fa fa-checkmark-round"></i> <span>Following</span></a>
+
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            @if (Model.Followings.Any(x => x == follower))
+                                            {
+                                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-checkmark-round"></i> <span>Unfollow</span></a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fa fa-checkmark-round"></i> <span>Follow</span></a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fa fa-checkmark-round"></i> <span>View Profile</span></a>
+                                        }
                                     </div>
                                 </div>
                             }
@@ -242,7 +257,22 @@
                                     }
                                     <div class="media-body">
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName">@following.UserName<br><span class="text-muted username">@following.FirstName @following.LastName</span></a>
-                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-close-round"></i> Unfollow</a>
+
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            @if (Model.Followings.Any(x => x == following))
+                                            {
+                                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-checkmark-round"></i> <span>Unfollow</span></a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fa fa-checkmark-round"></i> <span>Follow</span></a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fa fa-checkmark-round"></i> <span>View Profile</span></a>
+                                        }
                                     </div>
                                 </div>
                             }
