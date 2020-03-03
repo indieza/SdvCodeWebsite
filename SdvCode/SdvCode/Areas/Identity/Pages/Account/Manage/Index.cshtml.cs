@@ -132,7 +132,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
             var imageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary, Input.ProfilePicture, user.UserName);
 
-            if (imageUrl != user.ImageUrl)
+            if (imageUrl != user.ImageUrl && imageUrl != null)
             {
                 user.ImageUrl = imageUrl;
             }

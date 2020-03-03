@@ -41,6 +41,9 @@ namespace SdvCode.Models
         public bool IsFollowed { get; set; }
 
         [NotMapped]
+        public bool HasFollow { get; set; }
+
+        [NotMapped]
         public ICollection<ApplicationUser> Followers { get; set; } = new HashSet<ApplicationUser>();
 
         [NotMapped]

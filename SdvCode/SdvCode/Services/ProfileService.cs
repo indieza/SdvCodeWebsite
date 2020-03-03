@@ -31,7 +31,22 @@ namespace SdvCode.Services
                 .ToList();
 
             user.Followers = this.db.Users.Where(x => followersIds.Contains(x.Id)).ToList();
+            foreach (var follower in user.Followers)
+            {
+                if (this.db.FollowUnfollows.Any(x => x.FollowerId == currentUserId && x.PersonId == follower.Id && x.IsFollowed == true))
+                {
+                    follower.HasFollow = true;
+                }
+            }
+
             user.Followings = this.db.Users.Where(x => followingsIds.Contains(x.Id)).ToList();
+            foreach (var following in user.Followings)
+            {
+                if (this.db.FollowUnfollows.Any(x => x.FollowerId == currentUserId && x.PersonId == following.Id && x.IsFollowed == true))
+                {
+                    following.HasFollow = true;
+                }
+            }
             return user;
         }
 
