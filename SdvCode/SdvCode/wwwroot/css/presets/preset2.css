@@ -390,3 +390,15 @@ ul.navbar-nav > li.active > a {
 .headerSwitch {
     color: #81c83c;
 }
+
+.file-upload .file-select:hover {
+    border-color: #81c83c;
+}
+
+    .file-upload .file-select:hover .file-select-button {
+        background: #81c83c;
+    }
+
+.file-upload .file-select.file-select-disabled:hover {
+    color: #81c83c;
+}
