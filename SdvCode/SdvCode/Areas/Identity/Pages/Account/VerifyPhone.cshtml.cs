@@ -27,6 +27,8 @@ namespace SdvCode.Areas.Identity.Pages.Account
 
         public string PhoneNumber { get; set; }
 
+        public string CountryCode { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             await LoadPhoneNumber();
@@ -40,7 +42,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
             try
             {
                 var verification = await VerificationResource.CreateAsync(
-                    to: "+359" + PhoneNumber,
+                    to: $"+{this.CountryCode}{PhoneNumber}",
                     channel: "sms",
                     pathServiceSid: _settings.VerificationServiceSID
                 );
@@ -68,7 +70,9 @@ namespace SdvCode.Areas.Identity.Pages.Account
             {
                 throw new Exception($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+
             PhoneNumber = user.PhoneNumber;
+            this.CountryCode = user.CountryCode.ToString().Split("_")[1];
         }
     }
 }

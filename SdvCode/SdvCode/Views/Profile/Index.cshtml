@@ -84,7 +84,7 @@
                         @if (Model.PhoneNumber != null)
                         {
                             <p>
-                                <i class="fa fa-phone"></i> @Model.PhoneNumber
+                                <i class="fa fa-phone"></i> (@Model.CountryCode.ToString().Split("_")[0]) @Model.PhoneNumber
 
                                 @if (Model.PhoneNumberConfirmed == false)
                                 {

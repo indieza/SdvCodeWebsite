@@ -39,6 +39,10 @@ namespace SdvCode.ViewModels.Users
         public Gender Gender { get; set; }
 
         [PersonalData]
+        [Display(Name = "Country Code")]
+        public CountryCode CountryCode { get; set; }
+
+        [PersonalData]
         [Display(Name = "About Me")]
         [MaxLength(250)]
         public string AboutMe { get; set; }

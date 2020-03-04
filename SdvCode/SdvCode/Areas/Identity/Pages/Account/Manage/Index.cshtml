@@ -36,6 +36,10 @@
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-4">
+                <label asp-for="Input.CountryCode"></label>
+                <select class="form-control" asp-for="Input.CountryCode" asp-items="@Html.GetEnumSelectList<CountryCode>()"></select>
+            </div>
+            <div class="form-group col-md-4">
                 <label asp-for="Input.PhoneNumber"></label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>

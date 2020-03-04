@@ -60,7 +60,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 InstagramUrl = user.InstagramUrl,
                 TwitterUrl = user.TwitterUrl,
                 LinkedinUrl = user.LinkedinUrl,
-                RegisteredOn = user.RegisteredOn
+                RegisteredOn = user.RegisteredOn,
+                CountryCode = user.CountryCode
                 // TODO Image URL
             };
         }
@@ -165,6 +166,11 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             if (Input.InstagramUrl != user.InstagramUrl)
             {
                 user.InstagramUrl = Input.InstagramUrl;
+            }
+
+            if (Input.CountryCode != user.CountryCode)
+            {
+                user.CountryCode = Input.CountryCode;
             }
 
             var profileImageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary,

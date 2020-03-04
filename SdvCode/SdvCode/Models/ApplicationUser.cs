@@ -28,6 +28,8 @@ namespace SdvCode.Models
 
         public Gender Gender { get; set; }
 
+        public CountryCode CountryCode { get; set; }
+
         [MaxLength(250)]
         public string AboutMe { get; set; }
 
