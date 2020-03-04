@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* Global styles
 ================================================== */
 
@@ -384,5 +384,9 @@ ul.navbar-nav > li.active > a {
 }
 
 .about-message ul li a:hover {
+    color: #8C42BA;
+}
+
+.headerSwitch {
     color: #8C42BA;
 }

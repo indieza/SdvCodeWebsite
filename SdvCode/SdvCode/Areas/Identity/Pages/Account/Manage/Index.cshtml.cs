@@ -61,7 +61,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 TwitterUrl = user.TwitterUrl,
                 LinkedinUrl = user.LinkedinUrl,
                 RegisteredOn = user.RegisteredOn,
-                CountryCode = user.CountryCode
+                CountryCode = user.CountryCode,
+                Email = user.Email
                 // TODO Image URL
             };
         }
@@ -93,7 +94,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (Input.PhoneNumber != phoneNumber && Input.PhoneNumber != null)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)

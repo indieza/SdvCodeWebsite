@@ -12,6 +12,10 @@ namespace SdvCode.ViewModels.Users
     public class ManageAccountInputModel
     {
         [Phone]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Phone]
         [Display(Name = "Phone number")]
         [MaxLength(15)]
         public string PhoneNumber { get; set; }
