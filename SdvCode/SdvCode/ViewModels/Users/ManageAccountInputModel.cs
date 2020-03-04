@@ -31,6 +31,10 @@ namespace SdvCode.ViewModels.Users
         public DateTime BirthDate { get; set; }
 
         [PersonalData]
+        [Display(Name = "Registered On")]
+        public DateTime RegisteredOn { get; set; }
+
+        [PersonalData]
         [Display(Name = "Gender")]
         public Gender Gender { get; set; }
 
@@ -56,5 +60,29 @@ namespace SdvCode.ViewModels.Users
         [PersonalData]
         [Display(Name = "Cover Image")]
         public IFormFile CoverImage { get; set; }
+
+        [PersonalData]
+        [Display(Name = "GitHub Profile")]
+        public string GitHubUrl { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Stack-overflow Profile")]
+        public string StackoverflowUrl { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Facebook Profile")]
+        public string FacebookUrl { get; set; }
+
+        [PersonalData]
+        [Display(Name = "LinkedIn Profile")]
+        public string LinkedinUrl { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Twitter Profile")]
+        public string TwitterUrl { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Instagram Profile")]
+        public string InstagramUrl { get; set; }
     }
 }

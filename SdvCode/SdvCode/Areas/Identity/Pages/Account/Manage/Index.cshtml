@@ -22,6 +22,10 @@
                 <input asp-for="Username" class="form-control" disabled />
             </div>
             <div class="form-group col-md-4">
+                <label asp-for="Input.RegisteredOn"></label>
+                <input asp-for="Input.RegisteredOn" class="form-control" disabled />
+            </div>
+            <div class="form-group col-md-4">
                 <label asp-for="Input.FirstName"></label>
                 <input asp-for="Input.FirstName" class="form-control" />
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
@@ -54,6 +58,36 @@
             <div class="form-group col-md-4">
                 <label asp-for="Input.Gender"></label>
                 <select class="form-control" asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"></select>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Input.GitHubUrl"></label>
+                <input asp-for="Input.GitHubUrl" class="form-control" />
+                <span asp-validation-for="Input.GitHubUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Input.StackoverflowUrl"></label>
+                <input asp-for="Input.StackoverflowUrl" class="form-control" />
+                <span asp-validation-for="Input.StackoverflowUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Input.FacebookUrl"></label>
+                <input asp-for="Input.FacebookUrl" class="form-control" />
+                <span asp-validation-for="Input.FacebookUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Input.LinkedinUrl"></label>
+                <input asp-for="Input.LinkedinUrl" class="form-control" />
+                <span asp-validation-for="Input.LinkedinUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Input.TwitterUrl"></label>
+                <input asp-for="Input.TwitterUrl" class="form-control" />
+                <span asp-validation-for="Input.TwitterUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Input.InstagramUrl"></label>
+                <input asp-for="Input.InstagramUrl" class="form-control" />
+                <span asp-validation-for="Input.InstagramUrl" class="text-danger"></span>
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="Input.ProfilePicture"></label>

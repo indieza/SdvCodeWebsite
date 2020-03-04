@@ -24,6 +24,8 @@ namespace SdvCode.Models
 
         public DateTime BirthDate { get; set; }
 
+        public DateTime RegisteredOn { get; set; }
+
         public Gender Gender { get; set; }
 
         [MaxLength(250)]
@@ -38,6 +40,18 @@ namespace SdvCode.Models
         public string ImageUrl { get; set; }
 
         public string CoverImageUrl { get; set; }
+
+        public string GitHubUrl { get; set; }
+
+        public string StackoverflowUrl { get; set; }
+
+        public string FacebookUrl { get; set; }
+
+        public string LinkedinUrl { get; set; }
+
+        public string TwitterUrl { get; set; }
+
+        public string InstagramUrl { get; set; }
 
         [NotMapped]
         public bool IsFollowed { get; set; }

@@ -53,7 +53,14 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 Gender = user.Gender,
                 AboutMe = user.AboutMe,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                GitHubUrl = user.GitHubUrl,
+                StackoverflowUrl = user.StackoverflowUrl,
+                FacebookUrl = user.FacebookUrl,
+                InstagramUrl = user.InstagramUrl,
+                TwitterUrl = user.TwitterUrl,
+                LinkedinUrl = user.LinkedinUrl,
+                RegisteredOn = user.RegisteredOn
                 // TODO Image URL
             };
         }
@@ -128,6 +135,36 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             if (Input.LastName != user.LastName)
             {
                 user.LastName = Input.LastName;
+            }
+
+            if (Input.GitHubUrl != user.GitHubUrl)
+            {
+                user.GitHubUrl = Input.GitHubUrl;
+            }
+
+            if (Input.StackoverflowUrl != user.StackoverflowUrl)
+            {
+                user.StackoverflowUrl = Input.StackoverflowUrl;
+            }
+
+            if (Input.FacebookUrl != user.FacebookUrl)
+            {
+                user.FacebookUrl = Input.FacebookUrl;
+            }
+
+            if (Input.LinkedinUrl != user.LinkedinUrl)
+            {
+                user.LinkedinUrl = Input.LinkedinUrl;
+            }
+
+            if (Input.TwitterUrl != user.TwitterUrl)
+            {
+                user.TwitterUrl = Input.TwitterUrl;
+            }
+
+            if (Input.InstagramUrl != user.InstagramUrl)
+            {
+                user.InstagramUrl = Input.InstagramUrl;
             }
 
             var profileImageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary,

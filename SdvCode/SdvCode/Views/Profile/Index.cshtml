@@ -76,11 +76,31 @@
                     </div>
                     <div class="section">
                         <h3>Social</h3>
-                        <ul class="list-unstyled list-social">
-                            <li><a href="#"><i class="fa fa-twitter"></i> jackbay</a></li>
-                            <li><a href="#"><i class="fa fa-facebook"></i> Jack Bay</a></li>
-                            <li><a href="#"><i class="fa fa-dribbble"></i> jackdribs</a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i> Jack Bay</a></li>
+                        <ul class="list-unstyled">
+                            @if (Model.GitHubUrl != null)
+                            {
+                                <li><a href=@Model.GitHubUrl target="_blank"><i class="fa fa-github"></i> @Model.GitHubUrl.Split("/").Last()</a></li>
+                            }
+                            @if (Model.StackoverflowUrl != null)
+                            {
+                                <li><a href=@Model.StackoverflowUrl target="_blank"><i class="fa fa-stack-overflow"></i> @Model.StackoverflowUrl.Split("/").Last()</a></li>
+                            }
+                            @if (Model.FacebookUrl != null)
+                            {
+                                <li><a href=@Model.FacebookUrl target="_blank"><i class="fa fa-facebook-square"></i> @Model.FacebookUrl.Split("/").Last()</a></li>
+                            }
+                            @if (Model.LinkedinUrl != null)
+                            {
+                                <li><a href=@Model.LinkedinUrl target="_blank"><i class="fa fa-linkedin"></i> @Model.LinkedinUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
+                            }
+                            @if (Model.TwitterUrl != null)
+                            {
+                                <li><a href=@Model.TwitterUrl target="_blank"><i class="fa fa-twitter-square"></i> @Model.TwitterUrl.Split("/").Last()</a></li>
+                            }
+                            @if (Model.InstagramUrl != null)
+                            {
+                                <li><a href=@Model.InstagramUrl target="_blank"><i class="fa fa-instagram"></i> @Model.InstagramUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
+                            }
                         </ul>
                     </div>
                 </div>
