@@ -69,10 +69,29 @@
                     </div>
                     <div class="section">
                         <h3>Personal Data</h3>
-                        <p><i class="fa fa-building"></i> @Model.City</p>
-                        <p><i class="fa fa-flag"></i> @Model.Country</p>
-                        <p><i class="fa fa-birthday-cake"></i> @Model.BirthDate.ToString("dd-MMMM-yyyy")</p>
-                        <p><i class="fa fa-phone"></i> @Model.PhoneNumber</p>
+                        @if (Model.City != null)
+                        {
+                            <p><i class="fa fa-building"></i> @Model.City</p>
+                        }
+                        @if (Model.Country != null)
+                        {
+                            <p><i class="fa fa-flag"></i> @Model.Country</p>
+                        }
+                        @if (Model.BirthDate != null)
+                        {
+                            <p><i class="fa fa-birthday-cake"></i> @Model.BirthDate.ToString("dd-MMMM-yyyy")</p>
+                        }
+                        @if (Model.PhoneNumber != null)
+                        {
+                            <p>
+                                <i class="fa fa-phone"></i> @Model.PhoneNumber
+
+                                @if (Model.PhoneNumberConfirmed == false)
+                                {
+                                    <a asp-area="Identity" asp-page="/Account/VerifyPhone">Verify Phone</a>
+                                }
+                            </p>
+                        }
                     </div>
                     <div class="section">
                         <h3>Social</h3>

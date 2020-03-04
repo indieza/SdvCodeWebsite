@@ -1,0 +1,46 @@
+﻿@page
+@model ConfirmPhoneModel
+@{
+    ViewData["Title"] = "Confirm Phone number";
+}
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <!-- Subpage title start -->
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>Confirm Phone Number</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li><a asp-area="Identity" asp-page="/Account/ConfirmPhone"> Confirm Phone</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h4>@ViewData["Title"]</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                <p>
+                    We have sent a confirmation code to @Model.PhoneNumber
+                    Enter the code you receive to confirm your phone number.
+                </p>
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="VerificationCode"></label>
+                    <input asp-for="VerificationCode" class="form-control" type="number" />
+                    <span asp-validation-for="VerificationCode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

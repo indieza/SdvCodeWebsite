@@ -16,6 +16,8 @@ using SdvCode.Services;
 using SdvCode.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using CloudinaryDotNet;
+using Twilio;
+using SdvCode.ViewModels.Security;
 
 namespace SdvCode
 {
@@ -63,6 +65,12 @@ namespace SdvCode
                 Configuration["Cloudinary:ApiSecret"]);
             var cloudinary = new Cloudinary(cloudinaryAccount);
             services.AddSingleton(cloudinary);
+
+            // Twilio Authentication
+            var accountSid = Configuration["Twilio:AccountSID"];
+            var authToken = Configuration["Twilio:AuthToken"];
+            TwilioClient.Init(accountSid, authToken);
+            services.Configure<TwilioVerifySettings>(Configuration.GetSection("Twilio"));
 
             // Register Services
             services.AddScoped<IContactsService, ContactsService>();
