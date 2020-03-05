@@ -16,6 +16,8 @@ namespace SdvCode.Data
 
         public DbSet<FollowUnfollow> FollowUnfollows { get; set; }
 
+        public DbSet<UserAction> UserActions { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

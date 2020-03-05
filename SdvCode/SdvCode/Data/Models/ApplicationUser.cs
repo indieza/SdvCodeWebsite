@@ -55,6 +55,8 @@ namespace SdvCode.Data.Models
 
         public string InstagramUrl { get; set; }
 
+        public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
+
         [NotMapped]
         public bool IsFollowed { get; set; }
 
