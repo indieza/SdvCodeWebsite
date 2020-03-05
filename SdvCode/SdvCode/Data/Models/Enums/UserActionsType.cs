@@ -12,6 +12,7 @@ namespace SdvCode.Data.Models.Enums
         Unfollow = 3,
         Unfollowed = 4,
         ChangeCoverImage = 5,
-        ChangeProfilePicture = 6
+        ChangeProfilePicture = 6,
+        EditPersonalData = 7
     }
 }

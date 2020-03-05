@@ -144,7 +144,7 @@
                                         </a>
                                         <div class="media-body">
                                             <p class="activity-title"><a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> started following <a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:MM tt")</small>
+                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         <div class="btn-group pull-right activity-actions">
                                             <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -169,7 +169,7 @@
                                         </a>
                                         <div class="media-body">
                                             <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> was followed by <a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:MM tt")</small>
+                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         <div class="btn-group pull-right activity-actions">
                                             <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -194,7 +194,7 @@
                                         </a>
                                         <div class="media-body">
                                             <p class="activity-title"><a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> unfollow <a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:MM tt")</small>
+                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         <div class="btn-group pull-right activity-actions">
                                             <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -219,7 +219,7 @@
                                         </a>
                                         <div class="media-body">
                                             <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> was unfollowed by <a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:MM tt")</small>
+                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         <div class="btn-group pull-right activity-actions">
                                             <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -232,6 +232,55 @@
                                                 <li class="divider"></li>
                                                 <li><a href="#">Get Notification</a></li>
                                             </ul>
+                                        </div>
+                                    </div>
+                                }
+
+                                if (action.Action.ToString() == "EditPersonalData")
+                                {
+                                    <div class="media activity-item">
+                                        <a href=/Profile/@action.PersonUsername class="pull-left">
+                                            <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
+                                        </a>
+                                        <div class="media-body">
+                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> update his/her personal information <small class="text-muted"></small></p>
+                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                                        </div>
+                                    </div>
+                                }
+
+                                if (action.Action.ToString() == "ChangeCoverImage")
+                                {
+                                    <div class="media activity-item">
+                                        <a href="#" class="pull-left">
+                                            <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
+                                        </a>
+                                        <div class="media-body">
+                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> has changed his/her cover picture <small class="text-muted"></small></p>
+                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                                            <div class="activity-attachment">
+                                                <a href=/Profile/@action.PersonUsername class="thumbnail">
+                                                    <img src=@action.CoverImageUrl alt="Uploaded photo">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                if (action.Action.ToString() == "ChangeProfilePicture")
+                                {
+                                    <div class="media activity-item">
+                                        <a href="#" class="pull-left">
+                                            <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
+                                        </a>
+                                        <div class="media-body">
+                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> has changed his/her profile picture <small class="text-muted"></small></p>
+                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                                            <div class="activity-attachment">
+                                                <a href=/Profile/@action.PersonUsername class="thumbnail">
+                                                    <img src=@action.ProfileImageUrl alt="Uploaded photo">
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 }

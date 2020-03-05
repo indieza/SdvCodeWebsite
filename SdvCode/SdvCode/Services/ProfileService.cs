@@ -88,29 +88,63 @@ namespace SdvCode.Services
                 db.FollowUnfollows.FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
             }
 
-            currentUser.UserActions.Add(new UserAction
-            {
-                Action = UserActionsType.Follow,
-                ActionDate = DateTime.UtcNow,
-                PersonUsername = username,
-                PersonProfileImageUrl = user.ImageUrl,
-                FollowerUsername = currentUser.UserName,
-                FollowerProfileImageUrl = currentUser.ImageUrl,
-                ApplicationUserId = currentUser.Id
-            });
-
-            user.UserActions.Add(new UserAction
-            {
-                Action = UserActionsType.Followed,
-                ActionDate = DateTime.UtcNow,
-                FollowerUsername = currentUser.UserName,
-                FollowerProfileImageUrl = currentUser.ImageUrl,
-                PersonUsername = user.UserName,
-                PersonProfileImageUrl = user.ImageUrl,
-                ApplicationUserId = user.Id
-            });
-
             this.db.SaveChanges();
+
+            var targetFollowerEntity = this.db.UserActions.FirstOrDefault(x =>
+            x.Action == UserActionsType.Follow &&
+            x.FollowerUsername == currentUser.UserName &&
+            x.PersonUsername == username &&
+            x.ApplicationUserId == currentUser.Id);
+
+            if (targetFollowerEntity == null)
+            {
+                currentUser.UserActions.Add(new UserAction
+                {
+                    Action = UserActionsType.Follow,
+                    ActionDate = DateTime.UtcNow,
+                    PersonUsername = username,
+                    PersonProfileImageUrl = user.ImageUrl,
+                    FollowerUsername = currentUser.UserName,
+                    FollowerProfileImageUrl = currentUser.ImageUrl,
+                    ApplicationUserId = currentUser.Id
+                });
+
+                this.db.SaveChanges();
+            }
+            else
+            {
+                targetFollowerEntity.ActionDate = DateTime.UtcNow;
+                this.db.UserActions.Update(targetFollowerEntity);
+                this.db.SaveChanges();
+            }
+
+            var targetPersonEntity = this.db.UserActions.FirstOrDefault(x => x.Action == UserActionsType.Followed &&
+            x.FollowerUsername == currentUser.UserName &&
+            x.PersonUsername == user.UserName &&
+            x.ApplicationUserId == user.Id);
+
+            if (targetPersonEntity == null)
+            {
+                user.UserActions.Add(new UserAction
+                {
+                    Action = UserActionsType.Followed,
+                    ActionDate = DateTime.UtcNow,
+                    FollowerUsername = currentUser.UserName,
+                    FollowerProfileImageUrl = currentUser.ImageUrl,
+                    PersonUsername = user.UserName,
+                    PersonProfileImageUrl = user.ImageUrl,
+                    ApplicationUserId = user.Id
+                });
+
+                this.db.SaveChanges();
+            }
+            else
+            {
+                targetPersonEntity.ActionDate = DateTime.UtcNow;
+                this.db.UserActions.Update(targetPersonEntity);
+                this.db.SaveChanges();
+            }
+
             return currentUser;
         }
 
@@ -159,29 +193,63 @@ namespace SdvCode.Services
                     .FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true)
                     .IsFollowed = false;
 
-                currentUser.UserActions.Add(new UserAction
-                {
-                    Action = UserActionsType.Unfollow,
-                    ActionDate = DateTime.UtcNow,
-                    PersonUsername = username,
-                    PersonProfileImageUrl = user.ImageUrl,
-                    FollowerUsername = currentUser.UserName,
-                    FollowerProfileImageUrl = currentUser.ImageUrl,
-                    ApplicationUserId = currentUser.Id
-                });
-
-                user.UserActions.Add(new UserAction
-                {
-                    Action = UserActionsType.Unfollowed,
-                    ActionDate = DateTime.UtcNow,
-                    FollowerUsername = currentUser.UserName,
-                    FollowerProfileImageUrl = currentUser.ImageUrl,
-                    PersonUsername = user.UserName,
-                    PersonProfileImageUrl = user.ImageUrl,
-                    ApplicationUserId = user.Id
-                });
-
                 db.SaveChanges();
+
+                var targetUnfollowerEntity = this.db.UserActions.FirstOrDefault(x =>
+                x.Action == UserActionsType.Unfollow &&
+                x.FollowerUsername == currentUser.UserName &&
+                x.PersonUsername == username &&
+                x.ApplicationUserId == currentUser.Id);
+
+                if (targetUnfollowerEntity == null)
+                {
+                    currentUser.UserActions.Add(new UserAction
+                    {
+                        Action = UserActionsType.Unfollow,
+                        ActionDate = DateTime.UtcNow,
+                        PersonUsername = username,
+                        PersonProfileImageUrl = user.ImageUrl,
+                        FollowerUsername = currentUser.UserName,
+                        FollowerProfileImageUrl = currentUser.ImageUrl,
+                        ApplicationUserId = currentUser.Id
+                    });
+
+                    this.db.SaveChanges();
+                }
+                else
+                {
+                    targetUnfollowerEntity.ActionDate = DateTime.UtcNow;
+                    this.db.UserActions.Update(targetUnfollowerEntity);
+                    this.db.SaveChanges();
+                }
+
+                var targetPersonEntity = this.db.UserActions.FirstOrDefault(x =>
+                x.Action == UserActionsType.Unfollowed &&
+                x.FollowerUsername == currentUser.UserName &&
+                x.PersonUsername == user.UserName &&
+                x.ApplicationUserId == user.Id);
+
+                if (targetPersonEntity == null)
+                {
+                    user.UserActions.Add(new UserAction
+                    {
+                        Action = UserActionsType.Unfollowed,
+                        ActionDate = DateTime.UtcNow,
+                        FollowerUsername = currentUser.UserName,
+                        FollowerProfileImageUrl = currentUser.ImageUrl,
+                        PersonUsername = user.UserName,
+                        PersonProfileImageUrl = user.ImageUrl,
+                        ApplicationUserId = user.Id
+                    });
+
+                    this.db.SaveChanges();
+                }
+                else
+                {
+                    targetPersonEntity.ActionDate = DateTime.UtcNow;
+                    this.db.UserActions.Update(targetPersonEntity);
+                    this.db.SaveChanges();
+                }
             }
 
             return currentUser;
