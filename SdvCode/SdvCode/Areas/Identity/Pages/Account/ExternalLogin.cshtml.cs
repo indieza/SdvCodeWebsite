@@ -116,7 +116,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email, RegisteredOn = DateTime.UtcNow };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
