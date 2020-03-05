@@ -60,5 +60,25 @@ namespace SdvCode.Controllers
             var allUsers = this.profileService.GetAllUsers(currentUserId);
             return this.View(allUsers);
         }
+
+        [Authorize]
+        [Route("/DeleteActivityHistory/{username}")]
+        public IActionResult DeleteActivityHistory(string username)
+        {
+            var currentUserId = this.userManager.GetUserId(HttpContext.User);
+            this.profileService.DeleteActivity(currentUserId);
+
+            return this.Redirect($"/Profile/{username}");
+        }
+
+        [Authorize]
+        [Route("/DeleteActivityById/{username}/{activityId}")]
+        public IActionResult DeleteActivityById(string username, int activityId)
+        {
+            var currentUserId = this.userManager.GetUserId(HttpContext.User);
+            this.profileService.DeleteActivityById(currentUserId, activityId);
+
+            return this.Redirect($"/Profile/{username}");
+        }
     }
 }

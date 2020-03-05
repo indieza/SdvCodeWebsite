@@ -16,5 +16,9 @@ namespace SdvCode.Services
         ApplicationUser UnfollowUser(string username, string currentUserId);
 
         AllUsersViewModel GetAllUsers(string currentUserId);
+
+        void DeleteActivity(string currentUserId);
+
+        void DeleteActivityById(string currentUserId, int activityId);
     }
 }

@@ -62,6 +62,12 @@
                                 }
                             </div>
                         </div>
+                        @if (User.Identity.Name == Model.UserName && Model.UserActions.Count > 0)
+                        {
+                            <div style="margin-top: 15px">
+                                <a asp-controller="Profile" asp-action="DeleteActivityHistory" asp-route-username="@User.Identity.Name" class="btn btn-danger btn-block"><i class="fa fa-trash"></i> Delete Activity History</a>
+                            </div>
+                        }
                     </div>
                     <div class="section">
                         <h3>About Me</h3>
@@ -146,18 +152,21 @@
                                             <p class="activity-title"><a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> started following <a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        <div class="btn-group pull-right activity-actions">
-                                            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <i class="fa fa-th"></i>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                <li><a href="#">I don't want to see this</a></li>
-                                                <li><a href="#">Unfollow Antonius</a></li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">Get Notification</a></li>
-                                            </ul>
-                                        </div>
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            <div class="btn-group pull-right activity-actions">
+                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-th"></i>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                                                    <li><a href="#">Unfollow Antonius</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Get Notification</a></li>
+                                                </ul>
+                                            </div>
+                                        }
                                     </div>
                                 }
 
@@ -171,18 +180,21 @@
                                             <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> was followed by <a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        <div class="btn-group pull-right activity-actions">
-                                            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <i class="fa fa-th"></i>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                <li><a href="#">I don't want to see this</a></li>
-                                                <li><a href="#">Unfollow Antonius</a></li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">Get Notification</a></li>
-                                            </ul>
-                                        </div>
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            <div class="btn-group pull-right activity-actions">
+                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-th"></i>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                                                    <li><a href="#">Unfollow Antonius</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Get Notification</a></li>
+                                                </ul>
+                                            </div>
+                                        }
                                     </div>
                                 }
 
@@ -196,18 +208,21 @@
                                             <p class="activity-title"><a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> unfollow <a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        <div class="btn-group pull-right activity-actions">
-                                            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <i class="fa fa-th"></i>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                <li><a href="#">I don't want to see this</a></li>
-                                                <li><a href="#">Unfollow Antonius</a></li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">Get Notification</a></li>
-                                            </ul>
-                                        </div>
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            <div class="btn-group pull-right activity-actions">
+                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-th"></i>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                                                    <li><a href="#">Unfollow Antonius</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Get Notification</a></li>
+                                                </ul>
+                                            </div>
+                                        }
                                     </div>
                                 }
 
@@ -221,18 +236,21 @@
                                             <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> was unfollowed by <a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        <div class="btn-group pull-right activity-actions">
-                                            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <i class="fa fa-th"></i>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                <li><a href="#">I don't want to see this</a></li>
-                                                <li><a href="#">Unfollow Antonius</a></li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">Get Notification</a></li>
-                                            </ul>
-                                        </div>
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            <div class="btn-group pull-right activity-actions">
+                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-th"></i>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                                                    <li><a href="#">Unfollow Antonius</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Get Notification</a></li>
+                                                </ul>
+                                            </div>
+                                        }
                                     </div>
                                 }
 
@@ -246,6 +264,18 @@
                                             <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> update his/her personal information <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            <div class="btn-group pull-right activity-actions">
+                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-th"></i>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                                                </ul>
+                                            </div>
+                                        }
                                     </div>
                                 }
 
@@ -264,6 +294,18 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            <div class="btn-group pull-right activity-actions">
+                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-th"></i>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                                                </ul>
+                                            </div>
+                                        }
                                     </div>
                                 }
 
@@ -282,6 +324,18 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        @if (User.Identity.Name == Model.UserName)
+                                        {
+                                            <div class="btn-group pull-right activity-actions">
+                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-th"></i>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                                                </ul>
+                                            </div>
+                                        }
                                     </div>
                                 }
                             }

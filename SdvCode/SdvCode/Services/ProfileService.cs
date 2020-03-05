@@ -18,6 +18,20 @@ namespace SdvCode.Services
             this.db = db;
         }
 
+        public void DeleteActivity(string currentUserId)
+        {
+            var trash = this.db.UserActions.Where(x => x.ApplicationUserId == currentUserId).ToList();
+            this.db.UserActions.RemoveRange(trash);
+            this.db.SaveChanges();
+        }
+
+        public void DeleteActivityById(string currentUserId, int activityId)
+        {
+            var trash = this.db.UserActions.FirstOrDefault(x => x.ApplicationUserId == currentUserId && x.Id == activityId);
+            this.db.UserActions.Remove(trash);
+            this.db.SaveChanges();
+        }
+
         public ApplicationUser ExtractUserInfo(string username, string currentUserId)
         {
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
@@ -54,6 +68,7 @@ namespace SdvCode.Services
                 .Where(x => x.ApplicationUserId == user.Id)
                 .Select(x => new UserAction
                 {
+                    Id = x.Id,
                     Action = x.Action,
                     ActionDate = x.ActionDate,
                     PersonUsername = x.PersonUsername,
