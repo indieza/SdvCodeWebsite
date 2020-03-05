@@ -133,7 +133,7 @@
             <div class="col-md-8">
                 <div class="profile-info-right">
                     <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
-                        <li class="active"><a href="#activities" data-toggle="tab">ACTIVITIES</a></li>
+                        <li class="active"><a href="#activities" data-toggle="tab"><b>ACTIVITIES</b></a></li>
                         <li><a href="#followers" data-toggle="tab">FOLLOWERS</a></li>
                         <li><a href="#following" data-toggle="tab">FOLLOWING</a></li>
                     </ul>
@@ -149,7 +149,7 @@
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> started following <a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> started following <a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.UserName)
@@ -161,9 +161,6 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                     <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                    <li><a href="#">Unfollow Antonius</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Get Notification</a></li>
                                                 </ul>
                                             </div>
                                         }
@@ -177,7 +174,7 @@
                                             <img src=@action.FollowerProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> was followed by <a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> was followed by <a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.UserName)
@@ -189,9 +186,6 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                     <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                    <li><a href="#">Unfollow Antonius</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Get Notification</a></li>
                                                 </ul>
                                             </div>
                                         }
@@ -205,7 +199,7 @@
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> unfollow <a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> unfollow <a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.UserName)
@@ -217,9 +211,6 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                     <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                    <li><a href="#">Unfollow Antonius</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Get Notification</a></li>
                                                 </ul>
                                             </div>
                                         }
@@ -233,7 +224,7 @@
                                             <img src=@action.FollowerProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> was unfollowed by <a href=/Profile/@action.FollowerUsername>@action.FollowerUsername</a> <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> was unfollowed by <a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.UserName)
@@ -245,9 +236,6 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                     <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                    <li><a href="#">Unfollow Antonius</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Get Notification</a></li>
                                                 </ul>
                                             </div>
                                         }
@@ -261,7 +249,7 @@
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> update his/her personal information <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> update his/her personal information <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.UserName)
@@ -286,7 +274,7 @@
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> has changed his/her cover picture <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> has changed his/her cover picture <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                             <div class="activity-attachment">
                                                 <a href=/Profile/@action.PersonUsername class="thumbnail">
@@ -316,7 +304,7 @@
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername>@action.PersonUsername</a> has changed his/her profile picture <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> has changed his/her profile picture <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                             <div class="activity-attachment">
                                                 <a href=/Profile/@action.PersonUsername class="thumbnail">

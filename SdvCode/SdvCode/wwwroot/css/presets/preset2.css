@@ -402,3 +402,14 @@ ul.navbar-nav > li.active > a {
 .file-upload .file-select.file-select-disabled:hover {
     color: #81c83c;
 }
+
+.nav-pills-custom-minimal.custom-minimal-bottom > li.active > a, .nav-pills-custom-minimal.custom-minimal-bottom > li.active > a:hover, .nav-pills-custom-minimal.custom-minimal-bottom > li.active > a:focus {
+    border-bottom-color: #81c83c;
+}
+
+.activity-item .activity-actions .dropdown-menu > li > a {
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 3px 10px;
+    background-color: #81c83c;
+}

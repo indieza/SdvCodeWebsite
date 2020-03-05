@@ -48,18 +48,19 @@
                         <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" class="allUsersUsername">@@@user.Username</a></p>
                         @if (User.Identity.Name == user.Username)
                         {
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-info btn-block"><i class="fa fa-edit"></i> Edit Profile</a>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" type="button" class="btn btn-warning btn-block"><i class="fa fa-check-circle"></i> <span>It's You</span></a>
                             </div>
                         }
                         else
                         {
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 @if (user.HasFollowed == true)
                                 {
+
                                     <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@user.Username" class="btn btn-danger btn-block"><i class="fa fa-minus-circle"></i> Unfollow</a>
                                 }
                                 else
@@ -67,7 +68,7 @@
                                     <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@user.Username" class="btn btn-success btn-block"><i class="fa fa-plus-circle"></i> Follow</a>
                                 }
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" type="button" class="btn btn-info btn-block"><i class="fa fa-user"></i> <span>View Profile</span></a>
                             </div>
                         }

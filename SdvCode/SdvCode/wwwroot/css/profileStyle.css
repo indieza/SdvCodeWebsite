@@ -222,11 +222,6 @@
             margin: 0;
         }
 
-        .activity-item .activity-actions .dropdown-menu > li > a {
-            font-size: 0.9em;
-            padding: 3px 10px;
-        }
-
     .activity-item + .btn {
         margin-bottom: 15px;
     }
@@ -252,6 +247,12 @@
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
     background-color: #1688ae;
+}
+
+.nav-pills-custom-minimal > li.active > a, .nav-pills-custom-minimal > li.active > a:hover, .nav-pills-custom-minimal > li.active > a:focus {
+    background-color: transparent;
+    border-top-color: #94c632;
+    color: #696565;
 }
 
 .nav-tabs.tabs-iconized > li a,
@@ -337,12 +338,6 @@
             color: #4f4c4c;
         }
 
-    .nav-pills-custom-minimal > li.active > a, .nav-pills-custom-minimal > li.active > a:hover, .nav-pills-custom-minimal > li.active > a:focus {
-        background-color: transparent;
-        border-top-color: #94c632;
-        color: #696565;
-    }
-
     .nav-pills-custom-minimal > li + li {
         margin-left: 30px;
     }
@@ -356,10 +351,6 @@
 .nav-pills-custom-minimal.custom-minimal-bottom > li a {
     border-top: none;
     border-bottom: 4px solid transparent;
-}
-
-.nav-pills-custom-minimal.custom-minimal-bottom > li.active > a, .nav-pills-custom-minimal.custom-minimal-bottom > li.active > a:hover, .nav-pills-custom-minimal.custom-minimal-bottom > li.active > a:focus {
-    border-bottom-color: #94c632;
 }
 
 body {
