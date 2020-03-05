@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SdvCode.Models;
+using SdvCode.Data.Models;
 
 namespace SdvCode.Areas.Identity.Pages.Account.Manage
 {

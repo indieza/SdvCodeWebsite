@@ -1,5 +1,5 @@
 ﻿@page
-@using SdvCode.Models.Enums
+@using SdvCode.Data.Models.Enums
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
@@ -75,6 +75,7 @@
             <div class="form-group col-md-4">
                 <label asp-for="Input.CountryCode"></label>
                 <select class="form-control" asp-for="Input.CountryCode" id="countryCodeDrop" onchange="enablePhone()">
+                    <option value="">Select Country Code...</option>
                     @foreach (var code in @Html.GetEnumSelectList<CountryCode>())
                     {
                         <option value=@code.Value>@code.Text</option>

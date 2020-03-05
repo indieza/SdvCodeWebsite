@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SdvCode.Models.Enums
+namespace SdvCode.Data.Models.Enums
 {
     public enum CountryCode
     {

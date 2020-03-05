@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SdvCode.Services;
-using SdvCode.Models;
+using SdvCode.Data.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using CloudinaryDotNet;
 using Twilio;

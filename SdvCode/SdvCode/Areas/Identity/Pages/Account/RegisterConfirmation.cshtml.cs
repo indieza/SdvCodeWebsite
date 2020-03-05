@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using SdvCode.Models;
+using SdvCode.Data.Models;
 
 namespace SdvCode.Areas.Identity.Pages.Account
 {

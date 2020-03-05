@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using SdvCode.Models;
+using SdvCode.Data.Models;
 using SdvCode.ViewModels.Users;
 
 namespace SdvCode.Areas.Identity.Pages.Account

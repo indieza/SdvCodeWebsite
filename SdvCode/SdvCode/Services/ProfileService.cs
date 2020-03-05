@@ -1,5 +1,5 @@
 ﻿using SdvCode.Data;
-using SdvCode.Models;
+using SdvCode.Data.Models;
 using SdvCode.ViewModels.Users;
 using System;
 using System.Collections.Generic;
@@ -111,7 +111,6 @@ namespace SdvCode.Services
         public ApplicationUser UnfollowUser(string username, string currentUserId)
         {
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
-
             var currentUser = this.db.Users.FirstOrDefault(u => u.Id == currentUserId);
 
             if (this.db.FollowUnfollows.Any(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true))

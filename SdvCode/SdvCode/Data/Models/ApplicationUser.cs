@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SdvCode.Models.Enums;
+using SdvCode.Data.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace SdvCode.Models
+namespace SdvCode.Data.Models
 {
     public class ApplicationUser : IdentityUser
     {

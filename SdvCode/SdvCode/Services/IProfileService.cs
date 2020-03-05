@@ -1,4 +1,4 @@
-﻿using SdvCode.Models;
+﻿using SdvCode.Data.Models;
 using SdvCode.ViewModels.Users;
 using System;
 using System.Collections.Generic;

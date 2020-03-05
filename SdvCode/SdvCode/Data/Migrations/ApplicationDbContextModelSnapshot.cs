@@ -154,7 +154,7 @@ namespace SdvCode.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SdvCode.Models.ApplicationUser", b =>
+            modelBuilder.Entity("SdvCode.Data.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -275,7 +275,7 @@ namespace SdvCode.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("SdvCode.Models.FollowUnfollow", b =>
+            modelBuilder.Entity("SdvCode.Data.Models.FollowUnfollow", b =>
                 {
                     b.Property<string>("PersonId")
                         .HasColumnType("nvarchar(450)");
@@ -302,7 +302,7 @@ namespace SdvCode.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("SdvCode.Models.ApplicationUser", null)
+                    b.HasOne("SdvCode.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -311,7 +311,7 @@ namespace SdvCode.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("SdvCode.Models.ApplicationUser", null)
+                    b.HasOne("SdvCode.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -326,7 +326,7 @@ namespace SdvCode.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SdvCode.Models.ApplicationUser", null)
+                    b.HasOne("SdvCode.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -335,7 +335,7 @@ namespace SdvCode.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("SdvCode.Models.ApplicationUser", null)
+                    b.HasOne("SdvCode.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

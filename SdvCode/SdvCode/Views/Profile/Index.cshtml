@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model SdvCode.Models.ApplicationUser
+@model SdvCode.Data.Models.ApplicationUser
 @inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = $"{User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1, User.Identity.Name.Length - 1)} Profile";
