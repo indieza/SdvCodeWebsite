@@ -48,7 +48,7 @@ namespace SdvCode.ViewModels.Users
 
         [PersonalData]
         [Display(Name = "About Me")]
-        [MaxLength(250)]
+        [MaxLength(600)]
         public string AboutMe { get; set; }
 
         [PersonalData]

@@ -30,7 +30,7 @@ namespace SdvCode.Data.Models
 
         public CountryCode CountryCode { get; set; }
 
-        [MaxLength(250)]
+        [MaxLength(600)]
         public string AboutMe { get; set; }
 
         [MaxLength(15)]
