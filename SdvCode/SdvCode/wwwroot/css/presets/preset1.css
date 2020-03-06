@@ -413,3 +413,14 @@ ul.navbar-nav > li.active > a {
     padding: 3px 10px;
     background-color: #49a2e7;
 }
+
+.nav-pills-custom-minimal > li.active > a, .nav-pills-custom-minimal > li.active > a:hover, .nav-pills-custom-minimal > li.active > a:focus {
+    background-color: transparent;
+    border-top-color: #94c632;
+    color: #49a2e7;
+    font-weight: bold;
+}
+
+.profile-info-left img.avatar {
+    border: 3px solid #49a2e7;
+}

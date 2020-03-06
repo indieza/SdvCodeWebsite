@@ -23,10 +23,6 @@
     top: -92px;
 }
 
-    .profile-info-left img.avatar {
-        border: 2px solid #fff;
-    }
-
     .profile-info-left h2 {
         font-family: "josefinslab-semibold";
         margin-bottom: 30px;
@@ -246,13 +242,7 @@
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-    background-color: #1688ae;
-}
-
-.nav-pills-custom-minimal > li.active > a, .nav-pills-custom-minimal > li.active > a:hover, .nav-pills-custom-minimal > li.active > a:focus {
     background-color: transparent;
-    border-top-color: #94c632;
-    color: #696565;
 }
 
 .nav-tabs.tabs-iconized > li a,
