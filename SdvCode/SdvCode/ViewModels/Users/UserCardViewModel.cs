@@ -24,9 +24,7 @@ namespace SdvCode.ViewModels.Users
 
         public int FollowingsCount { get; set; }
 
-        public string City { get; set; }
-
-        public string Country { get; set; }
+        public int Activities { get; set; }
 
         public bool HasFollowed { get; set; }
     }

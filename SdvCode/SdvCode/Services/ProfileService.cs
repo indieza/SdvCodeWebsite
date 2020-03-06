@@ -175,8 +175,6 @@ namespace SdvCode.Services
                     Username = user.UserName,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Country = user.Country,
-                    City = user.City,
                     ImageUrl = user.ImageUrl,
                     CoverImageUrl = user.CoverImageUrl
                 });
@@ -192,6 +190,9 @@ namespace SdvCode.Services
 
                 user.HasFollowed = this.db.FollowUnfollows
                     .Any(x => x.FollowerId == currentUserId && x.PersonId == user.UserId && x.IsFollowed == true);
+
+                user.Activities = this.db.UserActions
+                    .Count(x => x.ApplicationUserId == user.UserId);
             }
 
             return users;
