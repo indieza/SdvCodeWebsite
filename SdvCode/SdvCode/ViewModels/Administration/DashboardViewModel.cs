@@ -14,5 +14,7 @@ namespace SdvCode.ViewModels.Administration
         public int TotalBannedUsers { get; set; }
 
         public int TotalUsersInRole { get; set; }
+
+        public ICollection<string> Usernames { get; set; } = new HashSet<string>();
     }
 }

@@ -19,12 +19,14 @@ namespace SdvCode.Services
 
         public DashboardViewModel GetDashboardInformation()
         {
+            var usernames = this.db.Users.Select(x => x.UserName).ToList();
             return new DashboardViewModel
             {
                 TotalUsersCount = db.Users.Count(),
                 TotalBannedUsers = 10,
                 TotalBlogPosts = 12,
-                TotalUsersInRole = 5
+                TotalUsersInRole = 5,
+                Usernames = usernames
             };
         }
     }
