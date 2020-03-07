@@ -1,66 +1,66 @@
 'use strict';
 
-var inputField = document.querySelector('.chosen-value');
-var dropdown = document.querySelector('.value-list');
-var dropdownArray = [].concat(document.querySelectorAll('li'));
-var dropdownItems = dropdownArray[0];
-//dropdown.classList.add('open');
-inputField.focus(); // Demo purposes only
+var inputUsernameField = document.querySelector('#usernameValue');
+var dropdownUsernames = document.querySelector('#usernamesList');
+var dropdownUsernamesArray = [].concat(document.querySelectorAll('#usernameItem'));
+var dropdownUsernameItems = dropdownUsernamesArray[0];
+//dropdownUsernames.classList.add('open');
+inputUsernameField.focus(); // Demo purposes only
 
-var valueArray = [];
-dropdownItems.forEach(function (item) {
-    valueArray.push(item.textContent);
+var usernameValueArray = [];
+dropdownUsernameItems.forEach(function (item) {
+    usernameValueArray.push(item.textContent);
 });
 
 var closeDropdown = function closeDropdown() {
-    dropdown.classList.remove('open');
+    dropdownUsernames.classList.remove('open');
 };
 
-inputField.addEventListener('input', function () {
-    dropdown.classList.add('open');
-    var inputValue = inputField.value.toLowerCase();
+inputUsernameField.addEventListener('input', function () {
+    dropdownUsernames.classList.add('open');
+    var inputValue = inputUsernameField.value.toLowerCase();
     var valueSubstring = undefined;
     if (inputValue.length > 0) {
-        for (var j = 0; j < valueArray.length; j++) {
-            if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
-                dropdownItems[j].classList.add('closed');
+        for (var j = 0; j < usernameValueArray.length; j++) {
+            if (!(inputValue.substring(0, inputValue.length) === usernameValueArray[j].substring(0, inputValue.length).toLowerCase())) {
+                dropdownUsernameItems[j].classList.add('closed');
             } else {
-                dropdownItems[j].classList.remove('closed');
+                dropdownUsernameItems[j].classList.remove('closed');
             }
         }
     } else {
-        for (var i = 0; i < dropdownItems.length; i++) {
-            dropdownItems[i].classList.remove('closed');
+        for (var i = 0; i < dropdownUsernameItems.length; i++) {
+            dropdownUsernameItems[i].classList.remove('closed');
         }
     }
 });
 
-dropdownItems.forEach(function (item) {
+dropdownUsernameItems.forEach(function (item) {
     item.addEventListener('click', function (evt) {
-        inputField.value = item.textContent;
-        dropdownItems.forEach(function (dropdown) {
-            dropdown.classList.add('closed');
+        inputUsernameField.value = item.textContent;
+        dropdownUsernameItems.forEach(function (dropdownUsernames) {
+            dropdownUsernames.classList.add('closed');
         });
     });
 });
 
-inputField.addEventListener('focus', function () {
-    inputField.placeholder = 'Type to filter';
-    dropdown.classList.add('open');
-    dropdownItems.forEach(function (dropdown) {
-        dropdown.classList.remove('closed');
+inputUsernameField.addEventListener('focus', function () {
+    inputUsernameField.placeholder = 'Type username to filter';
+    dropdownUsernames.classList.add('open');
+    dropdownUsernameItems.forEach(function (dropdownUsernames) {
+        dropdownUsernames.classList.remove('closed');
     });
 });
 
-inputField.addEventListener('blur', function () {
-    inputField.placeholder = 'Select username';
-    dropdown.classList.remove('open');
+inputUsernameField.addEventListener('blur', function () {
+    inputUsernameField.placeholder = 'Select username';
+    dropdownUsernames.classList.remove('open');
 });
 
 document.addEventListener('click', function (evt) {
-    var isDropdown = dropdown.contains(evt.target);
-    var isInput = inputField.contains(evt.target);
+    var isDropdown = dropdownUsernames.contains(evt.target);
+    var isInput = inputUsernameField.contains(evt.target);
     if (!isDropdown && !isInput) {
-        dropdown.classList.remove('open');
+        dropdownUsernames.classList.remove('open');
     }
 });
