@@ -4,7 +4,6 @@ var inputBanUserField = document.querySelector('#baneUserValue');
 var dropdownBanUsers = document.querySelector('#usersForBaneList');
 var dropdownBanUsersArray = [].concat(document.querySelectorAll('#banItem'));
 var dropdownBanUserItems = dropdownBanUsersArray[0];
-//dropdownBanUsers.classList.add('open');
 inputBanUserField.focus(); // Demo purposes only
 
 var banUsersValueArray = [];
@@ -45,7 +44,7 @@ dropdownBanUserItems.forEach(function (item) {
 });
 
 inputBanUserField.addEventListener('focus', function () {
-    inputBanUserField.placeholder = 'Type role to filter';
+    inputBanUserField.placeholder = 'Type user to filter';
     dropdownBanUsers.classList.add('open');
     dropdownBanUserItems.forEach(function (dropdownBanUsers) {
         dropdownBanUsers.classList.remove('closed');
@@ -53,7 +52,7 @@ inputBanUserField.addEventListener('focus', function () {
 });
 
 inputBanUserField.addEventListener('blur', function () {
-    inputBanUserField.placeholder = 'Select role';
+    inputBanUserField.placeholder = 'Select user';
     dropdownBanUsers.classList.remove('open');
 });
 

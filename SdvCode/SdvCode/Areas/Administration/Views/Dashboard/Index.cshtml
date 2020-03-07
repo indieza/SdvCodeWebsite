@@ -1,9 +1,7 @@
 ﻿@using SdvCode.Areas.Administration.ViewModels
+@using SdvCode.Areas.Administration.Models.Enums
 @{
     ViewData["Title"] = "Dashboard";
-}
-@{
-    Layout = "/Views/Shared/_AdministrationLayout.cshtml";
 }
 @model DashboardViewModel
 
@@ -107,7 +105,10 @@
                 <form>
                     <input id="usernameRoleValue" class="chosen-value" type="text" value="" placeholder="Search role">
                     <ul id="usernamesRolesList" class="value-list">
-                        <li id="usernameRoleItem">Test</li>
+                        @foreach (var role in Html.GetEnumSelectList<Roles>())
+                        {
+                            <li id="usernameRoleItem">@role.Text</li>
+                        }
                     </ul>
                 </form>
             </div>
@@ -132,9 +133,9 @@
                 <form>
                     <input id="roleValue" class="chosen-value" type="text" value="" placeholder="Search role">
                     <ul id="rolesList" class="value-list">
-                        @foreach (var user in Model.Usernames)
+                        @foreach (var role in Html.GetEnumSelectList<Roles>())
                         {
-                            <li id="roleItem">@user</li>
+                            <li id="roleItem">@role.Text</li>
                         }
                     </ul>
                 </form>

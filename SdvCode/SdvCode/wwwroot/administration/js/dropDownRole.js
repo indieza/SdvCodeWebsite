@@ -4,7 +4,6 @@ var inputNewRoleField = document.querySelector('#roleValue');
 var dropdownNewRoles = document.querySelector('#rolesList');
 var dropdownNewRolesArray = [].concat(document.querySelectorAll('#roleItem'));
 var dropdownNewRoleItems = dropdownNewRolesArray[0];
-//dropdownNewRoles.classList.add('open');
 inputNewRoleField.focus(); // Demo purposes only
 
 var newRoleValueArray = [];
