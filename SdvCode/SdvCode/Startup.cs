@@ -13,11 +13,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SdvCode.Services;
-using SdvCode.Data.Models;
+using SdvCode.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using CloudinaryDotNet;
 using Twilio;
 using SdvCode.ViewModels.Security;
+using Microsoft.AspNetCore.Mvc.Razor;
+using SdvCode.Areas.Administration.Services;
 
 namespace SdvCode
 {
@@ -108,8 +110,13 @@ namespace SdvCode
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                      name: "areas",
+                      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }

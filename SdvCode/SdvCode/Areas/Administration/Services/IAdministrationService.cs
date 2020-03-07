@@ -1,10 +1,10 @@
-﻿using SdvCode.ViewModels.Administration;
+﻿using SdvCode.Areas.Administration.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SdvCode.Services
+namespace SdvCode.Areas.Administration.Services
 {
     public interface IAdministrationService
     {

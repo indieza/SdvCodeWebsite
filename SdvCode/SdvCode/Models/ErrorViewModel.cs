@@ -1,6 +1,6 @@
 using System;
 
-namespace SdvCode.Data.Models
+namespace SdvCode.Models
 {
     public class ErrorViewModel
     {

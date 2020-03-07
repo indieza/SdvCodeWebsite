@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SdvCode.Data;
-using SdvCode.Data.Models;
+using SdvCode.Models;
 using SdvCode.Services;
 using SdvCode.ViewModels.Users;
 

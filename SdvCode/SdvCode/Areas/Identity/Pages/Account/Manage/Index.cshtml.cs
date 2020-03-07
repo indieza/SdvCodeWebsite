@@ -7,8 +7,8 @@ using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SdvCode.Data.Models;
-using SdvCode.Data.Models.Enums;
+using SdvCode.Models;
+using SdvCode.Models.Enums;
 using SdvCode.Services;
 using SdvCode.ViewModels.Users;
 

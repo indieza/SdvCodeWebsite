@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SdvCode.Areas.Administration.Services;
+using SdvCode.Areas.Administration.ViewModels;
 using SdvCode.Services;
-using SdvCode.ViewModels.Administration;
 
-namespace SdvCode.Controllers
+namespace SdvCode.Areas.Administration.Controllers
 {
-    public class AdministrationController : Controller
+    [Area("Administration")]
+    public class DashboardController : Controller
     {
         private readonly IAdministrationService administrationService;
 
-        public AdministrationController(IAdministrationService administrationService)
+        public DashboardController(IAdministrationService administrationService)
         {
             this.administrationService = administrationService;
         }

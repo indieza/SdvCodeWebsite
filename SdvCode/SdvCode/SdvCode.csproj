@@ -1785,4 +1785,11 @@
     <None Include="wwwroot\administration\vendor\jquery\jquery.slim.min.map" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Data\" />
+    <Folder Include="Areas\Administration\Models\" />
+    <Folder Include="Areas\Administration\Views\Shared\" />
+  </ItemGroup>
+
 </Project>

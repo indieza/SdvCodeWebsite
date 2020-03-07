@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SdvCode.Data.Models;
+using SdvCode.Models;
 
 namespace SdvCode.Data
 {

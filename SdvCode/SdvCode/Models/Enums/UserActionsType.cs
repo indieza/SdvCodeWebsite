@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SdvCode.Data.Models.Enums
+namespace SdvCode.Models.Enums
 {
     public enum UserActionsType
     {
