@@ -8,9 +8,9 @@ namespace SdvCode.Areas.Administration.Models.Enums
     public enum Roles
     {
         Administrator = 1,
-        Moderator = 2,
-        Editor = 3,
-        Author = 4,
-        User = 5
+        Editor = 2,
+        Author = 3,
+        Contributor = 4,
+        Subscriber = 5
     }
 }
