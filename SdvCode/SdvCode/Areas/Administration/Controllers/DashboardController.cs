@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SdvCode.Areas.Administration.Services;
 using SdvCode.Areas.Administration.ViewModels;
@@ -13,12 +15,15 @@ namespace SdvCode.Areas.Administration.Controllers
     public class DashboardController : Controller
     {
         private readonly IAdministrationService administrationService;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public DashboardController(IAdministrationService administrationService)
+        public DashboardController(IAdministrationService administrationService, RoleManager<IdentityRole> roleManager)
         {
             this.administrationService = administrationService;
+            this.roleManager = roleManager;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             DashboardViewModel dashboard = this.administrationService.GetDashboardInformation();
@@ -31,10 +36,30 @@ namespace SdvCode.Areas.Administration.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult CreateRole(DashboardIndexViewModel model)
+        [HttpPost, Authorize]
+        public async Task<IActionResult> CreateRole(DashboardIndexViewModel model)
         {
-            return null;
+            if (this.ModelState.IsValid)
+            {
+                IdentityRole identityRole = new IdentityRole
+                {
+                    Name = model.CreateRoleInputModel.Role
+                };
+
+                IdentityResult result = await this.roleManager.CreateAsync(identityRole);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return RedirectToAction("Index", "Dashboard");
         }
     }
 }
