@@ -50,6 +50,7 @@ namespace SdvCode.Areas.Administration.Controllers
 
                 if (result.Succeeded)
                 {
+                    TempData["Success"] = "Success added role.";
                     return RedirectToAction("Index", "Dashboard");
                 }
 
@@ -57,6 +58,8 @@ namespace SdvCode.Areas.Administration.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
+
+                return RedirectToAction("Index", "Dashboard");
             }
 
             return RedirectToAction("Index", "Dashboard");
