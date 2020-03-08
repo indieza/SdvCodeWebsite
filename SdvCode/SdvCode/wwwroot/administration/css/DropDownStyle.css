@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+form {
+    position: relative;
+    width: 100%;
+}
+
+.chosen-value,
+.value-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.chosen-value {
+    font-family: 'Ek Mukta';
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 4px;
+    height: 49px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    background-color: white;
+    border: 3px solid transparent;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    margin-top: -1px;
+}
+
+    .chosen-value::-webkit-input-placeholder {
+        color: #333;
+    }
+
+    .chosen-value:hover {
+        background-color: lightgrey;
+        cursor: pointer;
+    }
+
+        .chosen-value:hover::-webkit-input-placeholder {
+            color: #333;
+        }
+
+    .chosen-value:focus, .chosen-value.open {
+        box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+        outline: 0;
+        background-color: white;
+        color: #000;
+    }
+
+        .chosen-value:focus::-webkit-input-placeholder, .chosen-value.open::-webkit-input-placeholder {
+            color: #000;
+        }
+
+.value-list {
+    list-style: none;
+    margin-top: 4rem;
+    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-height: 0;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+    .value-list.open {
+        max-height: 320px;
+        overflow: auto;
+    }
+
+    .value-list li {
+        position: relative;
+        height: 4rem;
+        background-color: #FAFCFD;
+        padding: 1rem;
+        font-size: 1.1rem;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        cursor: pointer;
+        -webkit-transition: background-color .3s;
+        transition: background-color .3s;
+        opacity: 1;
+    }
+
+        .value-list li:hover {
+            background-color: lightgrey;
+        }
+
+        .value-list li.closed {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0;
+            opacity: 0;
+        }

@@ -22,7 +22,19 @@ namespace SdvCode.Areas.Administration.Controllers
         public IActionResult Index()
         {
             DashboardViewModel dashboard = this.administrationService.GetDashboardInformation();
-            return View(dashboard);
+            DashboardIndexViewModel model = new DashboardIndexViewModel
+            {
+                DashboardViewModel = dashboard,
+                CreateRoleInputModel = new CreateRoleInputModel()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateRole(DashboardIndexViewModel model)
+        {
+            return null;
         }
     }
 }

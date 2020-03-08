@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-@model DashboardViewModel
+@model DashboardIndexViewModel
 
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -17,7 +17,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Users</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalUsersCount</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DashboardViewModel.TotalUsersCount</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -32,7 +32,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Blog Posts</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalBlogPosts</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DashboardViewModel.TotalBlogPosts</div>
                         </div>
                         <div class="col-auto">
                             <i class="far fa-newspaper fa-2x text-gray-300"></i>
@@ -49,11 +49,11 @@
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Banned Users</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.TotalBannedUsers</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.DashboardViewModel.TotalBannedUsers</div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: @Model.TotalBannedUsers%" aria-valuenow=@Model.TotalBannedUsers aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: @Model.DashboardViewModel.TotalBannedUsers%" aria-valuenow=@Model.DashboardViewModel.TotalBannedUsers aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Users In Role</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalUsersInRole</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DashboardViewModel.TotalUsersInRole</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user-tag fa-2x text-gray-300"></i>
@@ -81,5 +81,33 @@
             </div>
         </div>
     </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Add new role</h1>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-xl-6 col-md-9 mb-4">
+                <div class="card border-left-warning shadow h-100 py-4">
+                    <input asp-for="@Model.CreateRoleInputModel.Role" class="chosen-value addNewRoleValue" type="text" value="" placeholder="Type to filter" autocomplete="off" required />
+                    <ul class="value-list newRolesList">
+                        @foreach (var role in @Html.GetEnumSelectList<Roles>())
+                        {
+                            <li>@role.Text</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 mb-4">
+                <button asp-action="CreateRole" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Add New Role</span>
+                </button>
+            </div>
+        </div>
+    </form>
     <hr />
 </div>
