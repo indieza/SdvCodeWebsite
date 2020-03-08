@@ -16,12 +16,12 @@ namespace SdvCode.Areas.Administration.Controllers
     [Area("Administration")]
     public class DashboardController : Controller
     {
-        private readonly IAdministrationService administrationService;
+        private readonly IDashboardService administrationService;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
 
-        public DashboardController(IAdministrationService administrationService,
+        public DashboardController(IDashboardService administrationService,
             RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
             ApplicationDbContext db)

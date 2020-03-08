@@ -80,7 +80,7 @@ namespace SdvCode
             services.AddScoped<IContactsService, ContactsService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IProfileService, ProfileService>();
-            services.AddTransient<IAdministrationService, AdministrationService>();
+            services.AddTransient<IDashboardService, DashboardService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace SdvCode.Areas.Administration.Services
 {
-    public class AdministrationService : IAdministrationService
+    public class DashboardService : IDashboardService
     {
         private readonly ApplicationDbContext db;
 
-        public AdministrationService(ApplicationDbContext db)
+        public DashboardService(ApplicationDbContext db)
         {
             this.db = db;
         }

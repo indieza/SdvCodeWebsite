@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SdvCode.Areas.Administration.Services
 {
-    public interface IAdministrationService
+    public interface IDashboardService
     {
         DashboardViewModel GetDashboardInformation();
     }
