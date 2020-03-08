@@ -2,12 +2,12 @@
 
 let inputNewRole = document.querySelector('.addNewRoleValue');
 let dropdownNewRoles = document.querySelector('.newRolesList');
-let dropdownNewRowItems = Array.from(document.querySelectorAll('li'));
+let dropdownNewRowItems = Array.from(document.querySelectorAll('#addRole'));
 inputNewRole.focus(); // Demo purposes only
 
-var newRolesValueArray = [];
+var newRolesForUserInRoleValueArray = [];
 dropdownNewRowItems.forEach(function (item) {
-    newRolesValueArray.push(item.textContent);
+    newRolesForUserInRoleValueArray.push(item.textContent);
 });
 
 var closeDropdown = function closeDropdown() {
@@ -19,8 +19,8 @@ inputNewRole.addEventListener('input', function () {
     var inputValue = inputNewRole.value.toLowerCase();
     var valueSubstring = undefined;
     if (inputValue.length > 0) {
-        for (var j = 0; j < newRolesValueArray.length; j++) {
-            if (!(inputValue.substring(0, inputValue.length) === newRolesValueArray[j].substring(0, inputValue.length).toLowerCase())) {
+        for (var j = 0; j < newRolesForUserInRoleValueArray.length; j++) {
+            if (!(inputValue.substring(0, inputValue.length) === newRolesForUserInRoleValueArray[j].substring(0, inputValue.length).toLowerCase())) {
                 dropdownNewRowItems[j].classList.add('closed');
             } else {
                 dropdownNewRowItems[j].classList.remove('closed');

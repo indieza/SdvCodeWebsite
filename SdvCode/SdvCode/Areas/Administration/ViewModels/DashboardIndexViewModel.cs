@@ -10,5 +10,7 @@ namespace SdvCode.Areas.Administration.ViewModels
         public DashboardViewModel DashboardViewModel { get; set; }
 
         public CreateRoleInputModel CreateRoleInputModel { get; set; }
+
+        public AddUserInRoleInputModel AddUserInRole { get; set; }
     }
 }
