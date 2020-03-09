@@ -13,6 +13,7 @@ using SdvCode.ViewModels.Users;
 
 namespace SdvCode.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -24,7 +25,6 @@ namespace SdvCode.Controllers
             this.profileService = profileService;
         }
 
-        [Authorize]
         [Route("/Profile/{username}")]
         public IActionResult Index(string username)
         {
@@ -41,7 +41,6 @@ namespace SdvCode.Controllers
             return View(model);
         }
 
-        [Authorize]
         [Route("/Follow/{username}")]
         public IActionResult Follow(string username)
         {
@@ -51,7 +50,6 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{currentUser.UserName}");
         }
 
-        [Authorize]
         [Route("/Unfollow/{username}")]
         public IActionResult Unfollow(string username)
         {
@@ -61,7 +59,6 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{currentUser.UserName}");
         }
 
-        [Authorize]
         [Route("/Profile/AllUsers")]
         public IActionResult AllUsers()
         {
@@ -70,7 +67,6 @@ namespace SdvCode.Controllers
             return this.View(allUsers);
         }
 
-        [Authorize]
         [Route("/DeleteActivityHistory/{username}")]
         public IActionResult DeleteActivityHistory(string username)
         {
@@ -80,7 +76,6 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{username}");
         }
 
-        [Authorize]
         [Route("/DeleteActivityById/{username}/{activityId}")]
         public IActionResult DeleteActivityById(string username, int activityId)
         {
@@ -90,7 +85,6 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{username}");
         }
 
-        [Authorize]
         public IActionResult MakeYourselfAdmin(string username)
         {
             this.profileService.MakeYourselfAdmin(username);

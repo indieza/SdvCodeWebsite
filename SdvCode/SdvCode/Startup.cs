@@ -20,6 +20,8 @@ using Twilio;
 using SdvCode.ViewModels.Security;
 using Microsoft.AspNetCore.Mvc.Razor;
 using SdvCode.Areas.Administration.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace SdvCode
 {
@@ -45,6 +47,12 @@ namespace SdvCode
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+
+            // Configuration for update cookies when user is added in Role!!!
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.FromMinutes(0);
+            });
 
             // Social Network Authentication
             services.AddAuthentication()

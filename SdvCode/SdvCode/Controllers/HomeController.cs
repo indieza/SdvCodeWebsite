@@ -35,11 +35,6 @@ namespace SdvCode.Controllers
             foreach (var role in Enum.GetValues(typeof(Roles)).Cast<Roles>().ToArray())
             {
                 IdentityResult result = await this.homeService.CreateRole(role.ToString());
-
-                if (!result.Succeeded)
-                {
-                    break;
-                }
             }
 
             return View(model);
