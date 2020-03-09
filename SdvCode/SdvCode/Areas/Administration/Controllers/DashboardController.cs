@@ -8,17 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 using SdvCode.Areas.Administration.Models.Enums;
 using SdvCode.Areas.Administration.Services;
 using SdvCode.Areas.Administration.ViewModels;
+using SdvCode.Constraints;
 using SdvCode.Data;
 using SdvCode.Models;
 using SdvCode.Services;
 
 namespace SdvCode.Areas.Administration.Controllers
 {
-    [Area("Administration")]
+    [Area(GlobalConstants.AdministrationArea)]
     public class DashboardController : Controller
     {
-        private const string administrator = "Administrator";
-
         private readonly IDashboardService dashboardService;
 
         public DashboardController(IDashboardService dashboardService)
@@ -26,7 +25,7 @@ namespace SdvCode.Areas.Administration.Controllers
             this.dashboardService = dashboardService;
         }
 
-        [Authorize(Roles = administrator)]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult Index()
         {
             DashboardViewModel dashboard = this.dashboardService.GetDashboardInformation();
@@ -39,7 +38,7 @@ namespace SdvCode.Areas.Administration.Controllers
             return View(model);
         }
 
-        [HttpPost, Authorize(Roles = administrator)]
+        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> CreateRole(DashboardIndexViewModel model)
         {
             string role = model.CreateRole.Role;
@@ -50,22 +49,22 @@ namespace SdvCode.Areas.Administration.Controllers
 
                 if (result.Succeeded)
                 {
-                    TempData["Success"] = $"Success added {role} role.";
+                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedRole, role);
                 }
                 else
                 {
-                    TempData["Error"] = $"{role} role already exits.";
+                    TempData["Error"] = string.Format(ErrorMessages.RoleExist, role);
                 }
             }
             else
             {
-                TempData["Error"] = "Unexpected error :( Maybe invalid Input Model.";
+                TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
             return RedirectToAction("Index", "Dashboard");
         }
 
-        [HttpPost, Authorize(Roles = administrator)]
+        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> AddUserInRole(DashboardIndexViewModel model)
         {
             string inputRole = model.AddUserInRole.Role;
@@ -77,22 +76,22 @@ namespace SdvCode.Areas.Administration.Controllers
 
                 if (isAdded)
                 {
-                    TempData["Success"] = $"{inputUsername.ToUpper()} is added in role {inputRole} successfully.";
+                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedUserInRole, inputUsername.ToUpper(), inputRole);
                 }
                 else
                 {
-                    TempData["Error"] = $"{inputUsername.ToUpper()} is already in role {inputRole}.";
+                    TempData["Error"] = string.Format(ErrorMessages.UserAlreadyInRole, inputUsername.ToUpper(), inputRole);
                 }
             }
             else
             {
-                TempData["Error"] = "Unexpected error :( Maybe invalid Input Model.";
+                TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
             return RedirectToAction("Index", "Dashboard");
         }
 
-        [HttpPost, Authorize(Roles = administrator)]
+        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> RemoveUserFromRole(DashboardIndexViewModel model)
         {
             if (ModelState.IsValid)
@@ -107,7 +106,7 @@ namespace SdvCode.Areas.Administration.Controllers
                 }
                 else
                 {
-                    TempData["Error"] = $"{username.ToUpper()} is not in role {role}.";
+                    TempData["Error"] = string.Format(ErrorMessages.UserNotInRol, username.ToUpper(), role);
                 }
             }
 

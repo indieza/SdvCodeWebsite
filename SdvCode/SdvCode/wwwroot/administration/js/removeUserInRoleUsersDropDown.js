@@ -3,7 +3,6 @@
 let inputUserForUserRemoveRole = document.querySelector('.addUserValueForUserRemoveRole');
 let dropdownUsersForUserRemoveRole = document.querySelector('.usersListForUserRemoveRole');
 let dropdownUserItemsForUserRemoveRole = Array.from(document.querySelectorAll('#userForUserRemoveRole'));
-inputUserForUserRemoveRole.focus(); // Demo purposes only
 
 var newUsersForUserRemoveRoleValueArray = [];
 dropdownUserItemsForUserRemoveRole.forEach(function (item) {

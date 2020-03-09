@@ -3,7 +3,6 @@
 let inputUserForUserInRole = document.querySelector('.addUserValueForUserInRole');
 let dropdownUsersForUserInRole = document.querySelector('.usersListForUserInRole');
 let dropdownUserItemsForUserInRole = Array.from(document.querySelectorAll('#userForUserInRole'));
-inputUserForUserInRole.focus(); // Demo purposes only
 
 var newUsersForUserInRoleValueArray = [];
 dropdownUserItemsForUserInRole.forEach(function (item) {
