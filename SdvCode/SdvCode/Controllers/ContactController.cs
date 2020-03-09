@@ -35,6 +35,7 @@ namespace SdvCode.Controllers
             }
 
             this.contactsService.SendEmail(model);
+            TempData["Success"] = $"Your message has been sent. Be patient you will receive a reply within 1 day.";
             return RedirectToPage("/");
         }
     }
