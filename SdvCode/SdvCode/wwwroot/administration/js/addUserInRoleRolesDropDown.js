@@ -2,11 +2,11 @@
 
 let inputRoleForUserInRole = document.querySelector('.addRoleValueForUserInRole');
 let dropdownRolesForUserInRole = document.querySelector('.rolesListForUserInRole');
-let dropdownRoleItemsForUserInRow = Array.from(document.querySelectorAll('#roleForUserInRole'));
+let dropdownRoleItemsForUserInRole = Array.from(document.querySelectorAll('#roleForUserInRole'));
 inputRoleForUserInRole.focus(); // Demo purposes only
 
 var newRolesForUserInRoleValueArray = [];
-dropdownRoleItemsForUserInRow.forEach(function (item) {
+dropdownRoleItemsForUserInRole.forEach(function (item) {
     newRolesForUserInRoleValueArray.push(item.textContent);
 });
 
@@ -21,22 +21,22 @@ inputRoleForUserInRole.addEventListener('input', function () {
     if (inputValue.length > 0) {
         for (var j = 0; j < newRolesForUserInRoleValueArray.length; j++) {
             if (!(inputValue.substring(0, inputValue.length) === newRolesForUserInRoleValueArray[j].substring(0, inputValue.length).toLowerCase())) {
-                dropdownRoleItemsForUserInRow[j].classList.add('closed');
+                dropdownRoleItemsForUserInRole[j].classList.add('closed');
             } else {
-                dropdownRoleItemsForUserInRow[j].classList.remove('closed');
+                dropdownRoleItemsForUserInRole[j].classList.remove('closed');
             }
         }
     } else {
-        for (var i = 0; i < dropdownRoleItemsForUserInRow.length; i++) {
-            dropdownRoleItemsForUserInRow[i].classList.remove('closed');
+        for (var i = 0; i < dropdownRoleItemsForUserInRole.length; i++) {
+            dropdownRoleItemsForUserInRole[i].classList.remove('closed');
         }
     }
 });
 
-dropdownRoleItemsForUserInRow.forEach(function (item) {
+dropdownRoleItemsForUserInRole.forEach(function (item) {
     item.addEventListener('click', function (evt) {
         inputRoleForUserInRole.value = item.textContent;
-        dropdownRoleItemsForUserInRow.forEach(function (dropdown) {
+        dropdownRoleItemsForUserInRole.forEach(function (dropdown) {
             dropdown.classList.add('closed');
         });
     });
@@ -45,7 +45,7 @@ dropdownRoleItemsForUserInRow.forEach(function (item) {
 inputRoleForUserInRole.addEventListener('focus', function () {
     inputRoleForUserInRole.placeholder = 'Type to filter';
     dropdownRolesForUserInRole.classList.add('open');
-    dropdownRoleItemsForUserInRow.forEach(function (dropdown) {
+    dropdownRoleItemsForUserInRole.forEach(function (dropdown) {
         dropdown.classList.remove('closed');
     });
 });

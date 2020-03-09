@@ -2,11 +2,11 @@
 
 let inputUserForUserInRole = document.querySelector('.addUserValueForUserInRole');
 let dropdownUsersForUserInRole = document.querySelector('.usersListForUserInRole');
-let dropdownUserItemsForUserInRow = Array.from(document.querySelectorAll('#userForUserInRole'));
+let dropdownUserItemsForUserInRole = Array.from(document.querySelectorAll('#userForUserInRole'));
 inputUserForUserInRole.focus(); // Demo purposes only
 
 var newUsersForUserInRoleValueArray = [];
-dropdownUserItemsForUserInRow.forEach(function (item) {
+dropdownUserItemsForUserInRole.forEach(function (item) {
     newUsersForUserInRoleValueArray.push(item.textContent);
 });
 
@@ -21,22 +21,22 @@ inputUserForUserInRole.addEventListener('input', function () {
     if (inputValue.length > 0) {
         for (var j = 0; j < newUsersForUserInRoleValueArray.length; j++) {
             if (!(inputValue.substring(0, inputValue.length) === newUsersForUserInRoleValueArray[j].substring(0, inputValue.length).toLowerCase())) {
-                dropdownUserItemsForUserInRow[j].classList.add('closed');
+                dropdownUserItemsForUserInRole[j].classList.add('closed');
             } else {
-                dropdownUserItemsForUserInRow[j].classList.remove('closed');
+                dropdownUserItemsForUserInRole[j].classList.remove('closed');
             }
         }
     } else {
-        for (var i = 0; i < dropdownUserItemsForUserInRow.length; i++) {
-            dropdownUserItemsForUserInRow[i].classList.remove('closed');
+        for (var i = 0; i < dropdownUserItemsForUserInRole.length; i++) {
+            dropdownUserItemsForUserInRole[i].classList.remove('closed');
         }
     }
 });
 
-dropdownUserItemsForUserInRow.forEach(function (item) {
+dropdownUserItemsForUserInRole.forEach(function (item) {
     item.addEventListener('click', function (evt) {
         inputUserForUserInRole.value = item.textContent;
-        dropdownUserItemsForUserInRow.forEach(function (dropdown) {
+        dropdownUserItemsForUserInRole.forEach(function (dropdown) {
             dropdown.classList.add('closed');
         });
     });
@@ -45,7 +45,7 @@ dropdownUserItemsForUserInRow.forEach(function (item) {
 inputUserForUserInRole.addEventListener('focus', function () {
     inputUserForUserInRole.placeholder = 'Type to filter';
     dropdownUsersForUserInRole.classList.add('open');
-    dropdownUserItemsForUserInRow.forEach(function (dropdown) {
+    dropdownUserItemsForUserInRole.forEach(function (dropdown) {
         dropdown.classList.remove('closed');
     });
 });

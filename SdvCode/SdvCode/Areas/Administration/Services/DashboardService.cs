@@ -94,5 +94,25 @@ namespace SdvCode.Areas.Administration.Services
 
             return false;
         }
+
+        public async Task<bool> RemoveUserFromRole(string username, string role)
+        {
+            var targetRole = await this.roleManager.FindByNameAsync(role);
+            var targetUser = await this.userManager.FindByNameAsync(username);
+
+            if (targetRole != null && targetUser != null)
+            {
+                var targetConnection = this.db.UserRoles.FirstOrDefault(x => x.RoleId == targetRole.Id && x.UserId == targetUser.Id);
+
+                if (targetConnection != null)
+                {
+                    this.db.UserRoles.Remove(targetConnection);
+                    await this.db.SaveChangesAsync();
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

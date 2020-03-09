@@ -14,5 +14,7 @@ namespace SdvCode.Areas.Administration.Services
         Task<IdentityResult> CreateRole(string role);
 
         Task<bool> IsAddedUserInRole(string inputRole, string inputUsername);
+
+        Task<bool> RemoveUserFromRole(string username, string role);
     }
 }

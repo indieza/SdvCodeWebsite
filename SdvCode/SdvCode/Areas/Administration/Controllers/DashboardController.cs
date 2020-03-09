@@ -33,7 +33,7 @@ namespace SdvCode.Areas.Administration.Controllers
             DashboardIndexViewModel model = new DashboardIndexViewModel
             {
                 DashboardViewModel = dashboard,
-                CreateRoleInputModel = new CreateRoleInputModel()
+                CreateRole = new CreateRoleInputModel()
             };
 
             return View(model);
@@ -42,7 +42,7 @@ namespace SdvCode.Areas.Administration.Controllers
         [HttpPost, Authorize(Roles = administrator)]
         public async Task<IActionResult> CreateRole(DashboardIndexViewModel model)
         {
-            string role = model.CreateRoleInputModel.Role;
+            string role = model.CreateRole.Role;
 
             if (this.ModelState.IsValid)
             {
@@ -87,6 +87,28 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 TempData["Error"] = "Unexpected error :( Maybe invalid Input Model.";
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        [HttpPost, Authorize(Roles = administrator)]
+        public async Task<IActionResult> RemoveUserFromRole(DashboardIndexViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var username = model.RemoveUserFromRole.Username;
+                var role = model.RemoveUserFromRole.Role;
+                bool isRemoved = await this.dashboardService.RemoveUserFromRole(username, role);
+
+                if (isRemoved)
+                {
+                    return this.Redirect($"/Profile/{username}");
+                }
+                else
+                {
+                    TempData["Error"] = $"{username.ToUpper()} is not in role {role}.";
+                }
             }
 
             return RedirectToAction("Index", "Dashboard");
