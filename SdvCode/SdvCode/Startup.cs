@@ -83,6 +83,7 @@ namespace SdvCode
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<IDashboardService, DashboardService>();
+            services.AddTransient<IHomeService, HomeService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

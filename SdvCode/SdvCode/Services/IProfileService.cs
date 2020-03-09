@@ -20,5 +20,9 @@ namespace SdvCode.Services
         void DeleteActivity(string currentUserId);
 
         void DeleteActivityById(string currentUserId, int activityId);
+
+        bool HasAdmin();
+
+        void MakeYourselfAdmin(string username);
     }
 }

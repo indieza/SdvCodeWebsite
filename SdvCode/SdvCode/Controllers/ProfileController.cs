@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using SdvCode.Data;
 using SdvCode.Models;
 using SdvCode.Services;
+using SdvCode.ViewModels.Profiles;
 using SdvCode.ViewModels.Users;
 
 namespace SdvCode.Controllers
@@ -29,7 +30,15 @@ namespace SdvCode.Controllers
         {
             var currentUserId = this.userManager.GetUserId(HttpContext.User);
             ApplicationUser user = this.profileService.ExtractUserInfo(username, currentUserId);
-            return View(user);
+            bool hasAdmin = this.profileService.HasAdmin();
+
+            var model = new ProfileViewModel
+            {
+                ApplicationUser = user,
+                HasAdmin = hasAdmin
+            };
+
+            return View(model);
         }
 
         [Authorize]
@@ -78,6 +87,13 @@ namespace SdvCode.Controllers
             var currentUserId = this.userManager.GetUserId(HttpContext.User);
             this.profileService.DeleteActivityById(currentUserId, activityId);
 
+            return this.Redirect($"/Profile/{username}");
+        }
+
+        [Authorize]
+        public IActionResult MakeYourselfAdmin(string username)
+        {
+            this.profileService.MakeYourselfAdmin(username);
             return this.Redirect($"/Profile/{username}");
         }
     }

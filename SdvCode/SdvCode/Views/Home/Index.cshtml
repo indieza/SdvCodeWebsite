@@ -1,6 +1,9 @@
-﻿@{
+﻿@using SdvCode.ViewModels.Home
+@{
     ViewData["Title"] = "Home Page";
 }
+
+@model HomeViewModel
 
 <section id="home" class="no-padding">
 
@@ -189,7 +192,7 @@
             <div class="facts one col-md-3 col-sm-6">
                 <span class="facts-icon"><i class="fas fa-user"></i></span>
                 <div class="facts-num">
-                    <span class="counter">1200</span>
+                    <span class="counter">@Model.TotalRegisteredUsers</span>
                 </div>
                 <h3>Users</h3>
             </div>

@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using SdvCode.Areas.Administration.Models.Enums
-@model SdvCode.Models.ApplicationUser
+@using SdvCode.ViewModels.Profiles
+@model ProfileViewModel
 @inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = $"{User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1, User.Identity.Name.Length - 1)} Profile";
@@ -8,13 +9,13 @@
 
 <div class="user-profile">
     <div class="profile-header-background">
-        @if (Model.CoverImageUrl == null)
+        @if (Model.ApplicationUser.CoverImageUrl == null)
         {
             <img src="~/images/userProfileCityBackgroundImage.jpg" alt="Profile Header Background">
         }
         else
         {
-            <img src=@Model.CoverImageUrl alt="Profile Header Background">
+            <img src=@Model.ApplicationUser.CoverImageUrl alt="Profile Header Background">
         }
     </div>
     <div class="container">
@@ -22,38 +23,38 @@
             <div class="col-md-4">
                 <div class="profile-info-left">
                     <div class="text-center">
-                        @if (Model.ImageUrl == null)
+                        @if (Model.ApplicationUser.ImageUrl == null)
                         {
                             <img src="~/images/NoAvatarProfileImage.png" alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
                         }
                         else
                         {
-                            <img src=@Model.ImageUrl alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
+                            <img src=@Model.ApplicationUser.ImageUrl alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
                         }
-                        <h2>@Model.FirstName @Model.LastName</h2>
-                        <h5>@@@Html.DisplayTextFor(model => model.UserName)</h5>
+                        <h2>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName</h2>
+                        <h5>@@@Html.DisplayTextFor(model => model.ApplicationUser.UserName)</h5>
                     </div>
                     <div class="action-buttons">
                         <div class="row">
                             <div class="col-xs-6">
-                                @if (User.Identity.Name == Model.UserName)
+                                @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                 {
                                     <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-primary btn-info btn-block"><i class="fas fa-edit"></i> Edit Profile</a>
                                 }
                                 else
                                 {
-                                    @if (!Model.IsFollowed)
+                                    @if (!Model.ApplicationUser.IsFollowed)
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.UserName" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
+                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.ApplicationUser.UserName" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
                                     }
                                     else
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.UserName" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
+                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.ApplicationUser.UserName" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
                                     }
                                 }
                             </div>
                             <div class="col-xs-6">
-                                @if (User.Identity.Name == Model.UserName)
+                                @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                 {
                                     <a asp-area="" asp-controller="Profile" asp-action="AllUsers" class="btn btn-primary btn-block"><i class="fas fa-users"></i> All Users</a>
                                 }
@@ -63,13 +64,19 @@
                                 }
                             </div>
                         </div>
-                        @if (User.Identity.Name == Model.UserName && Model.UserActions.Count > 0)
+                        @if (User.Identity.Name == Model.ApplicationUser.UserName && Model.ApplicationUser.UserActions.Count > 0)
                         {
                             <div style="margin-top: 15px">
                                 <a asp-controller="Profile" asp-action="DeleteActivityHistory" asp-route-username="@User.Identity.Name" class="btn btn-danger btn-block"><i class="fas fa-trash"></i> Delete Activity History</a>
                             </div>
                         }
-                        @if (User.Identity.Name == Model.UserName && User.IsInRole(Roles.Administrator.ToString()))
+                        @if (User.Identity.Name == Model.ApplicationUser.UserName && !Model.HasAdmin)
+                        {
+                            <div style="margin-top: 15px">
+                                <a asp-area="" asp-controller="Profile" asp-action="MakeYourselfAdmin" asp-route-username="@User.Identity.Name" class="btn btn-info btn-block"><i class="fas fa-user-shield"></i> Make Yourself Administrator</a>
+                            </div>
+                        }
+                        @if (User.Identity.Name == Model.ApplicationUser.UserName && User.IsInRole(Roles.Administrator.ToString()))
                         {
                             <div style="margin-top: 15px">
                                 <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-success btn-block"><i class="fas fa-user-shield"></i> Administration Panel</a>
@@ -78,28 +85,28 @@
                     </div>
                     <div class="section">
                         <h3>About Me</h3>
-                        <p>@Model.AboutMe</p>
+                        <p>@Model.ApplicationUser.AboutMe</p>
                     </div>
                     <div class="section">
                         <h3>Personal Data</h3>
-                        @if (Model.City != null)
+                        @if (Model.ApplicationUser.City != null)
                         {
-                            <p><i class="fas fa-building"></i> @Model.City</p>
+                            <p><i class="fas fa-building"></i> @Model.ApplicationUser.City</p>
                         }
-                        @if (Model.Country != null)
+                        @if (Model.ApplicationUser.Country != null)
                         {
-                            <p><i class="fas fa-flag"></i> @Model.Country</p>
+                            <p><i class="fas fa-flag"></i> @Model.ApplicationUser.Country</p>
                         }
-                        @if (Model.BirthDate != null)
+                        @if (Model.ApplicationUser.BirthDate != null)
                         {
-                            <p><i class="fas fa-birthday-cake"></i> @Model.BirthDate.ToString("dd-MMMM-yyyy")</p>
+                            <p><i class="fas fa-birthday-cake"></i> @Model.ApplicationUser.BirthDate.ToString("dd-MMMM-yyyy")</p>
                         }
-                        @if (Model.PhoneNumber != null)
+                        @if (Model.ApplicationUser.PhoneNumber != null)
                         {
                             <p>
-                                <i class="fas fa-phone"></i> (@Model.CountryCode.ToString().Split("_")[0]) @Model.PhoneNumber
+                                <i class="fas fa-phone"></i> (@Model.ApplicationUser.CountryCode.ToString().Split("_")[0]) @Model.ApplicationUser.PhoneNumber
 
-                                @if (Model.PhoneNumberConfirmed == false)
+                                @if (Model.ApplicationUser.PhoneNumberConfirmed == false)
                                 {
                                     <a asp-area="Identity" asp-page="/Account/VerifyPhone">Verify Phone</a>
                                 }
@@ -109,29 +116,29 @@
                     <div class="section">
                         <h3>Social</h3>
                         <ul class="list-unstyled">
-                            @if (Model.GitHubUrl != null)
+                            @if (Model.ApplicationUser.GitHubUrl != null)
                             {
-                                <li><a href=@Model.GitHubUrl target="_blank"><i class="fab fa-github"></i> @Model.GitHubUrl.Split("/").Last()</a></li>
+                                <li><a href=@Model.ApplicationUser.GitHubUrl target="_blank"><i class="fab fa-github"></i> @Model.ApplicationUser.GitHubUrl.Split("/").Last()</a></li>
                             }
-                            @if (Model.StackoverflowUrl != null)
+                            @if (Model.ApplicationUser.StackoverflowUrl != null)
                             {
-                                <li><a href=@Model.StackoverflowUrl target="_blank"><i class="fab fa-stack-overflow"></i> @Model.StackoverflowUrl.Split("/").Last()</a></li>
+                                <li><a href=@Model.ApplicationUser.StackoverflowUrl target="_blank"><i class="fab fa-stack-overflow"></i> @Model.ApplicationUser.StackoverflowUrl.Split("/").Last()</a></li>
                             }
-                            @if (Model.FacebookUrl != null)
+                            @if (Model.ApplicationUser.FacebookUrl != null)
                             {
-                                <li><a href=@Model.FacebookUrl target="_blank"><i class="fab fa-facebook-square"></i> @Model.FacebookUrl.Split("/").Last()</a></li>
+                                <li><a href=@Model.ApplicationUser.FacebookUrl target="_blank"><i class="fab fa-facebook-square"></i> @Model.ApplicationUser.FacebookUrl.Split("/").Last()</a></li>
                             }
-                            @if (Model.LinkedinUrl != null)
+                            @if (Model.ApplicationUser.LinkedinUrl != null)
                             {
-                                <li><a href=@Model.LinkedinUrl target="_blank"><i class="fab fa-linkedin"></i> @Model.LinkedinUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
+                                <li><a href=@Model.ApplicationUser.LinkedinUrl target="_blank"><i class="fab fa-linkedin"></i> @Model.ApplicationUser.LinkedinUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
                             }
-                            @if (Model.TwitterUrl != null)
+                            @if (Model.ApplicationUser.TwitterUrl != null)
                             {
-                                <li><a href=@Model.TwitterUrl target="_blank"><i class="fab fa-twitter-square"></i> @Model.TwitterUrl.Split("/").Last()</a></li>
+                                <li><a href=@Model.ApplicationUser.TwitterUrl target="_blank"><i class="fab fa-twitter-square"></i> @Model.ApplicationUser.TwitterUrl.Split("/").Last()</a></li>
                             }
-                            @if (Model.InstagramUrl != null)
+                            @if (Model.ApplicationUser.InstagramUrl != null)
                             {
-                                <li><a href=@Model.InstagramUrl target="_blank"><i class="fab fa-instagram"></i> @Model.InstagramUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
+                                <li><a href=@Model.ApplicationUser.InstagramUrl target="_blank"><i class="fab fa-instagram"></i> @Model.ApplicationUser.InstagramUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
                             }
                         </ul>
                     </div>
@@ -147,7 +154,7 @@
                     <div class="tab-content">
                         <!-- activities -->
                         <div class="tab-pane fade in active" id="activities">
-                            @foreach (var action in Model.UserActions)
+                            @foreach (var action in Model.ApplicationUser.UserActions)
                             {
                                 if (action.Action.ToString() == "Follow")
                                 {
@@ -159,7 +166,7 @@
                                             <p class="activity-title"><a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> started following <a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        @if (User.Identity.Name == Model.UserName)
+                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -184,7 +191,7 @@
                                             <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> was followed by <a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        @if (User.Identity.Name == Model.UserName)
+                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -209,7 +216,7 @@
                                             <p class="activity-title"><a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> unfollow <a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        @if (User.Identity.Name == Model.UserName)
+                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -234,7 +241,7 @@
                                             <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> was unfollowed by <a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        @if (User.Identity.Name == Model.UserName)
+                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -259,7 +266,7 @@
                                             <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> update his/her personal information <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
-                                        @if (User.Identity.Name == Model.UserName)
+                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -289,7 +296,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        @if (User.Identity.Name == Model.UserName)
+                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -319,7 +326,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        @if (User.Identity.Name == Model.UserName)
+                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
@@ -338,7 +345,7 @@
                         <!-- end activities -->
                         <!-- followers -->
                         <div class="tab-pane fade" id="followers">
-                            @foreach (var follower in Model.Followers)
+                            @foreach (var follower in Model.ApplicationUser.Followers)
                             {
                                 <div class="media user-follower">
                                     @if (follower.ImageUrl == null)
@@ -373,7 +380,7 @@
                         <!-- end followers -->
                         <!-- following -->
                         <div class="tab-pane fade" id="following">
-                            @foreach (var following in Model.Followings)
+                            @foreach (var following in Model.ApplicationUser.Followings)
                             {
                                 <div class="media user-following">
                                     @if (following.ImageUrl == null)

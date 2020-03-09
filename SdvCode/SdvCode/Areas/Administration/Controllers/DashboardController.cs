@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SdvCode.Areas.Administration.Models.Enums;
 using SdvCode.Areas.Administration.Services;
 using SdvCode.Areas.Administration.ViewModels;
 using SdvCode.Data;
@@ -16,6 +17,8 @@ namespace SdvCode.Areas.Administration.Controllers
     [Area("Administration")]
     public class DashboardController : Controller
     {
+        private const string administrator = "Administrator";
+
         private readonly IDashboardService dashboardService;
 
         public DashboardController(IDashboardService dashboardService)
@@ -23,7 +26,7 @@ namespace SdvCode.Areas.Administration.Controllers
             this.dashboardService = dashboardService;
         }
 
-        [Authorize]
+        [Authorize(Roles = administrator)]
         public IActionResult Index()
         {
             DashboardViewModel dashboard = this.dashboardService.GetDashboardInformation();
@@ -36,7 +39,7 @@ namespace SdvCode.Areas.Administration.Controllers
             return View(model);
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(Roles = administrator)]
         public async Task<IActionResult> CreateRole(DashboardIndexViewModel model)
         {
             string role = model.CreateRoleInputModel.Role;
@@ -62,7 +65,7 @@ namespace SdvCode.Areas.Administration.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(Roles = administrator)]
         public async Task<IActionResult> AddUserInRole(DashboardIndexViewModel model)
         {
             string inputRole = model.AddUserInRole.Role;

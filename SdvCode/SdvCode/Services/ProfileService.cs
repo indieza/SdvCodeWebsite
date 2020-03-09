@@ -1,4 +1,6 @@
-﻿using SdvCode.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using SdvCode.Areas.Administration.Models.Enums;
+using SdvCode.Data;
 using SdvCode.Models;
 using SdvCode.Models.Enums;
 using SdvCode.ViewModels.Users;
@@ -12,10 +14,13 @@ namespace SdvCode.Services
     public class ProfileService : IProfileService
     {
         private readonly ApplicationDbContext db;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public ProfileService(ApplicationDbContext db)
+        public ProfileService(ApplicationDbContext db,
+            RoleManager<IdentityRole> roleManager)
         {
             this.db = db;
+            this.roleManager = roleManager;
         }
 
         public void DeleteActivity(string currentUserId)
@@ -269,6 +274,38 @@ namespace SdvCode.Services
             }
 
             return currentUser;
+        }
+
+        public bool HasAdmin()
+        {
+            var role = this.roleManager.FindByNameAsync(Roles.Administrator.ToString()).Result;
+
+            if (role != null)
+            {
+                var roleId = role.Id;
+                return this.db.UserRoles.Any(x => x.RoleId == roleId);
+            }
+
+            return false;
+        }
+
+        public void MakeYourselfAdmin(string username)
+        {
+            ApplicationUser user = this.db.Users.FirstOrDefault(x => x.UserName == username);
+            IdentityRole role = this.db.Roles.FirstOrDefault(x => x.Name == Roles.Administrator.ToString());
+
+            if (user == null || role == null)
+            {
+                return;
+            }
+
+            this.db.UserRoles.Add(new IdentityUserRole<string>
+            {
+                RoleId = role.Id,
+                UserId = user.Id
+            });
+
+            this.db.SaveChanges();
         }
     }
 }

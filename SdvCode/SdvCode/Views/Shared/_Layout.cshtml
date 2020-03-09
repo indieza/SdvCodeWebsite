@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using SdvCode.Areas.Administration.Models.Enums
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -151,7 +153,10 @@
                             </div>
                         </div>
                         <br />
-                        <p><a href="#" class="btn btn-primary solid square">Purchase Now <i class="fa fa-long-arrow-right"></i></a></p>
+                        @if (User.IsInRole(Roles.Administrator.ToString()))
+                        {
+                            <p><a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-danger solid square">Go To Administration Panel <i class="fa fa-long-arrow-right"></i></a></p>
+                        }
                     </div>
                 </div>
             </div>
