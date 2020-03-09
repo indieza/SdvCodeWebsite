@@ -9,7 +9,7 @@
     <!-- Subpage title start -->
     <div class="banner-title-content">
         <div class="text-center">
-            <h2>@UserManager.GetUserName(User) Profile Settings</h2>
+            <h2>@User.Identity.Name Profile Settings</h2>
             <ul class="breadcrumb">
                 <partial name="_ManageNav" />
             </ul>
@@ -17,17 +17,11 @@
     </div>
 </div>
 <div class="container">
-    <main role="main" class="pb-1">
-        <h1>Manage your account</h1>
-
-        <div>
-            <h4>Change your account settings</h4>
-            <hr />
-            <div class="row">
-                @RenderBody()
-            </div>
-        </div>
-    </main>
+    <h1 class="row container">
+        @ViewData["Title"]
+    </h1>
+    <hr />
+    @RenderBody()
 </div>
 
 @section Scripts {

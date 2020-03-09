@@ -3,39 +3,21 @@
 @{
     ViewData["Title"] = "Reset authenticator key";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+    Layout = "/Areas/Identity/Pages/Account/Manage/_Layout.cshtml";
 }
-<div id="banner-area">
-    <img src="~/images/banner/banner2.jpg" alt="" />
-    <div class="parallax-overlay"></div>
-    <!-- Subpage title start -->
-    <div class="banner-title-content">
-        <div class="text-center">
-            <h2>@User.Identity.Name Profile Settings</h2>
-            <ul class="breadcrumb">
-                <partial name="_ManageNav" />
-            </ul>
-        </div>
-    </div>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</strong>
+    </p>
+    <p>
+        This process disables 2FA until you verify your authenticator app.
+        If you do not complete your authenticator app configuration you may lose access to your account.
+    </p>
 </div>
-<div class="container">
-    <h1 class="row container">
-        @ViewData["Title"]
-    </h1>
-    <hr />
-    <partial name="_StatusMessage" model="Model.StatusMessage" />
-    <div class="alert alert-warning" role="alert">
-        <p>
-            <span class="glyphicon glyphicon-warning-sign"></span>
-            <strong>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</strong>
-        </p>
-        <p>
-            This process disables 2FA until you verify your authenticator app.
-            If you do not complete your authenticator app configuration you may lose access to your account.
-        </p>
-    </div>
-    <div>
-        <form id="reset-authenticator-form" method="post" class="form-group">
-            <button id="reset-authenticator-button" class="btn btn-danger" type="submit">Reset authenticator key</button>
-        </form>
-    </div>
+<div>
+    <form id="reset-authenticator-form" method="post" class="form-group">
+        <button id="reset-authenticator-button" class="btn btn-danger" type="submit">Reset authenticator key</button>
+    </form>
 </div>
