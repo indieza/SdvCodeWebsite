@@ -16,26 +16,17 @@ namespace SdvCode.Areas.Administration.Controllers
     [Area("Administration")]
     public class DashboardController : Controller
     {
-        private readonly IDashboardService administrationService;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext db;
+        private readonly IDashboardService dashboardService;
 
-        public DashboardController(IDashboardService administrationService,
-            RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager,
-            ApplicationDbContext db)
+        public DashboardController(IDashboardService dashboardService)
         {
-            this.administrationService = administrationService;
-            this.roleManager = roleManager;
-            this.userManager = userManager;
-            this.db = db;
+            this.dashboardService = dashboardService;
         }
 
         [Authorize]
         public IActionResult Index()
         {
-            DashboardViewModel dashboard = this.administrationService.GetDashboardInformation();
+            DashboardViewModel dashboard = this.dashboardService.GetDashboardInformation();
             DashboardIndexViewModel model = new DashboardIndexViewModel
             {
                 DashboardViewModel = dashboard,
@@ -52,12 +43,7 @@ namespace SdvCode.Areas.Administration.Controllers
 
             if (this.ModelState.IsValid)
             {
-                IdentityRole identityRole = new IdentityRole
-                {
-                    Name = role
-                };
-
-                IdentityResult result = await this.roleManager.CreateAsync(identityRole);
+                IdentityResult result = await this.dashboardService.CreateRole(role);
 
                 if (result.Succeeded)
                 {
@@ -79,37 +65,20 @@ namespace SdvCode.Areas.Administration.Controllers
         [HttpPost, Authorize]
         public async Task<IActionResult> AddUserInRole(DashboardIndexViewModel model)
         {
+            string inputRole = model.AddUserInRole.Role;
+            string inputUsername = model.AddUserInRole.Username;
+
             if (this.ModelState.IsValid)
             {
-                ApplicationUser user = await this.userManager.FindByNameAsync(model.AddUserInRole.Username);
-                IdentityRole role = await this.roleManager.FindByNameAsync(model.AddUserInRole.Role);
+                var isAdded = await this.dashboardService.IsAddedUserInRole(inputRole, inputUsername);
 
-                if (role == null)
+                if (isAdded)
                 {
-                    TempData["Error"] =
-                        $@"{user.UserName.ToUpper()} cannot added to non-existed role {model.AddUserInRole.Role}.
-                                        Please, first add the role, then registered the user to that role";
-
-                    return RedirectToAction("Index", "Dashboard");
-                }
-
-                var isExist = this.db.UserRoles.Any(x => x.UserId == user.Id && x.RoleId == role.Id);
-
-                if (!isExist)
-                {
-                    this.db.UserRoles.Add(new IdentityUserRole<string>
-                    {
-                        RoleId = role.Id,
-                        UserId = user.Id
-                    });
-
-                    await this.db.SaveChangesAsync();
-
-                    TempData["Success"] = $"{user.UserName.ToUpper()} is added in role {role.Name} successfully.";
+                    TempData["Success"] = $"{inputUsername.ToUpper()} is added in role {inputRole} successfully.";
                 }
                 else
                 {
-                    TempData["Error"] = $"{user.UserName.ToUpper()} is already in role {role.Name}.";
+                    TempData["Error"] = $"{inputUsername.ToUpper()} is already in role {inputRole}.";
                 }
             }
             else

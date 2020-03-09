@@ -13,7 +13,7 @@ namespace SdvCode.Areas.Administration.ViewModels
 
         public int TotalBannedUsers { get; set; }
 
-        public int TotalUsersInRole { get; set; }
+        public int TotalUsersInAdminRole { get; set; }
 
         public ICollection<string> Usernames { get; set; } = new HashSet<string>();
     }

@@ -20,7 +20,7 @@
     <div class="container-fluid">
         <div class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            @TempData["Error"]
+            @Html.Encode(TempData["Error"])
         </div>
     </div>
 }
@@ -90,8 +90,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Users In Role</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DashboardViewModel.TotalUsersInRole</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Administrators</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DashboardViewModel.TotalUsersInAdminRole</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user-tag fa-2x text-gray-300"></i>

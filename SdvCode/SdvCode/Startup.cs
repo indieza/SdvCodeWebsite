@@ -42,7 +42,9 @@ namespace SdvCode
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
             // Social Network Authentication
             services.AddAuthentication()

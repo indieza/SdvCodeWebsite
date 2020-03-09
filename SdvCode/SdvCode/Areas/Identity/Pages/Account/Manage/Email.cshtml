@@ -4,37 +4,54 @@
     ViewData["Title"] = "Manage Email";
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
-
-<h4>@ViewData["Title"]</h4>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-<div class="row">
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <!-- Subpage title start -->
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>@User.Identity.Name Profile Settings</h2>
+            <ul class="breadcrumb">
+                <partial name="_ManageNav" />
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1 class="row container">
+        @ViewData["Title"]
+    </h1>
+    <hr />
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
     <div class="col-md-6">
         <form id="email-form" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                @if (Model.IsEmailConfirmed)
-                {
-                    <div class="input-group">
-                        <input asp-for="Email" class="form-control" disabled size="100" />
-                        <div class="input-group-append">
-                            <span class="input-group-text text-success font-weight-bold">✓</span>
+            <div class="row">
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    @if (Model.IsEmailConfirmed)
+                    {
+                        <div class="input-group">
+                            <input asp-for="Email" class="form-control" disabled size="100" />
+                            <div class="input-group-append">
+                                <span class="input-group-text text-success font-weight-bold">✓</span>
+                            </div>
                         </div>
-                    </div>
-                }
-                else
-                {
-                    <input asp-for="Email" class="form-control" disabled />
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-                }
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.NewEmail"></label>
-                <input asp-for="Input.NewEmail" class="form-control" size="100" />
-                <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">Change email</button>
+                    }
+                    else
+                    {
+                        <input asp-for="Email" class="form-control" disabled />
+                        <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewEmail"></label>
+                    <input asp-for="Input.NewEmail" class="form-control" size="100" />
+                    <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">Change email</button>
+                </div>
             </div>
         </form>
     </div>
