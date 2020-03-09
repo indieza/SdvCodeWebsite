@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using SdvCode.Areas.Administration.Models.Enums
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -13,6 +14,12 @@
     <li>
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">Edit Profile</a>
     </li>
+    @if (User.IsInRole(Roles.Administrator.ToString()))
+    {
+        <li>
+            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Administration Panel</a>
+        </li>
+    }
     <li>
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
     </li>

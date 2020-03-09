@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using SdvCode.Areas.Administration.Models.Enums
 @model SdvCode.Models.ApplicationUser
 @inject UserManager<ApplicationUser> UserManager
 @{
@@ -66,6 +67,12 @@
                         {
                             <div style="margin-top: 15px">
                                 <a asp-controller="Profile" asp-action="DeleteActivityHistory" asp-route-username="@User.Identity.Name" class="btn btn-danger btn-block"><i class="fa fa-trash"></i> Delete Activity History</a>
+                            </div>
+                        }
+                        @if (User.Identity.Name == Model.UserName && User.IsInRole(Roles.Administrator.ToString()))
+                        {
+                            <div style="margin-top: 15px">
+                                <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-success btn-block"><i class="fa fa-unlock-alt"></i> Administration Panel</a>
                             </div>
                         }
                     </div>
