@@ -92,6 +92,7 @@ namespace SdvCode
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IHomeService, HomeService>();
+            services.AddTransient<IDbUsageService, DbUsageService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

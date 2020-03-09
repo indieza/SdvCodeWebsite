@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SdvCode.Areas.Administration.ViewModels;
+using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -51,13 +51,13 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <i class="fas fa-database"></i>
+                    <span>DB Usage</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
+                        <h6 class="collapse-header">Custom DB usage:</h6>
+                        <a asp-area="Administration" asp-controller="DbUsage" asp-action="Index" class="collapse-item">Delete users activities</a>
                         <a class="collapse-item" href="cards.html">Cards</a>
                     </div>
                 </div>
@@ -219,6 +219,7 @@
     <script src="~/administration/js/removeUserInRoleRolesDropDown.js"></script>
     <script src="~/administration/js/removeUserInRoleUsersDropDown.js"></script>
     <script src="~/administration/js/addNewRoleDropDown.js"></script>
+    <script src="~/administration/js/clearUserActionsDropDown.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

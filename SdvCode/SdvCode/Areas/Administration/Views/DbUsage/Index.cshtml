@@ -1,0 +1,74 @@
+﻿@using SdvCode.Models.Enums
+@using SdvCode.Areas.Administration.ViewModels.DbUsageViewModels
+@{
+    ViewData["Title"] = "DbUsage";
+}
+@model DeleteActivitiesByNameInputModel
+
+@if (TempData["Success"] != null)
+{
+    <div class="container-fluid">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @TempData["Success"]
+        </div>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="container-fluid">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @Html.Encode(TempData["Error"])
+        </div>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">DB Usage - Delete users activities</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Delete Activities By Name</h1>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-xl-6 col-md-9 mb-4">
+                <div class="card border-left-danger shadow h-100 py-4">
+                    <input asp-for="@Model.ActivityName" class="chosen-value clearUserActionValue" type="text" value="" placeholder="Type to filter" autocomplete="off" required />
+                    <ul class="value-list clearActionsList">
+                        @foreach (var action in @Html.GetEnumSelectList<UserActionsType>())
+                        {
+                            <li id="addActions">@action.Text</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 mb-4">
+                <button asp-action="DeleteActivityByName" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Delete Activities</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Delete All Activities</h1>
+    </div>
+    <form method="post">
+        <button asp-action="DeleteAllActivities" class="btn btn-danger btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+            </span>
+            <span class="text">Delete All Activities</span>
+        </button>
+    </form>
+    <hr />
+</div>

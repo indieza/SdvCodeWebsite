@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using SdvCode.Areas.Administration.Models.Enums;
-using SdvCode.Areas.Administration.ViewModels;
+using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
 using SdvCode.Data;
 using SdvCode.Models;
 using SdvCode.Services;

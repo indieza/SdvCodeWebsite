@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SdvCode.Areas.Administration.ViewModels
+namespace SdvCode.Areas.Administration.ViewModels.DashboardViewModels
 {
     public class DashboardViewModel
     {

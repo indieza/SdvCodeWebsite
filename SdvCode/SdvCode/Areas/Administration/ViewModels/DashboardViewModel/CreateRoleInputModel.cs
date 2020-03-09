@@ -1,17 +1,15 @@
-﻿using System;
+﻿using SdvCode.Areas.Administration.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SdvCode.Areas.Administration.ViewModels
+namespace SdvCode.Areas.Administration.ViewModels.DashboardViewModels
 {
-    public class RemoveUserFromRoleInputModel
+    public class CreateRoleInputModel
     {
         [Required]
         public string Role { get; set; }
-
-        [Required]
-        public string Username { get; set; }
     }
 }

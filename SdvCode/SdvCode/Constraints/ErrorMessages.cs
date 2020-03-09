@@ -14,5 +14,9 @@ namespace SdvCode.Constraints
         public const string UserAlreadyInRole = "{0} is already in role {1}.";
 
         public const string RoleExist = "{0} role already exits.";
+
+        public const string NoActionsByGivenName = "There is no more {0} actions for cleaning.";
+
+        public const string NoActionsForRemoving = "There is no more users actions for removing";
     }
 }
