@@ -38,24 +38,24 @@
                             <div class="col-xs-6">
                                 @if (User.Identity.Name == Model.UserName)
                                 {
-                                    <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-primary btn-info btn-block"><i class="fa fa-edit"></i> Edit Profile</a>
+                                    <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-primary btn-info btn-block"><i class="fas fa-edit"></i> Edit Profile</a>
                                 }
                                 else
                                 {
                                     @if (!Model.IsFollowed)
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.UserName" class="btn btn-success btn-block"><i class="fa fa-plus-circle"></i> Follow</a>
+                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.UserName" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
                                     }
                                     else
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.UserName" class="btn btn-danger btn-block"><i class="fa fa-minus-circle"></i> Unfollow</a>
+                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.UserName" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
                                     }
                                 }
                             </div>
                             <div class="col-xs-6">
                                 @if (User.Identity.Name == Model.UserName)
                                 {
-                                    <a asp-area="" asp-controller="Profile" asp-action="AllUsers" class="btn btn-primary btn-block"><i class="fa fa-users"></i> All Users</a>
+                                    <a asp-area="" asp-controller="Profile" asp-action="AllUsers" class="btn btn-primary btn-block"><i class="fas fa-users"></i> All Users</a>
                                 }
                                 else
                                 {
@@ -66,13 +66,13 @@
                         @if (User.Identity.Name == Model.UserName && Model.UserActions.Count > 0)
                         {
                             <div style="margin-top: 15px">
-                                <a asp-controller="Profile" asp-action="DeleteActivityHistory" asp-route-username="@User.Identity.Name" class="btn btn-danger btn-block"><i class="fa fa-trash"></i> Delete Activity History</a>
+                                <a asp-controller="Profile" asp-action="DeleteActivityHistory" asp-route-username="@User.Identity.Name" class="btn btn-danger btn-block"><i class="fas fa-trash"></i> Delete Activity History</a>
                             </div>
                         }
                         @if (User.Identity.Name == Model.UserName && User.IsInRole(Roles.Administrator.ToString()))
                         {
                             <div style="margin-top: 15px">
-                                <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-success btn-block"><i class="fa fa-unlock-alt"></i> Administration Panel</a>
+                                <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-success btn-block"><i class="fas fa-user-shield"></i> Administration Panel</a>
                             </div>
                         }
                     </div>
@@ -84,20 +84,20 @@
                         <h3>Personal Data</h3>
                         @if (Model.City != null)
                         {
-                            <p><i class="fa fa-building"></i> @Model.City</p>
+                            <p><i class="fas fa-building"></i> @Model.City</p>
                         }
                         @if (Model.Country != null)
                         {
-                            <p><i class="fa fa-flag"></i> @Model.Country</p>
+                            <p><i class="fas fa-flag"></i> @Model.Country</p>
                         }
                         @if (Model.BirthDate != null)
                         {
-                            <p><i class="fa fa-birthday-cake"></i> @Model.BirthDate.ToString("dd-MMMM-yyyy")</p>
+                            <p><i class="fas fa-birthday-cake"></i> @Model.BirthDate.ToString("dd-MMMM-yyyy")</p>
                         }
                         @if (Model.PhoneNumber != null)
                         {
                             <p>
-                                <i class="fa fa-phone"></i> (@Model.CountryCode.ToString().Split("_")[0]) @Model.PhoneNumber
+                                <i class="fas fa-phone"></i> (@Model.CountryCode.ToString().Split("_")[0]) @Model.PhoneNumber
 
                                 @if (Model.PhoneNumberConfirmed == false)
                                 {
@@ -111,27 +111,27 @@
                         <ul class="list-unstyled">
                             @if (Model.GitHubUrl != null)
                             {
-                                <li><a href=@Model.GitHubUrl target="_blank"><i class="fa fa-github"></i> @Model.GitHubUrl.Split("/").Last()</a></li>
+                                <li><a href=@Model.GitHubUrl target="_blank"><i class="fab fa-github"></i> @Model.GitHubUrl.Split("/").Last()</a></li>
                             }
                             @if (Model.StackoverflowUrl != null)
                             {
-                                <li><a href=@Model.StackoverflowUrl target="_blank"><i class="fa fa-stack-overflow"></i> @Model.StackoverflowUrl.Split("/").Last()</a></li>
+                                <li><a href=@Model.StackoverflowUrl target="_blank"><i class="fab fa-stack-overflow"></i> @Model.StackoverflowUrl.Split("/").Last()</a></li>
                             }
                             @if (Model.FacebookUrl != null)
                             {
-                                <li><a href=@Model.FacebookUrl target="_blank"><i class="fa fa-facebook-square"></i> @Model.FacebookUrl.Split("/").Last()</a></li>
+                                <li><a href=@Model.FacebookUrl target="_blank"><i class="fab fa-facebook-square"></i> @Model.FacebookUrl.Split("/").Last()</a></li>
                             }
                             @if (Model.LinkedinUrl != null)
                             {
-                                <li><a href=@Model.LinkedinUrl target="_blank"><i class="fa fa-linkedin"></i> @Model.LinkedinUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
+                                <li><a href=@Model.LinkedinUrl target="_blank"><i class="fab fa-linkedin"></i> @Model.LinkedinUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
                             }
                             @if (Model.TwitterUrl != null)
                             {
-                                <li><a href=@Model.TwitterUrl target="_blank"><i class="fa fa-twitter-square"></i> @Model.TwitterUrl.Split("/").Last()</a></li>
+                                <li><a href=@Model.TwitterUrl target="_blank"><i class="fab fa-twitter-square"></i> @Model.TwitterUrl.Split("/").Last()</a></li>
                             }
                             @if (Model.InstagramUrl != null)
                             {
-                                <li><a href=@Model.InstagramUrl target="_blank"><i class="fa fa-instagram"></i> @Model.InstagramUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
+                                <li><a href=@Model.InstagramUrl target="_blank"><i class="fab fa-instagram"></i> @Model.InstagramUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()</a></li>
                             }
                         </ul>
                     </div>
@@ -163,7 +163,7 @@
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-th"></i>
+                                                    <i class="fas fa-th"></i>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -188,7 +188,7 @@
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-th"></i>
+                                                    <i class="fas fa-th"></i>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -213,7 +213,7 @@
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-th"></i>
+                                                    <i class="fas fa-th"></i>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -238,7 +238,7 @@
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-th"></i>
+                                                    <i class="fas fa-th"></i>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -263,7 +263,7 @@
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-th"></i>
+                                                    <i class="fas fa-th"></i>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -293,7 +293,7 @@
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-th"></i>
+                                                    <i class="fas fa-th"></i>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -323,7 +323,7 @@
                                         {
                                             <div class="btn-group pull-right activity-actions">
                                                 <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-th"></i>
+                                                    <i class="fas fa-th"></i>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -353,17 +353,17 @@
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName">@follower.UserName<br><span class="text-muted username">@follower.FirstName  @follower.LastName</span></a>
                                         @if (User.Identity.Name == follower.UserName)
                                         {
-                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fa fa-check-circle"></i> <span>It's You</span></a>
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
                                         }
                                         else
                                         {
                                             @if (follower.HasFollow)
                                             {
-                                                <a asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-minus-circle"></i> <span>Unfollow</span></a>
+                                                <a asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fas fa-minus-circle"></i> <span>Unfollow</span></a>
                                             }
                                             else
                                             {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus-circle"></i> <span>Follow</span></a>
+                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fas fa-plus-circle"></i> <span>Follow</span></a>
                                             }
                                         }
                                     </div>
@@ -388,17 +388,17 @@
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName">@following.UserName<br><span class="text-muted username">@following.FirstName @following.LastName</span></a>
                                         @if (User.Identity.Name == following.UserName)
                                         {
-                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fa fa-check-circle"></i> <span>It's You</span></a>
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
                                         }
                                         else
                                         {
                                             @if (following.HasFollow)
                                             {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fa fa-minus-circle"></i> <span>Unfollow</span></a>
+                                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fas fa-minus-circle"></i> <span>Unfollow</span></a>
                                             }
                                             else
                                             {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus-circle"></i> <span>Follow</span></a>
+                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fas fa-plus-circle"></i> <span>Follow</span></a>
                                             }
                                         }
                                     </div>
