@@ -145,6 +145,16 @@
                 </div>
             </div>
             <div class="col-md-8">
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="container-fluid" style="margin-top: 10px;">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            @TempData["Success"]
+                        </div>
+                    </div>
+                }
                 <div class="profile-info-right">
                     <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
                         <li class="active"><a href="#activities" data-toggle="tab">ACTIVITIES</a></li>

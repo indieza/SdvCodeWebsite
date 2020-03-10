@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
+using SdvCode.Areas.Administration.Services;
+using SdvCode.Constraints;
 using SdvCode.Models;
 using SdvCode.ViewModels.Security;
 using Twilio.Rest.Verify.V2.Service;
@@ -19,10 +21,14 @@ namespace SdvCode.Areas.Identity.Pages.Account
     {
         private readonly TwilioVerifySettings _settings;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IDashboardService dashboardService;
 
-        public ConfirmPhoneModel(UserManager<ApplicationUser> userManager, IOptions<TwilioVerifySettings> settings)
+        public ConfirmPhoneModel(UserManager<ApplicationUser> userManager,
+            IOptions<TwilioVerifySettings> settings,
+            IDashboardService dashboardService)
         {
             _userManager = userManager;
+            this.dashboardService = dashboardService;
             _settings = settings.Value;
         }
 
@@ -63,6 +69,13 @@ namespace SdvCode.Areas.Identity.Pages.Account
                     if (updateResult.Succeeded)
                     {
                         var user = this._userManager.GetUserAsync(HttpContext.User);
+                        var isAdded = await this.dashboardService.IsAddedUserInRole(GlobalConstants.ContributorRole, user.Result.UserName);
+                        if (isAdded)
+                        {
+                            TempData["Success"] =
+                                $"Successfully confirmed phone number. You are added in {GlobalConstants.ContributorRole} role";
+                        }
+
                         return Redirect($"/Profile/{user.Result.UserName}");
                     }
                     else
