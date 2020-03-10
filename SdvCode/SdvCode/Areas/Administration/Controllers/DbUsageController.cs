@@ -33,18 +33,19 @@ namespace SdvCode.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                string action = model.ActivityName;
+                string activityText = model.ActivityName;
+                string activityName = string.Join("", activityText.Split(" "));
 
-                UserActionsType actionValue = (UserActionsType)Enum.Parse(typeof(UserActionsType), model.ActivityName);
+                UserActionsType actionValue = (UserActionsType)Enum.Parse(typeof(UserActionsType), activityName);
                 bool isRemoved = await this.dbUsageService.RemoveActivitiesByName(actionValue);
 
                 if (isRemoved)
                 {
-                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyRemoveActionByName, action);
+                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyRemoveActionByName, activityText);
                 }
                 else
                 {
-                    TempData["Error"] = string.Format(ErrorMessages.NoActionsByGivenName, action);
+                    TempData["Error"] = string.Format(ErrorMessages.NoActionsByGivenName, activityText);
                 }
             }
 

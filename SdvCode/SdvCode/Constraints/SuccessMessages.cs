@@ -11,7 +11,8 @@ namespace SdvCode.Constraints
 
         public const string SuccessfullyAddedRole = "Success added {0} role.";
 
-        public const string SuccessfullyRemoveActionByName = "Successfully removed all {0} actions";
+        public const string SuccessfullyRemoveActionByName = "Successfully removed all \"{0}\" actions";
+
         public const string SuccessfullyRemoveAllActions = "Successfully removed all users actions ({0} users actions)";
     }
 }
