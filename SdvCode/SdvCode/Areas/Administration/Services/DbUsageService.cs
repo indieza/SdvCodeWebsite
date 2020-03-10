@@ -1,5 +1,8 @@
-﻿using SdvCode.Data;
+﻿using CloudinaryDotNet;
+using SdvCode.Constraints;
+using SdvCode.Data;
 using SdvCode.Models.Enums;
+using SdvCode.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +13,68 @@ namespace SdvCode.Areas.Administration.Services
     public class DbUsageService : IDbUsageService
     {
         private readonly ApplicationDbContext db;
+        private readonly Cloudinary cloudinary;
 
-        public DbUsageService(ApplicationDbContext db)
+        public DbUsageService(ApplicationDbContext db,
+            Cloudinary cloudinary)
         {
             this.db = db;
+            this.cloudinary = cloudinary;
+        }
+
+        public async Task<int> DeleteAllUsersImages()
+        {
+            int count = 0;
+            var users = this.db.Users.Where(x => x.ImageUrl != null || x.CoverImageUrl != null).ToList();
+
+            foreach (var user in users)
+            {
+                if (user.ImageUrl != null)
+                {
+                    user.ImageUrl = null;
+                    ApplicationCloudinary.DeleteImage(this.cloudinary,
+                        string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName));
+                    count++;
+                }
+                if (user.CoverImageUrl != null)
+                {
+                    user.CoverImageUrl = null;
+                    ApplicationCloudinary.DeleteImage(this.cloudinary,
+                        string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName));
+                    count++;
+                }
+            }
+
+            this.db.Users.UpdateRange(users);
+            await this.db.SaveChangesAsync();
+            return count;
+        }
+
+        public async Task<bool> DeleteUserImagesByUsername(string username)
+        {
+            var user = this.db.Users.FirstOrDefault(x => x.UserName == username);
+
+            if (user != null && (user.ImageUrl != null || user.CoverImageUrl != null))
+            {
+                user.ImageUrl = null;
+                ApplicationCloudinary.DeleteImage(this.cloudinary,
+                    string.Format(GlobalConstants.CloudinaryUserProfilePictureName, username));
+
+                user.CoverImageUrl = null;
+                ApplicationCloudinary.DeleteImage(this.cloudinary,
+                    string.Format(GlobalConstants.CloudinaryUserCoverImageName, username));
+
+                this.db.Users.Update(user);
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public ICollection<string> GetAllUsernames()
+        {
+            return this.db.Users.Select(x => x.UserName).ToList();
         }
 
         public async Task<bool> RemoveActivitiesByName(UserActionsType actionValue)

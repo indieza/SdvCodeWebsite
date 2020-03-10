@@ -57,8 +57,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom DB usage:</h6>
-                        <a asp-area="Administration" asp-controller="DbUsage" asp-action="Index" class="collapse-item">Delete users activities</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <a asp-area="Administration" asp-controller="DbUsage" asp-action="DeleteUsersActivities" class="collapse-item">Delete users activities</a>
+                        <a asp-area="Administration" asp-controller="DbUsage" asp-action="DeleteUsersImages" class="collapse-item">Delete users images</a>
                     </div>
                 </div>
             </li>
@@ -152,7 +152,14 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@firstName  @lastName</span>
-                                <img class="img-profile rounded-circle" src=@imageUrl>
+                                @if (imageUrl == null)
+                                {
+                                    <img class="img-profile rounded-circle" src="~/images/NoAvatarProfileImage.png">
+                                }
+                                else
+                                {
+                                    <img class="img-profile rounded-circle" src=@imageUrl>
+                                }
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@username" class="dropdown-item">

@@ -18,5 +18,9 @@ namespace SdvCode.Constraints
         public const string NoActionsByGivenName = "There is no more \"{0}\" actions for cleaning.";
 
         public const string NoActionsForRemoving = "There is no more users actions for removing";
+
+        public const string NoUserImagesByGivenUsername = "{0} has no any images for deleting";
+
+        public const string NoMoreUsersImagesForRemoving = "There is no more users images for removing";
     }
 }

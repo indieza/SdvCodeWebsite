@@ -7,6 +7,7 @@ using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SdvCode.Constraints;
 using SdvCode.Models;
 using SdvCode.Models.Enums;
 using SdvCode.Services;
@@ -197,7 +198,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
             var profileImageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary,
                 Input.ProfilePicture,
-                $"{user.UserName}ProfilePicture");
+                string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName));
 
             if (profileImageUrl != null)
             {
@@ -210,7 +211,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
             var coverImageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary,
                 Input.CoverImage,
-                $"{user.UserName}CoverPicture");
+                string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName));
 
             if (coverImageUrl != null)
             {

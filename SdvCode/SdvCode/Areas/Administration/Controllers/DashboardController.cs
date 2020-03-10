@@ -109,6 +109,10 @@ namespace SdvCode.Areas.Administration.Controllers
                     TempData["Error"] = string.Format(ErrorMessages.UserNotInRol, username.ToUpper(), role);
                 }
             }
+            else
+            {
+                TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
 
             return RedirectToAction("Index", "Dashboard");
         }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SdvCode.Areas.Administration.Services;
-using SdvCode.Areas.Administration.ViewModels.DbUsageViewModels;
+using SdvCode.Areas.Administration.ViewModels.DbUsageViewModels.DeleteActivities;
+using SdvCode.Areas.Administration.ViewModels.DbUsageViewModels.DeleteUsersImages;
 using SdvCode.Constraints;
 using SdvCode.Models.Enums;
 
@@ -23,9 +24,21 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRole)]
-        public IActionResult Index()
+        public IActionResult DeleteUsersActivities()
         {
             return View();
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public IActionResult DeleteUsersImages()
+        {
+            var model = new DeleteUsersImagesViewModel
+            {
+                Usernames = this.dbUsageService.GetAllUsernames(),
+                DeleteUserImages = new DeleteImagesByUsernameInputModel()
+            };
+
+            return View(model);
         }
 
         [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
@@ -48,8 +61,12 @@ namespace SdvCode.Areas.Administration.Controllers
                     TempData["Error"] = string.Format(ErrorMessages.NoActionsByGivenName, activityText);
                 }
             }
+            else
+            {
+                TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
 
-            return RedirectToAction("Index", "DbUsage");
+            return RedirectToAction("DeleteUsersActivities", "DbUsage");
         }
 
         [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
@@ -66,7 +83,49 @@ namespace SdvCode.Areas.Administration.Controllers
                 TempData["Error"] = ErrorMessages.NoActionsForRemoving;
             }
 
-            return RedirectToAction("Index", "DbUsage");
+            return RedirectToAction("DeleteUsersActivities", "DbUsage");
+        }
+
+        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public async Task<IActionResult> DeleteUserImages(DeleteUsersImagesViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string username = model.DeleteUserImages.Username;
+                bool isDeleted = await this.dbUsageService.DeleteUserImagesByUsername(username);
+
+                if (isDeleted)
+                {
+                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyRemoveUserImages, username.ToUpper());
+                }
+                else
+                {
+                    TempData["Error"] = string.Format(ErrorMessages.NoUserImagesByGivenUsername, username.ToUpper());
+                }
+            }
+            else
+            {
+                TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return RedirectToAction("DeleteUsersImages", "DbUsage");
+        }
+
+        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public async Task<IActionResult> DeleteAllusersImages()
+        {
+            int count = await this.dbUsageService.DeleteAllUsersImages();
+
+            if (count > 0)
+            {
+                TempData["Success"] = string.Format(SuccessMessages.SuccessfullyRemoveAllUsersImages, count);
+            }
+            else
+            {
+                TempData["Error"] = ErrorMessages.NoMoreUsersImagesForRemoving;
+            }
+
+            return RedirectToAction("DeleteUsersImages", "DbUsage");
         }
     }
 }

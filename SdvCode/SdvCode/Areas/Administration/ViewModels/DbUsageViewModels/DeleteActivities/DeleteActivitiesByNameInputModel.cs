@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SdvCode.Areas.Administration.ViewModels.DbUsageViewModels
+namespace SdvCode.Areas.Administration.ViewModels.DbUsageViewModels.DeleteActivities
 {
     public class DeleteActivitiesByNameInputModel
     {
