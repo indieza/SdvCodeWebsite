@@ -72,8 +72,8 @@ namespace SdvCode.Areas.Identity.Pages.Account
                         var isAdded = await this.dashboardService.IsAddedUserInRole(GlobalConstants.ContributorRole, user.Result.UserName);
                         if (isAdded)
                         {
-                            TempData["Success"] =
-                                $"Successfully confirmed phone number. You are added in {GlobalConstants.ContributorRole} role";
+                            TempData["Success"] = string.Format(SuccessMessages.SuccessfullyConfirmedPhoneNumber,
+                                GlobalConstants.ContributorRole);
                         }
 
                         return Redirect($"/Profile/{user.Result.UserName}");

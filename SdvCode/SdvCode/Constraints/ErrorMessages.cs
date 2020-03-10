@@ -24,5 +24,9 @@ namespace SdvCode.Constraints
         public const string NoMoreUsersImagesForRemoving = "There is no more users images for removing.";
 
         public const string NoDataForSyncFollowUnfollow = "There is no Follow-Unfollow relations for synchronize.";
+
+        public const string UserAlreadyBlocked = "User {0} is already blocked.";
+
+        public const string UserAlreadyUnblocked = "User {0} is already unblocked.";
     }
 }

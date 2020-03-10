@@ -93,6 +93,7 @@ namespace SdvCode
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IHomeService, HomeService>();
             services.AddTransient<IDbUsageService, DbUsageService>();
+            services.AddTransient<IUsersPenaltiesService, UsersPenaltiesService>();
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(Configuration.GetSection("GoogleReCAPTCHA"));

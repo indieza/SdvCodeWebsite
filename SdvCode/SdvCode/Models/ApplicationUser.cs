@@ -57,6 +57,8 @@ namespace SdvCode.Models
 
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
 
+        public bool IsBlocked { get; set; }
+
         [NotMapped]
         public bool IsFollowed { get; set; }
 
