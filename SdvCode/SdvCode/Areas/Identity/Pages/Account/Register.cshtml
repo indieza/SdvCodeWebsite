@@ -1,4 +1,7 @@
 ﻿@page
+@using Microsoft.Extensions.Options
+@using SdvCode.ViewModels.Security
+@inject IOptions<ReCaptchSettings> GoogleReCaptch
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -102,4 +105,14 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@GoogleReCaptch.Value.SiteKey"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('_reCAPTCHA_site_key_', { action: 'homepage' }).then(function (token) {
+
+            });
+        });
+    </script>
+
 }

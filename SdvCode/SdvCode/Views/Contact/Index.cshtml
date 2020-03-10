@@ -1,7 +1,10 @@
 ﻿@using SdvCode.ViewModels.Contacts
+@using Microsoft.Extensions.Options
+@using SdvCode.ViewModels.Security
 @model ContactInputModel
+@inject IOptions<ReCaptchSettings> GoogleReCaptch
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Contact";
 }
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
@@ -78,3 +81,14 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script src="https://www.google.com/recaptcha/api.js?render=@GoogleReCaptch.Value.SiteKey"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('_reCAPTCHA_site_key_', { action: 'homepage' }).then(function (token) {
+
+            });
+        });
+    </script>
+}
