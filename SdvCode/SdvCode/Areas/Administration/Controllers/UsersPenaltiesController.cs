@@ -87,5 +87,39 @@ namespace SdvCode.Areas.Administration.Controllers
 
             return RedirectToAction("BlockUnblockUser", "UsersPenalties");
         }
+
+        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public async Task<IActionResult> BlockAllUsers()
+        {
+            int count = await this.usersPenaltiesService.BlockAllUsers();
+
+            if (count > 0)
+            {
+                TempData["Success"] = string.Format(SuccessMessages.SuccessfullyBlockedAllUsers, count);
+            }
+            else
+            {
+                TempData["Error"] = string.Format(ErrorMessages.AllUsersAlreadyBlocked);
+            }
+
+            return RedirectToAction("BlockUnblockUser", "UsersPenalties");
+        }
+
+        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public async Task<IActionResult> UnblockAllUsers()
+        {
+            int count = await this.usersPenaltiesService.UnblockAllUsers();
+
+            if (count > 0)
+            {
+                TempData["Success"] = string.Format(SuccessMessages.SuccessfullyUnblockedAllUsers, count);
+            }
+            else
+            {
+                TempData["Error"] = string.Format(ErrorMessages.AllUsersAlreadyUnblocked);
+            }
+
+            return RedirectToAction("BlockUnblockUser", "UsersPenalties");
+        }
     }
 }

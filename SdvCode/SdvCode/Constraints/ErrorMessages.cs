@@ -28,5 +28,9 @@ namespace SdvCode.Constraints
         public const string UserAlreadyBlocked = "User {0} is already blocked.";
 
         public const string UserAlreadyUnblocked = "User {0} is already unblocked.";
+
+        public const string AllUsersAlreadyBlocked = "All users except Administrators are already blocked.";
+
+        public const string AllUsersAlreadyUnblocked = "All users  are already unblocked.";
     }
 }

@@ -85,4 +85,24 @@
         </div>
     </form>
     <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Block/Unblock all users - except administrators</h1>
+    </div>
+    <form method="post">
+        <button asp-area="Administration" asp-controller="UsersPenalties" asp-action="BlockAllUsers" class="btn btn-danger btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+            </span>
+            <span class="text">Block all users</span>
+        </button>
+
+        <button asp-area="Administration" asp-controller="UsersPenalties" asp-action="UnBlockAllUsers" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+            </span>
+            <span class="text">Unblock all users</span>
+        </button>
+    </form>
+    <hr />
 </div>

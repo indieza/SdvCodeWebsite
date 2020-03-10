@@ -24,6 +24,11 @@ namespace SdvCode.Constraints
         public const string SuccessfullyConfirmedPhoneNumber = "Successfully confirmed phone number. You are added in \"{0}\" role";
 
         public const string SuccessfullyBlockedUser = "Successfully blocked user {0}.";
+
         public const string SuccessfullyUnblockedUser = "Successfully unblocked user {0}.";
+
+        public const string SuccessfullyBlockedAllUsers = "Successfully blocked all users - except Administrators ({0} users).";
+
+        public const string SuccessfullyUnblockedAllUsers = "Successfully unblocked all users ({0} users).";
     }
 }
