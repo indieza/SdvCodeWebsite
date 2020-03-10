@@ -16,5 +16,6 @@ namespace SdvCode.Areas.Administration.Services
         Task<bool> IsAddedUserInRole(string inputRole, string inputUsername);
 
         Task<bool> RemoveUserFromRole(string username, string role);
+        Task<bool> SyncFollowUnfollow();
     }
 }

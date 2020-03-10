@@ -116,5 +116,22 @@ namespace SdvCode.Areas.Administration.Controllers
 
             return RedirectToAction("Index", "Dashboard");
         }
+
+        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public async Task<IActionResult> SyncFollowUnfollow()
+        {
+            bool isSync = await this.dashboardService.SyncFollowUnfollow();
+
+            if (isSync)
+            {
+                TempData["Success"] = SuccessMessages.SuccessfullySyncFollowUnfollow;
+            }
+            else
+            {
+                TempData["Error"] = ErrorMessages.NoDataForSyncFollowUnfollow;
+            }
+
+            return RedirectToAction("Index", "Dashboard");
+        }
     }
 }

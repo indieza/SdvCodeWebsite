@@ -114,5 +114,22 @@ namespace SdvCode.Areas.Administration.Services
 
             return false;
         }
+
+        public async Task<bool> SyncFollowUnfollow()
+        {
+            var usersIds = this.db.Users.Select(x => x.Id).ToList();
+            var targetNoneActiveRelations = this.db.FollowUnfollows
+                .Where(x => !usersIds.Contains(x.FollowerId) || !usersIds.Contains(x.PersonId))
+                .ToList();
+
+            if (targetNoneActiveRelations.Count() > 0)
+            {
+                this.db.FollowUnfollows.RemoveRange(targetNoneActiveRelations);
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

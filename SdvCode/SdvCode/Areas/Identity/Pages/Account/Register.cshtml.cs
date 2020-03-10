@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SdvCode.Constraints;
+using SdvCode.Data;
 using SdvCode.Models;
 using SdvCode.ViewModels.Users;
 
@@ -25,17 +27,23 @@ namespace SdvCode.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly ApplicationDbContext db;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.roleManager = roleManager;
+            this.db = db;
         }
 
         [BindProperty]
@@ -74,6 +82,31 @@ namespace SdvCode.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    IdentityRole role = await this.roleManager.FindByNameAsync(GlobalConstants.SubscriberRole);
+
+                    if (role == null)
+                    {
+                        IdentityResult resultRole = await this.CreateRole(GlobalConstants.SubscriberRole);
+
+                        if (resultRole.Succeeded)
+                        {
+                            role = await this.roleManager.FindByNameAsync(GlobalConstants.SubscriberRole);
+                        }
+                    }
+
+                    var isExist = this.db.UserRoles.Any(x => x.UserId == user.Id && x.RoleId == role.Id);
+
+                    if (!isExist)
+                    {
+                        this.db.UserRoles.Add(new IdentityUserRole<string>
+                        {
+                            RoleId = role.Id,
+                            UserId = user.Id
+                        });
+
+                        await this.db.SaveChangesAsync();
+                    }
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
@@ -92,6 +125,17 @@ namespace SdvCode.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        public async Task<IdentityResult> CreateRole(string role)
+        {
+            IdentityRole identityRole = new IdentityRole
+            {
+                Name = role
+            };
+
+            IdentityResult result = await this.roleManager.CreateAsync(identityRole);
+            return result;
         }
     }
 }
