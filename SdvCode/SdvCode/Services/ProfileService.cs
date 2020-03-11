@@ -23,11 +23,11 @@ namespace SdvCode.Services
             this.roleManager = roleManager;
         }
 
-        public void DeleteActivity(string currentUserId)
+        public async void DeleteActivity(string currentUserId)
         {
             var trash = this.db.UserActions.Where(x => x.ApplicationUserId == currentUserId).ToList();
             this.db.UserActions.RemoveRange(trash);
-            this.db.SaveChanges();
+            await this.db.SaveChangesAsync();
         }
 
         public string DeleteActivityById(string currentUserId, int activityId)
@@ -291,7 +291,7 @@ namespace SdvCode.Services
             return false;
         }
 
-        public void MakeYourselfAdmin(string username)
+        public async void MakeYourselfAdmin(string username)
         {
             ApplicationUser user = this.db.Users.FirstOrDefault(x => x.UserName == username);
             IdentityRole role = this.db.Roles.FirstOrDefault(x => x.Name == Roles.Administrator.ToString());
@@ -307,7 +307,7 @@ namespace SdvCode.Services
                 UserId = user.Id
             });
 
-            this.db.SaveChanges();
+            await this.db.SaveChangesAsync();
         }
     }
 }
