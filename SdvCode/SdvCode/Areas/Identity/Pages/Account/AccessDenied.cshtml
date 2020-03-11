@@ -3,8 +3,68 @@
 @{
     ViewData["Title"] = "Access denied";
 }
+<div id="banner-area" style="z-index: 5">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>@ViewData["Title"] Page</h2>
+            <ul class="breadcrumb">
+                <li>
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
+                </li>
+                <partial name="_LoginPartial" />
+            </ul>
+        </div>
+    </div>
+</div>
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+<div class="container">
+    <header>
+        <h1 class="text-danger">@ViewData["Title"]</h1>
+        <p class="text-danger">You do not have access to that page.</p>
+    </header>
+</div>
+<div class="row" style="height: 520px">
+    <div class="wrapper">
+        <div class="candles">
+            <div class="light__wave"></div>
+            <div class="candle1">
+                <div class="candle1__body">
+                    <div class="candle1__eyes">
+                        <span class="candle1__eyes-one"></span>
+                        <span class="candle1__eyes-two"></span>
+                    </div>
+                    <div class="candle1__mouth"></div>
+                </div>
+                <div class="candle1__stick"></div>
+            </div>
+
+            <div class="candle2">
+                <div class="candle2__body">
+                    <div class="candle2__eyes">
+                        <div class="candle2__eyes-one"></div>
+                        <div class="candle2__eyes-two"></div>
+                    </div>
+                </div>
+                <div class="candle2__stick"></div>
+            </div>
+            <div class="candle2__fire"></div>
+            <div class="sparkles-one"></div>
+            <div class="sparkles-two"></div>
+            <div class="candle__smoke-one">
+            </div>
+            <div class="candle__smoke-two">
+            </div>
+        </div>
+        <div class="floor">
+        </div>
+        <h1 style="margin-top: 70px">Forbidden 403</h1>
+    </div>
+</div>
