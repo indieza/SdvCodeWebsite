@@ -3,8 +3,30 @@
 @{
     ViewData["Title"] = "Access denied";
 }
-
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+<div id="banner-area" style="z-index: 5">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>@ViewData["Title"] Page</h2>
+            <ul class="breadcrumb">
+                <li>
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
+                </li>
+                <partial name="_LoginPartial" />
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <header>
+        <h1 class="text-danger">@ViewData["Title"]</h1>
+        <p class="text-danger">You do not have access to that page.</p>
+    </header>
+</div>
