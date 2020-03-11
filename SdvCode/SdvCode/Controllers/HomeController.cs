@@ -29,7 +29,8 @@ namespace SdvCode.Controllers
         {
             HomeViewModel model = new HomeViewModel
             {
-                TotalRegisteredUsers = this.homeService.GetRegisteredUsersCount()
+                TotalRegisteredUsers = this.homeService.GetRegisteredUsersCount(),
+                Administrators = this.homeService.GetAllAdministrators()
             };
 
             foreach (var role in Enum.GetValues(typeof(Roles)).Cast<Roles>().ToArray())

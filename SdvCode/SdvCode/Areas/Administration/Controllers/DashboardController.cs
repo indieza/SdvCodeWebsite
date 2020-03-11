@@ -102,11 +102,12 @@ namespace SdvCode.Areas.Administration.Controllers
 
                 if (isRemoved)
                 {
-                    return this.Redirect($"/Profile/{username}");
+                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyRemoveUserRole, username.ToUpper(), role);
+                    return Redirect($"/Profile/{username}");
                 }
                 else
                 {
-                    TempData["Error"] = string.Format(ErrorMessages.UserNotInRol, username.ToUpper(), role);
+                    TempData["Error"] = string.Format(ErrorMessages.UserNotInRole, username.ToUpper(), role);
                 }
             }
             else

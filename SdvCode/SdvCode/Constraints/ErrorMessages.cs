@@ -7,7 +7,7 @@ namespace SdvCode.Constraints
 {
     public static class ErrorMessages
     {
-        public const string UserNotInRol = "{0} is not in role {1}.";
+        public const string UserNotInRole = "{0} is not in role {1}.";
 
         public const string InvalidInputModel = "Unexpected error :( Maybe invalid Input Model.";
 

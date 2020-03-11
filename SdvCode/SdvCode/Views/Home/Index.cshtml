@@ -465,86 +465,51 @@
         </div>
 
         <div class="row text-center">
-            <div class="col-md-3 col-sm-6">
-                <div class="team wow slideInLeft">
-                    <div class="img-hexagon">
-                        <img src="images/team/team1.jpg" alt="">
-                        <span class="img-top"></span>
-                        <span class="img-bottom"></span>
-                    </div>
-                    <div class="team-content">
-                        <h3>Vosgi Varduhi</h3>
-                        <p>Web Designer</p>
-                        <div class="team-social">
-                            <a class="fb" href="#"><i class="fab fa-facebook"></i></a>
-                            <a class="twt" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="gplus" href="#"><i class="fab fa-google-plus"></i></a>
-                            <a class="linkdin" href="#"><i class="fab fa-linkedin"></i></a>
-                            <a class="dribble" href="#"><i class="fab fa-dribbble"></i></a>
+            @foreach (var admin in Model.Administrators)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="team wow slideInLeft">
+                        <div class="img-hexagon">
+                            @if (admin.ImageUrl == null)
+                            {
+                                <img src="~/images/NoAvatarProfileImage.png" alt="profile">
+                            }
+                            else
+                            {
+                                <img src=@admin.ImageUrl alt="profile">
+                            }
+                            <span class="img-top"></span>
+                            <span class="img-bottom"></span>
+                        </div>
+                        <div class="team-content">
+                            <h3>@admin.FirstName @admin.LastName</h3>
+                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@admin.UserName">@@@admin.UserName</a>
+                            <div class="team-social">
+                                @if (admin.GitHubUrl != null)
+                                {
+                                    <a class="fb" href=@admin.GitHubUrl><i class="fab fa-github"></i></a>
+                                }
+                                @if (admin.StackoverflowUrl != null)
+                                {
+                                    <a class="twt" href=@admin.StackoverflowUrl><i class="fab fa-stack-overflow"></i></a>
+                                }
+                                @if (admin.FacebookUrl != null)
+                                {
+                                    <a class="gplus" href=@admin.FacebookUrl><i class="fab fa-facebook-square"></i></a>
+                                }
+                                @if (admin.TwitterUrl != null)
+                                {
+                                    <a class="linkdin" href=@admin.TwitterUrl><i class="fab fa-twitter-square"></i></a>
+                                }
+                                @if (admin.InstagramUrl != null)
+                                {
+                                    <a class="dribble" href=@admin.InstagramUrl><i class="fab fa-instagram"></i></a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="team wow slideInLeft">
-                    <div class="img-hexagon">
-                        <img src="images/team/team2.jpg" alt="">
-                        <span class="img-top"></span>
-                        <span class="img-bottom"></span>
-                    </div>
-                    <div class="team-content">
-                        <h3>Robert Aleska</h3>
-                        <p>Web Designer</p>
-                        <div class="team-social">
-                            <a class="fb" href="#"><i class="fab fa-facebook"></i></a>
-                            <a class="twt" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="gplus" href="#"><i class="fab fa-google-plus"></i></a>
-                            <a class="linkdin" href="#"><i class="fab fa-linkedin"></i></a>
-                            <a class="dribble" href="#"><i class="fab fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="team wow slideInRight">
-                    <div class="img-hexagon">
-                        <img src="images/team/team3.jpg" alt="">
-                        <span class="img-top"></span>
-                        <span class="img-bottom"></span>
-                    </div>
-                    <div class="team-content">
-                        <h3>Taline Voski</h3>
-                        <p>Web Designer</p>
-                        <div class="team-social">
-                            <a class="fb" href="#"><i class="fab fa-facebook"></i></a>
-                            <a class="twt" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="gplus" href="#"><i class="fab fa-google-plus"></i></a>
-                            <a class="linkdin" href="#"><i class="fab fa-linkedin"></i></a>
-                            <a class="dribble" href="#"><i class="fab fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="team animate wow slideInRight">
-                    <div class="img-hexagon">
-                        <img src="images/team/team4.jpg" alt="">
-                        <span class="img-top"></span>
-                        <span class="img-bottom"></span>
-                    </div>
-                    <div class="team-content">
-                        <h3>Alban Spencer</h3>
-                        <p>Web Designer</p>
-                        <div class="team-social">
-                            <a class="fb" href="#"><i class="fab fa-facebook"></i></a>
-                            <a class="twt" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="gplus" href="#"><i class="fab fa-google-plus"></i></a>
-                            <a class="linkdin" href="#"><i class="fab fa-linkedin"></i></a>
-                            <a class="dribble" href="#"><i class="fab fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
@@ -553,39 +518,32 @@
     <div class="container">
         <div class="row">
             <div id="testimonial-carousel" class="owl-carousel owl-theme text-center testimonial-slide">
-                <div class="item">
-                    <div class="testimonial-thumb">
-                        <img src="images/team/testimonial1.jpg" alt="testimonial">
+                @foreach (var admin in Model.Administrators)
+                {
+                    <div class="item">
+                        <div class="testimonial-thumb">
+                            @if (admin.ImageUrl == null)
+                            {
+                                <img src="~/images/NoAvatarProfileImage.png" alt="profile">
+                            }
+                            else
+                            {
+                                <img src=@admin.ImageUrl alt="profile">
+                            }
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">
+                                @admin.AboutMe
+                            </p>
+                            <h3 class="name">
+                                @admin.FirstName @admin.LastName
+                                <span>
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@admin.UserName">@@@admin.UserName</a>
+                                </span>
+                            </h3>
+                        </div>
                     </div>
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">
-                            Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose. Lorem Ipsum is that it as opposed to using.
-                        </p>
-                        <h3 class="name">Sarah Arevik<span>Chief Executive</span></h3>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonial-thumb">
-                        <img src="images/team/testimonial2.jpg" alt="testimonial">
-                    </div>
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">
-                            Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose. Lorem Ipsum is that it as opposed to using.
-                        </p>
-                        <h3 class="name">Narek Bedros<span>Sr. Manager</span></h3>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonial-thumb">
-                        <img src="images/team/testimonial3.jpg" alt="testimonial">
-                    </div>
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">
-                            Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose. Lorem Ipsum is that it as opposed to using.
-                        </p>
-                        <h3 class="name">Taline Lucine<span>Sales Manager</span></h3>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
