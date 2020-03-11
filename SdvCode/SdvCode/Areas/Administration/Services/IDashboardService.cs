@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SdvCode.Areas.Administration.Services
+﻿namespace SdvCode.Areas.Administration.Services
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
+
     public interface IDashboardService
     {
         DashboardViewModel GetDashboardInformation();
@@ -16,6 +13,7 @@ namespace SdvCode.Areas.Administration.Services
         Task<bool> IsAddedUserInRole(string inputRole, string inputUsername);
 
         Task<bool> RemoveUserFromRole(string username, string role);
+
         Task<bool> SyncFollowUnfollow();
     }
 }

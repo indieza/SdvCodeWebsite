@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SdvCode.Constraints;
-using SdvCode.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-
-namespace SdvCode.Areas.Administration.Services
+﻿namespace SdvCode.Areas.Administration.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using SdvCode.Constraints;
+    using SdvCode.Data;
+
     public class UsersPenaltiesService : IUsersPenaltiesService
     {
         private readonly ApplicationDbContext db;

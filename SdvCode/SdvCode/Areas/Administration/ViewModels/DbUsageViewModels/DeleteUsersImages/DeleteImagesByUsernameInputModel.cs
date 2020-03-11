@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SdvCode.Areas.Administration.ViewModels.DbUsageViewModels.DeleteUsersImages
+﻿namespace SdvCode.Areas.Administration.ViewModels.DbUsageViewModels.DeleteUsersImages
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class DeleteImagesByUsernameInputModel
     {
         [Required]

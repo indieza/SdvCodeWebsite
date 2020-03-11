@@ -1,4 +1,4 @@
-//THREEJS RELATED VARIABLES 
+//THREEJS RELATED VARIABLES
 
 var scene,
     camera,
@@ -270,7 +270,6 @@ Lion = function () {
         shading: THREE.FlatShading
     });
 
-
     var bodyGeom = new THREE.CylinderGeometry(30, 80, 140, 4);
     var maneGeom = new THREE.BoxGeometry(40, 40, 15);
     var faceGeom = new THREE.BoxGeometry(80, 80, 80);
@@ -356,7 +355,6 @@ Lion = function () {
             var angleOffsetY, angleOffsetX;
             var angleAmpY, angleAmpX;
             var xInit, yInit;
-
 
             if ((j == 0 && k == 0) || (j == 0 && k == 3) || (j == 3 && k == 0) || (j == 3 && k == 3)) {
                 amp = -10 - Math.floor(Math.random() * 5);
@@ -487,7 +485,6 @@ Lion = function () {
     this.lips.position.z = 165;
     this.lips.position.y = -45;
 
-
     // ear
     this.rightEar = new THREE.Mesh(earGeom, this.yellowMat);
     this.rightEar.position.x = -50;
@@ -533,7 +530,6 @@ Lion = function () {
     this.head.add(this.mustache5);
     this.head.add(this.mustache6);
 
-
     this.head.position.y = 60;
 
     this.threegroup.add(this.body);
@@ -554,7 +550,6 @@ Lion = function () {
 }
 
 Lion.prototype.updateBody = function (speed) {
-
     this.head.rotation.y += (this.tHeagRotY - this.head.rotation.y) / speed;
     this.head.rotation.x += (this.tHeadRotX - this.head.rotation.x) / speed;
     this.head.position.x += (this.tHeadPosX - this.head.position.x) / speed;
@@ -594,7 +589,6 @@ Lion.prototype.look = function (xTarget, yTarget) {
     this.tHeadPosY = rule3(yTarget, -140, 260, 20, 100);
     this.tHeadPosZ = 0;
 
-
     this.tEyeScale = 1;
     this.tIrisYScale = 1;
     this.tIrisZScale = 1;
@@ -614,7 +608,6 @@ Lion.prototype.look = function (xTarget, yTarget) {
     this.tRightKneeRotZ = rule3(xTarget, -200, 200, .3 - Math.PI / 8, .3 + Math.PI / 8);
     this.tLeftKneeRotZ = rule3(xTarget, -200, 200, -.3 - Math.PI / 8, -.3 + Math.PI / 8)
 
-
     this.updateBody(10);
 
     this.mane.rotation.y = 0;
@@ -630,7 +623,6 @@ Lion.prototype.look = function (xTarget, yTarget) {
         var m = this.mustaches[i];
         m.rotation.y = 0;
     }
-
 
     for (var i = 0; i < this.bodyVertices.length - 1; i++) {
         var tvInit = this.bodyInitPositions[i];
@@ -688,7 +680,6 @@ Lion.prototype.cool = function (xTarget, yTarget) {
     this.leftEar.rotation.x = Math.cos(this.windTime) * Math.PI / 16 * dt;
     this.rightEar.rotation.x = -Math.cos(this.windTime) * Math.PI / 16 * dt;
 
-
     for (var i = 0; i < this.mustaches.length; i++) {
         var m = this.mustaches[i];
         var amp = (i < 3) ? -Math.PI / 8 : Math.PI / 8;
@@ -723,14 +714,12 @@ function render() {
     renderer.render(scene, camera);
 }
 
-
 init();
 createLights();
 createFloor();
 createLion();
 createFan();
 loop();
-
 
 function clamp(v, min, max) {
     return Math.min(Math.max(v, min), max);
@@ -743,5 +732,4 @@ function rule3(v, vmin, vmax, tmin, tmax) {
     var dt = tmax - tmin;
     var tv = tmin + (pc * dt);
     return tv;
-
 }

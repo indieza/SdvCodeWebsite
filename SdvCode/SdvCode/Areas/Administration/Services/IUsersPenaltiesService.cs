@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SdvCode.Areas.Administration.Services
+﻿namespace SdvCode.Areas.Administration.Services
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IUsersPenaltiesService
     {
         ICollection<string> GetAllBlockedUsers();
@@ -16,6 +14,7 @@ namespace SdvCode.Areas.Administration.Services
         Task<bool> UnblockUser(string username);
 
         Task<int> BlockAllUsers();
+
         Task<int> UnblockAllUsers();
     }
 }

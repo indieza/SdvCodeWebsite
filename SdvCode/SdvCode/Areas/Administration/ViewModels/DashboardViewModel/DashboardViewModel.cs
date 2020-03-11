@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SdvCode.Areas.Administration.ViewModels.DashboardViewModels
+﻿namespace SdvCode.Areas.Administration.ViewModels.DashboardViewModels
 {
+    using System.Collections.Generic;
+
     public class DashboardViewModel
     {
         public int TotalUsersCount { get; set; }

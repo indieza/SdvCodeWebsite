@@ -1,12 +1,7 @@
-﻿using SdvCode.Areas.Administration.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SdvCode.Areas.Administration.ViewModels.DashboardViewModels
+﻿namespace SdvCode.Areas.Administration.ViewModels.DashboardViewModels
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class CreateRoleInputModel
     {
         [Required]

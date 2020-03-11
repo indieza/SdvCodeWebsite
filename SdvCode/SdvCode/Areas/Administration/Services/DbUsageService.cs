@@ -3,7 +3,6 @@ using SdvCode.Constraints;
 using SdvCode.Data;
 using SdvCode.Models.Enums;
 using SdvCode.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,14 +31,17 @@ namespace SdvCode.Areas.Administration.Services
                 if (user.ImageUrl != null)
                 {
                     user.ImageUrl = null;
-                    ApplicationCloudinary.DeleteImage(this.cloudinary,
+                    ApplicationCloudinary.DeleteImage(
+                        this.cloudinary,
                         string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName));
                     count++;
                 }
+
                 if (user.CoverImageUrl != null)
                 {
                     user.CoverImageUrl = null;
-                    ApplicationCloudinary.DeleteImage(this.cloudinary,
+                    ApplicationCloudinary.DeleteImage(
+                        this.cloudinary,
                         string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName));
                     count++;
                 }
@@ -57,11 +59,13 @@ namespace SdvCode.Areas.Administration.Services
             if (user != null && (user.ImageUrl != null || user.CoverImageUrl != null))
             {
                 user.ImageUrl = null;
-                ApplicationCloudinary.DeleteImage(this.cloudinary,
+                ApplicationCloudinary.DeleteImage(
+                    this.cloudinary,
                     string.Format(GlobalConstants.CloudinaryUserProfilePictureName, username));
 
                 user.CoverImageUrl = null;
-                ApplicationCloudinary.DeleteImage(this.cloudinary,
+                ApplicationCloudinary.DeleteImage(
+                    this.cloudinary,
                     string.Format(GlobalConstants.CloudinaryUserCoverImageName, username));
 
                 this.db.Users.Update(user);

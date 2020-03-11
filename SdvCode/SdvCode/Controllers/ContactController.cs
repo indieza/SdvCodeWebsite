@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using SdvCode.Services;
-using SdvCode.ViewModels.Contacts;
-
-namespace SdvCode.Controllers
+﻿namespace SdvCode.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Services;
+    using SdvCode.ViewModels.Contacts;
+
     public class ContactController : Controller
     {
         private readonly IContactsService contactsService;
@@ -29,14 +25,14 @@ namespace SdvCode.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(ContactInputModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.View();
             }
 
             this.contactsService.SendEmail(model);
-            TempData["Success"] = $"Your message has been sent. Be patient you will receive a reply within 1 day.";
-            return RedirectToPage("/");
+            this.TempData["Success"] = $"Your message has been sent. Be patient you will receive a reply within 1 day.";
+            return this.RedirectToPage("/");
         }
     }
 }

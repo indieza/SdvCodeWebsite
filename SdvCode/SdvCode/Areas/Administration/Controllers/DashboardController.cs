@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SdvCode.Areas.Administration.Models.Enums;
 using SdvCode.Areas.Administration.Services;
 using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
 using SdvCode.Constraints;
-using SdvCode.Data;
-using SdvCode.Models;
-using SdvCode.Services;
+using System.Threading.Tasks;
 
 namespace SdvCode.Areas.Administration.Controllers
 {
@@ -32,7 +25,7 @@ namespace SdvCode.Areas.Administration.Controllers
             DashboardIndexViewModel model = new DashboardIndexViewModel
             {
                 DashboardViewModel = dashboard,
-                CreateRole = new CreateRoleInputModel()
+                CreateRole = new CreateRoleInputModel(),
             };
 
             return View(model);
@@ -49,22 +42,23 @@ namespace SdvCode.Areas.Administration.Controllers
 
                 if (result.Succeeded)
                 {
-                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedRole, role);
+                    this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedRole, role);
                 }
                 else
                 {
-                    TempData["Error"] = string.Format(ErrorMessages.RoleExist, role);
+                    this.TempData["Error"] = string.Format(ErrorMessages.RoleExist, role);
                 }
             }
             else
             {
-                TempData["Error"] = ErrorMessages.InvalidInputModel;
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return RedirectToAction("Index", "Dashboard");
+            return this.RedirectToAction("Index", "Dashboard");
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> AddUserInRole(DashboardIndexViewModel model)
         {
             string inputRole = model.AddUserInRole.Role;
@@ -76,25 +70,26 @@ namespace SdvCode.Areas.Administration.Controllers
 
                 if (isAdded)
                 {
-                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedUserInRole, inputUsername.ToUpper(), inputRole);
+                    this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedUserInRole, inputUsername.ToUpper(), inputRole);
                 }
                 else
                 {
-                    TempData["Error"] = string.Format(ErrorMessages.UserAlreadyInRole, inputUsername.ToUpper(), inputRole);
+                    this.TempData["Error"] = string.Format(ErrorMessages.UserAlreadyInRole, inputUsername.ToUpper(), inputRole);
                 }
             }
             else
             {
-                TempData["Error"] = ErrorMessages.InvalidInputModel;
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return RedirectToAction("Index", "Dashboard");
+            return this.RedirectToAction("Index", "Dashboard");
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> RemoveUserFromRole(DashboardIndexViewModel model)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 var username = model.RemoveUserFromRole.Username;
                 var role = model.RemoveUserFromRole.Role;
@@ -102,37 +97,38 @@ namespace SdvCode.Areas.Administration.Controllers
 
                 if (isRemoved)
                 {
-                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyRemoveUserRole, username.ToUpper(), role);
-                    return Redirect($"/Profile/{username}");
+                    this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyRemoveUserRole, username.ToUpper(), role);
+                    return this.Redirect($"/Profile/{username}");
                 }
                 else
                 {
-                    TempData["Error"] = string.Format(ErrorMessages.UserNotInRole, username.ToUpper(), role);
+                    this.TempData["Error"] = string.Format(ErrorMessages.UserNotInRole, username.ToUpper(), role);
                 }
             }
             else
             {
-                TempData["Error"] = ErrorMessages.InvalidInputModel;
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return RedirectToAction("Index", "Dashboard");
+            return this.RedirectToAction("Index", "Dashboard");
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> SyncFollowUnfollow()
         {
             bool isSync = await this.dashboardService.SyncFollowUnfollow();
 
             if (isSync)
             {
-                TempData["Success"] = SuccessMessages.SuccessfullySyncFollowUnfollow;
+                this.TempData["Success"] = SuccessMessages.SuccessfullySyncFollowUnfollow;
             }
             else
             {
-                TempData["Error"] = ErrorMessages.NoDataForSyncFollowUnfollow;
+                this.TempData["Error"] = ErrorMessages.NoDataForSyncFollowUnfollow;
             }
 
-            return RedirectToAction("Index", "Dashboard");
+            return this.RedirectToAction("Index", "Dashboard");
         }
     }
 }

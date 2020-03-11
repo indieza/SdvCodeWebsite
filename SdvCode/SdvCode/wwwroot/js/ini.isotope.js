@@ -1,8 +1,6 @@
-jQuery(function($){
-
+jQuery(function ($) {
 	//region Isotope
-	if($.fn.isotope) {
-
+	if ($.fn.isotope) {
 		var $w = $(window);
 
 		$w.load(function () {
@@ -14,7 +12,6 @@ jQuery(function($){
 					mode = $el.data('isotopeMode') || 'fitRows',
 					tmt;
 
-
 				$el.isotope({
 					itemSelector: '.isotope-item',
 					layoutMode: mode,
@@ -24,10 +21,9 @@ jQuery(function($){
 					}
 				});
 
-
-				$w.resize(function(){
+				$w.resize(function () {
 					clearTimeout(tmt);
-					tmt = setTimeout(function(){
+					tmt = setTimeout(function () {
 						$el.isotope('layout');
 					}, 150);
 				});
@@ -37,7 +33,7 @@ jQuery(function($){
 				if ($menu.length) {
 					$menu.find('a').click(function (e) {
 						var $link = $(this);
-						if(!$link.hasClass('active')){
+						if (!$link.hasClass('active')) {
 							var selector = $link.attr('data-filter');
 							$link.parents('ul').eq(0).find('.active').removeClass('active');
 							$link.addClass('active');
@@ -48,12 +44,8 @@ jQuery(function($){
 				}
 
 				$w.resize();
-
 			});
-
 		});
-
 	}
 	//endregion
-
 });

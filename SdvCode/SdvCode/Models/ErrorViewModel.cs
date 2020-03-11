@@ -1,5 +1,3 @@
-using System;
-
 namespace SdvCode.Models
 {
     public class ErrorViewModel

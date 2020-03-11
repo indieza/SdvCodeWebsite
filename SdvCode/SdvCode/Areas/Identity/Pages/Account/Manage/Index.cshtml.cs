@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using CloudinaryDotNet;
+﻿using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,6 +7,8 @@ using SdvCode.Models;
 using SdvCode.Models.Enums;
 using SdvCode.Services;
 using SdvCode.ViewModels.Users;
+using System;
+using System.Threading.Tasks;
 
 namespace SdvCode.Areas.Identity.Pages.Account.Manage
 {

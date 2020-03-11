@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using SdvCode.Models;
 using SdvCode.SecurityModels;
+using System;
+using System.Threading.Tasks;
 using Twilio.Rest.Verify.V2.Service;
 
 namespace SdvCode.Areas.Identity.Pages.Account

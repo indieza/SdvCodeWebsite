@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SdvCode.Areas.Administration.Models.Enums;
-using SdvCode.Areas.Administration.Services;
-using SdvCode.Areas.Administration.ViewModels.UsersPenalties;
-using SdvCode.Constraints;
-using SdvCode.ViewModels.Users;
-
-namespace SdvCode.Areas.Administration.Controllers
+﻿namespace SdvCode.Areas.Administration.Controllers
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Administration.ViewModels.UsersPenalties;
+    using SdvCode.Constraints;
+
     [Area(GlobalConstants.AdministrationArea)]
     public class UsersPenaltiesController : Controller
     {
@@ -30,96 +25,99 @@ namespace SdvCode.Areas.Administration.Controllers
                 UsersPenaltiesViewModel = new UsersPenaltiesViewModel
                 {
                     BlockedUsernames = this.usersPenaltiesService.GetAllBlockedUsers(),
-                    NotBlockedUsernames = this.usersPenaltiesService.GetAllNotBlockedUsers()
+                    NotBlockedUsernames = this.usersPenaltiesService.GetAllNotBlockedUsers(),
                 },
-                UsersPenaltiesInputModel = new UsersPenaltiesInputModel()
+                UsersPenaltiesInputModel = new UsersPenaltiesInputModel(),
             };
 
-            return View(model);
+            return this.View(model);
         }
 
         [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> BlockUser(UsersPenaltiesIndexModel model)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 string username = model.UsersPenaltiesInputModel.BlockedUsername;
                 bool isBlocked = await this.usersPenaltiesService.BlockUser(username);
 
                 if (isBlocked)
                 {
-                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyBlockedUser, username.ToUpper());
+                    this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyBlockedUser, username.ToUpper());
                 }
                 else
                 {
-                    TempData["Error"] = string.Format(ErrorMessages.UserAlreadyBlocked, username.ToUpper());
+                    this.TempData["Error"] = string.Format(ErrorMessages.UserAlreadyBlocked, username.ToUpper());
                 }
             }
             else
             {
-                TempData["Error"] = ErrorMessages.InvalidInputModel;
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return RedirectToAction("BlockUnblockUser", "UsersPenalties");
+            return this.RedirectToAction("BlockUnblockUser", "UsersPenalties");
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> UnblockUser(UsersPenaltiesIndexModel model)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 string username = model.UsersPenaltiesInputModel.UnblockedUsername;
                 bool isUnblocked = await this.usersPenaltiesService.UnblockUser(username);
 
                 if (isUnblocked)
                 {
-                    TempData["Success"] = string.Format(SuccessMessages.SuccessfullyUnblockedUser, username.ToUpper());
+                    this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyUnblockedUser, username.ToUpper());
                 }
                 else
                 {
-                    TempData["Error"] = string.Format(ErrorMessages.UserAlreadyUnblocked, username.ToUpper());
+                    this.TempData["Error"] = string.Format(ErrorMessages.UserAlreadyUnblocked, username.ToUpper());
                 }
             }
             else
             {
-                TempData["Error"] = ErrorMessages.InvalidInputModel;
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return RedirectToAction("BlockUnblockUser", "UsersPenalties");
+            return this.RedirectToAction("BlockUnblockUser", "UsersPenalties");
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> BlockAllUsers()
         {
             int count = await this.usersPenaltiesService.BlockAllUsers();
 
             if (count > 0)
             {
-                TempData["Success"] = string.Format(SuccessMessages.SuccessfullyBlockedAllUsers, count);
+                this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyBlockedAllUsers, count);
             }
             else
             {
-                TempData["Error"] = string.Format(ErrorMessages.AllUsersAlreadyBlocked);
+                this.TempData["Error"] = string.Format(ErrorMessages.AllUsersAlreadyBlocked);
             }
 
             return RedirectToAction("BlockUnblockUser", "UsersPenalties");
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> UnblockAllUsers()
         {
             int count = await this.usersPenaltiesService.UnblockAllUsers();
 
             if (count > 0)
             {
-                TempData["Success"] = string.Format(SuccessMessages.SuccessfullyUnblockedAllUsers, count);
+                this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyUnblockedAllUsers, count);
             }
             else
             {
-                TempData["Error"] = string.Format(ErrorMessages.AllUsersAlreadyUnblocked);
+                this.TempData["Error"] = string.Format(ErrorMessages.AllUsersAlreadyUnblocked);
             }
 
-            return RedirectToAction("BlockUnblockUser", "UsersPenalties");
+            return this.RedirectToAction("BlockUnblockUser", "UsersPenalties");
         }
     }
 }

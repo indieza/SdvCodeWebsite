@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using SdvCode.Areas.Administration.Models.Enums;
-using SdvCode.Models;
-using SdvCode.Services;
-using SdvCode.ViewModels.Home;
-
-namespace SdvCode.Controllers
+﻿namespace SdvCode.Controllers
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Models;
+    using SdvCode.Services;
+    using SdvCode.ViewModels.Home;
+
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
         private readonly IHomeService homeService;
 
-        public HomeController(ILogger<HomeController> logger,
+        public HomeController(
+            ILogger<HomeController> logger,
             IHomeService homeService)
         {
-            _logger = logger;
+            this.logger = logger;
             this.homeService = homeService;
         }
 
@@ -30,7 +30,7 @@ namespace SdvCode.Controllers
             HomeViewModel model = new HomeViewModel
             {
                 TotalRegisteredUsers = this.homeService.GetRegisteredUsersCount(),
-                Administrators = this.homeService.GetAllAdministrators()
+                Administrators = this.homeService.GetAllAdministrators(),
             };
 
             foreach (var role in Enum.GetValues(typeof(Roles)).Cast<Roles>().ToArray())
@@ -38,13 +38,13 @@ namespace SdvCode.Controllers
                 IdentityResult result = await this.homeService.CreateRole(role.ToString());
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
     }
 }

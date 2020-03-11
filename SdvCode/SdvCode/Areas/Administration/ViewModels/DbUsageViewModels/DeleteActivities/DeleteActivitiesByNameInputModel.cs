@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SdvCode.Areas.Administration.ViewModels.DbUsageViewModels.DeleteActivities
+﻿namespace SdvCode.Areas.Administration.ViewModels.DbUsageViewModels.DeleteActivities
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class DeleteActivitiesByNameInputModel
     {
         [Required]

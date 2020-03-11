@@ -1,35 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
-using SdvCode.Data;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using SdvCode.Services;
-using SdvCode.Models;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using CloudinaryDotNet;
-using Twilio;
-using SdvCode.SecurityModels;
-using Microsoft.AspNetCore.Mvc.Razor;
-using SdvCode.Areas.Administration.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-
 namespace SdvCode
 {
+    using System;
+    using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using SdvCode.Areas.Administration.Services;
+    using SdvCode.Data;
+    using SdvCode.Models;
+    using SdvCode.SecurityModels;
+    using SdvCode.Services;
+    using Twilio;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -40,7 +32,7 @@ namespace SdvCode
             // Initialize ApplicationUser and DdContext
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    this.Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
@@ -52,7 +44,6 @@ namespace SdvCode
             {
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.Cookie.HttpOnly = true;
-                //options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
                 options.LoginPath = "/Identity/Account/Login";
                 options.SlidingExpiration = true;
             });
@@ -67,33 +58,34 @@ namespace SdvCode
             services.AddAuthentication()
                 .AddFacebook(facebookOptions =>
                 {
-                    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                    facebookOptions.AppId = this.Configuration["Authentication:Facebook:AppId"];
+                    facebookOptions.AppSecret = this.Configuration["Authentication:Facebook:AppSecret"];
                 })
                 .AddGoogle(googleOptions =>
                 {
-                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                    googleOptions.ClientId = this.Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = this.Configuration["Authentication:Google:ClientSecret"];
                 })
                 .AddTwitter(twitterOptions =>
                 {
-                    twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ApiKey"];
-                    twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ApiSecretKey"];
+                    twitterOptions.ConsumerKey = this.Configuration["Authentication:Twitter:ApiKey"];
+                    twitterOptions.ConsumerSecret = this.Configuration["Authentication:Twitter:ApiSecretKey"];
                     twitterOptions.RetrieveUserDetails = true;
                 });
 
             // Cloudinary Authentication
-            var cloudinaryAccount = new CloudinaryDotNet.Account(Configuration["Cloudinary:CloudName"],
-                Configuration["Cloudinary:ApiKey"],
-                Configuration["Cloudinary:ApiSecret"]);
+            var cloudinaryAccount = new CloudinaryDotNet.Account(
+                this.Configuration["Cloudinary:CloudName"],
+                this.Configuration["Cloudinary:ApiKey"],
+                this.Configuration["Cloudinary:ApiSecret"]);
             var cloudinary = new Cloudinary(cloudinaryAccount);
             services.AddSingleton(cloudinary);
 
             // Twilio Authentication
-            var accountSid = Configuration["Twilio:AccountSID"];
-            var authToken = Configuration["Twilio:AuthToken"];
+            var accountSid = this.Configuration["Twilio:AccountSID"];
+            var authToken = this.Configuration["Twilio:AuthToken"];
             TwilioClient.Init(accountSid, authToken);
-            services.Configure<TwilioVerifySettings>(Configuration.GetSection("Twilio"));
+            services.Configure<TwilioVerifySettings>(this.Configuration.GetSection("Twilio"));
 
             // Register Services
             services.AddScoped<IContactsService, ContactsService>();
@@ -105,7 +97,7 @@ namespace SdvCode
             services.AddTransient<IUsersPenaltiesService, UsersPenaltiesService>();
 
             // Configure ReCaptch Settings
-            services.Configure<ReCaptchSettings>(Configuration.GetSection("GoogleReCAPTCHA"));
+            services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -122,9 +114,11 @@ namespace SdvCode
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseStatusCodePagesWithRedirects("/Error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();

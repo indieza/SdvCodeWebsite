@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SdvCode.Areas.Administration.ViewModels.UsersPenalties
+﻿namespace SdvCode.Areas.Administration.ViewModels.UsersPenalties
 {
     public class UsersPenaltiesInputModel
     {

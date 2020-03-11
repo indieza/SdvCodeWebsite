@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +7,9 @@ using SdvCode.Areas.Administration.Services;
 using SdvCode.Constraints;
 using SdvCode.Models;
 using SdvCode.SecurityModels;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Twilio.Rest.Verify.V2.Service;
 
 namespace SdvCode.Areas.Identity.Pages.Account

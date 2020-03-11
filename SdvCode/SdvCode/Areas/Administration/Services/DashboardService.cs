@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using SdvCode.Areas.Administration.Models.Enums;
-using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
-using SdvCode.Data;
-using SdvCode.Models;
-using SdvCode.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SdvCode.Areas.Administration.Services
+﻿namespace SdvCode.Areas.Administration.Services
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
+    using SdvCode.Data;
+    using SdvCode.Models;
+
     public class DashboardService : IDashboardService
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -44,7 +40,7 @@ namespace SdvCode.Areas.Administration.Services
                 TotalBannedUsers = 10,
                 TotalBlogPosts = 12,
                 TotalUsersInAdminRole = adminsCount,
-                Usernames = usernames
+                Usernames = usernames,
             };
         }
 
@@ -52,7 +48,7 @@ namespace SdvCode.Areas.Administration.Services
         {
             IdentityRole identityRole = new IdentityRole
             {
-                Name = role
+                Name = role,
             };
 
             IdentityResult result = await this.roleManager.CreateAsync(identityRole);
@@ -85,7 +81,7 @@ namespace SdvCode.Areas.Administration.Services
                 this.db.UserRoles.Add(new IdentityUserRole<string>
                 {
                     RoleId = role.Id,
-                    UserId = user.Id
+                    UserId = user.Id,
                 });
 
                 await this.db.SaveChangesAsync();
