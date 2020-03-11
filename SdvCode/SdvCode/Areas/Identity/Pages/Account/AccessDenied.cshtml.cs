@@ -10,8 +10,6 @@ namespace SdvCode.Areas.Identity.Pages.Account
     {
         public void OnGet()
         {
-
         }
     }
 }
-
