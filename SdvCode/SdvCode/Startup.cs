@@ -17,7 +17,7 @@ using SdvCode.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using CloudinaryDotNet;
 using Twilio;
-using SdvCode.ViewModels.Security;
+using SdvCode.SecurityModels;
 using Microsoft.AspNetCore.Mvc.Razor;
 using SdvCode.Areas.Administration.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;

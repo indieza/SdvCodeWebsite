@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using SdvCode.Models;
-using SdvCode.ViewModels.Security;
+using SdvCode.SecurityModels;
 using Twilio.Rest.Verify.V2.Service;
 
 namespace SdvCode.Areas.Identity.Pages.Account

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 using SdvCode.Areas.Administration.Services;
 using SdvCode.Constraints;
 using SdvCode.Models;
-using SdvCode.ViewModels.Security;
+using SdvCode.SecurityModels;
 using Twilio.Rest.Verify.V2.Service;
 
 namespace SdvCode.Areas.Identity.Pages.Account
