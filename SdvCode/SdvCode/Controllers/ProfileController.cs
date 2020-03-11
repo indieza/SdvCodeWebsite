@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SdvCode.Constraints;
 using SdvCode.Data;
 using SdvCode.Models;
 using SdvCode.Services;
@@ -46,6 +47,7 @@ namespace SdvCode.Controllers
         {
             var currentUserId = this.userManager.GetUserId(HttpContext.User);
             ApplicationUser currentUser = this.profileService.FollowUser(username, currentUserId);
+            TempData["Success"] = string.Format(SuccessMessages.SuccessfullyFollowedUser, username.ToUpper());
 
             return this.Redirect($"/Profile/{currentUser.UserName}");
         }
@@ -55,6 +57,7 @@ namespace SdvCode.Controllers
         {
             var currentUserId = this.userManager.GetUserId(HttpContext.User);
             ApplicationUser currentUser = this.profileService.UnfollowUser(username, currentUserId);
+            TempData["Success"] = string.Format(SuccessMessages.SuccessfullyUnfollowedUser, username.ToUpper());
 
             return this.Redirect($"/Profile/{currentUser.UserName}");
         }
@@ -72,6 +75,7 @@ namespace SdvCode.Controllers
         {
             var currentUserId = this.userManager.GetUserId(HttpContext.User);
             this.profileService.DeleteActivity(currentUserId);
+            TempData["Success"] = SuccessMessages.SuccessfullyDeleteAllActivity;
 
             return this.Redirect($"/Profile/{username}");
         }
@@ -80,7 +84,8 @@ namespace SdvCode.Controllers
         public IActionResult DeleteActivityById(string username, int activityId)
         {
             var currentUserId = this.userManager.GetUserId(HttpContext.User);
-            this.profileService.DeleteActivityById(currentUserId, activityId);
+            string activityName = this.profileService.DeleteActivityById(currentUserId, activityId);
+            TempData["Success"] = string.Format(SuccessMessages.SuccessfullyDeletedActivityById, activityName);
 
             return this.Redirect($"/Profile/{username}");
         }

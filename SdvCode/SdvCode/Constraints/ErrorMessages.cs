@@ -25,7 +25,7 @@ namespace SdvCode.Constraints
 
         public const string NoDataForSyncFollowUnfollow = "There is no Follow-Unfollow relations for synchronize.";
 
-        public const string UserAlreadyBlocked = "User {0} is already blocked.";
+        public const string UserAlreadyBlocked = "User {0} is already blocked or he is \"Administrator\". Administrators could not be blocked!!!";
 
         public const string UserAlreadyUnblocked = "User {0} is already unblocked.";
 

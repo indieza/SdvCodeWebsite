@@ -27,10 +27,18 @@ namespace SdvCode.Constraints
 
         public const string SuccessfullyUnblockedUser = "Successfully unblocked user {0}.";
 
-        public const string SuccessfullyBlockedAllUsers = "Successfully blocked all users - except Administrators ({0} users).";
+        public const string SuccessfullyBlockedAllUsers = "Successfully blocked all users ({0} users) - except Administrators.";
 
         public const string SuccessfullyUnblockedAllUsers = "Successfully unblocked all users ({0} users).";
 
         public const string SuccessfullyRemoveUserRole = "User {0} was successfully removed from \"{1}\" role.";
+
+        public const string SuccessfullyFollowedUser = "You successfully follow {0}.";
+
+        public const string SuccessfullyUnfollowedUser = "You successfully unfollow {0}.";
+
+        public const string SuccessfullyDeleteAllActivity = "You successfully delete all of your activity.";
+
+        public const string SuccessfullyDeletedActivityById = "You successfully delete your single \"{0}\" activity.";
     }
 }

@@ -30,11 +30,13 @@ namespace SdvCode.Services
             this.db.SaveChanges();
         }
 
-        public void DeleteActivityById(string currentUserId, int activityId)
+        public string DeleteActivityById(string currentUserId, int activityId)
         {
             var trash = this.db.UserActions.FirstOrDefault(x => x.ApplicationUserId == currentUserId && x.Id == activityId);
+            var activityName = trash.Action.ToString();
             this.db.UserActions.Remove(trash);
             this.db.SaveChanges();
+            return activityName;
         }
 
         public ApplicationUser ExtractUserInfo(string username, string currentUserId)

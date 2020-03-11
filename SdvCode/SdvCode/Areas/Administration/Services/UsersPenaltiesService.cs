@@ -24,6 +24,12 @@ namespace SdvCode.Areas.Administration.Services
         public async Task<bool> BlockUser(string username)
         {
             var user = this.db.Users.FirstOrDefault(x => x.UserName == username);
+            var adminRoleId = this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole).Result.Id;
+
+            if (this.db.UserRoles.Any(x => x.RoleId == adminRoleId && x.UserId == user.Id))
+            {
+                return false;
+            }
 
             if (user != null && user.IsBlocked == false)
             {
