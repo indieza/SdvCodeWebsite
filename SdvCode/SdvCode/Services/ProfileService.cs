@@ -5,6 +5,7 @@ namespace SdvCode.Services
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
@@ -32,12 +33,12 @@ namespace SdvCode.Services
             await this.db.SaveChangesAsync();
         }
 
-        public string DeleteActivityById(string currentUserId, int activityId)
+        public async Task<string> DeleteActivityById(string currentUserId, int activityId)
         {
             var trash = this.db.UserActions.FirstOrDefault(x => x.ApplicationUserId == currentUserId && x.Id == activityId);
             var activityName = trash.Action.ToString();
             this.db.UserActions.Remove(trash);
-            this.db.SaveChanges();
+            await this.db.SaveChangesAsync();
             return activityName;
         }
 
@@ -93,7 +94,7 @@ namespace SdvCode.Services
             return user;
         }
 
-        public ApplicationUser FollowUser(string username, string currentUserId)
+        public async Task<ApplicationUser> FollowUser(string username, string currentUserId)
         {
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             var currentUser = this.db.Users.FirstOrDefault(u => u.Id == currentUserId);
@@ -112,7 +113,7 @@ namespace SdvCode.Services
                 this.db.FollowUnfollows.FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
             }
 
-            this.db.SaveChanges();
+            await this.db.SaveChangesAsync();
 
             var targetFollowerEntity = this.db.UserActions.FirstOrDefault(x =>
             x.Action == UserActionsType.Follow &&
@@ -133,13 +134,13 @@ namespace SdvCode.Services
                     ApplicationUserId = currentUser.Id,
                 });
 
-                this.db.SaveChanges();
+                await this.db.SaveChangesAsync();
             }
             else
             {
                 targetFollowerEntity.ActionDate = DateTime.UtcNow;
                 this.db.UserActions.Update(targetFollowerEntity);
-                this.db.SaveChanges();
+                await this.db.SaveChangesAsync();
             }
 
             var targetPersonEntity = this.db.UserActions.FirstOrDefault(x => x.Action == UserActionsType.Followed &&
@@ -160,13 +161,13 @@ namespace SdvCode.Services
                     ApplicationUserId = user.Id,
                 });
 
-                this.db.SaveChanges();
+                await this.db.SaveChangesAsync();
             }
             else
             {
                 targetPersonEntity.ActionDate = DateTime.UtcNow;
                 this.db.UserActions.Update(targetPersonEntity);
-                this.db.SaveChanges();
+                await this.db.SaveChangesAsync();
             }
 
             return currentUser;
@@ -207,7 +208,7 @@ namespace SdvCode.Services
             return users;
         }
 
-        public ApplicationUser UnfollowUser(string username, string currentUserId)
+        public async Task<ApplicationUser> UnfollowUser(string username, string currentUserId)
         {
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             var currentUser = this.db.Users.FirstOrDefault(u => u.Id == currentUserId);
@@ -218,7 +219,7 @@ namespace SdvCode.Services
                     .FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true)
                     .IsFollowed = false;
 
-                this.db.SaveChanges();
+                await this.db.SaveChangesAsync();
 
                 var targetUnfollowerEntity = this.db.UserActions.FirstOrDefault(x =>
                 x.Action == UserActionsType.Unfollow &&
@@ -239,13 +240,13 @@ namespace SdvCode.Services
                         ApplicationUserId = currentUser.Id,
                     });
 
-                    this.db.SaveChanges();
+                    await this.db.SaveChangesAsync();
                 }
                 else
                 {
                     targetUnfollowerEntity.ActionDate = DateTime.UtcNow;
                     this.db.UserActions.Update(targetUnfollowerEntity);
-                    this.db.SaveChanges();
+                    await this.db.SaveChangesAsync();
                 }
 
                 var targetPersonEntity = this.db.UserActions.FirstOrDefault(x =>
@@ -267,22 +268,22 @@ namespace SdvCode.Services
                         ApplicationUserId = user.Id,
                     });
 
-                    this.db.SaveChanges();
+                    await this.db.SaveChangesAsync();
                 }
                 else
                 {
                     targetPersonEntity.ActionDate = DateTime.UtcNow;
                     this.db.UserActions.Update(targetPersonEntity);
-                    this.db.SaveChanges();
+                    await this.db.SaveChangesAsync();
                 }
             }
 
             return currentUser;
         }
 
-        public bool HasAdmin()
+        public async Task<bool> HasAdmin()
         {
-            var role = this.roleManager.FindByNameAsync(Roles.Administrator.ToString()).Result;
+            var role = await this.roleManager.FindByNameAsync(Roles.Administrator.ToString());
 
             if (role != null)
             {
@@ -293,7 +294,7 @@ namespace SdvCode.Services
             return false;
         }
 
-        public async void MakeYourselfAdmin(string username)
+        public void MakeYourselfAdmin(string username)
         {
             ApplicationUser user = this.db.Users.FirstOrDefault(x => x.UserName == username);
             IdentityRole role = this.db.Roles.FirstOrDefault(x => x.Name == Roles.Administrator.ToString());
@@ -309,7 +310,7 @@ namespace SdvCode.Services
                 UserId = user.Id,
             });
 
-            await this.db.SaveChangesAsync();
+            this.db.SaveChanges();
         }
     }
 }
