@@ -26,11 +26,11 @@ namespace SdvCode.Services
             this.roleManager = roleManager;
         }
 
-        public async void DeleteActivity(string currentUserId)
+        public void DeleteActivity(string currentUserId)
         {
             var trash = this.db.UserActions.Where(x => x.ApplicationUserId == currentUserId).ToList();
             this.db.UserActions.RemoveRange(trash);
-            await this.db.SaveChangesAsync();
+            this.db.SaveChanges();
         }
 
         public async Task<string> DeleteActivityById(string currentUserId, int activityId)

@@ -27,8 +27,8 @@ namespace SdvCode.Controllers
             this.profileService = profileService;
         }
 
-        [Route("/Profile/{username}")]
-        public async Task<IActionResult> Index(string username)
+        [Route("Profile/{username}/{page?}")]
+        public async Task<IActionResult> Index(string username, int? page)
         {
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
             ApplicationUser user = this.profileService.ExtractUserInfo(username, currentUserId);
@@ -39,6 +39,9 @@ namespace SdvCode.Controllers
                 ApplicationUser = user,
                 HasAdmin = hasAdmin,
             };
+
+            var pageNumber = page ?? 1;
+            this.ViewBag.UsersActions = user.UserActions.ToPagedList(pageNumber, GlobalConstants.UsersActivitiesCountOnPage);
 
             return this.View(model);
         }
@@ -63,7 +66,7 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{currentUser.UserName}");
         }
 
-        [Route("/Profile/AllUsers")]
+        [Route("/Profile/AllUsers/{page?}")]
         public IActionResult AllUsers(int? page)
         {
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);

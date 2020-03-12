@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using SdvCode.Areas.Administration.Models.Enums
 @using SdvCode.ViewModels.Profiles
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList
 @model ProfileViewModel
 @inject UserManager<ApplicationUser> UserManager
 @{
@@ -164,16 +167,16 @@
                     <div class="tab-content">
                         <!-- activities -->
                         <div class="tab-pane fade in active" id="activities">
-                            @foreach (var action in Model.ApplicationUser.UserActions)
+                            @foreach (var action in ViewBag.UsersActions)
                             {
                                 if (action.Action.ToString() == "Follow")
                                 {
                                     <div class="media activity-item">
-                                        <a href=/Profile/@action.PersonUsername class="pull-left">
+                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> started following <a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername"><b>@action.FollowerUsername</b></a> started following <a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.ApplicationUser.UserName)
@@ -194,11 +197,11 @@
                                 @if (action.Action.ToString() == "Followed")
                                 {
                                     <div class="media activity-item">
-                                        <a href=/Profile/@action.FollowerUsername class="pull-left">
+                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
                                             <img src=@action.FollowerProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> was followed by <a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> was followed by <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername"><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.ApplicationUser.UserName)
@@ -219,11 +222,11 @@
                                 if (action.Action.ToString() == "Unfollow")
                                 {
                                     <div class="media activity-item">
-                                        <a href=/Profile/@action.PersonUsername class="pull-left">
+                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> unfollow <a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername"><b>@action.FollowerUsername</b></a> unfollow <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.ApplicationUser.UserName)
@@ -244,11 +247,11 @@
                                 @if (action.Action.ToString() == "Unfollowed")
                                 {
                                     <div class="media activity-item">
-                                        <a href=/Profile/@action.FollowerUsername class="pull-left">
+                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
                                             <img src=@action.FollowerProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> was unfollowed by <a href=/Profile/@action.FollowerUsername><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> was unfollowed by <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername"><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.ApplicationUser.UserName)
@@ -269,11 +272,11 @@
                                 if (action.Action.ToString() == "EditPersonalData")
                                 {
                                     <div class="media activity-item">
-                                        <a href=/Profile/@action.PersonUsername class="pull-left">
+                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> update his/her personal information <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> update his/her personal information <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                         </div>
                                         @if (User.Identity.Name == Model.ApplicationUser.UserName)
@@ -294,14 +297,14 @@
                                 if (action.Action.ToString() == "ChangeCoverImage")
                                 {
                                     <div class="media activity-item">
-                                        <a href="#" class="pull-left">
+                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> has changed his/her cover picture <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> has changed his/her cover picture <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                             <div class="activity-attachment">
-                                                <a href=/Profile/@action.PersonUsername class="thumbnail">
+                                                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="thumbnail">
                                                     <img src=@action.CoverImageUrl alt="Uploaded photo">
                                                 </a>
                                             </div>
@@ -324,14 +327,14 @@
                                 if (action.Action.ToString() == "ChangeProfilePicture")
                                 {
                                     <div class="media activity-item">
-                                        <a href="#" class="pull-left">
+                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
                                             <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
                                         </a>
                                         <div class="media-body">
-                                            <p class="activity-title"><a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> has changed his/her profile picture <small class="text-muted"></small></p>
+                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> has changed his/her profile picture <small class="text-muted"></small></p>
                                             <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                                             <div class="activity-attachment">
-                                                <a href=/Profile/@action.PersonUsername class="thumbnail">
+                                                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="thumbnail">
                                                     <img src=@action.ProfileImageUrl alt="Uploaded photo">
                                                 </a>
                                             </div>
@@ -351,6 +354,12 @@
                                     </div>
                                 }
                             }
+                            <div class="row" style="text-align: center">
+                                @Html.PagedListPager((IPagedList)ViewBag.UsersActions,
+                                        page => Url.Action("Index", "Profile",
+                                new { username = Model.ApplicationUser.UserName, page = page }),
+                                PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+                            </div>
                         </div>
                         <!-- end activities -->
                         <!-- followers -->
