@@ -30,16 +30,16 @@ namespace SdvCode.Controllers
 
         public async Task<IActionResult> Index()
         {
+            foreach (var role in Enum.GetValues(typeof(Roles)).Cast<Roles>().ToArray())
+            {
+                IdentityResult result = await this.homeService.CreateRole(role.ToString());
+            }
+
             HomeViewModel model = new HomeViewModel
             {
                 TotalRegisteredUsers = this.homeService.GetRegisteredUsersCount(),
                 Administrators = this.homeService.GetAllAdministrators(),
             };
-
-            foreach (var role in Enum.GetValues(typeof(Roles)).Cast<Roles>().ToArray())
-            {
-                IdentityResult result = await this.homeService.CreateRole(role.ToString());
-            }
 
             return this.View(model);
         }

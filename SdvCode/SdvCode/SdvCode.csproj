@@ -22,6 +22,22 @@
     <Compile Remove="Data\Migrations\20200302162650_test.Designer.cs" />
     <Compile Remove="Data\Migrations\20200302225848_test.cs" />
     <Compile Remove="Data\Migrations\20200302225848_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200302230648_InitialCreate.cs" />
+    <Compile Remove="Data\Migrations\20200302230648_InitialCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200303224014_addCoverImageColum.cs" />
+    <Compile Remove="Data\Migrations\20200303224014_addCoverImageColum.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200304144156_updateUserPersonalData.cs" />
+    <Compile Remove="Data\Migrations\20200304144156_updateUserPersonalData.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200304151545_removeGooglePlusProperty.cs" />
+    <Compile Remove="Data\Migrations\20200304151545_removeGooglePlusProperty.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200304182301_addCountryCodeSection.cs" />
+    <Compile Remove="Data\Migrations\20200304182301_addCountryCodeSection.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200305115716_createUserActions.cs" />
+    <Compile Remove="Data\Migrations\20200305115716_createUserActions.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200305182742_extendAboutMeLength.cs" />
+    <Compile Remove="Data\Migrations\20200305182742_extendAboutMeLength.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200310215635_createBlockedColl.cs" />
+    <Compile Remove="Data\Migrations\20200310215635_createBlockedColl.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,7 +9,9 @@ namespace SdvCode.Controllers
     using SdvCode.Constraints;
     using SdvCode.Models;
     using SdvCode.Services;
+    using SdvCode.ViewModels.Paging;
     using SdvCode.ViewModels.Profiles;
+    using SdvCode.ViewModels.Users;
 
     [Authorize]
     public class ProfileController : Controller
@@ -60,11 +62,13 @@ namespace SdvCode.Controllers
         }
 
         [Route("/Profile/AllUsers")]
-        public IActionResult AllUsers()
+        public IActionResult AllUsers(int? pageNumber)
         {
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
             var allUsers = this.profileService.GetAllUsers(currentUserId);
-            return this.View(allUsers);
+
+            int pageSize = GlobalConstants.UsersCountOnPage;
+            return this.View(PaginatedList<UserCardViewModel>.Create(allUsers.UsersCards, pageNumber ?? 1, pageSize));
         }
 
         [Route("/DeleteActivityHistory/{username}")]

@@ -1,5 +1,6 @@
 ﻿@using SdvCode.ViewModels.Users
-@model AllUsersViewModel
+@using SdvCode.ViewModels.Paging
+@model PaginatedList<UserCardViewModel>
 
 @{
     ViewData["Title"] = "All Users";
@@ -20,7 +21,7 @@
 </div>
 <div class="container">
     <div class="row">
-        @foreach (var user in Model.UsersCards)
+        @foreach (var user in Model)
         {
             <div class="col-md-4">
                 <div class="uicard">
@@ -93,4 +94,24 @@
             </div>
         }
     </div>
+</div>
+<div class="container">
+    <div class="row" style="text-align: center">
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+
+        <a asp-action="AllUsers"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           class="btn btn-primary solid @prevDisabled">
+            <i style="color: black" class="fas fa-chevron-left"></i>
+        </a>
+        <a asp-action="AllUsers"
+           asp-route-pageNumber="@(Model.PageIndex + 1)"
+           class="btn btn-primary solid @nextDisabled">
+            <i style="color: black" class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+    <br />
 </div>

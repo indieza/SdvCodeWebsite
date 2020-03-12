@@ -20,5 +20,7 @@ namespace SdvCode.Constraints
         public const string CloudinaryUserProfilePictureName = "{0}ProfilePicture";
 
         public const string CloudinaryUserCoverImageName = "{0}CoverPicture";
+
+        public const int UsersCountOnPage = 3;
     }
 }

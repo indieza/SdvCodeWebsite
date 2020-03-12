@@ -46,11 +46,21 @@ namespace SdvCode.Data.Migrations
                     Country = table.Column<string>(maxLength: 20, nullable: true),
                     City = table.Column<string>(maxLength: 20, nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: false),
+                    RegisteredOn = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<int>(nullable: false),
-                    AboutMe = table.Column<string>(maxLength: 250, nullable: true),
+                    CountryCode = table.Column<int>(nullable: false),
+                    AboutMe = table.Column<string>(maxLength: 600, nullable: true),
                     FirstName = table.Column<string>(maxLength: 15, nullable: true),
                     LastName = table.Column<string>(maxLength: 15, nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
+                    CoverImageUrl = table.Column<string>(nullable: true),
+                    GitHubUrl = table.Column<string>(nullable: true),
+                    StackoverflowUrl = table.Column<string>(nullable: true),
+                    FacebookUrl = table.Column<string>(nullable: true),
+                    LinkedinUrl = table.Column<string>(nullable: true),
+                    TwitterUrl = table.Column<string>(nullable: true),
+                    InstagramUrl = table.Column<string>(nullable: true),
+                    IsBlocked = table.Column<bool>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -116,8 +126,8 @@ namespace SdvCode.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false),
                 },
@@ -161,8 +171,8 @@ namespace SdvCode.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
@@ -171,6 +181,33 @@ namespace SdvCode.Data.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserActions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(nullable: false),
+                    Action = table.Column<int>(nullable: false),
+                    ActionDate = table.Column<DateTime>(nullable: false),
+                    PersonUsername = table.Column<string>(nullable: true),
+                    PersonProfileImageUrl = table.Column<string>(nullable: true),
+                    FollowerUsername = table.Column<string>(nullable: true),
+                    FollowerProfileImageUrl = table.Column<string>(nullable: true),
+                    ProfileImageUrl = table.Column<string>(nullable: true),
+                    CoverImageUrl = table.Column<string>(nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserActions_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -214,6 +251,11 @@ namespace SdvCode.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserActions_ApplicationUserId",
+                table: "UserActions",
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -235,6 +277,9 @@ namespace SdvCode.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "FollowUnfollows");
+
+            migrationBuilder.DropTable(
+                name: "UserActions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
