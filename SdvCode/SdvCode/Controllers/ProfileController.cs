@@ -42,6 +42,8 @@ namespace SdvCode.Controllers
 
             var pageNumber = page ?? 1;
             this.ViewBag.UsersActions = user.UserActions.ToPagedList(pageNumber, GlobalConstants.UsersActivitiesCountOnPage);
+            this.ViewBag.UsersFollowers = user.Followers.ToPagedList(pageNumber, GlobalConstants.FollowersCountOnPage);
+            this.ViewBag.UsersFollowing = user.Followings.ToPagedList(pageNumber, GlobalConstants.FollowingCountOnPage);
 
             return this.View(model);
         }

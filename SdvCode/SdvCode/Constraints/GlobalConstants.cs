@@ -24,5 +24,9 @@ namespace SdvCode.Constraints
         public const int UsersCountOnPage = 3;
 
         public const int UsersActivitiesCountOnPage = 5;
+
+        public const int FollowersCountOnPage = 1;
+
+        public const int FollowingCountOnPage = 1;
     }
 }

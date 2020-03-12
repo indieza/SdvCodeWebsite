@@ -159,7 +159,7 @@
                     </div>
                 }
                 <div class="profile-info-right">
-                    <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
+                    <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom" id="myTab">
                         <li class="active"><a href="#activities" data-toggle="tab">ACTIVITIES</a></li>
                         <li><a href="#followers" data-toggle="tab">FOLLOWERS</a></li>
                         <li><a href="#following" data-toggle="tab">FOLLOWING</a></li>
@@ -364,7 +364,7 @@
                         <!-- end activities -->
                         <!-- followers -->
                         <div class="tab-pane fade" id="followers">
-                            @foreach (var follower in Model.ApplicationUser.Followers)
+                            @foreach (var follower in ViewBag.UsersFollowers)
                             {
                                 <div class="media user-follower">
                                     @if (follower.ImageUrl == null)
@@ -395,11 +395,17 @@
                                     </div>
                                 </div>
                             }
+                            <div class="row" style="text-align: center">
+                                @Html.PagedListPager((IPagedList)ViewBag.UsersFollowers,
+                                        page => Url.Action("Index", "Profile",
+                                new { username = Model.ApplicationUser.UserName, page = page }),
+                                PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+                            </div>
                         </div>
                         <!-- end followers -->
                         <!-- following -->
                         <div class="tab-pane fade" id="following">
-                            @foreach (var following in Model.ApplicationUser.Followings)
+                            @foreach (var following in ViewBag.UsersFollowing)
                             {
                                 <div class="media user-following">
                                     @if (following.ImageUrl == null)
@@ -430,6 +436,12 @@
                                     </div>
                                 </div>
                             }
+                            <div class="row" style="text-align: center">
+                                @Html.PagedListPager((IPagedList)ViewBag.UsersFollowing,
+                                        page => Url.Action("Index", "Profile",
+                                new { username = Model.ApplicationUser.UserName, page = page }),
+                                PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+                            </div>
                         </div>
                         <!-- end following -->
                     </div>
