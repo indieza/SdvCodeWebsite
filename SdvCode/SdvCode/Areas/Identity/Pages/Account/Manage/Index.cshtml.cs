@@ -1,21 +1,24 @@
-﻿using CloudinaryDotNet;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using SdvCode.Constraints;
-using SdvCode.Models;
-using SdvCode.Models.Enums;
-using SdvCode.Services;
-using SdvCode.ViewModels.Users;
-using System;
-using System.Threading.Tasks;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Areas.Identity.Pages.Account.Manage
 {
+    using System;
+    using System.Threading.Tasks;
+    using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using SdvCode.Constraints;
+    using SdvCode.Models;
+    using SdvCode.Models.Enums;
+    using SdvCode.Services;
+    using SdvCode.ViewModels.Users;
+
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly Cloudinary cloudinary;
 
         public IndexModel(
@@ -23,8 +26,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             SignInManager<ApplicationUser> signInManager,
             Cloudinary cloudinary)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
             this.cloudinary = cloudinary;
         }
 
@@ -36,46 +39,16 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public ManageAccountInputModel Input { get; set; }
 
-        private async Task LoadAsync(ApplicationUser user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
-
-            Input = new ManageAccountInputModel
-            {
-                PhoneNumber = phoneNumber,
-                City = user.City,
-                Country = user.Country,
-                BirthDate = user.BirthDate,
-                Gender = user.Gender,
-                AboutMe = user.AboutMe,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                GitHubUrl = user.GitHubUrl,
-                StackoverflowUrl = user.StackoverflowUrl,
-                FacebookUrl = user.FacebookUrl,
-                InstagramUrl = user.InstagramUrl,
-                TwitterUrl = user.TwitterUrl,
-                LinkedinUrl = user.LinkedinUrl,
-                RegisteredOn = user.RegisteredOn,
-                CountryCode = user.CountryCode,
-                Email = user.Email
-                // TODO Image URL
-            };
-        }
-
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
             }
 
-            await LoadAsync(user);
-            return Page();
+            await this.LoadAsync(user);
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -84,117 +57,118 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             bool isUpdateProfileImage = false;
             bool isUpdateCoverImage = false;
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                await LoadAsync(user);
-                return Page();
+                await this.LoadAsync(user);
+                return this.Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber && Input.PhoneNumber != null)
+            var phoneNumber = await this.userManager.GetPhoneNumberAsync(user);
+            if (this.Input.PhoneNumber != phoneNumber && this.Input.PhoneNumber != null)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                var setPhoneResult = await this.userManager.SetPhoneNumberAsync(user, this.Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    var userId = await _userManager.GetUserIdAsync(user);
+                    var userId = await this.userManager.GetUserIdAsync(user);
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
 
                 isUpdatePersonalData = true;
             }
 
-            if (Input.City != user.City)
+            if (this.Input.City != user.City)
             {
-                user.City = Input.City;
+                user.City = this.Input.City;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.Country != user.Country)
+            if (this.Input.Country != user.Country)
             {
-                user.Country = Input.Country;
+                user.Country = this.Input.Country;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.BirthDate != user.BirthDate)
+            if (this.Input.BirthDate != user.BirthDate)
             {
-                user.BirthDate = Input.BirthDate;
+                user.BirthDate = this.Input.BirthDate;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.Gender != user.Gender)
+            if (this.Input.Gender != user.Gender)
             {
-                user.Gender = Input.Gender;
+                user.Gender = this.Input.Gender;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.AboutMe != user.AboutMe)
+            if (this.Input.AboutMe != user.AboutMe)
             {
-                user.AboutMe = Input.AboutMe;
+                user.AboutMe = this.Input.AboutMe;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.FirstName != user.FirstName)
+            if (this.Input.FirstName != user.FirstName)
             {
-                user.FirstName = Input.FirstName;
+                user.FirstName = this.Input.FirstName;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.LastName != user.LastName)
+            if (this.Input.LastName != user.LastName)
             {
-                user.LastName = Input.LastName;
+                user.LastName = this.Input.LastName;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.GitHubUrl != user.GitHubUrl)
+            if (this.Input.GitHubUrl != user.GitHubUrl)
             {
-                user.GitHubUrl = Input.GitHubUrl;
+                user.GitHubUrl = this.Input.GitHubUrl;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.StackoverflowUrl != user.StackoverflowUrl)
+            if (this.Input.StackoverflowUrl != user.StackoverflowUrl)
             {
-                user.StackoverflowUrl = Input.StackoverflowUrl;
+                user.StackoverflowUrl = this.Input.StackoverflowUrl;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.FacebookUrl != user.FacebookUrl)
+            if (this.Input.FacebookUrl != user.FacebookUrl)
             {
-                user.FacebookUrl = Input.FacebookUrl;
+                user.FacebookUrl = this.Input.FacebookUrl;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.LinkedinUrl != user.LinkedinUrl)
+            if (this.Input.LinkedinUrl != user.LinkedinUrl)
             {
-                user.LinkedinUrl = Input.LinkedinUrl;
+                user.LinkedinUrl = this.Input.LinkedinUrl;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.TwitterUrl != user.TwitterUrl)
+            if (this.Input.TwitterUrl != user.TwitterUrl)
             {
-                user.TwitterUrl = Input.TwitterUrl;
+                user.TwitterUrl = this.Input.TwitterUrl;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.InstagramUrl != user.InstagramUrl)
+            if (this.Input.InstagramUrl != user.InstagramUrl)
             {
-                user.InstagramUrl = Input.InstagramUrl;
+                user.InstagramUrl = this.Input.InstagramUrl;
                 isUpdatePersonalData = true;
             }
 
-            if (Input.CountryCode != user.CountryCode)
+            if (this.Input.CountryCode != user.CountryCode)
             {
-                user.CountryCode = Input.CountryCode;
+                user.CountryCode = this.Input.CountryCode;
                 isUpdatePersonalData = true;
             }
 
-            var profileImageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary,
-                Input.ProfilePicture,
+            var profileImageUrl = await ApplicationCloudinary.UploadImage(
+                this.cloudinary,
+                this.Input.ProfilePicture,
                 string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName));
 
             if (profileImageUrl != null)
@@ -206,8 +180,9 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var coverImageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary,
-                Input.CoverImage,
+            var coverImageUrl = await ApplicationCloudinary.UploadImage(
+                this.cloudinary,
+                this.Input.CoverImage,
                 string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName));
 
             if (coverImageUrl != null)
@@ -227,7 +202,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     ActionDate = DateTime.UtcNow,
                     PersonUsername = user.UserName,
                     PersonProfileImageUrl = user.ImageUrl,
-                    ApplicationUserId = user.Id
+                    ApplicationUserId = user.Id,
                 });
             }
 
@@ -240,7 +215,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     PersonUsername = user.UserName,
                     PersonProfileImageUrl = user.ImageUrl,
                     CoverImageUrl = coverImageUrl,
-                    ApplicationUserId = user.Id
+                    ApplicationUserId = user.Id,
                 });
             }
 
@@ -253,14 +228,45 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     PersonUsername = user.UserName,
                     PersonProfileImageUrl = user.ImageUrl,
                     ProfileImageUrl = profileImageUrl,
-                    ApplicationUserId = user.Id
+                    ApplicationUserId = user.Id,
                 });
             }
 
-            await _userManager.UpdateAsync(user);
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
-            return RedirectToPage();
+            await this.userManager.UpdateAsync(user);
+            await this.signInManager.RefreshSignInAsync(user);
+            this.StatusMessage = "Your profile has been updated";
+            return this.RedirectToPage();
+        }
+
+        private async Task LoadAsync(ApplicationUser user)
+        {
+            var userName = await this.userManager.GetUserNameAsync(user);
+            var phoneNumber = await this.userManager.GetPhoneNumberAsync(user);
+
+            this.Username = userName;
+
+            this.Input = new ManageAccountInputModel
+            {
+                PhoneNumber = phoneNumber,
+                City = user.City,
+                Country = user.Country,
+                BirthDate = user.BirthDate,
+                Gender = user.Gender,
+                AboutMe = user.AboutMe,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                GitHubUrl = user.GitHubUrl,
+                StackoverflowUrl = user.StackoverflowUrl,
+                FacebookUrl = user.FacebookUrl,
+                InstagramUrl = user.InstagramUrl,
+                TwitterUrl = user.TwitterUrl,
+                LinkedinUrl = user.LinkedinUrl,
+                RegisteredOn = user.RegisteredOn,
+                CountryCode = user.CountryCode,
+                Email = user.Email,
+
+                // TODO Image URL
+            };
         }
     }
 }

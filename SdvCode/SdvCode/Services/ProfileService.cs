@@ -1,20 +1,24 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SdvCode.Areas.Administration.Models.Enums;
-using SdvCode.Data;
-using SdvCode.Models;
-using SdvCode.Models.Enums;
-using SdvCode.ViewModels.Users;
-using System;
-using System.Linq;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Services
 {
+    using System;
+    using System.Linq;
+    using Microsoft.AspNetCore.Identity;
+    using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Data;
+    using SdvCode.Models;
+    using SdvCode.Models.Enums;
+    using SdvCode.ViewModels.Users;
+
     public class ProfileService : IProfileService
     {
         private readonly ApplicationDbContext db;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public ProfileService(ApplicationDbContext db,
+        public ProfileService(
+            ApplicationDbContext db,
             RoleManager<IdentityRole> roleManager)
         {
             this.db = db;
@@ -81,7 +85,7 @@ namespace SdvCode.Services
                     FollowerUsername = x.FollowerUsername,
                     FollowerProfileImageUrl = x.FollowerProfileImageUrl ?? "/images/NoAvatarProfileImage.png",
                     ProfileImageUrl = x.ProfileImageUrl,
-                    CoverImageUrl = x.CoverImageUrl
+                    CoverImageUrl = x.CoverImageUrl,
                 })
                 .OrderByDescending(x => x.ActionDate)
                 .ToList();
@@ -94,18 +98,18 @@ namespace SdvCode.Services
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             var currentUser = this.db.Users.FirstOrDefault(u => u.Id == currentUserId);
 
-            if (!db.FollowUnfollows.Any(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id))
+            if (!this.db.FollowUnfollows.Any(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id))
             {
-                db.FollowUnfollows.Add(new FollowUnfollow
+                this.db.FollowUnfollows.Add(new FollowUnfollow
                 {
                     PersonId = user.Id,
                     FollowerId = currentUser.Id,
-                    IsFollowed = true
+                    IsFollowed = true,
                 });
             }
             else
             {
-                db.FollowUnfollows.FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
+                this.db.FollowUnfollows.FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
             }
 
             this.db.SaveChanges();
@@ -126,7 +130,7 @@ namespace SdvCode.Services
                     PersonProfileImageUrl = user.ImageUrl,
                     FollowerUsername = currentUser.UserName,
                     FollowerProfileImageUrl = currentUser.ImageUrl,
-                    ApplicationUserId = currentUser.Id
+                    ApplicationUserId = currentUser.Id,
                 });
 
                 this.db.SaveChanges();
@@ -153,7 +157,7 @@ namespace SdvCode.Services
                     FollowerProfileImageUrl = currentUser.ImageUrl,
                     PersonUsername = user.UserName,
                     PersonProfileImageUrl = user.ImageUrl,
-                    ApplicationUserId = user.Id
+                    ApplicationUserId = user.Id,
                 });
 
                 this.db.SaveChanges();
@@ -181,7 +185,7 @@ namespace SdvCode.Services
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     ImageUrl = user.ImageUrl,
-                    CoverImageUrl = user.CoverImageUrl
+                    CoverImageUrl = user.CoverImageUrl,
                 });
             }
 
@@ -214,7 +218,7 @@ namespace SdvCode.Services
                     .FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true)
                     .IsFollowed = false;
 
-                db.SaveChanges();
+                this.db.SaveChanges();
 
                 var targetUnfollowerEntity = this.db.UserActions.FirstOrDefault(x =>
                 x.Action == UserActionsType.Unfollow &&
@@ -232,7 +236,7 @@ namespace SdvCode.Services
                         PersonProfileImageUrl = user.ImageUrl,
                         FollowerUsername = currentUser.UserName,
                         FollowerProfileImageUrl = currentUser.ImageUrl,
-                        ApplicationUserId = currentUser.Id
+                        ApplicationUserId = currentUser.Id,
                     });
 
                     this.db.SaveChanges();
@@ -260,7 +264,7 @@ namespace SdvCode.Services
                         FollowerProfileImageUrl = currentUser.ImageUrl,
                         PersonUsername = user.UserName,
                         PersonProfileImageUrl = user.ImageUrl,
-                        ApplicationUserId = user.Id
+                        ApplicationUserId = user.Id,
                     });
 
                     this.db.SaveChanges();
@@ -302,7 +306,7 @@ namespace SdvCode.Services
             this.db.UserRoles.Add(new IdentityUserRole<string>
             {
                 RoleId = role.Id,
-                UserId = user.Id
+                UserId = user.Id,
             });
 
             await this.db.SaveChangesAsync();

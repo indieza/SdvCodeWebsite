@@ -1,11 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
-using SdvCode.ViewModels.Contacts;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System.Threading.Tasks;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Services
 {
+    using System.Threading.Tasks;
+    using Microsoft.Extensions.Configuration;
+    using SdvCode.ViewModels.Contacts;
+    using SendGrid;
+    using SendGrid.Helpers.Mail;
+
     public class ContactsService : IContactsService
     {
         private readonly IConfiguration configuration;
@@ -17,12 +20,12 @@ namespace SdvCode.Services
 
         public void SendEmail(ContactInputModel model)
         {
-            Execute(model).Wait();
+            this.Execute(model).Wait();
         }
 
         private async Task Execute(ContactInputModel model)
         {
-            var apiKey = configuration.GetSection("SendGrid:ApiKey").Value;
+            var apiKey = this.configuration.GetSection("SendGrid:ApiKey").Value;
             var client = new SendGridClient(apiKey);
 
             var message = new SendGridMessage()

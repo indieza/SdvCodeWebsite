@@ -1,4 +1,7 @@
-﻿namespace SdvCode.Models.Enums
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace SdvCode.Models.Enums
 {
     public enum Gender
     {
@@ -11,6 +14,6 @@
         Demigirl = 7,
         ThirdGender = 8,
         Transgender = 9,
-        Other = 10
+        Other = 10,
     }
 }

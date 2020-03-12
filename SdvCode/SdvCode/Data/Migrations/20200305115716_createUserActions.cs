@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Data.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class createUserActions : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +24,7 @@ namespace SdvCode.Data.Migrations
                     FollowerUsername = table.Column<string>(nullable: true),
                     FollowerProfileImageUrl = table.Column<string>(nullable: true),
                     ProfileImageUrl = table.Column<string>(nullable: true),
-                    CoverImageUrl = table.Column<string>(nullable: true)
+                    CoverImageUrl = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {

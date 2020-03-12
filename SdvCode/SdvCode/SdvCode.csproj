@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-SdvCode-31933615-E777-4295-B1A4-206E7EC035F7</UserSecretsId>
+    <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +22,14 @@
     <Compile Remove="Data\Migrations\20200302162650_test.Designer.cs" />
     <Compile Remove="Data\Migrations\20200302225848_test.cs" />
     <Compile Remove="Data\Migrations\20200302225848_test.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
 
 
@@ -46,6 +64,7 @@
 
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="wwwroot\administration\img\undraw_posting_photo.svg" />
     <None Include="wwwroot\administration\js\demo\chart-area-demo.js" />
     <None Include="wwwroot\administration\js\demo\chart-bar-demo.js" />

@@ -1,4 +1,7 @@
-﻿namespace SdvCode.Areas.Administration.Services
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace SdvCode.Areas.Administration.Services
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -12,7 +15,8 @@
         private readonly ApplicationDbContext db;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public UsersPenaltiesService(ApplicationDbContext db,
+        public UsersPenaltiesService(
+            ApplicationDbContext db,
             RoleManager<IdentityRole> roleManager)
         {
             this.db = db;

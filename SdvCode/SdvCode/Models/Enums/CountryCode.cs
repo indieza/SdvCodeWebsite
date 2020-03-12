@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Models.Enums
 {
+    using System.ComponentModel.DataAnnotations;
+
     public enum CountryCode
     {
         [Display(Name = "Bulgaria (+359)")]
@@ -27,6 +30,6 @@ namespace SdvCode.Models.Enums
         [Display(Name = "India (+91)")]
         IND_91 = 11,
         [Display(Name = "Italy (+39)")]
-        ITA_39 = 12
+        ITA_39 = 12,
     }
 }

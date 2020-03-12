@@ -1,11 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.ViewModels.Users
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class RegisterInputModel
     {
         [Required]
-        [MinLength(length: 3), MaxLength(20)]
+        [MinLength(length: 3)]
+        [MaxLength(20)]
         [Display(Name = "Username")]
         public string Username { get; set; }
 

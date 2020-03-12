@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Models.Enums
 {
+    using System.ComponentModel.DataAnnotations;
+
     public enum UserActionsType
     {
         [Display(Name = "Follow")]
@@ -17,6 +20,6 @@ namespace SdvCode.Models.Enums
         [Display(Name = "Change Profile Picture")]
         ChangeProfilePicture = 6,
         [Display(Name = "Edit Personal Data")]
-        EditPersonalData = 7
+        EditPersonalData = 7,
     }
 }

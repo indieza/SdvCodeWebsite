@@ -1,26 +1,29 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Options;
-using SdvCode.Models;
-using SdvCode.SecurityModels;
-using System;
-using System.Threading.Tasks;
-using Twilio.Rest.Verify.V2.Service;
+// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Areas.Identity.Pages.Account
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.Extensions.Options;
+    using SdvCode.Models;
+    using SdvCode.SecurityModels;
+    using Twilio.Rest.Verify.V2.Service;
+
     [Authorize]
     public class VerifyPhoneModel : PageModel
     {
-        private readonly TwilioVerifySettings _settings;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly TwilioVerifySettings settings;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public VerifyPhoneModel(IOptions<TwilioVerifySettings> settings, UserManager<ApplicationUser> userManager)
         {
-            _settings = settings.Value;
-            _userManager = userManager;
+            this.settings = settings.Value;
+            this.userManager = userManager;
         }
 
         public string PhoneNumber { get; set; }
@@ -29,47 +32,47 @@ namespace SdvCode.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetAsync()
         {
-            await LoadPhoneNumber();
-            return Page();
+            await this.LoadPhoneNumber();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await LoadPhoneNumber();
+            await this.LoadPhoneNumber();
 
             try
             {
                 var verification = await VerificationResource.CreateAsync(
-                    to: $"+{this.CountryCode}{PhoneNumber}",
+                    to: $"+{this.CountryCode}{this.PhoneNumber}",
                     channel: "sms",
-                    pathServiceSid: _settings.VerificationServiceSID
-                );
+                    pathServiceSid: this.settings.VerificationServiceSID);
 
                 if (verification.Status == "pending")
                 {
-                    return RedirectToPage("ConfirmPhone");
+                    return this.RedirectToPage("ConfirmPhone");
                 }
 
-                ModelState.AddModelError("", $"There was an error sending the verification code: {verification.Status}");
+                this.ModelState.AddModelError(string.Empty, $"There was an error sending the verification code: {verification.Status}");
             }
             catch (Exception)
             {
-                ModelState.AddModelError("",
+                this.ModelState.AddModelError(
+                    string.Empty,
                     "There was an error sending the verification code, please check the phone number is correct and try again");
             }
 
-            return Page();
+            return this.Page();
         }
 
         private async Task LoadPhoneNumber()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                throw new Exception($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                throw new Exception($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
             }
 
-            PhoneNumber = user.PhoneNumber;
+            this.PhoneNumber = user.PhoneNumber;
             this.CountryCode = user.CountryCode.ToString().Split("_")[1];
         }
     }

@@ -1,4 +1,7 @@
-﻿namespace SdvCode.Areas.Administration.Controllers
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace SdvCode.Areas.Administration.Controllers
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
@@ -33,7 +36,8 @@
             return this.View(model);
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> BlockUser(UsersPenaltiesIndexModel model)
         {
             if (this.ModelState.IsValid)
@@ -99,7 +103,7 @@
                 this.TempData["Error"] = string.Format(ErrorMessages.AllUsersAlreadyBlocked);
             }
 
-            return RedirectToAction("BlockUnblockUser", "UsersPenalties");
+            return this.RedirectToAction("BlockUnblockUser", "UsersPenalties");
         }
 
         [HttpPost]

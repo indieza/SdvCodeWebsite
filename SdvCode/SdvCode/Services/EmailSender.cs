@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Configuration;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System.Threading.Tasks;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Services
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.Extensions.Configuration;
+    using SendGrid;
+    using SendGrid.Helpers.Mail;
+
     public class EmailSender : IEmailSender
     {
         private readonly IConfiguration configuration;
@@ -17,7 +20,7 @@ namespace SdvCode.Services
 
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            return Execute(configuration.GetSection("SendGrid:ApiKey").Value, email, subject, htmlMessage);
+            return this.Execute(this.configuration.GetSection("SendGrid:ApiKey").Value, email, subject, htmlMessage);
         }
 
         private Task Execute(string apiKey, string email, string subject, string htmlMessage)
@@ -28,7 +31,7 @@ namespace SdvCode.Services
                 From = new EmailAddress("sdvcodeproject@gmail.com", "SDV Code Administration"),
                 Subject = subject,
                 PlainTextContent = htmlMessage,
-                HtmlContent = htmlMessage
+                HtmlContent = htmlMessage,
             };
 
             message.AddTo(new EmailAddress(email));

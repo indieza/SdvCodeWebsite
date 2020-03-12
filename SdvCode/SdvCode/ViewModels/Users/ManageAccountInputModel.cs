@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using SdvCode.Models.Enums;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.ViewModels.Users
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using SdvCode.Models.Enums;
+
     public class ManageAccountInputModel
     {
         [Phone]

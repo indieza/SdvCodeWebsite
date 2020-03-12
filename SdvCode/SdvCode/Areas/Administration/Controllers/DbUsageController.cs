@@ -1,4 +1,7 @@
-﻿namespace SdvCode.Areas.Administration.Controllers
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace SdvCode.Areas.Administration.Controllers
 {
     using System;
     using System.Threading.Tasks;
@@ -64,7 +67,7 @@
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return RedirectToAction("DeleteUsersActivities", "DbUsage");
+            return this.RedirectToAction("DeleteUsersActivities", "DbUsage");
         }
 
         [HttpPost]
@@ -111,7 +114,8 @@
             return this.RedirectToAction("DeleteUsersImages", "DbUsage");
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> DeleteAllusersImages()
         {
             int count = await this.dbUsageService.DeleteAllUsersImages();

@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using SdvCode.Areas.Administration.Services;
-using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
-using SdvCode.Constraints;
-using System.Threading.Tasks;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Areas.Administration.Controllers
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
+    using SdvCode.Constraints;
+
     [Area(GlobalConstants.AdministrationArea)]
     public class DashboardController : Controller
     {
@@ -28,10 +31,11 @@ namespace SdvCode.Areas.Administration.Controllers
                 CreateRole = new CreateRoleInputModel(),
             };
 
-            return View(model);
+            return this.View(model);
         }
 
-        [HttpPost, Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> CreateRole(DashboardIndexViewModel model)
         {
             string role = model.CreateRole.Role;

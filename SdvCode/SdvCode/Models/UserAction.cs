@@ -1,16 +1,20 @@
-﻿using SdvCode.Models.Enums;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace SdvCode.Models
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using SdvCode.Models.Enums;
+
     public class UserAction
     {
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey(nameof(ApplicationUser)), Required]
+        [ForeignKey(nameof(ApplicationUser))]
+        [Required]
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }

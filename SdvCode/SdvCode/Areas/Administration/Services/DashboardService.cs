@@ -1,4 +1,7 @@
-﻿namespace SdvCode.Areas.Administration.Services
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace SdvCode.Areas.Administration.Services
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -14,7 +17,8 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
 
-        public DashboardService(RoleManager<IdentityRole> roleManager,
+        public DashboardService(
+            RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
             ApplicationDbContext db)
         {
