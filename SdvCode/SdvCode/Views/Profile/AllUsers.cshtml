@@ -1,6 +1,6 @@
-﻿@using SdvCode.ViewModels.Users
-@using SdvCode.ViewModels.Paging
-@model PaginatedList<UserCardViewModel>
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList
 
 @{
     ViewData["Title"] = "All Users";
@@ -21,7 +21,7 @@
 </div>
 <div class="container">
     <div class="row">
-        @foreach (var user in Model)
+        @foreach (var user in ViewBag.UsersCards)
         {
             <div class="col-md-4">
                 <div class="uicard">
@@ -97,21 +97,10 @@
 </div>
 <div class="container">
     <div class="row" style="text-align: center">
-        @{
-            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        }
-
-        <a asp-action="AllUsers"
-           asp-route-pageNumber="@(Model.PageIndex - 1)"
-           class="btn btn-primary solid @prevDisabled">
-            <i style="color: black" class="fas fa-chevron-left"></i>
-        </a>
-        <a asp-action="AllUsers"
-           asp-route-pageNumber="@(Model.PageIndex + 1)"
-           class="btn btn-primary solid @nextDisabled">
-            <i style="color: black" class="fas fa-chevron-right"></i>
-        </a>
+        @Html.PagedListPager((IPagedList)ViewBag.UsersCards,
+                page => Url.Action("AllUsers", "Profile",
+                new { page = page }),
+                PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
     </div>
     <br />
 </div>

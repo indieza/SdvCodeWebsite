@@ -3,6 +3,7 @@
 
 namespace SdvCode.Controllers
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace SdvCode.Controllers
     using SdvCode.ViewModels.Paging;
     using SdvCode.ViewModels.Profiles;
     using SdvCode.ViewModels.Users;
-    using System.Threading.Tasks;
+    using X.PagedList;
 
     [Authorize]
     public class ProfileController : Controller
@@ -63,13 +64,14 @@ namespace SdvCode.Controllers
         }
 
         [Route("/Profile/AllUsers")]
-        public IActionResult AllUsers(int? pageNumber)
+        public IActionResult AllUsers(int? page)
         {
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
             var allUsers = this.profileService.GetAllUsers(currentUserId);
 
-            int pageSize = GlobalConstants.UsersCountOnPage;
-            return this.View(PaginatedList<UserCardViewModel>.Create(allUsers.UsersCards, pageNumber ?? 1, pageSize));
+            var pageNumber = page ?? 1;
+            this.ViewBag.UsersCards = allUsers.UsersCards.ToPagedList(pageNumber, GlobalConstants.UsersCountOnPage);
+            return this.View();
         }
 
         [Route("/DeleteActivityHistory/{username}")]
