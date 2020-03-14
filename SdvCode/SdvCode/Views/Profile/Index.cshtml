@@ -36,7 +36,15 @@
                             <img src=@Model.ApplicationUser.ImageUrl alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
                         }
                         <h2>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName</h2>
-                        <h5>@@@Html.DisplayTextFor(model => model.ApplicationUser.UserName)</h5>
+                        @if (Model.ApplicationUser.IsBlocked == true)
+                        {
+                            <div class="col-xs-12">
+                                <span class="label label-danger" style="font-size: medium; padding: 7px 40px 7px 40px"><i class="fas fa-user-slash"> Banned</i></span>
+                            </div>
+                        }
+                        <div class="row">
+                            <h5>@@@Html.DisplayTextFor(model => model.ApplicationUser.UserName)</h5>
+                        </div>
                     </div>
                     <div class="action-buttons">
                         <div class="row">
@@ -90,6 +98,36 @@
                     <div class="section">
                         <h3>About Me</h3>
                         <p>@Model.ApplicationUser.AboutMe</p>
+                    </div>
+                    <div class="section">
+                        <h3>Roles</h3>
+                        @foreach (var role in Model.ApplicationUser.Roles)
+                        {
+                            @if (role.Name == Roles.Administrator.ToString())
+                            {
+                                <span class="label label-success">@role.Name</span>
+                            }
+                            @if (role.Name == Roles.Editor.ToString())
+                            {
+                                <span class="label label-primary">@role.Name</span>
+
+                            }
+                            @if (role.Name == Roles.Author.ToString())
+                            {
+                                <span class="label label-warning">@role.Name</span>
+
+                            }
+                            @if (role.Name == Roles.Contributor.ToString())
+                            {
+                                <span class="label label-info">@role.Name</span>
+
+                            }
+                            @if (role.Name == Roles.Subscriber.ToString())
+                            {
+                                <span class="label label-default">@role.Name</span>
+
+                            }
+                        }
                     </div>
                     <div class="section">
                         <h3>Personal Data</h3>

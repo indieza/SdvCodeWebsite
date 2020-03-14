@@ -2,6 +2,8 @@
 @using SdvCode.Areas.Administration.Models.Enums
 @{
     ViewData["Title"] = "Dashboard";
+    var proportion = (decimal)Model.DashboardViewModel.TotalBannedUsers / Model.DashboardViewModel.TotalUsersCount;
+    var bannedUsersPercentage = proportion * 100;
 }
 @model DashboardIndexViewModel
 
@@ -66,14 +68,14 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Banned Users</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Banned Users (@bannedUsersPercentage)%</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.DashboardViewModel.TotalBannedUsers</div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: @Model.DashboardViewModel.TotalBannedUsers%" aria-valuenow=@Model.DashboardViewModel.TotalBannedUsers aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: @bannedUsersPercentage%" aria-valuenow=@Model.DashboardViewModel.TotalBannedUsers aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>

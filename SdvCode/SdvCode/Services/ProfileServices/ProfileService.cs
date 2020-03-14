@@ -19,16 +19,13 @@ namespace SdvCode.Services.ProfileServices
     {
         private readonly ApplicationDbContext db;
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<ApplicationUser> userManager;
 
         public ProfileService(
             ApplicationDbContext db,
-            RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager)
+            RoleManager<IdentityRole> roleManager)
         {
             this.db = db;
             this.roleManager = roleManager;
-            this.userManager = userManager;
         }
 
         public void DeleteActivity(string currentUserId)
@@ -52,6 +49,9 @@ namespace SdvCode.Services.ProfileServices
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             user.IsFollowed = this.db.FollowUnfollows.Any(x => x.FollowerId == currentUserId && x.PersonId == user.Id && x.IsFollowed == true);
             user.ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id);
+            var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
+            var roles = this.db.Roles.Where(x => rolesIds.Contains(x.Id)).OrderBy(x => x.Name).ToList();
+            user.Roles = roles;
             return user;
         }
 

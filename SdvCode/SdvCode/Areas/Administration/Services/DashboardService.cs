@@ -38,10 +38,12 @@ namespace SdvCode.Areas.Administration.Services
                 adminsCount = this.db.UserRoles.Count(x => x.RoleId == adminRol.Id);
             }
 
+            int bannedPeople = this.db.Users.Count(x => x.IsBlocked == true);
+
             return new DashboardViewModel
             {
                 TotalUsersCount = usernames.Count(),
-                TotalBannedUsers = 10,
+                TotalBannedUsers = bannedPeople,
                 TotalBlogPosts = 12,
                 TotalUsersInAdminRole = adminsCount,
                 Usernames = usernames,

@@ -63,6 +63,9 @@ namespace SdvCode.Models
         public bool IsBlocked { get; set; }
 
         [NotMapped]
+        public ICollection<IdentityRole> Roles { get; set; } = new HashSet<IdentityRole>();
+
+        [NotMapped]
         public bool IsFollowed { get; set; }
     }
 }

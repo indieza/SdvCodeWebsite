@@ -9,6 +9,7 @@ namespace SdvCode.ViewComponents
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models;
     using SdvCode.Services.ProfileServices;
@@ -31,7 +32,7 @@ namespace SdvCode.ViewComponents
             var user = await this.userManager.FindByNameAsync(username);
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
             List<FollowingViewModel> allFollowing = await this.followingService.ExtractFollowing(user, currentUserId);
-            this.ViewBag.Following = allFollowing.ToPagedList(page, 1);
+            this.ViewBag.Following = allFollowing.ToPagedList(page, GlobalConstants.FollowingCountOnPage);
             this.ViewBag.Username = username;
             return this.View(allFollowing);
         }

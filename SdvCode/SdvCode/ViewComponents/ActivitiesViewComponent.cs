@@ -9,6 +9,7 @@ namespace SdvCode.ViewComponents
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models;
     using SdvCode.Services.ProfileServices;
@@ -27,7 +28,7 @@ namespace SdvCode.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(string username, int page)
         {
             List<ActivitiesViewModel> allActivities = await this.activitiesService.ExtractActivities(username);
-            this.ViewBag.UsersActions = allActivities.ToPagedList(page, 4);
+            this.ViewBag.UsersActions = allActivities.ToPagedList(page, GlobalConstants.UsersActivitiesCountOnPage);
             this.ViewBag.Username = username;
             return this.View(allActivities);
         }
