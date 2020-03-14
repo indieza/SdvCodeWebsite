@@ -11,22 +11,22 @@ namespace SdvCode.ViewComponents
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Data;
     using SdvCode.Models;
-    using SdvCode.Services;
+    using SdvCode.Services.ProfileServices;
     using SdvCode.ViewModels.Profile;
     using X.PagedList;
 
     public class ActivitiesViewComponent : ViewComponent
     {
-        private readonly IProfileService profileService;
+        private readonly IProfileActivitiesService activitiesService;
 
-        public ActivitiesViewComponent(IProfileService profileService)
+        public ActivitiesViewComponent(IProfileActivitiesService activitiesService)
         {
-            this.profileService = profileService;
+            this.activitiesService = activitiesService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string username, int page)
         {
-            List<ActivitiesViewModel> allActivities = await this.profileService.ExtractActivities(username);
+            List<ActivitiesViewModel> allActivities = await this.activitiesService.ExtractActivities(username);
             this.ViewBag.UsersActions = allActivities.ToPagedList(page, 4);
             this.ViewBag.Username = username;
             return this.View(allActivities);

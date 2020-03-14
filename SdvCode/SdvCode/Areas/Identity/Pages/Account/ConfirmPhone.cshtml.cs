@@ -76,7 +76,13 @@ namespace SdvCode.Areas.Identity.Pages.Account
                         if (isAdded)
                         {
                             this.TempData["Success"] = string.Format(
-                                SuccessMessages.SuccessfullyConfirmedPhoneNumber,
+                                SuccessMessages.SuccessfullyConfirmedPhoneNumberAndRegisteredContributorRole,
+                                GlobalConstants.ContributorRole);
+                        }
+                        else
+                        {
+                            this.TempData["Success"] = string.Format(
+                                SuccessMessages.SuccessfullyConfirmedPhoneNumberInContributorRole,
                                 GlobalConstants.ContributorRole);
                         }
 

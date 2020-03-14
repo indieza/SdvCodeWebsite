@@ -11,26 +11,26 @@ namespace SdvCode.ViewComponents
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Data;
     using SdvCode.Models;
-    using SdvCode.Services;
+    using SdvCode.Services.ProfileServices;
     using SdvCode.ViewModels.Profile;
     using X.PagedList;
 
     public class FollowersViewComponent : ViewComponent
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IProfileService profileService;
+        private readonly IProfileFollowersService followersService;
 
-        public FollowersViewComponent(UserManager<ApplicationUser> userManager, IProfileService profileService)
+        public FollowersViewComponent(UserManager<ApplicationUser> userManager, IProfileFollowersService followersService)
         {
             this.userManager = userManager;
-            this.profileService = profileService;
+            this.followersService = followersService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string username, int page)
         {
             var user = await this.userManager.FindByNameAsync(username);
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            List<FollowersViewModel> allFollowers = await this.profileService.ExtractFollowers(user, currentUserId);
+            List<FollowersViewModel> allFollowers = await this.followersService.ExtractFollowers(user, currentUserId);
             this.ViewBag.Followers = allFollowers.ToPagedList(page, 1);
             this.ViewBag.Username = username;
             return this.View(allFollowers);

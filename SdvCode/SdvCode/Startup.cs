@@ -18,6 +18,8 @@ namespace SdvCode
     using SdvCode.Models;
     using SdvCode.SecurityModels;
     using SdvCode.Services;
+    using SdvCode.Services.CloudServices;
+    using SdvCode.Services.ProfileServices;
     using Twilio;
 
     public class Startup
@@ -98,6 +100,9 @@ namespace SdvCode
             services.AddTransient<IHomeService, HomeService>();
             services.AddTransient<IDbUsageService, DbUsageService>();
             services.AddTransient<IUsersPenaltiesService, UsersPenaltiesService>();
+            services.AddTransient<IProfileActivitiesService, ProfileActivitiesService>();
+            services.AddTransient<IProfileFollowersService, ProfileFollowersService>();
+            services.AddTransient<IProfileFollowingService, ProfileFollowingService>();
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));

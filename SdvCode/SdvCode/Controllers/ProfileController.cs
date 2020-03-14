@@ -10,7 +10,7 @@ namespace SdvCode.Controllers
     using SdvCode.Constraints;
     using SdvCode.Models;
     using SdvCode.Models.Enums;
-    using SdvCode.Services;
+    using SdvCode.Services.ProfileServices;
     using SdvCode.ViewModels.Paging;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users;

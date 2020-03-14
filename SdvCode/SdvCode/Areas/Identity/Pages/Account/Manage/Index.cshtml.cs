@@ -13,6 +13,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     using SdvCode.Models;
     using SdvCode.Models.Enums;
     using SdvCode.Services;
+    using SdvCode.Services.CloudServices;
     using SdvCode.ViewModels.Users;
 
     public partial class IndexModel : PageModel

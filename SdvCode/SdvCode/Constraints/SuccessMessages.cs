@@ -19,7 +19,8 @@ namespace SdvCode.Constraints
 
         public const string SuccessfullySyncFollowUnfollow = "Successfully synchronize Follow-Unfollow relations.";
 
-        public const string SuccessfullyConfirmedPhoneNumber = "Successfully confirmed phone number. You are added in \"{0}\" role.";
+        public const string SuccessfullyConfirmedPhoneNumberAndRegisteredContributorRole =
+            "Successfully confirmed phone number. You are added in \"{0}\" role.";
 
         public const string SuccessfullyBlockedUser = "Successfully blocked user {0}.";
 
@@ -38,5 +39,8 @@ namespace SdvCode.Constraints
         public const string SuccessfullyDeleteAllActivity = "You successfully delete all of your activity.";
 
         public const string SuccessfullyDeletedActivityById = "You successfully delete your single \"{0}\" activity.";
+
+        public const string SuccessfullyConfirmedPhoneNumberInContributorRole =
+            "Successfully confirmed phone number. You are already in \"{0}\" role.";
     }
 }
