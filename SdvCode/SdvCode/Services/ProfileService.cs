@@ -4,6 +4,7 @@
 namespace SdvCode.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
@@ -11,19 +12,23 @@ namespace SdvCode.Services
     using SdvCode.Data;
     using SdvCode.Models;
     using SdvCode.Models.Enums;
+    using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users;
 
     public class ProfileService : IProfileService
     {
         private readonly ApplicationDbContext db;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public ProfileService(
             ApplicationDbContext db,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager)
         {
             this.db = db;
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
 
         public void DeleteActivity(string currentUserId)
@@ -46,51 +51,7 @@ namespace SdvCode.Services
         {
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             user.IsFollowed = this.db.FollowUnfollows.Any(x => x.FollowerId == currentUserId && x.PersonId == user.Id && x.IsFollowed == true);
-
-            var followersIds = this.db.FollowUnfollows
-                .Where(x => x.PersonId == user.Id && x.IsFollowed == true)
-                .Select(x => x.FollowerId)
-                .ToList();
-            var followingsIds = this.db.FollowUnfollows
-                .Where(x => x.FollowerId == user.Id && x.IsFollowed == true)
-                .Select(x => x.PersonId)
-                .ToList();
-
-            user.Followers = this.db.Users.Where(x => followersIds.Contains(x.Id)).ToList();
-            foreach (var follower in user.Followers)
-            {
-                if (this.db.FollowUnfollows.Any(x => x.FollowerId == currentUserId && x.PersonId == follower.Id && x.IsFollowed == true))
-                {
-                    follower.HasFollow = true;
-                }
-            }
-
-            user.Followings = this.db.Users.Where(x => followingsIds.Contains(x.Id)).ToList();
-            foreach (var following in user.Followings)
-            {
-                if (this.db.FollowUnfollows.Any(x => x.FollowerId == currentUserId && x.PersonId == following.Id && x.IsFollowed == true))
-                {
-                    following.HasFollow = true;
-                }
-            }
-
-            user.UserActions = this.db.UserActions
-                .Where(x => x.ApplicationUserId == user.Id)
-                .Select(x => new UserAction
-                {
-                    Id = x.Id,
-                    Action = x.Action,
-                    ActionDate = x.ActionDate,
-                    PersonUsername = x.PersonUsername,
-                    PersonProfileImageUrl = x.PersonProfileImageUrl ?? "/images/NoAvatarProfileImage.png",
-                    FollowerUsername = x.FollowerUsername,
-                    FollowerProfileImageUrl = x.FollowerProfileImageUrl ?? "/images/NoAvatarProfileImage.png",
-                    ProfileImageUrl = x.ProfileImageUrl,
-                    CoverImageUrl = x.CoverImageUrl,
-                })
-                .OrderByDescending(x => x.ActionDate)
-                .ToList();
-
+            user.ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id);
             return user;
         }
 
@@ -311,6 +272,85 @@ namespace SdvCode.Services
             });
 
             this.db.SaveChanges();
+        }
+
+        public async Task<List<ActivitiesViewModel>> ExtractActivities(string username)
+        {
+            List<ActivitiesViewModel> allActivities = new List<ActivitiesViewModel>();
+            var user = await this.userManager.FindByNameAsync(username);
+            var activities = this.db.UserActions.Where(x => x.ApplicationUserId == user.Id).ToList();
+
+            foreach (var item in activities)
+            {
+                allActivities.Add(new ActivitiesViewModel
+                {
+                    Id = item.Id,
+                    Action = item.Action,
+                    ActionDate = item.ActionDate,
+                    ApplicationUser = user,
+                    ApplicationUserId = user.Id,
+                    CoverImageUrl = item.CoverImageUrl,
+                    FollowerProfileImageUrl = item.FollowerProfileImageUrl,
+                    FollowerUsername = item.FollowerUsername,
+                    PersonProfileImageUrl = item.PersonProfileImageUrl,
+                    PersonUsername = item.PersonUsername,
+                    ProfileImageUrl = item.ProfileImageUrl,
+                });
+            }
+
+            return allActivities.OrderByDescending(x => x.ActionDate).ToList();
+        }
+
+        public async Task<List<FollowersViewModel>> ExtractFollowers(ApplicationUser user, string currentUserId)
+        {
+            List<FollowersViewModel> allFollowers = new List<FollowersViewModel>();
+            var followers = this.db.FollowUnfollows.Where(x => x.PersonId == user.Id && x.IsFollowed == true).ToList();
+
+            foreach (var item in followers)
+            {
+                var follower = await this.userManager.FindByIdAsync(item.FollowerId);
+                var hasFollow = this.db.FollowUnfollows
+                    .Any(x => x.FollowerId == currentUserId &&
+                    x.PersonId == follower.Id && x.IsFollowed == true);
+
+                allFollowers.Add(new FollowersViewModel
+                {
+                    Username = follower.UserName,
+                    FirstName = follower.FirstName,
+                    LastName = follower.LastName,
+                    ImageUrl = follower.ImageUrl,
+                    IsBlocked = follower.IsBlocked,
+                    HasFollow = hasFollow,
+                });
+            }
+
+            return allFollowers;
+        }
+
+        public async Task<List<FollowingViewModel>> ExtractFollowing(ApplicationUser user, string currentUserId)
+        {
+            List<FollowingViewModel> allFollowing = new List<FollowingViewModel>();
+            var followers = this.db.FollowUnfollows.Where(x => x.FollowerId == user.Id && x.IsFollowed == true).ToList();
+
+            foreach (var item in followers)
+            {
+                var follower = await this.userManager.FindByIdAsync(item.PersonId);
+                var hasFollow = this.db.FollowUnfollows
+                    .Any(x => x.FollowerId == currentUserId &&
+                    x.PersonId == follower.Id && x.IsFollowed == true);
+
+                allFollowing.Add(new FollowingViewModel
+                {
+                    Username = follower.UserName,
+                    FirstName = follower.FirstName,
+                    LastName = follower.LastName,
+                    ImageUrl = follower.ImageUrl,
+                    IsBlocked = follower.IsBlocked,
+                    HasFollow = hasFollow,
+                });
+            }
+
+            return allFollowing;
         }
     }
 }

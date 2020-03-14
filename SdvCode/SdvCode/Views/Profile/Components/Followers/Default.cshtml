@@ -1,0 +1,49 @@
+﻿@using SdvCode.ViewModels.Profile
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList
+@model IEnumerable<FollowersViewModel>
+
+@{
+    ViewData["Title"] = "Followers";
+}
+
+<div class="tab-pane fade in active">
+    @foreach (var follower in ViewBag.Followers)
+    {
+        <div class="media user-follower">
+            @if (follower.ImageUrl == null)
+            {
+                <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object pull-left">
+            }
+            else
+            {
+                <img src=@follower.ImageUrl alt="User Avatar" class="media-object pull-left">
+            }
+            <div class="media-body">
+                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.Username">@follower.Username<br><span class="text-muted username">@follower.FirstName  @follower.LastName</span></a>
+                @if (User.Identity.Name == follower.Username)
+                {
+                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.Username" type="button" class="btn btn-sm btn-info pull-right"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
+                }
+                else
+                {
+                    @if (follower.HasFollow)
+                    {
+                        <a asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.Username" type="button" class="btn btn-sm btn-danger pull-right"><i class="fas fa-minus-circle"></i> <span>Unfollow</span></a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@follower.Username" type="button" class="btn btn-sm btn-success pull-right"><i class="fas fa-plus-circle"></i> <span>Follow</span></a>
+                    }
+                }
+            </div>
+        </div>
+    }
+    <div class="row" style="text-align: center">
+        @Html.PagedListPager((IPagedList)ViewBag.Followers,
+                page => Url.Action("Index", "Profile",
+        new { username = ViewBag.Username, page = page }),
+        PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+    </div>
+</div>

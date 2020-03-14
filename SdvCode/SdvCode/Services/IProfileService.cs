@@ -3,9 +3,11 @@
 
 namespace SdvCode.Services
 {
-    using SdvCode.Models;
-    using SdvCode.ViewModels.Users;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using SdvCode.Models;
+    using SdvCode.ViewModels.Profile;
+    using SdvCode.ViewModels.Users;
 
     public interface IProfileService
     {
@@ -24,5 +26,11 @@ namespace SdvCode.Services
         Task<bool> HasAdmin();
 
         void MakeYourselfAdmin(string username);
+
+        Task<List<ActivitiesViewModel>> ExtractActivities(string username);
+
+        Task<List<FollowersViewModel>> ExtractFollowers(ApplicationUser user, string currentUserId);
+
+        Task<List<FollowingViewModel>> ExtractFollowing(ApplicationUser user, string currentUserId);
     }
 }

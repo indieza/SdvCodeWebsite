@@ -403,6 +403,11 @@ ul.navbar-nav > li.active > a {
     border-bottom-color: #ee3b24;
 }
 
+.nav-pills-custom-minimal.custom-minimal-bottom > li > a:hover {
+    color: #ee3b24;
+    font-weight: bolder;
+}
+
 .activity-item .activity-actions .dropdown-menu > li > a {
     font-size: 0.9em;
     font-weight: bold;

@@ -55,20 +55,14 @@ namespace SdvCode.Models
 
         public string InstagramUrl { get; set; }
 
+        [NotMapped]
+        public int ActionsCount { get; set; }
+
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
 
         public bool IsBlocked { get; set; }
 
         [NotMapped]
         public bool IsFollowed { get; set; }
-
-        [NotMapped]
-        public bool HasFollow { get; set; }
-
-        [NotMapped]
-        public ICollection<ApplicationUser> Followers { get; set; } = new HashSet<ApplicationUser>();
-
-        [NotMapped]
-        public ICollection<ApplicationUser> Followings { get; set; } = new HashSet<ApplicationUser>();
     }
 }

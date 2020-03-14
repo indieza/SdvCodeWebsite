@@ -9,9 +9,10 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Constraints;
     using SdvCode.Models;
+    using SdvCode.Models.Enums;
     using SdvCode.Services;
     using SdvCode.ViewModels.Paging;
-    using SdvCode.ViewModels.Profiles;
+    using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users;
     using X.PagedList;
 
@@ -27,12 +28,14 @@ namespace SdvCode.Controllers
             this.profileService = profileService;
         }
 
-        [Route("Profile/{username}/{page?}")]
-        public async Task<IActionResult> Index(string username, int? page)
+        [Route("Profile/{username}/{tab?}/{page?}")]
+        public async Task<IActionResult> Index(string username, ProfileTab tab, int? page)
         {
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
             ApplicationUser user = this.profileService.ExtractUserInfo(username, currentUserId);
             bool hasAdmin = await this.profileService.HasAdmin();
+
+            var pageNumber = page ?? 1;
 
             var model = new ProfileViewModel
             {
@@ -40,12 +43,28 @@ namespace SdvCode.Controllers
                 HasAdmin = hasAdmin,
             };
 
-            var pageNumber = page ?? 1;
-            this.ViewBag.UsersActions = user.UserActions.ToPagedList(pageNumber, GlobalConstants.UsersActivitiesCountOnPage);
-            this.ViewBag.UsersFollowers = user.Followers.ToPagedList(pageNumber, GlobalConstants.FollowersCountOnPage);
-            this.ViewBag.UsersFollowing = user.Followings.ToPagedList(pageNumber, GlobalConstants.FollowingCountOnPage);
+            // if (tab == 0)
+            // {
+            //    tab = ProfileTab.Activities;
+            // }
+            model.ActiveTab = tab;
+            model.Page = pageNumber;
 
             return this.View(model);
+        }
+
+        public IActionResult SwitchToTabs(string username, string tab)
+        {
+            var user = this.userManager.FindByNameAsync(username).Result;
+            var vm = tab switch
+            {
+                "Activities" => ProfileTab.Activities,
+                "Following" => ProfileTab.Following,
+                "Followers" => ProfileTab.Followers,
+                _ => ProfileTab.Activities,
+            };
+
+            return this.RedirectToAction("Index", new { username = user.UserName, tab = vm });
         }
 
         [Route("/Follow/{username}")]

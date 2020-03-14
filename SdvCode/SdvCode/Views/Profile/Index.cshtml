@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using SdvCode.Areas.Administration.Models.Enums
-@using SdvCode.ViewModels.Profiles
+@using SdvCode.ViewModels.Profile
+@using SdvCode.Models.Enums
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Mvc.Common
 @using X.PagedList
@@ -67,7 +68,7 @@
                                 }
                             </div>
                         </div>
-                        @if (User.Identity.Name == Model.ApplicationUser.UserName && Model.ApplicationUser.UserActions.Count > 0)
+                        @if (User.Identity.Name == Model.ApplicationUser.UserName && Model.ApplicationUser.ActionsCount > 0)
                         {
                             <div style="margin-top: 15px">
                                 <a asp-controller="Profile" asp-action="DeleteActivityHistory" asp-route-username="@User.Identity.Name" class="btn btn-danger btn-block"><i class="fas fa-trash"></i> Delete Activity History</a>
@@ -160,290 +161,25 @@
                 }
                 <div class="profile-info-right">
                     <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom" id="myTab">
-                        <li class="active"><a href="#activities" data-toggle="tab">ACTIVITIES</a></li>
-                        <li><a href="#followers" data-toggle="tab">FOLLOWERS</a></li>
-                        <li><a href="#following" data-toggle="tab">FOLLOWING</a></li>
+                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Activities ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Activities" asp-route-page="@Model.Page" asp-action="SwitchToTabs">ACTIVITIES</a></li>
+                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Followers ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Followers" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWERS</a></li>
+                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Following ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Following" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWING</a></li>
                     </ul>
                     <div class="tab-content">
-                        <!-- activities -->
-                        <div class="tab-pane fade in active" id="activities">
-                            @foreach (var action in ViewBag.UsersActions)
-                            {
-                                if (action.Action.ToString() == "Follow")
-                                {
-                                    <div class="media activity-item">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
-                                            <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
-                                        </a>
-                                        <div class="media-body">
-                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername"><b>@action.FollowerUsername</b></a> started following <a href=/Profile/@action.PersonUsername><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
-                                        </div>
-                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
-                                        {
-                                            <div class="btn-group pull-right activity-actions">
-                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fas fa-th"></i>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-
-                                @if (action.Action.ToString() == "Followed")
-                                {
-                                    <div class="media activity-item">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
-                                            <img src=@action.FollowerProfileImageUrl alt="Avatar" class="media-object avatar">
-                                        </a>
-                                        <div class="media-body">
-                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> was followed by <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername"><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
-                                        </div>
-                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
-                                        {
-                                            <div class="btn-group pull-right activity-actions">
-                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fas fa-th"></i>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-
-                                if (action.Action.ToString() == "Unfollow")
-                                {
-                                    <div class="media activity-item">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
-                                            <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
-                                        </a>
-                                        <div class="media-body">
-                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername"><b>@action.FollowerUsername</b></a> unfollow <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
-                                        </div>
-                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
-                                        {
-                                            <div class="btn-group pull-right activity-actions">
-                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fas fa-th"></i>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-
-                                @if (action.Action.ToString() == "Unfollowed")
-                                {
-                                    <div class="media activity-item">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
-                                            <img src=@action.FollowerProfileImageUrl alt="Avatar" class="media-object avatar">
-                                        </a>
-                                        <div class="media-body">
-                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> was unfollowed by <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername"><b>@action.FollowerUsername</b></a> <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
-                                        </div>
-                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
-                                        {
-                                            <div class="btn-group pull-right activity-actions">
-                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fas fa-th"></i>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-
-                                if (action.Action.ToString() == "EditPersonalData")
-                                {
-                                    <div class="media activity-item">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
-                                            <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
-                                        </a>
-                                        <div class="media-body">
-                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> update his/her personal information <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
-                                        </div>
-                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
-                                        {
-                                            <div class="btn-group pull-right activity-actions">
-                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fas fa-th"></i>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-
-                                if (action.Action.ToString() == "ChangeCoverImage")
-                                {
-                                    <div class="media activity-item">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
-                                            <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
-                                        </a>
-                                        <div class="media-body">
-                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> has changed his/her cover picture <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
-                                            <div class="activity-attachment">
-                                                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="thumbnail">
-                                                    <img src=@action.CoverImageUrl alt="Uploaded photo">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
-                                        {
-                                            <div class="btn-group pull-right activity-actions">
-                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fas fa-th"></i>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-
-                                if (action.Action.ToString() == "ChangeProfilePicture")
-                                {
-                                    <div class="media activity-item">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
-                                            <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
-                                        </a>
-                                        <div class="media-body">
-                                            <p class="activity-title"><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername"><b>@action.PersonUsername</b></a> has changed his/her profile picture <small class="text-muted"></small></p>
-                                            <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
-                                            <div class="activity-attachment">
-                                                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="thumbnail">
-                                                    <img src=@action.ProfileImageUrl alt="Uploaded photo">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        @if (User.Identity.Name == Model.ApplicationUser.UserName)
-                                        {
-                                            <div class="btn-group pull-right activity-actions">
-                                                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fas fa-th"></i>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                    <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                            }
-                            <div class="row" style="text-align: center">
-                                @Html.PagedListPager((IPagedList)ViewBag.UsersActions,
-                                        page => Url.Action("Index", "Profile",
-                                new { username = Model.ApplicationUser.UserName, page = page }),
-                                PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
-                            </div>
-                        </div>
-                        <!-- end activities -->
-                        <!-- followers -->
-                        <div class="tab-pane fade" id="followers">
-                            @foreach (var follower in ViewBag.UsersFollowers)
-                            {
-                                <div class="media user-follower">
-                                    @if (follower.ImageUrl == null)
-                                    {
-                                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object pull-left">
-                                    }
-                                    else
-                                    {
-                                        <img src=@follower.ImageUrl alt="User Avatar" class="media-object pull-left">
-                                    }
-                                    <div class="media-body">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName">@follower.UserName<br><span class="text-muted username">@follower.FirstName  @follower.LastName</span></a>
-                                        @if (User.Identity.Name == follower.UserName)
-                                        {
-                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
-                                        }
-                                        else
-                                        {
-                                            @if (follower.HasFollow)
-                                            {
-                                                <a asp-controller="Profile" asp-action="Unfollow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fas fa-minus-circle"></i> <span>Unfollow</span></a>
-                                            }
-                                            else
-                                            {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@follower.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fas fa-plus-circle"></i> <span>Follow</span></a>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            <div class="row" style="text-align: center">
-                                @Html.PagedListPager((IPagedList)ViewBag.UsersFollowers,
-                                        page => Url.Action("Index", "Profile",
-                                new { username = Model.ApplicationUser.UserName, page = page }),
-                                PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
-                            </div>
-                        </div>
-                        <!-- end followers -->
-                        <!-- following -->
-                        <div class="tab-pane fade" id="following">
-                            @foreach (var following in ViewBag.UsersFollowing)
-                            {
-                                <div class="media user-following">
-                                    @if (following.ImageUrl == null)
-                                    {
-                                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object pull-left">
-                                    }
-                                    else
-                                    {
-                                        <img src=@following.ImageUrl alt="User Avatar" class="media-object pull-left">
-                                    }
-                                    <div class="media-body">
-                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName">@following.UserName<br><span class="text-muted username">@following.FirstName @following.LastName</span></a>
-                                        @if (User.Identity.Name == following.UserName)
-                                        {
-                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-info pull-right"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
-                                        }
-                                        else
-                                        {
-                                            @if (following.HasFollow)
-                                            {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-danger pull-right"><i class="fas fa-minus-circle"></i> <span>Unfollow</span></a>
-                                            }
-                                            else
-                                            {
-                                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@following.UserName" type="button" class="btn btn-sm btn-success pull-right"><i class="fas fa-plus-circle"></i> <span>Follow</span></a>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            <div class="row" style="text-align: center">
-                                @Html.PagedListPager((IPagedList)ViewBag.UsersFollowing,
-                                        page => Url.Action("Index", "Profile",
-                                new { username = Model.ApplicationUser.UserName, page = page }),
-                                PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
-                            </div>
-                        </div>
-                        <!-- end following -->
+                        @switch (Model.ActiveTab)
+                        {
+                            case ProfileTab.Activities:
+                                @await Component.InvokeAsync("Activities", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                break;
+                            case ProfileTab.Following:
+                                @await Component.InvokeAsync("Following", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                break;
+                            case ProfileTab.Followers:
+                                @await Component.InvokeAsync("Followers", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                break;
+                            default:
+                                break;
+                        }
                     </div>
                 </div>
             </div>
