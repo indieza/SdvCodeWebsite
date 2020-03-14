@@ -38,13 +38,9 @@
                         <h2>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName</h2>
                         @if (Model.ApplicationUser.IsBlocked == true)
                         {
-                            <div class="col-xs-12">
-                                <span class="label label-danger" style="font-size: medium; padding: 7px 40px 7px 40px"><i class="fas fa-user-slash"> Banned</i></span>
-                            </div>
+                            <span class="label label-danger" style="font-size: medium; padding: 7px 40px 7px 40px"><i class="fas fa-user-slash"> Banned</i></span>
                         }
-                        <div class="row">
-                            <h5>@@@Html.DisplayTextFor(model => model.ApplicationUser.UserName)</h5>
-                        </div>
+                        <h5>@@@Html.DisplayTextFor(model => model.ApplicationUser.UserName)</h5>
                     </div>
                     <div class="action-buttons">
                         <div class="row">
