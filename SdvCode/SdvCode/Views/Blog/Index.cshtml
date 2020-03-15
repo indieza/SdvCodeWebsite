@@ -18,7 +18,7 @@
                 <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
                 @if (SignInManager.IsSignedIn(User) && currentUser.IsBlocked == false)
                 {
-                    <li><a href="#" class="btn btn-primary solid square">Create Post</a></li>
+                    <li><a asp-area="" asp-controller="Blog" asp-action="CreatePost" class="btn btn-primary solid square">Create Post</a></li>
                 }
             </ul>
         </div>

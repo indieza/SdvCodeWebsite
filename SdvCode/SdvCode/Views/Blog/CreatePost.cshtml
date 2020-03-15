@@ -1,0 +1,79 @@
+﻿@using SdvCode.ViewModels.Blog.InputModels
+@model CreatePostIndexModel
+@{
+    ViewData["Title"] = "Create Post";
+}
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>Create Blog Post</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
+                <li><a asp-area="" asp-controller="Blog" asp-action="CreatePost"> Create Post</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1>Create your post now</h1>
+    <hr />
+</div>
+<div class="container">
+    <form id="profile-form" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <h2 class="headerSwitch container">Post Initials</h2>
+            <div class="form-group col-md-4">
+                <label asp-for="@Model.PostInputModel.Title"></label>
+                <input asp-for="@Model.PostInputModel.Title" class="form-control" />
+                <span asp-validation-for="@Model.PostInputModel.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="@Model.PostInputModel.CategoryName"></label>
+                <select class="form-control" asp-for="@Model.PostInputModel.CategoryName">
+                    <option value="">Select Category...</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value=@category>@category</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.PostInputModel.CategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="@Model.PostInputModel.TagsNames"></label>
+                <select class="form-control" asp-for="@Model.PostInputModel.TagsNames">
+                    <option value="">Select Tags...</option>
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <option value=@tag>@tag</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.PostInputModel.TagsNames" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <h2 class="headerSwitch container">Post Cover Image</h2>
+            <div class="form-group col-md-4">
+                <label asp-for="@Model.PostInputModel.CoverImage"></label>
+                <div class="file-upload" id="chooseCoverImage">
+                    <div class="file-select">
+                        <div class="file-select-button" id="fileName">Choose File</div>
+                        <div class="file-select-name" id="noCoverFile">No file chosen...</div>
+                        <input type="file" asp-for="@Model.PostInputModel.CoverImage" id="chooseCoverFile" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <button id="update-profile-button" type="submit" class="btn btn-primary">Post</button>
+            </div>
+        </div>
+    </form>
+</div>
