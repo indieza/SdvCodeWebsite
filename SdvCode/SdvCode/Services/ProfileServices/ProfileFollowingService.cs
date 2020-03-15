@@ -9,7 +9,7 @@ namespace SdvCode.Services.ProfileServices
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Data;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
 
     public class ProfileFollowingService : IProfileFollowingService

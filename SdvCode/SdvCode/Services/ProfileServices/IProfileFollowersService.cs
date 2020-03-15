@@ -7,7 +7,7 @@ namespace SdvCode.Services.ProfileServices
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
 
     public interface IProfileFollowersService

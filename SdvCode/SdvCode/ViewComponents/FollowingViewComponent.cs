@@ -11,7 +11,7 @@ namespace SdvCode.ViewComponents
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Constraints;
     using SdvCode.Data;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
     using SdvCode.Services.ProfileServices;
     using SdvCode.ViewModels.Profile;
     using X.PagedList;

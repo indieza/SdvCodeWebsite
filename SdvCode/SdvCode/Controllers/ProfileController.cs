@@ -8,8 +8,8 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Constraints;
-    using SdvCode.Models;
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
     using SdvCode.Services.ProfileServices;
     using SdvCode.ViewModels.Paging;
     using SdvCode.ViewModels.Profile;

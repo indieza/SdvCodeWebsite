@@ -15,7 +15,7 @@ namespace SdvCode
     using Microsoft.Extensions.Hosting;
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Data;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
     using SdvCode.SecurityModels;
     using SdvCode.Services;
     using SdvCode.Services.CloudServices;

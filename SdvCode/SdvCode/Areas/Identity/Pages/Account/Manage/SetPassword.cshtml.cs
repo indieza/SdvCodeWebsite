@@ -8,7 +8,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
 
     public class SetPasswordModel : PageModel
     {

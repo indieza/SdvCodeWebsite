@@ -5,7 +5,7 @@ namespace SdvCode.Services.ProfileServices
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users;
 

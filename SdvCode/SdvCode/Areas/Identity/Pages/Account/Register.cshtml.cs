@@ -19,7 +19,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.Extensions.Logging;
     using SdvCode.Constraints;
     using SdvCode.Data;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
     using SdvCode.ViewModels.Users;
 
     [AllowAnonymous]

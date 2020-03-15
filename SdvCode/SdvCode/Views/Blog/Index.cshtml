@@ -1,8 +1,10 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using SdvCode.Models.User
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Blog";
+    var currentUser = UserManager.FindByNameAsync(User.Identity.Name).Result;
 }
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
@@ -13,8 +15,8 @@
             <h2>Blog Page</h2>
             <ul class="breadcrumb">
                 <li>Home</li>
-                <li><a href="#"> Blog</a></li>
-                @if (SignInManager.IsSignedIn(User))
+                <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
+                @if (SignInManager.IsSignedIn(User) && currentUser.IsBlocked == false)
                 {
                     <li><a href="#" class="btn btn-primary solid square">Create Post</a></li>
                 }
@@ -39,8 +41,8 @@
                             <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
                             <span class="post-meta-cats">in <a href="#"> News</a></span>
                             <div class="pull-right">
-                                <span class="post-meta-comments"><a href="#"><i class="fas fa-comment-o"></i> 11</a></span>
-                                <span class="post-meta-hits"><a href="#"><i class="fas fa-heart-o"></i> 62</a></span>
+                                <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> 11</a></span>
+                                <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
                             </div>
                         </div>
                     </div>
@@ -66,8 +68,8 @@
                             <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
                             <span class="post-meta-cats">in <a href="#"> News</a></span>
                             <div class="pull-right">
-                                <span class="post-meta-comments"><a href="#"><i class="fas fa-comment-o"></i> 11</a></span>
-                                <span class="post-meta-hits"><a href="#"><i class="fas fa-heart-o"></i> 62</a></span>
+                                <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> 11</a></span>
+                                <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
                             </div>
                         </div>
                     </div>
@@ -91,8 +93,8 @@
                             <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
                             <span class="post-meta-cats">in <a href="#"> News</a></span>
                             <div class="pull-right">
-                                <span class="post-meta-comments"><a href="#"><i class="fas fa-comment-o"></i> 11</a></span>
-                                <span class="post-meta-hits"><a href="#"><i class="fas fa-heart-o"></i> 62</a></span>
+                                <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> 11</a></span>
+                                <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
                             </div>
                         </div>
                     </div>

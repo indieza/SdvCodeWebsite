@@ -8,7 +8,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
 
     public class TwoFactorAuthenticationModel : PageModel
     {

@@ -6,7 +6,7 @@ namespace SdvCode.Services
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
 
     public interface IHomeService
     {

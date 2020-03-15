@@ -16,7 +16,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
     using SdvCode.ViewModels.Users;
 
     [AllowAnonymous]

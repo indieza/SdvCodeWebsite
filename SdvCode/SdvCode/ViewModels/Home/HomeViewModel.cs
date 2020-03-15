@@ -4,7 +4,7 @@
 namespace SdvCode.ViewModels.Home
 {
     using System.Collections.Generic;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
 
     public class HomeViewModel
     {

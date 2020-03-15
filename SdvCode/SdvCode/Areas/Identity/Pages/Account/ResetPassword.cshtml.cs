@@ -11,7 +11,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
 
     [AllowAnonymous]
     public class ResetPasswordModel : PageModel

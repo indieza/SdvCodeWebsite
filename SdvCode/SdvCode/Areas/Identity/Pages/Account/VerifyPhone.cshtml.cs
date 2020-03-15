@@ -10,7 +10,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Options;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
     using SdvCode.SecurityModels;
     using Twilio.Rest.Verify.V2.Service;
 

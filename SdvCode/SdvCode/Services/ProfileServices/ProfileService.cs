@@ -10,8 +10,8 @@ namespace SdvCode.Services.ProfileServices
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
-    using SdvCode.Models;
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users;
 

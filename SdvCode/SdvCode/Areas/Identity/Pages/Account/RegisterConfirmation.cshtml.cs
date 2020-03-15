@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
 
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel

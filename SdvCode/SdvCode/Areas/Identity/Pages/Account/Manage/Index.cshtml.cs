@@ -10,8 +10,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using SdvCode.Constraints;
-    using SdvCode.Models;
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
     using SdvCode.Services;
     using SdvCode.Services.CloudServices;
     using SdvCode.ViewModels.Users;

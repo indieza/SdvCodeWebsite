@@ -5,7 +5,8 @@ namespace SdvCode.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Models;
+    using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -18,6 +19,14 @@ namespace SdvCode.Data
 
         public DbSet<UserAction> UserActions { get; set; }
 
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Tag> Tags { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -25,6 +34,29 @@ namespace SdvCode.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Post>(entity =>
+            {
+                entity.HasOne(x => x.ApplicationUser)
+                    .WithMany(x => x.Posts)
+                    .HasForeignKey(x => x.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(x => x.Comments)
+                    .WithOne(x => x.Post)
+                    .HasForeignKey(x => x.PostId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(x => x.Tags)
+                    .WithOne(x => x.Post)
+                    .HasForeignKey(x => x.PostId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Category)
+                    .WithMany(x => x.Posts)
+                    .HasForeignKey(x => x.CategoryId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
             builder.Entity<FollowUnfollow>().HasKey(k => new
             {
                 k.PersonId,

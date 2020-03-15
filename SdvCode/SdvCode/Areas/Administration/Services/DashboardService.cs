@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Administration.Services
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
     using SdvCode.Data;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
 
     public class DashboardService : IDashboardService
     {

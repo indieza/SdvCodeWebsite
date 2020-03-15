@@ -3,8 +3,8 @@
 
 namespace SdvCode.ViewModels.Profile
 {
-    using SdvCode.Models;
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
 
     public class ProfileViewModel
     {

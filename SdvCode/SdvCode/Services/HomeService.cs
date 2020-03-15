@@ -9,7 +9,7 @@ namespace SdvCode.Services
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Constraints;
     using SdvCode.Data;
-    using SdvCode.Models;
+    using SdvCode.Models.User;
 
     public class HomeService : IHomeService
     {
