@@ -10,23 +10,18 @@ namespace SdvCode.Models.Blog
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class Tag
+    public class PostTag
     {
-        public Tag()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        [Required]
+        [ForeignKey(nameof(Post))]
+        public string PostId { get; set; }
+
+        public Post Post { get; set; }
 
         [Required]
-        public string Id { get; set; }
+        [ForeignKey(nameof(Tag))]
+        public string TagId { get; set; }
 
-        [Required]
-        [MaxLength(15)]
-        public string Name { get; set; }
-
-        [Required]
-        public DateTime CreatedOn { get; set; }
-
-        public ICollection<PostTag> TagsPosts { get; set; } = new HashSet<PostTag>();
+        public Tag Tag { get; set; }
     }
 }

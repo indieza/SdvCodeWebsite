@@ -42,6 +42,8 @@
     <Compile Remove="Data\Migrations\20200315131504_CreateBlogEntities.Designer.cs" />
     <Compile Remove="Data\Migrations\20200315132720_CreateBlogEntities.cs" />
     <Compile Remove="Data\Migrations\20200315132720_CreateBlogEntities.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200315183548_EditDataStructure.cs" />
+    <Compile Remove="Data\Migrations\20200315183548_EditDataStructure.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

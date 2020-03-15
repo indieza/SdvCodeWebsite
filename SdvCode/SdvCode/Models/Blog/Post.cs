@@ -3,13 +3,13 @@
 
 namespace SdvCode.Models.Blog
 {
-    using SdvCode.Models.User;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.User;
 
     public class Post
     {
@@ -53,6 +53,6 @@ namespace SdvCode.Models.Blog
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
-        public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+        public ICollection<PostTag> PostsTags { get; set; } = new HashSet<PostTag>();
     }
 }

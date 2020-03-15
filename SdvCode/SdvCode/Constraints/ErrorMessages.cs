@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class ErrorMessages
@@ -30,5 +32,9 @@ namespace SdvCode.Constraints
         public const string AllUsersAlreadyBlocked = "All users except Administrators are already blocked.";
 
         public const string AllUsersAlreadyUnblocked = "All users  are already unblocked.";
+
+        public const string CategoryAlreadyExist = "\"{0}\" category already exist.";
+
+        public const string TagAlreadyExist = "\"{0}\" tag already exist.";
     }
 }

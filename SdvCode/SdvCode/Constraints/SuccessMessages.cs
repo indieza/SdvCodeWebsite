@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class SuccessMessages
@@ -42,5 +44,9 @@ namespace SdvCode.Constraints
 
         public const string SuccessfullyConfirmedPhoneNumberInContributorRole =
             "Successfully confirmed phone number. You are already in \"{0}\" role.";
+
+        public const string SuccessfullyAddedCategory = "Successfully added \"{0}\" category.";
+
+        public const string SuccessfullyAddedTag = "Successfully added \"{0}\" tag.";
     }
 }

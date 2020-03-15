@@ -27,6 +27,8 @@ namespace SdvCode.Data
 
         public DbSet<Tag> Tags { get; set; }
 
+        public DbSet<PostTag> PostsTags { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -46,15 +48,16 @@ namespace SdvCode.Data
                     .HasForeignKey(x => x.PostId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(x => x.Tags)
-                    .WithOne(x => x.Post)
-                    .HasForeignKey(x => x.PostId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
                 entity.HasOne(x => x.Category)
                     .WithMany(x => x.Posts)
                     .HasForeignKey(x => x.CategoryId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<PostTag>().HasKey(k => new
+            {
+                k.TagId,
+                k.PostId,
             });
 
             builder.Entity<FollowUnfollow>().HasKey(k => new

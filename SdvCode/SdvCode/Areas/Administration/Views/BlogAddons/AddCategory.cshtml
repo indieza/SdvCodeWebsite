@@ -1,0 +1,59 @@
+﻿@using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels
+@{
+    ViewData["Title"] = "Blog addons";
+}
+
+@model AddCategoryInputModel
+
+@if (TempData["Success"] != null)
+{
+    <div class="container-fluid">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @TempData["Success"]
+        </div>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="container-fluid">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @TempData["Error"]
+        </div>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Blog Addons - Add new category</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Add new category</h1>
+    </div>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <div class="col-xl-3 col-md-9 mb-4">
+                <input asp-for="Name" class="form-control" placeholder="Name" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="col-xl-6 col-md-9 mb-4">
+                <input asp-for="Description" class="form-control" placeholder="Description" required />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="BlogAddons" asp-action="AddNewCategory" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Add Category</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+</div>

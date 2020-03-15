@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
 namespace SdvCode.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200315181656_AddTagCreatedOnCol")]
+    partial class AddTagCreatedOnCol
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,21 +255,6 @@ namespace SdvCode.Data.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("SdvCode.Models.Blog.PostTag", b =>
-                {
-                    b.Property<string>("TagId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PostId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("TagId", "PostId");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("PostsTags");
-                });
-
             modelBuilder.Entity("SdvCode.Models.Blog.Tag", b =>
                 {
                     b.Property<string>("Id")
@@ -281,7 +268,13 @@ namespace SdvCode.Data.Migrations
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Tags");
                 });
@@ -549,18 +542,12 @@ namespace SdvCode.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SdvCode.Models.Blog.PostTag", b =>
+            modelBuilder.Entity("SdvCode.Models.Blog.Tag", b =>
                 {
                     b.HasOne("SdvCode.Models.Blog.Post", "Post")
-                        .WithMany("PostsTags")
+                        .WithMany("Tags")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SdvCode.Models.Blog.Tag", "Tag")
-                        .WithMany("TagsPosts")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

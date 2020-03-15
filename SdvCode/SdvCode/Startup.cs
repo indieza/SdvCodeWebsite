@@ -100,6 +100,7 @@ namespace SdvCode
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IHomeService, HomeService>();
             services.AddTransient<IDbUsageService, DbUsageService>();
+            services.AddTransient<IBlogAddonsService, BlogAddonsService>();
             services.AddTransient<IUsersPenaltiesService, UsersPenaltiesService>();
             services.AddTransient<IProfileActivitiesService, ProfileActivitiesService>();
             services.AddTransient<IProfileFollowersService, ProfileFollowersService>();
