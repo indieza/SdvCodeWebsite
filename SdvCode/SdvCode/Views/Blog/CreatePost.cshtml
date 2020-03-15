@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Create Post";
 }
+<style>
+</style>
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
@@ -44,8 +46,7 @@
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="@Model.PostInputModel.TagsNames"></label>
-                <select class="form-control" asp-for="@Model.PostInputModel.TagsNames">
-                    <option value="">Select Tags...</option>
+                <select multiple="multiple" role="multiselect" class="form-control multiselect" asp-for="@Model.PostInputModel.TagsNames">
                     @foreach (var tag in Model.Tags)
                     {
                         <option value=@tag>@tag</option>
@@ -71,9 +72,22 @@
         <hr />
 
         <div class="row">
+            <h2 class="headerSwitch container">Post description</h2>
+            <div class="form-group col-md-12">
+                <label asp-for="@Model.PostInputModel.Content"></label>
+                <textarea asp-for="@Model.PostInputModel.Content" class="form-control" style="resize: vertical" rows="6"></textarea>
+                <span asp-validation-for="@Model.PostInputModel.Content" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
             <div class="form-group col-md-5">
                 <button id="update-profile-button" type="submit" class="btn btn-primary">Post</button>
             </div>
         </div>
     </form>
 </div>
+@section Scripts {
+    <script type="text/javascript" src="~/js/multiSelect.js"></script>
+}

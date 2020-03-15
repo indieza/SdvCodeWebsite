@@ -29,6 +29,6 @@ namespace SdvCode.ViewModels.Blog.InputModels
         public string CategoryName { get; set; }
 
         [Display(Name = "Tags")]
-        public string TagsNames { get; set; }
+        public ICollection<string> TagsNames { get; set; } = new HashSet<string>();
     }
 }

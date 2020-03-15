@@ -43,6 +43,7 @@ namespace SdvCode.Controllers
         {
             if (this.ModelState.IsValid)
             {
+                return null;
             }
 
             return this.View();

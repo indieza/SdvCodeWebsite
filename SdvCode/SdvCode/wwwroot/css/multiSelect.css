@@ -1,0 +1,37 @@
+﻿.form-control {
+    width: 100%;
+}
+
+.multiselect-container {
+    box-shadow: 0 3px 12px rgba(0,0,0,.175);
+    margin: 0;
+}
+
+    .multiselect-container .checkbox {
+        margin: 0;
+    }
+
+    .multiselect-container li {
+        margin: 0;
+        padding: 0;
+        line-height: 0;
+    }
+
+        .multiselect-container li a {
+            line-height: 25px;
+            margin: 0;
+            padding: 0 35px;
+        }
+
+.custom-btn {
+    width: 100% !important;
+}
+
+    .custom-btn .btn, .custom-multi {
+        text-align: left;
+        width: 100% !important;
+    }
+
+.dropdown-menu > .active > a:hover {
+    color: inherit;
+}

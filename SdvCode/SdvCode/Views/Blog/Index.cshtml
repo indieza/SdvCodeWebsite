@@ -4,19 +4,18 @@
 @inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Blog";
-    var currentUser = UserManager.FindByNameAsync(User.Identity.Name).Result;
+    var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
 }
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
-    <!-- Subpage title start -->
     <div class="banner-title-content">
         <div class="text-center">
             <h2>Blog Page</h2>
             <ul class="breadcrumb">
                 <li>Home</li>
                 <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
-                @if (SignInManager.IsSignedIn(User) && currentUser.IsBlocked == false)
+                @if (SignInManager.IsSignedIn(User) && currentUser.Result.IsBlocked == false && currentUser != null)
                 {
                     <li><a asp-area="" asp-controller="Blog" asp-action="CreatePost" class="btn btn-primary solid square">Create Post</a></li>
                 }
