@@ -50,11 +50,11 @@
             // If more than 3 options are selected, the number of selected options is printed.
             buttonText: function (options, select) {
                 if (options.length == 0) {
-                    return this.nonSelectedText + ' <b class="caret"></b>';
+                    return '<b class="caret"></b> ' + this.nonSelectedText;
                 }
                 else {
-                    if (options.length > 5) {
-                        return options.length + ' ' + this.nSelectedText + ' <b class="caret"></b>';
+                    if (options.length > 8) {
+                        return '<b class="caret"></b> ' + options.length + ' ' + this.nSelectedText;
                     }
                     else {
                         var selected = '';
@@ -69,7 +69,7 @@
 
                             selected += label + ', ';
                         });
-                        return selected.substr(0, selected.length - 2) + ' <b class="caret"></b>';
+                        return '<b class="caret"></b> ' + selected.substr(0, selected.length - 2);
                     }
                 }
             },

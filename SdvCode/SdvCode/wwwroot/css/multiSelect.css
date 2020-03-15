@@ -5,6 +5,7 @@
 .multiselect-container {
     box-shadow: 0 3px 12px rgba(0,0,0,.175);
     margin: 0;
+    background-color: white
 }
 
     .multiselect-container .checkbox {

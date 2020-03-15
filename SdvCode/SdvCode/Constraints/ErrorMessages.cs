@@ -36,5 +36,7 @@ namespace SdvCode.Constraints
         public const string CategoryAlreadyExist = "\"{0}\" category already exist.";
 
         public const string TagAlreadyExist = "\"{0}\" tag already exist.";
+
+        public const string YouAreBlock = "Bro you are blocked. Don't make bullshits :)";
     }
 }

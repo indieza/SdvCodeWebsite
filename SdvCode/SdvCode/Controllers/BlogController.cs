@@ -39,6 +39,14 @@ namespace SdvCode.Controllers
         [Authorize]
         public IActionResult CreatePost()
         {
+            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
+
+            if (user.IsBlocked == true)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             var model = new CreatePostIndexModel
             {
                 Categories = this.blogService.ExtractAllCategoryNames(),
@@ -53,9 +61,16 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            if (user.IsBlocked == true)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             if (this.ModelState.IsValid)
             {
-                var user = await this.userManager.GetUserAsync(this.HttpContext.User);
                 bool isAdded = await this.blogService.CreatePost(model, user);
 
                 if (isAdded)
