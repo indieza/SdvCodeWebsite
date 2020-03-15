@@ -3,6 +3,9 @@
 
 namespace SdvCode.Services.Blog
 {
+    using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
+    using SdvCode.ViewModels.Blog.InputModels;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,5 +16,8 @@ namespace SdvCode.Services.Blog
         ICollection<string> ExtractAllCategoryNames();
 
         ICollection<string> ExtractAllTagNames();
+
+        Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user);
+        ICollection<Post> ExtraxtAllPosts();
     }
 }

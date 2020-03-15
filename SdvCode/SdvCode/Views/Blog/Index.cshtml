@@ -1,7 +1,9 @@
 ﻿@using SdvCode.Models.User
 @using Microsoft.AspNetCore.Identity
+@using SdvCode.ViewModels.Blog.ViewModels
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@model BlogViewModel
 @{
     ViewData["Title"] = "Blog";
     var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
@@ -25,85 +27,67 @@
 </div>
 <section id="main-container">
     <div class="container">
+        @if (TempData["Success"] != null)
+        {
+            <div class="container-fluid">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @TempData["Success"]
+                </div>
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="container-fluid">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @TempData["Error"]
+                </div>
+            </div>
+        }
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                <div class="post">
-                    <div class="post-image-wrapper">
-                        <img src="~/images/blog/blog1.jpg" class="img-responsive" alt="" />
-                        <span class="blog-date"><a href="#"> May 03, 2015</a></span>
-                    </div>
-                    <div class="post-header clearfix">
-                        <h2 class="post-title">
-                            <a href="blog-item.html">Over the year we have lots of experience</a>
-                        </h2>
-                        <div class="post-meta">
-                            <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
-                            <span class="post-meta-cats">in <a href="#"> News</a></span>
-                            <div class="pull-right">
-                                <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> 11</a></span>
-                                <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
+                @foreach (var post in Model.Posts)
+                {
+                    <div class="post">
+                        <div class="post-image-wrapper">
+                            <img src=@post.ImageUrl class="img-responsive" alt="post cover image" />
+                            @if (post.CreatedOn == post.UpdatedOn)
+                            {
+                                <span class="blog-date"><a href="#"> @post.CreatedOn.ToString("MMMM dd, yyyy")</a></span>
+                            }
+                            else
+                            {
+                                <span class="blog-date"><a href="#"> @post.UpdatedOn.ToString("MMMM dd, yyyy")</a></span>
+                            }
+                        </div>
+                        <div class="post-header clearfix">
+                            <h2 class="post-title">
+                                <a href="blog-item.html">@post.Title</a>
+                            </h2>
+                            <div class="post-meta">
+                                <span class="post-meta-author">
+                                    Posted on
+                                    <span class="post-meta-cats"> @post.CreatedOn.ToString("dd-MMMM-yyyy")</span>
+                                    by
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@post.ApplicationUser.UserName"> @post.ApplicationUser.UserName</a>
+                                </span>
+                                <span class="post-meta-cats">in <a href="#"> @post.Category.Name</a></span>
+                                <div class="pull-right">
+                                    <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> @post.Comments.Count</a></span>
+                                    <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="post-body">
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t anything embarrassing hidden in the middle dolor sit amet.</p>
-                    </div>
-                    <div class="post-footer">
-                        <a href="blog-item.html" class="btn btn-primary">Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i></a>
-                    </div>
-                </div>
-                <div class="post">
-                    <div class="post-image-wrapper">
-                        <div class="video-embed">
-                            <iframe src="//player.vimeo.com/video/72266001?title=0&amp;byline=0&amp;portrait=0&amp;color=8aba56" width="500" height="281" allowfullscreen></iframe>
+                        <div class="post-body">
+                            <p>@post.ShortContent</p>
                         </div>
-                        <span class="blog-date"><a href="#"> May 19, 2015</a></span>
-                    </div>
-                    <div class="post-header clearfix">
-                        <h2 class="post-title">
-                            <a href="blog-item.html">Dolorem animi nisi autem blanditiis</a>
-                        </h2>
-                        <div class="post-meta">
-                            <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
-                            <span class="post-meta-cats">in <a href="#"> News</a></span>
-                            <div class="pull-right">
-                                <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> 11</a></span>
-                                <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
-                            </div>
+                        <div class="post-footer">
+                            <a href="blog-item.html" class="btn btn-primary">Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i></a>
                         </div>
                     </div>
-                    <div class="post-body">
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t anything embarrassing hidden in the middle dolor sit amet.</p>
-                    </div>
-                    <div class="post-footer">
-                        <a href="blog-item.html" class="btn btn-primary">Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i></a>
-                    </div>
-                </div>
-                <div class="post">
-                    <div class="post-image-wrapper">
-                        <img src="~/images/blog/blog2.jpg" class="img-responsive" alt="" />
-                        <span class="blog-date"><a href="#"> May 23, 2015</a></span>
-                    </div>
-                    <div class="post-header clearfix">
-                        <h2 class="post-title">
-                            <a href="blog-item.html">Many web sites still in their infancy</a>
-                        </h2>
-                        <div class="post-meta">
-                            <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
-                            <span class="post-meta-cats">in <a href="#"> News</a></span>
-                            <div class="pull-right">
-                                <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> 11</a></span>
-                                <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-body">
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t anything embarrassing hidden in the middle dolor sit amet.</p>
-                    </div>
-                    <div class="post-footer">
-                        <a href="blog-item.html" class="btn btn-primary">Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i></a>
-                    </div>
-                </div>
+                }
                 <div class="paging">
                     <ul class="pagination">
                         <li><a href="#"><i class="fas fa-angle-left"></i></a></li>

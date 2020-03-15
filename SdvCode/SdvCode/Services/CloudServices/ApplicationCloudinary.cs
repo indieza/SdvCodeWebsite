@@ -25,8 +25,14 @@ namespace SdvCode.Services.CloudServices
 
                 using (var ms = new MemoryStream(destinationImage))
                 {
-                    // Cloudinary doesn't work with &
+                    // Cloudinary doesn't work with [?, &, #, \, %, <, >]
                     name = name.Replace("&", "And");
+                    name = name.Replace("#", "sharp");
+                    name = name.Replace("?", "questionMark");
+                    name = name.Replace("\\", "right");
+                    name = name.Replace("%", "percent");
+                    name = name.Replace(">", "greater");
+                    name = name.Replace("<", "lower");
 
                     var uploadParams = new ImageUploadParams()
                     {

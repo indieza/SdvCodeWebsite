@@ -4,24 +4,36 @@
 namespace SdvCode.Controllers
 {
     using System.Threading.Tasks;
+    using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
+    using SdvCode.Models.User;
     using SdvCode.Services.Blog;
     using SdvCode.ViewModels.Blog.InputModels;
+    using SdvCode.ViewModels.Blog.ViewModels;
     using Twilio.Rest.Api.V2010.Account.Usage;
 
     public class BlogController : Controller
     {
         private readonly IBlogService blogService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public BlogController(IBlogService blogService)
+        public BlogController(IBlogService blogService, UserManager<ApplicationUser> userManager)
         {
             this.blogService = blogService;
+            this.userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            return this.View();
+            var model = new BlogViewModel
+            {
+                Posts = this.blogService.ExtraxtAllPosts(),
+            };
+
+            return this.View(model);
         }
 
         [Authorize]
@@ -43,10 +55,20 @@ namespace SdvCode.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                return null;
+                var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+                bool isAdded = await this.blogService.CreatePost(model, user);
+
+                if (isAdded)
+                {
+                    this.TempData["Success"] = SuccessMessages.SuccessfullyCreatedPost;
+                }
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return this.View();
+            return this.RedirectToAction("Index", "Blog");
         }
     }
 }

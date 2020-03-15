@@ -48,5 +48,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyAddedCategory = "Successfully added \"{0}\" category.";
 
         public const string SuccessfullyAddedTag = "Successfully added \"{0}\" tag.";
+
+        public const string SuccessfullyCreatedPost = "Successfully created a new post.";
     }
 }
