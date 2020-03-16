@@ -38,5 +38,11 @@ namespace SdvCode.Models.User
         public string CoverImageUrl { get; set; }
 
         public string PostId { get; set; }
+
+        [MaxLength(150)]
+        public string PostTitle { get; set; }
+
+        [MaxLength(350)]
+        public string PostContent { get; set; }
     }
 }

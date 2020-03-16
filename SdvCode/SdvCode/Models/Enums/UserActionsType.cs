@@ -27,5 +27,13 @@ namespace SdvCode.Models.Enums
         LikePost = 9,
         [Display(Name = "Unlike Post")]
         UnlikePost = 10,
+        [Display(Name = "Unliked Post")]
+        UnlikedPost = 11,
+        [Display(Name = "Liked Post")]
+        LikedPost = 12,
+        [Display(Name = "Liked Own Post")]
+        LikeOwnPost = 13,
+        [Display(Name = "Unlike Own Post")]
+        UnlikeOwnPost = 14,
     }
 }

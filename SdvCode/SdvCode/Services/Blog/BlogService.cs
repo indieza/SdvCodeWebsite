@@ -101,7 +101,14 @@ namespace SdvCode.Services.Blog
                 post.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
                 post.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
                 post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id && x.IsLiked == true);
-                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
+                if (user != null)
+                {
+                    post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
+                }
+                else
+                {
+                    post.IsLiked = false;
+                }
             }
 
             return posts;

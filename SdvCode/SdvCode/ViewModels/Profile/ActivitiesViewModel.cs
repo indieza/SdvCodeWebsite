@@ -5,6 +5,7 @@ namespace SdvCode.ViewModels.Profile
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
     using SdvCode.Models.Enums;
@@ -18,8 +19,10 @@ namespace SdvCode.ViewModels.Profile
 
         public ApplicationUser ApplicationUser { get; set; }
 
+        [Required]
         public UserActionsType Action { get; set; }
 
+        [Required]
         public DateTime ActionDate { get; set; }
 
         public string PersonUsername { get; set; }
@@ -35,5 +38,11 @@ namespace SdvCode.ViewModels.Profile
         public string CoverImageUrl { get; set; }
 
         public string PostId { get; set; }
+
+        [MaxLength(150)]
+        public string PostTitle { get; set; }
+
+        [MaxLength(350)]
+        public string PostContent { get; set; }
     }
 }
