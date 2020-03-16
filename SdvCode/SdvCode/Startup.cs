@@ -107,6 +107,7 @@ namespace SdvCode
             services.AddTransient<IProfileFollowersService, ProfileFollowersService>();
             services.AddTransient<IProfileFollowingService, ProfileFollowingService>();
             services.AddTransient<IBlogService, BlogService>();
+            services.AddTransient<IBlogComponentService, BlogComponentService>();
             services.AddTransient<IPostService, PostService>();
 
             // Configure ReCaptch Settings

@@ -21,13 +21,5 @@ namespace SdvCode.Services.Blog
         Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user);
 
         ICollection<Post> ExtraxtAllPosts();
-
-        ICollection<TopCategoriesViewModel> ExtractTopCategories();
-
-        ICollection<TopTagsViewModel> ExtractTopTags();
-
-        ICollection<TopPostsViewModel> ExtractTopPosts();
-
-        ICollection<RecentPostsViewModel> ExtractRecentPosts();
     }
 }

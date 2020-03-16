@@ -1,0 +1,149 @@
+﻿@using SdvCode.ViewModels.Blog.ViewModels
+@model BlogComponentViewModel
+@{
+    ViewData["Title"] = "Blog Component";
+}
+
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+    <div class="sidebar sidebar-right">
+        <div class="widget widget-search">
+            <h3 class="widget-title">Search</h3>
+            <div id="search">
+                <input class="form-control form-control-lg" placeholder="search" type="search">
+            </div>
+        </div>
+        <div class="widget widget-tab">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#popular-tab" data-toggle="tab">popular</a></li>
+                <li class=""><a href="#recent-tab" data-toggle="tab">recent</a></li>
+                <li class=""><a href="#comments-tab" data-toggle="tab">comments</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="popular-tab">
+                    <ul class="posts-list unstyled clearfix">
+                        @foreach (var post in Model.TopPosts)
+                        {
+                            <li>
+                                <div class="posts-thumb pull-left">
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                        <img alt="img" src=@post.ImageUrl>
+                                    </a>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="entry-title">
+                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
+                                    </h4>
+                                    <p class="post-meta">
+                                        <span class="post-meta-author">
+                                            Posted by
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@post.ApplicationUser.UserName">
+                                                @post.ApplicationUser.UserName
+                                            </a>
+                                        </span>
+                                        <span class="post-meta-date">
+                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id"> <i class="fas fa-clock-o"></i> @post.CreatedOn.ToString("MMMM dd")</a>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="tab-pane" id="recent-tab">
+                    <ul class="posts-list unstyled clearfix">
+                        @foreach (var post in Model.RecentPosts)
+                        {
+                            <li>
+                                <div class="posts-thumb pull-left">
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                        <img alt="img" src=@post.ImageUrl>
+                                    </a>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="entry-title">
+                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
+                                    </h4>
+                                    <p class="post-meta">
+                                        <span class="post-meta-author">
+                                            Posted by
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@post.ApplicationUser.UserName">
+                                                @post.ApplicationUser.UserName
+                                            </a>
+                                        </span>
+                                        <span class="post-meta-date">
+                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id"> <i class="fas fa-clock-o"></i> @post.CreatedOn.ToString("MMMM dd")</a>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="tab-pane" id="comments-tab">
+                    <ul class="posts-list unstyled clearfix">
+                        <li>
+                            <div class="posts-avator pull-left">
+                                <a href="#">
+                                    <img alt="img" src="~/images/blog/avator1.png">
+                                </a>
+                            </div>
+                            <div class="post-content">
+                                <h4 class="entry-title">
+                                    <a href="#">If you are going to use a passage  of Lorem Ipsum</a>
+                                </h4>
+                                <p class="post-meta">
+                                    <span class="post-meta-author">Posted by <a href="#"> John</a></span>
+                                    <span class="post-meta-date">
+                                        <a href="#"> <i class="fas fa-clock-o"></i> November 21</a>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                        <li>
+                            <div class="posts-avator pull-left">
+                                <a href="#">
+                                    <img alt="img" src="~/images/blog/avator2.jpg">
+                                </a>
+                            </div>
+                            <div class="post-content">
+                                <h4 class="entry-title">
+                                    <a href="#">you need to be sure there isn’t anything embarra</a>
+                                </h4>
+                                <p class="post-meta">
+                                    <span class="post-meta-author">Posted by <a href="#"> Tina</a></span>
+                                    <span class="post-meta-date">
+                                        <a href="#"> <i class="fas fa-clock-o"></i> October 18</a>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="widget widget-categories">
+            <h3 class="widget-title">Blog Categories</h3>
+            <ul class="category-list clearfix">
+                @foreach (var category in Model.TopCategories)
+                {
+                    <li><a href="#">@category.Name</a><span class="posts-count"> (@category.PostsCount)</span></li>
+                }
+            </ul>
+        </div>
+        <div class="widget widget-tags">
+            <h3 class="widget-title">Popular Tags</h3>
+            <ul class="unstyled clearfix">
+                @foreach (var tag in Model.TopTags)
+                {
+                    <li><a href="#">@tag.Name (@tag.Count)</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
