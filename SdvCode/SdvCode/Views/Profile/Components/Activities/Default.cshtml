@@ -1,4 +1,5 @@
-﻿@using SdvCode.ViewModels.Profile
+﻿@using SdvCode.Models.Enums
+@using SdvCode.ViewModels.Profile
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Mvc.Common
 @using X.PagedList
@@ -43,7 +44,7 @@
             </div>
         }
 
-        @if (action.Action.ToString() == "Followed")
+        @if (action.Action == UserActionsType.Follow)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -75,7 +76,7 @@
             </div>
         }
 
-        if (action.Action.ToString() == "Unfollow")
+        if (action.Action == UserActionsType.Unfollow)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -107,7 +108,7 @@
             </div>
         }
 
-        @if (action.Action.ToString() == "Unfollowed")
+        @if (action.Action == UserActionsType.Unfollowed)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -139,7 +140,7 @@
             </div>
         }
 
-        if (action.Action.ToString() == "EditPersonalData")
+        if (action.Action == UserActionsType.EditPersonalData)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -171,7 +172,7 @@
             </div>
         }
 
-        if (action.Action.ToString() == "ChangeCoverImage")
+        if (action.Action == UserActionsType.ChangeCoverImage)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -208,7 +209,7 @@
             </div>
         }
 
-        if (action.Action.ToString() == "ChangeProfilePicture")
+        if (action.Action == UserActionsType.ChangeProfilePicture)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -245,7 +246,7 @@
             </div>
         }
 
-        @if (action.Action.ToString() == "CreatePost")
+        @if (action.Action == UserActionsType.CreatePost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -272,7 +273,89 @@
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
-                @if (User.Identity.Name == action.ApplicationUser.UserName)
+                @if (User.Identity.Name == action.PersonUsername)
+                {
+                    <div class="btn-group pull-right activity-actions">
+                        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-th"></i>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
+        @if (action.Action == UserActionsType.UnlikePost)
+        {
+            <div class="media activity-item">
+                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
+                    @if (action.PersonProfileImageUrl == null)
+                    {
+                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
+                    }
+                    else
+                    {
+                        <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
+                    }
+                </a>
+                <div class="media-body">
+                    <p class="activity-title">
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername">
+                            <b>
+                                @action.PersonUsername
+                            </b>
+                        </a> unlike a blog
+                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                            <b>post</b>
+                        </a>
+                        <small class="text-muted"></small>
+                    </p>
+                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                </div>
+                @if (User.Identity.Name == action.PersonUsername)
+                {
+                    <div class="btn-group pull-right activity-actions">
+                        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-th"></i>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
+        @if (action.Action == UserActionsType.LikePost)
+        {
+            <div class="media activity-item">
+                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
+                    @if (action.PersonProfileImageUrl == null)
+                    {
+                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
+                    }
+                    else
+                    {
+                        <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
+                    }
+                </a>
+                <div class="media-body">
+                    <p class="activity-title">
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername">
+                            <b>
+                                @action.PersonUsername
+                            </b>
+                        </a> like a blog
+                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                            <b>post</b>
+                        </a>
+                        <small class="text-muted"></small>
+                    </p>
+                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                </div>
+                @if (User.Identity.Name == action.PersonUsername)
                 {
                     <div class="btn-group pull-right activity-actions">
                         <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">

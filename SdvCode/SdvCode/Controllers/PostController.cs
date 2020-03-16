@@ -39,22 +39,7 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            PostViewModel post = this.postService.ExtractCurrentPost(id);
-            var model = new PostViewModel
-            {
-                Id = post.Id,
-                Title = post.Title,
-                Likes = post.Likes,
-                Content = post.Content,
-                CreatedOn = post.CreatedOn,
-                ApplicationUser = post.ApplicationUser,
-                Category = post.Category,
-                UpdatedOn = post.UpdatedOn,
-                Comments = post.Comments,
-                ImageUrl = post.ImageUrl,
-                Tags = post.Tags,
-            };
-
+            PostViewModel model = this.postService.ExtractCurrentPost(id, user);
             return this.View(model);
         }
 
@@ -70,11 +55,37 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isLiked = await this.postService.LikePost(id);
+            bool isLiked = await this.postService.LikePost(id, user);
 
             if (isLiked)
             {
                 this.TempData["Success"] = SuccessMessages.SuccessfullyLikePost;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("Index", "Post", new { id });
+        }
+
+        [Authorize]
+        [Route("/Blog/Post/unlike/{id}")]
+        public async Task<IActionResult> UnlikePost(string id)
+        {
+            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
+
+            if (user.IsBlocked == true)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            bool isUnliked = await this.postService.UnlikePost(id, user);
+
+            if (isUnliked)
+            {
+                this.TempData["Success"] = SuccessMessages.SuccessfullyUnlikePost;
             }
             else
             {

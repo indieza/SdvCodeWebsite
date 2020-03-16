@@ -28,9 +28,10 @@ namespace SdvCode.Controllers
 
         public IActionResult Index()
         {
+            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
             var model = new BlogViewModel
             {
-                Posts = this.blogService.ExtraxtAllPosts(),
+                Posts = this.blogService.ExtraxtAllPosts(user),
             };
 
             return this.View(model);

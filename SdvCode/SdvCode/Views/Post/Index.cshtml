@@ -73,9 +73,18 @@
                             <div class="pull-right">
                                 <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> @Model.Comments.Count</a></span>
                                 <span class="post-meta-hits">
-                                    <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@Model.Id">
-                                        <i class="fa fa-heart-o"></i> @Model.Likes
-                                    </a>
+                                    @if (Model.IsLiked == true)
+                                    {
+                                        <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-id="@Model.Id">
+                                            <i class="fas fa-thumbs-down"></i> @Model.Likes
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@Model.Id">
+                                            <i class="fas fa-thumbs-up"></i> @Model.Likes
+                                        </a>
+                                    }
                                 </span>
                             </div>
                         </div><!-- post meta end -->

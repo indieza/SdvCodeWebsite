@@ -20,6 +20,6 @@ namespace SdvCode.Services.Blog
 
         Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user);
 
-        ICollection<Post> ExtraxtAllPosts();
+        ICollection<Post> ExtraxtAllPosts(ApplicationUser user);
     }
 }

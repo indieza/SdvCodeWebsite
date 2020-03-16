@@ -8,12 +8,15 @@ namespace SdvCode.Services.Post
     using System.Linq;
     using System.Threading.Tasks;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
 
     public interface IPostService
     {
-        Task<bool> LikePost(string id);
+        Task<bool> LikePost(string id, ApplicationUser user);
 
-        PostViewModel ExtractCurrentPost(string id);
+        PostViewModel ExtractCurrentPost(string id, ApplicationUser user);
+
+        Task<bool> UnlikePost(string id, ApplicationUser user);
     }
 }

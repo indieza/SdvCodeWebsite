@@ -56,5 +56,8 @@ namespace SdvCode.Models.Blog
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
         public ICollection<PostTag> PostsTags { get; set; } = new HashSet<PostTag>();
+
+        [NotMapped]
+        public bool IsLiked { get; set; }
     }
 }

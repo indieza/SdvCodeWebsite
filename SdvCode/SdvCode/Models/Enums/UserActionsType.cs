@@ -23,5 +23,9 @@ namespace SdvCode.Models.Enums
         EditPersonalData = 7,
         [Display(Name = "Create Post")]
         CreatePost = 8,
+        [Display(Name = "Like Post")]
+        LikePost = 9,
+        [Display(Name = "Unlike Post")]
+        UnlikePost = 10,
     }
 }

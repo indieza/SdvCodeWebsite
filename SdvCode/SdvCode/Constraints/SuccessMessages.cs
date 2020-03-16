@@ -50,5 +50,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyCreatedPost = "Successfully created a new post.";
 
         public const string SuccessfullyLikePost = "You successfully like post.";
+
+        public const string SuccessfullyUnlikePost = "You successfully unlike post.";
     }
 }

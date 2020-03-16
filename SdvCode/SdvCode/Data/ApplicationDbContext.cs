@@ -29,6 +29,8 @@ namespace SdvCode.Data
 
         public DbSet<PostTag> PostsTags { get; set; }
 
+        public DbSet<PostLike> PostsLikes { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -58,6 +60,12 @@ namespace SdvCode.Data
             {
                 k.TagId,
                 k.PostId,
+            });
+
+            builder.Entity<PostLike>().HasKey(k => new
+            {
+                k.PostId,
+                k.UserId,
             });
 
             builder.Entity<FollowUnfollow>().HasKey(k => new

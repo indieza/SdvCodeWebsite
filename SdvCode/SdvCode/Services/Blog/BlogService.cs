@@ -92,7 +92,7 @@ namespace SdvCode.Services.Blog
             return this.db.Tags.Select(x => x.Name).ToList();
         }
 
-        public ICollection<Post> ExtraxtAllPosts()
+        public ICollection<Post> ExtraxtAllPosts(ApplicationUser user)
         {
             var posts = this.db.Posts.OrderByDescending(x => x.CreatedOn).ToList();
 
@@ -100,6 +100,8 @@ namespace SdvCode.Services.Blog
             {
                 post.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
                 post.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
+                post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id && x.IsLiked == true);
+                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
             }
 
             return posts;
