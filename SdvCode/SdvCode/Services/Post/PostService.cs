@@ -143,7 +143,6 @@ namespace SdvCode.Services.Post
                             PersonUsername = post.ApplicationUser.UserName,
                             ApplicationUserId = post.ApplicationUserId,
                             ApplicationUser = post.ApplicationUser,
-                            ProfileImageUrl = post.ApplicationUser.ImageUrl,
                             FollowerUsername = user.UserName,
                             FollowerProfileImageUrl = user.ImageUrl,
                             PostTitle = post.Title,
@@ -176,7 +175,6 @@ namespace SdvCode.Services.Post
                             PersonProfileImageUrl = user.ImageUrl,
                             PersonUsername = user.UserName,
                             ApplicationUserId = user.Id,
-                            ProfileImageUrl = user.ImageUrl,
                             FollowerUsername = post.ApplicationUser.UserName,
                             FollowerProfileImageUrl = post.ApplicationUser.ImageUrl,
                             PostTitle = post.Title,
@@ -228,7 +226,6 @@ namespace SdvCode.Services.Post
                             PersonProfileImageUrl = user.ImageUrl,
                             PersonUsername = user.UserName,
                             ApplicationUserId = user.Id,
-                            ProfileImageUrl = user.ImageUrl,
                         });
                     }
                 }
@@ -260,7 +257,6 @@ namespace SdvCode.Services.Post
                             PersonUsername = post.ApplicationUser.UserName,
                             ApplicationUserId = post.ApplicationUserId,
                             ApplicationUser = post.ApplicationUser,
-                            ProfileImageUrl = post.ApplicationUser.ImageUrl,
                             FollowerUsername = user.UserName,
                             FollowerProfileImageUrl = user.ImageUrl,
                         });
@@ -292,7 +288,6 @@ namespace SdvCode.Services.Post
                             PersonProfileImageUrl = user.ImageUrl,
                             PersonUsername = user.UserName,
                             ApplicationUserId = user.Id,
-                            ProfileImageUrl = user.ImageUrl,
                             FollowerUsername = post.ApplicationUser.UserName,
                             FollowerProfileImageUrl = post.ApplicationUser.ImageUrl,
                         });
