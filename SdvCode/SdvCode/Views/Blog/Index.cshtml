@@ -55,16 +55,24 @@
                             <img src=@post.ImageUrl class="img-responsive" alt="post cover image" />
                             @if (post.CreatedOn == post.UpdatedOn)
                             {
-                                <span class="blog-date"><a href="#"> @post.CreatedOn.ToString("MMMM dd, yyyy")</a></span>
+                                <span class="blog-date">
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                        @post.CreatedOn.ToString("MMMM dd, yyyy")
+                                    </a>
+                                </span>
                             }
                             else
                             {
-                                <span class="blog-date"><a href="#"> @post.UpdatedOn.ToString("MMMM dd, yyyy")</a></span>
+                                <span class="blog-date">
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                        @post.UpdatedOn.ToString("MMMM dd, yyyy")
+                                    </a>
+                                </span>
                             }
                         </div>
                         <div class="post-header clearfix">
                             <h2 class="post-title">
-                                <a href="blog-item.html">@post.Title</a>
+                                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
                             </h2>
                             <div class="post-meta">
                                 <span class="post-meta-author">
@@ -77,7 +85,7 @@
                                 <div class="pull-right">
                                     <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> @post.Comments.Count</a></span>
                                     <span class="post-meta-hits">
-                                        <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@post.Id" asp-route-title="@post.Title">
+                                        <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@post.Id">
                                             <i class="fa fa-heart-o"></i> @post.Likes
                                         </a>
                                     </span>
@@ -90,7 +98,15 @@
                         <div class="post-footer">
                             @if (SignInManager.IsSignedIn(User) && currentUser.Result.IsBlocked == false && currentUser != null)
                             {
-                                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" asp-route-title="@post.Title" class="btn btn-primary">Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i></a>
+                                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
+                                    Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
+                                    Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
+                                </a>
                             }
                         </div>
                     </div>

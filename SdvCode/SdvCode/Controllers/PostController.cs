@@ -28,8 +28,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [Route("/Blog/Post/{title}/{id}")]
-        public IActionResult Index(string id, string title)
+        [Route("/Blog/Post/{id}")]
+        public IActionResult Index(string id)
         {
             var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
 
@@ -39,7 +39,7 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            PostViewModel post = this.postService.ExtractCurrentPost(id, title);
+            PostViewModel post = this.postService.ExtractCurrentPost(id);
             var model = new PostViewModel
             {
                 Id = post.Id,
@@ -59,8 +59,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [Route("/Blog/{title}/Like/{id}")]
-        public async Task<IActionResult> LikePost(string id, string title)
+        [Route("/Blog/Post/Like/{id}")]
+        public async Task<IActionResult> LikePost(string id)
         {
             var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
 
@@ -70,7 +70,7 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isLiked = await this.postService.LikePost(id, title);
+            bool isLiked = await this.postService.LikePost(id);
 
             if (isLiked)
             {
@@ -81,7 +81,7 @@ namespace SdvCode.Controllers
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return this.RedirectToAction("Index", "Blog");
+            return this.RedirectToAction("Index", "Post", new { id });
         }
     }
 }

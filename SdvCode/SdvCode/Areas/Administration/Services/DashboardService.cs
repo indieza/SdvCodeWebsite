@@ -39,12 +39,13 @@ namespace SdvCode.Areas.Administration.Services
             }
 
             int bannedPeople = this.db.Users.Count(x => x.IsBlocked == true);
+            int postsCount = this.db.Posts.Count();
 
             return new DashboardViewModel
             {
                 TotalUsersCount = usernames.Count(),
                 TotalBannedUsers = bannedPeople,
-                TotalBlogPosts = 12,
+                TotalBlogPosts = postsCount,
                 TotalUsersInAdminRole = adminsCount,
                 Usernames = usernames,
             };

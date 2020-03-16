@@ -9,12 +9,12 @@
     <div class="parallax-overlay"></div>
     <div class="banner-title-content">
         <div class="text-center">
-            <h2>Blog Single</h2>
+            <h2>@Model.Title</h2>
             <ul class="breadcrumb">
                 <li>Home</li>
-                <li>Blog</li>
+                <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
                 <li>
-                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id" asp-route-title="@Model.Title">
+                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
                         @Model.Title
                     </a>
                 </li>
@@ -25,8 +25,26 @@
 
 <section id="main-container">
     <div class="container">
-        <div class="row">
+        @if (TempData["Success"] != null)
+        {
+            <div class="container-fluid">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @TempData["Success"]
+                </div>
+            </div>
+        }
 
+        @if (TempData["Error"] != null)
+        {
+            <div class="container-fluid">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @TempData["Error"]
+                </div>
+            </div>
+        }
+        <div class="row">
             <!-- Blog start -->
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                 <!-- Blog post start -->
@@ -34,18 +52,31 @@
                     <!-- post image start -->
                     <div class="post-image-wrapper">
                         <img src=@Model.ImageUrl class="img-responsive" alt="" />
-                        <span class="blog-date"><a href="#"> @Model.CreatedOn.ToString("MMMM dd, yyyy")</a></span>
+                        <span class="blog-date">
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
+                                @Model.CreatedOn.ToString("MMMM dd, yyyy")
+                            </a>
+                        </span>
                     </div><!-- post image end -->
                     <div class="post-header clearfix">
                         <h2 class="post-title">
-                            <a href="blog-item.html">@Model.Title</a>
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">@Model.Title</a>
                         </h2>
                         <div class="post-meta">
-                            <span class="post-meta-author">Posted by <a href="#"> @Model.ApplicationUser.UserName</a></span>
-                            <span class="post-meta-cats">in <a href="#"> News</a></span>
+                            <span class="post-meta-author">
+                                Posted by
+                                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName">
+                                    @Model.ApplicationUser.UserName
+                                </a>
+                            </span>
+                            <span class="post-meta-cats">in <a href="#"> @Model.Category.Name</a></span>
                             <div class="pull-right">
                                 <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> @Model.Comments.Count</a></span>
-                                <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> @Model.Likes</a></span>
+                                <span class="post-meta-hits">
+                                    <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@Model.Id">
+                                        <i class="fa fa-heart-o"></i> @Model.Likes
+                                    </a>
+                                </span>
                             </div>
                         </div><!-- post meta end -->
                     </div><!-- post heading end -->
@@ -65,7 +96,7 @@
                             }
                         </div>
                         <div class="author-info">
-                            <h3>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName<span>@Model.ApplicationUser.Country, @Model.ApplicationUser.City</span></h3>
+                            <h3>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName<span>@Model.ApplicationUser.CountryCode.ToString().Split("_")[0], @Model.ApplicationUser.City</span></h3>
                             <p>@Model.ApplicationUser.AboutMe</p>
                             <p class="author-url">Profile: <span><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName">@@@Model.ApplicationUser.UserName</a></span></p>
                         </div>

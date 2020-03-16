@@ -20,9 +20,9 @@ namespace SdvCode.Services.Post
             this.db = db;
         }
 
-        public PostViewModel ExtractCurrentPost(string id, string title)
+        public PostViewModel ExtractCurrentPost(string id)
         {
-            var post = this.db.Posts.FirstOrDefault(x => x.Id == id && x.Title == title);
+            var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
             PostViewModel model = new PostViewModel
             {
                 Id = post.Id,
@@ -30,13 +30,13 @@ namespace SdvCode.Services.Post
                 Likes = post.Likes,
                 Content = post.Content,
                 CreatedOn = post.CreatedOn,
-                Category = post.Category,
                 UpdatedOn = post.UpdatedOn,
                 Comments = post.Comments,
                 ImageUrl = post.ImageUrl,
             };
 
             model.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
+            model.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
 
             foreach (var tag in post.PostsTags)
             {
@@ -52,9 +52,9 @@ namespace SdvCode.Services.Post
             return model;
         }
 
-        public async Task<bool> LikePost(string id, string title)
+        public async Task<bool> LikePost(string id)
         {
-            var post = this.db.Posts.FirstOrDefault(x => x.Id == id && x.Title == title);
+            var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
 
             if (post != null)
             {

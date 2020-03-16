@@ -12,8 +12,8 @@ namespace SdvCode.Services.Post
 
     public interface IPostService
     {
-        Task<bool> LikePost(string id, string title);
+        Task<bool> LikePost(string id);
 
-        PostViewModel ExtractCurrentPost(string id, string title);
+        PostViewModel ExtractCurrentPost(string id);
     }
 }
