@@ -44,6 +44,7 @@ namespace SdvCode.Services.ProfileServices
                     PersonProfileImageUrl = item.PersonProfileImageUrl,
                     PersonUsername = item.PersonUsername,
                     ProfileImageUrl = item.ProfileImageUrl,
+                    PostId = item.PostId,
                 });
             }
 

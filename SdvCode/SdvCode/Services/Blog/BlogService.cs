@@ -11,6 +11,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.CloudServices;
     using SdvCode.ViewModels.Blog.InputModels;
@@ -67,6 +68,16 @@ namespace SdvCode.Services.Blog
             }
 
             this.db.Posts.Add(post);
+            this.db.UserActions.Add(new UserAction
+            {
+                Action = UserActionsType.CreatePost,
+                ActionDate = DateTime.UtcNow,
+                ApplicationUserId = user.Id,
+                PostId = post.Id,
+                PersonProfileImageUrl = user.ImageUrl,
+                PersonUsername = user.UserName,
+                ProfileImageUrl = user.ImageUrl,
+            });
             await this.db.SaveChangesAsync();
             return true;
         }

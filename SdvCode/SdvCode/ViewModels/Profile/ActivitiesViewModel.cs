@@ -33,5 +33,7 @@ namespace SdvCode.ViewModels.Profile
         public string ProfileImageUrl { get; set; }
 
         public string CoverImageUrl { get; set; }
+
+        public string PostId { get; set; }
     }
 }

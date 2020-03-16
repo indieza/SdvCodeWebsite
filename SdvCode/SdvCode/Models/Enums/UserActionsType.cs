@@ -21,5 +21,7 @@ namespace SdvCode.Models.Enums
         ChangeProfilePicture = 6,
         [Display(Name = "Edit Personal Data")]
         EditPersonalData = 7,
+        [Display(Name = "Create Post")]
+        CreatePost = 8,
     }
 }
