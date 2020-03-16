@@ -31,6 +31,10 @@ namespace SdvCode.Controllers
             var model = new BlogViewModel
             {
                 Posts = this.blogService.ExtraxtAllPosts(),
+                TopCategories = this.blogService.ExtractTopCategories(),
+                TopTags = this.blogService.ExtractTopTags(),
+                TopPosts = this.blogService.ExtractTopPosts(),
+                RecentPosts = this.blogService.ExtractRecentPosts(),
             };
 
             return this.View(model);

@@ -1,17 +1,15 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Areas.Administration.Services
+namespace SdvCode.Services.Blog
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public interface IBlogAddonsService
+    public interface IPostService
     {
-        Task<bool> CreateCategory(string name, string description);
-
-        Task<bool> CreateTag(string name);
+        Task<bool> LikePost(string id, string title);
     }
 }

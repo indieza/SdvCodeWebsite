@@ -12,5 +12,13 @@ namespace SdvCode.ViewModels.Blog.ViewModels
     public class BlogViewModel
     {
         public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+
+        public ICollection<RecentPostsViewModel> RecentPosts { get; set; } = new HashSet<RecentPostsViewModel>();
+
+        public ICollection<TopCategoriesViewModel> TopCategories { get; set; } = new HashSet<TopCategoriesViewModel>();
+
+        public ICollection<TopTagsViewModel> TopTags { get; set; } = new HashSet<TopTagsViewModel>();
+
+        public ICollection<TopPostsViewModel> TopPosts { get; set; } = new HashSet<TopPostsViewModel>();
     }
 }

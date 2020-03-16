@@ -76,7 +76,11 @@
                                 <span class="post-meta-cats">in <a href="#"> @post.Category.Name</a></span>
                                 <div class="pull-right">
                                     <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> @post.Comments.Count</a></span>
-                                    <span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
+                                    <span class="post-meta-hits">
+                                        <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@post.Id" asp-route-title="@post.Title">
+                                            <i class="fa fa-heart-o"></i> @post.Likes
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -118,106 +122,55 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="popular-tab">
                                 <ul class="posts-list unstyled clearfix">
-                                    <li>
-                                        <div class="posts-thumb pull-left">
-                                            <a href="#">
-                                                <img alt="img" src="~/images/blog/blog1.jpg">
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h4 class="entry-title">
-                                                <a href="#">Bulgaria claims to find Europe's 'oldest town'</a>
-                                            </h4>
-                                            <p class="post-meta">
-                                                <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
-                                                <span class="post-meta-date">
-                                                    <a href="#"> <i class="fas fa-clock-o"></i> November 14</a>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </li>
-                                    <li>
-                                        <div class="posts-thumb pull-left">
-                                            <a href="#">
-                                                <img alt="img" src="~/images/blog/blog2.jpg">
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h4 class="entry-title">
-                                                <a href="#">Lorem ipsum dolor sit amet, consectetur claims</a>
-                                            </h4>
-                                            <p class="post-meta">
-                                                <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
-                                                <span class="post-meta-date">
-                                                    <a href="#"> <i class="fas fa-clock-o"></i> October 19</a>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </li>
-                                    <li>
-                                        <div class="posts-thumb pull-left">
-                                            <a href="#">
-                                                <img alt="img" src="~/images/blog/blog3.jpg">
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h4 class="entry-title">
-                                                <a href="#">Should You Ever Skip Giving A Tip?</a>
-                                            </h4>
-                                            <p class="post-meta">
-                                                <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
-                                                <span class="post-meta-date">
-                                                    <a href="#"> <i class="fas fa-clock-o"></i> November 21</a>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </li><!-- 3rd post end-->
+                                    @foreach (var topPost in Model.TopPosts)
+                                    {
+                                        <li>
+                                            <div class="posts-thumb pull-left">
+                                                <a href="#">
+                                                    <img alt="img" src=@topPost.ImageUrl>
+                                                </a>
+                                            </div>
+                                            <div class="post-content">
+                                                <h4 class="entry-title">
+                                                    <a href="#">@topPost.Title</a>
+                                                </h4>
+                                                <p class="post-meta">
+                                                    <span class="post-meta-author">Posted by <a href="#"> @topPost.ApplicationUser.UserName</a></span>
+                                                    <span class="post-meta-date">
+                                                        <a href="#"> <i class="fas fa-clock-o"></i> @topPost.CreatedOn.ToString("MMMM dd")</a>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
 
                             <div class="tab-pane" id="recent-tab">
                                 <ul class="posts-list unstyled clearfix">
-                                    <li>
-                                        <div class="posts-thumb pull-left">
-                                            <a href="#">
-                                                <img alt="img" src="~/images/blog/blog3.jpg">
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h4 class="entry-title">
-                                                <a href="#">Bulgaria claims to find Europe's 'oldest town'</a>
-                                            </h4>
-                                            <p class="post-meta">
-                                                <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
-                                                <span class="post-meta-date">
-                                                    <a href="#"> <i class="fas fa-clock-o"></i> November 21</a>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </li>
-                                    <li>
-                                        <div class="posts-thumb pull-left">
-                                            <a href="#">
-                                                <img alt="img" src="~/images/blog/blog1.jpg">
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h4 class="entry-title">
-                                                <a href="#">Bulgaria claims to find Europe's 'oldest town'</a>
-                                            </h4>
-                                            <p class="post-meta">
-                                                <span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
-                                                <span class="post-meta-date">
-                                                    <a href="#"> <i class="fas fa-clock-o"></i> October 19</a>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </li>
+                                    @foreach (var recetPost in Model.RecentPosts)
+                                    {
+                                        <li>
+                                            <div class="posts-thumb pull-left">
+                                                <a href="#">
+                                                    <img alt="img" src=@recetPost.ImageUrl>
+                                                </a>
+                                            </div>
+                                            <div class="post-content">
+                                                <h4 class="entry-title">
+                                                    <a href="#">@recetPost.Title</a>
+                                                </h4>
+                                                <p class="post-meta">
+                                                    <span class="post-meta-author">Posted by <a href="#"> @recetPost.ApplicationUser.UserName</a></span>
+                                                    <span class="post-meta-date">
+                                                        <a href="#"> <i class="fas fa-clock-o"></i> @recetPost.CreatedOn.ToString("MMMM dd")</a>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                             <div class="tab-pane" id="comments-tab">
@@ -267,29 +220,20 @@
                     <div class="widget widget-categories">
                         <h3 class="widget-title">Blog Categories</h3>
                         <ul class="category-list clearfix">
-                            <li><a href="#">Objects</a><span class="posts-count"> (19)</span></li>
-                            <li><a href="#">Technology</a><span class="posts-count"> (09)</span></li>
-                            <li><a href="#">Photography</a><span class="posts-count"> (13)</span></li>
-                            <li><a href="#">Fashion</a><span class="posts-count"> (10)</span></li>
-                            <li><a href="#">Realtough</a><span class="posts-count"> (14)</span></li>
-                            <li><a href="#">Architecture</a><span class="posts-count"> (11)</span></li>
+                            @foreach (var category in Model.TopCategories)
+                            {
+                                <li><a href="#">@category.Name</a><span class="posts-count"> (@category.PostsCount)</span></li>
+                            }
                         </ul>
                     </div>
                     <div class="widget widget-tags">
                         <h3 class="widget-title">Popular Tags</h3>
                         <ul class="unstyled clearfix">
-                            <li><a href="#">iMac</a></li>
-                            <li><a href="#">Black and Green</a></li>
-                            <li><a href="#">Crative</a></li>
-                            <li><a href="#">Momentum</a></li>
-                            <li><a href="#">Business</a></li>
-                            <li><a href="#">Cellular</a></li>
-                            <li><a href="#">Niche</a></li>
+                            @foreach (var tag in Model.TopTags)
+                            {
+                                <li><a href="#">@tag.Name (@tag.Count)</a></li>
+                            }
                         </ul>
-                    </div>
-                    <div class="widget">
-                        <h3 class="widget-title">Text Widgets</h3>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normalopposed.</p>
                     </div>
                 </div>
             </div>

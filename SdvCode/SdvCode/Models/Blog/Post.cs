@@ -39,6 +39,8 @@ namespace SdvCode.Models.Blog
 
         public string ImageUrl { get; set; }
 
+        public int Likes { get; set; }
+
         [Required]
         [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }

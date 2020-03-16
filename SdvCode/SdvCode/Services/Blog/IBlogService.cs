@@ -3,13 +3,14 @@
 
 namespace SdvCode.Services.Blog
 {
-    using SdvCode.Models.Blog;
-    using SdvCode.Models.User;
-    using SdvCode.ViewModels.Blog.InputModels;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
+    using SdvCode.ViewModels.Blog.InputModels;
+    using SdvCode.ViewModels.Blog.ViewModels;
 
     public interface IBlogService
     {
@@ -18,6 +19,15 @@ namespace SdvCode.Services.Blog
         ICollection<string> ExtractAllTagNames();
 
         Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user);
+
         ICollection<Post> ExtraxtAllPosts();
+
+        ICollection<TopCategoriesViewModel> ExtractTopCategories();
+
+        ICollection<TopTagsViewModel> ExtractTopTags();
+
+        ICollection<TopPostsViewModel> ExtractTopPosts();
+
+        ICollection<RecentPostsViewModel> ExtractRecentPosts();
     }
 }

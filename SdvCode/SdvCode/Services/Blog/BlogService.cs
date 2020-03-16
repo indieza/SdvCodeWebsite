@@ -14,6 +14,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.Models.User;
     using SdvCode.Services.CloudServices;
     using SdvCode.ViewModels.Blog.InputModels;
+    using SdvCode.ViewModels.Blog.ViewModels;
 
     public class BlogService : IBlogService
     {
@@ -47,6 +48,7 @@ namespace SdvCode.Services.Blog
                 UpdatedOn = DateTime.UtcNow,
                 ShortContent = $"{model.PostInputModel.Content.Substring(0, 347)}...",
                 ApplicationUser = user,
+                Likes = 0,
             };
 
             if (imageUrl != null)
@@ -79,9 +81,85 @@ namespace SdvCode.Services.Blog
             return this.db.Tags.Select(x => x.Name).ToList();
         }
 
+        public ICollection<RecentPostsViewModel> ExtractRecentPosts()
+        {
+            var posts = this.db.Posts.ToList().OrderByDescending(x => x.UpdatedOn).Take(3);
+            var recentPosts = new List<RecentPostsViewModel>();
+
+            foreach (var post in posts)
+            {
+                recentPosts.Add(new RecentPostsViewModel
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    CreatedOn = post.CreatedOn,
+                    ImageUrl = post.ImageUrl,
+                    ApplicationUser = post.ApplicationUser,
+                });
+            }
+
+            return recentPosts;
+        }
+
+        public ICollection<TopCategoriesViewModel> ExtractTopCategories()
+        {
+            var categories = this.db.Categories.ToList();
+            var topCategories = new List<TopCategoriesViewModel>();
+
+            foreach (var category in categories)
+            {
+                topCategories.Add(new TopCategoriesViewModel
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    PostsCount = this.db.Posts.Count(x => x.CategoryId == category.Id),
+                });
+            }
+
+            return topCategories.OrderByDescending(x => x.PostsCount).Take(10).ToList();
+        }
+
+        public ICollection<TopPostsViewModel> ExtractTopPosts()
+        {
+            var posts = this.db.Posts.ToList().OrderByDescending(x => x.Comments.Count + x.Likes).Take(3);
+            var topPosts = new List<TopPostsViewModel>();
+
+            foreach (var post in posts)
+            {
+                topPosts.Add(new TopPostsViewModel
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    CreatedOn = post.CreatedOn,
+                    ImageUrl = post.ImageUrl,
+                    ApplicationUser = post.ApplicationUser,
+                });
+            }
+
+            return topPosts;
+        }
+
+        public ICollection<TopTagsViewModel> ExtractTopTags()
+        {
+            var tags = this.db.Tags.ToList();
+            var topTags = new List<TopTagsViewModel>();
+
+            foreach (var tag in tags)
+            {
+                topTags.Add(new TopTagsViewModel
+                {
+                    Id = tag.Id,
+                    Name = tag.Name,
+                    Count = this.db.PostsTags.Count(x => x.TagId == tag.Id),
+                });
+            }
+
+            return topTags.OrderByDescending(x => x.Count).Take(10).ToList();
+        }
+
         public ICollection<Post> ExtraxtAllPosts()
         {
-            var posts = this.db.Posts.ToList();
+            var posts = this.db.Posts.OrderByDescending(x => x.CreatedOn).ToList();
 
             foreach (var post in posts)
             {

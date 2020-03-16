@@ -1,17 +1,19 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Areas.Administration.Services
+namespace SdvCode.ViewModels.Blog.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public interface IBlogAddonsService
+    public class TopTagsViewModel
     {
-        Task<bool> CreateCategory(string name, string description);
+        public string Id { get; set; }
 
-        Task<bool> CreateTag(string name);
+        public string Name { get; set; }
+
+        public int Count { get; set; }
     }
 }
