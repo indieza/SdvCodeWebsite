@@ -12,7 +12,7 @@
 <div class="tab-pane fade in active">
     @foreach (var action in ViewBag.UsersActions)
     {
-        @if (action.Action.ToString() == "Follow")
+        @if (action.Action == UserActionsType.Follow)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -44,7 +44,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.Follow)
+        @if (action.Action == UserActionsType.Followed)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
