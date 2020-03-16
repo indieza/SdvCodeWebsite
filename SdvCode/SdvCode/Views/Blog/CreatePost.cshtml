@@ -1,5 +1,8 @@
 ﻿@using SdvCode.ViewModels.Blog.InputModels
+@using SdvCode.SecurityModels
+@using Microsoft.Extensions.Options
 @model CreatePostIndexModel
+@inject IOptions<TinyMceSettings> TinySettings
 @{
     ViewData["Title"] = "Create Post";
 }
@@ -75,7 +78,7 @@
             <h2 class="headerSwitch container">Post description</h2>
             <div class="form-group col-md-12">
                 <label asp-for="@Model.PostInputModel.Content"></label>
-                <textarea asp-for="@Model.PostInputModel.Content" class="form-control" style="resize: vertical" rows="6"></textarea>
+                <textarea asp-for="@Model.PostInputModel.Content" class="form-control" style="resize: vertical" rows="30"></textarea>
                 <span asp-validation-for="@Model.PostInputModel.Content" class="text-danger"></span>
             </div>
         </div>
@@ -90,4 +93,6 @@
 </div>
 @section Scripts {
     <script type="text/javascript" src="~/js/multiSelect.js"></script>
+    @*<script src="https://cdn.tiny.cloud/1/@TinySettings.Value.ApiKey/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <script type="text/javascript" src="~/js/tinyMce.js"></script>*@
 }
