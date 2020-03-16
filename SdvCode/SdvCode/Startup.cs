@@ -20,6 +20,7 @@ namespace SdvCode
     using SdvCode.Services;
     using SdvCode.Services.Blog;
     using SdvCode.Services.CloudServices;
+    using SdvCode.Services.Post;
     using SdvCode.Services.ProfileServices;
     using Twilio;
 

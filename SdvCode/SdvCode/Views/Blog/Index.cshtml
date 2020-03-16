@@ -88,7 +88,10 @@
                             <p>@post.ShortContent</p>
                         </div>
                         <div class="post-footer">
-                            <a href="blog-item.html" class="btn btn-primary">Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i></a>
+                            @if (SignInManager.IsSignedIn(User) && currentUser.Result.IsBlocked == false && currentUser != null)
+                            {
+                                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" asp-route-title="@post.Title" class="btn btn-primary">Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i></a>
+                            }
                         </div>
                     </div>
                 }

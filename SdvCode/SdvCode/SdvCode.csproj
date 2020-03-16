@@ -1834,6 +1834,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administration\Data\" />
+    <Folder Include="ViewModels\Post\InputModels\" />
   </ItemGroup>
 
 </Project>
