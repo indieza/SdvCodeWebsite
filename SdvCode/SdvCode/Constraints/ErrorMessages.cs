@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class ErrorMessages
@@ -36,5 +38,7 @@ namespace SdvCode.Constraints
         public const string TagAlreadyExist = "\"{0}\" tag already exist.";
 
         public const string YouAreBlock = "Bro you are blocked. Don't make bullshits :)";
+
+        public const string NotInBlogRoles = "You're not in \"{0}\" role. Go to your account add phone number and verify it.";
     }
 }

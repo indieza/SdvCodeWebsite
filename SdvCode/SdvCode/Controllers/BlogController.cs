@@ -3,11 +3,13 @@
 
 namespace SdvCode.Controllers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.Services.Blog;
@@ -19,11 +21,13 @@ namespace SdvCode.Controllers
     {
         private readonly IBlogService blogService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly GlobalUserValidator userValidator;
 
         public BlogController(IBlogService blogService, UserManager<ApplicationUser> userManager)
         {
             this.blogService = blogService;
             this.userManager = userManager;
+            this.userValidator = new GlobalUserValidator(this.userManager);
         }
 
         public IActionResult Index()
@@ -42,9 +46,17 @@ namespace SdvCode.Controllers
         {
             var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
 
-            if (user.IsBlocked == true)
+            var isBlocked = this.userValidator.IsBlocked(user);
+            if (isBlocked == true)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            var isInRole = this.userValidator.IsInBlogRole(user);
+            if (isInRole == false)
+            {
+                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
@@ -62,13 +74,7 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-
-            if (user.IsBlocked == true)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
+            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
 
             if (this.ModelState.IsValid)
             {

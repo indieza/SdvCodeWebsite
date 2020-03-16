@@ -10,6 +10,7 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
@@ -20,11 +21,13 @@ namespace SdvCode.Controllers
     {
         private readonly IPostService postService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly GlobalUserValidator userValidator;
 
         public PostController(IPostService postService, UserManager<ApplicationUser> userManager)
         {
             this.postService = postService;
             this.userManager = userManager;
+            this.userValidator = new GlobalUserValidator(this.userManager);
         }
 
         [Authorize]
@@ -33,9 +36,17 @@ namespace SdvCode.Controllers
         {
             var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
 
-            if (user.IsBlocked == true)
+            var isBlocked = this.userValidator.IsBlocked(user);
+            if (isBlocked == true)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            var isInRole = this.userValidator.IsInBlogRole(user);
+            if (isInRole == false)
+            {
+                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
@@ -49,9 +60,17 @@ namespace SdvCode.Controllers
         {
             var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
 
-            if (user.IsBlocked == true)
+            var isBlocked = this.userValidator.IsBlocked(user);
+            if (isBlocked == true)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            var isInRole = this.userValidator.IsInBlogRole(user);
+            if (isInRole == false)
+            {
+                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
@@ -75,9 +94,17 @@ namespace SdvCode.Controllers
         {
             var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
 
-            if (user.IsBlocked == true)
+            var isBlocked = this.userValidator.IsBlocked(user);
+            if (isBlocked == true)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            var isInRole = this.userValidator.IsInBlogRole(user);
+            if (isInRole == false)
+            {
+                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
