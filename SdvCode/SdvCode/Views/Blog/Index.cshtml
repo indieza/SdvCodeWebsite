@@ -6,6 +6,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @model BlogViewModel
 @{
+    var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
     ViewData["Title"] = "Blog";
 }
 <div id="banner-area">
@@ -17,7 +18,15 @@
             <ul class="breadcrumb">
                 <li>Home</li>
                 <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
-                <partial name="_CreatePostPartial" />
+                @if (SignInManager.IsSignedIn(User) && currentUser.Result.IsBlocked == false && currentUser != null)
+                {
+                    @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Author.ToString()) || User.IsInRole(Roles.Contributor.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Blog" asp-action="CreatePost" class="btn btn-primary solid square">Create Post</a>
+                        </li>
+                    }
+                }
             </ul>
         </div>
     </div>

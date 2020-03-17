@@ -21,6 +21,7 @@ namespace SdvCode.ViewModels.Blog.InputModels
         [Display(Name = "Content")]
         public string Content { get; set; }
 
+        [Required]
         [Display(Name = "Cover Image")]
         public IFormFile CoverImage { get; set; }
 
