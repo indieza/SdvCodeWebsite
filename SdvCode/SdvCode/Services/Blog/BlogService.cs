@@ -172,6 +172,8 @@ namespace SdvCode.Services.Blog
                 }
 
                 var postsLikes = this.db.PostsLikes.Where(x => x.PostId == post.Id);
+                var postActivities = this.db.UserActions.Where(x => x.PostId == post.Id);
+                this.db.UserActions.RemoveRange(postActivities);
                 this.db.PostsLikes.RemoveRange(postsLikes);
                 this.db.Posts.Remove(post);
 
