@@ -1,4 +1,5 @@
 ﻿@using SdvCode.ViewModels.Post.ViewModels
+@using SdvCode.Areas.Administration.Models.Enums
 @model PostViewModel
 @{
     ViewData["Title"] = Model.Title;
@@ -62,6 +63,10 @@
                         <h2 class="post-title">
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">@Model.Title</a>
                         </h2>
+                        @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                        {
+                            <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@Model.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
+                        }
                         <div class="post-meta">
                             <span class="post-meta-author">
                                 Posted by
@@ -91,6 +96,14 @@
                     </div><!-- post heading end -->
                     <div class="entry-content">
                         <p>@Model.Content</p>
+                    </div>
+                    <div class="widget widget-tags">
+                        <ul class="unstyled clearfix">
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <li><a href="#">@tag.Name</a></li>
+                            }
+                        </ul>
                     </div>
                     <!-- Author info start -->
                     <div class="about-author">

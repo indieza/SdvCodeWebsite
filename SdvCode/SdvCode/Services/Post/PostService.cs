@@ -25,6 +25,7 @@ namespace SdvCode.Services.Post
         public PostViewModel ExtractCurrentPost(string id, ApplicationUser user)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            post.PostsTags = this.db.PostsTags.Where(x => x.PostId == post.Id).ToList();
             PostViewModel model = new PostViewModel
             {
                 Id = post.Id,

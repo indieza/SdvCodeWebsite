@@ -21,5 +21,7 @@ namespace SdvCode.Services.Blog
         Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user);
 
         ICollection<Post> ExtraxtAllPosts(ApplicationUser user);
+
+        Task<bool> DeletePost(string id, ApplicationUser user);
     }
 }

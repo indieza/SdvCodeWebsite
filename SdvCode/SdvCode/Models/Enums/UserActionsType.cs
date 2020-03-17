@@ -35,5 +35,11 @@ namespace SdvCode.Models.Enums
         LikeOwnPost = 13,
         [Display(Name = "Unlike Own Post")]
         UnlikeOwnPost = 14,
+        [Display(Name = "Delete Own Post")]
+        DeleteOwnPost = 15,
+        [Display(Name = "Delete Post")]
+        DeletePost = 16,
+        [Display(Name = "Deleted Post")]
+        DeletedPost = 17,
     }
 }

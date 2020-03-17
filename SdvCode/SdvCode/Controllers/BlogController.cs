@@ -70,6 +70,32 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public async Task<IActionResult> DeletePost(string id)
+        {
+            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
+
+            var isBlocked = this.userValidator.IsBlocked(user);
+            if (isBlocked == true)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            var isDeleted = await this.blogService.DeletePost(id, user);
+
+            if (isDeleted == true)
+            {
+                this.TempData["Success"] = SuccessMessages.SuccessfullyDeletePost;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("Index", "Blog");
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)

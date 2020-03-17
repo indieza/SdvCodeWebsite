@@ -78,6 +78,10 @@
                             <h2 class="post-title">
                                 <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
                             </h2>
+                            @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                            {
+                                <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@post.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
+                            }
                             <div class="post-meta">
                                 <span class="post-meta-author">
                                     Posted on
@@ -127,18 +131,9 @@
                             <p>@post.ShortContent</p>
                         </div>
                         <div class="post-footer">
-                            @if (SignInManager.IsSignedIn(User) && currentUser.Result.IsBlocked == false && currentUser != null)
-                            {
-                                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
-                                    Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
-                                </a>
-                            }
-                            else
-                            {
-                                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
-                                    Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
-                                </a>
-                            }
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
+                                Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
+                            </a>
                         </div>
                     </div>
                 }

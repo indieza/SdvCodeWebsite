@@ -31,14 +31,6 @@ namespace SdvCode.Services.Blog
         public async Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user)
         {
             var category = this.db.Categories.FirstOrDefault(x => x.Name == model.PostInputModel.CategoryName);
-            var imageName = string.Join(string.Empty, model.PostInputModel.Title.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries));
-
-            var imageUrl = await ApplicationCloudinary.UploadImage(
-                this.cloudinary,
-                model.PostInputModel.CoverImage,
-                string.Format(
-                    GlobalConstants.CloudinaryPostCoverImageName,
-                    imageName));
 
             var post = new Post
             {
@@ -51,6 +43,13 @@ namespace SdvCode.Services.Blog
                 ApplicationUser = user,
                 Likes = 0,
             };
+
+            var imageUrl = await ApplicationCloudinary.UploadImage(
+                this.cloudinary,
+                model.PostInputModel.CoverImage,
+                string.Format(
+                    GlobalConstants.CloudinaryPostCoverImageName,
+                    post.Id));
 
             if (imageUrl != null)
             {
@@ -80,6 +79,107 @@ namespace SdvCode.Services.Blog
             });
             await this.db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<bool> DeletePost(string id, ApplicationUser user)
+        {
+            var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            var userPost = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
+
+            if (post != null && userPost != null)
+            {
+                if (post.ImageUrl != null)
+                {
+                    ApplicationCloudinary
+                        .DeleteImage(this.cloudinary, string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id));
+                }
+
+                if (user.Id == post.ApplicationUserId)
+                {
+                    if (this.db.UserActions
+                        .Any(x => x.Action == UserActionsType.DeleteOwnPost &&
+                        x.ApplicationUserId == user.Id &&
+                        x.PersonUsername == user.UserName))
+                    {
+                        this.db.UserActions
+                            .FirstOrDefault(x => x.Action == UserActionsType.DeleteOwnPost &&
+                            x.ApplicationUserId == user.Id &&
+                            x.PersonUsername == user.UserName).ActionDate = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        this.db.UserActions.Add(new UserAction
+                        {
+                            Action = UserActionsType.DeleteOwnPost,
+                            ActionDate = DateTime.UtcNow,
+                            ApplicationUserId = user.Id,
+                            PersonUsername = user.UserName,
+                            PersonProfileImageUrl = user.ImageUrl,
+                        });
+                    }
+                }
+                else
+                {
+                    if (this.db.UserActions
+                        .Any(x => x.Action == UserActionsType.DeletedPost &&
+                        x.ApplicationUserId == userPost.Id &&
+                        x.PersonUsername == userPost.UserName &&
+                        x.FollowerUsername == user.UserName))
+                    {
+                        this.db.UserActions
+                            .FirstOrDefault(x => x.Action == UserActionsType.DeletedPost &&
+                            x.ApplicationUserId == userPost.Id &&
+                            x.PersonUsername == userPost.UserName &&
+                            x.FollowerUsername == user.UserName).ActionDate = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        this.db.UserActions.Add(new UserAction
+                        {
+                            Action = UserActionsType.DeletedPost,
+                            ActionDate = DateTime.UtcNow,
+                            ApplicationUserId = userPost.Id,
+                            PersonUsername = userPost.UserName,
+                            FollowerUsername = user.UserName,
+                            FollowerProfileImageUrl = user.ImageUrl,
+                        });
+                    }
+
+                    if (this.db.UserActions
+                        .Any(x => x.Action == UserActionsType.DeletePost &&
+                        x.ApplicationUserId == user.Id &&
+                        x.PersonUsername == user.UserName &&
+                        x.FollowerUsername == userPost.UserName))
+                    {
+                        this.db.UserActions
+                            .FirstOrDefault(x => x.Action == UserActionsType.DeletePost &&
+                            x.ApplicationUserId == user.Id &&
+                            x.PersonUsername == user.UserName &&
+                            x.FollowerUsername == userPost.UserName).ActionDate = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        this.db.UserActions.Add(new UserAction
+                        {
+                            Action = UserActionsType.DeletePost,
+                            ActionDate = DateTime.UtcNow,
+                            ApplicationUserId = user.Id,
+                            PersonUsername = user.UserName,
+                            FollowerUsername = userPost.UserName,
+                            FollowerProfileImageUrl = userPost.ImageUrl,
+                        });
+                    }
+                }
+
+                var postsLikes = this.db.PostsLikes.Where(x => x.PostId == post.Id);
+                this.db.PostsLikes.RemoveRange(postsLikes);
+                this.db.Posts.Remove(post);
+
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
 
         public ICollection<string> ExtractAllCategoryNames()
