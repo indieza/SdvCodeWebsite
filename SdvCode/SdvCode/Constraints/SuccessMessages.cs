@@ -54,5 +54,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyUnlikePost = "You successfully unlike post.";
 
         public const string SuccessfullyDeletePost = "You successfully delete the post";
+
+        public const string SuccessfullyEditedPost = "You successfully edit your blog post.";
     }
 }

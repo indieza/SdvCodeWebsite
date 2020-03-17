@@ -17,6 +17,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -29,7 +30,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly ApplicationDbContext db;
 
         public RegisterModel(
@@ -37,7 +38,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<ApplicationRole> roleManager,
             ApplicationDbContext db)
         {
             this.userManager = userManager;
@@ -86,7 +87,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
                         "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    IdentityRole role = await this.roleManager.FindByNameAsync(GlobalConstants.SubscriberRole);
+                    ApplicationRole role = await this.roleManager.FindByNameAsync(GlobalConstants.SubscriberRole);
 
                     if (role == null)
                     {
@@ -134,9 +135,11 @@ namespace SdvCode.Areas.Identity.Pages.Account
 
         public async Task<IdentityResult> CreateRole(string role)
         {
-            IdentityRole identityRole = new IdentityRole
+            Roles roleValue = (Roles)Enum.Parse(typeof(Roles), role);
+            ApplicationRole identityRole = new ApplicationRole
             {
                 Name = role,
+                RoleLevel = (int)roleValue,
             };
 
             IdentityResult result = await this.roleManager.CreateAsync(identityRole);

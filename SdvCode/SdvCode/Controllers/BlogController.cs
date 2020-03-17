@@ -13,6 +13,7 @@ namespace SdvCode.Controllers
     using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.Services.Blog;
+    using SdvCode.Services.Post;
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
     using Twilio.Rest.Api.V2010.Account.Usage;
@@ -21,12 +22,14 @@ namespace SdvCode.Controllers
     {
         private readonly IBlogService blogService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IPostService postService;
         private readonly GlobalUserValidator userValidator;
 
-        public BlogController(IBlogService blogService, UserManager<ApplicationUser> userManager)
+        public BlogController(IBlogService blogService, UserManager<ApplicationUser> userManager, IPostService postService)
         {
             this.blogService = blogService;
             this.userManager = userManager;
+            this.postService = postService;
             this.userValidator = new GlobalUserValidator(this.userManager);
         }
 
@@ -120,10 +123,9 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        public IActionResult EditPost()
+        public async Task<IActionResult> EditPost(string id)
         {
             var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
-
             var isBlocked = this.userValidator.IsBlocked(user);
             if (isBlocked == true)
             {
@@ -131,7 +133,37 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            return this.View();
+            EditPostInputModel model = await this.blogService.ExtractPost(id, user);
+            model.Categories = this.blogService.ExtractAllCategoryNames();
+            model.Tags = this.blogService.ExtractAllTagNames();
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EditPost(EditPostInputModel model)
+        {
+            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
+            var isBlocked = this.userValidator.IsBlocked(user);
+            if (isBlocked == true)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            bool isEdited = await this.blogService.EditPost(model, user);
+
+            if (isEdited)
+            {
+                this.TempData["Success"] = SuccessMessages.SuccessfullyEditedPost;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("Index", "Post", new { model.Id });
         }
     }
 }

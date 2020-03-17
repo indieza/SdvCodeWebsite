@@ -3,10 +3,12 @@
 
 namespace SdvCode.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -14,11 +16,11 @@ namespace SdvCode.Services
     public class HomeService : IHomeService
     {
         private readonly ApplicationDbContext db;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
 
         public HomeService(
             ApplicationDbContext db,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<ApplicationRole> roleManager)
         {
             this.db = db;
             this.roleManager = roleManager;
@@ -26,9 +28,11 @@ namespace SdvCode.Services
 
         public async Task<IdentityResult> CreateRole(string role)
         {
-            IdentityRole identityRole = new IdentityRole
+            Roles roleValue = (Roles)Enum.Parse(typeof(Roles), role);
+            ApplicationRole identityRole = new ApplicationRole
             {
                 Name = role,
+                RoleLevel = (int)roleValue,
             };
 
             IdentityResult result = await this.roleManager.CreateAsync(identityRole);

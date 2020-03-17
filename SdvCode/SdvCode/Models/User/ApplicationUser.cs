@@ -68,7 +68,7 @@ namespace SdvCode.Models.User
         public int ActionsCount { get; set; }
 
         [NotMapped]
-        public ICollection<IdentityRole> Roles { get; set; } = new HashSet<IdentityRole>();
+        public ICollection<ApplicationRole> Roles { get; set; } = new HashSet<ApplicationRole>();
 
         [NotMapped]
         public bool IsFollowed { get; set; }

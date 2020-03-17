@@ -41,5 +41,11 @@ namespace SdvCode.Models.Enums
         DeletePost = 16,
         [Display(Name = "Deleted Post")]
         DeletedPost = 17,
+        [Display(Name = "Edit Post")]
+        EditPost = 18,
+        [Display(Name = "Edited Post")]
+        EditedPost = 19,
+        [Display(Name = "Edit Own Post")]
+        EditOwnPost = 20,
     }
 }

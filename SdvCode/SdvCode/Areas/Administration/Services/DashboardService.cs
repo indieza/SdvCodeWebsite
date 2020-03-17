@@ -3,6 +3,7 @@
 
 namespace SdvCode.Areas.Administration.Services
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
@@ -13,12 +14,12 @@ namespace SdvCode.Areas.Administration.Services
 
     public class DashboardService : IDashboardService
     {
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
 
         public DashboardService(
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<ApplicationRole> roleManager,
             UserManager<ApplicationUser> userManager,
             ApplicationDbContext db)
         {
@@ -53,9 +54,11 @@ namespace SdvCode.Areas.Administration.Services
 
         public async Task<IdentityResult> CreateRole(string role)
         {
-            IdentityRole identityRole = new IdentityRole
+            Roles roleValue = (Roles)Enum.Parse(typeof(Roles), role);
+            ApplicationRole identityRole = new ApplicationRole
             {
                 Name = role,
+                RoleLevel = (int)roleValue,
             };
 
             IdentityResult result = await this.roleManager.CreateAsync(identityRole);

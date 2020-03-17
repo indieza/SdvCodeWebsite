@@ -8,7 +8,7 @@ namespace SdvCode.Data
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

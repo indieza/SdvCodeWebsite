@@ -18,11 +18,11 @@ namespace SdvCode.Services.ProfileServices
     public class ProfileService : IProfileService
     {
         private readonly ApplicationDbContext db;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
 
         public ProfileService(
             ApplicationDbContext db,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<ApplicationRole> roleManager)
         {
             this.db = db;
             this.roleManager = roleManager;
@@ -51,7 +51,7 @@ namespace SdvCode.Services.ProfileServices
             user.ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id);
             var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
             var roles = this.db.Roles.Where(x => rolesIds.Contains(x.Id)).OrderBy(x => x.Name).ToList();
-            user.Roles = roles;
+            user.Roles = roles.OrderBy(x => x.RoleLevel).ToList();
             return user;
         }
 
@@ -258,7 +258,7 @@ namespace SdvCode.Services.ProfileServices
         public void MakeYourselfAdmin(string username)
         {
             ApplicationUser user = this.db.Users.FirstOrDefault(x => x.UserName == username);
-            IdentityRole role = this.db.Roles.FirstOrDefault(x => x.Name == Roles.Administrator.ToString());
+            ApplicationRole role = this.db.Roles.FirstOrDefault(x => x.Name == Roles.Administrator.ToString());
 
             if (user == null || role == null)
             {

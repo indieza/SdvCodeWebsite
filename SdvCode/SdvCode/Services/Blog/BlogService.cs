@@ -8,6 +8,7 @@ namespace SdvCode.Services.Blog
     using System.Linq;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
@@ -184,6 +185,99 @@ namespace SdvCode.Services.Blog
             return false;
         }
 
+        public async Task<bool> EditPost(EditPostInputModel model, ApplicationUser user)
+        {
+            var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
+
+            if (post != null)
+            {
+                var category = await this.db.Categories.FirstOrDefaultAsync(x => x.Name == model.CategoryName);
+                var postUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
+                post.Category = category;
+                post.Title = model.Title;
+                post.UpdatedOn = DateTime.UtcNow;
+                post.Content = model.Content;
+                post.ShortContent = $"{model.Content.Substring(0, 347)}...";
+
+                var imageUrl = await ApplicationCloudinary.UploadImage(
+                    this.cloudinary,
+                    model.CoverImage,
+                    string.Format(
+                        GlobalConstants.CloudinaryPostCoverImageName,
+                        post.Id));
+
+                if (imageUrl != null)
+                {
+                    post.ImageUrl = imageUrl;
+                }
+
+                List<PostTag> oldTagsIds = this.db.PostsTags.Where(x => x.PostId == model.Id).ToList();
+                this.db.PostsTags.RemoveRange(oldTagsIds);
+
+                List<PostTag> postTags = new List<PostTag>();
+                foreach (var tagName in model.TagsNames)
+                {
+                    var tag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToLower() == tagName.ToLower());
+                    postTags.Add(new PostTag
+                    {
+                        PostId = post.Id,
+                        TagId = tag.Id,
+                    });
+                }
+
+                post.PostsTags = postTags;
+
+                if (user.Id == postUser.Id)
+                {
+                    this.db.UserActions.Add(new UserAction
+                    {
+                        Action = UserActionsType.EditOwnPost,
+                        ActionDate = DateTime.UtcNow,
+                        ApplicationUserId = user.Id,
+                        PersonUsername = user.UserName,
+                        PersonProfileImageUrl = user.ImageUrl,
+                        PostId = post.Id,
+                        PostTitle = post.Title,
+                        PostContent = $"{post.Content.Substring(0, 347)}...",
+                    });
+                }
+                else
+                {
+                    this.db.UserActions.Add(new UserAction
+                    {
+                        Action = UserActionsType.EditPost,
+                        ActionDate = DateTime.UtcNow,
+                        ApplicationUserId = user.Id,
+                        PersonUsername = user.UserName,
+                        FollowerUsername = postUser.UserName,
+                        FollowerProfileImageUrl = postUser.ImageUrl,
+                        PostId = post.Id,
+                        PostTitle = post.Title,
+                        PostContent = $"{post.Content.Substring(0, 347)}...",
+                    });
+
+                    this.db.UserActions.Add(new UserAction
+                    {
+                        Action = UserActionsType.EditedPost,
+                        ActionDate = DateTime.UtcNow,
+                        ApplicationUserId = postUser.Id,
+                        PersonUsername = postUser.UserName,
+                        FollowerUsername = user.UserName,
+                        FollowerProfileImageUrl = user.ImageUrl,
+                        PostId = post.Id,
+                        PostTitle = post.Title,
+                        PostContent = $"{post.Content.Substring(0, 347)}...",
+                    });
+                }
+
+                this.db.Posts.Update(post);
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
         public ICollection<string> ExtractAllCategoryNames()
         {
             return this.db.Categories.Select(x => x.Name).ToList();
@@ -192,6 +286,28 @@ namespace SdvCode.Services.Blog
         public ICollection<string> ExtractAllTagNames()
         {
             return this.db.Tags.Select(x => x.Name).ToList();
+        }
+
+        public async Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user)
+        {
+            var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
+            post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
+            var postTagsNames = new List<string>();
+
+            foreach (var tag in post.PostsTags)
+            {
+                postTagsNames.Add(this.db.Tags.FirstOrDefault(x => x.Id == tag.TagId).Name);
+            }
+
+            return new EditPostInputModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                CategoryName = post.Category.Name,
+                Content = post.Content,
+                TagsNames = postTagsNames,
+                Tags = postTagsNames,
+            };
         }
 
         public ICollection<Post> ExtraxtAllPosts(ApplicationUser user)

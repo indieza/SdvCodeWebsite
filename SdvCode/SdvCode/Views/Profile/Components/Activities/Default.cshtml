@@ -745,6 +745,173 @@
                 }
             </div>
         }
+
+        @if (action.Action == UserActionsType.EditPost)
+        {
+            <div class="media activity-item">
+                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
+                    @if (action.FollowerProfileImageUrl == null)
+                    {
+                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
+                    }
+                    else
+                    {
+                        <img src=@action.FollowerProfileImageUrl alt="Avatar" class="media-object avatar">
+                    }
+                </a>
+                <div class="media-body">
+                    <p class="activity-title">
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername">
+                            <b>
+                                @action.PersonUsername
+                            </b>
+                        </a> edit
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername">
+                            <b>
+                                @action.FollowerUsername
+                            </b>
+                        </a> blog
+                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                            <b>post</b>
+                        </a>
+                        <small class="text-muted"></small>
+                    </p>
+                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <div class="activity-attachment">
+                        <h4>
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                                @action.PostTitle
+                            </a>
+                        </h4>
+                        <div class="well well-sm">
+                            @action.PostContent
+                        </div>
+                    </div>
+                </div>
+                @if (User.Identity.Name == action.PersonUsername)
+                {
+                    <div class="btn-group pull-right activity-actions">
+                        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-th"></i>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (action.Action == UserActionsType.EditedPost)
+        {
+            <div class="media activity-item">
+                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
+                    @if (action.FollowerProfileImageUrl == null)
+                    {
+                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
+                    }
+                    else
+                    {
+                        <img src=@action.FollowerProfileImageUrl alt="Avatar" class="media-object avatar">
+                    }
+                </a>
+                <div class="media-body">
+                    <p class="activity-title">
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername">
+                            <b>
+                                @action.PersonUsername
+                            </b>
+                        </a> blog
+                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                            <b>post</b>
+                        </a> was edited by
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername">
+                            <b>
+                                @action.FollowerUsername
+                            </b>
+                        </a>
+
+                        <small class="text-muted"></small>
+                    </p>
+                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <div class="activity-attachment">
+                        <h4>
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                                @action.PostTitle
+                            </a>
+                        </h4>
+                        <div class="well well-sm">
+                            @action.PostContent
+                        </div>
+                    </div>
+                </div>
+                @if (User.Identity.Name == action.PersonUsername)
+                {
+                    <div class="btn-group pull-right activity-actions">
+                        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-th"></i>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (action.Action == UserActionsType.EditOwnPost)
+        {
+            <div class="media activity-item">
+                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
+                    @if (action.PersonProfileImageUrl == null)
+                    {
+                        <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
+                    }
+                    else
+                    {
+                        <img src=@action.PersonProfileImageUrl alt="Avatar" class="media-object avatar">
+                    }
+                </a>
+                <div class="media-body">
+                    <p class="activity-title">
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername">
+                            <b>
+                                @action.PersonUsername
+                            </b>
+                        </a> edit his own blog
+                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                            <b>post</b>
+                        </a>
+                        <small class="text-muted"></small>
+                    </p>
+                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <div class="activity-attachment">
+                        <h4>
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                                @action.PostTitle
+                            </a>
+                        </h4>
+                        <div class="well well-sm">
+                            @action.PostContent
+                        </div>
+                    </div>
+                </div>
+                @if (User.Identity.Name == action.PersonUsername)
+                {
+                    <div class="btn-group pull-right activity-actions">
+                        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-th"></i>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
     }
     <div class="row" style="text-align: center">
         @Html.PagedListPager((IPagedList)ViewBag.UsersActions,

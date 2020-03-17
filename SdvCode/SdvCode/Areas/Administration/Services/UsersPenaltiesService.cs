@@ -9,15 +9,16 @@ namespace SdvCode.Areas.Administration.Services
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Models.User;
 
     public class UsersPenaltiesService : IUsersPenaltiesService
     {
         private readonly ApplicationDbContext db;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
 
         public UsersPenaltiesService(
             ApplicationDbContext db,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<ApplicationRole> roleManager)
         {
             this.db = db;
             this.roleManager = roleManager;
