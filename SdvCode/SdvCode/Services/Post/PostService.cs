@@ -37,6 +37,7 @@ namespace SdvCode.Services.Post
                 Comments = post.Comments,
                 ImageUrl = post.ImageUrl,
                 IsLiked = this.db.PostsLikes.Any(x => x.PostId == id && x.UserId == user.Id && x.IsLiked == true),
+                IsAuthor = post.ApplicationUserId == user.Id ? true : false,
             };
 
             model.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);

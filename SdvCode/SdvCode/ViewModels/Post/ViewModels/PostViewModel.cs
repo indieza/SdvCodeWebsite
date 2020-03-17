@@ -39,5 +39,7 @@ namespace SdvCode.ViewModels.Post.ViewModels
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
         public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+
+        public bool IsAuthor { get; set; }
     }
 }

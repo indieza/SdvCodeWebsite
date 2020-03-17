@@ -70,7 +70,7 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
+        [Authorize]
         public async Task<IActionResult> DeletePost(string id)
         {
             var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
@@ -117,6 +117,21 @@ namespace SdvCode.Controllers
             }
 
             return this.RedirectToAction("Index", "Blog");
+        }
+
+        [Authorize]
+        public IActionResult EditPost()
+        {
+            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
+
+            var isBlocked = this.userValidator.IsBlocked(user);
+            if (isBlocked == true)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            return this.View();
         }
     }
 }

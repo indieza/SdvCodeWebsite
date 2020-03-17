@@ -9,7 +9,7 @@
 @model ProfileViewModel
 @inject UserManager<ApplicationUser> UserManager
 @{
-    ViewData["Title"] = $"{User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1, User.Identity.Name.Length - 1)} Profile";
+    ViewData["Title"] = $"{Model.ApplicationUser.UserName.Substring(0, 1).ToUpper() + Model.ApplicationUser.UserName.Substring(1, Model.ApplicationUser.UserName.Length - 1)} Profile";
 }
 
 <div class="user-profile">
