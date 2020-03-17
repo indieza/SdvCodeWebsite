@@ -4,6 +4,7 @@
 namespace SdvCode
 {
     using System;
+    using AutoMapper;
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -113,6 +114,7 @@ namespace SdvCode
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
