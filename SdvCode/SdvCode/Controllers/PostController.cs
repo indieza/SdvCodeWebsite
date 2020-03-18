@@ -12,6 +12,7 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
+    using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Services.Post;
@@ -21,13 +22,15 @@ namespace SdvCode.Controllers
     {
         private readonly IPostService postService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext db;
         private readonly GlobalUserValidator userValidator;
 
-        public PostController(IPostService postService, UserManager<ApplicationUser> userManager)
+        public PostController(IPostService postService, UserManager<ApplicationUser> userManager, ApplicationDbContext db)
         {
             this.postService = postService;
             this.userManager = userManager;
-            this.userValidator = new GlobalUserValidator(this.userManager);
+            this.db = db;
+            this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
 
         [Authorize]

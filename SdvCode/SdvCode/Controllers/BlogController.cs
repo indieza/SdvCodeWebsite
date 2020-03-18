@@ -11,6 +11,7 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
+    using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.Services.Blog;
     using SdvCode.Services.Post;
@@ -23,14 +24,20 @@ namespace SdvCode.Controllers
         private readonly IBlogService blogService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IPostService postService;
+        private readonly ApplicationDbContext db;
         private readonly GlobalUserValidator userValidator;
 
-        public BlogController(IBlogService blogService, UserManager<ApplicationUser> userManager, IPostService postService)
+        public BlogController(
+            IBlogService blogService,
+            UserManager<ApplicationUser> userManager,
+            IPostService postService,
+            ApplicationDbContext db)
         {
             this.blogService = blogService;
             this.userManager = userManager;
             this.postService = postService;
-            this.userValidator = new GlobalUserValidator(this.userManager);
+            this.db = db;
+            this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
 
         public IActionResult Index()
@@ -85,8 +92,14 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isDeleted = await this.blogService.DeletePost(id, user);
+            var isInRole = this.userValidator.IsInPostRole(user, id);
+            if (isInRole == false)
+            {
+                this.TempData["Error"] = ErrorMessages.NotInDeletePostRoles;
+                return this.RedirectToAction("Index", "Blog");
+            }
 
+            var isDeleted = await this.blogService.DeletePost(id, user);
             if (isDeleted == true)
             {
                 this.TempData["Success"] = SuccessMessages.SuccessfullyDeletePost;
@@ -130,6 +143,13 @@ namespace SdvCode.Controllers
             if (isBlocked == true)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            var isInRole = this.userValidator.IsInPostRole(user, id);
+            if (isInRole == false)
+            {
+                this.TempData["Error"] = ErrorMessages.NotInEditPostRoles;
                 return this.RedirectToAction("Index", "Blog");
             }
 

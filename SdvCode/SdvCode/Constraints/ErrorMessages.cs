@@ -38,5 +38,9 @@ namespace SdvCode.Constraints
         public const string YouAreBlock = "Bro you are blocked. Don't make bullshits :)";
 
         public const string NotInBlogRoles = "You're not in \"{0}\" role. Go to your account add phone number and verify it.";
+
+        public const string NotInDeletePostRoles = "You don't have permissions to delete post.";
+
+        public const string NotInEditPostRoles = "You don't have permissions to edit post.";
     }
 }

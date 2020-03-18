@@ -9,15 +9,18 @@ namespace SdvCode.Constraints
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Data;
     using SdvCode.Models.User;
 
     public class GlobalUserValidator
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext db;
 
-        public GlobalUserValidator(UserManager<ApplicationUser> userManager)
+        public GlobalUserValidator(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
         {
             this.userManager = userManager;
+            this.db = db;
         }
 
         public bool IsBlocked(ApplicationUser user)
@@ -33,6 +36,25 @@ namespace SdvCode.Constraints
                 this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()).Result)
             {
                 return true;
+            }
+
+            return false;
+        }
+
+        public bool IsInPostRole(ApplicationUser user, string id)
+        {
+            var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+
+            if (post != null)
+            {
+                if (this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()).Result ||
+                    this.userManager.IsInRoleAsync(user, Roles.Author.ToString()).Result ||
+                    post.ApplicationUserId == user.Id)
+                {
+                    return true;
+                }
+
+                return false;
             }
 
             return false;
