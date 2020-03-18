@@ -2,7 +2,7 @@
 @using SdvCode.SecurityModels
 @using Microsoft.Extensions.Options
 @model CreatePostIndexModel
-@inject IOptions<TinyMceSettings> TinySettings
+@inject IOptions<ReCaptchSettings> GoogleReCaptch
 @{
     ViewData["Title"] = "Create Post";
 }
@@ -79,7 +79,7 @@
             <h2 class="headerSwitch container">Post description</h2>
             <div class="form-group col-md-12">
                 <label asp-for="@Model.PostInputModel.Content"></label>
-                <textarea asp-for="@Model.PostInputModel.Content" class="form-control" style="resize: vertical" rows="15"></textarea>
+                <textarea asp-for="@Model.PostInputModel.Content" class="form-control edit-with-tinymce" style="resize: vertical" rows="30"></textarea>
                 <span asp-validation-for="@Model.PostInputModel.Content" class="text-danger"></span>
             </div>
         </div>
@@ -93,8 +93,16 @@
     </form>
 </div>
 @section Scripts {
-    <script type="text/javascript" src="~/js/multiSelect.js"></script>
     <partial name="_ValidationScriptsPartial" />
-    @*<script src="https://cdn.tiny.cloud/1/@TinySettings.Value.ApiKey/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-        <script type="text/javascript" src="~/js/tinyMce.js"></script>*@
+    <script type="text/javascript" src="~/js/multiSelect.js"></script>
+    <script src="~/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script src="~/lib/tinymce/visualizer.js" type="text/javascript"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=@GoogleReCaptch.Value.SiteKey"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleReCaptch.Value.SiteKey', { action: 'homepage' }).then(function (token) {
+
+            });
+        });
+    </script>
 }
