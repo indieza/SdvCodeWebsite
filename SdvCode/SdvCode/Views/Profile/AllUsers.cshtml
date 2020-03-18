@@ -1,10 +1,13 @@
 ﻿@using X.PagedList.Mvc.Core
 @using X.PagedList.Mvc.Common
 @using X.PagedList
+@using SdvCode.ViewModels.Users
 
 @{
     ViewData["Title"] = "All Users";
 }
+
+@model IEnumerable<UserCardViewModel>
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
@@ -21,7 +24,7 @@
 </div>
 <div class="container">
     <div class="row">
-        @foreach (var user in ViewBag.UsersCards)
+        @foreach (var user in Model)
         {
             <div class="col-md-4">
                 <div class="uicard">
@@ -97,7 +100,7 @@
 </div>
 <div class="container">
     <div class="row" style="text-align: center">
-        @Html.PagedListPager((IPagedList)ViewBag.UsersCards,
+        @Html.PagedListPager((IPagedList)Model,
                 page => Url.Action("AllUsers", "Profile",
                 new { page = page }),
                 PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)

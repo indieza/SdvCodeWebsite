@@ -28,9 +28,8 @@ namespace SdvCode.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(string username, int page)
         {
             List<ActivitiesViewModel> allActivities = await this.activitiesService.ExtractActivities(username);
-            this.ViewBag.UsersActions = allActivities.ToPagedList(page, GlobalConstants.UsersActivitiesCountOnPage);
             this.ViewBag.Username = username;
-            return this.View(allActivities);
+            return this.View(allActivities.ToPagedList(page, GlobalConstants.UsersActivitiesCountOnPage));
         }
     }
 }

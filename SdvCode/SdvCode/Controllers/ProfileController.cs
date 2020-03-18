@@ -96,8 +96,7 @@ namespace SdvCode.Controllers
             var allUsers = this.profileService.GetAllUsers(currentUserId);
 
             var pageNumber = page ?? 1;
-            this.ViewBag.UsersCards = allUsers.UsersCards.ToPagedList(pageNumber, GlobalConstants.UsersCountOnPage);
-            return this.View();
+            return this.View(allUsers.UsersCards.ToPagedList(pageNumber, GlobalConstants.UsersCountOnPage));
         }
 
         [Route("/DeleteActivityHistory/{username}")]

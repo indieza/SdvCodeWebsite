@@ -32,9 +32,8 @@ namespace SdvCode.ViewComponents
             var user = await this.userManager.FindByNameAsync(username);
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
             List<FollowingViewModel> allFollowing = await this.followingService.ExtractFollowing(user, currentUserId);
-            this.ViewBag.Following = allFollowing.ToPagedList(page, GlobalConstants.FollowingCountOnPage);
             this.ViewBag.Username = username;
-            return this.View(allFollowing);
+            return this.View(allFollowing.ToPagedList(page, GlobalConstants.FollowingCountOnPage));
         }
     }
 }

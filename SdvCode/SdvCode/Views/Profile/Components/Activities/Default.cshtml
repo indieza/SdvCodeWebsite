@@ -10,7 +10,7 @@
 }
 
 <div class="tab-pane fade in active">
-    @foreach (var action in ViewBag.UsersActions)
+    @foreach (var action in Model)
     {
         @if (action.Action == UserActionsType.Follow)
         {
@@ -914,7 +914,7 @@
         }
     }
     <div class="row" style="text-align: center">
-        @Html.PagedListPager((IPagedList)ViewBag.UsersActions,
+        @Html.PagedListPager((IPagedList)Model,
                 page => Url.Action("Index", "Profile",
         new { username = ViewBag.Username, page = page }),
         PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
