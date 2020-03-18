@@ -8,6 +8,7 @@ namespace SdvCode.ViewModels.Blog.InputModels
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Http;
 
     public class CreatePostInputModel
@@ -20,6 +21,8 @@ namespace SdvCode.ViewModels.Blog.InputModels
         [Required]
         [Display(Name = "Content")]
         public string Content { get; set; }
+
+        public string SanitizeContent => new HtmlSanitizer().Sanitize(this.Content);
 
         [Required]
         [Display(Name = "Cover Image")]

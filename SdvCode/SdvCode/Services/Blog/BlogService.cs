@@ -8,6 +8,7 @@ namespace SdvCode.Services.Blog
     using System.Linq;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
+    using Ganss.XSS;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -37,12 +38,12 @@ namespace SdvCode.Services.Blog
             {
                 Title = model.PostInputModel.Title,
                 Category = category,
-                Content = model.PostInputModel.Content,
+                Content = model.PostInputModel.SanitizeContent,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow,
-                ShortContent = model.PostInputModel.Content.Length < 347 ?
+                ShortContent = model.PostInputModel.SanitizeContent.Length < 347 ?
                     model.PostInputModel.Content :
-                    $"{model.PostInputModel.Content.Substring(0, 347)}...",
+                    $"{model.PostInputModel.SanitizeContent.Substring(0, 347)}...",
                 ApplicationUser = user,
                 Likes = 0,
             };
@@ -198,8 +199,10 @@ namespace SdvCode.Services.Blog
                 post.Category = category;
                 post.Title = model.Title;
                 post.UpdatedOn = DateTime.UtcNow;
-                post.Content = model.Content;
-                post.ShortContent = $"{model.Content.Substring(0, 347)}...";
+                post.Content = model.SanitizeContent;
+                post.ShortContent = model.SanitizeContent.Length < 347 ?
+                    model.SanitizeContent :
+                    $"{model.SanitizeContent.Substring(0, 347)}...";
 
                 var imageUrl = await ApplicationCloudinary.UploadImage(
                     this.cloudinary,
@@ -213,21 +216,24 @@ namespace SdvCode.Services.Blog
                     post.ImageUrl = imageUrl;
                 }
 
-                List<PostTag> oldTagsIds = this.db.PostsTags.Where(x => x.PostId == model.Id).ToList();
-                this.db.PostsTags.RemoveRange(oldTagsIds);
-
-                List<PostTag> postTags = new List<PostTag>();
-                foreach (var tagName in model.TagsNames)
+                if (model.TagsNames.Count > 0)
                 {
-                    var tag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToLower() == tagName.ToLower());
-                    postTags.Add(new PostTag
-                    {
-                        PostId = post.Id,
-                        TagId = tag.Id,
-                    });
-                }
+                    List<PostTag> oldTagsIds = this.db.PostsTags.Where(x => x.PostId == model.Id).ToList();
+                    this.db.PostsTags.RemoveRange(oldTagsIds);
 
-                post.PostsTags = postTags;
+                    List<PostTag> postTags = new List<PostTag>();
+                    foreach (var tagName in model.TagsNames)
+                    {
+                        var tag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToLower() == tagName.ToLower());
+                        postTags.Add(new PostTag
+                        {
+                            PostId = post.Id,
+                            TagId = tag.Id,
+                        });
+                    }
+
+                    post.PostsTags = postTags;
+                }
 
                 if (user.Id == postUser.Id)
                 {
@@ -240,7 +246,9 @@ namespace SdvCode.Services.Blog
                         PersonProfileImageUrl = user.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
-                        PostContent = $"{post.Content.Substring(0, 347)}...",
+                        PostContent = post.Content.Length < 347 ?
+                        post.Content :
+                        $"{post.Content.Substring(0, 347)}...",
                     });
                 }
                 else
@@ -255,7 +263,9 @@ namespace SdvCode.Services.Blog
                         FollowerProfileImageUrl = postUser.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
-                        PostContent = $"{post.Content.Substring(0, 347)}...",
+                        PostContent = post.Content.Length < 347 ?
+                        post.Content :
+                        $"{post.Content.Substring(0, 347)}...",
                     });
 
                     this.db.UserActions.Add(new UserAction
@@ -268,7 +278,9 @@ namespace SdvCode.Services.Blog
                         FollowerProfileImageUrl = user.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
-                        PostContent = $"{post.Content.Substring(0, 347)}...",
+                        PostContent = post.Content.Length < 347 ?
+                        post.Content :
+                        $"{post.Content.Substring(0, 347)}...",
                     });
                 }
 

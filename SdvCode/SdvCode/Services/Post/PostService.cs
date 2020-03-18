@@ -113,7 +113,7 @@ namespace SdvCode.Services.Post
                             ApplicationUserId = user.Id,
                             ProfileImageUrl = user.ImageUrl,
                             PostTitle = post.Title,
-                            PostContent = $"{post.Content.Substring(0, 347)}...",
+                            PostContent = post.Content.Length < 347 ? post.Content : $"{post.Content.Substring(0, 347)}...",
                         });
                     }
                 }
@@ -148,7 +148,7 @@ namespace SdvCode.Services.Post
                             FollowerUsername = user.UserName,
                             FollowerProfileImageUrl = user.ImageUrl,
                             PostTitle = post.Title,
-                            PostContent = $"{post.Content.Substring(0, 347)}...",
+                            PostContent = post.Content.Length < 347 ? post.Content : $"{post.Content.Substring(0, 347)}...",
                         });
                     }
 
@@ -180,7 +180,7 @@ namespace SdvCode.Services.Post
                             FollowerUsername = post.ApplicationUser.UserName,
                             FollowerProfileImageUrl = post.ApplicationUser.ImageUrl,
                             PostTitle = post.Title,
-                            PostContent = $"{post.Content.Substring(0, 347)}...",
+                            PostContent = post.Content.Length < 347 ? post.Content : $"{post.Content.Substring(0, 347)}...",
                         });
                     }
                 }
