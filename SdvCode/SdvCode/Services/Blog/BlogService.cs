@@ -40,7 +40,9 @@ namespace SdvCode.Services.Blog
                 Content = model.PostInputModel.Content,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow,
-                ShortContent = $"{model.PostInputModel.Content.Substring(0, 347)}...",
+                ShortContent = model.PostInputModel.Content.Length < 347 ?
+                    model.PostInputModel.Content :
+                    $"{model.PostInputModel.Content.Substring(0, 347)}...",
                 ApplicationUser = user,
                 Likes = 0,
             };

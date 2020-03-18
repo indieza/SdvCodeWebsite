@@ -112,7 +112,7 @@
                             </div>
                         </div>
                         <div class="post-body">
-                            <p>@post.ShortContent</p>
+                            <p>@Html.Raw(post.ShortContent)</p>
                         </div>
                         <div class="post-footer">
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
