@@ -15,6 +15,7 @@ namespace SdvCode
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using SdvCode.Areas.Administration.Services;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;
@@ -47,8 +48,12 @@ namespace SdvCode
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = GlobalConstants.PasswordRequiredLength;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireNonAlphanumeric = false;
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options =>

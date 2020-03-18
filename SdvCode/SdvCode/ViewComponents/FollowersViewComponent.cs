@@ -13,6 +13,7 @@ namespace SdvCode.ViewComponents
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.Services.ProfileServices;
+    using SdvCode.ViewModels.Pagination;
     using SdvCode.ViewModels.Profile;
     using X.PagedList;
 
@@ -32,8 +33,14 @@ namespace SdvCode.ViewComponents
             var user = await this.userManager.FindByNameAsync(username);
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
             List<FollowersViewModel> allFollowers = await this.followersService.ExtractFollowers(user, currentUserId);
-            this.ViewBag.Username = username;
-            return this.View(allFollowers.ToPagedList(page, GlobalConstants.FollowersCountOnPage));
+
+            FollowersPaginationViewModel model = new FollowersPaginationViewModel
+            {
+                Username = username,
+                Followers = allFollowers.ToPagedList(page, GlobalConstants.FollowersCountOnPage),
+            };
+
+            return this.View(model);
         }
     }
 }

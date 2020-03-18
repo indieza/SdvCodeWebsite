@@ -1,16 +1,17 @@
 ﻿@using SdvCode.Models.Enums
+@using SdvCode.ViewModels.Pagination
 @using SdvCode.ViewModels.Profile
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Mvc.Common
 @using X.PagedList
-@model IEnumerable<ActivitiesViewModel>
+@model ActivitiesPaginationViewModel
 
 @{
     ViewData["Title"] = "Activities";
 }
 
 <div class="tab-pane fade in active">
-    @foreach (var action in Model)
+    @foreach (var action in Model.Activities)
     {
         @if (action.Action == UserActionsType.Follow)
         {
@@ -914,9 +915,9 @@
         }
     }
     <div class="row" style="text-align: center">
-        @Html.PagedListPager((IPagedList)Model,
+        @Html.PagedListPager((IPagedList)Model.Activities,
                 page => Url.Action("Index", "Profile",
-        new { username = ViewBag.Username, page = page }),
+        new { username = Model.Username, page = page }),
         PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
     </div>
 </div>

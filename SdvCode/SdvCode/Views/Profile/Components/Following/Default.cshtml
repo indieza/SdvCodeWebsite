@@ -1,15 +1,16 @@
 ﻿@using SdvCode.ViewModels.Profile
+@using SdvCode.ViewModels.Pagination
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Mvc.Common
 @using X.PagedList
-@model IEnumerable<FollowingViewModel>
+@model FollowingPaginationViewModel
 
 @{
     ViewData["Title"] = "Following";
 }
 
 <div class="tab-pane fade in active">
-    @foreach (var following in Model)
+    @foreach (var following in Model.Followings)
     {
         <div class="media user-following">
             @if (following.ImageUrl == null)
@@ -41,9 +42,9 @@
         </div>
     }
     <div class="row" style="text-align: center">
-        @Html.PagedListPager((IPagedList)Model,
+        @Html.PagedListPager((IPagedList)Model.Followings,
                 page => Url.Action("Index", "Profile",
-        new { username = ViewBag.Username, page = page }),
+        new { username = Model.Username, page = page }),
         PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
     </div>
 </div>

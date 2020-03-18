@@ -13,6 +13,7 @@ namespace SdvCode.ViewComponents
     using SdvCode.Data;
     using SdvCode.Models;
     using SdvCode.Services.ProfileServices;
+    using SdvCode.ViewModels.Pagination;
     using SdvCode.ViewModels.Profile;
     using X.PagedList;
 
@@ -28,8 +29,14 @@ namespace SdvCode.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(string username, int page)
         {
             List<ActivitiesViewModel> allActivities = await this.activitiesService.ExtractActivities(username);
-            this.ViewBag.Username = username;
-            return this.View(allActivities.ToPagedList(page, GlobalConstants.UsersActivitiesCountOnPage));
+
+            ActivitiesPaginationViewModel model = new ActivitiesPaginationViewModel
+            {
+                Username = username,
+                Activities = allActivities.ToPagedList(page, GlobalConstants.UsersActivitiesCountOnPage),
+            };
+
+            return this.View(model);
         }
     }
 }

@@ -30,5 +30,7 @@ namespace SdvCode.Constraints
         public const int FollowingCountOnPage = 1;
 
         public const string CloudinaryPostCoverImageName = "{0}PostCoverImage";
+
+        public const int PasswordRequiredLength = 7;
     }
 }
