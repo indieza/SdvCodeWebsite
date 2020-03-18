@@ -14,13 +14,13 @@ namespace SdvCode.Services.Blog
 
     public interface IBlogService
     {
-        ICollection<string> ExtractAllCategoryNames();
+        Task<ICollection<string>> ExtractAllCategoryNames();
 
-        ICollection<string> ExtractAllTagNames();
+        Task<ICollection<string>> ExtractAllTagNames();
 
         Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user);
 
-        ICollection<Post> ExtraxtAllPosts(ApplicationUser user);
+        Task<ICollection<Post>> ExtraxtAllPosts(ApplicationUser user);
 
         Task<bool> DeletePost(string id, ApplicationUser user);
 

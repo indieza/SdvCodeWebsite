@@ -20,9 +20,11 @@ namespace SdvCode
     using SdvCode.SecurityModels;
     using SdvCode.Services;
     using SdvCode.Services.Blog;
+    using SdvCode.Services.Category;
     using SdvCode.Services.CloudServices;
     using SdvCode.Services.Post;
     using SdvCode.Services.ProfileServices;
+    using SdvCode.Services.Tag;
     using Twilio;
 
     public class Startup
@@ -110,6 +112,8 @@ namespace SdvCode
             services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IBlogComponentService, BlogComponentService>();
             services.AddTransient<IPostService, PostService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ITagService, TagService>();
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));

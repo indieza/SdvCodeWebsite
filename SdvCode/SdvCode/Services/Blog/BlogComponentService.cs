@@ -22,7 +22,7 @@ namespace SdvCode.Services.Blog
 
         public Task<List<RecentPostsViewModel>> ExtractRecentPosts()
         {
-            var posts = this.db.Posts.ToList().OrderByDescending(x => x.UpdatedOn).Take(3);
+            var posts = this.db.Posts.ToList().OrderByDescending(x => x.UpdatedOn).Take(20);
             var recentPosts = new List<RecentPostsViewModel>();
 
             foreach (var post in posts)
@@ -43,7 +43,7 @@ namespace SdvCode.Services.Blog
 
         public Task<List<TopCategoriesViewModel>> ExtractTopCategories()
         {
-            var categories = this.db.Categories.ToList();
+            var categories = this.db.Categories.ToList().Take(10);
             var topCategories = new List<TopCategoriesViewModel>();
 
             foreach (var category in categories)
@@ -56,12 +56,12 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return topCategories.OrderByDescending(x => x.PostsCount).Take(10).ToListAsync();
+            return topCategories.OrderByDescending(x => x.PostsCount).ToListAsync();
         }
 
         public Task<List<TopPostsViewModel>> ExtractTopPosts()
         {
-            var posts = this.db.Posts.ToList().OrderByDescending(x => x.Comments.Count + x.Likes).Take(3);
+            var posts = this.db.Posts.ToList().OrderByDescending(x => x.Comments.Count + x.Likes).Take(10);
             var topPosts = new List<TopPostsViewModel>();
 
             foreach (var post in posts)
@@ -82,7 +82,7 @@ namespace SdvCode.Services.Blog
 
         public Task<List<TopTagsViewModel>> ExtractTopTags()
         {
-            var tags = this.db.Tags.ToList();
+            var tags = this.db.Tags.ToList().Take(10);
             var topTags = new List<TopTagsViewModel>();
 
             foreach (var tag in tags)
@@ -95,7 +95,7 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return topTags.OrderByDescending(x => x.Count).Take(10).ToListAsync();
+            return topTags.OrderByDescending(x => x.Count).ToListAsync();
         }
     }
 }

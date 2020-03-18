@@ -21,7 +21,7 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="popular-tab">
-                    <ul class="posts-list unstyled clearfix">
+                    <ul class="posts-list unstyled clearfix" style="height: 250px; overflow: auto">
                         @foreach (var post in Model.TopPosts)
                         {
                             <li>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="tab-pane" id="recent-tab">
-                    <ul class="posts-list unstyled clearfix">
+                    <ul class="posts-list unstyled clearfix" style="height: 250px; overflow: auto">
                         @foreach (var post in Model.RecentPosts)
                         {
                             <li>
@@ -129,10 +129,10 @@
         </div>
         <div class="widget widget-categories">
             <h3 class="widget-title">Blog Categories</h3>
-            <ul class="category-list clearfix">
+            <ul class="category-list clearfix" style="height: 250px; overflow: auto">
                 @foreach (var category in Model.TopCategories)
                 {
-                    <li><a href="#">@category.Name</a><span class="posts-count"> (@category.PostsCount)</span></li>
+                    <li><a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@category.Id">@category.Name</a><span class="posts-count"> (@category.PostsCount)</span></li>
                 }
             </ul>
         </div>
@@ -141,7 +141,7 @@
             <ul class="unstyled clearfix">
                 @foreach (var tag in Model.TopTags)
                 {
-                    <li><a href="#">@tag.Name (@tag.Count)</a></li>
+                    <li><a asp-area="" asp-controller="Tag" asp-action="Index" asp-route-id="@tag.Id">@tag.Name (@tag.Count)</a></li>
                 }
             </ul>
         </div>

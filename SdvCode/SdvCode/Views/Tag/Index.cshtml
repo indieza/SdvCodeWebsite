@@ -1,36 +1,32 @@
-﻿@using SdvCode.Models.User
+﻿@using SdvCode.ViewModels.Tag
+@using SdvCode.Models.User
 @using Microsoft.AspNetCore.Identity
-@using SdvCode.ViewModels.Blog.ViewModels
 @using SdvCode.Areas.Administration.Models.Enums
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@model BlogViewModel
+@model TagViewModel
 @{
-    var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
-    ViewData["Title"] = "Blog";
+    ViewData["Title"] = Model.Tag.Name;
 }
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
     <div class="banner-title-content">
         <div class="text-center">
-            <h2>Blog Page</h2>
+            <h2><i class="fas fa-hashtag headerSwitch"></i>@Model.Tag.Name Tag</h2>
             <ul class="breadcrumb">
                 <li>Home</li>
                 <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
-                @if (SignInManager.IsSignedIn(User) && currentUser.Result.IsBlocked == false)
-                {
-                    @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Author.ToString()) || User.IsInRole(Roles.Contributor.ToString()) || User.IsInRole(Roles.Editor.ToString()))
-                    {
-                        <li>
-                            <a asp-area="" asp-controller="Blog" asp-action="CreatePost" class="btn btn-primary solid square">Create Post</a>
-                        </li>
-                    }
-                }
+                <li>
+                    <a asp-area="" asp-controller="Tag" asp-action="Index" asp-route-id="@Model.Tag.Id">
+                        @Model.Tag.Name
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
 </div>
+
 <section id="main-container">
     <div class="container">
         <partial name="_TempDataPartial" />

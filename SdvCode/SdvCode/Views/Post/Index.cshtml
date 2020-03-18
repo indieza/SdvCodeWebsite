@@ -57,7 +57,7 @@
                                     @Model.ApplicationUser.UserName
                                 </a>
                             </span>
-                            <span class="post-meta-cats">in <a href="#"> @Model.Category.Name</a></span>
+                            <span class="post-meta-cats">in <a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@Model.Category.Id"> @Model.Category.Name</a></span>
                             <div class="pull-right">
                                 <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> @Model.Comments.Count</a></span>
                                 <span class="post-meta-hits">
@@ -84,7 +84,7 @@
                         <ul class="unstyled clearfix">
                             @foreach (var tag in Model.Tags)
                             {
-                                <li><a href="#">@tag.Name</a></li>
+                                <li><a asp-area="" asp-controller="Tag" asp-action="Index" asp-route-id="@tag.Id">@tag.Name</a></li>
                             }
                         </ul>
                     </div>

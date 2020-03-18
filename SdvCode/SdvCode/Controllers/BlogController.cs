@@ -40,21 +40,21 @@ namespace SdvCode.Controllers
             this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
             var model = new BlogViewModel
             {
-                Posts = this.blogService.ExtraxtAllPosts(user),
+                Posts = await this.blogService.ExtraxtAllPosts(user),
             };
 
             return this.View(model);
         }
 
         [Authorize]
-        public IActionResult CreatePost()
+        public async Task<IActionResult> CreatePost()
         {
-            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
 
             var isBlocked = this.userValidator.IsBlocked(user);
             if (isBlocked == true)
@@ -72,8 +72,8 @@ namespace SdvCode.Controllers
 
             var model = new CreatePostIndexModel
             {
-                Categories = this.blogService.ExtractAllCategoryNames(),
-                Tags = this.blogService.ExtractAllTagNames(),
+                Categories = await this.blogService.ExtractAllCategoryNames(),
+                Tags = await this.blogService.ExtractAllTagNames(),
                 PostInputModel = new CreatePostInputModel(),
             };
 
@@ -138,7 +138,7 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> EditPost(string id)
         {
-            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
             var isBlocked = this.userValidator.IsBlocked(user);
             if (isBlocked == true)
             {
@@ -154,8 +154,8 @@ namespace SdvCode.Controllers
             }
 
             EditPostInputModel model = await this.blogService.ExtractPost(id, user);
-            model.Categories = this.blogService.ExtractAllCategoryNames();
-            model.Tags = this.blogService.ExtractAllTagNames();
+            model.Categories = await this.blogService.ExtractAllCategoryNames();
+            model.Tags = await this.blogService.ExtractAllTagNames();
 
             return this.View(model);
         }

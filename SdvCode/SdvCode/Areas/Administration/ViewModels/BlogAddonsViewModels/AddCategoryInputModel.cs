@@ -17,7 +17,7 @@ namespace SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(300)]
+        [MaxLength(550)]
         [Display(Name = "Category description")]
         public string Description { get; set; }
     }

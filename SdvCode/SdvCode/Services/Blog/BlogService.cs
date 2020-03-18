@@ -292,14 +292,14 @@ namespace SdvCode.Services.Blog
             return false;
         }
 
-        public ICollection<string> ExtractAllCategoryNames()
+        public async Task<ICollection<string>> ExtractAllCategoryNames()
         {
-            return this.db.Categories.Select(x => x.Name).ToList();
+            return await this.db.Categories.Select(x => x.Name).ToListAsync();
         }
 
-        public ICollection<string> ExtractAllTagNames()
+        public async Task<ICollection<string>> ExtractAllTagNames()
         {
-            return this.db.Tags.Select(x => x.Name).ToList();
+            return await this.db.Tags.Select(x => x.Name).ToListAsync();
         }
 
         public async Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user)
@@ -324,9 +324,9 @@ namespace SdvCode.Services.Blog
             };
         }
 
-        public ICollection<Post> ExtraxtAllPosts(ApplicationUser user)
+        public async Task<ICollection<Post>> ExtraxtAllPosts(ApplicationUser user)
         {
-            var posts = this.db.Posts.OrderByDescending(x => x.CreatedOn).ToList();
+            var posts = await this.db.Posts.OrderByDescending(x => x.CreatedOn).ToListAsync();
 
             foreach (var post in posts)
             {
