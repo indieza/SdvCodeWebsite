@@ -25,6 +25,7 @@ namespace SdvCode
     using SdvCode.Services.Post;
     using SdvCode.Services.ProfileServices;
     using SdvCode.Services.Tag;
+    using SdvCode.Services.UserPosts;
     using Twilio;
 
     public class Startup
@@ -114,6 +115,7 @@ namespace SdvCode
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ITagService, TagService>();
+            services.AddTransient<IUserPostsService, UserPostsService>();
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));

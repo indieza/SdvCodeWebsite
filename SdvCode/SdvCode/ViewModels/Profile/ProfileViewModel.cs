@@ -15,5 +15,9 @@ namespace SdvCode.ViewModels.Profile
         public bool HasAdmin { get; set; }
 
         public int Page { get; set; }
+
+        public int CreatedPosts { get; set; }
+
+        public int LikedPosts { get; set; }
     }
 }

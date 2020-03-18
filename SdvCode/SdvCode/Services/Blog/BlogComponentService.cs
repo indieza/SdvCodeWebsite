@@ -7,6 +7,7 @@ namespace SdvCode.Services.Blog
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Data;
     using SdvCode.ViewModels.Blog.ViewModels;
     using X.PagedList;
@@ -20,14 +21,14 @@ namespace SdvCode.Services.Blog
             this.db = db;
         }
 
-        public Task<List<RecentPostsViewModel>> ExtractRecentPosts()
+        public async Task<List<RecentPostsViewModel>> ExtractRecentPosts()
         {
-            var posts = this.db.Posts.ToList().OrderByDescending(x => x.UpdatedOn).Take(20);
+            var posts = this.db.Posts.OrderByDescending(x => x.UpdatedOn).ToList();
             var recentPosts = new List<RecentPostsViewModel>();
 
-            foreach (var post in posts)
+            foreach (var post in posts.Take(20))
             {
-                var user = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
+                var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
                 recentPosts.Add(new RecentPostsViewModel
                 {
                     Id = post.Id,
@@ -38,15 +39,15 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return recentPosts.ToListAsync();
+            return await recentPosts.ToListAsync();
         }
 
-        public Task<List<TopCategoriesViewModel>> ExtractTopCategories()
+        public async Task<List<TopCategoriesViewModel>> ExtractTopCategories()
         {
-            var categories = this.db.Categories.ToList().Take(10);
+            var categories = this.db.Categories.ToList();
             var topCategories = new List<TopCategoriesViewModel>();
 
-            foreach (var category in categories)
+            foreach (var category in categories.Take(10))
             {
                 topCategories.Add(new TopCategoriesViewModel
                 {
@@ -56,17 +57,17 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return topCategories.OrderByDescending(x => x.PostsCount).ToListAsync();
+            return await topCategories.OrderByDescending(x => x.PostsCount).ToListAsync();
         }
 
-        public Task<List<TopPostsViewModel>> ExtractTopPosts()
+        public async Task<List<TopPostsViewModel>> ExtractTopPosts()
         {
-            var posts = this.db.Posts.ToList().OrderByDescending(x => x.Comments.Count + x.Likes).Take(10);
+            var posts = this.db.Posts.OrderByDescending(x => x.Comments.Count + x.Likes).ToList();
             var topPosts = new List<TopPostsViewModel>();
 
-            foreach (var post in posts)
+            foreach (var post in posts.Take(10))
             {
-                var user = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
+                var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
                 topPosts.Add(new TopPostsViewModel
                 {
                     Id = post.Id,
@@ -77,15 +78,15 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return topPosts.ToListAsync();
+            return await topPosts.ToListAsync();
         }
 
-        public Task<List<TopTagsViewModel>> ExtractTopTags()
+        public async Task<List<TopTagsViewModel>> ExtractTopTags()
         {
-            var tags = this.db.Tags.ToList().Take(10);
+            var tags = this.db.Tags.ToList();
             var topTags = new List<TopTagsViewModel>();
 
-            foreach (var tag in tags)
+            foreach (var tag in tags.Take(10))
             {
                 topTags.Add(new TopTagsViewModel
                 {
@@ -95,7 +96,7 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return topTags.OrderByDescending(x => x.Count).ToListAsync();
+            return await topTags.OrderByDescending(x => x.Count).ToListAsync();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace SdvCode.Services.ProfileServices
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
     using SdvCode.Models.Enums;
@@ -272,6 +273,17 @@ namespace SdvCode.Services.ProfileServices
             });
 
             this.db.SaveChanges();
+        }
+
+        public async Task<int> TakeCreatedPostsCountByUsername(string username)
+        {
+            return await this.db.Posts.CountAsync(x => x.ApplicationUser.UserName == username);
+        }
+
+        public async Task<int> TakeLikedPostsCountByUsername(string username)
+        {
+            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            return await this.db.PostsLikes.CountAsync(x => x.UserId == user.Id && x.IsLiked == true);
         }
     }
 }

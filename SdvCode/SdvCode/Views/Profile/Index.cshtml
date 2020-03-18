@@ -181,6 +181,24 @@
                             }
                         </ul>
                     </div>
+                    <div class="section">
+                        <h3>Blog</h3>
+                        <p>
+                            <a asp-area="" asp-controller="UserPosts" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName" asp-route-filter=@UserPostsFilter.Created.ToString()>
+                                <i class="fas fa-blog"></i> @Model.CreatedPosts Blog Posts
+                            </a>
+                        </p>
+                        <p>
+                            <a asp-area="" asp-controller="UserPosts" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName" asp-route-filter="@UserPostsFilter.Liked.ToString()">
+                                <i class="fas fa-thumbs-up"></i> @Model.LikedPosts Posts Likes
+                            </a>
+                        </p>
+                        <p>
+                            <a>
+                                <i class="far fa-comments"></i> 30 Posts Comments
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">

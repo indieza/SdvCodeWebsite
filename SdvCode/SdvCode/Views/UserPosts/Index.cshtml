@@ -1,0 +1,133 @@
+﻿@using SdvCode.Models.User
+@using Microsoft.AspNetCore.Identity
+@using SdvCode.ViewModels.UserPosts
+@using SdvCode.ViewModels.Blog.ViewModels
+@using SdvCode.Areas.Administration.Models.Enums
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
+    ViewData["Title"] = "Blog";
+}
+@model UserPostsViewModel
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>@Model.Username @Model.Action Posts</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
+                <li>@Model.Action</li>
+                <li><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Username">@Model.Username</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section id="main-container">
+    <div class="container">
+        <partial name="_TempDataPartial" />
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                @foreach (var post in Model.Posts)
+                {
+                    <div class="post">
+                        <div class="post-image-wrapper">
+                            <img src=@post.ImageUrl class="img-responsive" alt="post cover image" />
+                            @if (post.CreatedOn == post.UpdatedOn)
+                            {
+                                <span class="blog-date">
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                        @post.CreatedOn.ToString("MMMM dd, yyyy")
+                                    </a>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="blog-date">
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                        @post.UpdatedOn.ToString("MMMM dd, yyyy")
+                                    </a>
+                                </span>
+                            }
+                        </div>
+                        <div class="post-header clearfix">
+                            <h2 class="post-title">
+                                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
+                            </h2>
+                            @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                            {
+                                <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@post.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
+                            }
+                            <div class="post-meta">
+                                <span class="post-meta-author">
+                                    Posted on
+                                    <span class="post-meta-cats"> @post.CreatedOn.ToString("dd-MMMM-yyyy")</span>
+                                    by
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@post.ApplicationUser.UserName"> @post.ApplicationUser.UserName</a>
+                                </span>
+                                <span class="post-meta-cats">in <a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@post.Category.Id"> @post.Category.Name</a></span>
+                                <div class="pull-right">
+                                    <span class="post-meta-comments">
+                                        @if (SignInManager.IsSignedIn(User))
+                                        {
+                                            <a href="#">
+                                                <i class="fa fa-comment-o"></i> @post.Comments.Count
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <h><i class="fa fa-comment-o"></i> @post.Comments.Count comments</h>
+                                        }
+                                    </span>
+                                    <span class="post-meta-hits">
+                                        @if (post.IsLiked == true)
+                                        {
+                                            <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-id="@post.Id">
+                                                <i class="fas fa-thumbs-down"></i> @post.Likes
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            @if (post.IsLiked == false && SignInManager.IsSignedIn(User))
+                                            {
+                                                <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@post.Id">
+                                                    <i class="fas fa-thumbs-up"></i> @post.Likes
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <h><i class="fas fa-thumbs-up"></i> @post.Likes likes</h>
+                                            }
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-body">
+                            <p>@Html.Raw(post.ShortContent)</p>
+                        </div>
+                        <div class="post-footer">
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
+                                Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
+                            </a>
+                        </div>
+                    </div>
+                }
+                <div class="paging">
+                    <ul class="pagination">
+                        <li><a href="#"><i class="fas fa-angle-left"></i></a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            @await Component.InvokeAsync("Blog")
+        </div>
+    </div>
+</section>

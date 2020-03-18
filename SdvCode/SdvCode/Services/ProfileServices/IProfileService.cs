@@ -26,5 +26,9 @@ namespace SdvCode.Services.ProfileServices
         Task<bool> HasAdmin();
 
         void MakeYourselfAdmin(string username);
+
+        Task<int> TakeCreatedPostsCountByUsername(string username);
+
+        Task<int> TakeLikedPostsCountByUsername(string username);
     }
 }

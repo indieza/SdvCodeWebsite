@@ -3,14 +3,14 @@
 
 namespace SdvCode.Services.Category
 {
-    using Microsoft.EntityFrameworkCore;
-    using SdvCode.Data;
-    using SdvCode.Models.Blog;
-    using SdvCode.Models.User;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using SdvCode.Data;
+    using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
 
     public class CategoryService : ICategoryService
     {
