@@ -10,9 +10,11 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.Services.Category;
     using SdvCode.ViewModels.Category;
+    using X.PagedList;
 
     public class CategoryController : Controller
     {
@@ -26,14 +28,17 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [Route("Blog/Category/{id}")]
-        public async Task<IActionResult> Index(string id)
+        [Route("Blog/Category/{id}/{page?}")]
+        public async Task<IActionResult> Index(string id, int? page)
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            var pageNumber = page ?? 1;
+            var posts = await this.categoryService.ExtractPostsByCategoryId(id, user);
+
             CategoryViewModel model = new CategoryViewModel
             {
                 Category = await this.categoryService.ExtractCategoryById(id),
-                Posts = await this.categoryService.ExtractPostsByCategoryId(id, user),
+                Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
             };
 
             return this.View(model);

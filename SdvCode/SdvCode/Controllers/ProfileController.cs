@@ -11,7 +11,6 @@ namespace SdvCode.Controllers
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.ProfileServices;
-    using SdvCode.ViewModels.Paging;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users;
     using X.PagedList;

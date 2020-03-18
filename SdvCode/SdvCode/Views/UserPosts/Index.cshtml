@@ -3,6 +3,9 @@
 @using SdvCode.ViewModels.UserPosts
 @using SdvCode.ViewModels.Blog.ViewModels
 @using SdvCode.Areas.Administration.Models.Enums
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
@@ -10,6 +13,7 @@
     ViewData["Title"] = "Blog";
 }
 @model UserPostsViewModel
+
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
@@ -115,16 +119,11 @@
                         </div>
                     </div>
                 }
-                <div class="paging">
-                    <ul class="pagination">
-                        <li><a href="#"><i class="fas fa-angle-left"></i></a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#"><i class="fas fa-angle-right"></i></a></li>
-                    </ul>
+                <div class="row" style="text-align: center">
+                    @Html.PagedListPager((IPagedList)Model.Posts,
+                            page => Url.Action("Index", "UserPosts",
+                    new { username = Model.Username, filter = Model.Action, page = page }),
+                    PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
                 </div>
             </div>
             @await Component.InvokeAsync("Blog")

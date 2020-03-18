@@ -13,6 +13,6 @@ namespace SdvCode.ViewModels.Tag
     {
         public Tag Tag { get; set; }
 
-        public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+        public IEnumerable<Post> Posts { get; set; } = new HashSet<Post>();
     }
 }

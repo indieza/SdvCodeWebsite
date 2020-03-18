@@ -10,6 +10,7 @@ namespace SdvCode.Services.UserPosts
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
 
     public class UserPostsService : IUserPostsService
     {
@@ -20,7 +21,7 @@ namespace SdvCode.Services.UserPosts
             this.db = db;
         }
 
-        public async Task<ICollection<Post>> ExtractCreatedPostsByUsername(string username)
+        public async Task<ICollection<Post>> ExtractCreatedPostsByUsername(string username, ApplicationUser curentUser)
         {
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var posts = await this.db.Posts.Where(x => x.ApplicationUser.UserName == username).ToListAsync();
@@ -30,13 +31,13 @@ namespace SdvCode.Services.UserPosts
                 post.ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
                 post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
                 post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id);
-                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
+                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == curentUser.Id && x.IsLiked == true);
             }
 
             return posts;
         }
 
-        public async Task<ICollection<Post>> ExtractLikedPostsByUsername(string username)
+        public async Task<ICollection<Post>> ExtractLikedPostsByUsername(string username, ApplicationUser curentUser)
         {
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var postsIds = await this.db.PostsLikes.Where(x => x.UserId == user.Id && x.IsLiked == true).Select(x => x.PostId).ToListAsync();
@@ -53,7 +54,7 @@ namespace SdvCode.Services.UserPosts
                 post.ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
                 post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
                 post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id);
-                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
+                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == curentUser.Id && x.IsLiked == true);
             }
 
             return posts;

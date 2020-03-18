@@ -18,6 +18,7 @@ namespace SdvCode.Controllers
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
     using Twilio.Rest.Api.V2010.Account.Usage;
+    using X.PagedList;
 
     public class BlogController : Controller
     {
@@ -40,12 +41,15 @@ namespace SdvCode.Controllers
             this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
 
-        public async Task<IActionResult> Index()
+        [Route("Blog/{page?}")]
+        public async Task<IActionResult> Index(int? page)
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            var pageNumber = page ?? 1;
+            var posts = await this.blogService.ExtraxtAllPosts(user);
             var model = new BlogViewModel
             {
-                Posts = await this.blogService.ExtraxtAllPosts(user),
+                Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
             };
 
             return this.View(model);
