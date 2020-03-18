@@ -52,6 +52,7 @@ namespace SdvCode
                 options.Password.RequiredLength = GlobalConstants.PasswordRequiredLength;
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
@@ -102,6 +103,8 @@ namespace SdvCode
             var authToken = this.Configuration["Twilio:AuthToken"];
             TwilioClient.Init(accountSid, authToken);
             services.Configure<TwilioVerifySettings>(this.Configuration.GetSection("Twilio"));
+
+            services.AddTransient<ApplicationDbContext>();
 
             // Register Services
             services.AddScoped<IContactsService, ContactsService>();

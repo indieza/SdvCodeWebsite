@@ -37,14 +37,14 @@ namespace SdvCode.Services.Blog
             var post = new Post
             {
                 Title = model.PostInputModel.Title,
-                Category = category,
+                CategoryId = category.Id,
                 Content = model.PostInputModel.SanitizeContent,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow,
                 ShortContent = model.PostInputModel.SanitizeContent.Length < 347 ?
                     model.PostInputModel.Content :
                     $"{model.PostInputModel.SanitizeContent.Substring(0, 347)}...",
-                ApplicationUser = user,
+                ApplicationUserId = user.Id,
                 Likes = 0,
             };
 
