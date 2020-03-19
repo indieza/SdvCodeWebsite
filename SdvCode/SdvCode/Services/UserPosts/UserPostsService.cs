@@ -32,6 +32,12 @@ namespace SdvCode.Services.UserPosts
                 post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
                 post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id);
                 post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == curentUser.Id && x.IsLiked == true);
+
+                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
+                foreach (var userId in usersIds)
+                {
+                    post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
+                }
             }
 
             return posts;
@@ -55,6 +61,12 @@ namespace SdvCode.Services.UserPosts
                 post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
                 post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id);
                 post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == curentUser.Id && x.IsLiked == true);
+
+                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
+                foreach (var userId in usersIds)
+                {
+                    post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
+                }
             }
 
             return posts;

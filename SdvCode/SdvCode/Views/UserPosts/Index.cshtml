@@ -10,7 +10,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @{
     var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
-    ViewData["Title"] = "Blog";
+    ViewData["Title"] = $"{Model.Action} Posts - {@Model.Username}";
 }
 @model UserPostsViewModel
 
@@ -64,6 +64,29 @@
                             {
                                 <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@post.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
                             }
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <div class="dropdown">
+                                    <a class="btn btn-success dropbtn"><i class="far fa-heart"></i> @post.Likes Likes</a>
+                                    <div class="dropdown-content">
+                                        @foreach (var liker in post.Likers)
+                                        {
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@liker.UserName">
+                                                @if (liker.ImageUrl == null)
+                                                {
+                                                    <img class="likerAvatar" src="~/images/NoAvatarProfileImage.png" alt="avatar">
+                                                }
+                                                else
+                                                {
+                                                    <img class="likerAvatar" src=@liker.ImageUrl alt="avatar">
+                                                }
+
+                                                @liker.FirstName @liker.LastName (@@@liker.UserName)
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            }
                             <div class="post-meta">
                                 <span class="post-meta-author">
                                     Posted on
@@ -89,7 +112,7 @@
                                         @if (post.IsLiked == true)
                                         {
                                             <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-id="@post.Id">
-                                                <i class="fas fa-thumbs-down"></i> @post.Likes
+                                                <i class="fas fa-thumbs-down"></i> Unlike
                                             </a>
                                         }
                                         else
@@ -97,7 +120,7 @@
                                             @if (post.IsLiked == false && SignInManager.IsSignedIn(User))
                                             {
                                                 <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@post.Id">
-                                                    <i class="fas fa-thumbs-up"></i> @post.Likes
+                                                    <i class="fas fa-thumbs-up"></i> Like
                                                 </a>
                                             }
                                             else
