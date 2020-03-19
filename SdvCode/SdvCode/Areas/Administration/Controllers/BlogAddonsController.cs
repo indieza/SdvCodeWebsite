@@ -41,7 +41,7 @@ namespace SdvCode.Areas.Administration.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                bool isAdded = await this.addonsService.CreateCategory(model.Name, model.Description);
+                bool isAdded = await this.addonsService.CreateCategory(model.Name, model.Description = model.SanitizedDescription);
 
                 if (isAdded)
                 {

@@ -15,6 +15,7 @@ namespace SdvCode
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Editor.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -124,6 +125,7 @@ namespace SdvCode
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ITagService, TagService>();
             services.AddTransient<IUserPostsService, UserPostsService>();
+            services.AddTransient<IEditCategoryService, EditCategoryService>();
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));

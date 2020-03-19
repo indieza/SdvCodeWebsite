@@ -42,7 +42,7 @@ namespace SdvCode.Services.Blog
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow,
                 ShortContent = model.PostInputModel.SanitizeContent.Length < 347 ?
-                    model.PostInputModel.Content :
+                    model.PostInputModel.SanitizeContent :
                     $"{model.PostInputModel.SanitizeContent.Substring(0, 347)}...",
                 ApplicationUserId = user.Id,
                 Likes = 0,

@@ -34,6 +34,12 @@
     <div class="container">
         <h2 class="headerSwitch"><i class="fas fa-tag"></i> @Model.Category.Name</h2>
         <p>@Model.Category.Description</p>
+
+        @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+        {
+            <a asp-area="Editor" asp-controller="EditCategory" asp-action="Index" asp-route-id="@Model.Category.Id" class="btn btn-success" type="submit"><i class="fas fa-edit"></i> Edit Category</a>
+        }
+
         <div class="headerSwitch" style="text-align: right"><i class="fas fa-clock"></i> @Model.Category.CreatedOn.ToString("MMMM dd,yyyy")</div>
         <hr />
         <partial name="_TempDataPartial" />

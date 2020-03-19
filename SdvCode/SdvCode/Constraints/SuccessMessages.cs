@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class SuccessMessages
@@ -56,5 +58,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyDeletePost = "You successfully delete the post";
 
         public const string SuccessfullyEditedPost = "You successfully edit your blog post.";
+
+        public const string SuccessfullyEditCategory = "You successfully edit \"{0}\" category.";
     }
 }

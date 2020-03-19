@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels
+namespace SdvCode.Areas.Editor.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +10,11 @@ namespace SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels
     using System.Threading.Tasks;
     using Ganss.XSS;
 
-    public class AddCategoryInputModel
+    public class EditCategoryInputModel
     {
+        [Required]
+        public string Id { get; set; }
+
         [Required]
         [MaxLength(30)]
         [Display(Name = "Category name")]

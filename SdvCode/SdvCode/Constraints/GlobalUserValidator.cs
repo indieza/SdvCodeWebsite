@@ -17,6 +17,11 @@ namespace SdvCode.Constraints
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
 
+        public GlobalUserValidator(UserManager<ApplicationUser> userManager)
+        {
+            this.userManager = userManager;
+        }
+
         public GlobalUserValidator(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
         {
             this.userManager = userManager;
