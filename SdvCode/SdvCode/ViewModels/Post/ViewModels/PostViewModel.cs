@@ -41,5 +41,7 @@ namespace SdvCode.ViewModels.Post.ViewModels
         public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
 
         public bool IsAuthor { get; set; }
+
+        public ICollection<ApplicationUser> Likers { get; set; } = new HashSet<ApplicationUser>();
     }
 }

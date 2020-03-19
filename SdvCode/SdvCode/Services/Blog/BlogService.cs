@@ -350,6 +350,12 @@ namespace SdvCode.Services.Blog
                 {
                     post.IsLiked = false;
                 }
+
+                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
+                foreach (var userId in usersIds)
+                {
+                    post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
+                }
             }
 
             return posts;

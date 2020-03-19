@@ -1,5 +1,9 @@
 ﻿@using SdvCode.ViewModels.Post.ViewModels
 @using SdvCode.Areas.Administration.Models.Enums
+@using SdvCode.Models.User
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model PostViewModel
 @{
     ViewData["Title"] = Model.Title;
@@ -50,6 +54,29 @@
                             <a asp-area="" asp-controller="Blog" asp-action="EditPost" asp-route-id="@Model.Id" class="btn btn-info"><i class="fas fa-edit"></i> Edit Post</a>
                             <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@Model.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
                         }
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class="dropdown">
+                                <a class="btn btn-success dropbtn"><i class="far fa-heart"></i> @Model.Likes Likes</a>
+                                <div class="dropdown-content">
+                                    @foreach (var liker in Model.Likers)
+                                    {
+                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@liker.UserName">
+                                            @if (liker.ImageUrl == null)
+                                            {
+                                                <img class="likerAvatar" src="~/images/NoAvatarProfileImage.png" alt="avatar">
+                                            }
+                                            else
+                                            {
+                                                <img class="likerAvatar" src=@liker.ImageUrl alt="avatar">
+                                            }
+
+                                            @liker.FirstName @liker.LastName (@@@liker.UserName)
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        }
                         <div class="post-meta">
                             <span class="post-meta-author">
                                 Posted by
@@ -64,13 +91,13 @@
                                     @if (Model.IsLiked == true)
                                     {
                                         <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-id="@Model.Id">
-                                            <i class="fas fa-thumbs-down"></i> @Model.Likes
+                                            <i class="fas fa-thumbs-down"></i> Unlike
                                         </a>
                                     }
                                     else
                                     {
                                         <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@Model.Id">
-                                            <i class="fas fa-thumbs-up"></i> @Model.Likes
+                                            <i class="fas fa-thumbs-up"></i> Like
                                         </a>
                                     }
                                 </span>
