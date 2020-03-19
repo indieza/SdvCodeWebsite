@@ -37,10 +37,8 @@ namespace SdvCode.Areas.Editor.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string id)
         {
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-
-            var isBlocked = this.userValidator.IsBlocked(user);
-            if (isBlocked == true)
+            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
@@ -54,10 +52,8 @@ namespace SdvCode.Areas.Editor.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(EditCategoryInputModel model)
         {
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-
-            var isBlocked = this.userValidator.IsBlocked(user);
-            if (isBlocked == true)
+            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");

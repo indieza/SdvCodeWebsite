@@ -7,6 +7,8 @@ namespace SdvCode.Services.Category
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
@@ -15,10 +17,12 @@ namespace SdvCode.Services.Category
     public class CategoryService : ICategoryService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public CategoryService(ApplicationDbContext db)
+        public CategoryService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
 
         public async Task<Category> ExtractCategoryById(string id)
@@ -26,9 +30,10 @@ namespace SdvCode.Services.Category
             return await this.db.Categories.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<ICollection<Post>> ExtractPostsByCategoryId(string id, ApplicationUser user)
+        public async Task<ICollection<Post>> ExtractPostsByCategoryId(string id, HttpContext httpContext)
         {
             var posts = await this.db.Posts.Where(x => x.CategoryId == id).ToListAsync();
+            var user = await this.userManager.GetUserAsync(httpContext.User);
 
             foreach (var post in posts)
             {

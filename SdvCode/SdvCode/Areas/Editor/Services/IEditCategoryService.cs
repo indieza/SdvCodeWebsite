@@ -3,15 +3,16 @@
 
 namespace SdvCode.Areas.Editor.Services
 {
-    using SdvCode.Areas.Editor.ViewModels;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Areas.Editor.ViewModels;
 
     public interface IEditCategoryService
     {
         Task<EditCategoryInputModel> ExtractCategoryById(string id);
+
         Task<bool> EditCategory(EditCategoryInputModel model);
     }
 }

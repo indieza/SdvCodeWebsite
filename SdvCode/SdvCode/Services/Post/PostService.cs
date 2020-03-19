@@ -7,6 +7,8 @@ namespace SdvCode.Services.Post
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
@@ -16,15 +18,18 @@ namespace SdvCode.Services.Post
     public class PostService : IPostService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public PostService(ApplicationDbContext db)
+        public PostService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
 
-        public PostViewModel ExtractCurrentPost(string id, ApplicationUser user)
+        public async Task<PostViewModel> ExtractCurrentPost(string id, HttpContext httpContext)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             post.PostsTags = this.db.PostsTags.Where(x => x.PostId == post.Id).ToList();
             PostViewModel model = new PostViewModel
             {
@@ -57,9 +62,10 @@ namespace SdvCode.Services.Post
             return model;
         }
 
-        public async Task<bool> LikePost(string id, ApplicationUser user)
+        public async Task<bool> LikePost(string id, HttpContext httpContext)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             post.ApplicationUser = this.db.Users.Find(post.ApplicationUserId);
 
             if (post != null)
@@ -192,9 +198,10 @@ namespace SdvCode.Services.Post
             return false;
         }
 
-        public async Task<bool> UnlikePost(string id, ApplicationUser user)
+        public async Task<bool> UnlikePost(string id, HttpContext httpContext)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             post.ApplicationUser = this.db.Users.Find(post.ApplicationUserId);
 
             var targetPostsLikes = this.db.PostsLikes.FirstOrDefault(x => x.PostId == id && x.UserId == user.Id);

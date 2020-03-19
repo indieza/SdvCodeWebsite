@@ -30,8 +30,7 @@ namespace SdvCode.Controllers
         [Route("Profile/{username}/{tab?}/{page?}")]
         public async Task<IActionResult> Index(string username, ProfileTab tab, int? page)
         {
-            var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            ApplicationUser user = this.profileService.ExtractUserInfo(username, currentUserId);
+            ApplicationUser user = this.profileService.ExtractUserInfo(username, this.HttpContext);
             bool hasAdmin = await this.profileService.HasAdmin();
 
             var pageNumber = page ?? 1;
@@ -54,9 +53,9 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
-        public IActionResult SwitchToTabs(string username, string tab)
+        public async Task<IActionResult> SwitchToTabs(string username, string tab)
         {
-            var user = this.userManager.FindByNameAsync(username).Result;
+            var user = await this.userManager.FindByNameAsync(username);
             var vm = tab switch
             {
                 "Activities" => ProfileTab.Activities,
@@ -71,8 +70,7 @@ namespace SdvCode.Controllers
         [Route("/Follow/{username}")]
         public async Task<IActionResult> Follow(string username)
         {
-            var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            ApplicationUser currentUser = await this.profileService.FollowUser(username, currentUserId);
+            ApplicationUser currentUser = await this.profileService.FollowUser(username, this.HttpContext);
             this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyFollowedUser, username.ToUpper());
 
             return this.Redirect($"/Profile/{currentUser.UserName}");
@@ -81,8 +79,7 @@ namespace SdvCode.Controllers
         [Route("/Unfollow/{username}")]
         public async Task<IActionResult> Unfollow(string username)
         {
-            var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            ApplicationUser currentUser = await this.profileService.UnfollowUser(username, currentUserId);
+            ApplicationUser currentUser = await this.profileService.UnfollowUser(username, this.HttpContext);
             this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyUnfollowedUser, username.ToUpper());
 
             return this.Redirect($"/Profile/{currentUser.UserName}");
@@ -91,8 +88,7 @@ namespace SdvCode.Controllers
         [Route("/Profile/AllUsers/{page?}")]
         public IActionResult AllUsers(int? page)
         {
-            var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            var allUsers = this.profileService.GetAllUsers(currentUserId);
+            var allUsers = this.profileService.GetAllUsers(this.HttpContext);
 
             var pageNumber = page ?? 1;
             return this.View(allUsers.UsersCards.ToPagedList(pageNumber, GlobalConstants.UsersCountOnPage));
@@ -101,8 +97,7 @@ namespace SdvCode.Controllers
         [Route("/DeleteActivityHistory/{username}")]
         public IActionResult DeleteActivityHistory(string username)
         {
-            var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            this.profileService.DeleteActivity(currentUserId);
+            this.profileService.DeleteActivity(this.HttpContext);
             this.TempData["Success"] = SuccessMessages.SuccessfullyDeleteAllActivity;
 
             return this.Redirect($"/Profile/{username}");
@@ -111,8 +106,7 @@ namespace SdvCode.Controllers
         [Route("/DeleteActivityById/{username}/{activityId}")]
         public async Task<IActionResult> DeleteActivityById(string username, int activityId)
         {
-            var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            string activityName = await this.profileService.DeleteActivityById(currentUserId, activityId);
+            string activityName = await this.profileService.DeleteActivityById(this.HttpContext, activityId);
             this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyDeletedActivityById, activityName);
 
             return this.Redirect($"/Profile/{username}");

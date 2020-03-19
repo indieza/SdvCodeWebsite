@@ -7,6 +7,7 @@ namespace SdvCode.Services.ProfileServices
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
@@ -20,24 +21,29 @@ namespace SdvCode.Services.ProfileServices
     {
         private readonly ApplicationDbContext db;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public ProfileService(
             ApplicationDbContext db,
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager,
+            UserManager<ApplicationUser> userManager)
         {
             this.db = db;
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
 
-        public void DeleteActivity(string currentUserId)
+        public void DeleteActivity(HttpContext httpContext)
         {
+            var currentUserId = this.userManager.GetUserId(httpContext.User);
             var trash = this.db.UserActions.Where(x => x.ApplicationUserId == currentUserId).ToList();
             this.db.UserActions.RemoveRange(trash);
             this.db.SaveChanges();
         }
 
-        public async Task<string> DeleteActivityById(string currentUserId, int activityId)
+        public async Task<string> DeleteActivityById(HttpContext httpContext, int activityId)
         {
+            var currentUserId = this.userManager.GetUserId(httpContext.User);
             var trash = this.db.UserActions.FirstOrDefault(x => x.ApplicationUserId == currentUserId && x.Id == activityId);
             var activityName = trash.Action.ToString();
             this.db.UserActions.Remove(trash);
@@ -45,8 +51,9 @@ namespace SdvCode.Services.ProfileServices
             return activityName;
         }
 
-        public ApplicationUser ExtractUserInfo(string username, string currentUserId)
+        public ApplicationUser ExtractUserInfo(string username, HttpContext httpContext)
         {
+            var currentUserId = this.userManager.GetUserId(httpContext.User);
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             user.IsFollowed = this.db.FollowUnfollows.Any(x => x.FollowerId == currentUserId && x.PersonId == user.Id && x.IsFollowed == true);
             user.ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id);
@@ -56,8 +63,9 @@ namespace SdvCode.Services.ProfileServices
             return user;
         }
 
-        public async Task<ApplicationUser> FollowUser(string username, string currentUserId)
+        public async Task<ApplicationUser> FollowUser(string username, HttpContext httpContext)
         {
+            var currentUserId = this.userManager.GetUserId(httpContext.User);
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             var currentUser = this.db.Users.FirstOrDefault(u => u.Id == currentUserId);
 
@@ -135,9 +143,10 @@ namespace SdvCode.Services.ProfileServices
             return currentUser;
         }
 
-        public AllUsersViewModel GetAllUsers(string currentUserId)
+        public AllUsersViewModel GetAllUsers(HttpContext httpContext)
         {
             var users = new AllUsersViewModel();
+            var currentUserId = this.userManager.GetUserId(httpContext.User);
 
             foreach (var user in this.db.Users)
             {
@@ -170,8 +179,9 @@ namespace SdvCode.Services.ProfileServices
             return users;
         }
 
-        public async Task<ApplicationUser> UnfollowUser(string username, string currentUserId)
+        public async Task<ApplicationUser> UnfollowUser(string username, HttpContext httpContext)
         {
+            var currentUserId = this.userManager.GetUserId(httpContext.User);
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
             var currentUser = this.db.Users.FirstOrDefault(u => u.Id == currentUserId);
 

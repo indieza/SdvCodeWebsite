@@ -9,6 +9,8 @@ namespace SdvCode.Services.Blog
     using System.Threading.Tasks;
     using CloudinaryDotNet;
     using Ganss.XSS;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -23,16 +25,19 @@ namespace SdvCode.Services.Blog
     {
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public BlogService(ApplicationDbContext db, Cloudinary cloudinary)
+        public BlogService(ApplicationDbContext db, Cloudinary cloudinary, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
             this.cloudinary = cloudinary;
+            this.userManager = userManager;
         }
 
-        public async Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user)
+        public async Task<bool> CreatePost(CreatePostIndexModel model, HttpContext httpContext)
         {
             var category = this.db.Categories.FirstOrDefault(x => x.Name == model.PostInputModel.CategoryName);
+            var user = await this.userManager.GetUserAsync(httpContext.User);
 
             var post = new Post
             {
@@ -85,10 +90,11 @@ namespace SdvCode.Services.Blog
             return true;
         }
 
-        public async Task<bool> DeletePost(string id, ApplicationUser user)
+        public async Task<bool> DeletePost(string id, HttpContext httpContext)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
             var userPost = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
+            var user = await this.userManager.GetUserAsync(httpContext.User);
 
             if (post != null && userPost != null)
             {
@@ -188,8 +194,9 @@ namespace SdvCode.Services.Blog
             return false;
         }
 
-        public async Task<bool> EditPost(EditPostInputModel model, ApplicationUser user)
+        public async Task<bool> EditPost(EditPostInputModel model, HttpContext httpContext)
         {
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
 
             if (post != null)
@@ -302,8 +309,9 @@ namespace SdvCode.Services.Blog
             return await this.db.Tags.Select(x => x.Name).ToListAsync();
         }
 
-        public async Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user)
+        public async Task<EditPostInputModel> ExtractPost(string id, HttpContext httpContext)
         {
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
             post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
             var postTagsNames = new List<string>();
@@ -324,9 +332,10 @@ namespace SdvCode.Services.Blog
             };
         }
 
-        public async Task<ICollection<Post>> ExtraxtAllPosts(ApplicationUser user)
+        public async Task<ICollection<Post>> ExtraxtAllPosts(HttpContext httpContext)
         {
             var posts = await this.db.Posts.OrderByDescending(x => x.CreatedOn).ToListAsync();
+            var user = await this.userManager.GetUserAsync(httpContext.User);
 
             foreach (var post in posts)
             {

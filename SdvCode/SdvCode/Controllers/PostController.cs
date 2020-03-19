@@ -35,25 +35,23 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/{id}")]
-        public IActionResult Index(string id)
+        public async Task<IActionResult> Index(string id)
         {
-            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
-
-            var isBlocked = this.userValidator.IsBlocked(user);
+            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
             if (isBlocked == true)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = this.userValidator.IsInBlogRole(user);
-            if (isInRole == false)
+            var isInRole = await this.userValidator.IsInBlogRole(this.HttpContext);
+            if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            PostViewModel model = this.postService.ExtractCurrentPost(id, user);
+            PostViewModel model = await this.postService.ExtractCurrentPost(id, this.HttpContext);
             return this.View(model);
         }
 
@@ -61,23 +59,21 @@ namespace SdvCode.Controllers
         [Route("/Blog/Post/Like/{id}")]
         public async Task<IActionResult> LikePost(string id)
         {
-            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
-
-            var isBlocked = this.userValidator.IsBlocked(user);
-            if (isBlocked == true)
+            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = this.userValidator.IsInBlogRole(user);
-            if (isInRole == false)
+            var isInRole = await this.userValidator.IsInBlogRole(this.HttpContext);
+            if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isLiked = await this.postService.LikePost(id, user);
+            bool isLiked = await this.postService.LikePost(id, this.HttpContext);
 
             if (isLiked)
             {
@@ -95,23 +91,21 @@ namespace SdvCode.Controllers
         [Route("/Blog/Post/unlike/{id}")]
         public async Task<IActionResult> UnlikePost(string id)
         {
-            var user = this.userManager.GetUserAsync(this.HttpContext.User).Result;
-
-            var isBlocked = this.userValidator.IsBlocked(user);
-            if (isBlocked == true)
+            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = this.userValidator.IsInBlogRole(user);
-            if (isInRole == false)
+            var isInRole = await this.userValidator.IsInBlogRole(this.HttpContext);
+            if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isUnliked = await this.postService.UnlikePost(id, user);
+            bool isUnliked = await this.postService.UnlikePost(id, this.HttpContext);
 
             if (isUnliked)
             {
