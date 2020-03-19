@@ -64,6 +64,8 @@ namespace SdvCode.Models.User
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
+        public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
+
         [NotMapped]
         public int ActionsCount { get; set; }
 

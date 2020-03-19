@@ -217,6 +217,7 @@
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Activities ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Activities" asp-route-page="@Model.Page" asp-action="SwitchToTabs">ACTIVITIES</a></li>
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Followers ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Followers" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWERS</a></li>
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Following ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Following" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWING</a></li>
+                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Favorites ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Favorites" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FAVORITES</a></li>
                     </ul>
                     <div class="tab-content">
                         @switch (Model.ActiveTab)
@@ -229,6 +230,9 @@
                                 break;
                             case ProfileTab.Followers:
                                 @await Component.InvokeAsync("Followers", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                break;
+                            case ProfileTab.Favorites:
+                                @await Component.InvokeAsync("Favorites", new { username = Model.ApplicationUser.UserName, page = Model.Page });
                                 break;
                             default:
                                 break;

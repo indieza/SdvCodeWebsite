@@ -12,7 +12,6 @@
     var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
     ViewData["Title"] = "Blog";
 }
-
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
@@ -145,6 +144,21 @@
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
                                 Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
                             </a>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                @if (!post.IsFavourite)
+                                {
+                                    <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-id="@post.Id" style="float: right" class="btn btn-primary">
+                                        <i class="far fa-heart"></i> Add to favorite
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-id="@post.Id" style="float: right" class="btn btn-primary">
+                                        <i class="fas fa-eraser"></i> Remove from favorite
+                                    </a>
+                                }
+                            }
                         </div>
                     </div>
                 }

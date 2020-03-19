@@ -36,6 +36,8 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
         public bool IsLiked { get; set; }
 
+        public bool IsFavourite { get; set; }
+
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
         public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();

@@ -356,6 +356,9 @@ namespace SdvCode.Services.Blog
                 {
                     post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
                 }
+
+                post.IsFavourite = this.db.FavouritePosts
+                    .Any(x => x.PostId == post.Id && x.ApplicationUserId == user.Id && x.IsFavourite == true);
             }
 
             return posts;

@@ -118,5 +118,49 @@ namespace SdvCode.Controllers
 
             return this.RedirectToAction("Index", "Post", new { id });
         }
+
+        public async Task<IActionResult> AddToFavorite(string id)
+        {
+            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            if (isBlocked)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            bool isAdded = await this.postService.AddToFavorite(this.HttpContext, id);
+            if (isAdded)
+            {
+                this.TempData["Success"] = SuccessMessages.SuccessfullyAddedToFavorite;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("Index", "Post", new { id });
+        }
+
+        public async Task<IActionResult> RemoveFromFavorite(string id)
+        {
+            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            if (isBlocked)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            bool isRemoved = await this.postService.RemoveFromFavorite(this.HttpContext, id);
+            if (isRemoved)
+            {
+                this.TempData["Success"] = SuccessMessages.SuccessfullyRemoveFromFavorite;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("Index", "Post", new { id });
+        }
     }
 }

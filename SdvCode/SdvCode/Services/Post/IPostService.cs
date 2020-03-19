@@ -19,5 +19,9 @@ namespace SdvCode.Services.Post
         Task<PostViewModel> ExtractCurrentPost(string id, HttpContext httpContext);
 
         Task<bool> UnlikePost(string id, HttpContext httpContext);
+
+        Task<bool> AddToFavorite(HttpContext httpContext, string id);
+
+        Task<bool> RemoveFromFavorite(HttpContext httpContext, string id);
     }
 }

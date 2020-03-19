@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
 namespace SdvCode.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200319191353_AddFavouritePostsTable")]
+    partial class AddFavouritePostsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,9 +190,6 @@ namespace SdvCode.Data.Migrations
 
                     b.Property<string>("PostId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsFavourite")
-                        .HasColumnType("bit");
 
                     b.HasKey("ApplicationUserId", "PostId");
 

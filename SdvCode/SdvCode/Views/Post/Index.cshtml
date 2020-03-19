@@ -133,6 +133,19 @@
                             <p class="author-url">Profile: <span><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName">@@@Model.ApplicationUser.UserName</a></span></p>
                         </div>
                     </div>
+
+                    @if (!Model.IsFavourite)
+                    {
+                        <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-id="@Model.Id" class="btn btn-success" style="float: right">
+                            <i class="far fa-heart"></i> Add to favorite
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-id="@Model.Id" class="btn btn-info" style="float: right">
+                            <i class="fas fa-eraser"></i> Remove from favorite
+                        </a>
+                    }
                     <!-- Author info end -->
 
                     <div class="gap-30"></div>

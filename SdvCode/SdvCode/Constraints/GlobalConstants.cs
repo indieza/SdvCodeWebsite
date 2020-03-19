@@ -36,5 +36,7 @@ namespace SdvCode.Constraints
         public const int PasswordRequiredLength = 7;
 
         public const int BlogPostsOnPage = 4;
+
+        public const int FavoritesCountOnPage = 6;
     }
 }

@@ -61,6 +61,7 @@ namespace SdvCode.Controllers
                 "Activities" => ProfileTab.Activities,
                 "Following" => ProfileTab.Following,
                 "Followers" => ProfileTab.Followers,
+                "Favorites" => ProfileTab.Favorites,
                 _ => ProfileTab.Activities,
             };
 
