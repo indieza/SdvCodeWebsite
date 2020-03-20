@@ -7,13 +7,15 @@ namespace SdvCode.Services.UserPosts
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public interface IUserPostsService
     {
-        Task<ICollection<Post>> ExtractLikedPostsByUsername(string username, ApplicationUser curentUser);
+        Task<ICollection<PostViewModel>> ExtractLikedPostsByUsername(string username, HttpContext httpContext);
 
-        Task<ICollection<Post>> ExtractCreatedPostsByUsername(string username, ApplicationUser curentUser);
+        Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, HttpContext httpContext);
     }
 }

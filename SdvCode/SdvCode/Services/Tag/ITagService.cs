@@ -7,13 +7,15 @@ namespace SdvCode.Services.Tag
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public interface ITagService
     {
         Task<Tag> ExtractTagById(string id);
 
-        Task<ICollection<Post>> ExtractPostsByTagId(string id, ApplicationUser user);
+        Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, HttpContext httpContext);
     }
 }

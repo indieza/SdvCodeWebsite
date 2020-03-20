@@ -7,46 +7,43 @@ namespace SdvCode.Services.UserPosts
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Post.ViewModels;
+    using X.PagedList;
 
     public class UserPostsService : IUserPostsService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly GlobalPostsExtractor postsExtractor;
 
-        public UserPostsService(ApplicationDbContext db)
+        public UserPostsService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
+            this.postsExtractor = new GlobalPostsExtractor(this.db);
         }
 
-        public async Task<ICollection<Post>> ExtractCreatedPostsByUsername(string username, ApplicationUser curentUser)
+        public async Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, HttpContext httpContext)
         {
+            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var posts = await this.db.Posts.Where(x => x.ApplicationUser.UserName == username).ToListAsync();
 
-            foreach (var post in posts)
-            {
-                post.ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
-                post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
-                post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id);
-                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == curentUser.Id && x.IsLiked == true);
-                post.IsFavourite = this.db.FavouritePosts
-                    .Any(x => x.ApplicationUserId == user.Id && x.PostId == post.Id && x.IsFavourite == true);
+            List<PostViewModel> postsModel = await this.postsExtractor.ExtractPosts(currentUser, posts);
 
-                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
-                foreach (var userId in usersIds)
-                {
-                    post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
-                }
-            }
-
-            return posts;
+            return postsModel;
         }
 
-        public async Task<ICollection<Post>> ExtractLikedPostsByUsername(string username, ApplicationUser curentUser)
+        public async Task<ICollection<PostViewModel>> ExtractLikedPostsByUsername(string username, HttpContext httpContext)
         {
+            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var postsIds = await this.db.PostsLikes.Where(x => x.UserId == user.Id && x.IsLiked == true).Select(x => x.PostId).ToListAsync();
 
@@ -57,23 +54,9 @@ namespace SdvCode.Services.UserPosts
                 posts.Add(await this.db.Posts.FirstOrDefaultAsync(x => x.Id == postId));
             }
 
-            foreach (var post in posts)
-            {
-                post.ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
-                post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
-                post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id);
-                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == curentUser.Id && x.IsLiked == true);
-                post.IsFavourite = this.db.FavouritePosts
-                    .Any(x => x.ApplicationUserId == user.Id && x.PostId == post.Id && x.IsFavourite == true);
+            List<PostViewModel> postsModel = await this.postsExtractor.ExtractPosts(currentUser, posts);
 
-                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
-                foreach (var userId in usersIds)
-                {
-                    post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
-                }
-            }
-
-            return posts;
+            return postsModel;
         }
     }
 }

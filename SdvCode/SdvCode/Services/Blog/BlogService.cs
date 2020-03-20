@@ -21,18 +21,21 @@ namespace SdvCode.Services.Blog
     using SdvCode.Services.CloudServices;
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public class BlogService : IBlogService
     {
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly GlobalPostsExtractor postExtractor;
 
         public BlogService(ApplicationDbContext db, Cloudinary cloudinary, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
             this.cloudinary = cloudinary;
             this.userManager = userManager;
+            this.postExtractor = new GlobalPostsExtractor(this.db);
         }
 
         public async Task<bool> CreatePost(CreatePostIndexModel model, HttpContext httpContext)
@@ -329,38 +332,12 @@ namespace SdvCode.Services.Blog
             };
         }
 
-        public async Task<ICollection<Post>> ExtraxtAllPosts(HttpContext httpContext)
+        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(HttpContext httpContext)
         {
             var posts = await this.db.Posts.OrderByDescending(x => x.CreatedOn).ToListAsync();
             var user = await this.userManager.GetUserAsync(httpContext.User);
-            foreach (var post in posts)
-            {
-                post.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
-                post.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
-                post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id && x.IsLiked == true);
-                if (user != null)
-                {
-                    post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
-                }
-                else
-                {
-                    post.IsLiked = false;
-                }
-
-                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
-                foreach (var userId in usersIds)
-                {
-                    post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
-                }
-
-                if (user != null)
-                {
-                    post.IsFavourite = this.db.FavouritePosts
-                        .Any(x => x.PostId == post.Id && x.ApplicationUserId == user.Id && x.IsFavourite == true);
-                }
-            }
-
-            return posts;
+            List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
+            return postsModel;
         }
     }
 }

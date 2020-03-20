@@ -12,6 +12,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public interface IBlogService
     {
@@ -21,7 +22,7 @@ namespace SdvCode.Services.Blog
 
         Task<bool> CreatePost(CreatePostIndexModel model, HttpContext httpContext);
 
-        Task<ICollection<Post>> ExtraxtAllPosts(HttpContext httpContext);
+        Task<ICollection<PostViewModel>> ExtraxtAllPosts(HttpContext httpContext);
 
         Task<bool> DeletePost(string id, HttpContext httpContext);
 

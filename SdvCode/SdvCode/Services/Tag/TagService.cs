@@ -7,22 +7,31 @@ namespace SdvCode.Services.Tag
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public class TagService : ITagService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly GlobalPostsExtractor postExtractor;
 
-        public TagService(ApplicationDbContext db)
+        public TagService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
+            this.postExtractor = new GlobalPostsExtractor(this.db);
         }
 
-        public async Task<ICollection<Post>> ExtractPostsByTagId(string id, ApplicationUser user)
+        public async Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, HttpContext httpContext)
         {
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             var postsIds = await this.db.PostsTags.Where(x => x.TagId == id).Select(x => x.PostId).ToListAsync();
             List<Post> posts = new List<Post>();
 
@@ -31,23 +40,9 @@ namespace SdvCode.Services.Tag
                 posts.Add(this.db.Posts.FirstOrDefault(x => x.Id == postId));
             }
 
-            foreach (var post in posts)
-            {
-                post.ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
-                post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
-                post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id);
-                post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
-                post.IsFavourite = this.db.FavouritePosts
-                    .Any(x => x.ApplicationUserId == user.Id && x.PostId == post.Id && x.IsFavourite == true);
+            List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
 
-                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
-                foreach (var userId in usersIds)
-                {
-                    post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
-                }
-            }
-
-            return posts;
+            return postsModel;
         }
 
         public async Task<Tag> ExtractTagById(string id)

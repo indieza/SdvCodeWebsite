@@ -10,11 +10,12 @@ namespace SdvCode.Services.Category
     using Microsoft.AspNetCore.Http;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public interface ICategoryService
     {
         Task<Category> ExtractCategoryById(string id);
 
-        Task<ICollection<Post>> ExtractPostsByCategoryId(string id, HttpContext httpContext);
+        Task<ICollection<PostViewModel>> ExtractPostsByCategoryId(string id, HttpContext httpContext);
     }
 }

@@ -65,8 +65,10 @@
                             <h2 class="post-title">
                                 <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
                             </h2>
-                            @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+
+                            @if ((User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || post.IsAuthor == true) && post.ApplicationUser.IsBlocked == false)
                             {
+                                <a asp-area="" asp-controller="Blog" asp-action="EditPost" asp-route-id="@post.Id" class="btn btn-info"><i class="fas fa-edit"></i> Edit Post</a>
                                 <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@post.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
                             }
                             @if (SignInManager.IsSignedIn(User))

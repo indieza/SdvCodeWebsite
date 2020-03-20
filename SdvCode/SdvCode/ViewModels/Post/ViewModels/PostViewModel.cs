@@ -18,6 +18,8 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
         public string Content { get; set; }
 
+        public string ShortContent { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public DateTime UpdatedOn { get; set; }
@@ -34,8 +36,6 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
         public Category Category { get; set; }
 
-        public bool IsLiked { get; set; }
-
         public bool IsFavourite { get; set; }
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
@@ -44,6 +44,10 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
         public bool IsAuthor { get; set; }
 
+        public bool IsLiked { get; set; }
+
         public ICollection<ApplicationUser> Likers { get; set; } = new HashSet<ApplicationUser>();
+
+        public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
     }
 }

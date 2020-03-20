@@ -33,7 +33,6 @@ namespace SdvCode.Controllers
         [Route("Blog/UserPosts/{username}/{filter}/{page?}")]
         public async Task<IActionResult> Index(string username, string filter, int? page)
         {
-            var currentUser = await this.userManager.GetUserAsync(this.HttpContext.User);
             UserPostsViewModel model = new UserPostsViewModel
             {
                 Username = username,
@@ -44,13 +43,13 @@ namespace SdvCode.Controllers
             if (filter == UserPostsFilter.Liked.ToString())
             {
                 model.Action = UserPostsFilter.Liked.ToString();
-                var posts = await this.userPostsService.ExtractLikedPostsByUsername(username, currentUser);
+                var posts = await this.userPostsService.ExtractLikedPostsByUsername(username, this.HttpContext);
                 model.Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage);
             }
             else if (filter == UserPostsFilter.Created.ToString())
             {
                 model.Action = UserPostsFilter.Created.ToString();
-                var posts = await this.userPostsService.ExtractCreatedPostsByUsername(username, currentUser);
+                var posts = await this.userPostsService.ExtractCreatedPostsByUsername(username, this.HttpContext);
                 model.Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage);
             }
 

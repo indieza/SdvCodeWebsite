@@ -59,14 +59,5 @@ namespace SdvCode.Models.Blog
         public ICollection<PostTag> PostsTags { get; set; } = new HashSet<PostTag>();
 
         public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
-
-        [NotMapped]
-        public bool IsLiked { get; set; }
-
-        [NotMapped]
-        public ICollection<ApplicationUser> Likers { get; set; } = new HashSet<ApplicationUser>();
-
-        [NotMapped]
-        public bool IsFavourite { get; set; }
     }
 }

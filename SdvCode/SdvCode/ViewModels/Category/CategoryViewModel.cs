@@ -8,11 +8,12 @@ namespace SdvCode.ViewModels.Category
     using System.Linq;
     using System.Threading.Tasks;
     using SdvCode.Models.Blog;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public class CategoryViewModel
     {
         public Category Category { get; set; }
 
-        public IEnumerable<Post> Posts { get; set; } = new HashSet<Post>();
+        public IEnumerable<PostViewModel> Posts { get; set; } = new HashSet<PostViewModel>();
     }
 }
