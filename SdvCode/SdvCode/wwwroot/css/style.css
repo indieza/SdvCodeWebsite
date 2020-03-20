@@ -69,6 +69,12 @@ h1, h2, h3 {
     color: #323232;
 }
 
+.renderBodySection {
+    display: inline;
+    width: 100%;
+    height: 100%;
+}
+
 .body-inner {
     position: relative;
     overflow: hidden;

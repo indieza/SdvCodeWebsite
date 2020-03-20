@@ -253,9 +253,7 @@ namespace SdvCode.Services.Blog
                         PersonProfileImageUrl = user.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
-                        PostContent = post.Content.Length < 347 ?
-                        post.Content :
-                        $"{post.Content.Substring(0, 347)}...",
+                        PostContent = post.ShortContent,
                     });
                 }
                 else
@@ -270,9 +268,7 @@ namespace SdvCode.Services.Blog
                         FollowerProfileImageUrl = postUser.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
-                        PostContent = post.Content.Length < 347 ?
-                        post.Content :
-                        $"{post.Content.Substring(0, 347)}...",
+                        PostContent = post.ShortContent,
                     });
 
                     this.db.UserActions.Add(new UserAction
@@ -285,9 +281,7 @@ namespace SdvCode.Services.Blog
                         FollowerProfileImageUrl = user.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
-                        PostContent = post.Content.Length < 347 ?
-                        post.Content :
-                        $"{post.Content.Substring(0, 347)}...",
+                        PostContent = post.ShortContent,
                     });
                 }
 
