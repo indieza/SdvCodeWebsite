@@ -6,6 +6,7 @@ namespace SdvCode.Services.Blog
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
     using Ganss.XSS;
@@ -38,6 +39,7 @@ namespace SdvCode.Services.Blog
         {
             var category = this.db.Categories.FirstOrDefault(x => x.Name == model.PostInputModel.CategoryName);
             var user = await this.userManager.GetUserAsync(httpContext.User);
+            var contentWithoutTags = Regex.Replace(model.PostInputModel.SanitizeContent, "<.*?>", string.Empty);
 
             var post = new Post
             {
@@ -46,9 +48,9 @@ namespace SdvCode.Services.Blog
                 Content = model.PostInputModel.SanitizeContent,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow,
-                ShortContent = model.PostInputModel.SanitizeContent.Length < 347 ?
-                    model.PostInputModel.SanitizeContent :
-                    $"{model.PostInputModel.SanitizeContent.Substring(0, 347)}...",
+                ShortContent = contentWithoutTags.Length <= 347 ?
+                    contentWithoutTags :
+                    $"{contentWithoutTags.Substring(0, 347)}...",
                 ApplicationUserId = user.Id,
                 Likes = 0,
             };
@@ -198,6 +200,7 @@ namespace SdvCode.Services.Blog
         {
             var user = await this.userManager.GetUserAsync(httpContext.User);
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
+            var contentWithoutTags = Regex.Replace(model.SanitizeContent, "<.*?>", string.Empty);
 
             if (post != null)
             {
@@ -207,9 +210,9 @@ namespace SdvCode.Services.Blog
                 post.Title = model.Title;
                 post.UpdatedOn = DateTime.UtcNow;
                 post.Content = model.SanitizeContent;
-                post.ShortContent = model.SanitizeContent.Length < 347 ?
-                    model.SanitizeContent :
-                    $"{model.SanitizeContent.Substring(0, 347)}...";
+                post.ShortContent = contentWithoutTags.Length <= 347 ?
+                    contentWithoutTags :
+                    $"{contentWithoutTags.Substring(0, 347)}...";
 
                 var imageUrl = await ApplicationCloudinary.UploadImage(
                     this.cloudinary,
@@ -330,7 +333,6 @@ namespace SdvCode.Services.Blog
         {
             var posts = await this.db.Posts.OrderByDescending(x => x.CreatedOn).ToListAsync();
             var user = await this.userManager.GetUserAsync(httpContext.User);
-
             foreach (var post in posts)
             {
                 post.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
@@ -351,8 +353,11 @@ namespace SdvCode.Services.Blog
                     post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
                 }
 
-                post.IsFavourite = this.db.FavouritePosts
-                    .Any(x => x.PostId == post.Id && x.ApplicationUserId == user.Id && x.IsFavourite == true);
+                if (user != null)
+                {
+                    post.IsFavourite = this.db.FavouritePosts
+                        .Any(x => x.PostId == post.Id && x.ApplicationUserId == user.Id && x.IsFavourite == true);
+                }
             }
 
             return posts;

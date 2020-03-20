@@ -3,11 +3,11 @@
 
 namespace SdvCode.ViewModels.Pagination
 {
-    using SdvCode.ViewModels.Profile;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.ViewModels.Profile;
 
     public class FavoritesPaginationViewModel
     {

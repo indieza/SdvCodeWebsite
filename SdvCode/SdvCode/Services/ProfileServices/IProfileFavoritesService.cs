@@ -7,11 +7,12 @@ namespace SdvCode.Services.ProfileServices
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
 
     public interface IProfileFavoritesService
     {
-        Task<List<FavoritesViewModel>> ExtractFavorites(ApplicationUser user);
+        Task<List<FavoritesViewModel>> ExtractFavorites(ApplicationUser user, HttpContext httpContext);
     }
 }

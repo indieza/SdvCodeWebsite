@@ -18,6 +18,15 @@
                     </span>
                 </a>
             }
+            else
+            {
+                <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-id="@post.PostId" type="button" class="btn btn-sm btn-success" style="float: right">
+                    <i class="far fa-heart"></i>
+                    <span>
+                        Add to favorite
+                    </span>
+                </a>
+            }
             <h4>
                 <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.PostId">
                     @post.PostTitle
