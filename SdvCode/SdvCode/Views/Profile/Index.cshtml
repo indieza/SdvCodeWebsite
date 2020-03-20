@@ -91,6 +91,15 @@
                                 <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-success btn-block"><i class="fas fa-user-shield"></i> Administration Panel</a>
                             </div>
                         }
+                        else
+                        {
+                            @if (User.Identity.Name == Model.ApplicationUser.UserName && User.IsInRole(Roles.Editor.ToString()))
+                            {
+                                <div style="margin-top: 15px">
+                                    <a asp-area="Editor" asp-controller="AddCategory" asp-action="Index" class="btn btn-success btn-block"><i class="fas fa-feather-alt"></i> Create Category</a>
+                                </div>
+                            }
+                        }
                     </div>
                     <div class="section">
                         <h3>About Me</h3>

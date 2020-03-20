@@ -66,6 +66,11 @@ namespace SdvCode
                 options.SlidingExpiration = true;
             });
 
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
+
             // Configuration for update cookies when user is added in Role!!!
             services.Configure<SecurityStampValidatorOptions>(options =>
             {
@@ -127,6 +132,7 @@ namespace SdvCode
             services.AddTransient<IUserPostsService, UserPostsService>();
             services.AddTransient<IEditCategoryService, EditCategoryService>();
             services.AddTransient<IProfileFavoritesService, ProfileFavoritesService>();
+            services.AddTransient<IAddCategoryService, AddCategoryService>();
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));

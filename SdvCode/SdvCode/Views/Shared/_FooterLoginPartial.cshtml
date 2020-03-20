@@ -21,6 +21,15 @@
             <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Administration Panel</a>
         </li>
     }
+    else
+    {
+        if (User.IsInRole(Roles.Editor.ToString()))
+        {
+            <li>
+                <a class="nav-link text-dark" asp-area="Editor" asp-controller="AddCategory" asp-action="Index">Add Category</a>
+            </li>
+        }
+    }
     <li>
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
     </li>

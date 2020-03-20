@@ -15,7 +15,6 @@ namespace SdvCode.Areas.Editor.Controllers
     using SdvCode.Constraints;
     using SdvCode.Models.User;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     [Authorize(Roles = GlobalConstants.EditorRole)]
     [Area(GlobalConstants.EditorArea)]
     public class EditCategoryController : Controller
