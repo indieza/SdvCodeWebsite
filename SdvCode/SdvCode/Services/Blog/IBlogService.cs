@@ -12,6 +12,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
+    using SdvCode.ViewModels.Post.InputModels;
     using SdvCode.ViewModels.Post.ViewModels;
 
     public interface IBlogService

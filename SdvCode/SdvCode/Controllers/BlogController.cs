@@ -17,6 +17,7 @@ namespace SdvCode.Controllers
     using SdvCode.Services.Post;
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
+    using SdvCode.ViewModels.Post.InputModels;
     using Twilio.Rest.Api.V2010.Account.Usage;
     using X.PagedList;
 
