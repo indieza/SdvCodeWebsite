@@ -8,6 +8,7 @@ namespace SdvCode.Models.Blog
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using SdvCode.Models.User;
@@ -59,5 +60,7 @@ namespace SdvCode.Models.Blog
         public ICollection<PostTag> PostsTags { get; set; } = new HashSet<PostTag>();
 
         public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
+
+        public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
     }
 }

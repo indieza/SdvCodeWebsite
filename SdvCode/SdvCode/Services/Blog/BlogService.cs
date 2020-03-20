@@ -30,6 +30,8 @@ namespace SdvCode.Services.Blog
         private readonly Cloudinary cloudinary;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly GlobalPostsExtractor postExtractor;
+        private readonly AddCyclicActivity cyclicActivity;
+        private readonly AddNonCyclicActivity nonCyclicActivity;
 
         public BlogService(ApplicationDbContext db, Cloudinary cloudinary, UserManager<ApplicationUser> userManager)
         {
@@ -37,6 +39,8 @@ namespace SdvCode.Services.Blog
             this.cloudinary = cloudinary;
             this.userManager = userManager;
             this.postExtractor = new GlobalPostsExtractor(this.db);
+            this.cyclicActivity = new AddCyclicActivity(this.db);
+            this.nonCyclicActivity = new AddNonCyclicActivity(this.db);
         }
 
         public async Task<bool> CreatePost(CreatePostIndexModel model, HttpContext httpContext)
@@ -82,15 +86,7 @@ namespace SdvCode.Services.Blog
             }
 
             this.db.Posts.Add(post);
-            this.db.UserActions.Add(new UserAction
-            {
-                Action = UserActionsType.CreatePost,
-                ActionDate = DateTime.UtcNow,
-                ApplicationUserId = user.Id,
-                PostId = post.Id,
-                PersonUsername = user.UserName,
-                ProfileImageUrl = user.ImageUrl,
-            });
+            this.nonCyclicActivity.AddUserAction(user, post, UserActionsType.CreatePost, user);
             await this.db.SaveChangesAsync();
             return true;
         }
@@ -111,79 +107,12 @@ namespace SdvCode.Services.Blog
 
                 if (user.Id == post.ApplicationUserId)
                 {
-                    if (this.db.UserActions
-                        .Any(x => x.Action == UserActionsType.DeleteOwnPost &&
-                        x.ApplicationUserId == user.Id &&
-                        x.PersonUsername == user.UserName))
-                    {
-                        this.db.UserActions
-                            .FirstOrDefault(x => x.Action == UserActionsType.DeleteOwnPost &&
-                            x.ApplicationUserId == user.Id &&
-                            x.PersonUsername == user.UserName).ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.DeleteOwnPost,
-                            ActionDate = DateTime.UtcNow,
-                            ApplicationUserId = user.Id,
-                            PersonUsername = user.UserName,
-                            ProfileImageUrl = user.ImageUrl,
-                        });
-                    }
+                    this.cyclicActivity.AddUserAction(user, UserActionsType.DeleteOwnPost, user);
                 }
                 else
                 {
-                    if (this.db.UserActions
-                        .Any(x => x.Action == UserActionsType.DeletedPost &&
-                        x.ApplicationUserId == userPost.Id &&
-                        x.PersonUsername == userPost.UserName &&
-                        x.FollowerUsername == user.UserName))
-                    {
-                        this.db.UserActions
-                            .FirstOrDefault(x => x.Action == UserActionsType.DeletedPost &&
-                            x.ApplicationUserId == userPost.Id &&
-                            x.PersonUsername == userPost.UserName &&
-                            x.FollowerUsername == user.UserName).ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.DeletedPost,
-                            ActionDate = DateTime.UtcNow,
-                            ApplicationUserId = userPost.Id,
-                            PersonUsername = userPost.UserName,
-                            FollowerUsername = user.UserName,
-                            ProfileImageUrl = user.ImageUrl,
-                        });
-                    }
-
-                    if (this.db.UserActions
-                        .Any(x => x.Action == UserActionsType.DeletePost &&
-                        x.ApplicationUserId == user.Id &&
-                        x.PersonUsername == user.UserName &&
-                        x.FollowerUsername == userPost.UserName))
-                    {
-                        this.db.UserActions
-                            .FirstOrDefault(x => x.Action == UserActionsType.DeletePost &&
-                            x.ApplicationUserId == user.Id &&
-                            x.PersonUsername == user.UserName &&
-                            x.FollowerUsername == userPost.UserName).ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.DeletePost,
-                            ActionDate = DateTime.UtcNow,
-                            ApplicationUserId = user.Id,
-                            PersonUsername = user.UserName,
-                            FollowerUsername = userPost.UserName,
-                            ProfileImageUrl = userPost.ImageUrl,
-                        });
-                    }
+                    this.cyclicActivity.AddUserAction(user, UserActionsType.DeletedPost, userPost);
+                    this.cyclicActivity.AddUserAction(userPost, UserActionsType.DeletePost, user);
                 }
 
                 var postActivities = this.db.UserActions.Where(x => x.PostId == post.Id);
@@ -248,45 +177,12 @@ namespace SdvCode.Services.Blog
 
                 if (user.Id == postUser.Id)
                 {
-                    this.db.UserActions.Add(new UserAction
-                    {
-                        Action = UserActionsType.EditOwnPost,
-                        ActionDate = DateTime.UtcNow,
-                        ApplicationUserId = user.Id,
-                        PersonUsername = user.UserName,
-                        ProfileImageUrl = user.ImageUrl,
-                        PostId = post.Id,
-                        PostTitle = post.Title,
-                        PostContent = post.ShortContent,
-                    });
+                    this.nonCyclicActivity.AddUserAction(user, post, UserActionsType.EditOwnPost, user);
                 }
                 else
                 {
-                    this.db.UserActions.Add(new UserAction
-                    {
-                        Action = UserActionsType.EditPost,
-                        ActionDate = DateTime.UtcNow,
-                        ApplicationUserId = user.Id,
-                        PersonUsername = user.UserName,
-                        FollowerUsername = postUser.UserName,
-                        ProfileImageUrl = postUser.ImageUrl,
-                        PostId = post.Id,
-                        PostTitle = post.Title,
-                        PostContent = post.ShortContent,
-                    });
-
-                    this.db.UserActions.Add(new UserAction
-                    {
-                        Action = UserActionsType.EditedPost,
-                        ActionDate = DateTime.UtcNow,
-                        ApplicationUserId = postUser.Id,
-                        PersonUsername = postUser.UserName,
-                        FollowerUsername = user.UserName,
-                        ProfileImageUrl = user.ImageUrl,
-                        PostId = post.Id,
-                        PostTitle = post.Title,
-                        PostContent = post.ShortContent,
-                    });
+                    this.nonCyclicActivity.AddUserAction(user, post, UserActionsType.EditPost, postUser);
+                    this.nonCyclicActivity.AddUserAction(postUser, post, UserActionsType.EditedPost, user);
                 }
 
                 this.db.Posts.Update(post);

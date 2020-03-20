@@ -16,7 +16,7 @@
         @if (action.Action == UserActionsType.Follow)
         {
             <div class="media activity-item">
-                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
+                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
                     @if (action.ProfileImageUrl == null)
                     {
                         <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
@@ -28,11 +28,11 @@
                 </a>
                 <div class="media-body">
                     <p class="activity-title">
-                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername">
-                            <b>@action.FollowerUsername</b>
-                        </a> started following
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername">
                             <b>@action.PersonUsername</b>
+                        </a> started following
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername">
+                            <b>@action.FollowerUsername</b>
                         </a>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
@@ -94,7 +94,7 @@
         @if (action.Action == UserActionsType.Unfollow)
         {
             <div class="media activity-item">
-                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
+                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
                     @if (action.ProfileImageUrl == null)
                     {
                         <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
@@ -106,11 +106,11 @@
                 </a>
                 <div class="media-body">
                     <p class="activity-title">
-                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername">
-                            <b>@action.FollowerUsername</b>
-                        </a> unfollow
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername">
                             <b>@action.PersonUsername</b>
+                        </a> unfollow
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername">
+                            <b>@action.FollowerUsername</b>
                         </a>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
@@ -310,9 +310,18 @@
                         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
                             <b>post</b>
                         </a>
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <div class="activity-attachment">
+                        <h4>
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
+                                @action.PostTitle
+                            </a>
+                        </h4>
+                        <div class="well well-sm">
+                            @Html.Raw(action.PostContent)
+                        </div>
+                    </div>
                 </div>
                 @if (User.Identity.Name == action.PersonUsername)
                 {
@@ -348,11 +357,10 @@
                             <b>
                                 @action.PersonUsername
                             </b>
-                        </a> like his own blog
+                        </a> like his/her own blog
                         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
                             <b>post</b>
                         </a>
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
@@ -409,7 +417,6 @@
                         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
                             <b>post</b>
                         </a>
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
@@ -466,8 +473,6 @@
                                 @action.FollowerUsername
                             </b>
                         </a>
-
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
@@ -515,11 +520,10 @@
                             <b>
                                 @action.PersonUsername
                             </b>
-                        </a> unlike his own blog
+                        </a> unlike his/her own blog
                         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
                             <b>post</b>
                         </a>
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
@@ -566,7 +570,6 @@
                         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
                             <b>post</b>
                         </a>
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
@@ -613,8 +616,6 @@
                                 @action.FollowerUsername
                             </b>
                         </a>
-
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
@@ -650,7 +651,7 @@
                     <p class="activity-title">
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername">
                             <b>@action.PersonUsername</b>
-                        </a> delete his own post
+                        </a> delete his/her own blog post
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
@@ -775,7 +776,6 @@
                         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
                             <b>post</b>
                         </a>
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
@@ -832,8 +832,6 @@
                                 @action.FollowerUsername
                             </b>
                         </a>
-
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
@@ -881,11 +879,10 @@
                             <b>
                                 @action.PersonUsername
                             </b>
-                        </a> edit his own blog
+                        </a> edit his/her own blog
                         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
                             <b>post</b>
                         </a>
-                        <small class="text-muted"></small>
                     </p>
                     <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">

@@ -16,6 +16,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20200320191038_ConnectActionsTableToPostsTable.cs" />
+    <Compile Remove="Data\Migrations\20200320191038_ConnectActionsTableToPostsTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="stylecop.json" />
   </ItemGroup>
 

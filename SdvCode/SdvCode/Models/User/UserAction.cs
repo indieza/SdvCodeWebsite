@@ -6,6 +6,7 @@ namespace SdvCode.Models.User
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
     public class UserAction
@@ -33,7 +34,10 @@ namespace SdvCode.Models.User
 
         public string CoverImageUrl { get; set; }
 
+        [ForeignKey(nameof(Post))]
         public string PostId { get; set; }
+
+        public Post Post { get; set; }
 
         [MaxLength(150)]
         public string PostTitle { get; set; }

@@ -11,6 +11,7 @@ namespace SdvCode.Services.ProfileServices
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
@@ -22,6 +23,7 @@ namespace SdvCode.Services.ProfileServices
         private readonly ApplicationDbContext db;
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly AddCyclicActivity cyclicActivity;
 
         public ProfileService(
             ApplicationDbContext db,
@@ -31,6 +33,7 @@ namespace SdvCode.Services.ProfileServices
             this.db = db;
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.cyclicActivity = new AddCyclicActivity(this.db);
         }
 
         public void DeleteActivity(HttpContext httpContext)
@@ -83,60 +86,9 @@ namespace SdvCode.Services.ProfileServices
                 this.db.FollowUnfollows.FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
             }
 
+            this.cyclicActivity.AddUserAction(user, UserActionsType.Follow, currentUser);
+            this.cyclicActivity.AddUserAction(currentUser, UserActionsType.Followed, user);
             await this.db.SaveChangesAsync();
-
-            var targetFollowerEntity = this.db.UserActions.FirstOrDefault(x =>
-            x.Action == UserActionsType.Follow &&
-            x.FollowerUsername == currentUser.UserName &&
-            x.PersonUsername == username &&
-            x.ApplicationUserId == currentUser.Id);
-
-            if (targetFollowerEntity == null)
-            {
-                currentUser.UserActions.Add(new UserAction
-                {
-                    Action = UserActionsType.Follow,
-                    ActionDate = DateTime.UtcNow,
-                    PersonUsername = username,
-                    ProfileImageUrl = user.ImageUrl,
-                    FollowerUsername = currentUser.UserName,
-                    ApplicationUserId = currentUser.Id,
-                });
-
-                await this.db.SaveChangesAsync();
-            }
-            else
-            {
-                targetFollowerEntity.ActionDate = DateTime.UtcNow;
-                this.db.UserActions.Update(targetFollowerEntity);
-                await this.db.SaveChangesAsync();
-            }
-
-            var targetPersonEntity = this.db.UserActions.FirstOrDefault(x => x.Action == UserActionsType.Followed &&
-            x.FollowerUsername == currentUser.UserName &&
-            x.PersonUsername == user.UserName &&
-            x.ApplicationUserId == user.Id);
-
-            if (targetPersonEntity == null)
-            {
-                user.UserActions.Add(new UserAction
-                {
-                    Action = UserActionsType.Followed,
-                    ActionDate = DateTime.UtcNow,
-                    FollowerUsername = currentUser.UserName,
-                    PersonUsername = user.UserName,
-                    ProfileImageUrl = currentUser.ImageUrl,
-                    ApplicationUserId = user.Id,
-                });
-
-                await this.db.SaveChangesAsync();
-            }
-            else
-            {
-                targetPersonEntity.ActionDate = DateTime.UtcNow;
-                this.db.UserActions.Update(targetPersonEntity);
-                await this.db.SaveChangesAsync();
-            }
 
             return currentUser;
         }
@@ -188,61 +140,9 @@ namespace SdvCode.Services.ProfileServices
                     .FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true)
                     .IsFollowed = false;
 
+                this.cyclicActivity.AddUserAction(user, UserActionsType.Unfollow, currentUser);
+                this.cyclicActivity.AddUserAction(currentUser, UserActionsType.Unfollowed, user);
                 await this.db.SaveChangesAsync();
-
-                var targetUnfollowerEntity = this.db.UserActions.FirstOrDefault(x =>
-                x.Action == UserActionsType.Unfollow &&
-                x.FollowerUsername == currentUser.UserName &&
-                x.PersonUsername == username &&
-                x.ApplicationUserId == currentUser.Id);
-
-                if (targetUnfollowerEntity == null)
-                {
-                    this.db.UserActions.Add(new UserAction
-                    {
-                        Action = UserActionsType.Unfollow,
-                        ActionDate = DateTime.UtcNow,
-                        PersonUsername = username,
-                        ProfileImageUrl = user.ImageUrl,
-                        FollowerUsername = currentUser.UserName,
-                        ApplicationUserId = currentUser.Id,
-                    });
-
-                    await this.db.SaveChangesAsync();
-                }
-                else
-                {
-                    targetUnfollowerEntity.ActionDate = DateTime.UtcNow;
-                    this.db.UserActions.Update(targetUnfollowerEntity);
-                    await this.db.SaveChangesAsync();
-                }
-
-                var targetPersonEntity = this.db.UserActions.FirstOrDefault(x =>
-                x.Action == UserActionsType.Unfollowed &&
-                x.FollowerUsername == currentUser.UserName &&
-                x.PersonUsername == user.UserName &&
-                x.ApplicationUserId == user.Id);
-
-                if (targetPersonEntity == null)
-                {
-                    this.db.UserActions.Add(new UserAction
-                    {
-                        Action = UserActionsType.Unfollowed,
-                        ActionDate = DateTime.UtcNow,
-                        FollowerUsername = currentUser.UserName,
-                        ProfileImageUrl = currentUser.ImageUrl,
-                        PersonUsername = user.UserName,
-                        ApplicationUserId = user.Id,
-                    });
-
-                    await this.db.SaveChangesAsync();
-                }
-                else
-                {
-                    targetPersonEntity.ActionDate = DateTime.UtcNow;
-                    this.db.UserActions.Update(targetPersonEntity);
-                    await this.db.SaveChangesAsync();
-                }
             }
 
             return currentUser;
