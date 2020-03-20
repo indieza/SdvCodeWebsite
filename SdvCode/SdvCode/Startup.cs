@@ -15,6 +15,7 @@ namespace SdvCode
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Editor.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -52,6 +53,7 @@ namespace SdvCode
                 options.Password.RequiredLength = GlobalConstants.PasswordRequiredLength;
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
@@ -103,6 +105,8 @@ namespace SdvCode
             TwilioClient.Init(accountSid, authToken);
             services.Configure<TwilioVerifySettings>(this.Configuration.GetSection("Twilio"));
 
+            services.AddTransient<ApplicationDbContext>();
+
             // Register Services
             services.AddScoped<IContactsService, ContactsService>();
             services.AddTransient<IEmailSender, EmailSender>();
@@ -121,6 +125,8 @@ namespace SdvCode
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ITagService, TagService>();
             services.AddTransient<IUserPostsService, UserPostsService>();
+            services.AddTransient<IEditCategoryService, EditCategoryService>();
+            services.AddTransient<IProfileFavoritesService, ProfileFavoritesService>();
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));

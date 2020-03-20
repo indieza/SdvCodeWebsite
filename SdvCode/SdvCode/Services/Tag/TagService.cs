@@ -37,6 +37,14 @@ namespace SdvCode.Services.Tag
                 post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
                 post.Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id);
                 post.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
+                post.IsFavourite = this.db.FavouritePosts
+                    .Any(x => x.ApplicationUserId == user.Id && x.PostId == post.Id && x.IsFavourite == true);
+
+                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
+                foreach (var userId in usersIds)
+                {
+                    post.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
+                }
             }
 
             return posts;

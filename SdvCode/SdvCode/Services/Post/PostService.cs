@@ -7,6 +7,8 @@ namespace SdvCode.Services.Post
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
@@ -16,15 +18,45 @@ namespace SdvCode.Services.Post
     public class PostService : IPostService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public PostService(ApplicationDbContext db)
+        public PostService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
 
-        public PostViewModel ExtractCurrentPost(string id, ApplicationUser user)
+        public async Task<bool> AddToFavorite(HttpContext httpContext, string id)
+        {
+            var user = await this.userManager.GetUserAsync(httpContext.User);
+
+            if (user != null && id != null)
+            {
+                if (this.db.FavouritePosts.Any(x => x.PostId == id && x.ApplicationUserId == user.Id))
+                {
+                    this.db.FavouritePosts.FirstOrDefault(x => x.PostId == id && x.ApplicationUserId == user.Id).IsFavourite = true;
+                }
+                else
+                {
+                    this.db.FavouritePosts.Add(new FavouritePost
+                    {
+                        ApplicationUserId = user.Id,
+                        PostId = id,
+                        IsFavourite = true,
+                    });
+                }
+
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<PostViewModel> ExtractCurrentPost(string id, HttpContext httpContext)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             post.PostsTags = this.db.PostsTags.Where(x => x.PostId == post.Id).ToList();
             PostViewModel model = new PostViewModel
             {
@@ -38,6 +70,7 @@ namespace SdvCode.Services.Post
                 ImageUrl = post.ImageUrl,
                 IsLiked = this.db.PostsLikes.Any(x => x.PostId == id && x.UserId == user.Id && x.IsLiked == true),
                 IsAuthor = post.ApplicationUserId == user.Id ? true : false,
+                IsFavourite = this.db.FavouritePosts.Any(x => x.ApplicationUserId == user.Id && x.PostId == post.Id && x.IsFavourite == true),
             };
 
             model.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
@@ -54,12 +87,19 @@ namespace SdvCode.Services.Post
                 });
             }
 
+            var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
+            foreach (var userId in usersIds)
+            {
+                model.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
+            }
+
             return model;
         }
 
-        public async Task<bool> LikePost(string id, ApplicationUser user)
+        public async Task<bool> LikePost(string id, HttpContext httpContext)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             post.ApplicationUser = this.db.Users.Find(post.ApplicationUserId);
 
             if (post != null)
@@ -192,9 +232,32 @@ namespace SdvCode.Services.Post
             return false;
         }
 
-        public async Task<bool> UnlikePost(string id, ApplicationUser user)
+        public async Task<bool> RemoveFromFavorite(HttpContext httpContext, string id)
+        {
+            var user = await this.userManager.GetUserAsync(httpContext.User);
+
+            if (user != null && id != null)
+            {
+                if (this.db.FavouritePosts.Any(x => x.PostId == id && x.ApplicationUserId == user.Id))
+                {
+                    this.db.FavouritePosts.FirstOrDefault(x => x.PostId == id && x.ApplicationUserId == user.Id).IsFavourite = false;
+                }
+                else
+                {
+                    return false;
+                }
+
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> UnlikePost(string id, HttpContext httpContext)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            var user = await this.userManager.GetUserAsync(httpContext.User);
             post.ApplicationUser = this.db.Users.Find(post.ApplicationUserId);
 
             var targetPostsLikes = this.db.PostsLikes.FirstOrDefault(x => x.PostId == id && x.UserId == user.Id);

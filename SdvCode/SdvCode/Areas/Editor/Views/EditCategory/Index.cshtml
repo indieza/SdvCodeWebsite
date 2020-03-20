@@ -1,0 +1,51 @@
+﻿@using SdvCode.Areas.Editor.ViewModels
+@model EditCategoryInputModel
+@{
+    ViewData["Title"] = $"Edit {@Model.Name} Category";
+}
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>@Model.Name Category</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li>Editor Area</li>
+                <li>
+                    <a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@Model.Id">
+                        @Model.Name
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h2 class="headerSwitch">Edit "@Model.Name" category</h2>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label asp-for="@Model.Name"></label>
+                <input asp-for="@Model.Name" class="form-control" placeholder="Name" required />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label asp-for="@Model.Description"></label>
+                <textarea asp-for="@Model.Description" class="form-control" placeholder="Description" rows="7"></textarea>
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-edit"></i>
+                    Edit Category
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

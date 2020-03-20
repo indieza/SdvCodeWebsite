@@ -10,8 +10,8 @@ using SdvCode.Data;
 namespace SdvCode.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200317223832_ExtendRoleTable")]
-    partial class ExtendRoleTable
+    [Migration("20200318224753_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,8 +134,8 @@ namespace SdvCode.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(300)")
-                        .HasMaxLength(300);
+                        .HasColumnType("nvarchar(550)")
+                        .HasMaxLength(550);
 
                     b.Property<string>("Name")
                         .IsRequired()

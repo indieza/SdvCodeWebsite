@@ -8,6 +8,7 @@ namespace SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+    using Ganss.XSS;
 
     public class AddCategoryInputModel
     {
@@ -16,9 +17,10 @@ namespace SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels
         [Display(Name = "Category name")]
         public string Name { get; set; }
 
-        [Required]
         [MaxLength(550)]
         [Display(Name = "Category description")]
         public string Description { get; set; }
+
+        public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);
     }
 }

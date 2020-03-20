@@ -9,6 +9,8 @@ namespace SdvCode.Constraints
 
         public const string AdministrationArea = "Administration";
 
+        public const string EditorArea = "Editor";
+
         public const string EditorRole = "Editor";
 
         public const string AuthorRole = "Author";
@@ -32,5 +34,9 @@ namespace SdvCode.Constraints
         public const string CloudinaryPostCoverImageName = "{0}PostCoverImage";
 
         public const int PasswordRequiredLength = 7;
+
+        public const int BlogPostsOnPage = 4;
+
+        public const int FavoritesCountOnPage = 6;
     }
 }

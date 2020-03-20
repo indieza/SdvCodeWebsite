@@ -181,6 +181,24 @@ namespace SdvCode.Data.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("SdvCode.Models.Blog.FavouritePost", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsFavourite")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ApplicationUserId", "PostId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("FavouritePosts");
+                });
+
             modelBuilder.Entity("SdvCode.Models.Blog.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -564,6 +582,21 @@ namespace SdvCode.Data.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Models.Blog.FavouritePost", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
+                        .WithMany("FavouritePosts")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.Blog.Post", "Post")
+                        .WithMany("FavouritePosts")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

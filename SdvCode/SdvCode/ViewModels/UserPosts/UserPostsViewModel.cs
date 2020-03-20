@@ -11,7 +11,7 @@ namespace SdvCode.ViewModels.UserPosts
 
     public class UserPostsViewModel
     {
-        public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+        public IEnumerable<Post> Posts { get; set; } = new HashSet<Post>();
 
         public string Action { get; set; }
 

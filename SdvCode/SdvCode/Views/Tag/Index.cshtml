@@ -2,6 +2,9 @@
 @using SdvCode.Models.User
 @using Microsoft.AspNetCore.Identity
 @using SdvCode.Areas.Administration.Models.Enums
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @model TagViewModel
@@ -62,6 +65,29 @@
                             {
                                 <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@post.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
                             }
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <div class="dropdown">
+                                    <a class="btn btn-success dropbtn"><i class="far fa-heart"></i> @post.Likes Likes</a>
+                                    <div class="dropdown-content">
+                                        @foreach (var liker in post.Likers)
+                                        {
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@liker.UserName">
+                                                @if (liker.ImageUrl == null)
+                                                {
+                                                    <img class="likerAvatar" src="~/images/NoAvatarProfileImage.png" alt="avatar">
+                                                }
+                                                else
+                                                {
+                                                    <img class="likerAvatar" src=@liker.ImageUrl alt="avatar">
+                                                }
+
+                                                @liker.FirstName @liker.LastName (@@@liker.UserName)
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            }
                             <div class="post-meta">
                                 <span class="post-meta-author">
                                     Posted on
@@ -87,7 +113,7 @@
                                         @if (post.IsLiked == true)
                                         {
                                             <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-id="@post.Id">
-                                                <i class="fas fa-thumbs-down"></i> @post.Likes
+                                                <i class="fas fa-thumbs-down"></i> Unlike
                                             </a>
                                         }
                                         else
@@ -95,7 +121,7 @@
                                             @if (post.IsLiked == false && SignInManager.IsSignedIn(User))
                                             {
                                                 <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@post.Id">
-                                                    <i class="fas fa-thumbs-up"></i> @post.Likes
+                                                    <i class="fas fa-thumbs-up"></i> Like
                                                 </a>
                                             }
                                             else
@@ -114,19 +140,29 @@
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" class="btn btn-primary">
                                 Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
                             </a>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                @if (!post.IsFavourite)
+                                {
+                                    <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-id="@post.Id" style="float: right" class="btn btn-primary">
+                                        <i class="far fa-heart"></i> Add to favorite
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-id="@post.Id" style="float: right" class="btn btn-primary">
+                                        <i class="fas fa-eraser"></i> Remove from favorite
+                                    </a>
+                                }
+                            }
                         </div>
                     </div>
                 }
-                <div class="paging">
-                    <ul class="pagination">
-                        <li><a href="#"><i class="fas fa-angle-left"></i></a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#"><i class="fas fa-angle-right"></i></a></li>
-                    </ul>
+                <div class="row" style="text-align: center">
+                    @Html.PagedListPager((IPagedList)Model.Posts,
+                            page => Url.Action("Index", "Tag",
+                    new { page = page }),
+                    PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
                 </div>
             </div>
             @await Component.InvokeAsync("Blog")

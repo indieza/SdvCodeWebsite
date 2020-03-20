@@ -8,11 +8,12 @@ namespace SdvCode.Services.UserPosts
     using System.Linq;
     using System.Threading.Tasks;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
 
     public interface IUserPostsService
     {
-        Task<ICollection<Post>> ExtractLikedPostsByUsername(string username);
+        Task<ICollection<Post>> ExtractLikedPostsByUsername(string username, ApplicationUser curentUser);
 
-        Task<ICollection<Post>> ExtractCreatedPostsByUsername(string username);
+        Task<ICollection<Post>> ExtractCreatedPostsByUsername(string username, ApplicationUser curentUser);
     }
 }

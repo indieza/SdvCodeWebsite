@@ -28,7 +28,7 @@ namespace SdvCode.Services.Blog
 
             foreach (var post in posts.Take(20))
             {
-                var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
+                var user = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
                 recentPosts.Add(new RecentPostsViewModel
                 {
                     Id = post.Id,
@@ -67,7 +67,7 @@ namespace SdvCode.Services.Blog
 
             foreach (var post in posts.Take(10))
             {
-                var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
+                var user = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
                 topPosts.Add(new TopPostsViewModel
                 {
                     Id = post.Id,

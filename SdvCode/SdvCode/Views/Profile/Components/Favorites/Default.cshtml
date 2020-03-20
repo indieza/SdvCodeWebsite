@@ -1,0 +1,38 @@
+﻿@using SdvCode.ViewModels.Profile
+@using SdvCode.ViewModels.Pagination
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList
+@model FavoritesPaginationViewModel
+
+@foreach (var post in Model.Favorites)
+{
+    <div class="media activity-item">
+        <div class="activity-attachment">
+            @if (post.IsFavorite)
+            {
+                <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-id="@post.PostId" type="button" class="btn btn-sm btn-danger" style="float: right">
+                    <i class="fas fa-eraser"></i>
+                    <span>
+                        Remove
+                    </span>
+                </a>
+            }
+            <h4>
+                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.PostId">
+                    @post.PostTitle
+                </a>
+            </h4>
+            <small>@post.CreatedOn.ToString("dd-MMMM-yyyy")</small>
+            <div class="well well-sm">
+                @Html.Raw(post.PostContent)
+            </div>
+        </div>
+    </div>
+}
+<div class="row" style="text-align: center">
+    @Html.PagedListPager((IPagedList)Model.Favorites,
+            page => Url.Action("Index", "Profile",
+    new { username = Model.Username, page = page }),
+    PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+</div>

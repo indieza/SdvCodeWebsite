@@ -5,23 +5,22 @@ namespace SdvCode.Data.Migrations
 {
     using Microsoft.EntityFrameworkCore.Migrations;
 
-    public partial class CreatePostTitleCol : Migration
+    public partial class AddAditionalColInFavTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Title",
-                table: "Posts",
-                maxLength: 150,
+            migrationBuilder.AddColumn<bool>(
+                name: "IsFavourite",
+                table: "FavouritePosts",
                 nullable: false,
-                defaultValue: string.Empty);
+                defaultValue: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Title",
-                table: "Posts");
+                name: "IsFavourite",
+                table: "FavouritePosts");
         }
     }
 }

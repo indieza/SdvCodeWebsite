@@ -10,9 +10,11 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.Services.Tag;
     using SdvCode.ViewModels.Tag;
+    using X.PagedList;
 
     public class TagController : Controller
     {
@@ -26,14 +28,17 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [Route("Blog/Tag/{id}")]
-        public async Task<IActionResult> Index(string id)
+        [Route("Blog/Tag/{id}/{page?}")]
+        public async Task<IActionResult> Index(string id, int? page)
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            var pageNumber = page ?? 1;
+            var post = await this.tagService.ExtractPostsByTagId(id, user);
+
             TagViewModel model = new TagViewModel
             {
                 Tag = await this.tagService.ExtractTagById(id),
-                Posts = await this.tagService.ExtractPostsByTagId(id, user),
+                Posts = post.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
             };
 
             return this.View(model);

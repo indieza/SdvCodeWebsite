@@ -31,6 +31,8 @@ namespace SdvCode.Data
 
         public DbSet<PostLike> PostsLikes { get; set; }
 
+        public DbSet<FavouritePost> FavouritePosts { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -72,6 +74,12 @@ namespace SdvCode.Data
             {
                 k.PersonId,
                 k.FollowerId,
+            });
+
+            builder.Entity<FavouritePost>().HasKey(k => new
+            {
+                k.ApplicationUserId,
+                k.PostId,
             });
 
             base.OnModelCreating(builder);

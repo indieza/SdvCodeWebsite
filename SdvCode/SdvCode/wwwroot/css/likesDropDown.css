@@ -1,0 +1,45 @@
+﻿.likerAvatar {
+    float: left;
+    width: 27px;
+    height: 27px;
+    margin-right: 5px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    overflow: auto;
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 280px;
+    height: auto;
+    max-height: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 0);
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}

@@ -7,6 +7,7 @@ namespace SdvCode.Services.Category
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
 
@@ -14,6 +15,6 @@ namespace SdvCode.Services.Category
     {
         Task<Category> ExtractCategoryById(string id);
 
-        Task<ICollection<Post>> ExtractPostsByCategoryId(string id, ApplicationUser user);
+        Task<ICollection<Post>> ExtractPostsByCategoryId(string id, HttpContext httpContext);
     }
 }

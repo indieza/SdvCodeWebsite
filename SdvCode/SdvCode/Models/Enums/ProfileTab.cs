@@ -13,5 +13,6 @@ namespace SdvCode.Models.Enums
         Activities = 1,
         Following = 2,
         Followers = 3,
+        Favorites = 4,
     }
 }

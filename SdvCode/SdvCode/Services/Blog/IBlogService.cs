@@ -7,6 +7,7 @@ namespace SdvCode.Services.Blog
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.InputModels;
@@ -18,14 +19,14 @@ namespace SdvCode.Services.Blog
 
         Task<ICollection<string>> ExtractAllTagNames();
 
-        Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user);
+        Task<bool> CreatePost(CreatePostIndexModel model, HttpContext httpContext);
 
-        Task<ICollection<Post>> ExtraxtAllPosts(ApplicationUser user);
+        Task<ICollection<Post>> ExtraxtAllPosts(HttpContext httpContext);
 
-        Task<bool> DeletePost(string id, ApplicationUser user);
+        Task<bool> DeletePost(string id, HttpContext httpContext);
 
-        Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user);
+        Task<EditPostInputModel> ExtractPost(string id, HttpContext httpContext);
 
-        Task<bool> EditPost(EditPostInputModel model, ApplicationUser user);
+        Task<bool> EditPost(EditPostInputModel model, HttpContext httpContext);
     }
 }

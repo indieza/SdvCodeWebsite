@@ -56,5 +56,11 @@ namespace SdvCode.Constraints
         public const string SuccessfullyDeletePost = "You successfully delete the post";
 
         public const string SuccessfullyEditedPost = "You successfully edit your blog post.";
+
+        public const string SuccessfullyEditCategory = "You successfully edit \"{0}\" category.";
+
+        public const string SuccessfullyAddedToFavorite = "You successfully added the post to your favorite list.";
+
+        public const string SuccessfullyRemoveFromFavorite = "You successfully remove the post from your favorite list.";
     }
 }
