@@ -148,7 +148,6 @@ namespace SdvCode.Services.Post
                             Action = UserActionsType.LikeOwnPost,
                             ActionDate = DateTime.UtcNow,
                             PostId = id,
-                            PersonProfileImageUrl = user.ImageUrl,
                             PersonUsername = user.UserName,
                             ApplicationUserId = user.Id,
                             ProfileImageUrl = user.ImageUrl,
@@ -181,12 +180,11 @@ namespace SdvCode.Services.Post
                             Action = UserActionsType.LikedPost,
                             ActionDate = DateTime.UtcNow,
                             PostId = id,
-                            PersonProfileImageUrl = post.ApplicationUser.ImageUrl,
                             PersonUsername = post.ApplicationUser.UserName,
                             ApplicationUserId = post.ApplicationUserId,
                             ApplicationUser = post.ApplicationUser,
                             FollowerUsername = user.UserName,
-                            FollowerProfileImageUrl = user.ImageUrl,
+                            ProfileImageUrl = user.ImageUrl,
                             PostTitle = post.Title,
                             PostContent = post.ShortContent,
                         });
@@ -214,11 +212,10 @@ namespace SdvCode.Services.Post
                             Action = UserActionsType.LikePost,
                             ActionDate = DateTime.UtcNow,
                             PostId = id,
-                            PersonProfileImageUrl = user.ImageUrl,
                             PersonUsername = user.UserName,
                             ApplicationUserId = user.Id,
                             FollowerUsername = post.ApplicationUser.UserName,
-                            FollowerProfileImageUrl = post.ApplicationUser.ImageUrl,
+                            ProfileImageUrl = post.ApplicationUser.ImageUrl,
                             PostTitle = post.Title,
                             PostContent = post.ShortContent,
                         });
@@ -288,7 +285,7 @@ namespace SdvCode.Services.Post
                             Action = UserActionsType.UnlikeOwnPost,
                             ActionDate = DateTime.UtcNow,
                             PostId = id,
-                            PersonProfileImageUrl = user.ImageUrl,
+                            ProfileImageUrl = user.ImageUrl,
                             PersonUsername = user.UserName,
                             ApplicationUserId = user.Id,
                         });
@@ -318,12 +315,11 @@ namespace SdvCode.Services.Post
                             Action = UserActionsType.UnlikedPost,
                             ActionDate = DateTime.UtcNow,
                             PostId = id,
-                            PersonProfileImageUrl = post.ApplicationUser.ImageUrl,
                             PersonUsername = post.ApplicationUser.UserName,
                             ApplicationUserId = post.ApplicationUserId,
                             ApplicationUser = post.ApplicationUser,
                             FollowerUsername = user.UserName,
-                            FollowerProfileImageUrl = user.ImageUrl,
+                            ProfileImageUrl = user.ImageUrl,
                         });
                     }
 
@@ -350,11 +346,10 @@ namespace SdvCode.Services.Post
                             Action = UserActionsType.UnlikePost,
                             ActionDate = DateTime.UtcNow,
                             PostId = id,
-                            PersonProfileImageUrl = user.ImageUrl,
                             PersonUsername = user.UserName,
                             ApplicationUserId = user.Id,
                             FollowerUsername = post.ApplicationUser.UserName,
-                            FollowerProfileImageUrl = post.ApplicationUser.ImageUrl,
+                            ProfileImageUrl = post.ApplicationUser.ImageUrl,
                         });
                     }
                 }

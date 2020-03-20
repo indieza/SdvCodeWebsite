@@ -88,7 +88,6 @@ namespace SdvCode.Services.Blog
                 ActionDate = DateTime.UtcNow,
                 ApplicationUserId = user.Id,
                 PostId = post.Id,
-                PersonProfileImageUrl = user.ImageUrl,
                 PersonUsername = user.UserName,
                 ProfileImageUrl = user.ImageUrl,
             });
@@ -130,7 +129,7 @@ namespace SdvCode.Services.Blog
                             ActionDate = DateTime.UtcNow,
                             ApplicationUserId = user.Id,
                             PersonUsername = user.UserName,
-                            PersonProfileImageUrl = user.ImageUrl,
+                            ProfileImageUrl = user.ImageUrl,
                         });
                     }
                 }
@@ -157,7 +156,7 @@ namespace SdvCode.Services.Blog
                             ApplicationUserId = userPost.Id,
                             PersonUsername = userPost.UserName,
                             FollowerUsername = user.UserName,
-                            FollowerProfileImageUrl = user.ImageUrl,
+                            ProfileImageUrl = user.ImageUrl,
                         });
                     }
 
@@ -182,7 +181,7 @@ namespace SdvCode.Services.Blog
                             ApplicationUserId = user.Id,
                             PersonUsername = user.UserName,
                             FollowerUsername = userPost.UserName,
-                            FollowerProfileImageUrl = userPost.ImageUrl,
+                            ProfileImageUrl = userPost.ImageUrl,
                         });
                     }
                 }
@@ -257,7 +256,7 @@ namespace SdvCode.Services.Blog
                         ActionDate = DateTime.UtcNow,
                         ApplicationUserId = user.Id,
                         PersonUsername = user.UserName,
-                        PersonProfileImageUrl = user.ImageUrl,
+                        ProfileImageUrl = user.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
                         PostContent = post.ShortContent,
@@ -272,7 +271,7 @@ namespace SdvCode.Services.Blog
                         ApplicationUserId = user.Id,
                         PersonUsername = user.UserName,
                         FollowerUsername = postUser.UserName,
-                        FollowerProfileImageUrl = postUser.ImageUrl,
+                        ProfileImageUrl = postUser.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
                         PostContent = post.ShortContent,
@@ -285,7 +284,7 @@ namespace SdvCode.Services.Blog
                         ApplicationUserId = postUser.Id,
                         PersonUsername = postUser.UserName,
                         FollowerUsername = user.UserName,
-                        FollowerProfileImageUrl = user.ImageUrl,
+                        ProfileImageUrl = user.ImageUrl,
                         PostId = post.Id,
                         PostTitle = post.Title,
                         PostContent = post.ShortContent,

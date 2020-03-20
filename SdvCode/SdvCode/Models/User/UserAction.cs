@@ -27,11 +27,7 @@ namespace SdvCode.Models.User
 
         public string PersonUsername { get; set; }
 
-        public string PersonProfileImageUrl { get; set; }
-
         public string FollowerUsername { get; set; }
-
-        public string FollowerProfileImageUrl { get; set; }
 
         public string ProfileImageUrl { get; set; }
 

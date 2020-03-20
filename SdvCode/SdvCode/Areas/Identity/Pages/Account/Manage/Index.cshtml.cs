@@ -202,7 +202,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     Action = UserActionsType.EditPersonalData,
                     ActionDate = DateTime.UtcNow,
                     PersonUsername = user.UserName,
-                    PersonProfileImageUrl = user.ImageUrl,
+                    ProfileImageUrl = user.ImageUrl,
                     ApplicationUserId = user.Id,
                 });
             }
@@ -214,7 +214,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     Action = UserActionsType.ChangeCoverImage,
                     ActionDate = DateTime.UtcNow,
                     PersonUsername = user.UserName,
-                    PersonProfileImageUrl = user.ImageUrl,
+                    ProfileImageUrl = user.ImageUrl,
                     CoverImageUrl = coverImageUrl,
                     ApplicationUserId = user.Id,
                 });
@@ -227,7 +227,6 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     Action = UserActionsType.ChangeProfilePicture,
                     ActionDate = DateTime.UtcNow,
                     PersonUsername = user.UserName,
-                    PersonProfileImageUrl = user.ImageUrl,
                     ProfileImageUrl = profileImageUrl,
                     ApplicationUserId = user.Id,
                 });

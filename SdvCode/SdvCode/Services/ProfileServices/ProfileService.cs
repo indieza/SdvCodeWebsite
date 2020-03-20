@@ -98,9 +98,8 @@ namespace SdvCode.Services.ProfileServices
                     Action = UserActionsType.Follow,
                     ActionDate = DateTime.UtcNow,
                     PersonUsername = username,
-                    PersonProfileImageUrl = user.ImageUrl,
+                    ProfileImageUrl = user.ImageUrl,
                     FollowerUsername = currentUser.UserName,
-                    FollowerProfileImageUrl = currentUser.ImageUrl,
                     ApplicationUserId = currentUser.Id,
                 });
 
@@ -125,9 +124,8 @@ namespace SdvCode.Services.ProfileServices
                     Action = UserActionsType.Followed,
                     ActionDate = DateTime.UtcNow,
                     FollowerUsername = currentUser.UserName,
-                    FollowerProfileImageUrl = currentUser.ImageUrl,
                     PersonUsername = user.UserName,
-                    PersonProfileImageUrl = user.ImageUrl,
+                    ProfileImageUrl = currentUser.ImageUrl,
                     ApplicationUserId = user.Id,
                 });
 
@@ -181,9 +179,8 @@ namespace SdvCode.Services.ProfileServices
 
         public async Task<ApplicationUser> UnfollowUser(string username, HttpContext httpContext)
         {
-            var currentUserId = this.userManager.GetUserId(httpContext.User);
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
-            var currentUser = this.db.Users.FirstOrDefault(u => u.Id == currentUserId);
+            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
 
             if (this.db.FollowUnfollows.Any(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true))
             {
@@ -201,14 +198,13 @@ namespace SdvCode.Services.ProfileServices
 
                 if (targetUnfollowerEntity == null)
                 {
-                    currentUser.UserActions.Add(new UserAction
+                    this.db.UserActions.Add(new UserAction
                     {
                         Action = UserActionsType.Unfollow,
                         ActionDate = DateTime.UtcNow,
                         PersonUsername = username,
-                        PersonProfileImageUrl = user.ImageUrl,
+                        ProfileImageUrl = user.ImageUrl,
                         FollowerUsername = currentUser.UserName,
-                        FollowerProfileImageUrl = currentUser.ImageUrl,
                         ApplicationUserId = currentUser.Id,
                     });
 
@@ -229,14 +225,13 @@ namespace SdvCode.Services.ProfileServices
 
                 if (targetPersonEntity == null)
                 {
-                    user.UserActions.Add(new UserAction
+                    this.db.UserActions.Add(new UserAction
                     {
                         Action = UserActionsType.Unfollowed,
                         ActionDate = DateTime.UtcNow,
                         FollowerUsername = currentUser.UserName,
-                        FollowerProfileImageUrl = currentUser.ImageUrl,
+                        ProfileImageUrl = currentUser.ImageUrl,
                         PersonUsername = user.UserName,
-                        PersonProfileImageUrl = user.ImageUrl,
                         ApplicationUserId = user.Id,
                     });
 
