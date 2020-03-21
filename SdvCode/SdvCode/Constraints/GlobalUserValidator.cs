@@ -57,7 +57,7 @@ namespace SdvCode.Constraints
             if (post != null)
             {
                 if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
-                    await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()) ||
+                    await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
                     post.ApplicationUserId == user.Id)
                 {
                     return true;

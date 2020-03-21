@@ -195,12 +195,12 @@ namespace SdvCode.Services.Blog
 
         public async Task<ICollection<string>> ExtractAllCategoryNames()
         {
-            return await this.db.Categories.Select(x => x.Name).ToListAsync();
+            return await this.db.Categories.Select(x => x.Name).OrderBy(x => x).ToListAsync();
         }
 
         public async Task<ICollection<string>> ExtractAllTagNames()
         {
-            return await this.db.Tags.Select(x => x.Name).ToListAsync();
+            return await this.db.Tags.Select(x => x.Name).OrderBy(x => x).ToListAsync();
         }
 
         public async Task<EditPostInputModel> ExtractPost(string id, HttpContext httpContext)
