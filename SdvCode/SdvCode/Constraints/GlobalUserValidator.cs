@@ -11,6 +11,7 @@ namespace SdvCode.Constraints
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
     public class GlobalUserValidator
@@ -64,6 +65,27 @@ namespace SdvCode.Constraints
                 }
 
                 return false;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> IsPostApproved(string id, HttpContext httpContext)
+        {
+            var user = await this.userManager.GetUserAsync(httpContext.User);
+            var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
+            var userPostsIds = this.db.Posts.Where(x => x.ApplicationUserId == user.Id).Select(x => x.Id).ToList();
+
+            if (post.PostStatus == PostStatus.Approved)
+            {
+                return true;
+            }
+
+            if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
+                userPostsIds.Contains(id))
+            {
+                return true;
             }
 
             return false;

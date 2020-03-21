@@ -14,17 +14,30 @@ namespace SdvCode.Areas.Editor.Services
     public class AddCategoryService : IAddCategoryService
     {
         private readonly ApplicationDbContext db;
-        private readonly CreateCategoryGlobally createCategoryGlobally;
 
         public AddCategoryService(ApplicationDbContext db)
         {
             this.db = db;
-            this.createCategoryGlobally = new CreateCategoryGlobally(this.db);
         }
 
         public async Task<bool> CreateCategory(string name, string description)
         {
-            return await this.createCategoryGlobally.CreateCategory(name, description);
+            if (this.db.Categories.Any(x => x.Name.ToLower() == name.ToLower()))
+            {
+                return false;
+            }
+
+            var category = new Category
+            {
+                Name = name,
+                CreatedOn = DateTime.UtcNow,
+                UpdatedOn = DateTime.UtcNow,
+                Description = description,
+            };
+
+            this.db.Categories.Add(category);
+            await this.db.SaveChangesAsync();
+            return true;
         }
     }
 }

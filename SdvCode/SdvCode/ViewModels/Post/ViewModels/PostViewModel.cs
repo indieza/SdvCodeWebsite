@@ -8,6 +8,7 @@ namespace SdvCode.ViewModels.Post.ViewModels
     using System.Linq;
     using System.Threading.Tasks;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
     public class PostViewModel
@@ -36,6 +37,8 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
         public Category Category { get; set; }
 
+        public PostStatus PostStatus { get; set; }
+
         public bool IsFavourite { get; set; }
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
@@ -49,5 +52,7 @@ namespace SdvCode.ViewModels.Post.ViewModels
         public ICollection<ApplicationUser> Likers { get; set; } = new HashSet<ApplicationUser>();
 
         public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
+
+        public ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
     }
 }

@@ -62,5 +62,11 @@ namespace SdvCode.Constraints
         public const string SuccessfullyAddedToFavorite = "You successfully added the post to your favorite list.";
 
         public const string SuccessfullyRemoveFromFavorite = "You successfully remove the post from your favorite list.";
+
+        public const string SuccessfullyApprovedBlogPost = "You successfully approved the blog post.";
+
+        public const string SuccessfullyBannedBlogPost = "You successfully banned the blog post.";
+
+        public const string SuccessfullyUnannedBlogPost = "You successfully unbanned the blog post.";
     }
 }

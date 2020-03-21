@@ -42,6 +42,7 @@ namespace SdvCode.Constraints
                     ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId),
                     Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId),
                     Likes = post.Likes,
+                    PostStatus = post.PostStatus,
                 };
 
                 if (user != null)

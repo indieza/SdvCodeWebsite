@@ -41,7 +41,7 @@
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                 @foreach (var post in Model.Posts)
                 {
-                    @await Html.PartialAsync("_BlogPostPartial", post)
+                    @await Html.PartialAsync("_PostsFilterPartial", post)
                 }
                 <div class="row" style="text-align: center">
                     @Html.PagedListPager((IPagedList)Model.Posts,

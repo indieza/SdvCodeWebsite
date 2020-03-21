@@ -71,6 +71,7 @@ namespace SdvCode.Services.Post
                 IsLiked = this.db.PostsLikes.Any(x => x.PostId == id && x.UserId == user.Id && x.IsLiked == true),
                 IsAuthor = post.ApplicationUserId == user.Id ? true : false,
                 IsFavourite = this.db.FavouritePosts.Any(x => x.ApplicationUserId == user.Id && x.PostId == post.Id && x.IsFavourite == true),
+                PostStatus = post.PostStatus,
             };
 
             model.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);

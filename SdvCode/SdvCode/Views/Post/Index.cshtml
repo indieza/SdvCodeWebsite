@@ -2,6 +2,7 @@
 @using SdvCode.Areas.Administration.Models.Enums
 @using SdvCode.Models.User
 @using Microsoft.AspNetCore.Identity
+@using SdvCode.Models.Enums
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @model PostViewModel
@@ -133,6 +134,31 @@
                             <p class="author-url">Profile: <span><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName">@@@Model.ApplicationUser.UserName</a></span></p>
                         </div>
                     </div>
+
+                    @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                    {
+                        @if (Model.PostStatus == PostStatus.Pending)
+                        {
+                            <a asp-area="Editor" asp-controller="Post" asp-action="ApprovePost" asp-route-id="@Model.Id" class="btn btn-info" style="float: left">
+                                <i class="fas fa-check"></i> Approve Post
+                            </a>
+                        }
+                        else
+                        {
+                            @if (Model.PostStatus == PostStatus.Banned)
+                            {
+                                <a asp-area="Editor" asp-controller="Post" asp-action="UnbanPost" asp-route-id="@Model.Id" class="btn btn-danger" style="float: left">
+                                    <i class="fas fa-unlock-alt"></i> Unban Post
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-area="Editor" asp-controller="Post" asp-action="BanPost" asp-route-id="@Model.Id" class="btn btn-info" style="float: left">
+                                    <i class="fas fa-lock"></i> Ban Post
+                                </a>
+                            }
+                        }
+                    }
 
                     @if (!Model.IsFavourite)
                     {

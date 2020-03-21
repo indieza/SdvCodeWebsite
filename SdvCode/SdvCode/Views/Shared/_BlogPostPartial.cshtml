@@ -2,13 +2,13 @@
 @using Microsoft.AspNetCore.Identity
 @using SdvCode.ViewModels.Post.ViewModels
 @using SdvCode.Areas.Administration.Models.Enums
+@using SdvCode.Models.Enums;
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Mvc.Common
 @using X.PagedList
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @model PostViewModel
-
 <div class="post">
     <div class="post-image-wrapper">
         <img src=@Model.ImageUrl class="img-responsive" alt="post cover image" />
@@ -38,6 +38,31 @@
         {
             <a asp-area="" asp-controller="Blog" asp-action="EditPost" asp-route-id="@Model.Id" class="btn btn-info"><i class="fas fa-edit"></i> Edit Post</a>
             <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@Model.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
+        }
+
+        @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+        {
+            @if (Model.PostStatus == PostStatus.Pending)
+            {
+                <a asp-area="Editor" asp-controller="Post" asp-action="ApprovePost" asp-route-id="@Model.Id" class="btn btn-info">
+                    <i class="fas fa-check"></i> Approve Post
+                </a>
+            }
+            else
+            {
+                @if (Model.PostStatus == PostStatus.Banned)
+                {
+                    <a asp-area="Editor" asp-controller="Post" asp-action="UnbanPost" asp-route-id="@Model.Id" class="btn btn-danger">
+                        <i class="fas fa-unlock-alt"></i> Unban Post
+                    </a>
+                }
+                else
+                {
+                    <a asp-area="Editor" asp-controller="Post" asp-action="BanPost" asp-route-id="@Model.Id" class="btn btn-info">
+                        <i class="fas fa-lock"></i> Ban Post
+                    </a>
+                }
+            }
         }
         @if (SignInManager.IsSignedIn(User))
         {

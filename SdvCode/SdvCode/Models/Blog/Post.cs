@@ -11,6 +11,7 @@ namespace SdvCode.Models.Blog
     using System.Reflection;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc.Formatters;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
     public class Post
@@ -44,6 +45,9 @@ namespace SdvCode.Models.Blog
         public int Likes { get; set; }
 
         [Required]
+        public PostStatus PostStatus { get; set; }
+
+        [Required]
         [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }
 
@@ -60,6 +64,10 @@ namespace SdvCode.Models.Blog
         public ICollection<PostTag> PostsTags { get; set; } = new HashSet<PostTag>();
 
         public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
+
+        public ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
+
+        public ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
 
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
     }

@@ -13,7 +13,7 @@ namespace SdvCode.Areas.Editor.Controllers
     using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Constraints;
 
-    [Authorize(Roles = GlobalConstants.EditorRole)]
+    [Authorize(Roles = GlobalConstants.EditorRole + "," + GlobalConstants.AdministratorRole)]
     [Area(GlobalConstants.EditorArea)]
     public class AddCategoryController : Controller
     {

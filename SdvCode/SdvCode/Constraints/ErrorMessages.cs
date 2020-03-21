@@ -42,5 +42,7 @@ namespace SdvCode.Constraints
         public const string NotInDeletePostRoles = "You don't have permissions to delete post.";
 
         public const string NotInEditPostRoles = "You don't have permissions to edit post.";
+
+        public const string NotApprovedBlogPost = "You cannot see not approved post.";
     }
 }

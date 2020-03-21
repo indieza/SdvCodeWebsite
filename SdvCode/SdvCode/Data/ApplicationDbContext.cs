@@ -33,6 +33,10 @@ namespace SdvCode.Data
 
         public DbSet<FavouritePost> FavouritePosts { get; set; }
 
+        public DbSet<PendingPost> PendingPosts { get; set; }
+
+        public DbSet<BlockedPost> BlockedPosts { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -77,6 +81,18 @@ namespace SdvCode.Data
             });
 
             builder.Entity<FavouritePost>().HasKey(k => new
+            {
+                k.ApplicationUserId,
+                k.PostId,
+            });
+
+            builder.Entity<PendingPost>().HasKey(k => new
+            {
+                k.ApplicationUserId,
+                k.PostId,
+            });
+
+            builder.Entity<BlockedPost>().HasKey(k => new
             {
                 k.ApplicationUserId,
                 k.PostId,

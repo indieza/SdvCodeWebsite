@@ -66,6 +66,10 @@ namespace SdvCode.Models.User
 
         public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
 
+        public ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
+
+        public ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
+
         [NotMapped]
         public int ActionsCount { get; set; }
 

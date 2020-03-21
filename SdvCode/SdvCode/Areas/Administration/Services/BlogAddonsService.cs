@@ -7,6 +7,7 @@ namespace SdvCode.Areas.Administration.Services
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Areas.Editor.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
@@ -14,17 +15,17 @@ namespace SdvCode.Areas.Administration.Services
     public class BlogAddonsService : IBlogAddonsService
     {
         private readonly ApplicationDbContext db;
-        private readonly CreateCategoryGlobally createCategoryGlobally;
+        private readonly IAddCategoryService addCategoryService;
 
-        public BlogAddonsService(ApplicationDbContext db)
+        public BlogAddonsService(ApplicationDbContext db, IAddCategoryService addCategoryService)
         {
             this.db = db;
-            this.createCategoryGlobally = new CreateCategoryGlobally(this.db);
+            this.addCategoryService = addCategoryService;
         }
 
         public async Task<bool> CreateCategory(string name, string description)
         {
-            return await this.createCategoryGlobally.CreateCategory(name, description);
+            return await this.addCategoryService.CreateCategory(name, description);
         }
 
         public async Task<bool> CreateTag(string name)

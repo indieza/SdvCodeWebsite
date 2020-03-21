@@ -13,6 +13,7 @@ namespace SdvCode.Services.Blog
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
@@ -29,15 +30,21 @@ namespace SdvCode.Services.Blog
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly GlobalPostsExtractor postExtractor;
         private readonly AddCyclicActivity cyclicActivity;
         private readonly AddNonCyclicActivity nonCyclicActivity;
 
-        public BlogService(ApplicationDbContext db, Cloudinary cloudinary, UserManager<ApplicationUser> userManager)
+        public BlogService(
+            ApplicationDbContext db,
+            Cloudinary cloudinary,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager)
         {
             this.db = db;
             this.cloudinary = cloudinary;
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.postExtractor = new GlobalPostsExtractor(this.db);
             this.cyclicActivity = new AddCyclicActivity(this.db);
             this.nonCyclicActivity = new AddNonCyclicActivity(this.db);
@@ -85,7 +92,29 @@ namespace SdvCode.Services.Blog
                 });
             }
 
+            if (await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()))
+            {
+                post.PostStatus = PostStatus.Pending;
+            }
+            else
+            {
+                post.PostStatus = PostStatus.Approved;
+            }
+
             this.db.Posts.Add(post);
+            this.db.PendingPosts.Add(new PendingPost
+            {
+                ApplicationUserId = post.ApplicationUserId,
+                PostId = post.Id,
+                IsPending = true,
+            });
+            this.db.BlockedPosts.Add(new Models.Blog.BlockedPost
+            {
+                ApplicationUserId = post.ApplicationUserId,
+                PostId = post.Id,
+                IsBlocked = false,
+            });
+
             this.nonCyclicActivity.AddUserAction(user, post, UserActionsType.CreatePost, user);
             await this.db.SaveChangesAsync();
             return true;

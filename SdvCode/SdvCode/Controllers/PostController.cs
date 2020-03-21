@@ -51,6 +51,13 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
+            var isApproved = await this.userValidator.IsPostApproved(id, this.HttpContext);
+            if (!isApproved)
+            {
+                this.TempData["Error"] = ErrorMessages.NotApprovedBlogPost;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             PostViewModel model = await this.postService.ExtractCurrentPost(id, this.HttpContext);
             return this.View(model);
         }
