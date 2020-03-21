@@ -3,17 +3,30 @@
 
 namespace SdvCode.Areas.Editor.Services
 {
-    using Microsoft.EntityFrameworkCore;
-    using SdvCode.Data;
-    using SdvCode.Models.Enums;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using SdvCode.Data;
+    using SdvCode.Models.Enums;
 
     public class EditorPostService : IEditorPostService
     {
         private readonly ApplicationDbContext db;
+        private readonly List<UserActionsType> actionsForBann = new List<UserActionsType>()
+        {
+            UserActionsType.LikedPost,
+            UserActionsType.LikePost,
+            UserActionsType.LikeOwnPost,
+            UserActionsType.EditedPost,
+            UserActionsType.EditPost,
+            UserActionsType.EditOwnPost,
+            UserActionsType.CreatePost,
+            UserActionsType.UnlikedPost,
+            UserActionsType.UnlikePost,
+            UserActionsType.UnlikeOwnPost,
+        };
 
         public EditorPostService(ApplicationDbContext db)
         {
@@ -47,6 +60,27 @@ namespace SdvCode.Areas.Editor.Services
             {
                 post.PostStatus = PostStatus.Banned;
                 targetApprovedEntity.IsBlocked = true;
+                var favorites = this.db.FavouritePosts.Where(x => x.PostId == id);
+
+                foreach (var favor in favorites)
+                {
+                    favor.IsFavourite = false;
+                }
+
+                var likes = this.db.PostsLikes.Where(x => x.PostId == id && x.IsLiked == true);
+
+                foreach (var like in likes)
+                {
+                    like.IsLiked = false;
+                    post.Likes--;
+                }
+
+                var actions = this.db.UserActions
+                    .Where(x => x.PostId == id && this.actionsForBann.Contains(x.Action));
+
+                this.db.FavouritePosts.UpdateRange(favorites);
+                this.db.PostsLikes.UpdateRange(likes);
+                this.db.UserActions.RemoveRange(actions);
                 this.db.BlockedPosts.Update(targetApprovedEntity);
                 this.db.Posts.Update(post);
                 await this.db.SaveChangesAsync();

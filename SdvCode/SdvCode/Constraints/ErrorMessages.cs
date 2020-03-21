@@ -44,5 +44,13 @@ namespace SdvCode.Constraints
         public const string NotInEditPostRoles = "You don't have permissions to edit post.";
 
         public const string NotApprovedBlogPost = "You cannot see not approved post.";
+
+        public const string CannotLikeNotApprovedBlogPost = "You cannot like not approved post.";
+
+        public const string CannotUnlikeNotApprovedBlogPost = "You cannot unlike not approved post.";
+
+        public const string CannotAddToFavoriteNotApprovedBlogPost = "You cannot add to your favorite list not approved post.";
+
+        public const string CannotRemoveFromFavoriteNotApprovedBlogPost = "You cannot remove from your favorite list not approved post.";
     }
 }

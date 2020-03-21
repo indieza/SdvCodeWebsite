@@ -7,6 +7,7 @@ namespace SdvCode.ViewModels.Blog.ViewModels
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
     public class TopPostsViewModel
@@ -18,6 +19,8 @@ namespace SdvCode.ViewModels.Blog.ViewModels
         public DateTime CreatedOn { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public PostStatus PostStatus { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
     }

@@ -80,6 +80,13 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
+            var isApproved = await this.userValidator.IsPostBlocked(id);
+            if (isApproved)
+            {
+                this.TempData["Error"] = ErrorMessages.CannotLikeNotApprovedBlogPost;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             bool isLiked = await this.postService.LikePost(id, this.HttpContext);
 
             if (isLiked)
@@ -112,6 +119,13 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
+            var isApproved = await this.userValidator.IsPostBlocked(id);
+            if (isApproved)
+            {
+                this.TempData["Error"] = ErrorMessages.CannotUnlikeNotApprovedBlogPost;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             bool isUnliked = await this.postService.UnlikePost(id, this.HttpContext);
 
             if (isUnliked)
@@ -135,6 +149,13 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
+            var isApproved = await this.userValidator.IsPostBlocked(id);
+            if (isApproved)
+            {
+                this.TempData["Error"] = ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             bool isAdded = await this.postService.AddToFavorite(this.HttpContext, id);
             if (isAdded)
             {
@@ -154,6 +175,13 @@ namespace SdvCode.Controllers
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            var isApproved = await this.userValidator.IsPostBlocked(id);
+            if (isApproved)
+            {
+                this.TempData["Error"] = ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost;
                 return this.RedirectToAction("Index", "Blog");
             }
 

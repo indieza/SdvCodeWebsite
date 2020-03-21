@@ -62,7 +62,7 @@ namespace SdvCode.Services.Post
             {
                 Id = post.Id,
                 Title = post.Title,
-                Likes = this.db.PostsLikes.Count(x => x.PostId == post.Id && x.IsLiked == true),
+                Likes = post.Likes,
                 Content = post.Content,
                 CreatedOn = post.CreatedOn,
                 UpdatedOn = post.UpdatedOn,

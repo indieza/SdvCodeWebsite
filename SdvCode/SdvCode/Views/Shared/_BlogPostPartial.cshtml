@@ -94,7 +94,31 @@
                 by
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName"> @Model.ApplicationUser.UserName</a>
             </span>
-            <span class="post-meta-cats">in <a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@Model.Category.Id"> @Model.Category.Name</a></span>
+            <span class="post-meta-cats">
+                in
+                <a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@Model.Category.Id">
+                    @Model.Category.Name
+                </a>
+            </span>
+            <br />
+            <span class="post-meta-cats">
+                Post Status:
+                @if (Model.PostStatus == PostStatus.Banned)
+                {
+                    <font color="red" size="2"><b>@Model.PostStatus.ToString()</b></font>
+                }
+                else
+                {
+                    @if (Model.PostStatus == PostStatus.Approved)
+                    {
+                        <font color="green" size="2"><b>@Model.PostStatus.ToString()</b></font>
+                    }
+                    else
+                    {
+                        <font color="blue" size="2"><b>@Model.PostStatus.ToString()</b></font>
+                    }
+                }
+            </span>
             <div class="pull-right">
                 <span class="post-meta-comments">
                     @if (SignInManager.IsSignedIn(User))

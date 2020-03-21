@@ -9,6 +9,7 @@ namespace SdvCode.Constraints
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
     using SdvCode.Models.Enums;
@@ -84,6 +85,17 @@ namespace SdvCode.Constraints
             if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
                 userPostsIds.Contains(id))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> IsPostBlocked(string id)
+        {
+            var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
+            if (post.PostStatus == PostStatus.Banned)
             {
                 return true;
             }

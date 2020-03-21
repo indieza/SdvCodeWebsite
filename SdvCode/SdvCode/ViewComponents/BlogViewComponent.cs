@@ -24,9 +24,9 @@ namespace SdvCode.ViewComponents
         {
             BlogComponentViewModel components = new BlogComponentViewModel
             {
-                RecentPosts = await this.blogComponentService.ExtractRecentPosts(),
+                RecentPosts = await this.blogComponentService.ExtractRecentPosts(this.HttpContext),
                 TopCategories = await this.blogComponentService.ExtractTopCategories(),
-                TopPosts = await this.blogComponentService.ExtractTopPosts(),
+                TopPosts = await this.blogComponentService.ExtractTopPosts(this.HttpContext),
                 TopTags = await this.blogComponentService.ExtractTopTags(),
             };
 
