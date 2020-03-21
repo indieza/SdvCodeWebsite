@@ -8,6 +8,7 @@ namespace SdvCode.Constraints
     using System.Linq;
     using System.Threading.Tasks;
     using SdvCode.Data;
+    using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
@@ -44,6 +45,40 @@ namespace SdvCode.Constraints
                     PersonUsername = userPost.UserName,
                     FollowerUsername = user.UserName,
                     ProfileImageUrl = user.ImageUrl,
+                });
+            }
+        }
+
+        public void AddLikeUnlikeActivity(ApplicationUser user, Post post, UserActionsType action, ApplicationUser postUser)
+        {
+            if (this.db.UserActions
+                .Any(x => x.PostId == post.Id &&
+                x.ApplicationUserId == user.Id &&
+                x.PersonUsername == user.UserName &&
+                x.FollowerUsername == postUser.UserName &&
+                x.Action == action))
+            {
+                var targetAction = this.db.UserActions
+                    .FirstOrDefault(x => x.PostId == post.Id &&
+                    x.ApplicationUserId == user.Id &&
+                    x.PersonUsername == user.UserName &&
+                    x.FollowerUsername == postUser.UserName &&
+                    x.Action == action);
+                targetAction.ActionDate = DateTime.UtcNow;
+            }
+            else
+            {
+                this.db.UserActions.Add(new UserAction
+                {
+                    Action = action,
+                    ActionDate = DateTime.UtcNow,
+                    ApplicationUserId = user.Id,
+                    PersonUsername = user.UserName,
+                    FollowerUsername = postUser.UserName,
+                    ProfileImageUrl = postUser.ImageUrl,
+                    PostId = post.Id,
+                    PostTitle = post.Title,
+                    PostContent = post.ShortContent,
                 });
             }
         }

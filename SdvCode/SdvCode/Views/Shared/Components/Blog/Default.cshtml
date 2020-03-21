@@ -96,8 +96,30 @@
                                                 @post.ApplicationUser.UserName
                                             </a>
                                         </span>
+                                        <br />
                                         <span class="post-meta-date">
-                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id"> <i class="fas fa-clock-o"></i> @post.CreatedOn.ToString("MMMM dd")</a>
+                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                                <i class="fas fa-clock-o"></i>
+                                                @post.CreatedOn.ToString("MMMM dd")
+                                            </a>
+                                        </span>
+                                        <span class="post-meta-cats">
+                                            Post Status:
+                                            @if (post.PostStatus == PostStatus.Banned)
+                                            {
+                                                <font color="red" size="2"><b>@post.PostStatus.ToString()</b></font>
+                                            }
+                                            else
+                                            {
+                                                @if (post.PostStatus == PostStatus.Approved)
+                                                {
+                                                    <font color="green" size="2"><b>@post.PostStatus.ToString()</b></font>
+                                                }
+                                                else
+                                                {
+                                                    <font color="blue" size="2"><b>@post.PostStatus.ToString()</b></font>
+                                                }
+                                            }
                                         </span>
                                     </p>
                                 </div>

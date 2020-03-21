@@ -62,6 +62,8 @@ namespace SdvCode.Controllers
                 "Following" => ProfileTab.Following,
                 "Followers" => ProfileTab.Followers,
                 "Favorites" => ProfileTab.Favorites,
+                "PendingPosts" => ProfileTab.PendingPosts,
+                "BannedPosts" => ProfileTab.BannedPosts,
                 _ => ProfileTab.Activities,
             };
 

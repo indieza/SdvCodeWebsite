@@ -52,5 +52,7 @@ namespace SdvCode.Constraints
         public const string CannotAddToFavoriteNotApprovedBlogPost = "You cannot add to your favorite list not approved post.";
 
         public const string CannotRemoveFromFavoriteNotApprovedBlogPost = "You cannot remove from your favorite list not approved post.";
+
+        public const string CannotEditBlogPost = "You cannot edit banned blog post.";
     }
 }

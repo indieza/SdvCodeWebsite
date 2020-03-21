@@ -134,6 +134,8 @@ namespace SdvCode
             services.AddTransient<IProfileFavoritesService, ProfileFavoritesService>();
             services.AddTransient<IAddCategoryService, AddCategoryService>();
             services.AddTransient<IEditorPostService, EditorPostService>();
+            services.AddTransient<IProfilePendingPostsService, ProfilePendingPostsService>();
+            services.AddTransient<IProfileBannedPostsService, ProfileBannedPostsService>();
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));

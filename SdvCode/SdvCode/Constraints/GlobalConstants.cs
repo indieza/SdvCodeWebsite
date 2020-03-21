@@ -38,5 +38,9 @@ namespace SdvCode.Constraints
         public const int BlogPostsOnPage = 4;
 
         public const int FavoritesCountOnPage = 6;
+
+        public const int BannedPostsCountOnPage = 6;
+
+        public const int PendingPostsCountOnPage = 6;
     }
 }

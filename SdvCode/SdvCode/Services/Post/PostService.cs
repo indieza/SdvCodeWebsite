@@ -9,6 +9,7 @@ namespace SdvCode.Services.Post
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
@@ -19,11 +20,13 @@ namespace SdvCode.Services.Post
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly AddCyclicActivity cyclicActivity;
 
         public PostService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
             this.userManager = userManager;
+            this.cyclicActivity = new AddCyclicActivity(this.db);
         }
 
         public async Task<bool> AddToFavorite(HttpContext httpContext, string id)
@@ -129,98 +132,12 @@ namespace SdvCode.Services.Post
 
                 if (post.ApplicationUserId == user.Id)
                 {
-                    if (this.db.UserActions
-                        .Any(x => x.PostId == id &&
-                        x.ApplicationUserId == user.Id &&
-                        x.PersonUsername == user.UserName &&
-                        x.Action == UserActionsType.LikeOwnPost))
-                    {
-                        var targetAction = this.db.UserActions
-                            .FirstOrDefault(x => x.PostId == id &&
-                            x.ApplicationUserId == user.Id &&
-                            x.PersonUsername == user.UserName &&
-                            x.Action == UserActionsType.LikeOwnPost);
-                        targetAction.ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.LikeOwnPost,
-                            ActionDate = DateTime.UtcNow,
-                            PostId = id,
-                            PersonUsername = user.UserName,
-                            ApplicationUserId = user.Id,
-                            ProfileImageUrl = user.ImageUrl,
-                            PostTitle = post.Title,
-                            PostContent = post.ShortContent,
-                        });
-                    }
+                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionsType.LikeOwnPost, user);
                 }
                 else
                 {
-                    if (this.db.UserActions
-                        .Any(x => x.PostId == id &&
-                        x.ApplicationUserId == post.ApplicationUser.Id &&
-                        x.PersonUsername == post.ApplicationUser.UserName &&
-                        x.FollowerUsername == user.UserName &&
-                        x.Action == UserActionsType.LikedPost))
-                    {
-                        var targetAction = this.db.UserActions
-                            .FirstOrDefault(x => x.PostId == id &&
-                            x.ApplicationUserId == post.ApplicationUser.Id &&
-                            x.PersonUsername == post.ApplicationUser.UserName &&
-                            x.FollowerUsername == user.UserName &&
-                            x.Action == UserActionsType.LikedPost);
-                        targetAction.ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.LikedPost,
-                            ActionDate = DateTime.UtcNow,
-                            PostId = id,
-                            PersonUsername = post.ApplicationUser.UserName,
-                            ApplicationUserId = post.ApplicationUserId,
-                            ApplicationUser = post.ApplicationUser,
-                            FollowerUsername = user.UserName,
-                            ProfileImageUrl = user.ImageUrl,
-                            PostTitle = post.Title,
-                            PostContent = post.ShortContent,
-                        });
-                    }
-
-                    if (this.db.UserActions
-                        .Any(x => x.PostId == id &&
-                        x.ApplicationUserId == user.Id &&
-                        x.PersonUsername == user.UserName &&
-                        x.FollowerUsername == post.ApplicationUser.UserName &&
-                        x.Action == UserActionsType.LikePost))
-                    {
-                        var targetAction = this.db.UserActions
-                            .FirstOrDefault(x => x.PostId == id &&
-                            x.ApplicationUserId == user.Id &&
-                            x.PersonUsername == user.UserName &&
-                            x.FollowerUsername == post.ApplicationUser.UserName &&
-                            x.Action == UserActionsType.LikePost);
-                        targetAction.ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.LikePost,
-                            ActionDate = DateTime.UtcNow,
-                            PostId = id,
-                            PersonUsername = user.UserName,
-                            ApplicationUserId = user.Id,
-                            FollowerUsername = post.ApplicationUser.UserName,
-                            ProfileImageUrl = post.ApplicationUser.ImageUrl,
-                            PostTitle = post.Title,
-                            PostContent = post.ShortContent,
-                        });
-                    }
+                    this.cyclicActivity.AddLikeUnlikeActivity(post.ApplicationUser, post, UserActionsType.LikedPost, user);
+                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionsType.LikePost, post.ApplicationUser);
                 }
 
                 await this.db.SaveChangesAsync();
@@ -266,93 +183,12 @@ namespace SdvCode.Services.Post
 
                 if (post.ApplicationUserId == user.Id)
                 {
-                    if (this.db.UserActions
-                        .Any(x => x.PostId == id &&
-                        x.ApplicationUserId == user.Id &&
-                        x.PersonUsername == user.UserName &&
-                        x.Action == UserActionsType.UnlikeOwnPost))
-                    {
-                        var targetAction = this.db.UserActions
-                            .FirstOrDefault(x => x.PostId == id &&
-                            x.ApplicationUserId == user.Id &&
-                            x.PersonUsername == user.UserName &&
-                            x.Action == UserActionsType.UnlikeOwnPost);
-                        targetAction.ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.UnlikeOwnPost,
-                            ActionDate = DateTime.UtcNow,
-                            PostId = id,
-                            ProfileImageUrl = user.ImageUrl,
-                            PersonUsername = user.UserName,
-                            ApplicationUserId = user.Id,
-                        });
-                    }
+                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionsType.UnlikeOwnPost, user);
                 }
                 else
                 {
-                    if (this.db.UserActions
-                        .Any(x => x.PostId == id &&
-                        x.ApplicationUserId == post.ApplicationUser.Id &&
-                        x.PersonUsername == post.ApplicationUser.UserName &&
-                        x.FollowerUsername == user.UserName &&
-                        x.Action == UserActionsType.UnlikedPost))
-                    {
-                        var targetAction = this.db.UserActions
-                            .FirstOrDefault(x => x.PostId == id &&
-                            x.ApplicationUserId == post.ApplicationUser.Id &&
-                            x.PersonUsername == post.ApplicationUser.UserName &&
-                            x.FollowerUsername == user.UserName &&
-                            x.Action == UserActionsType.UnlikedPost);
-                        targetAction.ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.UnlikedPost,
-                            ActionDate = DateTime.UtcNow,
-                            PostId = id,
-                            PersonUsername = post.ApplicationUser.UserName,
-                            ApplicationUserId = post.ApplicationUserId,
-                            ApplicationUser = post.ApplicationUser,
-                            FollowerUsername = user.UserName,
-                            ProfileImageUrl = user.ImageUrl,
-                        });
-                    }
-
-                    if (this.db.UserActions.Any(
-                        x => x.PostId == id &&
-                        x.ApplicationUserId == user.Id &&
-                        x.PersonUsername == user.UserName &&
-                        x.FollowerUsername == post.ApplicationUser.UserName &&
-                        x.Action == UserActionsType.UnlikePost))
-                    {
-                        var targetAction = this.db.UserActions
-                            .FirstOrDefault(
-                            x => x.PostId == id &&
-                            x.ApplicationUserId == user.Id &&
-                            x.PersonUsername == user.UserName &&
-                            x.FollowerUsername == post.ApplicationUser.UserName &&
-                            x.Action == UserActionsType.UnlikePost);
-                        targetAction.ActionDate = DateTime.UtcNow;
-                    }
-                    else
-                    {
-                        this.db.UserActions.Add(new UserAction
-                        {
-                            Action = UserActionsType.UnlikePost,
-                            ActionDate = DateTime.UtcNow,
-                            PostId = id,
-                            PersonUsername = user.UserName,
-                            ApplicationUserId = user.Id,
-                            FollowerUsername = post.ApplicationUser.UserName,
-                            ProfileImageUrl = post.ApplicationUser.ImageUrl,
-                        });
-                    }
+                    this.cyclicActivity.AddLikeUnlikeActivity(post.ApplicationUser, post, UserActionsType.UnlikedPost, user);
+                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionsType.UnlikePost, post.ApplicationUser);
                 }
 
                 await this.db.SaveChangesAsync();

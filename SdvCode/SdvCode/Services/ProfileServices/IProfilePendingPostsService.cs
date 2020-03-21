@@ -1,20 +1,17 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Models.Enums
+namespace SdvCode.Services.ProfileServices
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.User;
+    using SdvCode.ViewModels.Profile;
 
-    public enum ProfileTab
+    public interface IProfilePendingPostsService
     {
-        Activities = 1,
-        Following = 2,
-        Followers = 3,
-        Favorites = 4,
-        BannedPosts = 5,
-        PendingPosts = 6,
+        Task<List<PendingPostsViewModel>> ExtractPendingPosts(ApplicationUser user, string currentUserId);
     }
 }

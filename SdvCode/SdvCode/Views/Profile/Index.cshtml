@@ -227,6 +227,11 @@
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Followers ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Followers" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWERS</a></li>
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Following ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Following" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWING</a></li>
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Favorites ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Favorites" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FAVORITES</a></li>
+                        @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.UserName)
+                        {
+                            <li role="presentation" class="@(Model.ActiveTab == ProfileTab.PendingPosts ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="PendingPosts" asp-route-page="@Model.Page" asp-action="SwitchToTabs">PENDING</a></li>
+                            <li role="presentation" class="@(Model.ActiveTab == ProfileTab.BannedPosts ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="BannedPosts" asp-route-page="@Model.Page" asp-action="SwitchToTabs">BANNED</a></li>
+                        }
                     </ul>
                     <div class="tab-content">
                         @switch (Model.ActiveTab)
@@ -242,6 +247,18 @@
                                 break;
                             case ProfileTab.Favorites:
                                 @await Component.InvokeAsync("Favorites", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                break;
+                            case ProfileTab.PendingPosts:
+                                @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.UserName)
+                                {
+                                    @await Component.InvokeAsync("PendingPosts", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                }
+                                break;
+                            case ProfileTab.BannedPosts:
+                                @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.UserName)
+                                {
+                                    @await Component.InvokeAsync("BannedPosts", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                }
                                 break;
                             default:
                                 break;

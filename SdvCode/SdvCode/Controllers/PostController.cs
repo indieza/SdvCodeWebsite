@@ -80,7 +80,7 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlocked(id);
+            var isApproved = await this.userValidator.IsPostBlockedOrPending(id);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotLikeNotApprovedBlogPost;
@@ -119,7 +119,7 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlocked(id);
+            var isApproved = await this.userValidator.IsPostBlockedOrPending(id);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotUnlikeNotApprovedBlogPost;
@@ -149,7 +149,7 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlocked(id);
+            var isApproved = await this.userValidator.IsPostBlockedOrPending(id);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost;
@@ -178,7 +178,7 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlocked(id);
+            var isApproved = await this.userValidator.IsPostBlockedOrPending(id);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost;

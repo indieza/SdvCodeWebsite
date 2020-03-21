@@ -143,6 +143,13 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
+            var isApproved = await this.userValidator.IsPostBlocked(id, this.HttpContext);
+            if (isApproved)
+            {
+                this.TempData["Error"] = ErrorMessages.CannotEditBlogPost;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             var isInRole = await this.userValidator.IsInPostRole(this.HttpContext, id);
             if (!isInRole)
             {

@@ -92,22 +92,24 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            if (await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()))
-            {
-                post.PostStatus = PostStatus.Pending;
-            }
-            else
+            if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
+                await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()))
             {
                 post.PostStatus = PostStatus.Approved;
             }
+            else
+            {
+                post.PostStatus = PostStatus.Pending;
+                this.db.PendingPosts.Add(new PendingPost
+                {
+                    ApplicationUserId = post.ApplicationUserId,
+                    PostId = post.Id,
+                    IsPending = true,
+                });
+            }
 
             this.db.Posts.Add(post);
-            this.db.PendingPosts.Add(new PendingPost
-            {
-                ApplicationUserId = post.ApplicationUserId,
-                PostId = post.Id,
-                IsPending = true,
-            });
             this.db.BlockedPosts.Add(new Models.Blog.BlockedPost
             {
                 ApplicationUserId = post.ApplicationUserId,

@@ -1,0 +1,65 @@
+﻿@using SdvCode.Areas.Administration.Models.Enums
+@using SdvCode.ViewModels.Pagination
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Common
+@using X.PagedList
+@model BannedPostsPaginationViewModel
+@{
+    ViewData["Title"] = "Pending Posts";
+}
+
+<div class="tab-pane fade in active">
+    @foreach (var post in Model.BannedPosts)
+    {
+        <div class="media activity-item">
+            @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+            {
+                <a asp-area="Editor" asp-controller="Post" asp-action="UnbanPost" asp-route-id="@post.PostId" class="btn btn-danger" style="float: right;">
+                    <i class="fas fa-check"></i>
+                    <span>
+                        Unban
+                    </span>
+                </a>
+            }
+            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Username" class="pull-left">
+                @if (post.ImageUrl == null)
+                {
+                    <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
+                }
+                else
+                {
+                    <img src=@post.ImageUrl alt="Avatar" class="media-object avatar">
+                }
+            </a>
+            <div class="media-body">
+                <p class="activity-title">
+                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@post.AuthorUsername">
+                        <b>
+                            @post.AuthorUsername
+                        </b>
+                    </a> banned blog
+                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.PostId">
+                        <b>post</b>
+                    </a>
+                </p>
+                <small class="text-muted">@post.CreatedOn.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                <div class="activity-attachment">
+                    <h4>
+                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.PostId">
+                            @post.PostTitle
+                        </a>
+                    </h4>
+                    <div class="well well-sm">
+                        @Html.Raw(post.PostContent)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row" style="text-align: center">
+        @Html.PagedListPager((IPagedList)Model.BannedPosts,
+                page => Url.Action("Index", "Profile",
+        new { username = Model.Username, page = page }),
+        PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+    </div>
+</div>

@@ -92,10 +92,25 @@ namespace SdvCode.Constraints
             return false;
         }
 
-        public async Task<bool> IsPostBlocked(string id)
+        public async Task<bool> IsPostBlockedOrPending(string id)
         {
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
-            if (post.PostStatus == PostStatus.Banned)
+            if (post.PostStatus == PostStatus.Banned || post.PostStatus == PostStatus.Pending)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> IsPostBlocked(string id, HttpContext httpContext)
+        {
+            var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
+            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
+
+            if (post.PostStatus == PostStatus.Banned &&
+                !await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) &&
+                !await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString()))
             {
                 return true;
             }
