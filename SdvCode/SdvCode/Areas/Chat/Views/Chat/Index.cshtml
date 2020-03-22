@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Chat Room";
+}
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>Chat Room</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li>Editor Area</li>
+                <li>Chat Room</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1>Hello from chat</h1>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">User</div>
+        <div class="col-4"><input type="text" id="userInput" /></div>
+    </div>
+    <div class="row">
+        <div class="col-2">Message</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="sendButton" value="Send Message" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+}
