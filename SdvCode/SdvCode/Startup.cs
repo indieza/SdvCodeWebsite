@@ -20,12 +20,14 @@ namespace SdvCode
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;
-    using SdvCode.Services;
     using SdvCode.Services.Blog;
     using SdvCode.Services.Category;
-    using SdvCode.Services.CloudServices;
+    using SdvCode.Services.Cloud;
+    using SdvCode.Services.Contact;
+    using SdvCode.Services.Home;
     using SdvCode.Services.Post;
-    using SdvCode.Services.ProfileServices;
+    using SdvCode.Services.Profile;
+    using SdvCode.Services.Profile.Pagination;
     using SdvCode.Services.Tag;
     using SdvCode.Services.UserPosts;
     using Twilio;
@@ -112,8 +114,8 @@ namespace SdvCode
 
             services.AddTransient<ApplicationDbContext>();
 
-            // Register Services
-            services.AddScoped<IContactsService, ContactsService>();
+            // Register Logic Services
+            services.AddScoped<IContactService, ContactService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<IDashboardService, DashboardService>();
@@ -121,9 +123,6 @@ namespace SdvCode
             services.AddTransient<IDbUsageService, DbUsageService>();
             services.AddTransient<IBlogAddonsService, BlogAddonsService>();
             services.AddTransient<IUsersPenaltiesService, UsersPenaltiesService>();
-            services.AddTransient<IProfileActivitiesService, ProfileActivitiesService>();
-            services.AddTransient<IProfileFollowersService, ProfileFollowersService>();
-            services.AddTransient<IProfileFollowingService, ProfileFollowingService>();
             services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IBlogComponentService, BlogComponentService>();
             services.AddTransient<IPostService, PostService>();
@@ -131,9 +130,14 @@ namespace SdvCode
             services.AddTransient<ITagService, TagService>();
             services.AddTransient<IUserPostsService, UserPostsService>();
             services.AddTransient<IEditCategoryService, EditCategoryService>();
-            services.AddTransient<IProfileFavoritesService, ProfileFavoritesService>();
             services.AddTransient<IAddCategoryService, AddCategoryService>();
             services.AddTransient<IEditorPostService, EditorPostService>();
+
+            // Register Pagination Services
+            services.AddTransient<IProfileActivitiesService, ProfileActivitiesService>();
+            services.AddTransient<IProfileFollowersService, ProfileFollowersService>();
+            services.AddTransient<IProfileFollowingService, ProfileFollowingService>();
+            services.AddTransient<IProfileFavoritesService, ProfileFavoritesService>();
             services.AddTransient<IProfilePendingPostsService, ProfilePendingPostsService>();
             services.AddTransient<IProfileBannedPostsService, ProfileBannedPostsService>();
 

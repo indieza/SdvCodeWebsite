@@ -4,14 +4,14 @@
 namespace SdvCode.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using SdvCode.Services;
+    using SdvCode.Services.Contact;
     using SdvCode.ViewModels.Contacts;
 
     public class ContactController : Controller
     {
-        private readonly IContactsService contactsService;
+        private readonly IContactService contactsService;
 
-        public ContactController(IContactsService contactsService)
+        public ContactController(IContactService contactsService)
         {
             this.contactsService = contactsService;
         }

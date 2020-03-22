@@ -11,7 +11,7 @@ namespace SdvCode.Areas.Administration.Services
     using SdvCode.Data;
     using SdvCode.Models.Enums;
     using SdvCode.Services;
-    using SdvCode.Services.CloudServices;
+    using SdvCode.Services.Cloud;
 
     public class DbUsageService : IDbUsageService
     {

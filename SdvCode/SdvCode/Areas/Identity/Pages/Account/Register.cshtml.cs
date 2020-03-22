@@ -21,7 +21,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Users;
+    using SdvCode.ViewModels.Users.InputModels;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel

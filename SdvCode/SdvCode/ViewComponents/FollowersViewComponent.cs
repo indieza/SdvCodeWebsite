@@ -12,7 +12,7 @@ namespace SdvCode.ViewComponents
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
-    using SdvCode.Services.ProfileServices;
+    using SdvCode.Services.Profile.Pagination;
     using SdvCode.ViewModels.Pagination;
     using SdvCode.ViewModels.Profile;
     using X.PagedList;

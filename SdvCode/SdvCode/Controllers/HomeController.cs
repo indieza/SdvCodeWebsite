@@ -12,7 +12,7 @@ namespace SdvCode.Controllers
     using Microsoft.Extensions.Logging;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Models;
-    using SdvCode.Services;
+    using SdvCode.Services.Home;
     using SdvCode.ViewModels.Home;
 
     public class HomeController : Controller

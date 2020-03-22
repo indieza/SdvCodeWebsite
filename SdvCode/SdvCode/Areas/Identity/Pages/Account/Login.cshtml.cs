@@ -13,7 +13,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Users;
+    using SdvCode.ViewModels.Users.InputModels;
 
     [AllowAnonymous]
     public class LoginModel : PageModel

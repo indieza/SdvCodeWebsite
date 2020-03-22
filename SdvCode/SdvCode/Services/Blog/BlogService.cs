@@ -19,7 +19,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
-    using SdvCode.Services.CloudServices;
+    using SdvCode.Services.Cloud;
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
     using SdvCode.ViewModels.Post.InputModels;
