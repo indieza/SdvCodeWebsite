@@ -1903,8 +1903,6 @@
     <Folder Include="Areas\Administration\Data\" />
     <Folder Include="Areas\Editor\Data\" />
     <Folder Include="Areas\Editor\Models\" />
-    <Folder Include="Areas\SdvShop\Data\" />
-    <Folder Include="Areas\SdvShop\Models\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 
