@@ -53,7 +53,10 @@
                         @if ((User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || Model.IsAuthor == true) && Model.ApplicationUser.IsBlocked == false)
                         {
                             <a asp-area="" asp-controller="Blog" asp-action="EditPost" asp-route-id="@Model.Id" class="btn btn-info"><i class="fas fa-edit"></i> Edit Post</a>
-                            <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@Model.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete Post</a>
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete Post
+                            </a>
                         }
                         @if (SignInManager.IsSignedIn(User))
                         {
@@ -307,3 +310,17 @@
         </div><!--/ row end -->
     </div><!--/ container end -->
 </section><!-- Blog details page end -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Do you want to delete the post?</h5>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete the post.</div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@Model.Id" class="btn btn-danger">Delete Post</a>
+            </div>
+        </div>
+    </div>
+</div>
