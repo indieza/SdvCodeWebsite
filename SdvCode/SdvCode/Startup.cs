@@ -15,7 +15,6 @@ namespace SdvCode
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using SdvCode.Areas.Administration.Services;
-    using SdvCode.Areas.Chat.Hubs;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -148,7 +147,6 @@ namespace SdvCode
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -188,7 +186,6 @@ namespace SdvCode
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapRazorPages();
-                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

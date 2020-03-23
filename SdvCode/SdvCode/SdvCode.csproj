@@ -1858,15 +1858,54 @@
     <None Include="wwwroot\lib\tinymce\themes\mobile\theme.min.js" />
     <None Include="wwwroot\lib\tinymce\themes\silver\theme.min.js" />
     <None Include="wwwroot\lib\tinymce\tinymce.min.js" />
+    <None Include="wwwroot\shop\css\style.css.map" />
+    <None Include="wwwroot\shop\css\style.map" />
+    <None Include="wwwroot\shop\fonts\Flaticon.svg" />
+    <None Include="wwwroot\shop\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\shop\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\shop\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\shop\fonts\themify.svg" />
+    <None Include="wwwroot\shop\img\.DS_Store" />
+    <None Include="wwwroot\shop\img\blog\.DS_Store" />
+    <None Include="wwwroot\shop\img\elements\_DS_Store" />
+    <None Include="wwwroot\shop\img\product\.DS_Store" />
+    <None Include="wwwroot\shop\js\bootstrap.min.js" />
+    <None Include="wwwroot\shop\js\contact.js" />
+    <None Include="wwwroot\shop\js\custom.js" />
+    <None Include="wwwroot\shop\js\gmaps.min.js" />
+    <None Include="wwwroot\shop\js\jquery-3.2.1.min.js" />
+    <None Include="wwwroot\shop\js\jquery.ajaxchimp.min.js" />
+    <None Include="wwwroot\shop\js\jquery.form.js" />
+    <None Include="wwwroot\shop\js\jquery.validate.min.js" />
+    <None Include="wwwroot\shop\js\mail-script.js" />
+    <None Include="wwwroot\shop\js\popper.js" />
+    <None Include="wwwroot\shop\js\stellar.js" />
+    <None Include="wwwroot\shop\js\theme.js" />
+    <None Include="wwwroot\shop\vendors\animate-css\wow.min.js" />
+    <None Include="wwwroot\shop\vendors\bootstrap-datepicker\bootstrap-datetimepicker.min.js" />
+    <None Include="wwwroot\shop\vendors\bootstrap-datepicker\bootstrap-select.js" />
+    <None Include="wwwroot\shop\vendors\counter-up\jquery.counterup.js" />
+    <None Include="wwwroot\shop\vendors\counter-up\jquery.waypoints.min.js" />
+    <None Include="wwwroot\shop\vendors\flipclock\timer.js" />
+    <None Include="wwwroot\shop\vendors\isotope\imagesloaded.pkgd.min.js" />
+    <None Include="wwwroot\shop\vendors\isotope\isotope-min.js" />
+    <None Include="wwwroot\shop\vendors\jquery-ui\jquery-ui.js" />
+    <None Include="wwwroot\shop\vendors\lightbox\simpleLightbox.min.js" />
+    <None Include="wwwroot\shop\vendors\linericon\fonts\Linearicons-Free.svg" />
+    <None Include="wwwroot\shop\vendors\linericon\fonts\Linearicons-Free.woff2" />
+    <None Include="wwwroot\shop\vendors\nice-select\js\jquery.nice-select.js" />
+    <None Include="wwwroot\shop\vendors\nice-select\js\jquery.nice-select.min.js" />
+    <None Include="wwwroot\shop\vendors\owl-carousel\owl.carousel.min.js" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Folder Include="Areas\Administration\Data\" />
-    <Folder Include="Areas\Chat\Data\" />
-    <Folder Include="Areas\Chat\Models\" />
     <Folder Include="Areas\Editor\Data\" />
     <Folder Include="Areas\Editor\Models\" />
+    <Folder Include="Areas\SdvCodeShop\Data\" />
+    <Folder Include="Areas\SdvCodeShop\Models\" />
+    <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 
 </Project>
