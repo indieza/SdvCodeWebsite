@@ -3,6 +3,7 @@
 
 namespace SdvCode.Areas.SdvShop.Models
 {
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -20,10 +21,17 @@ namespace SdvCode.Areas.SdvShop.Models
         [Key]
         public string Id { get; set; }
 
+        [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Required]
+        public decimal Price { get; set; }
+
+        [Required]
         public DateTime CreatedOn { get; set; }
 
         public DateTime UpdatedOn { get; set; }
@@ -33,5 +41,13 @@ namespace SdvCode.Areas.SdvShop.Models
         public string ProductCategoryId { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
+
+        public ICollection<IFormFile> Images { get; set; } = new HashSet<IFormFile>();
+
+        public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+
+        public ICollection<FavouriteProduct> FavouriteProducts { get; set; } = new HashSet<FavouriteProduct>();
+
+        public ICollection<ShoppingCartProduct> ShoppingCartProducts { get; set; } = new HashSet<ShoppingCartProduct>();
     }
 }

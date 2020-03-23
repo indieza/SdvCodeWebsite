@@ -3,15 +3,17 @@
 
 namespace SdvCode.Areas.SdvShop.Models
 {
+    using SdvCode.Models.User;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class ProductCategory
+    public class Review
     {
-        public ProductCategory()
+        public Review()
         {
             this.Id = Guid.NewGuid().ToString();
         }
@@ -20,17 +22,21 @@ namespace SdvCode.Areas.SdvShop.Models
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        public string Title { get; set; }
+        public int Stars { get; set; }
 
         [Required]
         public string Description { get; set; }
 
         [Required]
-        public DateTime CreatedOn { get; set; }
+        [ForeignKey(nameof(Product))]
+        public string ProductId { get; set; }
 
-        public DateTime UpdatedOn { get; set; }
+        public Product Product { get; set; }
 
-        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        [Required]
+        [ForeignKey(nameof(ApplicationUser))]
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
