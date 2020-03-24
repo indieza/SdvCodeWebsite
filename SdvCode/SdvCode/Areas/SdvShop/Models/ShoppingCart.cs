@@ -13,20 +13,20 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class ShoppingCart
     {
-        public ShoppingCart()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        //public ShoppingCart()
+        //{
+        //    this.Id = Guid.NewGuid().ToString();
+        //}
 
-        [Key]
-        public string Id { get; set; }
+        //[Key]
+        //public string Id { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(ApplicationUser))]
-        public string ApplicationUserId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(ApplicationUser))]
+        //public string ApplicationUserId { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        //public ApplicationUser ApplicationUser { get; set; }
 
-        public ICollection<ShoppingCartProduct> ShoppingCartProducts { get; set; } = new HashSet<ShoppingCartProduct>();
+        //public ICollection<ShoppingCartProduct> ShoppingCartProducts { get; set; } = new HashSet<ShoppingCartProduct>();
     }
 }

@@ -8,6 +8,7 @@ namespace SdvCode.Models.User
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using Microsoft.AspNetCore.Identity;
+    using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
@@ -57,6 +58,24 @@ namespace SdvCode.Models.User
         public string InstagramUrl { get; set; }
 
         public bool IsBlocked { get; set; }
+
+        //[ForeignKey(nameof(Address))]
+        //public string AddressId { get; set; }
+
+        //public Address Address { get; set; }
+
+        //[ForeignKey(nameof(ShoppingCart))]
+        //public string ShoppingCartId { get; set; }
+
+        //public ShoppingCart ShoppingCart { get; set; }
+
+        //public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+
+        //public ICollection<FavouriteProduct> FavouriteProducts { get; set; } = new HashSet<FavouriteProduct>();
+
+        //public ICollection<WishlistProduct> WishlistProducts { get; set; } = new HashSet<WishlistProduct>();
+
+        //public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
 
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
 

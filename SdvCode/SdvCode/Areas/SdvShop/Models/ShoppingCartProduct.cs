@@ -12,16 +12,16 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class ShoppingCartProduct
     {
-        [Required]
-        [ForeignKey(nameof(ShoppingCart))]
-        public string ShoppingCartId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(ShoppingCart))]
+        //public string ShoppingCartId { get; set; }
 
-        public ShoppingCart ShoppingCart { get; set; }
+        //public ShoppingCart ShoppingCart { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(Product))]
-        public string ProductId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(Product))]
+        //public string ProductId { get; set; }
 
-        public Product Product { get; set; }
+        //public Product Product { get; set; }
     }
 }

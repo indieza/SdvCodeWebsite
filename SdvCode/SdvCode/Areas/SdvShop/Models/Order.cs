@@ -13,26 +13,26 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class Order
     {
-        public Order()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        //public Order()
+        //{
+        //    this.Id = Guid.NewGuid().ToString();
+        //}
 
-        [Key]
-        public string Id { get; set; }
+        //[Key]
+        //public string Id { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(Address))]
-        public string AddressId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(Address))]
+        //public string AddressId { get; set; }
 
-        public Address Address { get; set; }
+        //public Address Address { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(ApplicationUser))]
-        public string ApplicationUserId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(ApplicationUser))]
+        //public string ApplicationUserId { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        //public ApplicationUser ApplicationUser { get; set; }
 
-        public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+        //public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
     }
 }

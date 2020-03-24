@@ -12,16 +12,16 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class OrderProduct
     {
-        [Required]
-        [ForeignKey(nameof(Product))]
-        public string ProductId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(Product))]
+        //public string ProductId { get; set; }
 
-        public Product Product { get; set; }
+        //public Product Product { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(Order))]
-        public string OrderId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(Order))]
+        //public string OrderId { get; set; }
 
-        public Order Order { get; set; }
+        //public Order Order { get; set; }
     }
 }

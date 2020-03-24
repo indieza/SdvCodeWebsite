@@ -18,6 +18,10 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20200320191038_ConnectActionsTableToPostsTable.cs" />
     <Compile Remove="Data\Migrations\20200320191038_ConnectActionsTableToPostsTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200324095902_test.cs" />
+    <Compile Remove="Data\Migrations\20200324095902_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200324100049_test.cs" />
+    <Compile Remove="Data\Migrations\20200324100049_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
