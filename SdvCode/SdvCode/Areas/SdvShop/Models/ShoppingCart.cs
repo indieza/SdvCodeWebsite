@@ -6,8 +6,10 @@ namespace SdvCode.Areas.SdvShop.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.User;
 
     public class ShoppingCart
     {
@@ -18,5 +20,13 @@ namespace SdvCode.Areas.SdvShop.Models
 
         [Key]
         public string Id { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(ApplicationUser))]
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
+
+        public ICollection<ShoppingCartProduct> ShoppingCartProducts { get; set; } = new HashSet<ShoppingCartProduct>();
     }
 }

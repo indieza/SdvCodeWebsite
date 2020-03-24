@@ -3,16 +3,17 @@
 
 namespace SdvCode.Areas.SdvShop.Models
 {
-    using SdvCode.Models.User;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
 
-    public class City
+    public class ProductImage
     {
-        public City()
+        public ProductImage()
         {
             this.Id = Guid.NewGuid().ToString();
         }
@@ -21,14 +22,16 @@ namespace SdvCode.Areas.SdvShop.Models
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(150)]
+        [MaxLength(250)]
         public string Name { get; set; }
 
-        [MaxLength(200)]
-        public string Description { get; set; }
+        [Required]
+        public string ImageUrl { get; set; }
 
-        public ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
+        [Required]
+        [ForeignKey(nameof(Product))]
+        public string ProductId { get; set; }
 
-        public ICollection<ApplicationUser> ApplicationUsers { get; set; } = new HashSet<ApplicationUser>();
+        public Product Product { get; set; }
     }
 }

@@ -3,13 +3,13 @@
 
 namespace SdvCode.Areas.SdvShop.Models
 {
-    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
 
     public class Product
     {
@@ -42,7 +42,7 @@ namespace SdvCode.Areas.SdvShop.Models
 
         public ProductCategory ProductCategory { get; set; }
 
-        public ICollection<IFormFile> Images { get; set; } = new HashSet<IFormFile>();
+        public ICollection<ProductImage> ProductImages { get; set; } = new HashSet<ProductImage>();
 
         public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
 

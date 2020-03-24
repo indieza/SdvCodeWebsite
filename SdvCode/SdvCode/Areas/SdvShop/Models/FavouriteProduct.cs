@@ -3,13 +3,13 @@
 
 namespace SdvCode.Areas.SdvShop.Models
 {
-    using SdvCode.Models.User;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.User;
 
     public class FavouriteProduct
     {

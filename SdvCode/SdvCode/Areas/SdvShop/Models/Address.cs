@@ -3,6 +3,7 @@
 
 namespace SdvCode.Areas.SdvShop.Models
 {
+    using SdvCode.Models.User;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -21,16 +22,21 @@ namespace SdvCode.Areas.SdvShop.Models
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        public string Name { get; set; }
-
-        [MaxLength(250)]
-        public string Description { get; set; }
+        [MaxLength(50)]
+        public string Country { get; set; }
 
         [Required]
-        [ForeignKey(nameof(City))]
-        public string CityId { get; set; }
+        [MaxLength(50)]
+        public string City { get; set; }
 
-        public City City { get; set; }
+        [Required]
+        [MaxLength(150)]
+        public string Street { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Order))]
+        public string OrderId { get; set; }
+
+        public Order Order { get; set; }
     }
 }
