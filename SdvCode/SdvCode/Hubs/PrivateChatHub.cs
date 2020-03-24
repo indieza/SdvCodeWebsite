@@ -28,7 +28,7 @@ namespace SdvCode.Hubs
             var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
             var fromId = fromUser.Id;
             var fromImage = fromUser.ImageUrl;
-            //await this.Clients.User(toId).SendAsync("SendMessage", toUser, toImage, message);
+
             await this.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
         }
 

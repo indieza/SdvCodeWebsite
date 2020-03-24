@@ -7,12 +7,14 @@ namespace SdvCode.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.PrivateChat;
 
+    [Authorize]
     public class PrivateChatController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
