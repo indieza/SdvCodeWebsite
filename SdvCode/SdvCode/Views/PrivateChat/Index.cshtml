@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Private Chat";
+}
+@model SdvCode.ViewModels.PrivateChat.PrivateChatViewModel
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>Private Chat</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li><a> Private Chat</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">User</div>
+        <div class="col-4"><input type="text" id="userInput" value="@Model.ToUser.UserName" /></div>
+    </div>
+    <div class="row">
+        <div class="col-2">Message</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="sendButton" value="Send Message" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+
+@section Scripts{
+
+}

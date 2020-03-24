@@ -18,6 +18,7 @@ namespace SdvCode
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;
     using SdvCode.Services.Blog;
@@ -147,6 +148,7 @@ namespace SdvCode
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -184,6 +186,8 @@ namespace SdvCode
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<PrivateChatHub>("/privateChatHub");
 
                 endpoints.MapRazorPages();
             });
