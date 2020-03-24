@@ -19,10 +19,26 @@ namespace SdvCode.Hubs
             this.db = db;
         }
 
-        public async Task SendMessage(string user, string message)
+        public async Task SendMessage(string fromUsername, string toUsername, string message)
         {
-            var id = this.db.Users.FirstOrDefault(x => x.UserName == user).Id;
-            await this.Clients.User(id).SendAsync("ReceiveMessage", user, message);
+            var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
+            var toId = toUser.Id;
+            var toImage = toUser.ImageUrl;
+
+            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+            //await this.Clients.User(toId).SendAsync("SendMessage", toUser, toImage, message);
+            await this.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
+        }
+
+        public async Task ReceiveMessage(string fromUsername, string message)
+        {
+            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            await this.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, message);
         }
     }
 }
