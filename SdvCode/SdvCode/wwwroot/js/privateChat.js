@@ -62,6 +62,13 @@ connection.on("SendMessage", function (user, image, message) {
 
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
+    var toUser = document.getElementById("toUser").textContent;
+    var fromUser = document.getElementById("fromUser").textContent;
+    var group = Array.from([toUser, fromUser]).sort().join("->");
+
+    connection.invoke("AddToGroup", `${group}`, toUser, fromUser).catch(function (err) {
+        return console.error(err.toString());
+    });
 }).catch(function (err) {
     return console.error(err.toString());
 });

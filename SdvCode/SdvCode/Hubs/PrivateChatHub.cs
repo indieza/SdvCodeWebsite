@@ -19,6 +19,20 @@ namespace SdvCode.Hubs
             this.db = db;
         }
 
+        public async Task AddToGroup(string groupName, string toUsername, string fromUsername)
+        {
+            await this.Groups.AddToGroupAsync(this.Context.ConnectionId, groupName);
+            var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
+            var toId = toUser.Id;
+            var toImage = toUser.ImageUrl;
+
+            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            await this.Clients.Group(groupName).SendAsync("ReceiveMessage", fromUsername, fromImage, $"{fromUsername} has joined the group {groupName}.");
+        }
+
         public async Task SendMessage(string fromUsername, string toUsername, string message)
         {
             var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
