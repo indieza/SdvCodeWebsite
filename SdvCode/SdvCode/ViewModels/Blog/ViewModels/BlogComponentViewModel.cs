@@ -10,6 +10,8 @@ namespace SdvCode.ViewModels.Blog.ViewModels
 
     public class BlogComponentViewModel
     {
+        public string Search { get; set; }
+
         public ICollection<RecentPostsViewModel> RecentPosts { get; set; } = new HashSet<RecentPostsViewModel>();
 
         public ICollection<TopCategoriesViewModel> TopCategories { get; set; } = new HashSet<TopCategoriesViewModel>();

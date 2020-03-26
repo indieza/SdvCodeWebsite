@@ -23,7 +23,7 @@ namespace SdvCode.Services.Blog
 
         Task<bool> CreatePost(CreatePostIndexModel model, HttpContext httpContext);
 
-        Task<ICollection<PostViewModel>> ExtraxtAllPosts(HttpContext httpContext);
+        Task<ICollection<PostViewModel>> ExtraxtAllPosts(HttpContext httpContext, string search);
 
         Task<bool> DeletePost(string id, HttpContext httpContext);
 

@@ -257,9 +257,24 @@ namespace SdvCode.Services.Blog
             };
         }
 
-        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(HttpContext httpContext)
+        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(HttpContext httpContext, string search)
         {
-            var posts = await this.db.Posts.OrderByDescending(x => x.CreatedOn).ToListAsync();
+            var posts = new List<Post>();
+
+            if (search == null)
+            {
+                posts = await this.db.Posts.OrderByDescending(x => x.CreatedOn).ToListAsync();
+            }
+            else
+            {
+                posts = await this.db.Posts
+                    .Where(x => EF.Functions.Contains(x.Title, search) ||
+                    EF.Functions.Contains(x.ShortContent, search) ||
+                    EF.Functions.Contains(x.Content, search))
+                    .OrderByDescending(x => x.CreatedOn)
+                    .ToListAsync();
+            }
+
             var user = await this.userManager.GetUserAsync(httpContext.User);
             List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
             return postsModel;

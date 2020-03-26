@@ -42,14 +42,15 @@ namespace SdvCode.Controllers
             this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
 
-        [Route("Blog/{page?}")]
-        public async Task<IActionResult> Index(int? page)
+        [Route("Blog/{page?}/{search?}")]
+        public async Task<IActionResult> Index(int? page, string search)
         {
             var pageNumber = page ?? 1;
-            var posts = await this.blogService.ExtraxtAllPosts(this.HttpContext);
+            var posts = await this.blogService.ExtraxtAllPosts(this.HttpContext, search);
             var model = new BlogViewModel
             {
                 Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
+                Search = search,
             };
 
             return this.View(model);

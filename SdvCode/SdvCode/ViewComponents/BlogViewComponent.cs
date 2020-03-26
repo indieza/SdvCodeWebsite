@@ -20,7 +20,7 @@ namespace SdvCode.ViewComponents
             this.blogComponentService = blogComponentService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string search)
         {
             BlogComponentViewModel components = new BlogComponentViewModel
             {
@@ -28,6 +28,7 @@ namespace SdvCode.ViewComponents
                 TopCategories = await this.blogComponentService.ExtractTopCategories(),
                 TopPosts = await this.blogComponentService.ExtractTopPosts(this.HttpContext),
                 TopTags = await this.blogComponentService.ExtractTopTags(),
+                Search = search,
             };
 
             return this.View(components);

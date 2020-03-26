@@ -46,11 +46,11 @@
                 <div class="row" style="text-align: center">
                     @Html.PagedListPager((IPagedList)Model.Posts,
                             page => Url.Action("Index", "Blog",
-                    new { page = page }),
+                    new { page = page, serch = Model.Search }),
                     PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
                 </div>
             </div>
-            @await Component.InvokeAsync("Blog")
+            @await Component.InvokeAsync("Blog", new { Model.Search })
         </div>
     </div>
 </section>

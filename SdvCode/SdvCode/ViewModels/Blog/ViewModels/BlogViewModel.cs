@@ -12,6 +12,8 @@ namespace SdvCode.ViewModels.Blog.ViewModels
 
     public class BlogViewModel
     {
+        public string Search { get; set; }
+
         public IEnumerable<PostViewModel> Posts { get; set; } = new HashSet<PostViewModel>();
     }
 }

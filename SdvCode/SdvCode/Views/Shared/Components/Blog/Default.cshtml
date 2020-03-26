@@ -10,9 +10,16 @@
     <div class="sidebar sidebar-right">
         <div class="widget widget-search">
             <h3 class="widget-title">Search</h3>
-            <div id="search">
-                <input class="form-control form-control-lg" placeholder="search" type="search">
-            </div>
+            <form asp-controller="Blog" asp-action="Index" method="get">
+                <div class="wrap">
+                    <div class="search">
+                        <input autocomplete="off" type="text" class="searchTerm" value="@Model.Search" name="search" placeholder="Filter posts ...">
+                        <button type="submit" class="searchButton">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="widget widget-tab">
             <ul class="nav nav-tabs">
