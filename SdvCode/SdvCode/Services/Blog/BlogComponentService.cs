@@ -66,7 +66,7 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return await recentPosts.ToListAsync();
+            return recentPosts.ToList();
         }
 
         public async Task<List<TopCategoriesViewModel>> ExtractTopCategories()
@@ -80,11 +80,11 @@ namespace SdvCode.Services.Blog
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    PostsCount = this.db.Posts.Count(x => x.CategoryId == category.Id),
+                    PostsCount = await this.db.Posts.CountAsync(x => x.CategoryId == category.Id),
                 });
             }
 
-            return await topCategories.OrderByDescending(x => x.PostsCount).ToListAsync();
+            return topCategories.OrderByDescending(x => x.PostsCount).ToList();
         }
 
         public async Task<List<TopPostsViewModel>> ExtractTopPosts(HttpContext httpContext)
@@ -125,7 +125,7 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return await topPosts.ToListAsync();
+            return topPosts.ToList();
         }
 
         public async Task<List<TopTagsViewModel>> ExtractTopTags()
@@ -139,11 +139,11 @@ namespace SdvCode.Services.Blog
                 {
                     Id = tag.Id,
                     Name = tag.Name,
-                    Count = this.db.PostsTags.Count(x => x.TagId == tag.Id),
+                    Count = await this.db.PostsTags.CountAsync(x => x.TagId == tag.Id),
                 });
             }
 
-            return await topTags.OrderByDescending(x => x.Count).ToListAsync();
+            return topTags.OrderByDescending(x => x.Count).ToList();
         }
     }
 }
