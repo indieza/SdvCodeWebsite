@@ -18,7 +18,7 @@ namespace SdvCode.Services.Profile
 
         Task<ApplicationUser> UnfollowUser(string username, HttpContext httpContext);
 
-        AllUsersViewModel GetAllUsers(HttpContext httpContext);
+        Task<List<UserCardViewModel>> GetAllUsers(HttpContext httpContext, string search);
 
         void DeleteActivity(HttpContext httpContext);
 

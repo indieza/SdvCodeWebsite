@@ -3,6 +3,7 @@
 
 namespace SdvCode.Controllers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ namespace SdvCode.Controllers
     using SdvCode.Services.Profile;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users;
+    using SdvCode.ViewModels.Users.ViewModels;
     using X.PagedList;
 
     [Authorize]
@@ -88,13 +90,19 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{currentUser.UserName}");
         }
 
-        [Route("/Profile/AllUsers/{page?}")]
-        public IActionResult AllUsers(int? page)
+        [Route("/Profile/AllUsers/{page?}/{search?}")]
+        public async Task<IActionResult> AllUsers(int? page, string search)
         {
-            var allUsers = this.profileService.GetAllUsers(this.HttpContext);
+            List<UserCardViewModel> allUsers = await this.profileService.GetAllUsers(this.HttpContext, search);
 
             var pageNumber = page ?? 1;
-            return this.View(allUsers.UsersCards.ToPagedList(pageNumber, GlobalConstants.UsersCountOnPage));
+            var model = new AllUsersViewModel
+            {
+                UsersCards = allUsers.ToPagedList(pageNumber, GlobalConstants.UsersCountOnPage),
+                Search = search,
+            };
+
+            return this.View(model);
         }
 
         [Route("/DeleteActivityHistory/{username}")]

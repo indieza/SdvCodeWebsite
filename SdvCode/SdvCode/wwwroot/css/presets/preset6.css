@@ -429,3 +429,17 @@ ul.navbar-nav > li.active > a {
 .profile-info-left img.avatar {
     border: 3px solid #8C42BA;
 }
+
+.searchTerm {
+    border: 3px solid #8C42BA;
+    color: #8C42BA;
+}
+
+    .searchTerm:focus {
+        color: #8C42BA;
+    }
+
+.searchButton {
+    border: 1px solid #8C42BA;
+    background: #8C42BA;
+}

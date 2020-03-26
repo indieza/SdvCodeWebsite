@@ -7,6 +7,8 @@ namespace SdvCode.ViewModels.Users.ViewModels
 
     public class AllUsersViewModel
     {
-        public ICollection<UserCardViewModel> UsersCards { get; set; } = new HashSet<UserCardViewModel>();
+        public string Search { get; set; }
+
+        public IEnumerable<UserCardViewModel> UsersCards { get; set; } = new HashSet<UserCardViewModel>();
     }
 }

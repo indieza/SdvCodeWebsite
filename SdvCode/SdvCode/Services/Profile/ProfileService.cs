@@ -93,14 +93,29 @@ namespace SdvCode.Services.Profile
             return currentUser;
         }
 
-        public AllUsersViewModel GetAllUsers(HttpContext httpContext)
+        public async Task<List<UserCardViewModel>> GetAllUsers(HttpContext httpContext, string search)
         {
-            var users = new AllUsersViewModel();
+            List<UserCardViewModel> allUsers = new List<UserCardViewModel>();
             var currentUserId = this.userManager.GetUserId(httpContext.User);
 
-            foreach (var user in this.db.Users)
+            var targetUser = new List<ApplicationUser>();
+
+            if (search == null)
             {
-                users.UsersCards.Add(new UserCardViewModel
+                targetUser = await this.db.Users.ToListAsync();
+            }
+            else
+            {
+                targetUser = await this.db.Users
+                     .Where(x => EF.Functions.Contains(x.UserName, search) ||
+                     EF.Functions.Contains(x.FirstName, search) ||
+                     EF.Functions.Contains(x.LastName, search))
+                     .ToListAsync();
+            }
+
+            foreach (var user in targetUser)
+            {
+                allUsers.Add(new UserCardViewModel
                 {
                     UserId = user.Id,
                     Username = user.UserName,
@@ -111,22 +126,22 @@ namespace SdvCode.Services.Profile
                 });
             }
 
-            foreach (var user in users.UsersCards)
+            foreach (var user in allUsers)
             {
-                user.FollowingsCount = this.db.FollowUnfollows
-                    .Count(x => x.FollowerId == user.UserId && x.IsFollowed == true);
+                user.FollowingsCount = await this.db.FollowUnfollows
+                    .CountAsync(x => x.FollowerId == user.UserId && x.IsFollowed == true);
 
-                user.FollowersCount = this.db.FollowUnfollows
-                    .Count(x => x.PersonId == user.UserId && x.IsFollowed == true);
+                user.FollowersCount = await this.db.FollowUnfollows
+                    .CountAsync(x => x.PersonId == user.UserId && x.IsFollowed == true);
 
-                user.HasFollowed = this.db.FollowUnfollows
-                    .Any(x => x.FollowerId == currentUserId && x.PersonId == user.UserId && x.IsFollowed == true);
+                user.HasFollowed = await this.db.FollowUnfollows
+                    .AnyAsync(x => x.FollowerId == currentUserId && x.PersonId == user.UserId && x.IsFollowed == true);
 
-                user.Activities = this.db.UserActions
-                    .Count(x => x.ApplicationUserId == user.UserId);
+                user.Activities = await this.db.UserActions
+                    .CountAsync(x => x.ApplicationUserId == user.UserId);
             }
 
-            return users;
+            return allUsers;
         }
 
         public async Task<ApplicationUser> UnfollowUser(string username, HttpContext httpContext)

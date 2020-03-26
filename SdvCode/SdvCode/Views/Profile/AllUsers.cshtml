@@ -7,7 +7,7 @@
     ViewData["Title"] = "All Users";
 }
 
-@model IEnumerable<UserCardViewModel>
+@model AllUsersViewModel
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
@@ -22,9 +22,21 @@
         </div>
     </div>
 </div>
+<div class="container" style="margin-top: 10px">
+    <form asp-controller="Profile" asp-action="AllUsers" method="get">
+        <div class="wrap">
+            <div class="search">
+                <input autocomplete="off" type="text" class="searchTerm" name="search" value="@Model.Search" placeholder="Filter by username, first or last name ...">
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="container">
     <div class="row">
-        @foreach (var user in Model)
+        @foreach (var user in Model.UsersCards)
         {
             <div class="col-md-4">
                 <div class="uicard">
@@ -100,9 +112,9 @@
 </div>
 <div class="container">
     <div class="row" style="text-align: center">
-        @Html.PagedListPager((IPagedList)Model,
+        @Html.PagedListPager((IPagedList)Model.UsersCards,
                 page => Url.Action("AllUsers", "Profile",
-                new { page = page }),
+                new { page = page, search = Model.Search }),
                 PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
     </div>
     <br />
