@@ -17,14 +17,10 @@ namespace SdvCode.Controllers
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
         private readonly IHomeService homeService;
 
-        public HomeController(
-            ILogger<HomeController> logger,
-            IHomeService homeService)
+        public HomeController(IHomeService homeService)
         {
-            this.logger = logger;
             this.homeService = homeService;
         }
 
