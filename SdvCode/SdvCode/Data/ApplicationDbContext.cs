@@ -37,6 +37,8 @@ namespace SdvCode.Data
 
         public DbSet<BlockedPost> BlockedPosts { get; set; }
 
+        public DbSet<PostCode> PostCodes { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -60,6 +62,14 @@ namespace SdvCode.Data
                     .WithMany(x => x.Posts)
                     .HasForeignKey(x => x.CategoryId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<ApplicationUser>(entity =>
+            {
+                entity.HasOne(x => x.PostCode)
+                    .WithMany(x => x.ApplicationUsers)
+                    .HasForeignKey(x => x.PostCodeId)
+                    .IsRequired(false);
             });
 
             builder.Entity<PostTag>().HasKey(k => new

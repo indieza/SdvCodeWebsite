@@ -92,5 +92,9 @@ namespace SdvCode.ViewModels.Users.InputModels
         [PersonalData]
         [Display(Name = "Instagram Profile")]
         public string InstagramUrl { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Zip Code")]
+        public int PostCode { get; set; }
     }
 }

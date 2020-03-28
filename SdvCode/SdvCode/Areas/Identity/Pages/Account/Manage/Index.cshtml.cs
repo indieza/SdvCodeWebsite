@@ -4,12 +4,14 @@
 namespace SdvCode.Areas.Identity.Pages.Account.Manage
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using SdvCode.Constraints;
+    using SdvCode.Data;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services;
@@ -21,15 +23,18 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly Cloudinary cloudinary;
+        private readonly ApplicationDbContext db;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            Cloudinary cloudinary)
+            Cloudinary cloudinary,
+            ApplicationDbContext db)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.cloudinary = cloudinary;
+            this.db = db;
         }
 
         public string Username { get; set; }
@@ -232,6 +237,23 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 });
             }
 
+            if (this.Input.PostCode != 0)
+            {
+                var targetCode = this.db.PostCodes.FirstOrDefault(x => x.Code == this.Input.PostCode);
+
+                if (targetCode == null)
+                {
+                    targetCode = new PostCode
+                    {
+                        Code = this.Input.PostCode,
+                        City = this.Input.City,
+                    };
+                    this.db.PostCodes.Add(targetCode);
+                }
+
+                user.PostCode = targetCode;
+            }
+
             await this.userManager.UpdateAsync(user);
             await this.signInManager.RefreshSignInAsync(user);
             this.StatusMessage = "Your profile has been updated";
@@ -264,6 +286,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 RegisteredOn = user.RegisteredOn,
                 CountryCode = user.CountryCode,
                 Email = user.Email,
+                PostCode = user.PostCode == null ? 0 : user.PostCode.Code,
 
                 // TODO Image URL
             };

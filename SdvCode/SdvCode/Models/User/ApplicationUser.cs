@@ -59,6 +59,11 @@ namespace SdvCode.Models.User
 
         public bool IsBlocked { get; set; }
 
+        [ForeignKey(nameof(PostCode))]
+        public int? PostCodeId { get; set; }
+
+        public PostCode PostCode { get; set; }
+
         //[ForeignKey(nameof(Address))]
         //public string AddressId { get; set; }
 

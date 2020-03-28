@@ -22,6 +22,16 @@
     <Compile Remove="Data\Migrations\20200324095902_test.Designer.cs" />
     <Compile Remove="Data\Migrations\20200324100049_test.cs" />
     <Compile Remove="Data\Migrations\20200324100049_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200328162251_InitialPostCodeCreate.cs" />
+    <Compile Remove="Data\Migrations\20200328162251_InitialPostCodeCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200328162412_InitialPostCodeCreate.cs" />
+    <Compile Remove="Data\Migrations\20200328162412_InitialPostCodeCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200328162721_InitialPostCodeCreate.cs" />
+    <Compile Remove="Data\Migrations\20200328162721_InitialPostCodeCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200328162842_InitialPostCodeCreate.cs" />
+    <Compile Remove="Data\Migrations\20200328162842_InitialPostCodeCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200328163006_InitialPostCodeCreate.cs" />
+    <Compile Remove="Data\Migrations\20200328163006_InitialPostCodeCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

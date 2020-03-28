@@ -53,6 +53,11 @@
             <input type="date" asp-for="Input.BirthDate" class="form-control">
             <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
         </div>
+        <div class="form-group col-md-2">
+            <label asp-for="Input.PostCode"></label>
+            <input asp-for="Input.PostCode" class="form-control" type="number" />
+            <span asp-validation-for="Input.PostCode" class="text-danger"></span>
+        </div>
         <div class="form-group col-md-4">
             <label asp-for="Input.Country"></label>
             <input asp-for="Input.Country" class="form-control" />
@@ -63,7 +68,7 @@
             <input asp-for="Input.City" class="form-control" />
             <span asp-validation-for="Input.City" class="text-danger"></span>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-2">
             <label asp-for="Input.Gender"></label>
             <select class="form-control" asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"></select>
             <span asp-validation-for="Input.Gender" class="text-danger"></span>
