@@ -54,26 +54,48 @@ namespace SdvCode.Services.Profile
             return activityName;
         }
 
-        public ApplicationUser ExtractUserInfo(string username, HttpContext httpContext)
+        public ApplicationUserViewModel ExtractUserInfo(string username, HttpContext httpContext)
         {
             var currentUserId = this.userManager.GetUserId(httpContext.User);
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
-
-            user.IsFollowed = this.db.FollowUnfollows
-                .Any(x => x.FollowerId == currentUserId &&
-                x.PersonId == user.Id && x.IsFollowed == true);
-
-            user.ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id);
-            user.State = this.db.States.FirstOrDefault(x => x.Id == user.StateId);
-            user.Country = this.db.Countries.FirstOrDefault(x => x.Id == user.CountryId);
-            user.City = this.db.Cities.FirstOrDefault(x => x.Id == user.CityId);
-            user.ZipCode = this.db.ZipCodes.FirstOrDefault(x => x.Id == user.ZipCodeId);
+            var model = new ApplicationUserViewModel
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                RegisteredOn = user.RegisteredOn,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                BirthDate = user.BirthDate,
+                Gender = user.Gender,
+                AboutMe = user.AboutMe,
+                ImageUrl = user.ImageUrl,
+                CoverImageUrl = user.CoverImageUrl,
+                IsBlocked = user.IsBlocked,
+                State = this.db.States.FirstOrDefault(x => x.Id == user.StateId),
+                Country = this.db.Countries.FirstOrDefault(x => x.Id == user.CountryId),
+                City = this.db.Cities.FirstOrDefault(x => x.Id == user.CityId),
+                ZipCode = this.db.ZipCodes.FirstOrDefault(x => x.Id == user.ZipCodeId),
+                CountryCode = user.CountryCode,
+                ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id),
+                IsFollowed = this.db.FollowUnfollows
+                    .Any(x => x.FollowerId == currentUserId && x.PersonId == user.Id && x.IsFollowed == true),
+                GitHubUrl = user.GitHubUrl,
+                FacebookUrl = user.FacebookUrl,
+                InstagramUrl = user.InstagramUrl,
+                LinkedinUrl = user.LinkedinUrl,
+                TwitterUrl = user.TwitterUrl,
+                StackoverflowUrl = user.StackoverflowUrl,
+            };
 
             var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
             var roles = this.db.Roles.Where(x => rolesIds.Contains(x.Id)).OrderBy(x => x.Name).ToList();
-            user.Roles = roles.OrderBy(x => x.RoleLevel).ToList();
+            model.Roles = roles.OrderBy(x => x.RoleLevel).ToList();
 
-            return user;
+            return model;
         }
 
         public async Task<ApplicationUser> FollowUser(string username, HttpContext httpContext)

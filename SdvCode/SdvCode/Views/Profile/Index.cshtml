@@ -9,7 +9,7 @@
 @model ProfileViewModel
 @inject UserManager<ApplicationUser> UserManager
 @{
-    ViewData["Title"] = $"{Model.ApplicationUser.UserName.Substring(0, 1).ToUpper() + Model.ApplicationUser.UserName.Substring(1, Model.ApplicationUser.UserName.Length - 1)} Profile";
+    ViewData["Title"] = $"{Model.ApplicationUser.Username.Substring(0, 1).ToUpper() + Model.ApplicationUser.Username.Substring(1, Model.ApplicationUser.Username.Length - 1)} Profile";
 }
 
 <div class="user-profile">
@@ -41,12 +41,12 @@
                         {
                             <span class="label label-danger" style="font-size: medium; padding: 7px 40px 7px 40px"><i class="fas fa-user-slash"> Banned</i></span>
                         }
-                        <h5>@@@Model.ApplicationUser.UserName</h5>
+                        <h5>@@@Model.ApplicationUser.Username</h5>
                     </div>
                     <div class="action-buttons">
                         <div class="row">
                             <div class="col-xs-6">
-                                @if (User.Identity.Name == Model.ApplicationUser.UserName)
+                                @if (User.Identity.Name == Model.ApplicationUser.Username)
                                 {
                                     <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-primary btn-info btn-block"><i class="fas fa-edit"></i> Edit Profile</a>
                                 }
@@ -54,38 +54,38 @@
                                 {
                                     @if (!Model.ApplicationUser.IsFollowed)
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.ApplicationUser.UserName" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
+                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.ApplicationUser.Username" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
                                     }
                                     else
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.ApplicationUser.UserName" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
+                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.ApplicationUser.Username" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
                                     }
                                 }
                             </div>
                             <div class="col-xs-6">
-                                @if (User.Identity.Name == Model.ApplicationUser.UserName)
+                                @if (User.Identity.Name == Model.ApplicationUser.Username)
                                 {
                                     <a asp-area="" asp-controller="Profile" asp-action="AllUsers" class="btn btn-primary btn-block"><i class="fas fa-users"></i> All Users</a>
                                 }
                                 else
                                 {
-                                    <a asp-area="" asp-controller="PrivateChat" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName" class="btn btn-primary btn-block">Message</a>
+                                    <a asp-area="" asp-controller="PrivateChat" asp-action="Index" asp-route-username="@Model.ApplicationUser.Username" class="btn btn-primary btn-block">Message</a>
                                 }
                             </div>
                         </div>
-                        @if (User.Identity.Name == Model.ApplicationUser.UserName && Model.ApplicationUser.ActionsCount > 0)
+                        @if (User.Identity.Name == Model.ApplicationUser.Username && Model.ApplicationUser.ActionsCount > 0)
                         {
                             <div style="margin-top: 15px">
                                 <a asp-controller="Profile" asp-action="DeleteActivityHistory" asp-route-username="@User.Identity.Name" class="btn btn-danger btn-block"><i class="fas fa-trash"></i> Delete Activity History</a>
                             </div>
                         }
-                        @if (User.Identity.Name == Model.ApplicationUser.UserName && !Model.HasAdmin)
+                        @if (User.Identity.Name == Model.ApplicationUser.Username && !Model.HasAdmin)
                         {
                             <div style="margin-top: 15px">
                                 <a asp-area="" asp-controller="Profile" asp-action="MakeYourselfAdmin" asp-route-username="@User.Identity.Name" class="btn btn-info btn-block"><i class="fas fa-user-shield"></i> Make Yourself Administrator</a>
                             </div>
                         }
-                        @if (User.Identity.Name == Model.ApplicationUser.UserName && User.IsInRole(Roles.Administrator.ToString()))
+                        @if (User.Identity.Name == Model.ApplicationUser.Username && User.IsInRole(Roles.Administrator.ToString()))
                         {
                             <div style="margin-top: 15px">
                                 <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-success btn-block"><i class="fas fa-user-shield"></i> Administration Panel</a>
@@ -93,7 +93,7 @@
                         }
                         else
                         {
-                            @if (User.Identity.Name == Model.ApplicationUser.UserName && User.IsInRole(Roles.Editor.ToString()))
+                            @if (User.Identity.Name == Model.ApplicationUser.Username && User.IsInRole(Roles.Editor.ToString()))
                             {
                                 <div style="margin-top: 15px">
                                     <a asp-area="Editor" asp-controller="AddCategory" asp-action="Index" class="btn btn-success btn-block"><i class="fas fa-feather-alt"></i> Create Category</a>
@@ -162,7 +162,7 @@
                             <p>
                                 <i class="fas fa-phone"></i> (@Model.ApplicationUser.CountryCode.ToString().Split("_")[0]) @Model.ApplicationUser.PhoneNumber
 
-                                @if (User.Identity.Name == Model.ApplicationUser.UserName && Model.ApplicationUser.PhoneNumberConfirmed == false)
+                                @if (User.Identity.Name == Model.ApplicationUser.Username && Model.ApplicationUser.PhoneNumberConfirmed == false)
                                 {
                                     <a asp-area="Identity" asp-page="/Account/VerifyPhone">Verify Phone</a>
                                 }
@@ -201,12 +201,12 @@
                     <div class="section">
                         <h3>Blog</h3>
                         <p>
-                            <a asp-area="" asp-controller="UserPosts" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName" asp-route-filter=@UserPostsFilter.Created.ToString()>
+                            <a asp-area="" asp-controller="UserPosts" asp-action="Index" asp-route-username="@Model.ApplicationUser.Username" asp-route-filter=@UserPostsFilter.Created.ToString()>
                                 <i class="fas fa-blog"></i> @Model.CreatedPosts Blog Posts
                             </a>
                         </p>
                         <p>
-                            <a asp-area="" asp-controller="UserPosts" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName" asp-route-filter="@UserPostsFilter.Liked.ToString()">
+                            <a asp-area="" asp-controller="UserPosts" asp-action="Index" asp-route-username="@Model.ApplicationUser.Username" asp-route-filter="@UserPostsFilter.Liked.ToString()">
                                 <i class="fas fa-thumbs-up"></i> @Model.LikedPosts Posts Likes
                             </a>
                         </p>
@@ -231,41 +231,41 @@
                 }
                 <div class="profile-info-right">
                     <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom" id="myTab">
-                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Activities ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Activities" asp-route-page="@Model.Page" asp-action="SwitchToTabs">ACTIVITIES</a></li>
-                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Followers ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Followers" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWERS</a></li>
-                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Following ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Following" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWING</a></li>
-                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Favorites ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Favorites" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FAVORITES</a></li>
-                        @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.UserName)
+                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Activities ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.Username" asp-route-tab="Activities" asp-route-page="@Model.Page" asp-action="SwitchToTabs">ACTIVITIES</a></li>
+                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Followers ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.Username" asp-route-tab="Followers" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWERS</a></li>
+                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Following ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.Username" asp-route-tab="Following" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FOLLOWING</a></li>
+                        <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Favorites ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.Username" asp-route-tab="Favorites" asp-route-page="@Model.Page" asp-action="SwitchToTabs">FAVORITES</a></li>
+                        @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.Username)
                         {
-                            <li role="presentation" class="@(Model.ActiveTab == ProfileTab.PendingPosts ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="PendingPosts" asp-route-page="@Model.Page" asp-action="SwitchToTabs">PENDING</a></li>
-                            <li role="presentation" class="@(Model.ActiveTab == ProfileTab.BannedPosts ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="BannedPosts" asp-route-page="@Model.Page" asp-action="SwitchToTabs">BANNED</a></li>
+                            <li role="presentation" class="@(Model.ActiveTab == ProfileTab.PendingPosts ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.Username" asp-route-tab="PendingPosts" asp-route-page="@Model.Page" asp-action="SwitchToTabs">PENDING</a></li>
+                            <li role="presentation" class="@(Model.ActiveTab == ProfileTab.BannedPosts ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.Username" asp-route-tab="BannedPosts" asp-route-page="@Model.Page" asp-action="SwitchToTabs">BANNED</a></li>
                         }
                     </ul>
                     <div class="tab-content">
                         @switch (Model.ActiveTab)
                         {
                             case ProfileTab.Activities:
-                                @await Component.InvokeAsync("Activities", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                @await Component.InvokeAsync("Activities", new { username = Model.ApplicationUser.Username, page = Model.Page });
                                 break;
                             case ProfileTab.Following:
-                                @await Component.InvokeAsync("Following", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                @await Component.InvokeAsync("Following", new { username = Model.ApplicationUser.Username, page = Model.Page });
                                 break;
                             case ProfileTab.Followers:
-                                @await Component.InvokeAsync("Followers", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                @await Component.InvokeAsync("Followers", new { username = Model.ApplicationUser.Username, page = Model.Page });
                                 break;
                             case ProfileTab.Favorites:
-                                @await Component.InvokeAsync("Favorites", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                @await Component.InvokeAsync("Favorites", new { username = Model.ApplicationUser.Username, page = Model.Page });
                                 break;
                             case ProfileTab.PendingPosts:
-                                @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.UserName)
+                                @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.Username)
                                 {
-                                    @await Component.InvokeAsync("PendingPosts", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                    @await Component.InvokeAsync("PendingPosts", new { username = Model.ApplicationUser.Username, page = Model.Page });
                                 }
                                 break;
                             case ProfileTab.BannedPosts:
-                                @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.UserName)
+                                @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.Username)
                                 {
-                                    @await Component.InvokeAsync("BannedPosts", new { username = Model.ApplicationUser.UserName, page = Model.Page });
+                                    @await Component.InvokeAsync("BannedPosts", new { username = Model.ApplicationUser.Username, page = Model.Page });
                                 }
                                 break;
                             default:

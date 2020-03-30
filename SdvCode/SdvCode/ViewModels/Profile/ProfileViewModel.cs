@@ -5,12 +5,13 @@ namespace SdvCode.ViewModels.Profile
 {
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Users.ViewModels;
 
     public class ProfileViewModel
     {
         public ProfileTab ActiveTab { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUserViewModel ApplicationUser { get; set; }
 
         public bool HasAdmin { get; set; }
 

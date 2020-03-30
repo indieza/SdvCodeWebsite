@@ -103,13 +103,13 @@ namespace SdvCode.Models.User
 
         public ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
 
-        [NotMapped]
-        public int ActionsCount { get; set; }
+        //[NotMapped]
+        //public int ActionsCount { get; set; }
 
-        [NotMapped]
-        public ICollection<ApplicationRole> Roles { get; set; } = new HashSet<ApplicationRole>();
+        //[NotMapped]
+        //public ICollection<ApplicationRole> Roles { get; set; } = new HashSet<ApplicationRole>();
 
-        [NotMapped]
-        public bool IsFollowed { get; set; }
+        //[NotMapped]
+        //public bool IsFollowed { get; set; }
     }
 }

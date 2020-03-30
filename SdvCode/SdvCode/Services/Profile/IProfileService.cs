@@ -12,7 +12,7 @@ namespace SdvCode.Services.Profile
 
     public interface IProfileService
     {
-        ApplicationUser ExtractUserInfo(string username, HttpContext httpContext);
+        ApplicationUserViewModel ExtractUserInfo(string username, HttpContext httpContext);
 
         Task<ApplicationUser> FollowUser(string username, HttpContext httpContext);
 
