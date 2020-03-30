@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Controllers
+namespace SdvCode.Areas.PrivateChat.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -10,11 +10,13 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.PrivateChat;
 
     [Authorize]
+    [Area(GlobalConstants.PrivateChatArea)]
     public class PrivateChatController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;

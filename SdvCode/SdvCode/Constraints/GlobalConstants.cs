@@ -5,6 +5,8 @@ namespace SdvCode.Constraints
 {
     public static class GlobalConstants
     {
+        public const string PrivateChatArea = "PrivateChat";
+
         public const string AdministratorRole = "Administrator";
 
         public const string AdministrationArea = "Administration";

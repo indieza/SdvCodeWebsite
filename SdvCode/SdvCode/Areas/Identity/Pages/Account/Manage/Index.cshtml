@@ -176,26 +176,5 @@
     <partial name="_ValidationScriptsPartial" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//geodata.solutions/includes/countrystatecity.js"></script>
-    <script>
-        function changeState() {
-            let item = document.getElementById("stateId").value;
-            console.log(item);
-            let input = document.getElementById("stateValue");
-            input.value = item;
-        }
-
-        function changeCountry() {
-            let item = document.getElementById("countryId").value;
-            console.log(item);
-            let input = document.getElementById("countryValue");
-            input.value = item;
-        }
-
-        function changeCity() {
-            let item = document.getElementById("cityId").value;
-            console.log(item);
-            let input = document.getElementById("cityValue");
-            input.value = item;
-        }
-    </script>
+    <script src="~/js/manageLocationScript.js"></script>
 }
