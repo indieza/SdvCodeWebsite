@@ -382,19 +382,17 @@ namespace SdvCode.Data.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
                     b.Property<int>("CountryCode")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("CoverImageUrl")
@@ -459,9 +457,6 @@ namespace SdvCode.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PostCodeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RegisteredOn")
                         .HasColumnType("datetime2");
 
@@ -470,6 +465,9 @@ namespace SdvCode.Data.Migrations
 
                     b.Property<string>("StackoverflowUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TwitterUrl")
                         .HasColumnType("nvarchar(max)");
@@ -481,7 +479,14 @@ namespace SdvCode.Data.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<int?>("ZipCodeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -491,9 +496,53 @@ namespace SdvCode.Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("PostCodeId");
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("ZipCodeId");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.FollowUnfollow", b =>
@@ -512,23 +561,25 @@ namespace SdvCode.Data.Migrations
                     b.ToTable("FollowUnfollows");
                 });
 
-            modelBuilder.Entity("SdvCode.Models.User.PostCode", b =>
+            modelBuilder.Entity("SdvCode.Models.User.State", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("PostCodes");
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.UserAction", b =>
@@ -578,6 +629,25 @@ namespace SdvCode.Data.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("UserActions");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.ZipCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ZipCodes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -738,9 +808,45 @@ namespace SdvCode.Data.Migrations
 
             modelBuilder.Entity("SdvCode.Models.User.ApplicationUser", b =>
                 {
-                    b.HasOne("SdvCode.Models.User.PostCode", "PostCode")
+                    b.HasOne("SdvCode.Models.User.City", "City")
                         .WithMany("ApplicationUsers")
-                        .HasForeignKey("PostCodeId");
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("SdvCode.Models.User.Country", "Country")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SdvCode.Models.User.State", "State")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("StateId");
+
+                    b.HasOne("SdvCode.Models.User.ZipCode", "ZipCode")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("ZipCodeId");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.City", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Models.User.State", "State")
+                        .WithMany("Cities")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.State", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.Country", "Country")
+                        .WithMany("States")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.UserAction", b =>

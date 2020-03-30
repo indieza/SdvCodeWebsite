@@ -7,18 +7,20 @@ namespace SdvCode.Models.User
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
-    public class PostCode
+    public class Country
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public int Code { get; set; }
-
         [MaxLength(20)]
-        public string City { get; set; }
+        public string Name { get; set; }
+
+        public ICollection<State> States { get; set; } = new HashSet<State>();
+
+        public ICollection<City> Cities { get; set; } = new HashSet<City>();
 
         public ICollection<ApplicationUser> ApplicationUsers { get; set; } = new HashSet<ApplicationUser>();
     }

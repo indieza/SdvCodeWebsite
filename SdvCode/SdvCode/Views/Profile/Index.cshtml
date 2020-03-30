@@ -137,13 +137,21 @@
                     </div>
                     <div class="section">
                         <h3>Personal Data</h3>
-                        @if (Model.ApplicationUser.City != null)
-                        {
-                            <p><i class="fas fa-building"></i> @Model.ApplicationUser.City</p>
-                        }
                         @if (Model.ApplicationUser.Country != null)
                         {
-                            <p><i class="fas fa-flag"></i> @Model.ApplicationUser.Country</p>
+                            <p><i class="fas fa-flag"></i> Country: @Model.ApplicationUser.Country.Name</p>
+                        }
+                        @if (Model.ApplicationUser.State != null)
+                        {
+                            <p><i class="far fa-star"></i> State: @Model.ApplicationUser.State.Name</p>
+                        }
+                        @if (Model.ApplicationUser.City != null)
+                        {
+                            <p><i class="fas fa-building"></i> City: @Model.ApplicationUser.City.Name</p>
+                        }
+                        @if (Model.ApplicationUser.ZipCode != null)
+                        {
+                            <p><i class="fas fa-mail-bulk"></i> Zip Code: @Model.ApplicationUser.ZipCode.Code</p>
                         }
                         @if (Model.ApplicationUser.BirthDate != null)
                         {

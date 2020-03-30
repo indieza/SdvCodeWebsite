@@ -7,6 +7,7 @@ namespace SdvCode.ViewModels.Users.InputModels
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using SdvCode.Models.Enums;
 
     public class ManageAccountInputModel
@@ -23,11 +24,19 @@ namespace SdvCode.ViewModels.Users.InputModels
         [PersonalData]
         [Display(Name = "Country")]
         [MaxLength(20)]
+        [BindProperty]
         public string Country { get; set; }
+
+        [PersonalData]
+        [Display(Name = "State")]
+        [MaxLength(20)]
+        [BindProperty]
+        public string State { get; set; }
 
         [PersonalData]
         [Display(Name = "City")]
         [MaxLength(20)]
+        [BindProperty]
         public string City { get; set; }
 
         [PersonalData]
@@ -95,6 +104,6 @@ namespace SdvCode.ViewModels.Users.InputModels
 
         [PersonalData]
         [Display(Name = "Zip Code")]
-        public int PostCode { get; set; }
+        public int ZipCode { get; set; }
     }
 }

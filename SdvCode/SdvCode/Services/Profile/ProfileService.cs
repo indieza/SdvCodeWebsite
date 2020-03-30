@@ -58,11 +58,21 @@ namespace SdvCode.Services.Profile
         {
             var currentUserId = this.userManager.GetUserId(httpContext.User);
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
-            user.IsFollowed = this.db.FollowUnfollows.Any(x => x.FollowerId == currentUserId && x.PersonId == user.Id && x.IsFollowed == true);
+
+            user.IsFollowed = this.db.FollowUnfollows
+                .Any(x => x.FollowerId == currentUserId &&
+                x.PersonId == user.Id && x.IsFollowed == true);
+
             user.ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id);
+            user.State = this.db.States.FirstOrDefault(x => x.Id == user.StateId);
+            user.Country = this.db.Countries.FirstOrDefault(x => x.Id == user.CountryId);
+            user.City = this.db.Cities.FirstOrDefault(x => x.Id == user.CityId);
+            user.ZipCode = this.db.ZipCodes.FirstOrDefault(x => x.Id == user.ZipCodeId);
+
             var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
             var roles = this.db.Roles.Where(x => rolesIds.Contains(x.Id)).OrderBy(x => x.Name).ToList();
             user.Roles = roles.OrderBy(x => x.RoleLevel).ToList();
+
             return user;
         }
 

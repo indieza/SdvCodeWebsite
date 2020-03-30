@@ -18,11 +18,25 @@ namespace SdvCode.Models.User
         {
         }
 
-        [MaxLength(20)]
-        public string Country { get; set; }
+        [ForeignKey(nameof(ZipCode))]
+        public int? ZipCodeId { get; set; }
 
-        [MaxLength(20)]
-        public string City { get; set; }
+        public ZipCode ZipCode { get; set; }
+
+        [ForeignKey(nameof(Country))]
+        public int? CountryId { get; set; }
+
+        public Country Country { get; set; }
+
+        [ForeignKey(nameof(State))]
+        public int? StateId { get; set; }
+
+        public State State { get; set; }
+
+        [ForeignKey(nameof(City))]
+        public int? CityId { get; set; }
+
+        public City City { get; set; }
 
         public DateTime BirthDate { get; set; }
 
@@ -58,11 +72,6 @@ namespace SdvCode.Models.User
         public string InstagramUrl { get; set; }
 
         public bool IsBlocked { get; set; }
-
-        [ForeignKey(nameof(PostCode))]
-        public int? PostCodeId { get; set; }
-
-        public PostCode PostCode { get; set; }
 
         //[ForeignKey(nameof(Address))]
         //public string AddressId { get; set; }

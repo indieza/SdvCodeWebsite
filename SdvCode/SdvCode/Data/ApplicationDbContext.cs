@@ -37,7 +37,13 @@ namespace SdvCode.Data
 
         public DbSet<BlockedPost> BlockedPosts { get; set; }
 
-        public DbSet<PostCode> PostCodes { get; set; }
+        public DbSet<ZipCode> ZipCodes { get; set; }
+
+        public DbSet<State> States { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<City> Cities { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -64,11 +70,24 @@ namespace SdvCode.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
+            builder.Entity<City>(entity =>
+            {
+                entity.HasOne(x => x.State)
+                .WithMany(x => x.Cities)
+                .HasForeignKey(x => x.StateId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Country)
+                .WithMany(x => x.Cities)
+                .HasForeignKey(x => x.CountryId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
             builder.Entity<ApplicationUser>(entity =>
             {
-                entity.HasOne(x => x.PostCode)
+                entity.HasOne(x => x.ZipCode)
                     .WithMany(x => x.ApplicationUsers)
-                    .HasForeignKey(x => x.PostCodeId)
+                    .HasForeignKey(x => x.ZipCodeId)
                     .IsRequired(false);
             });
 

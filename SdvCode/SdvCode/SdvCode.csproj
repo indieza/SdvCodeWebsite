@@ -32,6 +32,14 @@
     <Compile Remove="Data\Migrations\20200328162842_InitialPostCodeCreate.Designer.cs" />
     <Compile Remove="Data\Migrations\20200328163006_InitialPostCodeCreate.cs" />
     <Compile Remove="Data\Migrations\20200328163006_InitialPostCodeCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200328163250_InitialPostCodeCreate.cs" />
+    <Compile Remove="Data\Migrations\20200328163250_InitialPostCodeCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200329200721_InitialVillageCreate.cs" />
+    <Compile Remove="Data\Migrations\20200329200721_InitialVillageCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200329201033_InitialVillageCreate.cs" />
+    <Compile Remove="Data\Migrations\20200329201033_InitialVillageCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200329201424_InitialVillageCreate.cs" />
+    <Compile Remove="Data\Migrations\20200329201424_InitialVillageCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

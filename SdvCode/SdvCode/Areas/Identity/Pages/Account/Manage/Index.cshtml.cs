@@ -88,16 +88,65 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 isUpdatePersonalData = true;
             }
 
-            if (this.Input.City != user.City)
+            var targetCountry = this.db.Countries.FirstOrDefault(x => x.Name == this.Input.Country);
+            var targetState = this.db.States.FirstOrDefault(x => x.Name == this.Input.State);
+            var targetCity = this.db.Cities.FirstOrDefault(x => x.Name == this.Input.City);
+
+            if (this.Input.Country != null)
             {
-                user.City = this.Input.City;
-                isUpdatePersonalData = true;
+                if (targetCountry == null)
+                {
+                    targetCountry = new Country
+                    {
+                        Name = this.Input.Country,
+                    };
+                    this.db.Countries.Add(targetCountry);
+                }
+
+                if (user.CountryId != targetCountry.Id)
+                {
+                    user.Country = targetCountry;
+                    isUpdatePersonalData = true;
+                }
             }
 
-            if (this.Input.Country != user.Country)
+            if (this.Input.State != null)
             {
-                user.Country = this.Input.Country;
-                isUpdatePersonalData = true;
+                if (targetState == null)
+                {
+                    targetState = new State
+                    {
+                        Name = this.Input.State,
+                        Country = targetCountry,
+                    };
+                    this.db.States.Add(targetState);
+                }
+
+                if (user.StateId != targetState.Id)
+                {
+                    user.State = targetState;
+                    isUpdatePersonalData = true;
+                }
+            }
+
+            if (this.Input.City != null)
+            {
+                if (targetCity == null)
+                {
+                    targetCity = new City
+                    {
+                        Name = this.Input.City,
+                        Country = targetCountry,
+                        State = targetState,
+                    };
+                    this.db.Cities.Add(targetCity);
+                }
+
+                if (user.CityId != targetCity.Id)
+                {
+                    user.City = targetCity;
+                    isUpdatePersonalData = true;
+                }
             }
 
             if (this.Input.BirthDate != user.BirthDate)
@@ -237,21 +286,25 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 });
             }
 
-            if (this.Input.PostCode != 0)
+            if (this.Input.ZipCode != 0)
             {
-                var targetCode = this.db.PostCodes.FirstOrDefault(x => x.Code == this.Input.PostCode);
+                var targetCode = this.db.ZipCodes.FirstOrDefault(x => x.Code == this.Input.ZipCode);
 
                 if (targetCode == null)
                 {
-                    targetCode = new PostCode
+                    targetCode = new ZipCode
                     {
-                        Code = this.Input.PostCode,
+                        Code = this.Input.ZipCode,
                         City = this.Input.City,
                     };
-                    this.db.PostCodes.Add(targetCode);
+                    this.db.ZipCodes.Add(targetCode);
                 }
 
-                user.PostCode = targetCode;
+                if (user.ZipCodeId != targetCode.Id)
+                {
+                    user.ZipCode = targetCode;
+                    isUpdatePersonalData = true;
+                }
             }
 
             await this.userManager.UpdateAsync(user);
@@ -264,14 +317,19 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
         {
             var userName = await this.userManager.GetUserNameAsync(user);
             var phoneNumber = await this.userManager.GetPhoneNumberAsync(user);
+            var zipCode = this.db.ZipCodes.FirstOrDefault(x => x.Id == user.ZipCodeId);
+            var country = this.db.Countries.FirstOrDefault(x => x.Id == user.CountryId);
+            var state = this.db.States.FirstOrDefault(x => x.Id == user.StateId);
+            var city = this.db.Cities.FirstOrDefault(x => x.Id == user.CityId);
 
             this.Username = userName;
 
             this.Input = new ManageAccountInputModel
             {
                 PhoneNumber = phoneNumber,
-                City = user.City,
-                Country = user.Country,
+                State = state == null ? string.Empty : state.Name,
+                Country = country == null ? string.Empty : country.Name,
+                City = city == null ? string.Empty : city.Name,
                 BirthDate = user.BirthDate,
                 Gender = user.Gender,
                 AboutMe = user.AboutMe,
@@ -286,7 +344,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 RegisteredOn = user.RegisteredOn,
                 CountryCode = user.CountryCode,
                 Email = user.Email,
-                PostCode = user.PostCode == null ? 0 : user.PostCode.Code,
+                ZipCode = zipCode == null ? 0 : zipCode.Code,
 
                 // TODO Image URL
             };
