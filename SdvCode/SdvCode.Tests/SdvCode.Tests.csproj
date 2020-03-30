@@ -23,9 +23,9 @@
     <Folder Include="Category\" />
     <Folder Include="Contact\Services\" />
     <Folder Include="Home\Services\" />
+    <Folder Include="Profile\Services\" />
     <Folder Include="UserPosts\" />
     <Folder Include="Tag\" />
-    <Folder Include="Profile\" />
     <Folder Include="PrivateChat\" />
     <Folder Include="Post\" />
   </ItemGroup>
