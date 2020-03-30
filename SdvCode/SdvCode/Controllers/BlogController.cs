@@ -46,6 +46,12 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> Index(int? page, string search)
         {
             var pageNumber = page ?? 1;
+
+            if (search != null)
+            {
+                pageNumber = 1;
+            }
+
             var posts = await this.blogService.ExtraxtAllPosts(this.HttpContext, search);
             var model = new BlogViewModel
             {

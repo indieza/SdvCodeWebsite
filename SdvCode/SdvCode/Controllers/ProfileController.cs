@@ -96,6 +96,12 @@ namespace SdvCode.Controllers
             List<UserCardViewModel> allUsers = await this.profileService.GetAllUsers(this.HttpContext, search);
 
             var pageNumber = page ?? 1;
+
+            if (search != null)
+            {
+                pageNumber = 1;
+            }
+
             var model = new AllUsersViewModel
             {
                 UsersCards = allUsers.ToPagedList(pageNumber, GlobalConstants.UsersCountOnPage),
