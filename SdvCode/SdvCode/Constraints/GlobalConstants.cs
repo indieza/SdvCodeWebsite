@@ -44,5 +44,9 @@ namespace SdvCode.Constraints
         public const int BannedPostsCountOnPage = 6;
 
         public const int PendingPostsCountOnPage = 6;
+
+        public const int SavedChatMessagesCount = 200;
+
+        public const string NoAvatarImageLocation = "/images/NoAvatarProfileImage.png";
     }
 }

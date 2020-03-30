@@ -5,6 +5,7 @@ namespace SdvCode.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
 
@@ -44,6 +45,12 @@ namespace SdvCode.Data
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<City> Cities { get; set; }
+
+        public DbSet<Group> Groups { get; set; }
+
+        public DbSet<UserGroup> UsersGroups { get; set; }
+
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -125,6 +132,12 @@ namespace SdvCode.Data
             {
                 k.ApplicationUserId,
                 k.PostId,
+            });
+
+            builder.Entity<UserGroup>().HasKey(k => new
+            {
+                k.GroupId,
+                k.ApplicationUserId,
             });
 
             base.OnModelCreating(builder);

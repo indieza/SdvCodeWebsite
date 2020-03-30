@@ -3,6 +3,9 @@
 
 namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Models.User;
 
     public class PrivateChatViewModel
@@ -10,5 +13,9 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
         public ApplicationUser FromUser { get; set; }
 
         public ApplicationUser ToUser { get; set; }
+
+        public ICollection<ChatMessage> ChatMessages { get; set; } = new HashSet<ChatMessage>();
+
+        public string GroupName { get; set; }
     }
 }

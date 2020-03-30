@@ -9,6 +9,7 @@ namespace SdvCode.Services.Profile
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Razor.Language.Intermediate;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
@@ -54,10 +55,13 @@ namespace SdvCode.Services.Profile
             return activityName;
         }
 
-        public ApplicationUserViewModel ExtractUserInfo(string username, HttpContext httpContext)
+        public async Task<ApplicationUserViewModel> ExtractUserInfo(string username, HttpContext httpContext)
         {
+            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             var currentUserId = this.userManager.GetUserId(httpContext.User);
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
+            var group = new List<string>() { username, currentUser.UserName };
+
             var model = new ApplicationUserViewModel
             {
                 Id = user.Id,
@@ -89,6 +93,7 @@ namespace SdvCode.Services.Profile
                 LinkedinUrl = user.LinkedinUrl,
                 TwitterUrl = user.TwitterUrl,
                 StackoverflowUrl = user.StackoverflowUrl,
+                GroupName = string.Join("->", group.OrderBy(x => x)),
             };
 
             var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();

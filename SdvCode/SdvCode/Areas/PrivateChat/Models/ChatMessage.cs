@@ -3,13 +3,10 @@
 
 namespace SdvCode.Areas.PrivateChat.Models
 {
-    using SdvCode.Models.User;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using SdvCode.Models.User;
 
     public class ChatMessage
     {
@@ -30,5 +27,13 @@ namespace SdvCode.Areas.PrivateChat.Models
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
+
+        [Required]
+        public string ReceiverUsername { get; set; }
+
+        public string RecieverImageUrl { get; set; }
+
+        [Required]
+        public DateTime SendedOn { get; set; }
     }
 }

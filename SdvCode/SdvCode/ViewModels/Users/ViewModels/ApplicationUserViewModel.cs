@@ -80,5 +80,7 @@ namespace SdvCode.ViewModels.Users.ViewModels
         public ICollection<ApplicationRole> Roles { get; set; } = new HashSet<ApplicationRole>();
 
         public bool IsFollowed { get; set; }
+
+        public string GroupName { get; set; }
     }
 }

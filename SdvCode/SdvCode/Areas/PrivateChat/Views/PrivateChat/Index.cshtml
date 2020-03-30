@@ -19,6 +19,7 @@
 
 <div class="container privateChat">
     <div class="row">
+        <h1 id="groupName">@Model.GroupName</h1>
         <div class="col-md-12">
             <div class="panel">
                 <!--Heading-->
@@ -29,6 +30,63 @@
                 <div class="nano">
                     <div id="demo-chat-body" class="nano-content pad-all" tabindex="0">
                         <ul class="list-unstyled media-block" id="messagesList">
+                            @if (Model.ChatMessages != null && Model.ChatMessages.Count != 0)
+                            {
+                                @foreach (var message in Model.ChatMessages)
+                                {
+                                    @if (message.ReceiverUsername == Model.ToUser.UserName && message.ApplicationUser.UserName != Model.ToUser.UserName)
+                                    {
+                                        <li class="mar-btm">
+                                            <div class="media-right">
+                                                @if (message.RecieverImageUrl == null)
+                                                {
+                                                    <img src="~/images/NoAvatarProfileImage.png" class="img-circle img-sm" alt="Profile Picture">
+                                                }
+                                                else
+                                                {
+                                                    <img src=@message.RecieverImageUrl class="img-circle img-sm" alt="Profile Picture">
+                                                }
+                                            </div>
+                                            <div class="media-body pad-hor speech-right">
+                                                <div class="speech">
+                                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.FromUser.UserName" class="media-heading">@Model.FromUser.UserName</a>
+                                                    <p>@message.Content</p>
+                                                    <p class="speech-time">
+                                                        <i class="fa fa-clock-o fa-fw"></i> @message.SendedOn
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        @if (message.ReceiverUsername != Model.ToUser.UserName && message.ApplicationUser.UserName != Model.FromUser.UserName)
+                                        {
+                                            <li class="mar-btm">
+                                                <div class="media-left">
+                                                    @if (message.ApplicationUser.ImageUrl == null)
+                                                    {
+                                                        <img src="~/images/NoAvatarProfileImage.png" class="img-circle img-sm" alt="Profile Picture">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src=@message.ApplicationUser.ImageUrl class="img-circle img-sm" alt="Profile Picture">
+                                                    }
+                                                </div>
+                                                <div class="media-body pad-hor">
+                                                    <div class="speech">
+                                                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ToUser.UserName" class="media-heading">@Model.ToUser.UserName</a>
+                                                        <p>@message.Content</p>
+                                                        <p class="speech-time">
+                                                            <i class="fa fa-clock-o fa-fw"></i>@message.SendedOn
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            }
                             @*Here Goose your messages*@
                         </ul>
                     </div>

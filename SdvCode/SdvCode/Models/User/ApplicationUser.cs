@@ -8,6 +8,7 @@ namespace SdvCode.Models.User
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using Microsoft.AspNetCore.Identity;
+    using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
@@ -102,6 +103,10 @@ namespace SdvCode.Models.User
         public ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
 
         public ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
+
+        public ICollection<UserGroup> UsersGroups { get; set; } = new HashSet<UserGroup>();
+
+        public ICollection<ChatMessage> ChatMessages { get; set; } = new HashSet<ChatMessage>();
 
         //[NotMapped]
         //public int ActionsCount { get; set; }

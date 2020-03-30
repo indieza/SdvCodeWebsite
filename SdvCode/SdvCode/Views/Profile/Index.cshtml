@@ -69,7 +69,7 @@
                                 }
                                 else
                                 {
-                                    <a asp-area="PrivateChat" asp-controller="PrivateChat" asp-action="Index" asp-route-username="@Model.ApplicationUser.Username" class="btn btn-primary btn-block">Message</a>
+                                    <a asp-area="PrivateChat" asp-controller="PrivateChat" asp-action="Index" asp-route-username="@Model.ApplicationUser.Username" asp-route-group="@Model.ApplicationUser.GroupName" class="btn btn-primary btn-block">Message</a>
                                 }
                             </div>
                         </div>
@@ -219,16 +219,9 @@
                 </div>
             </div>
             <div class="col-md-8">
-
-                @if (TempData["Success"] != null)
-                {
-                    <div class="container-fluid" style="margin-top: 10px;">
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            @TempData["Success"]
-                        </div>
-                    </div>
-                }
+                <div style="margin-top: 10px;">
+                    <partial name="_TempDataPartial" />
+                </div>
                 <div class="profile-info-right">
                     <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom" id="myTab">
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Activities ? "active" : string.Empty )"><a asp-route-username="@Model.ApplicationUser.Username" asp-route-tab="Activities" asp-route-page="@Model.Page" asp-action="SwitchToTabs">ACTIVITIES</a></li>

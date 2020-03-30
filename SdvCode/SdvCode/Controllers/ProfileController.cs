@@ -32,7 +32,7 @@ namespace SdvCode.Controllers
         [Route("Profile/{username}/{tab?}/{page?}")]
         public async Task<IActionResult> Index(string username, ProfileTab tab, int? page)
         {
-            ApplicationUserViewModel user = this.profileService.ExtractUserInfo(username, this.HttpContext);
+            ApplicationUserViewModel user = await this.profileService.ExtractUserInfo(username, this.HttpContext);
             bool hasAdmin = await this.profileService.HasAdmin();
 
             var pageNumber = page ?? 1;

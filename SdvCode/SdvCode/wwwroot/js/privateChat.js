@@ -24,7 +24,7 @@ connection.on("ReceiveMessage", function (user, image, message) {
                                     </div>
                                     <div class="media-body pad-hor">
                                         <div class="speech">
-                                            <a href="#" class="media-heading">${user}</a>
+                                            <a href="/Profile/${user}" class="media-heading">${user}</a>
                                             <p>${msg}</p>
                                             <p class="speech-time">
                                                 <i class="fa fa-clock-o fa-fw"></i>${formattedDate}
@@ -49,7 +49,7 @@ connection.on("SendMessage", function (user, image, message) {
                                     </div>
                                     <div class="media-body pad-hor speech-right">
                                         <div class="speech">
-                                            <a href="#" class="media-heading">${user}</a>
+                                            <a href="/Profile$/{user}" class="media-heading">${user}</a>
                                             <p>${msg}</p >
                                             <p class="speech-time">
                                                 <i class="fa fa-clock-o fa-fw"></i> ${formattedDate}
@@ -64,7 +64,7 @@ connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
     var toUser = document.getElementById("toUser").textContent;
     var fromUser = document.getElementById("fromUser").textContent;
-    var group = Array.from([toUser, fromUser]).sort().join("->");
+    var group = document.getElementById("groupName").textContent;
 
     connection.invoke("AddToGroup", `${group}`, toUser, fromUser).catch(function (err) {
         return console.error(err.toString());
@@ -77,13 +77,14 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var toUser = document.getElementById("toUser").textContent;
     var fromUser = document.getElementById("fromUser").textContent;
     var message = document.getElementById("messageInput").value;
+    var group = document.getElementById("groupName").textContent;
 
     if (message) {
-        connection.invoke("SendMessage", fromUser, toUser, message).catch(function (err) {
+        connection.invoke("SendMessage", fromUser, toUser, message, group).catch(function (err) {
             return console.error(err.toString());
         });
 
-        connection.invoke("ReceiveMessage", fromUser, message).catch(function (err) {
+        connection.invoke("ReceiveMessage", fromUser, message, group).catch(function (err) {
             return console.error(err.toString());
         });
 
