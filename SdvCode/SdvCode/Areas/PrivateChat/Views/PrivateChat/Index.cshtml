@@ -38,13 +38,13 @@
                                     {
                                         <li class="mar-btm">
                                             <div class="media-right">
-                                                @if (message.RecieverImageUrl == null)
+                                                @if (message.ApplicationUser.ImageUrl == null)
                                                 {
                                                     <img src="~/images/NoAvatarProfileImage.png" class="img-circle img-sm" alt="Profile Picture">
                                                 }
                                                 else
                                                 {
-                                                    <img src=@message.RecieverImageUrl class="img-circle img-sm" alt="Profile Picture">
+                                                    <img src=@message.ApplicationUser.ImageUrl class="img-circle img-sm" alt="Profile Picture">
                                                 }
                                             </div>
                                             <div class="media-body pad-hor speech-right">

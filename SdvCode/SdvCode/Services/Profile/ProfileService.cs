@@ -93,7 +93,7 @@ namespace SdvCode.Services.Profile
                 LinkedinUrl = user.LinkedinUrl,
                 TwitterUrl = user.TwitterUrl,
                 StackoverflowUrl = user.StackoverflowUrl,
-                GroupName = string.Join("->", group.OrderBy(x => x)),
+                GroupName = string.Join(GlobalConstants.ChatGroupNameSeparator, group.OrderBy(x => x)),
             };
 
             var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();

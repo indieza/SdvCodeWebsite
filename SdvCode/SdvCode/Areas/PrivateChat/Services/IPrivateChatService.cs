@@ -13,6 +13,7 @@ namespace SdvCode.Areas.PrivateChat.Services
     public interface IPrivateChatService
     {
         Task<ICollection<ChatMessage>> ExtractAllMessages(string group);
-        Task<bool> IsUserAbleToChat(string username, HttpContext httpContext);
+
+        Task<bool> IsUserAbleToChat(string username, string group, HttpContext httpContext);
     }
 }

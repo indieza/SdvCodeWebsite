@@ -48,5 +48,7 @@ namespace SdvCode.Constraints
         public const int SavedChatMessagesCount = 200;
 
         public const string NoAvatarImageLocation = "/images/NoAvatarProfileImage.png";
+
+        public const string ChatGroupNameSeparator = "->";
     }
 }
