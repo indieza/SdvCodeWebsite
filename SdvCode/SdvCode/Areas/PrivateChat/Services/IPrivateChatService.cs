@@ -9,11 +9,12 @@ namespace SdvCode.Areas.PrivateChat.Services
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using SdvCode.Areas.PrivateChat.Models;
+    using SdvCode.Models.User;
 
     public interface IPrivateChatService
     {
         Task<ICollection<ChatMessage>> ExtractAllMessages(string group);
 
-        Task<bool> IsUserAbleToChat(string username, string group, HttpContext httpContext);
+        Task<bool> IsUserAbleToChat(string username, string group, ApplicationUser user);
     }
 }

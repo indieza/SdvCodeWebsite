@@ -16,6 +16,6 @@ namespace SdvCode.Services.Tag
     {
         Task<Tag> ExtractTagById(string id);
 
-        Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, HttpContext httpContext);
+        Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, ApplicationUser user);
     }
 }

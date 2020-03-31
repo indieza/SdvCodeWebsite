@@ -32,7 +32,8 @@ namespace SdvCode.Controllers
         [Route("Profile/{username}/{tab?}/{page?}")]
         public async Task<IActionResult> Index(string username, ProfileTab tab, int? page)
         {
-            ApplicationUserViewModel user = await this.profileService.ExtractUserInfo(username, this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            ApplicationUserViewModel user = await this.profileService.ExtractUserInfo(username, currentUser);
             bool hasAdmin = await this.profileService.HasAdmin();
 
             var pageNumber = page ?? 1;
@@ -75,25 +76,28 @@ namespace SdvCode.Controllers
         [Route("/Follow/{username}")]
         public async Task<IActionResult> Follow(string username)
         {
-            ApplicationUser currentUser = await this.profileService.FollowUser(username, this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            ApplicationUser user = await this.profileService.FollowUser(username, currentUser);
             this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyFollowedUser, username.ToUpper());
 
-            return this.Redirect($"/Profile/{currentUser.UserName}");
+            return this.Redirect($"/Profile/{user.UserName}");
         }
 
         [Route("/Unfollow/{username}")]
         public async Task<IActionResult> Unfollow(string username)
         {
-            ApplicationUser currentUser = await this.profileService.UnfollowUser(username, this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            ApplicationUser user = await this.profileService.UnfollowUser(username, currentUser);
             this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyUnfollowedUser, username.ToUpper());
 
-            return this.Redirect($"/Profile/{currentUser.UserName}");
+            return this.Redirect($"/Profile/{user.UserName}");
         }
 
         [Route("/Profile/AllUsers/{page?}/{search?}")]
         public async Task<IActionResult> AllUsers(int? page, string search)
         {
-            List<UserCardViewModel> allUsers = await this.profileService.GetAllUsers(this.HttpContext, search);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            List<UserCardViewModel> allUsers = await this.profileService.GetAllUsers(currentUser, search);
 
             var pageNumber = page ?? 1;
 
@@ -112,9 +116,10 @@ namespace SdvCode.Controllers
         }
 
         [Route("/DeleteActivityHistory/{username}")]
-        public IActionResult DeleteActivityHistory(string username)
+        public async Task<IActionResult> DeleteActivityHistory(string username)
         {
-            this.profileService.DeleteActivity(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            this.profileService.DeleteActivity(currentUser);
             this.TempData["Success"] = SuccessMessages.SuccessfullyDeleteAllActivity;
 
             return this.Redirect($"/Profile/{username}");
@@ -123,7 +128,8 @@ namespace SdvCode.Controllers
         [Route("/DeleteActivityById/{username}/{activityId}")]
         public async Task<IActionResult> DeleteActivityById(string username, int activityId)
         {
-            string activityName = await this.profileService.DeleteActivityById(this.HttpContext, activityId);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            string activityName = await this.profileService.DeleteActivityById(currentUser, activityId);
             this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyDeletedActivityById, activityName);
 
             return this.Redirect($"/Profile/{username}");

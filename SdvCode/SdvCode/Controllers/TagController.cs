@@ -31,8 +31,9 @@ namespace SdvCode.Controllers
         [Route("Blog/Tag/{id}/{page?}")]
         public async Task<IActionResult> Index(string id, int? page)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
             var pageNumber = page ?? 1;
-            var post = await this.tagService.ExtractPostsByTagId(id, this.HttpContext);
+            var post = await this.tagService.ExtractPostsByTagId(id, currentUser);
 
             TagViewModel model = new TagViewModel
             {

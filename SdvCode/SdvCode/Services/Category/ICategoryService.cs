@@ -16,6 +16,6 @@ namespace SdvCode.Services.Category
     {
         Task<Category> ExtractCategoryById(string id);
 
-        Task<ICollection<PostViewModel>> ExtractPostsByCategoryId(string id, HttpContext httpContext);
+        Task<ICollection<PostViewModel>> ExtractPostsByCategoryId(string id, ApplicationUser user);
     }
 }

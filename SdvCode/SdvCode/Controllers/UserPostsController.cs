@@ -40,16 +40,17 @@ namespace SdvCode.Controllers
 
             var pageNumber = page ?? 1;
 
+            var currentUser = await this.userManager.GetUserAsync(this.User);
             if (filter == UserPostsFilter.Liked.ToString())
             {
                 model.Action = UserPostsFilter.Liked.ToString();
-                var posts = await this.userPostsService.ExtractLikedPostsByUsername(username, this.HttpContext);
+                var posts = await this.userPostsService.ExtractLikedPostsByUsername(username, currentUser);
                 model.Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage);
             }
             else if (filter == UserPostsFilter.Created.ToString())
             {
                 model.Action = UserPostsFilter.Created.ToString();
-                var posts = await this.userPostsService.ExtractCreatedPostsByUsername(username, this.HttpContext);
+                var posts = await this.userPostsService.ExtractCreatedPostsByUsername(username, currentUser);
                 model.Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage);
             }
 

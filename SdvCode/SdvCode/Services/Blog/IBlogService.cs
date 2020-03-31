@@ -21,14 +21,14 @@ namespace SdvCode.Services.Blog
 
         Task<ICollection<string>> ExtractAllTagNames();
 
-        Task<bool> CreatePost(CreatePostIndexModel model, HttpContext httpContext);
+        Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user);
 
-        Task<ICollection<PostViewModel>> ExtraxtAllPosts(HttpContext httpContext, string search);
+        Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search);
 
-        Task<bool> DeletePost(string id, HttpContext httpContext);
+        Task<bool> DeletePost(string id, ApplicationUser user);
 
-        Task<EditPostInputModel> ExtractPost(string id, HttpContext httpContext);
+        Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user);
 
-        Task<bool> EditPost(EditPostInputModel model, HttpContext httpContext);
+        Task<bool> EditPost(EditPostInputModel model, ApplicationUser user);
     }
 }

@@ -30,9 +30,8 @@ namespace SdvCode.Services.UserPosts
             this.postsExtractor = new GlobalPostsExtractor(this.db);
         }
 
-        public async Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, HttpContext httpContext)
+        public async Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, ApplicationUser currentUser)
         {
-            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var posts = await this.db.Posts.Where(x => x.ApplicationUser.UserName == username).ToListAsync();
 
@@ -41,9 +40,8 @@ namespace SdvCode.Services.UserPosts
             return postsModel;
         }
 
-        public async Task<ICollection<PostViewModel>> ExtractLikedPostsByUsername(string username, HttpContext httpContext)
+        public async Task<ICollection<PostViewModel>> ExtractLikedPostsByUsername(string username, ApplicationUser currentUser)
         {
-            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var postsIds = await this.db.PostsLikes.Where(x => x.UserId == user.Id && x.IsLiked == true).Select(x => x.PostId).ToListAsync();
 

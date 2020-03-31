@@ -10,6 +10,7 @@ namespace SdvCode.Services.Tag
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Hosting.Internal;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
@@ -29,9 +30,8 @@ namespace SdvCode.Services.Tag
             this.postExtractor = new GlobalPostsExtractor(this.db);
         }
 
-        public async Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, HttpContext httpContext)
+        public async Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, ApplicationUser user)
         {
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             var postsIds = await this.db.PostsTags.Where(x => x.TagId == id).Select(x => x.PostId).ToListAsync();
             List<Post> posts = new List<Post>();
 

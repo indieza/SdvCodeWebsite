@@ -8,6 +8,7 @@ namespace SdvCode.Areas.Editor.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Editor.Services;
@@ -21,14 +22,17 @@ namespace SdvCode.Areas.Editor.Controllers
     {
         private readonly IEditCategoryService editCategoryService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IHttpContextAccessor contextAccessor;
         private readonly GlobalUserValidator userValidator;
 
         public EditCategoryController(
             IEditCategoryService editCategoryService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IHttpContextAccessor contextAccessor)
         {
             this.editCategoryService = editCategoryService;
             this.userManager = userManager;
+            this.contextAccessor = contextAccessor;
             this.userValidator = new GlobalUserValidator(this.userManager);
         }
 
@@ -36,7 +40,8 @@ namespace SdvCode.Areas.Editor.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string id)
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
@@ -51,7 +56,8 @@ namespace SdvCode.Areas.Editor.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(EditCategoryInputModel model)
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;

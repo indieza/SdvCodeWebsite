@@ -7,6 +7,7 @@ namespace SdvCode.Controllers
     using System.Threading.Tasks;
     using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Models.Enums;
@@ -25,19 +26,16 @@ namespace SdvCode.Controllers
     {
         private readonly IBlogService blogService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IPostService postService;
         private readonly ApplicationDbContext db;
         private readonly GlobalUserValidator userValidator;
 
         public BlogController(
             IBlogService blogService,
             UserManager<ApplicationUser> userManager,
-            IPostService postService,
             ApplicationDbContext db)
         {
             this.blogService = blogService;
             this.userManager = userManager;
-            this.postService = postService;
             this.db = db;
             this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
@@ -45,6 +43,7 @@ namespace SdvCode.Controllers
         [Route("Blog/{page?}/{search?}")]
         public async Task<IActionResult> Index(int? page, string search)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
             var pageNumber = page ?? 1;
 
             if (search != null)
@@ -52,7 +51,7 @@ namespace SdvCode.Controllers
                 pageNumber = 1;
             }
 
-            var posts = await this.blogService.ExtraxtAllPosts(this.HttpContext, search);
+            var posts = await this.blogService.ExtraxtAllPosts(currentUser, search);
             var model = new BlogViewModel
             {
                 Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
@@ -65,14 +64,15 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> CreatePost()
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInBlogRole(this.HttpContext);
+            var isInRole = await this.userValidator.IsInBlogRole(currentUser);
             if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
@@ -92,21 +92,22 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> DeletePost(string id)
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInPostRole(this.HttpContext, id);
+            var isInRole = await this.userValidator.IsInPostRole(currentUser, id);
             if (isInRole == false)
             {
                 this.TempData["Error"] = ErrorMessages.NotInDeletePostRoles;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isDeleted = await this.blogService.DeletePost(id, this.HttpContext);
+            var isDeleted = await this.blogService.DeletePost(id, currentUser);
             if (isDeleted == true)
             {
                 this.TempData["Success"] = SuccessMessages.SuccessfullyDeletePost;
@@ -123,9 +124,10 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
             if (this.ModelState.IsValid)
             {
-                bool isAdded = await this.blogService.CreatePost(model, this.HttpContext);
+                bool isAdded = await this.blogService.CreatePost(model, currentUser);
 
                 if (isAdded)
                 {
@@ -143,28 +145,29 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> EditPost(string id)
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlocked(id, this.HttpContext);
+            var isApproved = await this.userValidator.IsPostBlocked(id, currentUser);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotEditBlogPost;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInPostRole(this.HttpContext, id);
+            var isInRole = await this.userValidator.IsInPostRole(currentUser, id);
             if (!isInRole)
             {
                 this.TempData["Error"] = ErrorMessages.NotInEditPostRoles;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            EditPostInputModel model = await this.blogService.ExtractPost(id, this.HttpContext);
+            EditPostInputModel model = await this.blogService.ExtractPost(id, currentUser);
             model.Categories = await this.blogService.ExtractAllCategoryNames();
             model.Tags = await this.blogService.ExtractAllTagNames();
 
@@ -175,14 +178,15 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> EditPost(EditPostInputModel model)
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isEdited = await this.blogService.EditPost(model, this.HttpContext);
+            bool isEdited = await this.blogService.EditPost(model, currentUser);
 
             if (isEdited)
             {

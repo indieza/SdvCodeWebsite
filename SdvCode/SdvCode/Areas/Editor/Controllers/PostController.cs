@@ -8,6 +8,7 @@ namespace SdvCode.Areas.Editor.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Editor.Services;
@@ -21,18 +22,24 @@ namespace SdvCode.Areas.Editor.Controllers
     {
         private readonly IEditorPostService postService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IHttpContextAccessor contextAccessor;
         private readonly GlobalUserValidator userValidator;
 
-        public PostController(IEditorPostService postService, UserManager<ApplicationUser> userManager)
+        public PostController(
+            IEditorPostService postService,
+            UserManager<ApplicationUser> userManager,
+            IHttpContextAccessor contextAccessor)
         {
             this.postService = postService;
             this.userManager = userManager;
+            this.contextAccessor = contextAccessor;
             this.userValidator = new GlobalUserValidator(this.userManager);
         }
 
         public async Task<IActionResult> ApprovePost(string id)
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
@@ -54,7 +61,8 @@ namespace SdvCode.Areas.Editor.Controllers
 
         public async Task<IActionResult> UnbanPost(string id)
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
@@ -76,7 +84,8 @@ namespace SdvCode.Areas.Editor.Controllers
 
         public async Task<IActionResult> BanPost(string id)
         {
-            var isBlocked = await this.userValidator.IsBlocked(this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
+            var isBlocked = this.userValidator.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;

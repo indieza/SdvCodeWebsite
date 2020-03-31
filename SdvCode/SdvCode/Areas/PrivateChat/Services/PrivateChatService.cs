@@ -66,9 +66,8 @@ namespace SdvCode.Areas.PrivateChat.Services
             return null;
         }
 
-        public async Task<bool> IsUserAbleToChat(string username, string group, HttpContext httpContext)
+        public async Task<bool> IsUserAbleToChat(string username, string group, ApplicationUser currentUser)
         {
-            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             var targetUser = this.db.Users.FirstOrDefault(x => x.UserName == username);
             var groupUsers = new List<string>() { currentUser.UserName, targetUser.UserName };
             var targetGroupName = string.Join(GlobalConstants.ChatGroupNameSeparator, groupUsers.OrderBy(x => x));

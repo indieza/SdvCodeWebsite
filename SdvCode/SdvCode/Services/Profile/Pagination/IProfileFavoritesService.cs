@@ -13,6 +13,6 @@ namespace SdvCode.Services.Profile.Pagination
 
     public interface IProfileFavoritesService
     {
-        Task<List<FavoritesViewModel>> ExtractFavorites(ApplicationUser user, HttpContext httpContext);
+        Task<List<FavoritesViewModel>> ExtractFavorites(ApplicationUser user, ApplicationUser currentUser);
     }
 }

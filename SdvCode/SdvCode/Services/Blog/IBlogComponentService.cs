@@ -8,6 +8,7 @@ namespace SdvCode.Services.Blog
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
+    using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels;
 
     public interface IBlogComponentService
@@ -16,8 +17,8 @@ namespace SdvCode.Services.Blog
 
         Task<List<TopTagsViewModel>> ExtractTopTags();
 
-        Task<List<TopPostsViewModel>> ExtractTopPosts(HttpContext httpContext);
+        Task<List<TopPostsViewModel>> ExtractTopPosts(ApplicationUser user);
 
-        Task<List<RecentPostsViewModel>> ExtractRecentPosts(HttpContext httpContext);
+        Task<List<RecentPostsViewModel>> ExtractRecentPosts(ApplicationUser user);
     }
 }

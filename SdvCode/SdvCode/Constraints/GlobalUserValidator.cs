@@ -31,15 +31,13 @@ namespace SdvCode.Constraints
             this.db = db;
         }
 
-        public async Task<bool> IsBlocked(HttpContext httpContext)
+        public bool IsBlocked(ApplicationUser user)
         {
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             return user.IsBlocked;
         }
 
-        public async Task<bool> IsInBlogRole(HttpContext httpContext)
+        public async Task<bool> IsInBlogRole(ApplicationUser user)
         {
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()) ||
@@ -51,10 +49,9 @@ namespace SdvCode.Constraints
             return false;
         }
 
-        public async Task<bool> IsInPostRole(HttpContext httpContext, string id)
+        public async Task<bool> IsInPostRole(ApplicationUser user, string id)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
-            var user = await this.userManager.GetUserAsync(httpContext.User);
 
             if (post != null)
             {
@@ -71,9 +68,8 @@ namespace SdvCode.Constraints
             return false;
         }
 
-        public async Task<bool> IsPostApproved(string id, HttpContext httpContext)
+        public async Task<bool> IsPostApproved(string id, ApplicationUser user)
         {
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
             var userPostsIds = this.db.Posts.Where(x => x.ApplicationUserId == user.Id).Select(x => x.Id).ToList();
 
@@ -103,14 +99,13 @@ namespace SdvCode.Constraints
             return false;
         }
 
-        public async Task<bool> IsPostBlocked(string id, HttpContext httpContext)
+        public async Task<bool> IsPostBlocked(string id, ApplicationUser user)
         {
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
-            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
 
             if (post.PostStatus == PostStatus.Banned &&
-                !await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) &&
-                !await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString()))
+                !await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) &&
+                !await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()))
             {
                 return true;
             }

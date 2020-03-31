@@ -12,17 +12,17 @@ namespace SdvCode.Services.Profile
 
     public interface IProfileService
     {
-        Task<ApplicationUserViewModel> ExtractUserInfo(string username, HttpContext httpContext);
+        Task<ApplicationUserViewModel> ExtractUserInfo(string username, ApplicationUser user);
 
-        Task<ApplicationUser> FollowUser(string username, HttpContext httpContext);
+        Task<ApplicationUser> FollowUser(string username, ApplicationUser user);
 
-        Task<ApplicationUser> UnfollowUser(string username, HttpContext httpContext);
+        Task<ApplicationUser> UnfollowUser(string username, ApplicationUser user);
 
-        Task<List<UserCardViewModel>> GetAllUsers(HttpContext httpContext, string search);
+        Task<List<UserCardViewModel>> GetAllUsers(ApplicationUser user, string search);
 
-        void DeleteActivity(HttpContext httpContext);
+        Task DeleteActivity(ApplicationUser user);
 
-        Task<string> DeleteActivityById(HttpContext httpContext, int activityId);
+        Task<string> DeleteActivityById(ApplicationUser user, int activityId);
 
         Task<bool> HasAdmin();
 

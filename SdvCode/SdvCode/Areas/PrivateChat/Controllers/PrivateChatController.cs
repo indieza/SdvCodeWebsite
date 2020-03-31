@@ -37,7 +37,8 @@ namespace SdvCode.Areas.PrivateChat.Controllers
         [Route("PrivateChat/With/{username?}/Group/{group?}")]
         public async Task<IActionResult> Index(string username, string group)
         {
-            bool isAbaleToChat = await this.privateChatService.IsUserAbleToChat(username, group, this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isAbaleToChat = await this.privateChatService.IsUserAbleToChat(username, group, currentUser);
 
             if (!isAbaleToChat)
             {

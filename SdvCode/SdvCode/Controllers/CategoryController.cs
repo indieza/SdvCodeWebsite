@@ -31,8 +31,9 @@ namespace SdvCode.Controllers
         [Route("Blog/Category/{id}/{page?}")]
         public async Task<IActionResult> Index(string id, int? page)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
             var pageNumber = page ?? 1;
-            var posts = await this.categoryService.ExtractPostsByCategoryId(id, this.HttpContext);
+            var posts = await this.categoryService.ExtractPostsByCategoryId(id, currentUser);
 
             CategoryViewModel model = new CategoryViewModel
             {

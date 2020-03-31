@@ -30,7 +30,8 @@ namespace SdvCode.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(string username, int page)
         {
             var user = await this.userManager.FindByNameAsync(username);
-            List<FavoritesViewModel> allFollowers = await this.favoritesService.ExtractFavorites(user, this.HttpContext);
+            var currentUser = await this.userManager.GetUserAsync(this.HttpContext.User);
+            List<FavoritesViewModel> allFollowers = await this.favoritesService.ExtractFavorites(user, currentUser);
 
             FavoritesPaginationViewModel model = new FavoritesPaginationViewModel
             {

@@ -14,8 +14,8 @@ namespace SdvCode.Services.UserPosts
 
     public interface IUserPostsService
     {
-        Task<ICollection<PostViewModel>> ExtractLikedPostsByUsername(string username, HttpContext httpContext);
+        Task<ICollection<PostViewModel>> ExtractLikedPostsByUsername(string username, ApplicationUser user);
 
-        Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, HttpContext httpContext);
+        Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, ApplicationUser user);
     }
 }

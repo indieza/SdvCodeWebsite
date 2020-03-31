@@ -50,10 +50,9 @@ namespace SdvCode.Services.Blog
             this.nonCyclicActivity = new AddNonCyclicActivity(this.db);
         }
 
-        public async Task<bool> CreatePost(CreatePostIndexModel model, HttpContext httpContext)
+        public async Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user)
         {
             var category = this.db.Categories.FirstOrDefault(x => x.Name == model.PostInputModel.CategoryName);
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             var contentWithoutTags = Regex.Replace(model.PostInputModel.SanitizeContent, "<.*?>", string.Empty);
 
             var post = new Post
@@ -122,11 +121,10 @@ namespace SdvCode.Services.Blog
             return true;
         }
 
-        public async Task<bool> DeletePost(string id, HttpContext httpContext)
+        public async Task<bool> DeletePost(string id, ApplicationUser user)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
             var userPost = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
-            var user = await this.userManager.GetUserAsync(httpContext.User);
 
             if (post != null && userPost != null)
             {
@@ -157,9 +155,8 @@ namespace SdvCode.Services.Blog
             return false;
         }
 
-        public async Task<bool> EditPost(EditPostInputModel model, HttpContext httpContext)
+        public async Task<bool> EditPost(EditPostInputModel model, ApplicationUser user)
         {
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
             var contentWithoutTags = Regex.Replace(model.SanitizeContent, "<.*?>", string.Empty);
 
@@ -234,9 +231,8 @@ namespace SdvCode.Services.Blog
             return await this.db.Tags.Select(x => x.Name).OrderBy(x => x).ToListAsync();
         }
 
-        public async Task<EditPostInputModel> ExtractPost(string id, HttpContext httpContext)
+        public async Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user)
         {
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
             post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
             var postTagsNames = new List<string>();
@@ -257,7 +253,7 @@ namespace SdvCode.Services.Blog
             };
         }
 
-        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(HttpContext httpContext, string search)
+        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search)
         {
             var posts = new List<Post>();
 
@@ -275,7 +271,6 @@ namespace SdvCode.Services.Blog
                     .ToListAsync();
             }
 
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
             return postsModel;
         }

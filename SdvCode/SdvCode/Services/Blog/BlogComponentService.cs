@@ -29,9 +29,8 @@ namespace SdvCode.Services.Blog
             this.userManager = userManager;
         }
 
-        public async Task<List<RecentPostsViewModel>> ExtractRecentPosts(HttpContext httpContext)
+        public async Task<List<RecentPostsViewModel>> ExtractRecentPosts(ApplicationUser currentUser)
         {
-            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             List<Post> posts = new List<Post>();
             if (currentUser != null &&
                 (await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) ||
@@ -87,9 +86,8 @@ namespace SdvCode.Services.Blog
             return topCategories.OrderByDescending(x => x.PostsCount).ToList();
         }
 
-        public async Task<List<TopPostsViewModel>> ExtractTopPosts(HttpContext httpContext)
+        public async Task<List<TopPostsViewModel>> ExtractTopPosts(ApplicationUser currentUser)
         {
-            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             List<Post> posts = new List<Post>();
 
             if (currentUser != null &&

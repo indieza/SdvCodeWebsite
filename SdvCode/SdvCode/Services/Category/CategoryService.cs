@@ -34,10 +34,9 @@ namespace SdvCode.Services.Category
             return await this.db.Categories.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<ICollection<PostViewModel>> ExtractPostsByCategoryId(string id, HttpContext httpContext)
+        public async Task<ICollection<PostViewModel>> ExtractPostsByCategoryId(string id, ApplicationUser user)
         {
             var posts = await this.db.Posts.Where(x => x.CategoryId == id).ToListAsync();
-            var user = await this.userManager.GetUserAsync(httpContext.User);
             List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
             return postsModel;
         }

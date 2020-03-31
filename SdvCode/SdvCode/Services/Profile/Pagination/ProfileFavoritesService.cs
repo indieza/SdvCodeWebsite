@@ -24,9 +24,8 @@ namespace SdvCode.Services.Profile.Pagination
             this.userManager = userManager;
         }
 
-        public async Task<List<FavoritesViewModel>> ExtractFavorites(ApplicationUser user, HttpContext httpContext)
+        public async Task<List<FavoritesViewModel>> ExtractFavorites(ApplicationUser user, ApplicationUser currentUser)
         {
-            var currentUser = await this.userManager.GetUserAsync(httpContext.User);
             List<FavoritesViewModel> allFavorites = new List<FavoritesViewModel>();
             var favorites = this.db.FavouritePosts.Where(x => x.ApplicationUserId == user.Id && x.IsFavourite == true).ToList();
 
