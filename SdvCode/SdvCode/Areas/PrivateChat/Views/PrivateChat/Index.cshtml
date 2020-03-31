@@ -19,7 +19,7 @@
 
 <div class="container privateChat">
     <div class="row">
-        <h1 id="groupName">@Model.GroupName</h1>
+        <h3 id="groupName" style="text-align:center">@Model.GroupName</h3>
         <div class="col-md-12">
             <div class="panel">
                 <!--Heading-->
@@ -96,10 +96,10 @@
                 <!--Widget footer-->
                 <div class="panel-footer">
                     <div class="row">
-                        <div class="col-xs-10">
+                        <div class="col-md-10">
                             <input type="text" placeholder="Enter your text" class="form-control chat-input" id="messageInput">
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-md-2">
                             <button class="btn btn-info btn-block" type="submit" id="sendButton">Send</button>
                         </div>
                     </div>
@@ -108,3 +108,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/js/privateChat.js"></script>
+}
