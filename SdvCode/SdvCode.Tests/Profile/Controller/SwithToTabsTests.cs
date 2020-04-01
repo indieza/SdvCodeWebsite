@@ -1,6 +1,5 @@
 ﻿namespace SdvCode.Tests.Profile.Controller
 {
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -10,18 +9,17 @@
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile;
-    using SdvCode.ViewModels.Profile;
-    using SdvCode.ViewModels.Users.ViewModels;
     using System;
     using System.Collections.Generic;
+    using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
     using Xunit;
 
-    public class ProfileIndexTests
+    public class SwithToTabsTests
     {
         [Fact]
-        public async Task IndexShouldReturnCorrectViewModel()
+        public async Task ShouldReturnRedirectToAction()
         {
             var mockService = new Mock<IProfileService>();
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
@@ -34,17 +32,24 @@
                     new Mock<IdentityErrorDescriber>().Object,
                     new Mock<IServiceProvider>().Object,
                     new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, "1"),
+            }));
+            mockUserManager.Setup(x => x.FindByNameAsync("indieza")).ReturnsAsync(new ApplicationUser
+            {
+                UserName = "indieza",
+            });
 
             var controller = new ProfileController(mockUserManager.Object, mockService.Object);
-            var result = await controller.Index("indieza", ProfileTab.Activities, 0);
-            Assert.IsType<ViewResult>(result);
+            var result = (RedirectToActionResult)await controller.SwitchToTabs("indieza", "Activities");
 
-            var viewResult = result as ViewResult;
-            Assert.IsType<ProfileViewModel>(viewResult.Model);
-
-            var viewModel = viewResult.Model as ProfileViewModel;
-            Assert.Equal(ProfileTab.Activities, viewModel.ActiveTab);
-            Assert.Equal(0, viewModel.Page);
+            Assert.Equal("Index", result.ActionName);
+            Assert.Equal(2, result.RouteValues.Count);
+            Assert.True(result.RouteValues.ContainsKey("tab"));
+            Assert.True(result.RouteValues.ContainsKey("username"));
+            Assert.Equal(ProfileTab.Activities, result.RouteValues["tab"]);
+            Assert.Equal("indieza", result.RouteValues["username"]);
         }
     }
 }

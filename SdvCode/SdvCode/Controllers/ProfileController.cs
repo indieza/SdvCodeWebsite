@@ -119,7 +119,7 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> DeleteActivityHistory(string username)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            this.profileService.DeleteActivity(currentUser);
+            await this.profileService.DeleteActivity(currentUser);
             this.TempData["Success"] = SuccessMessages.SuccessfullyDeleteAllActivity;
 
             return this.Redirect($"/Profile/{username}");
