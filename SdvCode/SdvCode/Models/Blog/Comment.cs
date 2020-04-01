@@ -41,5 +41,10 @@ namespace SdvCode.Models.Blog
         public string PostId { get; set; }
 
         public Post Post { get; set; }
+
+        [ForeignKey(nameof(Comment))]
+        public string ParentCommentId { get; set; }
+
+        public Comment ParentComment { get; set; }
     }
 }
