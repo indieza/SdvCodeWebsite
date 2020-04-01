@@ -56,6 +56,12 @@ namespace SdvCode.Services.Post
         public async Task<PostViewModel> ExtractCurrentPost(string id, ApplicationUser user)
         {
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
+            post.Comments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
+            foreach (var comment in post.Comments)
+            {
+                comment.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == comment.ApplicationUserId);
+            }
+
             post.PostsTags = this.db.PostsTags.Where(x => x.PostId == post.Id).ToList();
             PostViewModel model = new PostViewModel
             {

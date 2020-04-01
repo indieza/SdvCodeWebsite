@@ -8,6 +8,35 @@
 @model PostViewModel
 @{
     ViewData["Title"] = Model.Title;
+
+    void DisplayComments(string parentId)
+    {
+        var comments = this.Model.Comments.Where(x => x.ParentCommentId == parentId);
+        if (!comments.Any())
+        {
+            return;
+        }
+
+        @foreach (var comment in comments)
+        {
+            <div class="comment">
+                <img class="comment-avatar pull-left" alt="avatar" src=@comment.ApplicationUser.ImageUrl>
+                <div class="comment-body">
+                    <h4 class="comment-author">@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName</h4>
+                    <div class="comment-date">@comment.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy dddd HH:mm tt")</div>
+                    <p>@Html.Raw(comment.Content)</p>
+                    <div class="text-right weight-600">
+                        <a class="comment-reply" onclick="showAddCommentForm('@comment.Id')"><i class="fa fa-mail-reply"></i> Reply</a>
+                    </div>
+                </div>
+            </div>
+            <ul class="comments-reply">
+                <li>
+                    @{ DisplayComments(comment.Id); }
+                </li>
+            </ul>
+        }
+    }
 }
 
 <div id="banner-area">
@@ -203,103 +232,33 @@
 
                     <div class="gap-30"></div>
 
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <button style="float: right" type="button" class="btn btn-info" onclick="showAddCommentForm(0)"><i class="fa fa-plus"></i>&nbsp; Comment</button>
+                    }
+
                     <!-- Post comment start -->
                     <div id="post-comments">
                         <div class="comments-counter"><a href="#">@Model.Comments.Count Comments found</a></div>
                         <ul class="comments-list">
-                            <li>
-                                <div class="comment">
-                                    <img class="comment-avatar pull-left" alt="" src="images/blog/avator1.png">
-                                    <div class="comment-body">
-                                        <h4 class="comment-author">Jack Ruler</h4>
-                                        <div class="comment-date">March 29, 2014 at 1:38 pm</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In magna ligula, faucibus sed ligula ut, venenatis mattis diam. Proin feugiat mollis nibh.</p>
-                                        <div class="text-right weight-600">
-                                            <a class="comment-reply" href="#">
-                                                <i class="fa fa-mail-reply"></i> Reply
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="comments-reply">
-                                    <li>
-                                        <div class="comment">
-                                            <img class="comment-avatar pull-left" alt="img" src="images/blog/avator2.jpg">
-                                            <div class="comment-body">
-                                                <h4 class="comment-author">Jack Ruler</h4>
-                                                <div class="comment-date">March 29, 2014 at 1:38 pm</div>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In magna ligula, faucibus sed ligula ut, venenatis mattis diam. Proin feugiat mollis nibh.</p>
-                                                <div class="text-right weight-600">
-                                                    <a class="comment-reply" href="#">
-                                                        <i class="fa fa-mail-reply"></i> Reply
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="comment">
-                                            <img class="comment-avatar pull-left" alt="" src="images/blog/avator1.png">
-                                            <div class="comment-body">
-                                                <h4 class="comment-author">Jack Ruler</h4>
-                                                <div class="comment-date">March 29, 2014 at 1:38 pm</div>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In magna ligula, faucibus sed ligula ut, venenatis mattis diam. Proin feugiat mollis nibh.</p>
-                                                <div class="text-right weight-600">
-                                                    <a class="comment-reply" href="#">
-                                                        <i class="fa fa-mail-reply"></i> Reply
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul><!-- comments-reply end -->
-                                <div class="comment last">
-                                    <img class="comment-avatar pull-left" alt="" src="images/blog/author.jpg">
-                                    <div class="comment-body">
-                                        <h4 class="comment-author">Jack Ruler</h4>
-                                        <div class="comment-date">March 29, 2014 at 1:38 pm</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In magna ligula, faucibus sed ligula ut, venenatis mattis diam. Proin feugiat mollis nibh.</p>
-                                        <div class="text-right weight-600">
-                                            <a class="comment-reply" href="#">
-                                                <i class="fa fa-mail-reply"></i> Reply
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li><!-- Comments-list li end -->
-                        </ul><!-- Comments-list ul end -->
-                    </div><!-- Post comment end -->
+                            @{ DisplayComments(null); }
+                        </ul>
+                    </div>
 
                     <div class="comments-form">
-                        <h3>Leave a comment</h3>
-                        <form role="form">
+                        <form asp-controller="Comment" asp-action="Create" method="post" id="AddCommentForm" style="display: none">
+                            <input type="hidden" name="PostId" value="@this.Model.Id" />
+                            <input type="hidden" name="ParentId" value="0" />
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Your Name</label>
-                                        <input class="form-control" name="name" id="name" placeholder="" type="text" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Your Email</label>
-                                        <input class="form-control" name="email" id="email" placeholder="" type="email" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Your Website</label>
-                                        <input class="form-control" placeholder="" type="text" required>
-                                    </div>
-                                </div>
+                                <h3>Leave a comment</h3>
                             </div>
                             <div class="form-group">
-                                <label>Message</label>
-                                <textarea class="form-control required-field" id="message" placeholder="" rows="8" required></textarea>
+                                <label for="Content"></label>
+                                <textarea name="Content" id="Content" class="form-control edit-with-tinymce"></textarea>
                             </div>
                             <div>
                                 <br>
-                                <button class="btn btn-primary" type="submit">Post Comment</button>
+                                <input type="submit" class="btn btn-primary" value="Add comment" />
                             </div>
                         </form>
                     </div><!-- Comments form end -->
@@ -324,3 +283,10 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script src="~/lib/tinymce/visualizer.js" type="text/javascript"></script>
+    <script src="~/js/blogPostScript.js"></script>
+}

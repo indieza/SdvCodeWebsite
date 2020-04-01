@@ -25,6 +25,7 @@ namespace SdvCode
     using SdvCode.Services.Blog;
     using SdvCode.Services.Category;
     using SdvCode.Services.Cloud;
+    using SdvCode.Services.Comment;
     using SdvCode.Services.Contact;
     using SdvCode.Services.Home;
     using SdvCode.Services.Post;
@@ -135,6 +136,7 @@ namespace SdvCode
             services.AddTransient<IAddCategoryService, AddCategoryService>();
             services.AddTransient<IEditorPostService, EditorPostService>();
             services.AddTransient<IPrivateChatService, PrivateChatService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             // Register Pagination Services
             services.AddTransient<IProfileActivitiesService, ProfileActivitiesService>();

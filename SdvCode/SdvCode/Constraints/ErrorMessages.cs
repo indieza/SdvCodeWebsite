@@ -56,5 +56,7 @@ namespace SdvCode.Constraints
         public const string CannotEditBlogPost = "You cannot edit banned blog post.";
 
         public const string NotAbleToChat = "Your are not able to chat.";
+
+        public const string DontMakeBullshits = "Bro are you a cheater. Don't make bullshits :)";
     }
 }
