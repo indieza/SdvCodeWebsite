@@ -53,7 +53,7 @@
                                         <span class="post-meta-date">
                                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
                                                 <i class="fas fa-clock-o"></i>
-                                                @post.CreatedOn.ToString("MMMM dd")
+                                                @post.CreatedOn.ToLocalTime().ToString("MMMM dd")
                                             </a>
                                         </span>
                                         <span class="post-meta-cats">
@@ -107,7 +107,7 @@
                                         <span class="post-meta-date">
                                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
                                                 <i class="fas fa-clock-o"></i>
-                                                @post.CreatedOn.ToString("MMMM dd")
+                                                @post.CreatedOn.ToLocalTime().ToString("MMMM dd")
                                             </a>
                                         </span>
                                         <span class="post-meta-cats">

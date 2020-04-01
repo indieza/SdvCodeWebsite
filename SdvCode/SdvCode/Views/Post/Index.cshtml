@@ -42,7 +42,7 @@
                         <img src=@Model.ImageUrl class="img-responsive" alt="" />
                         <span class="blog-date">
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
-                                @Model.CreatedOn.ToString("MMMM dd, yyyy")
+                                @Model.CreatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
                             </a>
                         </span>
                     </div><!-- post image end -->

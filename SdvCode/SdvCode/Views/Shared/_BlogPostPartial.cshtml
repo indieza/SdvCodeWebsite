@@ -16,7 +16,7 @@
         {
             <span class="blog-date">
                 <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
-                    @Model.CreatedOn.ToString("MMMM dd, yyyy")
+                    @Model.CreatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
                 </a>
             </span>
         }
@@ -24,7 +24,7 @@
         {
             <span class="blog-date">
                 <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
-                    @Model.UpdatedOn.ToString("MMMM dd, yyyy")
+                    @Model.UpdatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
                 </a>
             </span>
         }
@@ -93,7 +93,7 @@
         <div class="post-meta">
             <span class="post-meta-author">
                 Posted on
-                <span class="post-meta-cats"> @Model.CreatedOn.ToString("dd-MMMM-yyyy")</span>
+                <span class="post-meta-cats"> @Model.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy")</span>
                 by
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName"> @Model.ApplicationUser.UserName</a>
             </span>

@@ -35,7 +35,7 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
                 {
@@ -74,7 +74,7 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
                 {
@@ -113,7 +113,7 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
                 {
@@ -152,7 +152,7 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
                 {
@@ -188,7 +188,7 @@
                             <b>@action.PersonUsername</b>
                         </a> update his/her personal information
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
                 {
@@ -224,7 +224,7 @@
                             <b>@action.PersonUsername</b>
                         </a> has changed his/her cover picture
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="thumbnail">
                             <img src=@action.CoverImageUrl alt="Uploaded photo">
@@ -265,7 +265,7 @@
                             <b>@action.PersonUsername</b>
                         </a> has changed his/her profile picture
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="thumbnail">
                             <img src=@action.ProfileImageUrl alt="Uploaded photo">
@@ -311,7 +311,7 @@
                             <b>post</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
@@ -362,7 +362,7 @@
                             <b>post</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
@@ -418,7 +418,7 @@
                             <b>post</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
@@ -474,7 +474,7 @@
                             </b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
@@ -525,7 +525,7 @@
                             <b>post</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.PersonUsername)
                 {
@@ -571,7 +571,7 @@
                             <b>post</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.PersonUsername)
                 {
@@ -617,7 +617,7 @@
                             </b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.PersonUsername)
                 {
@@ -653,7 +653,7 @@
                             <b>@action.PersonUsername</b>
                         </a> delete his/her own blog post
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
                 {
@@ -692,7 +692,7 @@
                             <b>@action.FollowerUsername</b>
                         </a> blog post
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
                 {
@@ -731,7 +731,7 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
                 {
@@ -777,7 +777,7 @@
                             <b>post</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
@@ -833,7 +833,7 @@
                             </b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
@@ -884,7 +884,7 @@
                             <b>post</b>
                         </a>
                     </p>
-                    <small class="text-muted">@action.ActionDate.ToString("dd-MMMM-yyyy HH:mm tt")</small>
+                    <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@action.PostId">
