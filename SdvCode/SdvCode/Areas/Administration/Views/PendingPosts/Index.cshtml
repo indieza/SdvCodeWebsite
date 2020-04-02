@@ -41,22 +41,38 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>
-                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@item.Post.Id">
-                                        @item.Post.Title
-                                    </a>
+                                <td width="120px" height="80">
+                                    <div style="height: 80px; overflow: auto">
+                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@item.Post.Id">
+                                            @item.Post.Title
+                                        </a>
+                                    </div>
                                 </td>
-                                <td>@item.Post.ShortContent</td>
+                                <td height="80">
+                                    <div style="height: 80px; overflow: auto">
+                                        @item.Post.ShortContent
+                                    </div>
+                                </td>
                                 <td>
                                     <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-Username="@item.User.UserName">
                                         @item.User.UserName
                                     </a>
                                 </td>
-                                <td>@item.Post.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</td>
+                                <td width="200px">@item.Post.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</td>
                                 <td>@item.MlPrediction</td>
-                                <td>
-                                    <a>Approve</a>
-                                    <a>Delete</a>
+                                <td width="100">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a asp-area="Editor" asp-controller="Post" asp-action="ApprovePost" asp-route-id="@item.Post.Id" class="btn btn-info">
+                                                <i class="fas fa-check"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@item.Post.Id" class="btn btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         }
