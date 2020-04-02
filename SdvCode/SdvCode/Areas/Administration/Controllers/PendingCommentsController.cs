@@ -3,15 +3,29 @@
 
 namespace SdvCode.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Administration.Services.PendingComments;
+    using SdvCode.Areas.Administration.ViewModels.PendingCommentsViewModels;
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]
     public class PendingCommentsController : Controller
     {
-        public IActionResult Index()
+        private readonly IPendingCommentsService pendingCommentsService;
+
+        public PendingCommentsController(IPendingCommentsService pendingCommentsService)
         {
-            return this.View();
+            this.pendingCommentsService = pendingCommentsService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            ICollection<AdminPendingCommentViewModel> model =
+                await this.pendingCommentsService.ExtractAllPendingComments();
+            return this.View(model);
         }
     }
 }

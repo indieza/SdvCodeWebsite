@@ -18,6 +18,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.Services.Dashboard;
     using SdvCode.Areas.Administration.Services.DbUsage;
+    using SdvCode.Areas.Administration.Services.PendingComments;
     using SdvCode.Areas.Administration.Services.PendingPosts;
     using SdvCode.Areas.Administration.Services.UserPenalties;
     using SdvCode.Areas.Editor.Services;
@@ -135,6 +136,7 @@ namespace SdvCode
             services.AddTransient<IEditorPostService, EditorPostService>();
             services.AddTransient<IEditorCommentService, EditorCommentService>();
             services.AddTransient<IPendingPostsService, PendingPostsService>();
+            services.AddTransient<IPendingCommentsService, PendingCommentsService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();
