@@ -58,5 +58,9 @@ namespace SdvCode.Constraints
         public const string NotAbleToChat = "Your are not able to chat.";
 
         public const string DontMakeBullshits = "Bro are you a cheater. Don't make bullshits :)";
+
+        public const string CannotCommentNotApprovedBlogPost = "You cannot comment not approved post.";
+
+        public const string CannotCommentNotApprovedComment = "You cannot comment not approved comment.";
     }
 }

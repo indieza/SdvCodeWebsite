@@ -35,12 +35,37 @@
                         </a>
                     </h4>
                     <div class="comment-date">@comment.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy dddd HH:mm tt")</div>
+                    @if (comment.CommentStatus == CommentStatus.Pending)
+                    {
+                        <span class="post-meta-cats">
+                            Comment status:
+                            <font color="blue" size="2"><b>@comment.CommentStatus.ToString()</b></font>
+                        </span>
+                        @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                        {
+                            <a asp-area="" asp-controller="TODO" asp-action="TODO" asp-route-commentId="@comment.Id" style="float: right" class="comment-reply">
+                                <i class="far fa-check-circle"></i> Approve
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <span class="post-meta-cats">
+                            Comment status:
+                            <font color="green" size="2"><b>@comment.CommentStatus.ToString()</b></font>
+                        </span>
+                    }
                     <p>@Html.Raw(comment.Content)</p>
                     <div class="text-right weight-600">
-                        <a asp-area="" asp-controller="Comment" asp-action="DeleteById" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left" class="comment-reply">
-                            <i class="fas fa-trash-alt"></i> Delete
+                        @if (comment.ApplicationUser.UserName == User.Identity.Name || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                        {
+                            <a asp-area="" asp-controller="Comment" asp-action="DeleteById" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left" class="comment-reply">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        }
+                        <a class="comment-reply" onclick="showAddCommentForm('@comment.Id')">
+                            <i class="fa fa-mail-reply"></i> Reply
                         </a>
-                        <a class="comment-reply" onclick="showAddCommentForm('@comment.Id')"><i class="fa fa-mail-reply"></i> Reply</a>
                     </div>
                 </div>
             </div>
@@ -246,7 +271,7 @@
 
                     <div class="gap-30"></div>
 
-                    @if (this.User.Identity.IsAuthenticated)
+                    @if (this.User.Identity.IsAuthenticated && Model.PostStatus == PostStatus.Approved)
                     {
                         <button style="float: right" type="button" class="btn btn-info" onclick="showAddCommentForm(0)"><i class="far fa-comment"></i> Add Comment</button>
                     }

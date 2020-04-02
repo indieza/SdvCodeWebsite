@@ -9,6 +9,7 @@ namespace SdvCode.Models.Blog
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
     public class Comment
@@ -29,6 +30,9 @@ namespace SdvCode.Models.Blog
         public DateTime CreatedOn { get; set; }
 
         public DateTime UpdatedOn { get; set; }
+
+        [Required]
+        public CommentStatus CommentStatus { get; set; }
 
         [Required]
         [ForeignKey(nameof(ApplicationUser))]

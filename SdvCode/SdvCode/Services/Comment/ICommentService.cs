@@ -3,6 +3,8 @@
 
 namespace SdvCode.Services.Comment
 {
+    using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,9 +12,14 @@ namespace SdvCode.Services.Comment
 
     public interface ICommentService
     {
-        Task<bool> Create(string postId, string userId, string content, string parentId);
+        Task<bool> Create(string postId, ApplicationUser user, string content, string parentId);
 
         bool IsInPostId(string parentId, string postId);
+
         Task<bool> DeleteCommentById(string commentId);
+
+        Task<Post> ExtractCurrentPost(string postId);
+
+        Task<bool> IsParentCommentApproved(string parentId);
     }
 }

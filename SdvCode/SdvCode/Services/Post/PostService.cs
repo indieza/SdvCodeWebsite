@@ -10,6 +10,7 @@ namespace SdvCode.Services.Post
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
@@ -20,11 +21,13 @@ namespace SdvCode.Services.Post
     public class PostService : IPostService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly AddCyclicActivity cyclicActivity;
 
-        public PostService(ApplicationDbContext db)
+        public PostService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
             this.cyclicActivity = new AddCyclicActivity(this.db);
         }
 
@@ -56,7 +59,38 @@ namespace SdvCode.Services.Post
         public async Task<PostViewModel> ExtractCurrentPost(string id, ApplicationUser user)
         {
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
-            post.Comments = this.db.Comments.Where(x => x.PostId == post.Id).OrderBy(x => x.CreatedOn).ToList();
+
+            if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()))
+            {
+                post.Comments = this.db.Comments.Where(x => x.PostId == post.Id).OrderBy(x => x.CreatedOn).ToList();
+            }
+            else
+            {
+                var targetComments = this.db.Comments
+                    .Where(x => x.PostId == post.Id)
+                    .OrderBy(x => x.CreatedOn)
+                    .ToList();
+                List<Comment> comments = new List<Comment>();
+
+                foreach (var comment in targetComments)
+                {
+                    if (comment.CommentStatus == CommentStatus.Pending && comment.ApplicationUserId == user.Id)
+                    {
+                        comments.Add(comment);
+                    }
+                    else
+                    {
+                        if (comment.CommentStatus == CommentStatus.Approved)
+                        {
+                            comments.Add(comment);
+                        }
+                    }
+                }
+
+                post.Comments = comments;
+            }
+
             foreach (var comment in post.Comments)
             {
                 comment.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == comment.ApplicationUserId);

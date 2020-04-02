@@ -7,30 +7,45 @@ namespace SdvCode.Services.Comment
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
 
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public CommentService(ApplicationDbContext db)
+        public CommentService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
 
-        public async Task<bool> Create(string postId, string userId, string content, string parentId)
+        public async Task<bool> Create(string postId, ApplicationUser user, string content, string parentId)
         {
             var comment = new Comment
             {
                 Content = content,
                 ParentCommentId = parentId,
                 PostId = postId,
-                ApplicationUserId = userId,
+                ApplicationUserId = user.Id,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow,
             };
+
+            if (await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()))
+            {
+                comment.CommentStatus = CommentStatus.Pending;
+            }
+            else
+            {
+                comment.CommentStatus = CommentStatus.Approved;
+            }
 
             await this.db.Comments.AddAsync(comment);
             await this.db.SaveChangesAsync();
@@ -62,6 +77,17 @@ namespace SdvCode.Services.Comment
             }
 
             return false;
+        }
+
+        public async Task<bool> IsParentCommentApproved(string parentId)
+        {
+            var comment = await this.db.Comments.FirstOrDefaultAsync(x => x.Id == parentId);
+            return comment.CommentStatus == CommentStatus.Approved ? true : false;
+        }
+
+        public async Task<Post> ExtractCurrentPost(string postId)
+        {
+            return await this.db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
         }
 
         private async Task RemoveChildren(string i)

@@ -68,6 +68,25 @@ namespace SdvCode.Constraints
             return false;
         }
 
+        public async Task<bool> IsInCommentRole(ApplicationUser user, string id)
+        {
+            var comment = this.db.Comments.FirstOrDefault(x => x.Id == id);
+
+            if (comment != null)
+            {
+                if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
+                    await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
+                    comment.ApplicationUserId == user.Id)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
         public async Task<bool> IsPostApproved(string id, ApplicationUser user)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
