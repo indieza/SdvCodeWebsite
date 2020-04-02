@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using SdvCode.Constraints;
-using SdvCode.Models.User;
-using SdvCode.Services.Comment;
-using SdvCode.ViewModels.Comment;
-
-namespace SdvCode.Controllers
+﻿namespace SdvCode.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
+    using SdvCode.Models.User;
+    using SdvCode.Services.Comment;
+    using SdvCode.ViewModels.Comment;
+
     public class CommentController : Controller
     {
         private readonly ICommentService commentsService;
@@ -57,6 +57,22 @@ namespace SdvCode.Controllers
             }
 
             return this.RedirectToAction("Index", "Post", new { id = input.PostId });
+        }
+
+        public async Task<IActionResult> DeleteById(string commentId, string postId)
+        {
+            bool isDeleted = await this.commentsService.DeleteCommentById(commentId);
+
+            if (isDeleted)
+            {
+                this.TempData["Success"] = SuccessMessages.SuccessfullyDeletePostComment;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("Index", "Post", new { id = postId });
         }
     }
 }

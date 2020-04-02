@@ -9,7 +9,7 @@
 @{
     ViewData["Title"] = Model.Title;
 
-    void DisplayComments(string parentId)
+    async Task DisplayComments(string parentId)
     {
         var comments = this.Model.Comments.Where(x => x.ParentCommentId == parentId);
         if (!comments.Any())
@@ -20,19 +20,33 @@
         @foreach (var comment in comments)
         {
             <div class="comment">
-                <img class="comment-avatar pull-left" alt="avatar" src=@comment.ApplicationUser.ImageUrl>
+                @if (comment.ApplicationUser.ImageUrl == null)
+                {
+                    <img class="comment-avatar pull-left" alt="avatar" src="~/images/NoAvatarProfileImage.png">
+                }
+                else
+                {
+                    <img class="comment-avatar pull-left" alt="avatar" src=@comment.ApplicationUser.ImageUrl>
+                }
                 <div class="comment-body">
-                    <h4 class="comment-author">@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName</h4>
+                    <h4 class="comment-author">
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.ApplicationUser.UserName">
+                            @comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName
+                        </a>
+                    </h4>
                     <div class="comment-date">@comment.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy dddd HH:mm tt")</div>
                     <p>@Html.Raw(comment.Content)</p>
                     <div class="text-right weight-600">
+                        <a asp-area="" asp-controller="Comment" asp-action="DeleteById" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left" class="comment-reply">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
                         <a class="comment-reply" onclick="showAddCommentForm('@comment.Id')"><i class="fa fa-mail-reply"></i> Reply</a>
                     </div>
                 </div>
             </div>
             <ul class="comments-reply">
                 <li>
-                    @{ DisplayComments(comment.Id); }
+                    @{ await DisplayComments(comment.Id); }
                 </li>
             </ul>
         }
@@ -234,14 +248,14 @@
 
                     @if (this.User.Identity.IsAuthenticated)
                     {
-                        <button style="float: right" type="button" class="btn btn-info" onclick="showAddCommentForm(0)"><i class="fa fa-plus"></i>&nbsp; Comment</button>
+                        <button style="float: right" type="button" class="btn btn-info" onclick="showAddCommentForm(0)"><i class="far fa-comment"></i> Add Comment</button>
                     }
 
                     <!-- Post comment start -->
                     <div id="post-comments">
-                        <div class="comments-counter"><a href="#">@Model.Comments.Count Comments found</a></div>
+                        <div class="comments-counter"><a>@Model.Comments.Count Comments found</a></div>
                         <ul class="comments-list">
-                            @{ DisplayComments(null); }
+                            @{ await DisplayComments(null); }
                         </ul>
                     </div>
 

@@ -13,5 +13,6 @@ namespace SdvCode.Services.Comment
         Task<bool> Create(string postId, string userId, string content, string parentId);
 
         bool IsInPostId(string parentId, string postId);
+        Task<bool> DeleteCommentById(string commentId);
     }
 }

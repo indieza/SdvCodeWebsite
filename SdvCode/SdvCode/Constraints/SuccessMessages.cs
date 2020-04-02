@@ -70,5 +70,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyUnannedBlogPost = "You successfully unbanned the blog post.";
 
         public const string SuccessfullyAddedPostComment = "You successfully posted a new blog post comment.";
+
+        public const string SuccessfullyDeletePostComment = "You successfully delete the blog post comment.";
     }
 }

@@ -7,6 +7,7 @@ namespace SdvCode.Services.Comment
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
 
@@ -43,6 +44,34 @@ namespace SdvCode.Services.Comment
                 .Select(x => x.PostId).FirstOrDefault();
 
             return commentPostId == postId;
+        }
+
+        public async Task<bool> DeleteCommentById(string commentId)
+        {
+            var comment = await this.db.Comments.FirstOrDefaultAsync(m => m.Id == commentId);
+            if (comment != null)
+            {
+                if (comment != null)
+                {
+                    await this.RemoveChildren(comment.Id);
+                    this.db.Comments.Remove(comment);
+                }
+
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        private async Task RemoveChildren(string i)
+        {
+            var children = await this.db.Comments.Where(c => c.ParentCommentId == i).ToListAsync();
+            foreach (var child in children)
+            {
+                await this.RemoveChildren(child.Id);
+                this.db.Comments.Remove(child);
+            }
         }
     }
 }
