@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Services.PendingPosts;
-    using SdvCode.Areas.Administration.ViewModels.PendingPostsViewModel;
+    using SdvCode.Areas.Administration.ViewModels.PendingPostsViewModels;
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]
