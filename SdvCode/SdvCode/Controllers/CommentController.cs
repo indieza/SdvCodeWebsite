@@ -21,7 +21,6 @@ namespace SdvCode.Controllers
         private readonly ICommentService commentsService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
-        private readonly GlobalUserValidator userValidator;
 
         public CommentController(
             ICommentService commentsService,
@@ -31,7 +30,6 @@ namespace SdvCode.Controllers
             this.commentsService = commentsService;
             this.userManager = userManager;
             this.db = db;
-            this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
 
         [Authorize]
@@ -56,14 +54,14 @@ namespace SdvCode.Controllers
             }
 
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.commentsService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Post", new { id = input.PostId });
             }
 
-            var isInRole = await this.userValidator.IsInBlogRole(currentUser);
+            var isInRole = await this.commentsService.IsInBlogRole(currentUser);
             if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
@@ -86,7 +84,7 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> DeleteById(string commentId, string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isInCommentRole = await this.userValidator.IsInCommentRole(currentUser, commentId);
+            var isInCommentRole = await this.commentsService.IsInCommentRole(currentUser, commentId);
 
             if (!isInCommentRole)
             {

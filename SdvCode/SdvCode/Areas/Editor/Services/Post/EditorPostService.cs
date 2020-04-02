@@ -10,8 +10,9 @@ namespace SdvCode.Areas.Editor.Services.Post
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Data;
     using SdvCode.Models.Enums;
+    using SdvCode.Services;
 
-    public class EditorPostService : IEditorPostService
+    public class EditorPostService : BaseBlogValidationService, IEditorPostService
     {
         private readonly ApplicationDbContext db;
         private readonly List<UserActionsType> actionsForBann = new List<UserActionsType>()
@@ -29,6 +30,7 @@ namespace SdvCode.Areas.Editor.Services.Post
         };
 
         public EditorPostService(ApplicationDbContext db)
+            : base(db)
         {
             this.db = db;
         }

@@ -15,7 +15,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.ViewModels.Post.InputModels;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public interface IBlogService
+    public interface IBlogService : IBaseBlogValidationService
     {
         Task<ICollection<string>> ExtractAllCategoryNames();
 

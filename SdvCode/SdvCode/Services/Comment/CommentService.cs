@@ -16,12 +16,13 @@ namespace SdvCode.Services.Comment
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
-    public class CommentService : ICommentService
+    public class CommentService : BaseBlogValidationService, ICommentService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
 
         public CommentService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+            : base(userManager, db)
         {
             this.db = db;
             this.userManager = userManager;

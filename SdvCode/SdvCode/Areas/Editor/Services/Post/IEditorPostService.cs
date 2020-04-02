@@ -7,8 +7,9 @@ namespace SdvCode.Areas.Editor.Services.Post
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Services;
 
-    public interface IEditorPostService
+    public interface IEditorPostService : IBaseBlogValidationService
     {
         Task<bool> ApprovePost(string id);
 

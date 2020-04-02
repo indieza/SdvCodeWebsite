@@ -8,7 +8,7 @@ namespace SdvCode.Services.Comment
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
 
-    public interface ICommentService
+    public interface ICommentService : IBaseBlogValidationService
     {
         Task<Tuple<string, string>> Create(string postId, ApplicationUser user, string content, string parentId);
 

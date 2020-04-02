@@ -24,7 +24,6 @@ namespace SdvCode.Areas.Editor.Controllers
         private readonly IEditCategoryService editCategoryService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IHttpContextAccessor contextAccessor;
-        private readonly GlobalUserValidator userValidator;
 
         public EditCategoryController(
             IEditCategoryService editCategoryService,
@@ -34,7 +33,6 @@ namespace SdvCode.Areas.Editor.Controllers
             this.editCategoryService = editCategoryService;
             this.userManager = userManager;
             this.contextAccessor = contextAccessor;
-            this.userValidator = new GlobalUserValidator(this.userManager);
         }
 
         [Route("Editor/EditCategory/{id?}")]
@@ -42,7 +40,7 @@ namespace SdvCode.Areas.Editor.Controllers
         public async Task<IActionResult> Index(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.editCategoryService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
@@ -58,7 +56,7 @@ namespace SdvCode.Areas.Editor.Controllers
         public async Task<IActionResult> Index(EditCategoryInputModel model)
         {
             var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.editCategoryService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;

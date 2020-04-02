@@ -12,12 +12,14 @@ namespace SdvCode.Areas.Editor.Services.Category
     using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Data;
     using SdvCode.Models.User;
+    using SdvCode.Services;
 
-    public class EditCategoryService : IEditCategoryService
+    public class EditCategoryService : BaseBlogValidationService, IEditCategoryService
     {
         private readonly ApplicationDbContext db;
 
         public EditCategoryService(ApplicationDbContext db)
+            : base(db)
         {
             this.db = db;
         }

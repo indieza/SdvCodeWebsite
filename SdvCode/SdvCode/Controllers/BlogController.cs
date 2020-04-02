@@ -28,7 +28,6 @@ namespace SdvCode.Controllers
         private readonly IBlogService blogService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
-        private readonly GlobalUserValidator userValidator;
 
         public BlogController(
             IBlogService blogService,
@@ -38,7 +37,6 @@ namespace SdvCode.Controllers
             this.blogService = blogService;
             this.userManager = userManager;
             this.db = db;
-            this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
 
         [Route("Blog/{page?}/{search?}")]
@@ -66,14 +64,14 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> CreatePost()
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.blogService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInBlogRole(currentUser);
+            var isInRole = await this.blogService.IsInBlogRole(currentUser);
             if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
@@ -94,14 +92,14 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> DeletePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.blogService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInPostRole(currentUser, id);
+            var isInRole = await this.blogService.IsInPostRole(currentUser, id);
             if (isInRole == false)
             {
                 this.TempData["Error"] = ErrorMessages.NotInDeletePostRoles;
@@ -135,21 +133,21 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> EditPost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.blogService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlocked(id, currentUser);
+            var isApproved = await this.blogService.IsPostBlocked(id, currentUser);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotEditBlogPost;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInPostRole(currentUser, id);
+            var isInRole = await this.blogService.IsInPostRole(currentUser, id);
             if (!isInRole)
             {
                 this.TempData["Error"] = ErrorMessages.NotInEditPostRoles;
@@ -168,7 +166,7 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> EditPost(EditPostInputModel model)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.blogService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;

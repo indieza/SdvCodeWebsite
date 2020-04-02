@@ -12,7 +12,7 @@ namespace SdvCode.Services.Post
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public interface IPostService
+    public interface IPostService : IBaseBlogValidationService
     {
         Task<Tuple<string, string>> LikePost(string id, ApplicationUser user);
 

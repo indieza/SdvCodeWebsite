@@ -18,13 +18,14 @@ namespace SdvCode.Services.Post
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public class PostService : IPostService
+    public class PostService : BaseBlogValidationService, IPostService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly AddCyclicActivity cyclicActivity;
 
         public PostService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+            : base(userManager, db)
         {
             this.db = db;
             this.userManager = userManager;

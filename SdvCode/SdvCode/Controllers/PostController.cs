@@ -24,7 +24,6 @@ namespace SdvCode.Controllers
         private readonly IPostService postService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
-        private readonly GlobalUserValidator userValidator;
 
         public PostController(
             IPostService postService,
@@ -34,7 +33,6 @@ namespace SdvCode.Controllers
             this.postService = postService;
             this.userManager = userManager;
             this.db = db;
-            this.userValidator = new GlobalUserValidator(this.userManager, this.db);
         }
 
         [Authorize]
@@ -42,21 +40,21 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> Index(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.postService.IsBlocked(currentUser);
             if (isBlocked == true)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInBlogRole(currentUser);
+            var isInRole = await this.postService.IsInBlogRole(currentUser);
             if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostApproved(id, currentUser);
+            var isApproved = await this.postService.IsPostApproved(id, currentUser);
             if (!isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.NotApprovedBlogPost;
@@ -72,21 +70,21 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> LikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.postService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInBlogRole(currentUser);
+            var isInRole = await this.postService.IsInBlogRole(currentUser);
             if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlockedOrPending(id);
+            var isApproved = await this.postService.IsPostBlockedOrPending(id);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotLikeNotApprovedBlogPost;
@@ -103,21 +101,21 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> UnlikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.postService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isInRole = await this.userValidator.IsInBlogRole(currentUser);
+            var isInRole = await this.postService.IsInBlogRole(currentUser);
             if (!isInRole)
             {
                 this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlockedOrPending(id);
+            var isApproved = await this.postService.IsPostBlockedOrPending(id);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotUnlikeNotApprovedBlogPost;
@@ -132,14 +130,14 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> AddToFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.postService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlockedOrPending(id);
+            var isApproved = await this.postService.IsPostBlockedOrPending(id);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost;
@@ -154,14 +152,14 @@ namespace SdvCode.Controllers
         public async Task<IActionResult> RemoveFromFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.userValidator.IsBlocked(currentUser);
+            var isBlocked = this.postService.IsBlocked(currentUser);
             if (isBlocked)
             {
                 this.TempData["Error"] = ErrorMessages.YouAreBlock;
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isApproved = await this.userValidator.IsPostBlockedOrPending(id);
+            var isApproved = await this.postService.IsPostBlockedOrPending(id);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost;
