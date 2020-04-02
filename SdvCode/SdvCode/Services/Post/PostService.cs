@@ -31,7 +31,7 @@ namespace SdvCode.Services.Post
             this.cyclicActivity = new AddCyclicActivity(this.db);
         }
 
-        public async Task<bool> AddToFavorite(ApplicationUser user, string id)
+        public async Task<Tuple<string, string>> AddToFavorite(ApplicationUser user, string id)
         {
             if (user != null && id != null)
             {
@@ -50,10 +50,10 @@ namespace SdvCode.Services.Post
                 }
 
                 await this.db.SaveChangesAsync();
-                return true;
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyAddedToFavorite);
             }
 
-            return false;
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
         public async Task<PostViewModel> ExtractCurrentPost(string id, ApplicationUser user)
@@ -136,7 +136,7 @@ namespace SdvCode.Services.Post
             return model;
         }
 
-        public async Task<bool> LikePost(string id, ApplicationUser user)
+        public async Task<Tuple<string, string>> LikePost(string id, ApplicationUser user)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
             post.ApplicationUser = this.db.Users.Find(post.ApplicationUserId);
@@ -176,13 +176,13 @@ namespace SdvCode.Services.Post
                 }
 
                 await this.db.SaveChangesAsync();
-                return true;
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyLikePost);
             }
 
-            return false;
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
-        public async Task<bool> RemoveFromFavorite(ApplicationUser user, string id)
+        public async Task<Tuple<string, string>> RemoveFromFavorite(ApplicationUser user, string id)
         {
             if (user != null && id != null)
             {
@@ -192,17 +192,17 @@ namespace SdvCode.Services.Post
                 }
                 else
                 {
-                    return false;
+                    return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
                 }
 
                 await this.db.SaveChangesAsync();
-                return true;
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyRemoveFromFavorite);
             }
 
-            return false;
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
-        public async Task<bool> UnlikePost(string id, ApplicationUser user)
+        public async Task<Tuple<string, string>> UnlikePost(string id, ApplicationUser user)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
             post.ApplicationUser = this.db.Users.Find(post.ApplicationUserId);
@@ -224,12 +224,10 @@ namespace SdvCode.Services.Post
                 }
 
                 await this.db.SaveChangesAsync();
-                return true;
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyUnlikePost);
             }
-            else
-            {
-                return false;
-            }
+
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
     }
 }

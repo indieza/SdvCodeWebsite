@@ -3,17 +3,18 @@
 
 namespace SdvCode.Services.Comment
 {
+    using System;
     using System.Threading.Tasks;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
 
     public interface ICommentService
     {
-        Task<bool> Create(string postId, ApplicationUser user, string content, string parentId);
+        Task<Tuple<string, string>> Create(string postId, ApplicationUser user, string content, string parentId);
 
         bool IsInPostId(string parentId, string postId);
 
-        Task<bool> DeleteCommentById(string commentId);
+        Task<Tuple<string, string>> DeleteCommentById(string commentId);
 
         Task<Post> ExtractCurrentPost(string postId);
 

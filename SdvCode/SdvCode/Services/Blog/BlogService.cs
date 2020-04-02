@@ -5,6 +5,7 @@ namespace SdvCode.Services.Blog
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
@@ -50,7 +51,7 @@ namespace SdvCode.Services.Blog
             this.nonCyclicActivity = new AddNonCyclicActivity(this.db);
         }
 
-        public async Task<bool> CreatePost(CreatePostIndexModel model, ApplicationUser user)
+        public async Task<Tuple<string, string>> CreatePost(CreatePostIndexModel model, ApplicationUser user)
         {
             var category = this.db.Categories.FirstOrDefault(x => x.Name == model.PostInputModel.CategoryName);
             var contentWithoutTags = Regex.Replace(model.PostInputModel.SanitizeContent, "<.*?>", string.Empty);
@@ -109,7 +110,7 @@ namespace SdvCode.Services.Blog
             }
 
             this.db.Posts.Add(post);
-            this.db.BlockedPosts.Add(new Models.Blog.BlockedPost
+            this.db.BlockedPosts.Add(new BlockedPost
             {
                 ApplicationUserId = post.ApplicationUserId,
                 PostId = post.Id,
@@ -118,10 +119,10 @@ namespace SdvCode.Services.Blog
 
             this.nonCyclicActivity.AddUserAction(user, post, UserActionsType.CreatePost, user);
             await this.db.SaveChangesAsync();
-            return true;
+            return Tuple.Create("Success", SuccessMessages.SuccessfullyCreatedPost);
         }
 
-        public async Task<bool> DeletePost(string id, ApplicationUser user)
+        public async Task<Tuple<string, string>> DeletePost(string id, ApplicationUser user)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
             var userPost = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
@@ -145,17 +146,19 @@ namespace SdvCode.Services.Blog
                 }
 
                 var postActivities = this.db.UserActions.Where(x => x.PostId == post.Id);
+                var comments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
+                this.db.Comments.RemoveRange(comments);
                 this.db.UserActions.RemoveRange(postActivities);
                 this.db.Posts.Remove(post);
 
                 await this.db.SaveChangesAsync();
-                return true;
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyDeletePost);
             }
 
-            return false;
+            return Tuple.Create("Error", SuccessMessages.SuccessfullyDeletePost);
         }
 
-        public async Task<bool> EditPost(EditPostInputModel model, ApplicationUser user)
+        public async Task<Tuple<string, string>> EditPost(EditPostInputModel model, ApplicationUser user)
         {
             var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
             var contentWithoutTags = Regex.Replace(model.SanitizeContent, "<.*?>", string.Empty);
@@ -215,10 +218,10 @@ namespace SdvCode.Services.Blog
 
                 this.db.Posts.Update(post);
                 await this.db.SaveChangesAsync();
-                return true;
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyEditedPost);
             }
 
-            return false;
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
         public async Task<ICollection<string>> ExtractAllCategoryNames()

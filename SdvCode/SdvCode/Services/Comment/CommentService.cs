@@ -10,6 +10,7 @@ namespace SdvCode.Services.Comment
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
@@ -26,7 +27,7 @@ namespace SdvCode.Services.Comment
             this.userManager = userManager;
         }
 
-        public async Task<bool> Create(string postId, ApplicationUser user, string content, string parentId)
+        public async Task<Tuple<string, string>> Create(string postId, ApplicationUser user, string content, string parentId)
         {
             var comment = new Comment
             {
@@ -51,7 +52,7 @@ namespace SdvCode.Services.Comment
 
             await this.db.Comments.AddAsync(comment);
             await this.db.SaveChangesAsync();
-            return true;
+            return Tuple.Create("Success", SuccessMessages.SuccessfullyAddedPostComment);
         }
 
         public bool IsInPostId(string commentId, string postId)
@@ -63,7 +64,7 @@ namespace SdvCode.Services.Comment
             return commentPostId == postId;
         }
 
-        public async Task<bool> DeleteCommentById(string commentId)
+        public async Task<Tuple<string, string>> DeleteCommentById(string commentId)
         {
             var comment = await this.db.Comments.FirstOrDefaultAsync(m => m.Id == commentId);
             if (comment != null)
@@ -75,10 +76,10 @@ namespace SdvCode.Services.Comment
                 }
 
                 await this.db.SaveChangesAsync();
-                return true;
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyDeletePostComment);
             }
 
-            return false;
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
         public async Task<bool> IsParentCommentApproved(string parentId)

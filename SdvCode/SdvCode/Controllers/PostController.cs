@@ -93,17 +93,8 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isLiked = await this.postService.LikePost(id, currentUser);
-
-            if (isLiked)
-            {
-                this.TempData["Success"] = SuccessMessages.SuccessfullyLikePost;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
+            var tuple = await this.postService.LikePost(id, currentUser);
+            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
@@ -133,17 +124,8 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isUnliked = await this.postService.UnlikePost(id, currentUser);
-
-            if (isUnliked)
-            {
-                this.TempData["Success"] = SuccessMessages.SuccessfullyUnlikePost;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
+            var tuple = await this.postService.UnlikePost(id, currentUser);
+            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
@@ -164,16 +146,8 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isAdded = await this.postService.AddToFavorite(currentUser, id);
-            if (isAdded)
-            {
-                this.TempData["Success"] = SuccessMessages.SuccessfullyAddedToFavorite;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
+            var tuple = await this.postService.AddToFavorite(currentUser, id);
+            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
@@ -194,16 +168,8 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isRemoved = await this.postService.RemoveFromFavorite(currentUser, id);
-            if (isRemoved)
-            {
-                this.TempData["Success"] = SuccessMessages.SuccessfullyRemoveFromFavorite;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
+            var tuple = await this.postService.RemoveFromFavorite(currentUser, id);
+            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id });
         }
     }

@@ -14,14 +14,14 @@ namespace SdvCode.Services.Post
 
     public interface IPostService
     {
-        Task<bool> LikePost(string id, ApplicationUser user);
+        Task<Tuple<string, string>> LikePost(string id, ApplicationUser user);
 
         Task<PostViewModel> ExtractCurrentPost(string id, ApplicationUser user);
 
-        Task<bool> UnlikePost(string id, ApplicationUser user);
+        Task<Tuple<string, string>> UnlikePost(string id, ApplicationUser user);
 
-        Task<bool> AddToFavorite(ApplicationUser user, string id);
+        Task<Tuple<string, string>> AddToFavorite(ApplicationUser user, string id);
 
-        Task<bool> RemoveFromFavorite(ApplicationUser user, string id);
+        Task<Tuple<string, string>> RemoveFromFavorite(ApplicationUser user, string id);
     }
 }

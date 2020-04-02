@@ -4,6 +4,7 @@
 namespace SdvCode.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Authorization;
@@ -107,16 +108,8 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            var isDeleted = await this.blogService.DeletePost(id, currentUser);
-            if (isDeleted == true)
-            {
-                this.TempData["Success"] = SuccessMessages.SuccessfullyDeletePost;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
+            var tuple = await this.blogService.DeletePost(id, currentUser);
+            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Blog");
         }
 
@@ -127,12 +120,8 @@ namespace SdvCode.Controllers
             var currentUser = await this.userManager.GetUserAsync(this.User);
             if (this.ModelState.IsValid)
             {
-                bool isAdded = await this.blogService.CreatePost(model, currentUser);
-
-                if (isAdded)
-                {
-                    this.TempData["Success"] = SuccessMessages.SuccessfullyCreatedPost;
-                }
+                var tuple = await this.blogService.CreatePost(model, currentUser);
+                this.TempData[tuple.Item1] = tuple.Item2;
             }
             else
             {
@@ -186,17 +175,8 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isEdited = await this.blogService.EditPost(model, currentUser);
-
-            if (isEdited)
-            {
-                this.TempData["Success"] = SuccessMessages.SuccessfullyEditedPost;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
+            var tuple = await this.blogService.EditPost(model, currentUser);
+            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { model.Id });
         }
     }

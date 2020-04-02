@@ -77,18 +77,9 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Post", new { id = input.PostId });
             }
 
-            bool isCreated = await this.commentsService
+            var tuple = await this.commentsService
                 .Create(input.PostId, currentUser, input.SanitizedContent, parentId);
-
-            if (isCreated)
-            {
-                this.TempData["Success"] = SuccessMessages.SuccessfullyAddedPostComment;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
+            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id = input.PostId });
         }
 
@@ -102,17 +93,8 @@ namespace SdvCode.Controllers
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            bool isDeleted = await this.commentsService.DeleteCommentById(commentId);
-
-            if (isDeleted)
-            {
-                this.TempData["Success"] = SuccessMessages.SuccessfullyDeletePostComment;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
+            var tuple = await this.commentsService.DeleteCommentById(commentId);
+            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id = postId });
         }
     }
