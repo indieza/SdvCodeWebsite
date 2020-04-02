@@ -63,12 +63,12 @@
                                 <td width="100">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a asp-area="Editor" asp-controller="Post" asp-action="ApprovePost" asp-route-id="@item.Comment.Post.Id" class="btn btn-info">
+                                            <a asp-area="Editor" asp-controller="Comment" asp-action="ApproveComment" asp-route-commentId="@item.Comment.Id" asp-route-postId="@item.Comment.PostId" class="btn btn-info">
                                                 <i class="fas fa-check"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-6">
-                                            <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@item.Comment.Post.Id" class="btn btn-danger">
+                                            <a asp-area="" asp-controller="Comment" asp-action="DeleteById" asp-route-commentId="@item.Comment.Id" asp-route-postId="@item.Comment.PostId" class="btn btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </div>
