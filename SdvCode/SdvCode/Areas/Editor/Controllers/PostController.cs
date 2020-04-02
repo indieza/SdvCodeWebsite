@@ -12,6 +12,7 @@ namespace SdvCode.Areas.Editor.Controllers
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Editor.Services;
+    using SdvCode.Areas.Editor.Services.Post;
     using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.Services.Post;

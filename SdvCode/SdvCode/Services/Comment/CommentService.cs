@@ -38,13 +38,15 @@ namespace SdvCode.Services.Comment
                 UpdatedOn = DateTime.UtcNow,
             };
 
-            if (await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()))
+            if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
+                await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()))
             {
-                comment.CommentStatus = CommentStatus.Pending;
+                comment.CommentStatus = CommentStatus.Approved;
             }
             else
             {
-                comment.CommentStatus = CommentStatus.Approved;
+                comment.CommentStatus = CommentStatus.Pending;
             }
 
             await this.db.Comments.AddAsync(comment);

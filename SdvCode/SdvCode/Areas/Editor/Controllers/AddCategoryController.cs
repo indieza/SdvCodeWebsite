@@ -10,6 +10,7 @@ namespace SdvCode.Areas.Editor.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Editor.Services;
+    using SdvCode.Areas.Editor.Services.Category;
     using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Constraints;
 

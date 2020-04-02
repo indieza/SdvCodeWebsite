@@ -43,7 +43,7 @@
                         </span>
                         @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
                         {
-                            <a asp-area="" asp-controller="TODO" asp-action="TODO" asp-route-commentId="@comment.Id" style="float: right" class="comment-reply">
+                            <a asp-area="Editor" asp-controller="Comment" asp-action="ApproveComment" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: right" class="comment-reply">
                                 <i class="far fa-check-circle"></i> Approve
                             </a>
                         }

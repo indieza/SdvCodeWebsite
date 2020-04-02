@@ -43,7 +43,7 @@ namespace SdvCode.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 20, nullable: true)
+                    Name = table.Column<string>(maxLength: 20, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -57,7 +57,7 @@ namespace SdvCode.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<int>(nullable: false),
-                    City = table.Column<string>(maxLength: 20, nullable: true)
+                    City = table.Column<string>(maxLength: 20, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -71,7 +71,7 @@ namespace SdvCode.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
-                    CountryId = table.Column<int>(nullable: false)
+                    CountryId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -92,7 +92,7 @@ namespace SdvCode.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
                     StateId = table.Column<int>(nullable: false),
-                    CountryId = table.Column<int>(nullable: false)
+                    CountryId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {

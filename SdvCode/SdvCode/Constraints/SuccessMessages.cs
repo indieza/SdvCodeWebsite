@@ -72,5 +72,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyAddedPostComment = "You successfully posted a new blog post comment.";
 
         public const string SuccessfullyDeletePostComment = "You successfully delete the blog post comment.";
+
+        public const string SuccessfullyApprovedComment = "You successfully approved the blog post comment.";
     }
 }

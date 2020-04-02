@@ -10,6 +10,7 @@ namespace SdvCode.Constraints
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
 
@@ -43,6 +44,9 @@ namespace SdvCode.Constraints
                     Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId),
                     Likes = post.Likes,
                     PostStatus = post.PostStatus,
+                    Comments = this.db.Comments
+                    .Where(x => x.PostId == post.Id && x.CommentStatus == CommentStatus.Approved)
+                    .ToList(),
                 };
 
                 if (user != null)

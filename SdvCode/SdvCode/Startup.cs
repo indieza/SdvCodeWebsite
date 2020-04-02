@@ -16,6 +16,9 @@ namespace SdvCode
     using Microsoft.Extensions.Hosting;
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Areas.Editor.Services;
+    using SdvCode.Areas.Editor.Services.Category;
+    using SdvCode.Areas.Editor.Services.Comment;
+    using SdvCode.Areas.Editor.Services.Post;
     using SdvCode.Areas.PrivateChat.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -135,6 +138,7 @@ namespace SdvCode
             services.AddTransient<IEditCategoryService, EditCategoryService>();
             services.AddTransient<IAddCategoryService, AddCategoryService>();
             services.AddTransient<IEditorPostService, EditorPostService>();
+            services.AddTransient<IEditorCommentService, EditorCommentService>();
             services.AddTransient<IPrivateChatService, PrivateChatService>();
             services.AddTransient<ICommentService, CommentService>();
 
