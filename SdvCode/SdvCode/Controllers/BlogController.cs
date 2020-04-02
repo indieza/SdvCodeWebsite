@@ -27,16 +27,13 @@ namespace SdvCode.Controllers
     {
         private readonly IBlogService blogService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext db;
 
         public BlogController(
             IBlogService blogService,
-            UserManager<ApplicationUser> userManager,
-            ApplicationDbContext db)
+            UserManager<ApplicationUser> userManager)
         {
             this.blogService = blogService;
             this.userManager = userManager;
-            this.db = db;
         }
 
         [Route("Blog/{page?}/{search?}")]

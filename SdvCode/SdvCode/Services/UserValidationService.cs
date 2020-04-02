@@ -12,17 +12,17 @@ namespace SdvCode.Services
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
-    public class BaseBlogValidationService : IBaseBlogValidationService
+    public abstract class UserValidationService : IUserValidationService
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
 
-        public BaseBlogValidationService(ApplicationDbContext db)
+        protected UserValidationService(ApplicationDbContext db)
         {
             this.db = db;
         }
 
-        public BaseBlogValidationService(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
+        protected UserValidationService(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
         {
             this.userManager = userManager;
             this.db = db;

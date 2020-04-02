@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class ErrorMessages
@@ -62,5 +64,7 @@ namespace SdvCode.Constraints
         public const string CannotCommentNotApprovedBlogPost = "You cannot comment not approved post.";
 
         public const string CannotCommentNotApprovedComment = "You cannot comment not approved comment.";
+
+        public const string TagDoesNotExist = "\"{0}\" tag does not exist.";
     }
 }

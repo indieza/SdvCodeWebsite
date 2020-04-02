@@ -10,7 +10,7 @@ namespace SdvCode.Areas.Editor.Services.Category
     using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Services;
 
-    public interface IEditCategoryService : IBaseBlogValidationService
+    public interface IEditCategoryService : IUserValidationService
     {
         Task<EditCategoryInputModel> ExtractCategoryById(string id);
 

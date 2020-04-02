@@ -9,7 +9,7 @@ namespace SdvCode.Services
     using System.Threading.Tasks;
     using SdvCode.Models.User;
 
-    public interface IBaseBlogValidationService
+    public interface IUserValidationService
     {
         bool IsBlocked(ApplicationUser user);
 

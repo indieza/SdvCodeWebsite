@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Areas.Administration.Services
+namespace SdvCode.Areas.Administration.Services.BlogAddons
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +10,10 @@ namespace SdvCode.Areas.Administration.Services
 
     public interface IBlogAddonsService
     {
-        Task<bool> CreateCategory(string name, string description);
+        Task<Tuple<string, string>> CreateCategory(string name, string description);
 
-        Task<bool> CreateTag(string name);
+        Task<Tuple<string, string>> CreateTag(string name);
+
+        Task<Tuple<string, string>> RemoveTag(string name);
     }
 }

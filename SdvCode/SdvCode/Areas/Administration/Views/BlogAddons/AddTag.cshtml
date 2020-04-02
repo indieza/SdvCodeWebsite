@@ -34,4 +34,24 @@
         </div>
     </form>
     <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Remove existing tag</h1>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-xl-6 col-md-9 mb-4">
+                <input name="Name" class="form-control" placeholder="Name" required />
+            </div>
+            <div class="col-xl-4 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="BlogAddons" asp-action="RemoveTag" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Remove Tag</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
 </div>

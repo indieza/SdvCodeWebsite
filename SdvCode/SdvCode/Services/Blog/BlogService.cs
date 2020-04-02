@@ -26,7 +26,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.ViewModels.Post.InputModels;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public class BlogService : BaseBlogValidationService, IBlogService
+    public class BlogService : UserValidationService, IBlogService
     {
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;

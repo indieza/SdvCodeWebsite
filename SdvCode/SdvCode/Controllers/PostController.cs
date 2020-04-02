@@ -23,16 +23,13 @@ namespace SdvCode.Controllers
     {
         private readonly IPostService postService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext db;
 
         public PostController(
             IPostService postService,
-            UserManager<ApplicationUser> userManager,
-            ApplicationDbContext db)
+            UserManager<ApplicationUser> userManager)
         {
             this.postService = postService;
             this.userManager = userManager;
-            this.db = db;
         }
 
         [Authorize]

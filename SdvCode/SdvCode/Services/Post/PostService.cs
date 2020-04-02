@@ -18,7 +18,7 @@ namespace SdvCode.Services.Post
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public class PostService : BaseBlogValidationService, IPostService
+    public class PostService : UserValidationService, IPostService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;

@@ -35,16 +35,9 @@ namespace SdvCode.Areas.Editor.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                bool isAdded = await this.addCategoryService.CreateCategory(model.Name, model.Description = model.SanitizedDescription);
-
-                if (isAdded)
-                {
-                    this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedCategory, model.Name);
-                }
-                else
-                {
-                    this.TempData["Error"] = string.Format(ErrorMessages.CategoryAlreadyExist, model.Name);
-                }
+                var tuple = await this.addCategoryService
+                    .CreateCategory(model.Name, model.Description = model.SanitizedDescription);
+                this.TempData[tuple.Item1] = tuple.Item2;
             }
             else
             {

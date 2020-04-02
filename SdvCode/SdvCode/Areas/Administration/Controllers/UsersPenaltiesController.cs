@@ -7,6 +7,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Administration.Services.UserPenalties;
     using SdvCode.Areas.Administration.ViewModels.UsersPenalties;
     using SdvCode.Constraints;
 

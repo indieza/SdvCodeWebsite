@@ -12,6 +12,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Options;
     using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Administration.Services.Dashboard;
     using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;

@@ -14,7 +14,7 @@ namespace SdvCode.Areas.Editor.Services.Category
     using SdvCode.Models.User;
     using SdvCode.Services;
 
-    public class EditCategoryService : BaseBlogValidationService, IEditCategoryService
+    public class EditCategoryService : UserValidationService, IEditCategoryService
     {
         private readonly ApplicationDbContext db;
 

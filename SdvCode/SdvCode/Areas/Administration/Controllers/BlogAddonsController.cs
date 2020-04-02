@@ -10,6 +10,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels;
     using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Constraints;
@@ -42,16 +43,9 @@ namespace SdvCode.Areas.Administration.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                bool isAdded = await this.addonsService.CreateCategory(model.Name, model.Description = model.SanitizedDescription);
-
-                if (isAdded)
-                {
-                    this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedCategory, model.Name);
-                }
-                else
-                {
-                    this.TempData["Error"] = string.Format(ErrorMessages.CategoryAlreadyExist, model.Name);
-                }
+                var tuple = await this.addonsService
+                    .CreateCategory(model.Name, model.Description = model.SanitizedDescription);
+                this.TempData[tuple.Item1] = tuple.Item2;
             }
             else
             {
@@ -67,16 +61,25 @@ namespace SdvCode.Areas.Administration.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                bool isAdded = await this.addonsService.CreateTag(model.Name);
+                var tuple = await this.addonsService.CreateTag(model.Name);
+                this.TempData[tuple.Item1] = tuple.Item2;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
 
-                if (isAdded)
-                {
-                    this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyAddedTag, model.Name);
-                }
-                else
-                {
-                    this.TempData["Error"] = string.Format(ErrorMessages.TagAlreadyExist, model.Name);
-                }
+            return this.RedirectToAction("AddTag", "BlogAddons");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public async Task<IActionResult> RemoveTag(string name)
+        {
+            if (name != null)
+            {
+                var tuple = await this.addonsService.RemoveTag(name);
+                this.TempData[tuple.Item1] = tuple.Item2;
             }
             else
             {

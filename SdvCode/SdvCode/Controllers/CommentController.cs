@@ -20,16 +20,13 @@ namespace SdvCode.Controllers
     {
         private readonly ICommentService commentsService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext db;
 
         public CommentController(
             ICommentService commentsService,
-            UserManager<ApplicationUser> userManager,
-            ApplicationDbContext db)
+            UserManager<ApplicationUser> userManager)
         {
             this.commentsService = commentsService;
             this.userManager = userManager;
-            this.db = db;
         }
 
         [Authorize]

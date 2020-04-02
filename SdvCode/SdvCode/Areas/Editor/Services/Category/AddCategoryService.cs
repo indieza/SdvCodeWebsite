@@ -20,11 +20,11 @@ namespace SdvCode.Areas.Editor.Services.Category
             this.db = db;
         }
 
-        public async Task<bool> CreateCategory(string name, string description)
+        public async Task<Tuple<string, string>> CreateCategory(string name, string description)
         {
             if (this.db.Categories.Any(x => x.Name.ToLower() == name.ToLower()))
             {
-                return false;
+                return Tuple.Create("Error", string.Format(ErrorMessages.CategoryAlreadyExist, name));
             }
 
             var category = new Category
@@ -37,7 +37,7 @@ namespace SdvCode.Areas.Editor.Services.Category
 
             this.db.Categories.Add(category);
             await this.db.SaveChangesAsync();
-            return true;
+            return Tuple.Create("Success", string.Format(SuccessMessages.SuccessfullyAddedCategory, name));
         }
     }
 }

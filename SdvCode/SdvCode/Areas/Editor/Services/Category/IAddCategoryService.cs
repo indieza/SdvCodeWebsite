@@ -10,6 +10,6 @@ namespace SdvCode.Areas.Editor.Services.Category
 
     public interface IAddCategoryService
     {
-        Task<bool> CreateCategory(string name, string description);
+        Task<Tuple<string, string>> CreateCategory(string name, string description);
     }
 }
