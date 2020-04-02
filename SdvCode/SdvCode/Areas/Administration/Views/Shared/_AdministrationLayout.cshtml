@@ -78,7 +78,7 @@
                 <hr class="sidebar-divider">
             </li>
             <li class="sidebar-heading">
-                Addons
+                Blog
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -94,15 +94,15 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span>
+                <a asp-area="Administration" asp-controller="PendingPosts" asp-action="Index" class="nav-link">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Pending Posts</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span>
+                <a asp-area="Administration" asp-controller="PendingComments" asp-action="Index" class="nav-link">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Pending Comments</span>
                 </a>
             </li>
             <li>

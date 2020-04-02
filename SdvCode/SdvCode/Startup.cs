@@ -18,6 +18,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.Services.Dashboard;
     using SdvCode.Areas.Administration.Services.DbUsage;
+    using SdvCode.Areas.Administration.Services.PendingPosts;
     using SdvCode.Areas.Administration.Services.UserPenalties;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Areas.Editor.Services.Category;
@@ -124,25 +125,28 @@ namespace SdvCode
 
             services.AddTransient<ApplicationDbContext>();
 
+            // Register Administration Services
+            services.AddTransient<IDashboardService, DashboardService>();
+            services.AddTransient<IDbUsageService, DbUsageService>();
+            services.AddTransient<IBlogAddonsService, BlogAddonsService>();
+            services.AddTransient<IUsersPenaltiesService, UsersPenaltiesService>();
+            services.AddTransient<IEditCategoryService, EditCategoryService>();
+            services.AddTransient<IAddCategoryService, AddCategoryService>();
+            services.AddTransient<IEditorPostService, EditorPostService>();
+            services.AddTransient<IEditorCommentService, EditorCommentService>();
+            services.AddTransient<IPendingPostsService, PendingPostsService>();
+
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IProfileService, ProfileService>();
-            services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IHomeService, HomeService>();
-            services.AddTransient<IDbUsageService, DbUsageService>();
-            services.AddTransient<IBlogAddonsService, BlogAddonsService>();
-            services.AddTransient<IUsersPenaltiesService, UsersPenaltiesService>();
             services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IBlogComponentService, BlogComponentService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ITagService, TagService>();
             services.AddTransient<IUserPostsService, UserPostsService>();
-            services.AddTransient<IEditCategoryService, EditCategoryService>();
-            services.AddTransient<IAddCategoryService, AddCategoryService>();
-            services.AddTransient<IEditorPostService, EditorPostService>();
-            services.AddTransient<IEditorCommentService, EditorCommentService>();
             services.AddTransient<IPrivateChatService, PrivateChatService>();
             services.AddTransient<ICommentService, CommentService>();
 

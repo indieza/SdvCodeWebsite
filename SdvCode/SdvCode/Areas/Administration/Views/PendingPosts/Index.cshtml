@@ -1,0 +1,74 @@
+﻿@using SdvCode.Areas.Administration.ViewModels.PendingPostsViewModel
+@{
+    ViewData["Title"] = "Blog addons";
+}
+@model ICollection<AdminPendingPostViewModel>
+
+<link href="~/administration/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<partial name="_TempDataPartial" />
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Pending Posts</h1>
+    <hr />
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Blog pending posts</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>User</th>
+                            <th>Created On</th>
+                            <th>ML Prediction</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>User</th>
+                            <th>Created On</th>
+                            <th>ML Prediction</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@item.Post.Id">
+                                        @item.Post.Title
+                                    </a>
+                                </td>
+                                <td>@item.Post.ShortContent</td>
+                                <td>
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-Username="@item.User.UserName">
+                                        @item.User.UserName
+                                    </a>
+                                </td>
+                                <td>@item.Post.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</td>
+                                <td>@item.MlPrediction</td>
+                                <td>
+                                    <a>Approve</a>
+                                    <a>Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/administration/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/administration/js/demo/datatables-demo.js"></script>
+}
