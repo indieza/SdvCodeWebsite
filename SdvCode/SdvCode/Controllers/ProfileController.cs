@@ -44,6 +44,7 @@ namespace SdvCode.Controllers
                 HasAdmin = hasAdmin,
                 CreatedPosts = await this.profileService.TakeCreatedPostsCountByUsername(username),
                 LikedPosts = await this.profileService.TakeLikedPostsCountByUsername(username),
+                CommentsCount = await this.profileService.TakeCommentsCountByUsername(username),
             };
 
             // if (tab == 0)

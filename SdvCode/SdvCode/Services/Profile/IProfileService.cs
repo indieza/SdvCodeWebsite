@@ -31,5 +31,7 @@ namespace SdvCode.Services.Profile
         Task<int> TakeCreatedPostsCountByUsername(string username);
 
         Task<int> TakeLikedPostsCountByUsername(string username);
+
+        Task<int> TakeCommentsCountByUsername(string username);
     }
 }

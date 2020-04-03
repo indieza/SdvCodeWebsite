@@ -20,5 +20,7 @@ namespace SdvCode.ViewModels.Profile
         public int CreatedPosts { get; set; }
 
         public int LikedPosts { get; set; }
+
+        public int CommentsCount { get; set; }
     }
 }

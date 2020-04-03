@@ -238,5 +238,10 @@ namespace SdvCode.Services.Profile
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             return await this.db.PostsLikes.CountAsync(x => x.UserId == user.Id && x.IsLiked == true);
         }
+
+        public async Task<int> TakeCommentsCountByUsername(string username)
+        {
+            return await this.db.Comments.CountAsync(x => x.ApplicationUser.UserName == username);
+        }
     }
 }
