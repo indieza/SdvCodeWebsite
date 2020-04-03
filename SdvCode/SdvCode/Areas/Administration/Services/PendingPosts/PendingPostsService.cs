@@ -44,6 +44,7 @@ namespace SdvCode.Areas.Administration.Services.PendingPosts
                     Post = post,
                     User = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId),
                     MlPrediction = prediction.Prediction,
+                    MlScore = (decimal)prediction.Score[0],
                 });
             }
 

@@ -24,6 +24,7 @@
                             <th>User</th>
                             <th>Created On</th>
                             <th>ML Prediction</th>
+                            <th>ML Score</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -34,6 +35,7 @@
                             <th>User</th>
                             <th>Created On</th>
                             <th>ML Prediction</th>
+                            <th>ML Score</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
@@ -61,6 +63,9 @@
                                 <td width="200px">@item.Post.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</td>
                                 <td style="text-align: center">
                                     <span class="badge badge-info" style="font-size: 15px">@item.MlPrediction</span>
+                                </td>
+                                <td>
+                                    @item.MlScore
                                 </td>
                                 <td width="100">
                                     <div class="row">

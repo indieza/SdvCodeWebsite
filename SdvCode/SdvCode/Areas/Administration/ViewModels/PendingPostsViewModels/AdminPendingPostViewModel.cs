@@ -13,5 +13,7 @@ namespace SdvCode.Areas.Administration.ViewModels.PendingPostsViewModels
         public ApplicationUser User { get; set; }
 
         public string MlPrediction { get; set; }
+
+        public decimal MlScore { get; set; }
     }
 }
