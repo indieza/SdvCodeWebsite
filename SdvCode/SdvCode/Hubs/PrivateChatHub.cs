@@ -27,11 +27,11 @@ namespace SdvCode.Hubs
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, groupName);
             var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
             var toId = toUser.Id;
-            var toImage = toUser.ImageUrl ?? GlobalConstants.NoAvatarImageLocation;
+            var toImage = toUser.ImageUrl;
 
             var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
             var fromId = fromUser.Id;
-            var fromImage = fromUser.ImageUrl ?? GlobalConstants.NoAvatarImageLocation;
+            var fromImage = fromUser.ImageUrl;
 
             var targetGroup = await this.db.Groups
                 .FirstOrDefaultAsync(x => x.Name.ToLower() == groupName.ToLower());
@@ -69,11 +69,11 @@ namespace SdvCode.Hubs
         {
             var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
             var toId = toUser.Id;
-            var toImage = toUser.ImageUrl ?? GlobalConstants.NoAvatarImageLocation;
+            var toImage = toUser.ImageUrl;
 
             var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
             var fromId = fromUser.Id;
-            var fromImage = fromUser.ImageUrl ?? GlobalConstants.NoAvatarImageLocation;
+            var fromImage = fromUser.ImageUrl;
 
             this.db.ChatMessages.Add(new ChatMessage
             {
@@ -93,7 +93,7 @@ namespace SdvCode.Hubs
         {
             var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
             var fromId = fromUser.Id;
-            var fromImage = fromUser.ImageUrl ?? GlobalConstants.NoAvatarImageLocation;
+            var fromImage = fromUser.ImageUrl;
 
             this.db.ChatMessages.Add(new ChatMessage
             {

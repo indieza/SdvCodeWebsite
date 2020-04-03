@@ -52,14 +52,7 @@
                     </div>
 
                     <div class="user">
-                        @if (user.ImageUrl == null)
-                        {
-                            <img src="~/images/NoAvatarProfileImage.png">
-                        }
-                        else
-                        {
-                            <img src=@user.ImageUrl>
-                        }
+                        <img src=@user.ImageUrl>
                         <p>@user.FirstName @user.LastName</p>
                         <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" class="allUsersUsername">@@@user.Username</a></p>
                         @if (User.Identity.Name == user.Username)

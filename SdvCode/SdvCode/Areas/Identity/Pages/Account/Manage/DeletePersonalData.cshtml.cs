@@ -90,6 +90,9 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 .Where(x => x.PersonId == user.Id || x.FollowerId == user.Id)
                 .ToList();
 
+            var likes = this.db.PostsLikes.Where(x => x.UserId == user.Id).ToList();
+
+            this.db.PostsLikes.RemoveRange(likes);
             this.db.FollowUnfollows.RemoveRange(followFollowed);
             this.db.Posts.RemoveRange(posts);
             await this.db.SaveChangesAsync();

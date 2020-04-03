@@ -470,14 +470,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="team wow slideInLeft">
                         <div class="img-hexagon">
-                            @if (admin.ImageUrl == null)
-                            {
-                                <img src="~/images/NoAvatarProfileImage.png" alt="profile">
-                            }
-                            else
-                            {
-                                <img src=@admin.ImageUrl alt="profile">
-                            }
+                            <img src=@admin.ImageUrl alt="profile">
                             <span class="img-top"></span>
                             <span class="img-bottom"></span>
                         </div>
@@ -522,14 +515,7 @@
                 {
                     <div class="item">
                         <div class="testimonial-thumb">
-                            @if (admin.ImageUrl == null)
-                            {
-                                <img src="~/images/NoAvatarProfileImage.png" alt="profile">
-                            }
-                            else
-                            {
-                                <img src=@admin.ImageUrl alt="profile">
-                            }
+                            <img src=@admin.ImageUrl alt="profile">
                         </div>
                         <div class="testimonial-content">
                             <p class="testimonial-text">

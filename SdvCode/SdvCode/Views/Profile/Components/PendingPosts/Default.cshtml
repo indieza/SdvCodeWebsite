@@ -22,14 +22,7 @@
                 </a>
             }
             <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Username" class="pull-left">
-                @if (post.ImageUrl == null)
-                {
-                    <img src="~/images/NoAvatarProfileImage.png" alt="User Avatar" class="media-object avatar">
-                }
-                else
-                {
-                    <img src=@post.ImageUrl alt="Avatar" class="media-object avatar">
-                }
+                <img src=@post.ImageUrl alt="Avatar" class="media-object avatar">
             </a>
             <div class="media-body">
                 <p class="activity-title">

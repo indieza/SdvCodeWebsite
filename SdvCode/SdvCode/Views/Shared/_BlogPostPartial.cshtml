@@ -75,15 +75,7 @@
                     @foreach (var liker in Model.Likers)
                     {
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@liker.UserName">
-                            @if (liker.ImageUrl == null)
-                            {
-                                <img class="likerAvatar" src="~/images/NoAvatarProfileImage.png" alt="avatar">
-                            }
-                            else
-                            {
-                                <img class="likerAvatar" src=@liker.ImageUrl alt="avatar">
-                            }
-
+                            <img class="likerAvatar" src=@liker.ImageUrl alt="avatar">
                             @liker.FirstName @liker.LastName (@@@liker.UserName)
                         </a>
                     }

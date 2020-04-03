@@ -20,14 +20,7 @@
         @foreach (var comment in comments)
         {
             <div class="comment">
-                @if (comment.ApplicationUser.ImageUrl == null)
-                {
-                    <img class="comment-avatar pull-left" alt="avatar" src="~/images/NoAvatarProfileImage.png">
-                }
-                else
-                {
-                    <img class="comment-avatar pull-left" alt="avatar" src=@comment.ApplicationUser.ImageUrl>
-                }
+                <img class="comment-avatar pull-left" alt="avatar" src=@comment.ApplicationUser.ImageUrl>
                 <div class="comment-body">
                     <h4 class="comment-author">
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.ApplicationUser.UserName">
@@ -134,15 +127,7 @@
                                     @foreach (var liker in Model.Likers)
                                     {
                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@liker.UserName">
-                                            @if (liker.ImageUrl == null)
-                                            {
-                                                <img class="likerAvatar" src="~/images/NoAvatarProfileImage.png" alt="avatar">
-                                            }
-                                            else
-                                            {
-                                                <img class="likerAvatar" src=@liker.ImageUrl alt="avatar">
-                                            }
-
+                                            <img class="likerAvatar" src=@liker.ImageUrl alt="avatar">
                                             @liker.FirstName @liker.LastName (@@@liker.UserName)
                                         </a>
                                     }
@@ -214,14 +199,7 @@
                     <!-- Author info start -->
                     <div class="about-author">
                         <div class="author-img pull-left">
-                            @if (Model.ApplicationUser.ImageUrl == null)
-                            {
-                                <img src="~/images/NoAvatarProfileImage.png" alt="avatar" />
-                            }
-                            else
-                            {
-                                <img src=@Model.ApplicationUser.ImageUrl alt="avatar" />
-                            }
+                            <img src=@Model.ApplicationUser.ImageUrl alt="avatar" />
                         </div>
                         <div class="author-info">
                             <h3>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName<span>@Model.ApplicationUser.CountryCode.ToString().Split("_")[0], @Model.ApplicationUser.City</span></h3>
