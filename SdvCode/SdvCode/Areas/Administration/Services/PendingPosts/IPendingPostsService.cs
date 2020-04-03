@@ -7,10 +7,13 @@ namespace SdvCode.Areas.Administration.Services.PendingPosts
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.ML;
     using SdvCode.Areas.Administration.ViewModels.PendingPostsViewModels;
+    using SdvCode.MlModels.PostModels;
 
     public interface IPendingPostsService
     {
-        Task<ICollection<AdminPendingPostViewModel>> ExtractAllPendingPosts();
+        Task<ICollection<AdminPendingPostViewModel>> ExtractAllPendingPosts(
+            PredictionEnginePool<BlogPostModelInput, BlogPostModelOutput> predictionEngine);
     }
 }

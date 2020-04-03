@@ -3,11 +3,11 @@
 
 namespace SdvCode.Areas.Administration.Services.PendingComments
 {
-    using SdvCode.Areas.Administration.ViewModels.PendingCommentsViewModels;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Areas.Administration.ViewModels.PendingCommentsViewModels;
 
     public interface IPendingCommentsService
     {

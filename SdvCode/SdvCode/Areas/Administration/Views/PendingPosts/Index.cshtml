@@ -59,7 +59,9 @@
                                     </a>
                                 </td>
                                 <td width="200px">@item.Post.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</td>
-                                <td>@item.MlPrediction</td>
+                                <td style="text-align: center">
+                                    <span class="badge badge-info" style="font-size: 15px">@item.MlPrediction</span>
+                                </td>
                                 <td width="100">
                                     <div class="row">
                                         <div class="col-md-6">

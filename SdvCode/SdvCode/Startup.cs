@@ -14,6 +14,7 @@ namespace SdvCode
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.ML;
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.Services.Dashboard;
@@ -29,6 +30,7 @@ namespace SdvCode
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
+    using SdvCode.MlModels.PostModels;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;
     using SdvCode.Services.Blog;
@@ -159,6 +161,10 @@ namespace SdvCode
             services.AddTransient<IProfileFavoritesService, ProfileFavoritesService>();
             services.AddTransient<IProfilePendingPostsService, ProfilePendingPostsService>();
             services.AddTransient<IProfileBannedPostsService, ProfileBannedPostsService>();
+
+            // Register ML Models
+            services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()
+                .FromFile("MlModels/PostModels/BlogPostMLModel.zip");
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));
