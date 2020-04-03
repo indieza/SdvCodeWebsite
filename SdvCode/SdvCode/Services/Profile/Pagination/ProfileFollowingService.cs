@@ -26,7 +26,9 @@ namespace SdvCode.Services.Profile.Pagination
         public async Task<List<FollowingViewModel>> ExtractFollowing(ApplicationUser user, string currentUserId)
         {
             List<FollowingViewModel> allFollowing = new List<FollowingViewModel>();
-            var followers = this.db.FollowUnfollows.Where(x => x.FollowerId == user.Id && x.IsFollowed == true).ToList();
+            var followers = this.db.FollowUnfollows
+                .Where(x => x.FollowerId == user.Id && x.IsFollowed == true)
+                .ToList();
 
             foreach (var item in followers)
             {

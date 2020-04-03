@@ -28,14 +28,7 @@
             <div class="col-md-4">
                 <div class="profile-info-left">
                     <div class="text-center">
-                        @if (Model.ApplicationUser.ImageUrl == null)
-                        {
-                            <img src="~/images/NoAvatarProfileImage.png" alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
-                        }
-                        else
-                        {
-                            <img src=@Model.ApplicationUser.ImageUrl alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
-                        }
+                        <img src=@Model.ApplicationUser.ImageUrl alt="Avatar" class="avatar img-circle" style="width: 270px; height: 250px">
                         <h2>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName</h2>
                         @if (Model.ApplicationUser.IsBlocked == true)
                         {
