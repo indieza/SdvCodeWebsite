@@ -17,5 +17,7 @@ namespace SdvCode.Areas.Administration.ViewModels.PendingCommentsViewModels
         public ApplicationUser User { get; set; }
 
         public string MlPrediction { get; set; }
+
+        public decimal MlScore { get; set; }
     }
 }

@@ -24,6 +24,7 @@
                             <th>User</th>
                             <th>Created On</th>
                             <th>ML Prediction</th>
+                            <th>ML Score</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -34,6 +35,7 @@
                             <th>User</th>
                             <th>Created On</th>
                             <th>ML Prediction</th>
+                            <th>ML Score</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
@@ -59,7 +61,17 @@
                                     </a>
                                 </td>
                                 <td width="200px">@item.Comment.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</td>
-                                <td>@item.MlPrediction</td>
+                                <td style="text-align: center">
+                                    <span class="badge badge-info" style="font-size: 15px">@item.MlPrediction</span>
+                                </td>
+                                <td>
+                                    @{
+                                        string style = item.MlScore <= 0.70m ? "font-weight: bold; color: red;" : string.Empty;
+                                    }
+                                    <div style="@style">
+                                        @item.MlScore
+                                    </div>
+                                </td>
                                 <td width="100">
                                     <div class="row">
                                         <div class="col-md-6">

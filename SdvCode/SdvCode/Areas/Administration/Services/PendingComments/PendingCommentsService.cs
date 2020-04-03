@@ -6,10 +6,13 @@ namespace SdvCode.Areas.Administration.Services.PendingComments
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.ML;
     using SdvCode.Areas.Administration.ViewModels.PendingCommentsViewModels;
     using SdvCode.Data;
+    using SdvCode.MlModels.CommentModels;
     using SdvCode.Models.Enums;
 
     public class PendingCommentsService : IPendingCommentsService
@@ -21,18 +24,26 @@ namespace SdvCode.Areas.Administration.Services.PendingComments
             this.db = db;
         }
 
-        public async Task<ICollection<AdminPendingCommentViewModel>> ExtractAllPendingComments()
+        public async Task<ICollection<AdminPendingCommentViewModel>> ExtractAllPendingComments(
+            PredictionEnginePool<BlogCommentModelInput, BlogCommentModelOutput> predictionEngine)
         {
             var pendingComments = this.db.Comments.Where(x => x.CommentStatus == CommentStatus.Pending).ToList();
             List<AdminPendingCommentViewModel> model = new List<AdminPendingCommentViewModel>();
 
             foreach (var comment in pendingComments)
             {
+                var contentWithoutTags = Regex.Replace(comment.Content, "<.*?>", string.Empty);
+                var prediction = predictionEngine.Predict(new BlogCommentModelInput
+                {
+                    Content = contentWithoutTags,
+                });
+
                 var targetComment = new AdminPendingCommentViewModel
                 {
                     Comment = comment,
                     User = await this.db.Users.FirstOrDefaultAsync(x => x.Id == comment.ApplicationUserId),
-                    MlPrediction = "Test Prediction",
+                    MlPrediction = prediction.Prediction,
+                    MlScore = (decimal)prediction.Score[0],
                 };
 
                 targetComment.Comment.Post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == comment.PostId);

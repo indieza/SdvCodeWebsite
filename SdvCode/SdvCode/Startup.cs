@@ -30,6 +30,7 @@ namespace SdvCode
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
+    using SdvCode.MlModels.CommentModels;
     using SdvCode.MlModels.PostModels;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;
@@ -165,6 +166,8 @@ namespace SdvCode
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()
                 .FromFile("MlModels/PostModels/BlogPostMLModel.zip");
+            services.AddPredictionEnginePool<BlogCommentModelInput, BlogCommentModelOutput>()
+                .FromFile("MlModels/CommentModels/BlogCommentMLModel.zip");
 
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));
