@@ -6,6 +6,7 @@ namespace SdvCode.Services.Blog
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -27,6 +28,47 @@ namespace SdvCode.Services.Blog
         {
             this.db = db;
             this.userManager = userManager;
+        }
+
+        public async Task<ICollection<RecentCommentsViewModel>> ExtractRecentComments(ApplicationUser currentUser)
+        {
+            List<Comment> comments = new List<Comment>();
+            if (currentUser != null &&
+                (await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
+            {
+                comments = this.db.Comments
+                    .Where(x => x.CommentStatus == CommentStatus.Pending || x.CommentStatus == CommentStatus.Approved)
+                    .OrderByDescending(x => x.UpdatedOn)
+                    .ToList();
+            }
+            else
+            {
+                comments = this.db.Comments
+                    .Where(x => x.CommentStatus != CommentStatus.Pending)
+                    .OrderByDescending(x => x.UpdatedOn)
+                    .ToList();
+            }
+
+            var recentComments = new List<RecentCommentsViewModel>();
+
+            foreach (var comment in comments.Take(35))
+            {
+                var user = this.db.Users.FirstOrDefault(x => x.Id == comment.ApplicationUserId);
+                var contentWithoutTags = Regex.Replace(comment.Content, "<.*?>", string.Empty);
+                recentComments.Add(new RecentCommentsViewModel
+                {
+                    User = user,
+                    CreatedOn = comment.CreatedOn,
+                    CommentStatus = comment.CommentStatus,
+                    ShortContent = contentWithoutTags.Length < 95 ?
+                        contentWithoutTags :
+                        $"{contentWithoutTags.Substring(0, 95)}...",
+                    PostId = comment.PostId,
+                });
+            }
+
+            return recentComments;
         }
 
         public async Task<List<RecentPostsViewModel>> ExtractRecentPosts(ApplicationUser currentUser)
@@ -65,7 +107,7 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return recentPosts.ToList();
+            return recentPosts;
         }
 
         public async Task<List<TopCategoriesViewModel>> ExtractTopCategories()
@@ -123,7 +165,7 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return topPosts.ToList();
+            return topPosts;
         }
 
         public async Task<List<TopTagsViewModel>> ExtractTopTags()

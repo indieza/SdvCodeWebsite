@@ -20,5 +20,6 @@ namespace SdvCode.Services.Blog
         Task<List<TopPostsViewModel>> ExtractTopPosts(ApplicationUser user);
 
         Task<List<RecentPostsViewModel>> ExtractRecentPosts(ApplicationUser user);
+        Task<ICollection<RecentCommentsViewModel>> ExtractRecentComments(ApplicationUser currentUser);
     }
 }

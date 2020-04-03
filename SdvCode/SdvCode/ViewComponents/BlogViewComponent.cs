@@ -33,6 +33,7 @@ namespace SdvCode.ViewComponents
                 TopCategories = await this.blogComponentService.ExtractTopCategories(),
                 TopPosts = await this.blogComponentService.ExtractTopPosts(currentUser),
                 TopTags = await this.blogComponentService.ExtractTopTags(),
+                RecentComments = await this.blogComponentService.ExtractRecentComments(currentUser),
                 Search = search,
             };
 

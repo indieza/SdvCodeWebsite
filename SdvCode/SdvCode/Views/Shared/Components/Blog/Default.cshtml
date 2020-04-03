@@ -136,45 +136,50 @@
                     </ul>
                 </div>
                 <div class="tab-pane" id="comments-tab">
-                    <ul class="posts-list unstyled clearfix">
-                        <li>
-                            <div class="posts-avator pull-left">
-                                <a href="#">
-                                    <img alt="img" src="~/images/blog/avator1.png">
-                                </a>
-                            </div>
-                            <div class="post-content">
-                                <h4 class="entry-title">
-                                    <a href="#">If you are going to use a passage  of Lorem Ipsum</a>
-                                </h4>
-                                <p class="post-meta">
-                                    <span class="post-meta-author">Posted by <a href="#"> John</a></span>
-                                    <span class="post-meta-date">
-                                        <a href="#"> <i class="fas fa-clock-o"></i> November 21</a>
-                                    </span>
-                                </p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
-                        <li>
-                            <div class="posts-avator pull-left">
-                                <a href="#">
-                                    <img alt="img" src="~/images/blog/avator2.jpg">
-                                </a>
-                            </div>
-                            <div class="post-content">
-                                <h4 class="entry-title">
-                                    <a href="#">you need to be sure there isn’t anything embarra</a>
-                                </h4>
-                                <p class="post-meta">
-                                    <span class="post-meta-author">Posted by <a href="#"> Tina</a></span>
-                                    <span class="post-meta-date">
-                                        <a href="#"> <i class="fas fa-clock-o"></i> October 18</a>
-                                    </span>
-                                </p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
+                    <ul class="posts-list unstyled clearfix" style="height: 250px; overflow: auto">
+                        @foreach (var comment in Model.RecentComments)
+                        {
+                            <li>
+                                <div class="posts-avator pull-left">
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.User.UserName">
+                                        <img alt="avatar" src=@comment.User.ImageUrl>
+                                    </a>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="entry-title">
+                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@comment.PostId">
+                                            @Html.Raw(@comment.ShortContent)
+                                        </a>
+                                    </h4>
+                                    <p class="post-meta">
+                                        <span class="post-meta-author">
+                                            by
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.User.UserName">
+                                                @comment.User.UserName
+                                            </a>
+                                        </span>
+                                        <span class="post-meta-date">
+                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@comment.PostId">
+                                                <i class="fas fa-clock-o"></i>
+                                                @comment.CreatedOn.ToLocalTime().ToString("MMMM dd")
+                                            </a>
+                                        </span>
+                                        <span class="post-meta-date">
+                                            Status:
+                                            @if (comment.CommentStatus == CommentStatus.Approved)
+                                            {
+                                                <font color="green" size="2"><b>@comment.CommentStatus.ToString()</b></font>
+                                            }
+                                            else
+                                            {
+                                                <font color="blue" size="2"><b>@comment.CommentStatus.ToString()</b></font>
+                                            }
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

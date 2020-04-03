@@ -19,5 +19,7 @@ namespace SdvCode.ViewModels.Blog.ViewModels
         public ICollection<TopTagsViewModel> TopTags { get; set; } = new HashSet<TopTagsViewModel>();
 
         public ICollection<TopPostsViewModel> TopPosts { get; set; } = new HashSet<TopPostsViewModel>();
+
+        public ICollection<RecentCommentsViewModel> RecentComments { get; set; } = new HashSet<RecentCommentsViewModel>();
     }
 }
