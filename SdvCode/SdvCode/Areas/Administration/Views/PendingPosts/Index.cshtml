@@ -65,7 +65,12 @@
                                     <span class="badge badge-info" style="font-size: 15px">@item.MlPrediction</span>
                                 </td>
                                 <td>
-                                    @item.MlScore
+                                    @{
+                                        string style = item.MlScore <= 0.80m ? "font-weight: bold; color: red;" : string.Empty;
+                                    }
+                                    <div style="@style">
+                                        @item.MlScore
+                                    </div>
                                 </td>
                                 <td width="100">
                                     <div class="row">
