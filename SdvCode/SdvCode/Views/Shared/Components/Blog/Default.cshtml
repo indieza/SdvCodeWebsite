@@ -152,6 +152,12 @@
                                         </a>
                                     </h4>
                                     <p class="post-meta">
+                                        <span class="post-meta-date">
+                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@comment.PostId">
+                                                <i class="fas fa-clock-o"></i>
+                                                @comment.CreatedOn.ToLocalTime().ToString("MMMM dd")
+                                            </a>
+                                        </span>
                                         <span class="post-meta-author">
                                             by
                                             <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.User.UserName">
@@ -159,13 +165,7 @@
                                             </a>
                                         </span>
                                         <span class="post-meta-date">
-                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@comment.PostId">
-                                                <i class="fas fa-clock-o"></i>
-                                                @comment.CreatedOn.ToLocalTime().ToString("MMMM dd")
-                                            </a>
-                                        </span>
-                                        <span class="post-meta-date">
-                                            Status:
+                                            <i class="fas fa-info-circle"></i>
                                             @if (comment.CommentStatus == CommentStatus.Approved)
                                             {
                                                 <font color="green" size="2"><b>@comment.CommentStatus.ToString()</b></font>
