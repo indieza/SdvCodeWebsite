@@ -33,48 +33,56 @@ namespace SdvCode.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {
-            var parentId = input.ParentId == "0" ? null : input.ParentId;
-            if (parentId != null)
+            if (this.ModelState.IsValid)
             {
-                if (!this.commentsService.IsInPostId(parentId, input.PostId))
+                var parentId = input.ParentId == "0" ? null : input.ParentId;
+                if (parentId != null)
                 {
-                    this.TempData["Error"] = ErrorMessages.DontMakeBullshits;
+                    if (!this.commentsService.IsInPostId(parentId, input.PostId))
+                    {
+                        this.TempData["Error"] = ErrorMessages.DontMakeBullshits;
+                        return this.RedirectToAction("Index", "Post", new { id = input.PostId });
+                    }
+
+                    bool isParentApproved = await this.commentsService.IsParentCommentApproved(parentId);
+                    if (!isParentApproved)
+                    {
+                        this.TempData["Error"] = ErrorMessages.CannotCommentNotApprovedComment;
+                        return this.RedirectToAction("Index", "Post", new { id = input.PostId });
+                    }
+                }
+
+                var currentUser = await this.userManager.GetUserAsync(this.User);
+                var isBlocked = this.commentsService.IsBlocked(currentUser);
+                if (isBlocked)
+                {
+                    this.TempData["Error"] = ErrorMessages.YouAreBlock;
                     return this.RedirectToAction("Index", "Post", new { id = input.PostId });
                 }
 
-                bool isParentApproved = await this.commentsService.IsParentCommentApproved(parentId);
-                if (!isParentApproved)
+                var isInRole = await this.commentsService.IsInBlogRole(currentUser);
+                if (!isInRole)
                 {
-                    this.TempData["Error"] = ErrorMessages.CannotCommentNotApprovedComment;
+                    this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
                     return this.RedirectToAction("Index", "Post", new { id = input.PostId });
                 }
-            }
 
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.commentsService.IsBlocked(currentUser);
-            if (isBlocked)
+                Post currentPost = await this.commentsService.ExtractCurrentPost(input.PostId);
+                if (currentPost.PostStatus == PostStatus.Banned || currentPost.PostStatus == PostStatus.Pending)
+                {
+                    this.TempData["Error"] = ErrorMessages.CannotCommentNotApprovedBlogPost;
+                    return this.RedirectToAction("Index", "Post", new { id = input.PostId });
+                }
+
+                var tuple = await this.commentsService
+                    .Create(input.PostId, currentUser, input.SanitizedContent, parentId);
+                this.TempData[tuple.Item1] = tuple.Item2;
+            }
+            else
             {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Post", new { id = input.PostId });
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            var isInRole = await this.commentsService.IsInBlogRole(currentUser);
-            if (!isInRole)
-            {
-                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
-                return this.RedirectToAction("Index", "Post", new { id = input.PostId });
-            }
-
-            Post currentPost = await this.commentsService.ExtractCurrentPost(input.PostId);
-            if (currentPost.PostStatus == PostStatus.Banned || currentPost.PostStatus == PostStatus.Pending)
-            {
-                this.TempData["Error"] = ErrorMessages.CannotCommentNotApprovedBlogPost;
-                return this.RedirectToAction("Index", "Post", new { id = input.PostId });
-            }
-
-            var tuple = await this.commentsService
-                .Create(input.PostId, currentUser, input.SanitizedContent, parentId);
-            this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id = input.PostId });
         }
 

@@ -3,6 +3,7 @@
 
 namespace SdvCode.ViewModels.Comment
 {
+    using System.ComponentModel.DataAnnotations;
     using Ganss.XSS;
 
     public class CreateCommentInputModel
@@ -11,6 +12,7 @@ namespace SdvCode.ViewModels.Comment
 
         public string ParentId { get; set; }
 
+        [Required]
         public string Content { get; set; }
 
         public string SanitizedContent => new HtmlSanitizer().Sanitize(this.Content);
