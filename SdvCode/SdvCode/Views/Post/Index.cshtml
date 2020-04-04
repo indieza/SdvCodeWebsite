@@ -21,6 +21,9 @@
         {
             <div class="comment">
                 <img class="comment-avatar pull-left" alt="avatar" src=@comment.ApplicationUser.ImageUrl>
+                <button onclick="toggleButtonColr(this)" type="button" class="btn btn-success btn-comment-circle" data-toggle="collapse" data-target="#@comment.Id">
+                    <i class="fas fa-caret-down"></i>
+                </button>
                 <div class="comment-body">
                     <h4 class="comment-author">
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.ApplicationUser.UserName">
@@ -62,11 +65,9 @@
                     </div>
                 </div>
             </div>
-            <ul class="comments-reply">
-                <li>
-                    @{ await DisplayComments(comment.Id); }
-                </li>
-            </ul>
+            <div class="comments-reply collapse" id="@comment.Id">
+                @{ await DisplayComments(comment.Id); }
+            </div>
         }
     }
 }
