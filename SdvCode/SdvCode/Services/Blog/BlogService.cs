@@ -263,7 +263,7 @@ namespace SdvCode.Services.Blog
 
             if (search == null)
             {
-                posts = await this.db.Posts.OrderByDescending(x => x.CreatedOn).ToListAsync();
+                posts = await this.db.Posts.OrderByDescending(x => x.UpdatedOn).ToListAsync();
             }
             else
             {
@@ -271,8 +271,23 @@ namespace SdvCode.Services.Blog
                     .Where(x => EF.Functions.Contains(x.Title, search) ||
                     EF.Functions.Contains(x.ShortContent, search) ||
                     EF.Functions.Contains(x.Content, search))
-                    .OrderByDescending(x => x.CreatedOn)
+                    .OrderByDescending(x => x.UpdatedOn)
                     .ToListAsync();
+            }
+
+            if (user != null &&
+                (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString())))
+            {
+                posts = posts
+                    .Where(x => x.PostStatus == PostStatus.Banned || x.PostStatus == PostStatus.Pending || x.PostStatus == PostStatus.Approved)
+                    .ToList();
+            }
+            else
+            {
+                posts = posts
+                    .Where(x => x.PostStatus != PostStatus.Banned && x.PostStatus != PostStatus.Pending)
+                    .ToList();
             }
 
             List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
