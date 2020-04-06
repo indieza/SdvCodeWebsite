@@ -11,24 +11,38 @@
     using SdvCode.Controllers;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile;
+    using SdvCode.ViewModels.Users.ViewModels;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
     using Xunit;
 
-    public class FollowTests
+    public class AllUsersTests
     {
         [Fact]
-        public async Task FollowShouldReturnCorrectRedirect()
+        public async Task AllUsersShouldReturnCorrectViewModel()
         {
             var currentUser = new ApplicationUser { UserName = "gogo" };
             var user = new ApplicationUser { UserName = "pesho" };
 
             var mockService = new Mock<IProfileService>();
-            mockService.Setup(x => x.FollowUser(user.UserName, currentUser))
-                .ReturnsAsync(currentUser);
+            mockService.Setup(x => x.GetAllUsers(currentUser, null))
+                .ReturnsAsync(new List<UserCardViewModel>()
+                {
+                    new UserCardViewModel
+                    {
+                        FirstName = "Pesho",
+                        LastName = "Peshov",
+                    },
+                    new UserCardViewModel
+                    {
+                        FirstName = "Gogo",
+                        LastName = "Gogov",
+                    }
+                });
 
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                     new Mock<IUserStore<ApplicationUser>>().Object,
@@ -43,23 +57,17 @@
             mockUserManager.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            var httpContext = new DefaultHttpContext();
-            var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
-            var controller = new ProfileController(mockUserManager.Object, mockService.Object)
-            {
-                TempData = tempData,
-            };
+            var controller = new ProfileController(mockUserManager.Object, mockService.Object);
 
-            var result = await controller.Follow(user.UserName);
-            Assert.IsType<RedirectResult>(result);
+            var result = await controller.AllUsers(null, null);
+            Assert.IsType<ViewResult>(result);
 
-            var redirect = result as RedirectResult;
-            Assert.Equal($"/Profile/{currentUser.UserName}", redirect.Url);
+            var view = result as ViewResult;
+            Assert.IsType<AllUsersViewModel>(view.Model);
 
-            Assert.True(controller.TempData.ContainsKey("Success"));
-            Assert.Equal(
-                string.Format(SuccessMessages.SuccessfullyFollowedUser, user.UserName.ToUpper()),
-                controller.TempData["Success"]);
+            var model = view.Model as AllUsersViewModel;
+            Assert.Equal(2, model.UsersCards.Count());
+            Assert.Null(model.Search);
         }
     }
 }

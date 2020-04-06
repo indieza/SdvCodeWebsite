@@ -7,7 +7,6 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Moq;
-    using SdvCode.Constraints;
     using SdvCode.Controllers;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile;
@@ -18,17 +17,14 @@
     using System.Threading.Tasks;
     using Xunit;
 
-    public class FollowTests
+    public class MakeYourselfAdminTests
     {
         [Fact]
-        public async Task FollowShouldReturnCorrectRedirect()
+        public void MakeYourselfAdminShouldReturnCorrectViewModel()
         {
-            var currentUser = new ApplicationUser { UserName = "gogo" };
-            var user = new ApplicationUser { UserName = "pesho" };
+            ApplicationUser user = new ApplicationUser { UserName = "pesho" };
 
             var mockService = new Mock<IProfileService>();
-            mockService.Setup(x => x.FollowUser(user.UserName, currentUser))
-                .ReturnsAsync(currentUser);
 
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                     new Mock<IUserStore<ApplicationUser>>().Object,
@@ -40,26 +36,14 @@
                     new Mock<IdentityErrorDescriber>().Object,
                     new Mock<IServiceProvider>().Object,
                     new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
-            mockUserManager.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(currentUser);
 
-            var httpContext = new DefaultHttpContext();
-            var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
-            var controller = new ProfileController(mockUserManager.Object, mockService.Object)
-            {
-                TempData = tempData,
-            };
+            var controller = new ProfileController(mockUserManager.Object, mockService.Object);
 
-            var result = await controller.Follow(user.UserName);
+            var result = controller.MakeYourselfAdmin(user.UserName);
             Assert.IsType<RedirectResult>(result);
 
             var redirect = result as RedirectResult;
-            Assert.Equal($"/Profile/{currentUser.UserName}", redirect.Url);
-
-            Assert.True(controller.TempData.ContainsKey("Success"));
-            Assert.Equal(
-                string.Format(SuccessMessages.SuccessfullyFollowedUser, user.UserName.ToUpper()),
-                controller.TempData["Success"]);
+            Assert.Equal($"/Profile/{user.UserName}", redirect.Url);
         }
     }
 }

@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Moq;
+    using SdvCode.Constraints;
     using SdvCode.Controllers;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile;
@@ -54,6 +55,11 @@
 
             var redirect = result as RedirectResult;
             Assert.Equal($"/Profile/{currentUser.UserName}", redirect.Url);
+
+            Assert.True(controller.TempData.ContainsKey("Success"));
+            Assert.Equal(
+                string.Format(SuccessMessages.SuccessfullyUnfollowedUser, user.UserName.ToUpper()),
+                controller.TempData["Success"]);
         }
     }
 }

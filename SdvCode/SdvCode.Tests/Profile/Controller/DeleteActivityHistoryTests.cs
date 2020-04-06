@@ -11,6 +11,7 @@
     using SdvCode.Controllers;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile;
+    using SdvCode.ViewModels.Users.ViewModels;
     using System;
     using System.Collections.Generic;
     using System.Security.Claims;
@@ -18,17 +19,14 @@
     using System.Threading.Tasks;
     using Xunit;
 
-    public class FollowTests
+    public class DeleteActivityHistoryTests
     {
         [Fact]
-        public async Task FollowShouldReturnCorrectRedirect()
+        public async Task DeleteActivityHistoryShouldReturnCorrectViewModel()
         {
-            var currentUser = new ApplicationUser { UserName = "gogo" };
-            var user = new ApplicationUser { UserName = "pesho" };
+            ApplicationUser user = new ApplicationUser { UserName = "pesho" };
 
             var mockService = new Mock<IProfileService>();
-            mockService.Setup(x => x.FollowUser(user.UserName, currentUser))
-                .ReturnsAsync(currentUser);
 
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                     new Mock<IUserStore<ApplicationUser>>().Object,
@@ -41,7 +39,7 @@
                     new Mock<IServiceProvider>().Object,
                     new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
             mockUserManager.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(currentUser);
+                .ReturnsAsync(user);
 
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
@@ -50,16 +48,14 @@
                 TempData = tempData,
             };
 
-            var result = await controller.Follow(user.UserName);
+            var result = await controller.DeleteActivityHistory(user.UserName);
             Assert.IsType<RedirectResult>(result);
 
             var redirect = result as RedirectResult;
-            Assert.Equal($"/Profile/{currentUser.UserName}", redirect.Url);
+            Assert.Equal($"/Profile/{user.UserName}", redirect.Url);
 
             Assert.True(controller.TempData.ContainsKey("Success"));
-            Assert.Equal(
-                string.Format(SuccessMessages.SuccessfullyFollowedUser, user.UserName.ToUpper()),
-                controller.TempData["Success"]);
+            Assert.Equal(SuccessMessages.SuccessfullyDeleteAllActivity, controller.TempData["Success"]);
         }
     }
 }
