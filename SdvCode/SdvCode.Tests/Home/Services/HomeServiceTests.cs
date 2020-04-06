@@ -24,12 +24,11 @@
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
             var roleStore = new Mock<IRoleStore<ApplicationRole>>();
-            roleStore.Setup(x =>
-                x.CreateAsync(new ApplicationRole { Name = "Administrator" }, CancellationToken.None))
-                .Returns(Task.FromResult(IdentityResult.Success));
 
-            var roleManagerMock = new Mock<RoleManager<ApplicationRole>>(
-                         roleStore.Object, null, null, null, null);
+            var roleManagerMock =
+                new Mock<RoleManager<ApplicationRole>>(roleStore.Object, null, null, null, null);
+            roleManagerMock.Setup(x => x.CreateAsync(It.IsAny<ApplicationRole>()))
+                .ReturnsAsync(IdentityResult.Success);
 
             using (var db = new ApplicationDbContext(options))
             {
@@ -40,27 +39,69 @@
         }
 
         [Fact]
+        public void TestGetAllAdministratorsZeroResult()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+
+            var roleStore = new Mock<IRoleStore<ApplicationRole>>();
+
+            var roleManagerMock =
+                new Mock<RoleManager<ApplicationRole>>(roleStore.Object, null, null, null, null);
+            roleManagerMock.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
+                .ReturnsAsync(new ApplicationRole { Id = Guid.NewGuid().ToString(), Name = "Administrator" });
+
+            using (var db = new ApplicationDbContext(options))
+            {
+                IHomeService homeService = new HomeService(db, roleManagerMock.Object);
+                var result = homeService.GetAllAdministrators();
+
+                Assert.Equal(0, result.Count);
+            }
+        }
+
+        [Fact]
         public void TestGetAllAdministrators()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
             var roleStore = new Mock<IRoleStore<ApplicationRole>>();
-            roleStore.Setup(x =>
-                x.FindByNameAsync("Administrator", CancellationToken.None))
-                .Returns(Task.FromResult(new ApplicationRole
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "Administrator",
-                }));
 
-            var roleManagerMock = new Mock<RoleManager<ApplicationRole>>(
-                         roleStore.Object, null, null, null, null);
+            var role = new ApplicationRole
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Administrator",
+                RoleLevel = 1,
+            };
+            var user = new ApplicationUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "pesho",
+                Email = "pesho@gmail.com",
+            };
+
+            var roleManagerMock =
+                new Mock<RoleManager<ApplicationRole>>(roleStore.Object, null, null, null, null);
+            roleManagerMock.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
+                .ReturnsAsync(new ApplicationRole { Id = role.Id, Name = "Administrator" });
 
             using (var db = new ApplicationDbContext(options))
             {
+                db.Users.Add(user);
+                db.Roles.Add(role);
+                db.UserRoles.Add(new IdentityUserRole<string>
+                {
+                    RoleId = role.Id,
+                    UserId = user.Id,
+                });
+
+                db.SaveChanges();
+
                 IHomeService homeService = new HomeService(db, roleManagerMock.Object);
                 var result = homeService.GetAllAdministrators();
+
+                Assert.Equal(1, result.Count);
             }
         }
     }
