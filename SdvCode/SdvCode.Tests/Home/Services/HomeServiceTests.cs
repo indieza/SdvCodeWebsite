@@ -10,6 +10,7 @@
     using SdvCode.Services.Home;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -39,7 +40,7 @@
         }
 
         [Fact]
-        public void TestGetAllAdministratorsZeroResult()
+        public async Task TestGetAllAdministratorsZeroResult()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
@@ -54,14 +55,14 @@
             using (var db = new ApplicationDbContext(options))
             {
                 IHomeService homeService = new HomeService(db, roleManagerMock.Object);
-                var result = homeService.GetAllAdministrators();
+                var result = await homeService.GetAllAdministrators();
 
                 Assert.Equal(0, result.Count);
             }
         }
 
         [Fact]
-        public void TestGetAllAdministrators()
+        public async Task TestGetAllAdministrators()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
@@ -99,9 +100,35 @@
                 db.SaveChanges();
 
                 IHomeService homeService = new HomeService(db, roleManagerMock.Object);
-                var result = homeService.GetAllAdministrators();
+                var result = await homeService.GetAllAdministrators();
 
                 Assert.Equal(1, result.Count);
+            }
+        }
+
+        [Fact]
+        public void GetRegisteredUsersCountTest()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                   .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+
+            var roleStore = new Mock<IRoleStore<ApplicationRole>>();
+            var roleManagerMock =
+                new Mock<RoleManager<ApplicationRole>>(roleStore.Object, null, null, null, null);
+
+            using (var db = new ApplicationDbContext(options))
+            {
+                db.Users.Add(new ApplicationUser
+                {
+                    UserName = "pesho",
+                });
+
+                db.SaveChanges();
+
+                IHomeService homeService = new HomeService(db, roleManagerMock.Object);
+                var result = homeService.GetRegisteredUsersCount();
+
+                Assert.Equal(1, result);
             }
         }
     }

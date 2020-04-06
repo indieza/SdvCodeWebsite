@@ -34,7 +34,7 @@ namespace SdvCode.Controllers
             HomeViewModel model = new HomeViewModel
             {
                 TotalRegisteredUsers = this.homeService.GetRegisteredUsersCount(),
-                Administrators = this.homeService.GetAllAdministrators(),
+                Administrators = await this.homeService.GetAllAdministrators(),
             };
 
             return this.View(model);

@@ -22,7 +22,7 @@
         {
             var mockService = new Mock<IHomeService>();
             mockService.Setup(x => x.GetRegisteredUsersCount()).Returns(2);
-            mockService.Setup(x => x.GetAllAdministrators()).Returns(new List<ApplicationUser>()
+            mockService.Setup(x => x.GetAllAdministrators()).ReturnsAsync(new List<ApplicationUser>()
             {
                 new ApplicationUser
                 {

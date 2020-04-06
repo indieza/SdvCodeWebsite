@@ -39,10 +39,10 @@ namespace SdvCode.Services.Home
             return result;
         }
 
-        public ICollection<ApplicationUser> GetAllAdministrators()
+        public async Task<ICollection<ApplicationUser>> GetAllAdministrators()
         {
-            var roleId = this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole).Result.Id;
-            var administratorsIds = this.db.UserRoles.Where(x => x.RoleId == roleId).Select(x => x.UserId).ToList();
+            var role = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
+            var administratorsIds = this.db.UserRoles.Where(x => x.RoleId == role.Id).Select(x => x.UserId).ToList();
             var users = this.db.Users.Where(x => administratorsIds.Contains(x.Id)).ToList();
             return users;
         }

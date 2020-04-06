@@ -14,6 +14,6 @@ namespace SdvCode.Services.Home
 
         Task<IdentityResult> CreateRole(string role);
 
-        ICollection<ApplicationUser> GetAllAdministrators();
+        Task<ICollection<ApplicationUser>> GetAllAdministrators();
     }
 }
