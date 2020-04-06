@@ -1,4 +1,8 @@
 ﻿@using SdvCode.Areas.Administration.Models.Enums
+@using SdvCode.Models.User
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +39,7 @@
     <link rel="stylesheet" href="~/css/multiSelect.css">
     <link rel="stylesheet" href="~/css/likesDropDown.css">
     <link rel="stylesheet" href="~/css/searchField.css">
+    <link rel="stylesheet" href="~/css/notificaitonButton.css">
 </head>
 <body>
     <div class="style-switch-wrapper">
@@ -208,6 +213,14 @@
                 </div>
             </div>
         </section>
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a class="float">
+                <i class="fas fa-bell my-float"></i>
+                <span class="badge">3</span>
+            </a>
+        }
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js"></script>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

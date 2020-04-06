@@ -1,0 +1,28 @@
+﻿.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    left: 20px;
+    background-color: #0C9;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 200;
+}
+
+.my-float {
+    margin-top: 15px;
+    font-size: 30px;
+}
+
+.badge {
+    position: absolute;
+    top: 8px;
+    right: 5.5px;
+    padding: 5px 7px;
+    border-radius: 50%;
+    background-color: crimson;
+    color: white;
+}
