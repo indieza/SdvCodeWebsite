@@ -2,7 +2,6 @@
 {
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Data;
-    using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile;
     using System;
@@ -12,7 +11,7 @@
     using System.Threading.Tasks;
     using Xunit;
 
-    public class FollowUserTests
+    public class UnfollowUserTests
     {
         [Fact]
         public async Task TestFollowUser()
@@ -28,10 +27,11 @@
                 IProfileService profileService = new ProfileService(db);
                 db.Users.AddRange(user, currentUser);
                 await db.SaveChangesAsync();
-                var result = await profileService.FollowUser(user.UserName, currentUser);
+                await profileService.FollowUser(user.UserName, currentUser);
+                var result = await profileService.UnfollowUser(user.UserName, currentUser);
 
                 Assert.Equal(currentUser, result);
-                Assert.Equal(2, db.UserActions.Count());
+                Assert.Equal(4, db.UserActions.Count());
             }
         }
 
@@ -50,10 +50,11 @@
                 db.Users.AddRange(user, currentUser);
                 await db.SaveChangesAsync();
                 await profileService.FollowUser(user.UserName, currentUser);
-                var result = await profileService.FollowUser(user.UserName, currentUser);
+                await profileService.UnfollowUser(user.UserName, currentUser);
+                var result = await profileService.UnfollowUser(user.UserName, currentUser);
 
                 Assert.Equal(currentUser, result);
-                Assert.Equal(2, db.UserActions.Count());
+                Assert.Equal(4, db.UserActions.Count());
             }
         }
     }
