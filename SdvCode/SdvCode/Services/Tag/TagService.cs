@@ -17,17 +17,14 @@ namespace SdvCode.Services.Tag
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public class TagService : ITagService
+    public class TagService : GlobalPostsExtractor, ITagService
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly GlobalPostsExtractor postExtractor;
 
-        public TagService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public TagService(ApplicationDbContext db)
+            : base(db)
         {
             this.db = db;
-            this.userManager = userManager;
-            this.postExtractor = new GlobalPostsExtractor(this.db);
         }
 
         public async Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, ApplicationUser user)
@@ -40,7 +37,7 @@ namespace SdvCode.Services.Tag
                 posts.Add(this.db.Posts.FirstOrDefault(x => x.Id == postId));
             }
 
-            List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
+            List<PostViewModel> postsModel = await this.ExtractPosts(user, posts);
 
             return postsModel;
         }

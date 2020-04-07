@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Blog\" />
-    <Folder Include="Tag\" />
     <Folder Include="PrivateChat\" />
     <Folder Include="Post\" />
   </ItemGroup>
