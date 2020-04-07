@@ -16,7 +16,7 @@
         [Fact]
         public async Task TestTakeCommentsCountByUsername()
         {
-            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "peshp" };
+            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "pesho" };
             var comment = new Comment { Id = Guid.NewGuid().ToString(), ApplicationUser = user };
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()

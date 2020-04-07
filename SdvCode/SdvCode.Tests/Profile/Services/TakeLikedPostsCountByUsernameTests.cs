@@ -17,7 +17,7 @@
         [Fact]
         public async Task TestTakeLikedPostsCountByUsername()
         {
-            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "peshp" };
+            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "pesho" };
             var post = new Post { Id = Guid.NewGuid().ToString(), ApplicationUser = user };
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
