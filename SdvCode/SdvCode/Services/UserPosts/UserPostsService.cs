@@ -17,25 +17,20 @@ namespace SdvCode.Services.UserPosts
     using SdvCode.ViewModels.Post.ViewModels;
     using X.PagedList;
 
-    public class UserPostsService : IUserPostsService
+    public class UserPostsService : GlobalPostsExtractor, IUserPostsService
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly GlobalPostsExtractor postsExtractor;
 
-        public UserPostsService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public UserPostsService(ApplicationDbContext db)
+            : base(db)
         {
             this.db = db;
-            this.userManager = userManager;
-            this.postsExtractor = new GlobalPostsExtractor(this.db);
         }
 
         public async Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, ApplicationUser currentUser)
         {
-            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var posts = await this.db.Posts.Where(x => x.ApplicationUser.UserName == username).ToListAsync();
-
-            List<PostViewModel> postsModel = await this.postsExtractor.ExtractPosts(currentUser, posts);
+            List<PostViewModel> postsModel = await this.ExtractPosts(currentUser, posts);
 
             return postsModel;
         }
@@ -52,7 +47,7 @@ namespace SdvCode.Services.UserPosts
                 posts.Add(await this.db.Posts.FirstOrDefaultAsync(x => x.Id == postId));
             }
 
-            List<PostViewModel> postsModel = await this.postsExtractor.ExtractPosts(currentUser, posts);
+            List<PostViewModel> postsModel = await this.ExtractPosts(currentUser, posts);
 
             return postsModel;
         }
