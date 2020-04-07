@@ -41,7 +41,12 @@
                 UserName = "indieza",
             });
 
-            var controller = new ProfileController(mockUserManager.Object, mockService.Object);
+            var roleStore = new Mock<IRoleStore<ApplicationRole>>();
+            var roleManagerMock =
+                new Mock<RoleManager<ApplicationRole>>(roleStore.Object, null, null, null, null);
+
+            var controller =
+                new ProfileController(mockUserManager.Object, roleManagerMock.Object, mockService.Object);
             var result = (RedirectToActionResult)await controller.SwitchToTabs("indieza", "Activities");
 
             Assert.Equal("Index", result.ActionName);

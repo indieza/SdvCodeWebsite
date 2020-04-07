@@ -8,6 +8,7 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
@@ -21,11 +22,16 @@ namespace SdvCode.Controllers
     public class ProfileController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IProfileService profileService;
 
-        public ProfileController(UserManager<ApplicationUser> userManager, IProfileService profileService)
+        public ProfileController(
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager,
+            IProfileService profileService)
         {
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.profileService = profileService;
         }
 
@@ -34,7 +40,9 @@ namespace SdvCode.Controllers
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
             ApplicationUserViewModel user = await this.profileService.ExtractUserInfo(username, currentUser);
-            bool hasAdmin = await this.profileService.HasAdmin();
+
+            var adminRole = await this.roleManager.FindByNameAsync(Roles.Administrator.ToString());
+            bool hasAdmin = await this.profileService.HasAdmin(adminRole);
 
             var pageNumber = page ?? 1;
 

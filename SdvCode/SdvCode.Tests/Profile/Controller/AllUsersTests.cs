@@ -57,7 +57,12 @@
             mockUserManager.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
-            var controller = new ProfileController(mockUserManager.Object, mockService.Object);
+            var roleStore = new Mock<IRoleStore<ApplicationRole>>();
+            var roleManagerMock =
+                new Mock<RoleManager<ApplicationRole>>(roleStore.Object, null, null, null, null);
+
+            var controller = new ProfileController(
+                mockUserManager.Object, roleManagerMock.Object, mockService.Object);
 
             var result = await controller.AllUsers(null, null);
             Assert.IsType<ViewResult>(result);

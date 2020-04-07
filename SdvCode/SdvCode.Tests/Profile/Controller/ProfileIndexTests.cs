@@ -35,7 +35,12 @@
                     new Mock<IServiceProvider>().Object,
                     new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
 
-            var controller = new ProfileController(mockUserManager.Object, mockService.Object);
+            var roleStore = new Mock<IRoleStore<ApplicationRole>>();
+            var roleManagerMock =
+                new Mock<RoleManager<ApplicationRole>>(roleStore.Object, null, null, null, null);
+
+            var controller =
+                new ProfileController(mockUserManager.Object, roleManagerMock.Object, mockService.Object);
             var result = await controller.Index("indieza", ProfileTab.Activities, 0);
             Assert.IsType<ViewResult>(result);
 

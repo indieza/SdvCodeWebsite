@@ -43,9 +43,13 @@
             mockUserManager.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
                 .ReturnsAsync(currentUser);
 
+            var roleStore = new Mock<IRoleStore<ApplicationRole>>();
+            var roleManagerMock =
+                new Mock<RoleManager<ApplicationRole>>(roleStore.Object, null, null, null, null);
+
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
-            var controller = new ProfileController(mockUserManager.Object, mockService.Object)
+            var controller = new ProfileController(mockUserManager.Object, roleManagerMock.Object, mockService.Object)
             {
                 TempData = tempData,
             };

@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="Blog\" />
     <Folder Include="Category\" />
-    <Folder Include="Profile\Services\" />
     <Folder Include="UserPosts\" />
     <Folder Include="Tag\" />
     <Folder Include="PrivateChat\" />

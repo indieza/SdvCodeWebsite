@@ -24,7 +24,7 @@ namespace SdvCode.Services.Profile
 
         Task<string> DeleteActivityById(ApplicationUser user, int activityId);
 
-        Task<bool> HasAdmin();
+        Task<bool> HasAdmin(ApplicationRole role);
 
         void MakeYourselfAdmin(string username);
 
