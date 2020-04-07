@@ -16,17 +16,14 @@ namespace SdvCode.Services.Category
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public class CategoryService : ICategoryService
+    public class CategoryService : GlobalPostsExtractor, ICategoryService
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly GlobalPostsExtractor postExtractor;
 
-        public CategoryService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public CategoryService(ApplicationDbContext db)
+            : base(db)
         {
             this.db = db;
-            this.userManager = userManager;
-            this.postExtractor = new GlobalPostsExtractor(this.db);
         }
 
         public async Task<Category> ExtractCategoryById(string id)
@@ -37,7 +34,7 @@ namespace SdvCode.Services.Category
         public async Task<ICollection<PostViewModel>> ExtractPostsByCategoryId(string id, ApplicationUser user)
         {
             var posts = await this.db.Posts.Where(x => x.CategoryId == id).ToListAsync();
-            List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
+            List<PostViewModel> postsModel = await this.ExtractPosts(user, posts);
             return postsModel;
         }
     }
