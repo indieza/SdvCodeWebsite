@@ -12,8 +12,10 @@ namespace SdvCode.ViewModels.Comment.ViewModels
 
     public class EditCommentViewModel
     {
+        [Required]
         public string CommentId { get; set; }
 
+        [Required]
         public string PostId { get; set; }
 
         public string ParentId { get; set; }

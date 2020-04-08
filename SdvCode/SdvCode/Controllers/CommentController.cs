@@ -79,13 +79,12 @@ namespace SdvCode.Controllers
                 var tuple = await this.commentsService
                     .Create(input.PostId, currentUser, input.SanitizedContent, parentId);
                 this.TempData[tuple.Item1] = tuple.Item2;
-            }
-            else
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+
+                return this.RedirectToAction("Index", "Post", new { id = input.PostId });
             }
 
-            return this.RedirectToAction("Index", "Post", new { id = input.PostId });
+            this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            return this.RedirectToAction("Index", "Blog");
         }
 
         [HttpPost]
@@ -131,26 +130,33 @@ namespace SdvCode.Controllers
         [HttpPost]
         public async Task<IActionResult> EditComment(EditCommentViewModel model)
         {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isInCommentRole = await this.commentsService.IsInCommentRole(currentUser, model.CommentId);
-
-            if (!isInCommentRole)
+            if (this.ModelState.IsValid)
             {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                var currentUser = await this.userManager.GetUserAsync(this.User);
+                var isInCommentRole = await this.commentsService.IsInCommentRole(currentUser, model.CommentId);
+
+                if (!isInCommentRole)
+                {
+                    this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                    return this.RedirectToAction("Index", "Post", new { id = model.PostId });
+                }
+
+                var isCommentIdCorrect = await this.commentsService.IsCommentIdCorrect(model.CommentId, model.PostId);
+
+                if (!isCommentIdCorrect)
+                {
+                    this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                    return this.RedirectToAction("Index", "Post", new { id = model.PostId });
+                }
+
+                Tuple<string, string> tuple = await this.commentsService.EditComment(model);
+                this.TempData[tuple.Item1] = tuple.Item2;
+
                 return this.RedirectToAction("Index", "Post", new { id = model.PostId });
             }
 
-            var isCommentIdCorrect = await this.commentsService.IsCommentIdCorrect(model.CommentId, model.PostId);
-
-            if (!isCommentIdCorrect)
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-                return this.RedirectToAction("Index", "Post", new { id = model.PostId });
-            }
-
-            Tuple<string, string> tuple = await this.commentsService.EditComment(model);
-            this.TempData[tuple.Item1] = tuple.Item2;
-            return this.RedirectToAction("Index", "Post", new { id = model.PostId });
+            this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            return this.RedirectToAction("Index", "Blog");
         }
     }
 }
