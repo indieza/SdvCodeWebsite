@@ -18,6 +18,7 @@ namespace SdvCode.Controllers
     using SdvCode.ViewModels.Comment.InputModels;
     using SdvCode.ViewModels.Comment.ViewModels;
 
+    [Authorize]
     public class CommentController : Controller
     {
         private readonly ICommentService commentsService;
@@ -31,7 +32,6 @@ namespace SdvCode.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {
