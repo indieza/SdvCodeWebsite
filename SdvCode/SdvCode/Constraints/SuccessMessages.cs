@@ -78,5 +78,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyApprovedComment = "You successfully approved the blog post comment.";
 
         public const string SuccessfullyRemovedTag = "Successfully removed \"{0}\" tag.";
+
+        public const string SuccessfullyEditedComment = "You successfully edit blog post comment";
     }
 }

@@ -53,6 +53,12 @@
                     }
                     <p>@Html.Raw(comment.Content)</p>
                     <div class="text-right weight-600">
+                        @if (User.Identity.Name == comment.ApplicationUser.UserName || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                        {
+                            <a asp-area="" asp-controller="Comment" asp-action="EditComment" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left; margin-right: 8px" class="comment-reply">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                        }
                         @if (comment.ApplicationUser.UserName == User.Identity.Name || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
                         {
                             <a asp-area="" asp-controller="Comment" asp-action="DeleteById" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left" class="comment-reply">

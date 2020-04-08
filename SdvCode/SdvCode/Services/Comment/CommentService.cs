@@ -8,6 +8,7 @@ namespace SdvCode.Services.Comment
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
@@ -15,6 +16,7 @@ namespace SdvCode.Services.Comment
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Comment.ViewModels;
 
     public class CommentService : UserValidationService, ICommentService
     {
@@ -92,6 +94,52 @@ namespace SdvCode.Services.Comment
         public async Task<Post> ExtractCurrentPost(string postId)
         {
             return await this.db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
+        }
+
+        public async Task<bool> IsCommentIdCorrect(string commentId, string postId)
+        {
+            var comment = await this.db.Comments.FirstOrDefaultAsync(x => x.Id == commentId);
+            if (comment != null)
+            {
+                var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == postId);
+                if (post != null && comment.PostId == post.Id)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
+        public async Task<EditCommentViewModel> ExtractCurrentComment(string commentId)
+        {
+            var comment = await this.db.Comments.FirstOrDefaultAsync(x => x.Id == commentId);
+
+            return new EditCommentViewModel
+            {
+                CommentId = comment.Id,
+                ParentId = comment.ParentCommentId,
+                Content = comment.Content,
+                PostId = comment.PostId,
+            };
+        }
+
+        public async Task<Tuple<string, string>> EditComment(EditCommentViewModel model)
+        {
+            var comment = await this.db.Comments.FirstOrDefaultAsync(x => x.Id == model.CommentId);
+            if (comment != null)
+            {
+                comment.Content = model.SanitizedContent;
+                comment.UpdatedOn = DateTime.UtcNow;
+                this.db.Update(comment);
+                await this.db.SaveChangesAsync();
+
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyEditedComment);
+            }
+
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
         private async Task RemoveChildren(string i)

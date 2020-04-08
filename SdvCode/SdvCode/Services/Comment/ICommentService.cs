@@ -7,6 +7,7 @@ namespace SdvCode.Services.Comment
     using System.Threading.Tasks;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Comment.ViewModels;
 
     public interface ICommentService : IUserValidationService
     {
@@ -19,5 +20,9 @@ namespace SdvCode.Services.Comment
         Task<Post> ExtractCurrentPost(string postId);
 
         Task<bool> IsParentCommentApproved(string parentId);
+
+        Task<bool> IsCommentIdCorrect(string commentId, string postId);
+        Task<EditCommentViewModel> ExtractCurrentComment(string commentId);
+        Task<Tuple<string, string>> EditComment(EditCommentViewModel model);
     }
 }

@@ -3,6 +3,7 @@
 
 namespace SdvCode.Controllers
 {
+    using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,8 @@ namespace SdvCode.Controllers
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.Comment;
-    using SdvCode.ViewModels.Comment;
+    using SdvCode.ViewModels.Comment.InputModels;
+    using SdvCode.ViewModels.Comment.ViewModels;
 
     public class CommentController : Controller
     {
@@ -86,6 +88,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id = input.PostId });
         }
 
+        [HttpPost]
         public async Task<IActionResult> DeleteById(string commentId, string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -99,6 +102,55 @@ namespace SdvCode.Controllers
             var tuple = await this.commentsService.DeleteCommentById(commentId);
             this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id = postId });
+        }
+
+        public async Task<IActionResult> EditComment(string commentId, string postId)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var isInCommentRole = await this.commentsService.IsInCommentRole(currentUser, commentId);
+
+            if (!isInCommentRole)
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("Index", "Post", new { id = postId });
+            }
+
+            var isCommentIdCorrect = await this.commentsService.IsCommentIdCorrect(commentId, postId);
+
+            if (!isCommentIdCorrect)
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("Index", "Post", new { id = postId });
+            }
+
+            EditCommentViewModel model = await this.commentsService.ExtractCurrentComment(commentId);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditComment(EditCommentViewModel model)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var isInCommentRole = await this.commentsService.IsInCommentRole(currentUser, model.CommentId);
+
+            if (!isInCommentRole)
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("Index", "Post", new { id = model.PostId });
+            }
+
+            var isCommentIdCorrect = await this.commentsService.IsCommentIdCorrect(model.CommentId, model.PostId);
+
+            if (!isCommentIdCorrect)
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("Index", "Post", new { id = model.PostId });
+            }
+
+            Tuple<string, string> tuple = await this.commentsService.EditComment(model);
+            this.TempData[tuple.Item1] = tuple.Item2;
+            return this.RedirectToAction("Index", "Post", new { id = model.PostId });
         }
     }
 }
