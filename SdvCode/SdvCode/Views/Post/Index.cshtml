@@ -30,7 +30,7 @@
                             @comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName
                         </a>
                     </h4>
-                    <div class="comment-date">@comment.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy dddd HH:mm tt")</div>
+                    <div class="comment-date">@comment.UpdatedOn.ToLocalTime().ToString("dd-MMMM-yyyy dddd HH:mm tt")</div>
                     @if (comment.CommentStatus == CommentStatus.Pending)
                     {
                         <span class="post-meta-cats">

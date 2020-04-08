@@ -12,22 +12,11 @@
 <div class="post">
     <div class="post-image-wrapper">
         <img src=@Model.ImageUrl class="img-responsive" alt="post cover image" />
-        @if (Model.CreatedOn == Model.UpdatedOn)
-        {
-            <span class="blog-date">
-                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
-                    @Model.CreatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
-                </a>
-            </span>
-        }
-        else
-        {
-            <span class="blog-date">
-                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
-                    @Model.UpdatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
-                </a>
-            </span>
-        }
+        <span class="blog-date">
+            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
+                @Model.UpdatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
+            </a>
+        </span>
     </div>
     <div class="post-header clearfix">
         <h2 class="post-title">
