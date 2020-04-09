@@ -25,8 +25,9 @@ namespace SdvCode.Services.RecommendedFriends
             var trash = this.db.RecommendedFriends.ToList();
             this.db.RemoveRange(trash);
             this.db.SaveChanges();
+            this.db.Database.ExecuteSqlRaw("DBCC CHECKIDENT('[dbo].[RecommendedFriends]', RESEED, 0)");
 
-            var users = this.db.Users.ToList();
+            var users = this.db.Users.Where(x => x.IsBlocked == false).ToList();
 
             foreach (var user in users)
             {
@@ -36,10 +37,10 @@ namespace SdvCode.Services.RecommendedFriends
 
                 foreach (var recommendedUser in recommendedUsers)
                 {
-                    var followUnfollow = this.db.FollowUnfollows
-                        .FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == recommendedUser.Id && x.IsFollowed == false);
+                    var followInfollow = this.db.FollowUnfollows
+                        .FirstOrDefault(x => x.FollowerId == user.Id && x.PersonId == recommendedUser.Id && x.IsFollowed == true);
 
-                    if (followUnfollow == null)
+                    if (followInfollow == null)
                     {
                         user.RecommendedFriends.Add(new RecommendedFriend
                         {
