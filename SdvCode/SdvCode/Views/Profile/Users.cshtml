@@ -1,0 +1,65 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList
+@using SdvCode.ViewModels.Users.ViewModels
+@using SdvCode.Models.Enums
+@using Microsoft.AspNetCore.Identity
+@using SdvCode.Models.User
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "All Users";
+    var currentUser = await UserManager.GetUserAsync(this.User);
+}
+
+@model UsersViewModel
+<div id="banner-area">
+    <img src="~/images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <!-- Subpage title start -->
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>All Users Page</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li><a asp-route-tab="AllUsers" asp-area="" asp-controller="Profile" asp-action="Users">All Users</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 10px; margin-bottom: 30px">
+    <form asp-controller="Profile" asp-action="Users" method="get">
+        <div class="wrap">
+            <div class="search">
+                <input type="hidden" name="activeTab" , value="@Model.ActiveTab.ToString()" />
+                <input autocomplete="off" type="text" class="searchTerm" name="search" value="@Model.Search" placeholder="Filter by username, first or last name ...">
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom" id="myTab">
+        <li role="presentation" class="@(Model.ActiveTab == AllUsersTab.AllUsers ? "active" : string.Empty )"><a asp-route-tab="AllUsers" asp-route-page="@Model.Page" asp-action="SwitchToAllUsersTabs">ALL USERS</a></li>
+        <li role="presentation" class="@(Model.ActiveTab == AllUsersTab.RecommendedUsers ? "active" : string.Empty )"><a asp-route-tab="RecommendedUsers" asp-route-page="@Model.Page" asp-action="SwitchToAllUsersTabs">RECOMMENDED USERS</a></li>
+        <li role="presentation" class="@(Model.ActiveTab == AllUsersTab.BannedUsers ? "active" : string.Empty )"><a asp-route-tab="BannedUsers" asp-route-page="@Model.Page" asp-action="SwitchToAllUsersTabs">BANNED USERS</a></li>
+    </ul>
+    <div class="tab-content">
+        @switch (Model.ActiveTab)
+        {
+            case AllUsersTab.AllUsers:
+                @await Component.InvokeAsync("AllUsers", new { username = currentUser.UserName, page = Model.Page, search = Model.Search });
+                break;
+            case AllUsersTab.RecommendedUsers:
+                @await Component.InvokeAsync("RecommendedUsers", new { username = currentUser.UserName, page = Model.Page, search = Model.Search });
+                break;
+            case AllUsersTab.BannedUsers:
+                @await Component.InvokeAsync("BannedUsers", new { username = currentUser.UserName, page = Model.Page, search = Model.Search });
+                break;
+            default:
+                break;
+        }
+    </div>
+</div>

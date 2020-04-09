@@ -118,52 +118,7 @@ namespace SdvCode.Services.Profile
 
         public async Task<List<UserCardViewModel>> GetAllUsers(ApplicationUser user, string search)
         {
-            List<UserCardViewModel> allUsers = new List<UserCardViewModel>();
-
-            var targetUsers = new List<ApplicationUser>();
-
-            if (search == null)
-            {
-                targetUsers = await this.db.Users.ToListAsync();
-            }
-            else
-            {
-                targetUsers = await this.db.Users
-                     .Where(x => EF.Functions.Contains(x.UserName, search) ||
-                     EF.Functions.Contains(x.FirstName, search) ||
-                     EF.Functions.Contains(x.LastName, search))
-                     .ToListAsync();
-            }
-
-            foreach (var targetUser in targetUsers)
-            {
-                allUsers.Add(new UserCardViewModel
-                {
-                    UserId = targetUser.Id,
-                    Username = targetUser.UserName,
-                    FirstName = targetUser.FirstName,
-                    LastName = targetUser.LastName,
-                    ImageUrl = targetUser.ImageUrl,
-                    CoverImageUrl = targetUser.CoverImageUrl,
-                });
-            }
-
-            foreach (var targetUser in allUsers)
-            {
-                targetUser.FollowingsCount = await this.db.FollowUnfollows
-                    .CountAsync(x => x.FollowerId == targetUser.UserId && x.IsFollowed == true);
-
-                targetUser.FollowersCount = await this.db.FollowUnfollows
-                    .CountAsync(x => x.PersonId == targetUser.UserId && x.IsFollowed == true);
-
-                targetUser.HasFollowed = await this.db.FollowUnfollows
-                    .AnyAsync(x => x.FollowerId == user.Id && x.PersonId == targetUser.UserId && x.IsFollowed == true);
-
-                targetUser.Activities = await this.db.UserActions
-                    .CountAsync(x => x.ApplicationUserId == targetUser.UserId);
-            }
-
-            return allUsers;
+            return null;
         }
 
         public async Task<ApplicationUser> UnfollowUser(string username, ApplicationUser currentUser)

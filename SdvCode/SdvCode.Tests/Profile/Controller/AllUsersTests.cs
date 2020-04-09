@@ -9,6 +9,7 @@
     using Moq;
     using SdvCode.Constraints;
     using SdvCode.Controllers;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile;
     using SdvCode.ViewModels.Users.ViewModels;
@@ -23,7 +24,7 @@
     public class AllUsersTests
     {
         [Fact]
-        public async Task AllUsersShouldReturnCorrectViewModel()
+        public void AllUsersShouldReturnCorrectViewModel()
         {
             var currentUser = new ApplicationUser { UserName = "gogo" };
             var user = new ApplicationUser { UserName = "pesho" };
@@ -64,14 +65,14 @@
             var controller = new ProfileController(
                 mockUserManager.Object, roleManagerMock.Object, mockService.Object);
 
-            var result = await controller.AllUsers(null, null);
+            var result = controller.Users(AllUsersTab.AllUsers, null, null);
             Assert.IsType<ViewResult>(result);
 
             var view = result as ViewResult;
-            Assert.IsType<AllUsersViewModel>(view.Model);
+            Assert.IsType<UsersViewModel>(view.Model);
 
-            var model = view.Model as AllUsersViewModel;
-            Assert.Equal(2, model.UsersCards.Count());
+            var model = view.Model as UsersViewModel;
+            Assert.Equal(1, model.Page);
             Assert.Null(model.Search);
         }
     }

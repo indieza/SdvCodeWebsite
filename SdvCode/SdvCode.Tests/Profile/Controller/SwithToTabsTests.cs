@@ -47,7 +47,7 @@
 
             var controller =
                 new ProfileController(mockUserManager.Object, roleManagerMock.Object, mockService.Object);
-            var result = (RedirectToActionResult)await controller.SwitchToTabs("indieza", "Activities");
+            var result = (RedirectToActionResult)await controller.SwitchToAllActivitiesTabs("indieza", "Activities");
 
             Assert.Equal("Index", result.ActionName);
             Assert.Equal(2, result.RouteValues.Count);

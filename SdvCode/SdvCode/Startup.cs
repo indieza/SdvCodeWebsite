@@ -46,6 +46,8 @@ namespace SdvCode
     using SdvCode.Services.Post;
     using SdvCode.Services.Profile;
     using SdvCode.Services.Profile.Pagination;
+    using SdvCode.Services.Profile.Pagination.AllUsers;
+    using SdvCode.Services.Profile.Pagination.Profile;
     using SdvCode.Services.RecommendedFriends;
     using SdvCode.Services.Tag;
     using SdvCode.Services.UserPosts;
@@ -166,6 +168,9 @@ namespace SdvCode
             services.AddTransient<IProfileFavoritesService, ProfileFavoritesService>();
             services.AddTransient<IProfilePendingPostsService, ProfilePendingPostsService>();
             services.AddTransient<IProfileBannedPostsService, ProfileBannedPostsService>();
+            services.AddTransient<IAllUsersService, AllUsersService>();
+            services.AddTransient<IBannedUsersService, BannedUsersService>();
+            services.AddTransient<IRecommendedUsersService, RecommendedUsersService>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()

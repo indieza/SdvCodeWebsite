@@ -1,0 +1,86 @@
+﻿@using SdvCode.ViewModels.Profile
+@using SdvCode.ViewModels.Pagination.AllUsers
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList
+@model RecommendedUsersPaginationViewModel
+
+@{
+    ViewData["Title"] = "Recommended Users";
+}
+<div class="row">
+    @foreach (var user in Model.AllUsers)
+    {
+        <div class="col-md-4">
+            <div class="uicard">
+                <div class="fon">
+                    @if (user.CoverImageUrl == null)
+                    {
+                        <img src="~/images/userCardBackgroundImage.jpg">
+                    }
+                    else
+                    {
+                        <img src=@user.CoverImageUrl>
+                    }
+                </div>
+
+                <div class="user">
+                    <img src=@user.ImageUrl>
+                    <p>@user.FirstName @user.LastName</p>
+                    <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" class="allUsersUsername">@@@user.Username</a></p>
+                    @if (User.Identity.Name == user.Username)
+                    {
+                        <div class="col-xs-6">
+                            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-info btn-block"><i class="fas fa-edit"></i> Edit Profile</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" type="button" class="btn btn-warning btn-block"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-6">
+                            @if (user.HasFollowed == true)
+                            {
+
+                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@user.Username" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
+                            }
+                            else
+                            {
+                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@user.Username" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
+                            }
+                        </div>
+                        <div class="col-xs-6">
+                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" type="button" class="btn btn-info btn-block"><i class="fas fa-user"></i> <span>View Profile</span></a>
+                        </div>
+                    }
+                </div>
+                <div class="socialinfo">
+                    <div class="socialtext1">
+                        <p>@user.FollowersCount</p>
+                        <p>Followers</p>
+                    </div>
+
+                    <div class="socialtext2">
+                        <p>@user.FollowingsCount</p>
+                        <p>Following</p>
+                    </div>
+
+                    <div class="socialtext3">
+                        <p>@user.Activities</p>
+                        <p>Activities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="container">
+    <div class="row" style="text-align: center">
+        @Html.PagedListPager((IPagedList)Model.AllUsers,
+                page => Url.Action("Users", "Profile",
+                new { page = page }),
+                PagedListRenderOptions.OnlyShowFivePagesAtATime)
+    </div>
+    <br />
+</div>

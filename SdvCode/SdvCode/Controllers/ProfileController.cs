@@ -65,7 +65,7 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
-        public async Task<IActionResult> SwitchToTabs(string username, string tab)
+        public async Task<IActionResult> SwitchToAllActivitiesTabs(string username, string tab)
         {
             var user = await this.userManager.FindByNameAsync(username);
             var vm = tab switch
@@ -80,6 +80,19 @@ namespace SdvCode.Controllers
             };
 
             return this.RedirectToAction("Index", new { username = user.UserName, tab = vm });
+        }
+
+        public IActionResult SwitchToAllUsersTabs(string tab)
+        {
+            var vm = tab switch
+            {
+                "AllUsers" => AllUsersTab.AllUsers,
+                "RecommendedUsers" => AllUsersTab.RecommendedUsers,
+                "BannedUsers" => AllUsersTab.BannedUsers,
+                _ => AllUsersTab.AllUsers,
+            };
+
+            return this.RedirectToAction("Users", new { tab = vm });
         }
 
         [Route("/Follow/{username}")]
@@ -102,12 +115,9 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{user.UserName}");
         }
 
-        [Route("/Profile/AllUsers/{page?}/{search?}")]
-        public async Task<IActionResult> AllUsers(int? page, string search)
+        [Route("/Profile/Users/{tab?}/{page?}/{search?}")]
+        public IActionResult Users(AllUsersTab tab, int? page, string search)
         {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            List<UserCardViewModel> allUsers = await this.profileService.GetAllUsers(currentUser, search);
-
             var pageNumber = page ?? 1;
 
             if (search != null)
@@ -115,10 +125,11 @@ namespace SdvCode.Controllers
                 pageNumber = 1;
             }
 
-            var model = new AllUsersViewModel
+            var model = new UsersViewModel
             {
-                UsersCards = allUsers.ToPagedList(pageNumber, GlobalConstants.UsersCountOnPage),
                 Search = search,
+                ActiveTab = tab,
+                Page = pageNumber,
             };
 
             return this.View(model);
