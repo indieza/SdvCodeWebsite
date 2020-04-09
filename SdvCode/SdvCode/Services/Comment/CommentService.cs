@@ -72,12 +72,8 @@ namespace SdvCode.Services.Comment
             var comment = await this.db.Comments.FirstOrDefaultAsync(m => m.Id == commentId);
             if (comment != null)
             {
-                if (comment != null)
-                {
-                    await this.RemoveChildren(comment.Id);
-                    this.db.Comments.Remove(comment);
-                }
-
+                await this.RemoveChildren(comment.Id);
+                this.db.Comments.Remove(comment);
                 await this.db.SaveChangesAsync();
                 return Tuple.Create("Success", SuccessMessages.SuccessfullyDeletePostComment);
             }

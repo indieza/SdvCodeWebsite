@@ -79,10 +79,19 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 await this.commentService.DeleteCommentById(comment.Id);
             }
 
+            this.db.SaveChanges();
+
             var posts = this.db.Posts.Where(x => x.ApplicationUserId == user.Id).ToList();
             foreach (var post in posts)
             {
                 var action = this.db.UserActions.Where(x => x.PostId == post.Id).ToList();
+                var postComments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
+
+                foreach (var comment in postComments)
+                {
+                    await this.commentService.DeleteCommentById(comment.Id);
+                }
+
                 this.db.UserActions.RemoveRange(action);
             }
 
@@ -90,11 +99,25 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 .Where(x => x.PersonId == user.Id || x.FollowerId == user.Id)
                 .ToList();
 
-            var likes = this.db.PostsLikes.Where(x => x.UserId == user.Id).ToList();
+            var likes = this.db.PostsLikes
+                .Where(x => x.UserId == user.Id)
+                .ToList();
+            var recommendedFriends = this.db.RecommendedFriends
+                .Where(x => x.ApplicationUserId == user.Id || x.RecommendedUsername == user.UserName)
+                .ToList();
+            var chatGroups = this.db.Groups
+                .Where(x => x.Name.ToLower().Contains(user.UserName.ToLower()))
+                .ToList();
+            var chatMessages = this.db.ChatMessages
+                .Where(x => x.ReceiverUsername == user.UserName || x.ApplicationUserId == user.Id)
+                .ToList();
 
             this.db.PostsLikes.RemoveRange(likes);
             this.db.FollowUnfollows.RemoveRange(followFollowed);
             this.db.Posts.RemoveRange(posts);
+            this.db.RecommendedFriends.RemoveRange(recommendedFriends);
+            this.db.Groups.RemoveRange(chatGroups);
+            this.db.ChatMessages.RemoveRange(chatMessages);
             await this.db.SaveChangesAsync();
 
             var result = await this.userManager.DeleteAsync(user);
