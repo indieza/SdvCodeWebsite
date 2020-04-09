@@ -6,6 +6,9 @@ namespace SdvCode
     using System;
     using AutoMapper;
     using CloudinaryDotNet;
+    using Hangfire;
+    using Hangfire.Dashboard;
+    using Hangfire.SqlServer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -43,6 +46,7 @@ namespace SdvCode
     using SdvCode.Services.Post;
     using SdvCode.Services.Profile;
     using SdvCode.Services.Profile.Pagination;
+    using SdvCode.Services.RecommendedFriends;
     using SdvCode.Services.Tag;
     using SdvCode.Services.UserPosts;
     using Twilio;
@@ -172,6 +176,26 @@ namespace SdvCode
             // Configure ReCaptch Settings
             services.Configure<ReCaptchSettings>(this.Configuration.GetSection("GoogleReCAPTCHA"));
 
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(
+                this.Configuration.GetConnectionString("DefaultConnection"),
+                new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true,
+                }));
+
+            // Add the processing server as IHostedService
+            services.AddHangfireServer();
+
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -179,8 +203,10 @@ namespace SdvCode
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager recurringJobManager)
         {
+            this.SeedHangfireJobs(recurringJobManager);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -204,6 +230,14 @@ namespace SdvCode
             app.UseAuthentication();
             app.UseAuthorization();
 
+            if (!env.IsProduction())
+            {
+                app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
+                app.UseHangfireDashboard(
+                    "/hangfire",
+                    new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
+            }
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -218,6 +252,21 @@ namespace SdvCode
 
                 endpoints.MapRazorPages();
             });
+        }
+
+        private void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
+        {
+            recurringJobManager
+                .AddOrUpdate<RecommendedFriends>("RecommendedFriends", x => x.AddRecomendedFrinds(), Cron.Weekly);
+        }
+
+        public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
+        {
+            public bool Authorize(DashboardContext context)
+            {
+                var httpContext = context.GetHttpContext();
+                return httpContext.User.IsInRole(GlobalConstants.AdministratorRole);
+            }
         }
     }
 }
