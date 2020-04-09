@@ -18,8 +18,10 @@ namespace SdvCode.Models.User
         [Required]
         public string RecommendedUsername { get; set; }
 
+        [MaxLength(15)]
         public string RecommendedFirstName { get; set; }
 
+        [MaxLength(15)]
         public string RecommendedLastName { get; set; }
 
         [Required]

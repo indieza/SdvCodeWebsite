@@ -40,6 +40,8 @@
     <Compile Remove="Data\Migrations\20200329201033_InitialVillageCreate.Designer.cs" />
     <Compile Remove="Data\Migrations\20200329201424_InitialVillageCreate.cs" />
     <Compile Remove="Data\Migrations\20200329201424_InitialVillageCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200409085050_InitializeRecommendedFriedsTable.cs" />
+    <Compile Remove="Data\Migrations\20200409085050_InitializeRecommendedFriedsTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
