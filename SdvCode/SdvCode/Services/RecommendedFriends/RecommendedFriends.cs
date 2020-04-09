@@ -7,6 +7,7 @@ namespace SdvCode.Services.RecommendedFriends
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Data;
     using SdvCode.Models.User;
 
@@ -29,16 +30,26 @@ namespace SdvCode.Services.RecommendedFriends
 
             foreach (var user in users)
             {
-                foreach (var recommendedUser in this.db.Users.Where(x => x.StateId == user.StateId).ToList())
+                var recommendedUsers = this.db.Users
+                    .Where(x => x.StateId == user.StateId && x.Id != user.Id && x.IsBlocked == false)
+                    .ToList();
+
+                foreach (var recommendedUser in recommendedUsers)
                 {
-                    user.RecommendedFriends.Add(new RecommendedFriend
+                    var followUnfollow = this.db.FollowUnfollows
+                        .FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == recommendedUser.Id && x.IsFollowed == false);
+
+                    if (followUnfollow == null)
                     {
-                        RecommendedUsername = recommendedUser.UserName,
-                        RecommendedFirstName = recommendedUser.FirstName,
-                        RecommendedLastName = recommendedUser.LastName,
-                        RecommendedImageUrl = recommendedUser.ImageUrl,
-                        RecommendedCoverImage = recommendedUser.CoverImageUrl,
-                    });
+                        user.RecommendedFriends.Add(new RecommendedFriend
+                        {
+                            RecommendedUsername = recommendedUser.UserName,
+                            RecommendedFirstName = recommendedUser.FirstName,
+                            RecommendedLastName = recommendedUser.LastName,
+                            RecommendedImageUrl = recommendedUser.ImageUrl,
+                            RecommendedCoverImage = recommendedUser.CoverImageUrl,
+                        });
+                    }
                 }
             }
 
