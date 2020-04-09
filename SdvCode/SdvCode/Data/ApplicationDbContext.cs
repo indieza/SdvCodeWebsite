@@ -52,6 +52,8 @@ namespace SdvCode.Data
 
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
+        public DbSet<RecommendedFriend> RecommendedFriends { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

@@ -1,7 +1,7 @@
 ﻿@using SdvCode.Areas.Administration.Models.Enums
 @using SdvCode.ViewModels.Pagination
 @using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core.Common
 @using X.PagedList
 @model PendingPostsPaginationViewModel
 @{
@@ -53,6 +53,6 @@
         @Html.PagedListPager((IPagedList)Model.PendingPosts,
                 page => Url.Action("Index", "Profile",
         new { username = Model.Username, page = page }),
-        PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+        PagedListRenderOptions.OnlyShowFivePagesAtATime)
     </div>
 </div>

@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Identity
 @using SdvCode.Areas.Administration.Models.Enums
 @using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core.Common
 @using X.PagedList
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -53,7 +53,7 @@
                     @Html.PagedListPager((IPagedList)Model.Posts,
                             page => Url.Action("Index", "Category",
                     new { page = page }),
-                    PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+                    PagedListRenderOptions.OnlyShowFivePagesAtATime)
                 </div>
             </div>
             @await Component.InvokeAsync("Blog")

@@ -1,5 +1,5 @@
 ﻿@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core.Common
 @using X.PagedList
 @using SdvCode.ViewModels.Users.ViewModels
 
@@ -108,7 +108,7 @@
         @Html.PagedListPager((IPagedList)Model.UsersCards,
                 page => Url.Action("AllUsers", "Profile",
                 new { page = page, search = Model.Search }),
-                PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+                PagedListRenderOptions.OnlyShowFivePagesAtATime)
     </div>
     <br />
 </div>

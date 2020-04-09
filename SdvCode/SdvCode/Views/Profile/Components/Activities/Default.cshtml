@@ -2,7 +2,7 @@
 @using SdvCode.ViewModels.Pagination
 @using SdvCode.ViewModels.Profile
 @using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core.Common
 @using X.PagedList
 @model ActivitiesPaginationViewModel
 
@@ -775,6 +775,6 @@
         @Html.PagedListPager((IPagedList)Model.Activities,
                 page => Url.Action("Index", "Profile",
         new { username = Model.Username, page = page }),
-        PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+        PagedListRenderOptions.OnlyShowFivePagesAtATime)
     </div>
 </div>

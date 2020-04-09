@@ -108,6 +108,8 @@ namespace SdvCode.Models.User
 
         public ICollection<ChatMessage> ChatMessages { get; set; } = new HashSet<ChatMessage>();
 
+        public ICollection<RecommendedFriend> RecommendedFriends { get; set; } = new HashSet<RecommendedFriend>();
+
         //[NotMapped]
         //public int ActionsCount { get; set; }
 

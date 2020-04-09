@@ -1,7 +1,7 @@
 ﻿@using SdvCode.ViewModels.Profile
 @using SdvCode.ViewModels.Pagination
 @using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core.Common
 @using X.PagedList
 @model FavoritesPaginationViewModel
 
@@ -43,5 +43,5 @@
     @Html.PagedListPager((IPagedList)Model.Favorites,
             page => Url.Action("Index", "Profile",
     new { username = Model.Username, page = page }),
-    PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+    PagedListRenderOptions.OnlyShowFivePagesAtATime)
 </div>
