@@ -14,14 +14,7 @@
         <div class="col-md-4">
             <div class="uicard">
                 <div class="fon">
-                    @if (user.CoverImageUrl == null)
-                    {
-                        <img src="~/images/userCardBackgroundImage.jpg">
-                    }
-                    else
-                    {
-                        <img src=@user.CoverImageUrl>
-                    }
+                    <img src=@user.CoverImageUrl>
                 </div>
 
                 <div class="user">

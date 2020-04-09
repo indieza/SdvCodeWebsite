@@ -124,5 +124,11 @@ namespace SdvCode.Areas.Administration.Controllers
 
             return this.RedirectToAction("BlockUnblockUser", "UsersPenalties");
         }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public IActionResult HangFire()
+        {
+            return this.RedirectToPage("/Administration/UsersPenalties/HangFire");
+        }
     }
 }

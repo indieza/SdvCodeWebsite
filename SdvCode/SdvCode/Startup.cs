@@ -239,7 +239,7 @@ namespace SdvCode
             {
                 app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
                 app.UseHangfireDashboard(
-                    "/hangfire",
+                    "/Administration/UsersPenalties/HangFire",
                     new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
             }
 

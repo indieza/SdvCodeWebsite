@@ -14,14 +14,7 @@
 
 <div class="user-profile">
     <div class="profile-header-background">
-        @if (Model.ApplicationUser.CoverImageUrl == null)
-        {
-            <img src="~/images/userProfileCityBackgroundImage.jpg" alt="Profile Header Background">
-        }
-        else
-        {
-            <img src=@Model.ApplicationUser.CoverImageUrl alt="Profile Header Background">
-        }
+        <img src=@Model.ApplicationUser.CoverImageUrl alt="Profile Header Background">
     </div>
     <div class="container">
         <div class="row">
