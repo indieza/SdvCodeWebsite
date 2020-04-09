@@ -68,7 +68,15 @@ namespace SdvCode.Areas.Identity.Pages.Account
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, RegisteredOn = DateTime.UtcNow, ImageUrl = GlobalConstants.NoAvatarImageLocation };
+                var user = new ApplicationUser
+                {
+                    UserName = this.Input.Username,
+                    Email = this.Input.Email,
+                    RegisteredOn = DateTime.UtcNow,
+                    ImageUrl = GlobalConstants.NoAvatarImageLocation,
+                    CoverImageUrl = GlobalConstants.NoCoverImageLocation,
+                };
+
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {

@@ -50,5 +50,7 @@ namespace SdvCode.Constraints
         public const string NoAvatarImageLocation = "/images/NoAvatarProfileImage.png";
 
         public const string ChatGroupNameSeparator = "->";
+
+        public const string NoCoverImageLocation = "/images/userProfileCityBackgroundImage.jpg";
     }
 }
