@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Blog\" />
     <Folder Include="PrivateChat\" />
     <Folder Include="Post\" />
   </ItemGroup>
