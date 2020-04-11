@@ -31,7 +31,6 @@ namespace SdvCode.Services.Blog
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly GlobalPostsExtractor postExtractor;
         private readonly AddCyclicActivity cyclicActivity;
         private readonly AddNonCyclicActivity nonCyclicActivity;
@@ -39,14 +38,12 @@ namespace SdvCode.Services.Blog
         public BlogService(
             ApplicationDbContext db,
             Cloudinary cloudinary,
-            UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager)
+            UserManager<ApplicationUser> userManager)
             : base(userManager, db)
         {
             this.db = db;
             this.cloudinary = cloudinary;
             this.userManager = userManager;
-            this.roleManager = roleManager;
             this.postExtractor = new GlobalPostsExtractor(this.db);
             this.cyclicActivity = new AddCyclicActivity(this.db);
             this.nonCyclicActivity = new AddNonCyclicActivity(this.db);
