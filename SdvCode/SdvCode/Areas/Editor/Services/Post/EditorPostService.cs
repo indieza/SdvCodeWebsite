@@ -38,16 +38,21 @@ namespace SdvCode.Areas.Editor.Services.Post
         public async Task<bool> ApprovePost(string id)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
-            var targetApprovedEntity = this.db.PendingPosts.FirstOrDefault(x => x.PostId == post.Id && x.IsPending == true);
-
-            if (post != null && targetApprovedEntity != null)
+            if (post != null)
             {
-                post.PostStatus = PostStatus.Approved;
-                targetApprovedEntity.IsPending = false;
-                this.db.PendingPosts.Update(targetApprovedEntity);
-                this.db.Posts.Update(post);
-                await this.db.SaveChangesAsync();
-                return true;
+                var targetApprovedEntity = this.db.PendingPosts
+                    .FirstOrDefault(x => x.PostId == post.Id && x.IsPending == true);
+                if (targetApprovedEntity != null)
+                {
+                    post.PostStatus = PostStatus.Approved;
+                    targetApprovedEntity.IsPending = false;
+                    this.db.PendingPosts.Update(targetApprovedEntity);
+                    this.db.Posts.Update(post);
+                    await this.db.SaveChangesAsync();
+                    return true;
+                }
+
+                return false;
             }
 
             return false;
@@ -56,37 +61,43 @@ namespace SdvCode.Areas.Editor.Services.Post
         public async Task<bool> BannPost(string id)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
-            var targetApprovedEntity = this.db.BlockedPosts.FirstOrDefault(x => x.PostId == post.Id && x.IsBlocked == false);
 
-            if (post != null && targetApprovedEntity != null)
+            if (post != null)
             {
-                post.PostStatus = PostStatus.Banned;
-                targetApprovedEntity.IsBlocked = true;
-                var favorites = this.db.FavouritePosts.Where(x => x.PostId == id);
-
-                foreach (var favor in favorites)
+                var targetApprovedEntity = this.db.BlockedPosts
+                    .FirstOrDefault(x => x.PostId == post.Id && x.IsBlocked == false);
+                if (targetApprovedEntity != null)
                 {
-                    favor.IsFavourite = false;
+                    post.PostStatus = PostStatus.Banned;
+                    targetApprovedEntity.IsBlocked = true;
+                    var favorites = this.db.FavouritePosts.Where(x => x.PostId == id);
+
+                    foreach (var favor in favorites)
+                    {
+                        favor.IsFavourite = false;
+                    }
+
+                    var likes = this.db.PostsLikes.Where(x => x.PostId == id && x.IsLiked == true);
+
+                    foreach (var like in likes)
+                    {
+                        like.IsLiked = false;
+                        post.Likes--;
+                    }
+
+                    var actions = this.db.UserActions
+                        .Where(x => x.PostId == id && this.actionsForBann.Contains(x.Action));
+
+                    this.db.FavouritePosts.UpdateRange(favorites);
+                    this.db.PostsLikes.UpdateRange(likes);
+                    this.db.UserActions.RemoveRange(actions);
+                    this.db.BlockedPosts.Update(targetApprovedEntity);
+                    this.db.Posts.Update(post);
+                    await this.db.SaveChangesAsync();
+                    return true;
                 }
 
-                var likes = this.db.PostsLikes.Where(x => x.PostId == id && x.IsLiked == true);
-
-                foreach (var like in likes)
-                {
-                    like.IsLiked = false;
-                    post.Likes--;
-                }
-
-                var actions = this.db.UserActions
-                    .Where(x => x.PostId == id && this.actionsForBann.Contains(x.Action));
-
-                this.db.FavouritePosts.UpdateRange(favorites);
-                this.db.PostsLikes.UpdateRange(likes);
-                this.db.UserActions.RemoveRange(actions);
-                this.db.BlockedPosts.Update(targetApprovedEntity);
-                this.db.Posts.Update(post);
-                await this.db.SaveChangesAsync();
-                return true;
+                return false;
             }
 
             return false;
@@ -95,16 +106,22 @@ namespace SdvCode.Areas.Editor.Services.Post
         public async Task<bool> UnbannPost(string id)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
-            var targetApprovedEntity = this.db.BlockedPosts.FirstOrDefault(x => x.PostId == post.Id && x.IsBlocked == true);
 
-            if (post != null && targetApprovedEntity != null)
+            if (post != null)
             {
-                post.PostStatus = PostStatus.Approved;
-                targetApprovedEntity.IsBlocked = false;
-                this.db.BlockedPosts.Update(targetApprovedEntity);
-                this.db.Posts.Update(post);
-                await this.db.SaveChangesAsync();
-                return true;
+                var targetApprovedEntity = this.db.BlockedPosts
+                    .FirstOrDefault(x => x.PostId == post.Id && x.IsBlocked == true);
+                if (targetApprovedEntity != null)
+                {
+                    post.PostStatus = PostStatus.Approved;
+                    targetApprovedEntity.IsBlocked = false;
+                    this.db.BlockedPosts.Update(targetApprovedEntity);
+                    this.db.Posts.Update(post);
+                    await this.db.SaveChangesAsync();
+                    return true;
+                }
+
+                return false;
             }
 
             return false;
