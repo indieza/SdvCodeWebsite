@@ -10,7 +10,7 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
 
     public interface IBlogAddonsService
     {
-        Task<Tuple<string, string>> CreateCategory(string name, string description);
+        Task<Tuple<string, string>> CreateCategoryAdminArea(string name, string description);
 
         Task<Tuple<string, string>> CreateTag(string name);
 

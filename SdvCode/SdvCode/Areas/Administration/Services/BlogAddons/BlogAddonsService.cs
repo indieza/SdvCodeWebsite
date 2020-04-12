@@ -15,20 +15,19 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
     using SdvCode.Data;
     using SdvCode.Models.Blog;
 
-    public class BlogAddonsService : IBlogAddonsService
+    public class BlogAddonsService : AddCategoryService, IBlogAddonsService
     {
         private readonly ApplicationDbContext db;
-        private readonly IAddCategoryService addCategoryService;
 
-        public BlogAddonsService(ApplicationDbContext db, IAddCategoryService addCategoryService)
+        public BlogAddonsService(ApplicationDbContext db)
+            : base(db)
         {
             this.db = db;
-            this.addCategoryService = addCategoryService;
         }
 
-        public async Task<Tuple<string, string>> CreateCategory(string name, string description)
+        public async Task<Tuple<string, string>> CreateCategoryAdminArea(string name, string description)
         {
-            return await this.addCategoryService.CreateCategory(name, description);
+            return await this.CreateCategory(name, description);
         }
 
         public async Task<Tuple<string, string>> CreateTag(string name)

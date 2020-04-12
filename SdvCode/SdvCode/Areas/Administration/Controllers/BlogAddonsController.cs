@@ -44,7 +44,7 @@ namespace SdvCode.Areas.Administration.Controllers
             if (this.ModelState.IsValid)
             {
                 var tuple = await this.addonsService
-                    .CreateCategory(model.Name, model.Description = model.SanitizedDescription);
+                    .CreateCategoryAdminArea(model.Name, model.Description = model.SanitizedDescription);
                 this.TempData[tuple.Item1] = tuple.Item2;
             }
             else
