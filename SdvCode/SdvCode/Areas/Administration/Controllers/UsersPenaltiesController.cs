@@ -22,14 +22,14 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRole)]
-        public IActionResult BlockUnblockUser()
+        public async Task<IActionResult> BlockUnblockUser()
         {
             var model = new UsersPenaltiesIndexModel
             {
                 UsersPenaltiesViewModel = new UsersPenaltiesViewModel
                 {
                     BlockedUsernames = this.usersPenaltiesService.GetAllBlockedUsers(),
-                    NotBlockedUsernames = this.usersPenaltiesService.GetAllNotBlockedUsers(),
+                    NotBlockedUsernames = await this.usersPenaltiesService.GetAllNotBlockedUsers(),
                 },
                 UsersPenaltiesInputModel = new UsersPenaltiesInputModel(),
             };

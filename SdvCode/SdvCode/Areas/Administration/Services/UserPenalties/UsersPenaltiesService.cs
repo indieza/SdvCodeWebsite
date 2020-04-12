@@ -65,16 +65,22 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
             return this.db.Users.Where(u => u.IsBlocked == true).Select(x => x.UserName).ToList();
         }
 
-        public ICollection<string> GetAllNotBlockedUsers()
+        public async Task<ICollection<string>> GetAllNotBlockedUsers()
         {
-            var adminRoleId = this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole).Result.Id;
-            var usersAdminsIds = this.db.UserRoles.Where(x => x.RoleId == adminRoleId).Select(x => x.UserId).ToList();
-            return this.db.Users.Where(u => u.IsBlocked == false && !usersAdminsIds.Contains(u.Id)).Select(x => x.UserName).ToList();
+            var adminRole = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
+            var usersAdminsIds = this.db.UserRoles
+                .Where(x => x.RoleId == adminRole.Id)
+                .Select(x => x.UserId)
+                .ToList();
+            return this.db.Users
+                .Where(u => u.IsBlocked == false && !usersAdminsIds.Contains(u.Id))
+                .Select(x => x.UserName)
+                .ToList();
         }
 
         public async Task<int> BlockAllUsers()
         {
-            var role = this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole).Result;
+            var role = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
             int count = 0;
 
             if (role != null)

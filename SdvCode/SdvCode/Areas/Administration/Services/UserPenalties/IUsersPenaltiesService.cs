@@ -10,7 +10,7 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
     {
         ICollection<string> GetAllBlockedUsers();
 
-        ICollection<string> GetAllNotBlockedUsers();
+        Task<ICollection<string>> GetAllNotBlockedUsers();
 
         Task<bool> BlockUser(string username);
 
