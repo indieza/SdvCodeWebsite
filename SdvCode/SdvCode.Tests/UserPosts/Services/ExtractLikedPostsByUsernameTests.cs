@@ -33,7 +33,7 @@
                     Post = post,
                     IsLiked = true,
                 });
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await postService.ExtractLikedPostsByUsername(user.UserName, currentUser);
 
                 Assert.Equal(1, result.Count);
@@ -60,7 +60,7 @@
                     Post = post,
                     IsLiked = false,
                 });
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await postService.ExtractLikedPostsByUsername(user.UserName, currentUser);
 
                 Assert.Equal(0, result.Count);

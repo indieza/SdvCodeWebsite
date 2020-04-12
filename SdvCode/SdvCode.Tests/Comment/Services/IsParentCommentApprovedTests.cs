@@ -48,7 +48,7 @@
             {
                 ICommentService commentService = new CommentService(db, mockUserManager.Object);
                 db.Comments.AddRange(comment1);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await commentService.IsParentCommentApproved(comment1.Id);
 
                 Assert.Equal(1, db.Comments.Count());
@@ -84,7 +84,7 @@
             {
                 ICommentService commentService = new CommentService(db, mockUserManager.Object);
                 db.Comments.AddRange(comment1);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await commentService.IsParentCommentApproved(comment1.Id);
 
                 Assert.Equal(1, db.Comments.Count());

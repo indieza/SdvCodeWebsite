@@ -30,7 +30,7 @@
             {
                 IEditorCommentService commentService = new EditorCommentService(db);
                 db.Comments.AddRange(comment);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await commentService.ApprovedCommentById(comment.Id);
 
                 Assert.True(result);

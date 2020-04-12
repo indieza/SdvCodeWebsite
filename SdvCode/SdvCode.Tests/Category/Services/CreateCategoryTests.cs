@@ -26,7 +26,7 @@
             {
                 IAddCategoryService categoryService = new AddCategoryService(db);
                 db.Categories.AddRange(category);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await categoryService.CreateCategory("Test1", "Test");
 
                 Assert.Equal(1, db.Categories.Count());

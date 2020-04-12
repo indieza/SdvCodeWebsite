@@ -28,7 +28,7 @@
                 ICategoryService categoryService = new CategoryService(db);
                 db.Categories.Add(category);
                 db.Posts.Add(post);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await categoryService.ExtractPostsByCategoryId(category.Id, user);
 
                 Assert.Equal(1, result.Count);

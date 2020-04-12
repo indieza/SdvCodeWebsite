@@ -23,7 +23,7 @@
             {
                 ITagService tagService = new TagService(db);
                 db.Tags.Add(tag);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await tagService.ExtractTagById(tag.Id);
 
                 Assert.Equal(tag, result);

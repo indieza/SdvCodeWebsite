@@ -25,7 +25,7 @@
             {
                 IBlogAddonsService blodAddonsService = new BlogAddonsService(db);
                 db.Tags.Add(tag);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await blodAddonsService.CreateTag("test");
 
                 Assert.Equal("Error", result.Item1);
@@ -45,7 +45,7 @@
             {
                 IBlogAddonsService blodAddonsService = new BlogAddonsService(db);
                 db.Tags.Add(tag);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await blodAddonsService.CreateTag("Test2");
 
                 Assert.Equal("Success", result.Item1);

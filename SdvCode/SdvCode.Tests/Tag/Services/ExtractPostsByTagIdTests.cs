@@ -33,7 +33,7 @@
                     Post = post,
                     Tag = tag,
                 });
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await tagService.ExtractPostsByTagId(tag.Id, user);
 
                 Assert.Equal(1, result.Count);

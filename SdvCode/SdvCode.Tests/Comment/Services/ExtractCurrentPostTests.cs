@@ -47,7 +47,7 @@
             {
                 ICommentService commentService = new CommentService(db, mockUserManager.Object);
                 db.Posts.AddRange(post);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await commentService.ExtractCurrentPost(post.Id);
 
                 Assert.Equal(1, db.Posts.Count());

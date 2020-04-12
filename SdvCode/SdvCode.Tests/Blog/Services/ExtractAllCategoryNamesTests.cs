@@ -43,7 +43,7 @@
             {
                 IBlogService blogService = new BlogService(db, null, mockUserManager.Object);
                 db.Categories.AddRange(category1, category2);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await blogService.ExtractAllCategoryNames();
 
                 Assert.Equal(2, result.Count);

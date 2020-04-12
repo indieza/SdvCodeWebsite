@@ -42,7 +42,7 @@
             {
                 ICommentService commentService = new CommentService(db, mockUserManager.Object);
                 db.Comments.AddRange(comment);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await commentService.DeleteCommentById(comment.Id);
 
                 Assert.Equal(0, db.Comments.Count());

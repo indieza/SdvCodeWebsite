@@ -42,7 +42,7 @@
             {
                 IBlogService blogService = new BlogService(db, null, mockUserManager.Object);
                 db.Tags.AddRange(tag1, tag2);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await blogService.ExtractAllTagNames();
 
                 Assert.Equal(2, result.Count);

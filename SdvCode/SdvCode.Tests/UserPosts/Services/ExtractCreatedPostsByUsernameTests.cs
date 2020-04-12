@@ -27,7 +27,7 @@
                 IUserPostsService postService = new UserPostsService(db);
                 db.Users.AddRange(user, currentUser);
                 db.Posts.Add(post);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await postService.ExtractCreatedPostsByUsername(user.UserName, currentUser);
 
                 Assert.Equal(1, result.Count);
@@ -46,7 +46,7 @@
             {
                 IUserPostsService postService = new UserPostsService(db);
                 db.Users.AddRange(user, currentUser);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await postService.ExtractCreatedPostsByUsername(user.UserName, currentUser);
 
                 Assert.Equal(0, result.Count);

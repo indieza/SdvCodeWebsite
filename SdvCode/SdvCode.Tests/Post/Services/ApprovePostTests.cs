@@ -40,7 +40,7 @@
                 IEditorPostService commentService = new EditorPostService(db);
                 db.Posts.AddRange(post);
                 db.PendingPosts.Add(pendingPost);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await commentService.ApprovePost(post.Id);
 
                 Assert.True(result);
@@ -89,7 +89,7 @@
                 IEditorPostService commentService = new EditorPostService(db);
                 db.Posts.AddRange(post);
                 db.PendingPosts.Add(pendingPost);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await commentService.ApprovePost(post.Id);
 
                 Assert.False(result);

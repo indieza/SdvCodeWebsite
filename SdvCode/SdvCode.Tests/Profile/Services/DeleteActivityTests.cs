@@ -28,7 +28,7 @@
                 IProfileService profileService = new ProfileService(db);
                 db.Users.Add(user);
                 db.UserActions.Add(activity);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 await profileService.DeleteActivity(user);
 
                 Assert.Equal(0, db.UserActions.Count());

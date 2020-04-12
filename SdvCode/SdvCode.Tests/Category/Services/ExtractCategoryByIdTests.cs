@@ -24,7 +24,7 @@
             {
                 ICategoryService categoryService = new CategoryService(db);
                 db.Categories.Add(category);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await categoryService.ExtractCategoryById(category.Id);
 
                 Assert.Equal(category.Id, result.Id);

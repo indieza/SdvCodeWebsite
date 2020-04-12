@@ -44,7 +44,7 @@
                 IBlogService blogService = new BlogService(db, null, mockUserManager.Object);
                 db.Categories.Add(category);
                 db.Posts.Add(post);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 var result = await blogService.ExtractPost(post.Id, user);
 
                 Assert.IsType<EditPostInputModel>(result);
