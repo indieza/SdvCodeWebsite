@@ -201,6 +201,7 @@ namespace SdvCode
             // Add the processing server as IHostedService
             services.AddHangfireServer();
 
+            services.AddServerSideBlazor();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -256,6 +257,7 @@ namespace SdvCode
                 endpoints.MapHub<PrivateChatHub>("/privateChatHub");
 
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
         }
 
