@@ -30,6 +30,8 @@ namespace SdvCode
     using SdvCode.Areas.Editor.Services.Comment;
     using SdvCode.Areas.Editor.Services.Post;
     using SdvCode.Areas.PrivateChat.Services;
+    using SdvCode.Areas.PrivateChat.Services.ChatMessagesDbUsage;
+    using SdvCode.Areas.PrivateChat.Services.PrivateChat;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -279,6 +281,10 @@ namespace SdvCode
             // Delete all user activities
             recurringJobManager
                 .AddOrUpdate<AllActivities>("AllActivities", x => x.DeleteAllActivites(), Cron.Yearly);
+
+            // Delete all chat messages
+            recurringJobManager
+                .AddOrUpdate<DeleteMessages>("DeleteMessages", x => x.DeleteAllChatMessages(), Cron.Yearly);
         }
 
         public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter

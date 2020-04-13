@@ -11,6 +11,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.PrivateChat.Services;
+    using SdvCode.Areas.PrivateChat.Services.PrivateChat;
     using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
     using SdvCode.Constraints;
     using SdvCode.Data;
