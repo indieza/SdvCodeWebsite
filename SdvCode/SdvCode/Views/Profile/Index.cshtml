@@ -27,7 +27,7 @@
                             <span class="label label-danger" style="font-size: medium; padding: 7px 40px 7px 40px"><i class="fas fa-user-slash"> Banned</i></span>
                         }
                         <div style="font-size: 23px">
-                            Rating: <span id="profileRating">@Model.RatingScore/5</span><span style="color: #deb217">★</span>
+                            Rating: <span id="profileRating">@Model.RatingScore.ToString("F2")/5</span><span style="color: #deb217">★</span>
                         </div>
                         <h5>@@@Model.ApplicationUser.Username</h5>
                     </div>

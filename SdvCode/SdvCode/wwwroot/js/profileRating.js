@@ -9,7 +9,6 @@
         },
         success: function (msg) {
             document.getElementById("profileRating").innerText = msg;
-            console.log(msg);
         },
         error: function (msg) {
             alert(msg);

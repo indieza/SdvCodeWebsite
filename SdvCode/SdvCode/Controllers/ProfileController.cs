@@ -142,7 +142,7 @@ namespace SdvCode.Controllers
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
             double rateUser = await this.profileService.RateUser(currentUser, username, rate);
-            return $"{rateUser}/5";
+            return $"{rateUser:F2}/5";
         }
 
         [Route("/DeleteActivityHistory/{username}")]

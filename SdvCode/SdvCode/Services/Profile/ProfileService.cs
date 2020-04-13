@@ -219,7 +219,7 @@ namespace SdvCode.Services.Profile
             if (count != 0)
             {
                 var totalScore = this.db.UserRatings.Where(x => x.Username == username).Sum(x => x.Stars);
-                score = (double)totalScore / count;
+                score = Math.Round((double)totalScore / count, 2);
                 return score;
             }
 
