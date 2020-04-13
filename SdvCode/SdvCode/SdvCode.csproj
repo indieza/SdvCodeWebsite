@@ -1932,7 +1932,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Editor\Models\" />
-    <Folder Include="Areas\SdvShop\Components\Pages\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 
