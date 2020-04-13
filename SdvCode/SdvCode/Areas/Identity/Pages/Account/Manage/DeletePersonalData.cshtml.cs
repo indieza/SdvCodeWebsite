@@ -111,6 +111,9 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var chatMessages = this.db.ChatMessages
                 .Where(x => x.ReceiverUsername == user.UserName || x.ApplicationUserId == user.Id)
                 .ToList();
+            var ratings = this.db.UserRatings
+                .Where(x => x.RaterUsername == user.UserName || x.Username == user.UserName)
+                .ToList();
 
             this.db.PostsLikes.RemoveRange(likes);
             this.db.FollowUnfollows.RemoveRange(followFollowed);
@@ -118,6 +121,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             this.db.RecommendedFriends.RemoveRange(recommendedFriends);
             this.db.Groups.RemoveRange(chatGroups);
             this.db.ChatMessages.RemoveRange(chatMessages);
+            this.db.UserRatings.RemoveRange(ratings);
             await this.db.SaveChangesAsync();
 
             var result = await this.userManager.DeleteAsync(user);

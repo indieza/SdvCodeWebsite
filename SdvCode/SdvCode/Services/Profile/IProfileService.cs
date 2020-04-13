@@ -18,8 +18,6 @@ namespace SdvCode.Services.Profile
 
         Task<ApplicationUser> UnfollowUser(string username, ApplicationUser user);
 
-        Task<List<UserCardViewModel>> GetAllUsers(ApplicationUser user, string search);
-
         Task DeleteActivity(ApplicationUser user);
 
         Task<string> DeleteActivityById(ApplicationUser user, int activityId);
@@ -33,5 +31,9 @@ namespace SdvCode.Services.Profile
         Task<int> TakeLikedPostsCountByUsername(string username);
 
         Task<int> TakeCommentsCountByUsername(string username);
+
+        Task<double> RateUser(ApplicationUser currentUser, string username, int rate);
+
+        double ExtractUserRatingScore(string username);
     }
 }

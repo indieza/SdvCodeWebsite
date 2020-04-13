@@ -7,6 +7,7 @@ namespace SdvCode.Services.Profile
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Razor.Language.Intermediate;
@@ -116,11 +117,6 @@ namespace SdvCode.Services.Profile
             return currentUser;
         }
 
-        public async Task<List<UserCardViewModel>> GetAllUsers(ApplicationUser user, string search)
-        {
-            return null;
-        }
-
         public async Task<ApplicationUser> UnfollowUser(string username, ApplicationUser currentUser)
         {
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
@@ -183,6 +179,51 @@ namespace SdvCode.Services.Profile
         public async Task<int> TakeCommentsCountByUsername(string username)
         {
             return await this.db.Comments.CountAsync(x => x.ApplicationUser.UserName == username);
+        }
+
+        public async Task<double> RateUser(ApplicationUser currentUser, string username, int rate)
+        {
+            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName.ToLower() == username.ToLower());
+            var targetRating = await this.db.UserRatings
+                .FirstOrDefaultAsync(x => x.Username == username && x.RaterUsername == currentUser.UserName);
+
+            if (targetRating != null)
+            {
+                targetRating.Stars = rate;
+                this.db.Update(targetRating);
+            }
+            else
+            {
+                targetRating = new UserRating
+                {
+                    RaterUsername = currentUser.UserName,
+                    Username = username,
+                    Stars = rate,
+                };
+                this.db.UserRatings.Add(targetRating);
+            }
+
+            await this.db.SaveChangesAsync();
+            return this.CalculateRatingScore(username);
+        }
+
+        public double ExtractUserRatingScore(string username)
+        {
+            return this.CalculateRatingScore(username);
+        }
+
+        private double CalculateRatingScore(string username)
+        {
+            double score;
+            var count = this.db.UserRatings.Count(x => x.Username == username);
+            if (count != 0)
+            {
+                var totalScore = this.db.UserRatings.Where(x => x.Username == username).Sum(x => x.Stars);
+                score = (double)totalScore / count;
+                return score;
+            }
+
+            return 0;
         }
     }
 }

@@ -54,6 +54,8 @@ namespace SdvCode.Data
 
         public DbSet<RecommendedFriend> RecommendedFriends { get; set; }
 
+        public DbSet<UserRating> UserRatings { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

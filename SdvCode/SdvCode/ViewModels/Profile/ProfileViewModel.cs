@@ -22,5 +22,7 @@ namespace SdvCode.ViewModels.Profile
         public int LikedPosts { get; set; }
 
         public int CommentsCount { get; set; }
+
+        public double RatingScore { get; set; }
     }
 }

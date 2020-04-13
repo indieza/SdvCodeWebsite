@@ -53,6 +53,7 @@ namespace SdvCode.Controllers
                 CreatedPosts = await this.profileService.TakeCreatedPostsCountByUsername(username),
                 LikedPosts = await this.profileService.TakeLikedPostsCountByUsername(username),
                 CommentsCount = await this.profileService.TakeCommentsCountByUsername(username),
+                RatingScore = this.profileService.ExtractUserRatingScore(username),
             };
 
             // if (tab == 0)
@@ -133,6 +134,15 @@ namespace SdvCode.Controllers
             };
 
             return this.View(model);
+        }
+
+        [HttpPost]
+        [Route("/RateUser")]
+        public async Task<string> RateUser(string username, int rate)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            double rateUser = await this.profileService.RateUser(currentUser, username, rate);
+            return $"{rateUser}/5";
         }
 
         [Route("/DeleteActivityHistory/{username}")]
