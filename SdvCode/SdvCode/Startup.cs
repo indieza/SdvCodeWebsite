@@ -50,6 +50,9 @@ namespace SdvCode
     using SdvCode.Services.Profile.Pagination.Profile;
     using SdvCode.Services.RecommendedFriends;
     using SdvCode.Services.Tag;
+    using SdvCode.Services.UserActivites;
+    using SdvCode.Services.UserActivitesDbUsage.AllActivities;
+    using SdvCode.Services.UserActivitesDbUsage.FollowActivities;
     using SdvCode.Services.UserPosts;
     using Twilio;
 
@@ -265,6 +268,15 @@ namespace SdvCode
         {
             recurringJobManager
                 .AddOrUpdate<RecommendedFriends>("RecommendedFriends", x => x.AddRecomendedFrinds(), Cron.Weekly);
+
+            recurringJobManager
+                .AddOrUpdate<UserFollowActivitiesDbUsage>(
+                "UserActivitiesDbSavage",
+                x => x.DeleteFollowActivites(),
+                Cron.Monthly);
+
+            recurringJobManager
+                .AddOrUpdate<AllActivities>("AllActivities", x => x.DeleteAllActivites(), Cron.Yearly);
         }
 
         public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
