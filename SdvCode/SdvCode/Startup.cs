@@ -265,15 +265,18 @@ namespace SdvCode
 
         private void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
         {
+            // Edit recommended friend list for each user
             recurringJobManager
                 .AddOrUpdate<RecommendedFriends>("RecommendedFriends", x => x.AddRecomendedFrinds(), Cron.Weekly);
 
+            // Delete all follow-unfollow activities
             recurringJobManager
                 .AddOrUpdate<UserFollowActivitiesDbUsage>(
                 "UserActivitiesDbSavage",
                 x => x.DeleteFollowActivites(),
                 Cron.Monthly);
 
+            // Delete all user activities
             recurringJobManager
                 .AddOrUpdate<AllActivities>("AllActivities", x => x.DeleteAllActivites(), Cron.Yearly);
         }
