@@ -50,7 +50,6 @@ namespace SdvCode
     using SdvCode.Services.Profile.Pagination.Profile;
     using SdvCode.Services.RecommendedFriends;
     using SdvCode.Services.Tag;
-    using SdvCode.Services.UserActivites;
     using SdvCode.Services.UserActivitesDbUsage.AllActivities;
     using SdvCode.Services.UserActivitesDbUsage.FollowActivities;
     using SdvCode.Services.UserPosts;
