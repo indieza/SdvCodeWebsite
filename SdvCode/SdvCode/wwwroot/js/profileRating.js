@@ -1,5 +1,5 @@
 ﻿function selectRate(rate) {
-    let username = document.getElementsByTagName("h5")[0].innerText.substring(1).toLocaleLowerCase();
+    let username = document.getElementsByTagName("h5")[0].innerText.substring(1);
     $.ajax({
         url: `/RateUser`,
         type: "POST",

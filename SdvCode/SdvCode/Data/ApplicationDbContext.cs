@@ -144,6 +144,12 @@ namespace SdvCode.Data
                 k.ApplicationUserId,
             });
 
+            builder.Entity<UserRating>().HasKey(k => new
+            {
+                k.Username,
+                k.RaterUsername,
+            });
+
             base.OnModelCreating(builder);
         }
     }

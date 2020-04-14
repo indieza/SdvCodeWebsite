@@ -183,7 +183,7 @@ namespace SdvCode.Services.Profile
 
         public async Task<double> RateUser(ApplicationUser currentUser, string username, int rate)
         {
-            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName.ToLower() == username.ToLower());
+            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             var targetRating = await this.db.UserRatings
                 .FirstOrDefaultAsync(x => x.Username == username && x.RaterUsername == currentUser.UserName);
 

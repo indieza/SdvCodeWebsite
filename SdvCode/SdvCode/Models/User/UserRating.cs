@@ -11,9 +11,6 @@ namespace SdvCode.Models.User
 
     public class UserRating
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         public string Username { get; set; }
 
