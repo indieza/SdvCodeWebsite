@@ -9,9 +9,16 @@
         },
         success: function (msg) {
             document.getElementById("profileRating").innerText = msg;
-            markRateStars(msg.split("/")[0], false);
             var latestScore = document.getElementById("latestScore");
-            latestScore.innerHTML = rate;
+
+            if (latestScore.innerText == "0") {
+                latestScore.innerText = rate;
+                markRateStars(msg.split("/")[0], true);
+            } else {
+                latestScore.innerText = rate;
+                markRateStars(msg.split("/")[0], false);
+            }
+            markRateStars(msg.split("/")[0], true);
         },
         error: function (msg) {
             alert(msg);
@@ -39,7 +46,7 @@ function markRateStars(score, isFirst) {
     }
     starsDiv.appendChild(div);
     if (isFirst) {
-        if (latestScore) {
+        if (latestScore && score != 0) {
             document.getElementById(`rating-${latestScore.innerText}`).checked = true;
         }
     }
