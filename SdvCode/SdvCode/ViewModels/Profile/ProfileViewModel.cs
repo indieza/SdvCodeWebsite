@@ -24,5 +24,7 @@ namespace SdvCode.ViewModels.Profile
         public int CommentsCount { get; set; }
 
         public double RatingScore { get; set; }
+
+        public int LatestScore { get; set; }
     }
 }

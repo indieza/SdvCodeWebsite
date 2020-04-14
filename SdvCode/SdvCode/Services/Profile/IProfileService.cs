@@ -35,5 +35,7 @@ namespace SdvCode.Services.Profile
         Task<double> RateUser(ApplicationUser currentUser, string username, int rate);
 
         double ExtractUserRatingScore(string username);
+
+        Task<int> GetLatestScore(ApplicationUser currentUser, string username);
     }
 }

@@ -212,6 +212,13 @@ namespace SdvCode.Services.Profile
             return this.CalculateRatingScore(username);
         }
 
+        public async Task<int> GetLatestScore(ApplicationUser currentUser, string username)
+        {
+            var target = await this.db.UserRatings
+                .FirstOrDefaultAsync(x => x.Username == username && x.RaterUsername == currentUser.UserName);
+            return target == null ? 0 : target.Stars;
+        }
+
         private double CalculateRatingScore(string username)
         {
             double score;

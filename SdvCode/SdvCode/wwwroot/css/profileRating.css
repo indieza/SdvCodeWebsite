@@ -123,3 +123,15 @@
     align-items: center;
     box-shadow: 0 4px 30px rgba(0,0,0,.05);
 }
+
+.currentRatingScore {
+    text-align: center;
+}
+
+.ratingStars {
+    font-size: 23px;
+}
+
+.ratingStar {
+    color: #deb217;
+}

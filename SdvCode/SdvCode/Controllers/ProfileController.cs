@@ -54,6 +54,7 @@ namespace SdvCode.Controllers
                 LikedPosts = await this.profileService.TakeLikedPostsCountByUsername(username),
                 CommentsCount = await this.profileService.TakeCommentsCountByUsername(username),
                 RatingScore = this.profileService.ExtractUserRatingScore(username),
+                LatestScore = await this.profileService.GetLatestScore(currentUser, username),
             };
 
             // if (tab == 0)
