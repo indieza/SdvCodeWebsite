@@ -82,11 +82,11 @@
                 Blog
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBlog" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-puzzle-piece"></i>
                     <span>Blog Addons</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseBlog" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom blog addons:</h6>
                         <a asp-area="Administration" asp-controller="BlogAddons" asp-action="AddCategory" class="collapse-item">Add Category</a>
@@ -105,6 +105,26 @@
                     <i class="fas fa-comment-dots"></i>
                     <span>Pending Comments</span>
                 </a>
+            </li>
+            <li>
+                <hr class="sidebar-divider">
+            </li>
+
+            <li class="sidebar-heading">
+                Shop
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseShop" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Shop Addons</span>
+                </a>
+                <div id="collapseShop" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom shop addons:</h6>
+                        <a asp-area="Administration" asp-controller="Shop" asp-action="AddNewProductCategory" class="collapse-item">Add Category</a>
+                        <a asp-area="Administration" asp-controller="Shop" asp-action="AddNewProduct" class="collapse-item">Add Product</a>
+                    </div>
+                </div>
             </li>
             <li>
                 <hr class="sidebar-divider d-none d-md-block">

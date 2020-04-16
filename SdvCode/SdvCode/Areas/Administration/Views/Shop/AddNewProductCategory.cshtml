@@ -1,0 +1,44 @@
+﻿@using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels
+@{
+    ViewData["Title"] = "Add Product Category";
+}
+
+@model ProductCategoryInputModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Shop Center - Add product category</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Add new product category</h1>
+    </div>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <input asp-for="@Model.Title" class="form-control" placeholder="Name" required />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <textarea asp-for="@Model.Description" class="form-control" style="resize: vertical" rows="10"></textarea>
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="Shop" asp-action="AddNewProductCategory" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Add Category</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

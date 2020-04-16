@@ -66,5 +66,7 @@ namespace SdvCode.Constraints
         public const string CannotCommentNotApprovedComment = "You cannot comment not approved comment.";
 
         public const string TagDoesNotExist = "\"{0}\" tag does not exist.";
+
+        public const string ProductCategoryAlreadyExist = "\"{0}\" category already exist.";
     }
 }

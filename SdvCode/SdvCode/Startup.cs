@@ -24,6 +24,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.DbUsage;
     using SdvCode.Areas.Administration.Services.PendingComments;
     using SdvCode.Areas.Administration.Services.PendingPosts;
+    using SdvCode.Areas.Administration.Services.Shop;
     using SdvCode.Areas.Administration.Services.UserPenalties;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Areas.Editor.Services.Category;
@@ -175,6 +176,9 @@ namespace SdvCode
             services.AddTransient<IAllUsersService, AllUsersService>();
             services.AddTransient<IBannedUsersService, BannedUsersService>();
             services.AddTransient<IRecommendedUsersService, RecommendedUsersService>();
+
+            // Register Shop Services
+            services.AddTransient<IShopDbUsageService, ShopDbUsageService>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()

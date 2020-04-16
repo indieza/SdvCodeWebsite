@@ -80,5 +80,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyRemovedTag = "Successfully removed \"{0}\" tag.";
 
         public const string SuccessfullyEditedComment = "You successfully edit blog post comment";
+
+        public const string SuccessfullyAddedProductCategory = "\"{0}\" category was successfully created.";
     }
 }
