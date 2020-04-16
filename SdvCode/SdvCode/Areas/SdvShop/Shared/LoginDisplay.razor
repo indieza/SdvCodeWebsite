@@ -1,0 +1,38 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <li class="nav-item">
+            <a href="#" class="icons">
+                <i class="ti-search" aria-hidden="true"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="icons">
+                <i class="ti-shopping-cart"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/Profile/@context.User.Identity.Name" class="icons">
+                <i class="ti-user" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="icons">
+                <i class="ti-heart" aria-hidden="true"></i>
+            </a>
+        </li>
+    </Authorized>
+    <NotAuthorized>
+        <li class="nav-item">
+            <a href="#" class="icons">
+                <i class="ti-search" aria-hidden="true"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="icons">
+                <i class="ti-shopping-cart"></i>
+            </a>
+        </li>
+    </NotAuthorized>
+</AuthorizeView>

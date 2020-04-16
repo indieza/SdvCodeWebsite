@@ -1,9 +1,7 @@
-﻿<!--================Header Menu Area =================-->
-<header class="header_area">
+﻿<header class="header_area">
     <div class="main_menu">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light w-100">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <a class="navbar-brand logo_h" href="index.html">
                     <img src="img/logo.png" alt="" />
                 </a>
@@ -25,50 +23,23 @@
                         <div class="col-lg-7 pr-0">
                             <ul class="nav navbar-nav center_nav pull-right">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="index.html">Home</a>
+                                    <NavLink href="/Home" class="nav-link">Home</NavLink>
                                 </li>
                                 <li class="nav-item active submenu dropdown">
-                                    <a href="#"
-                                       class="nav-link dropdown-toggle"
-                                       data-toggle="dropdown"
-                                       role="button"
-                                       aria-haspopup="true"
-                                       aria-expanded="false">Shop</a>
+                                    <NavLink href="/SdvShop/Shop" class="nav-link">Shop</NavLink>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-area="" asp-controller="Blog" asp-action="Index" class="nav-link">Blog</a>
+                                    <NavLink href="/Blog" class="nav-link">Blog</NavLink>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-area="" asp-controller="Contact" asp-action="Index" class="nav-link">Contact</a>
+                                    <NavLink href="/Contact" class="nav-link">Contact</NavLink>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="col-lg-5 pr-0">
                             <ul class="nav navbar-nav navbar-right right_nav pull-right">
-                                <li class="nav-item">
-                                    <a href="#" class="icons">
-                                        <i class="ti-search" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="#" class="icons">
-                                        <i class="ti-shopping-cart"></i>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="#" class="icons">
-                                        <i class="ti-user" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="#" class="icons">
-                                        <i class="ti-heart" aria-hidden="true"></i>
-                                    </a>
-                                </li>
+                                <LoginDisplay />
                             </ul>
                         </div>
                     </div>
@@ -77,4 +48,3 @@
         </div>
     </div>
 </header>
-<!--================Header Menu Area =================-->
