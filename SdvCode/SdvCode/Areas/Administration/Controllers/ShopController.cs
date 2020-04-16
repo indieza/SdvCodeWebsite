@@ -12,6 +12,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.Services.Shop;
     using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]
@@ -26,11 +27,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         public IActionResult AddNewProductCategory()
-        {
-            return this.View();
-        }
-
-        public IActionResult AddNewProduct()
         {
             return this.View();
         }
@@ -51,6 +47,35 @@ namespace SdvCode.Areas.Administration.Controllers
             }
 
             return this.RedirectToAction("AddNewProductCategory", "Shop");
+        }
+
+        public IActionResult AddNewProduct()
+        {
+            ProductIndexModel model = new ProductIndexModel
+            {
+                ProductInputModel = new ProductInputModel(),
+                ProductCategories = this.shopDbUsageService.ExtractAllCategories(),
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewProduct(ProductIndexModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                Tuple<string, string> tuple =
+                    await this.shopDbUsageService.AddProduct(model.ProductInputModel);
+
+                this.TempData[tuple.Item1] = tuple.Item2;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("AddNewProduct", "Shop");
         }
     }
 }

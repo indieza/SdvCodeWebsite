@@ -68,5 +68,7 @@ namespace SdvCode.Constraints
         public const string TagDoesNotExist = "\"{0}\" tag does not exist.";
 
         public const string ProductCategoryAlreadyExist = "\"{0}\" category already exist.";
+
+        public const string ProductAlreadyExist = "\"{0}\" product already exist.";
     }
 }

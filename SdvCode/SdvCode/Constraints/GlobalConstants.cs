@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class GlobalConstants
@@ -52,5 +54,7 @@ namespace SdvCode.Constraints
         public const string ChatGroupNameSeparator = "->";
 
         public const string NoCoverImageLocation = "/images/userProfileCityBackgroundImage.jpg";
+
+        public const string ProductImageName = "{0}ProductImage{1}";
     }
 }

@@ -3,6 +3,7 @@
 
 namespace SdvCode.Areas.Administration.Services.Shop
 {
+    using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,5 +12,7 @@ namespace SdvCode.Areas.Administration.Services.Shop
     public interface IShopDbUsageService
     {
         Task<Tuple<string, string>> AddCategory(string title, string description);
+        ICollection<string> ExtractAllCategories();
+        Task<Tuple<string, string>> AddProduct(ProductInputModel productInputModel);
     }
 }
