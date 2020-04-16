@@ -9,6 +9,9 @@
 @using SdvCode.Models.User
 @using SdvShop.Shared
 @using SdvShop.Pages
+@using SdvCode.Areas.SdvShop.ViewModels.Category.ViewModels
+@using SdvCode.Areas.SdvShop.Services.Category
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IProductCategoryService CategoryService

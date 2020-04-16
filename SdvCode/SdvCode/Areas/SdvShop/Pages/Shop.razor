@@ -9,8 +9,8 @@
                     <p>Very us move be blessed multiply night</p>
                 </div>
                 <div class="page_link">
-                    <a href="index.html">Home</a>
-                    <a href="category.html">Shop</a>
+                    <NavLink href="/Home">Home</NavLink>
+                    <NavLink href="/SdvShop/Shop">Shop</NavLink>
                     <a href="category.html">Women Fashion</a>
                 </div>
             </div>
@@ -81,77 +81,12 @@
                         </div>
                         <div class="widgets_inner">
                             <ul class="list">
-                                <li>
-                                    <a href="#">Frozen Fish</a>
-                                </li>
-                                <li>
-                                    <a href="#">Dried Fish</a>
-                                </li>
-                                <li>
-                                    <a href="#">Fresh Fish</a>
-                                </li>
-                                <li>
-                                    <a href="#">Meat Alternatives</a>
-                                </li>
-                                <li>
-                                    <a href="#">Fresh Fish</a>
-                                </li>
-                                <li>
-                                    <a href="#">Meat Alternatives</a>
-                                </li>
-                                <li>
-                                    <a href="#">Meat</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </aside>
-
-                    <aside class="left_widgets p_filter_widgets">
-                        <div class="l_w_title">
-                            <h3>Product Brand</h3>
-                        </div>
-                        <div class="widgets_inner">
-                            <ul class="list">
-                                <li>
-                                    <a href="#">Apple</a>
-                                </li>
-                                <li>
-                                    <a href="#">Asus</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">Gionee</a>
-                                </li>
-                                <li>
-                                    <a href="#">Micromax</a>
-                                </li>
-                                <li>
-                                    <a href="#">Samsung</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </aside>
-
-                    <aside class="left_widgets p_filter_widgets">
-                        <div class="l_w_title">
-                            <h3>Color Filter</h3>
-                        </div>
-                        <div class="widgets_inner">
-                            <ul class="list">
-                                <li>
-                                    <a href="#">Black</a>
-                                </li>
-                                <li>
-                                    <a href="#">Black Leather</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">Black with red</a>
-                                </li>
-                                <li>
-                                    <a href="#">Gold</a>
-                                </li>
-                                <li>
-                                    <a href="#">Spacegrey</a>
-                                </li>
+                                @foreach (var category in categories)
+                                {
+                                    <li class="active">
+                                        <a href="#">@category.Title</a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </aside>
@@ -176,3 +111,13 @@
     </div>
 </section>
 <!--================End Category Product Area =================-->
+
+@code{
+    private List<ProductCategoryViewModel> categories;
+
+    protected override Task OnInitializedAsync()
+    {
+        categories = this.CategoryService.ExtractAllCategories();
+        return base.OnInitializedAsync();
+    }
+}
