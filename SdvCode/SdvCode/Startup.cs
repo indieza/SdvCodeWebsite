@@ -262,6 +262,7 @@ namespace SdvCode
 
                 endpoints.MapRazorPages();
                 endpoints.MapBlazorHub();
+                endpoints.MapFallbackToAreaController("Index", "Shop", "SdvShop");
             });
         }
 

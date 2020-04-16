@@ -14,7 +14,7 @@ namespace SdvCode.Areas.SdvShop.Controllers
     {
         public IActionResult Index()
         {
-            return this.View();
+            return this.View("_Host");
         }
     }
 }
