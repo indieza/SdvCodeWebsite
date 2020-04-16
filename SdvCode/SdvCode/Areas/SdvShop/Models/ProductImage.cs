@@ -13,25 +13,25 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class ProductImage
     {
-        //public ProductImage()
-        //{
-        //    this.Id = Guid.NewGuid().ToString();
-        //}
+        public ProductImage()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
 
-        //[Key]
-        //public string Id { get; set; }
+        [Key]
+        public string Id { get; set; }
 
-        //[Required]
-        //[MaxLength(250)]
-        //public string Name { get; set; }
+        [Required]
+        [MaxLength(120)]
+        public string Name { get; set; }
 
-        //[Required]
-        //public string ImageUrl { get; set; }
+        [Required]
+        public string ImageUrl { get; set; }
 
-        //[Required]
-        //[ForeignKey(nameof(Product))]
-        //public string ProductId { get; set; }
+        [Required]
+        [ForeignKey(nameof(Product))]
+        public string ProductId { get; set; }
 
-        //public Product Product { get; set; }
+        public Product Product { get; set; }
     }
 }

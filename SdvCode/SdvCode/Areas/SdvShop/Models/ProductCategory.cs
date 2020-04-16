@@ -11,26 +11,21 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class ProductCategory
     {
-        //public ProductCategory()
-        //{
-        //    this.Id = Guid.NewGuid().ToString();
-        //}
+        public ProductCategory()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
 
-        //[Key]
-        //public string Id { get; set; }
+        [Key]
+        public string Id { get; set; }
 
-        //[Required]
-        //[MaxLength(100)]
-        //public string Title { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Title { get; set; }
 
-        //[Required]
-        //public string Description { get; set; }
+        [Required]
+        public string Description { get; set; }
 
-        //[Required]
-        //public DateTime CreatedOn { get; set; }
-
-        //public DateTime UpdatedOn { get; set; }
-
-        //public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
     }
 }

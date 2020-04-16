@@ -13,36 +13,37 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class Product
     {
-        //public Product()
-        //{
-        //    this.Id = Guid.NewGuid().ToString();
-        //}
+        public Product()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
 
-        //[Key]
-        //public string Id { get; set; }
+        [Key]
+        public string Id { get; set; }
 
-        //[Required]
-        //[MaxLength(100)]
-        //public string Name { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; }
 
-        //[Required]
-        //public string Description { get; set; }
+        [Required]
+        public string Description { get; set; }
 
-        //[Required]
-        //public decimal Price { get; set; }
+        [Required]
+        [Column(TypeName = "decimal(15, 2)")]
+        public decimal Price { get; set; }
 
-        //[Required]
-        //public DateTime CreatedOn { get; set; }
+        [Required]
+        public DateTime CreatedOn { get; set; }
 
-        //public DateTime UpdatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
 
-        //[Required]
-        //[ForeignKey(nameof(ProductCategory))]
-        //public string ProductCategoryId { get; set; }
+        [Required]
+        [ForeignKey(nameof(ProductCategory))]
+        public string ProductCategoryId { get; set; }
 
-        //public ProductCategory ProductCategory { get; set; }
+        public ProductCategory ProductCategory { get; set; }
 
-        //public ICollection<ProductImage> ProductImages { get; set; } = new HashSet<ProductImage>();
+        public ICollection<ProductImage> ProductImages { get; set; } = new HashSet<ProductImage>();
 
         //public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
 

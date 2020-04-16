@@ -6,6 +6,7 @@ namespace SdvCode.Data
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.PrivateChat.Models;
+    using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
 
@@ -55,6 +56,12 @@ namespace SdvCode.Data
         public DbSet<RecommendedFriend> RecommendedFriends { get; set; }
 
         public DbSet<UserRating> UserRatings { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+
+        public DbSet<ProductImage> ProductImages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
