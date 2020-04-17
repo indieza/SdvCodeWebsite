@@ -7,6 +7,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
     using SdvCode.Data;
@@ -41,6 +42,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
 
             int bannedPeople = this.db.Users.Count(x => x.IsBlocked == true);
             int postsCount = this.db.Posts.Count();
+            int productsCount = this.db.Products.Count();
 
             return new DashboardViewModel
             {
@@ -49,6 +51,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
                 TotalBlogPosts = postsCount,
                 TotalUsersInAdminRole = adminsCount,
                 Usernames = usernames,
+                TotalShopProducts = productsCount,
             };
         }
 

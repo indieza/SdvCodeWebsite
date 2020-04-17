@@ -27,13 +27,16 @@ namespace SdvCode.Areas.SdvShop.Services.Product
 
             foreach (var item in products)
             {
-                var image = await this.db.ProductImages.FirstOrDefaultAsync(x => x.ProductId == item.Id);
+                var imageUrl = await this.db.ProductImages
+                    .Where(x => x.ProductId == item.Id).OrderBy(x => x.Name)
+                    .Select(x => x.ImageUrl)
+                    .FirstOrDefaultAsync();
                 result.Add(new ProductCardViewModel
                 {
                     Id = item.Id,
                     Name = item.Name,
                     Price = item.Price,
-                    ImageUrl = image.ImageUrl,
+                    ImageUrl = imageUrl,
                     CreatedOn = item.CreatedOn,
                 });
             }
@@ -48,13 +51,16 @@ namespace SdvCode.Areas.SdvShop.Services.Product
 
             foreach (var item in products)
             {
-                var image = await this.db.ProductImages.FirstOrDefaultAsync(x => x.ProductId == item.Id);
+                var imageUrl = await this.db.ProductImages
+                    .Where(x => x.ProductId == item.Id).OrderBy(x => x.Name)
+                    .Select(x => x.ImageUrl)
+                    .FirstOrDefaultAsync();
                 result.Add(new ProductCardViewModel
                 {
                     Id = item.Id,
                     Name = item.Name,
                     Price = item.Price,
-                    ImageUrl = image.ImageUrl,
+                    ImageUrl = imageUrl,
                     CreatedOn = item.CreatedOn,
                 });
             }
