@@ -1,0 +1,33 @@
+﻿@if (this.productCards == null)
+{
+    <div class="loader"></div>
+}
+else
+{
+    @foreach (var product in this.productCards)
+    {
+        <ProductCard ProductCard="@product"></ProductCard>
+    }
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    private List<ProductCardViewModel> productCards;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id == null)
+        {
+            this.productCards = await this.ProductService.ExtractAllProducts();
+        }
+        else
+        {
+            this.productCards = await this.ProductService.ExtractProductsByCategoryId(this.Id);
+        }
+    }
+}
