@@ -11,7 +11,7 @@
                 <div class="page_link">
                     <NavLink href="/Home">Home</NavLink>
                     <NavLink href="/SdvShop/Shop">Shop</NavLink>
-                    <a href="category.html">@this.categoryName</a>
+                    <a>@this.categoryName</a>
                 </div>
             </div>
         </div>
@@ -25,10 +25,13 @@
             <div class="col-lg-9">
                 <div class="product_top_bar">
                     <div class="left_dorp">
-                        <select class="sorting">
-                            <option value="1">Default sorting</option>
-                            <option value="2">Default sorting 01</option>
-                            <option value="4">Default sorting 02</option>
+                        <select class="sorting" @bind="this.sorting">
+                            <option value="Newest">Newest</option>
+                            <option value="Oldest">Oldest</option>
+                            <option value="N_ASC">Name (Ascending)</option>
+                            <option value="N_DESC">Name (Descending)</option>
+                            <option value="P_ASC">Price (Ascending)</option>
+                            <option value="P_DESC">Price (Descending)</option>
                         </select>
                         <select class="show">
                             <option value="1">Show 12</option>
@@ -40,7 +43,7 @@
 
                 <div class="latest_product_inner">
                     <div class="row">
-                        <AllProducts Id="@this.categoryId" Title="@this.categoryName"></AllProducts>
+                        <AllProducts Id="@this.categoryId" Title="@this.categoryName" Sorting="@this.sorting"></AllProducts>
                     </div>
                 </div>
             </div>
@@ -56,7 +59,7 @@
                                 @foreach (var category in categories)
                                 {
                                     <li class="active">
-                                        <a @onclick="@(() => SelectCategory(category.Id, category.Title))">@category.Title</a>
+                                        <a @onclick="@(() => this.SelectCategory(category.Id, category.Title))">@category.Title</a>
                                     </li>
                                 }
                             </ul>
@@ -93,8 +96,9 @@
         return base.OnInitializedAsync();
     }
 
-    public string categoryId = null;
-    public string categoryName = "All";
+    private string categoryId = null;
+    private string categoryName = "All";
+    private string sorting = null;
 
     private void SelectCategory(string id, string name)
     {

@@ -17,5 +17,7 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels
         public decimal Price { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

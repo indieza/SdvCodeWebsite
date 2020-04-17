@@ -11,8 +11,8 @@ namespace SdvCode.Areas.SdvShop.Services.Product
 
     public interface IProductService
     {
-        Task<List<ProductCardViewModel>> ExtractProductsByCategoryId(string id);
+        Task<List<ProductCardViewModel>> ExtractProductsByCategoryId(string categoryId, string sorting);
 
-        Task<List<ProductCardViewModel>> ExtractAllProducts();
+        Task<List<ProductCardViewModel>> ExtractAllProducts(string sorting);
     }
 }

@@ -17,17 +17,20 @@ else
     [Parameter]
     public string Title { get; set; }
 
+    [Parameter]
+    public string Sorting { get; set; }
+
     private List<ProductCardViewModel> productCards;
 
     protected override async Task OnParametersSetAsync()
     {
         if (Id == null)
         {
-            this.productCards = await this.ProductService.ExtractAllProducts();
+            this.productCards = await this.ProductService.ExtractAllProducts(this.Sorting);
         }
         else
         {
-            this.productCards = await this.ProductService.ExtractProductsByCategoryId(this.Id);
+            this.productCards = await this.ProductService.ExtractProductsByCategoryId(this.Id, this.Sorting);
         }
     }
 }
