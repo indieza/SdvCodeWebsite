@@ -44,6 +44,25 @@ namespace SdvCode.Areas.SdvShop.Services.Product
             return this.SortProducts(result, sorting);
         }
 
+        public async Task<ProductViewModel> ExtractProductById(string productId)
+        {
+            var product = await this.db.Products.FirstOrDefaultAsync(x => x.Id == productId);
+            var images = this.db.ProductImages.Where(x => x.ProductId == productId).OrderBy(x => x.Name).ToList();
+            var category = await this.db.ProductCategories.FirstOrDefaultAsync(x => x.Id == product.ProductCategoryId);
+            return new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                CreatedOn = product.CreatedOn,
+                Description = product.Description,
+                Price = product.Price,
+                ProductImages = images,
+                UpdatedOn = product.UpdatedOn,
+                ProductCategory = category,
+                ProductCategoryId = category.Id,
+            };
+        }
+
         public async Task<List<ProductCardViewModel>> ExtractProductsByCategoryId(string categoryId, string sorting)
         {
             var products = this.db.Products.Where(x => x.ProductCategoryId == categoryId).ToList();

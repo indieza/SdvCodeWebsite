@@ -14,5 +14,7 @@ namespace SdvCode.Areas.SdvShop.Services.Product
         Task<List<ProductCardViewModel>> ExtractProductsByCategoryId(string categoryId, string sorting);
 
         Task<List<ProductCardViewModel>> ExtractAllProducts(string sorting);
+
+        Task<ProductViewModel> ExtractProductById(string productId);
     }
 }
