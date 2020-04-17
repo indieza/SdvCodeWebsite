@@ -2,7 +2,7 @@
     <div class="single-product">
         <div class="product-img">
             <img class="card-img"
-                 src="@ProductCard.ImageUrl"
+                 src="@Card.ImageUrl"
                  alt="" />
             <div class="p_icon">
                 <a href="#">
@@ -18,10 +18,10 @@
         </div>
         <div class="product-btm">
             <a href="#" class="d-block">
-                <h4>@ProductCard.Name</h4>
+                <h4>@Card.Name</h4>
             </a>
             <div class="mt-3">
-                <span class="mr-4">@ProductCard.Price</span>
+                <span class="mr-4">@Card.Price</span>
                 <del>$35.00</del>
             </div>
         </div>
@@ -29,5 +29,6 @@
 </div>
 
 @code {
-    public ProductCardViewModel ProductCard { get; set; }
+    [Parameter]
+    public ProductCardViewModel Card { get; set; }
 }

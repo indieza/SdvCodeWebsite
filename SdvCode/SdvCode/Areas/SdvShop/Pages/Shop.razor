@@ -40,7 +40,7 @@
 
                 <div class="latest_product_inner">
                     <div class="row">
-                        <AllProducts Id="@categoryId" Title="@categoryName"></AllProducts>
+                        <AllProducts Id="@this.categoryId" Title="@this.categoryName"></AllProducts>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                                 @foreach (var category in categories)
                                 {
                                     <li class="active">
-                                        <a @onclick="@(e => SelectCategory(category.Id, category.Title))">@category.Title</a>
+                                        <a @onclick="@(() => SelectCategory(category.Id, category.Title))">@category.Title</a>
                                     </li>
                                 }
                             </ul>
@@ -93,12 +93,12 @@
         return base.OnInitializedAsync();
     }
 
-    private string categoryId = null;
-    private string categoryName = "All";
+    public string categoryId = null;
+    public string categoryName = "All";
 
     private void SelectCategory(string id, string name)
     {
-        categoryId = id;
-        categoryName = name;
+        this.categoryId = id;
+        this.categoryName = name;
     }
 }

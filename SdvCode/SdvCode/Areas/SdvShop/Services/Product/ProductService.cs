@@ -3,13 +3,13 @@
 
 namespace SdvCode.Areas.SdvShop.Services.Product
 {
-    using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
-    using SdvCode.Data;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
+    using SdvCode.Data;
 
     public class ProductService : IProductService
     {
