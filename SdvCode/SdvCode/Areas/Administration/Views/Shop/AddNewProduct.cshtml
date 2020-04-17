@@ -38,7 +38,7 @@
                 <span asp-validation-for="@Model.ProductInputModel.Price" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
-                <textarea asp-for="@Model.ProductInputModel.Description" class="form-control" style="resize: vertical" rows="10"></textarea>
+                <textarea asp-for="@Model.ProductInputModel.Description" class="form-control edit-with-tinymce" style="resize: vertical" rows="10"></textarea>
                 <span asp-validation-for="@Model.ProductInputModel.Description" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
@@ -58,4 +58,6 @@
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script src="~/lib/tinymce/visualizer.js" type="text/javascript"></script>
 }
