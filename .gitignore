@@ -349,6 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /SdvCode/SdvCode/appsettings.json
-/Resources/Bootstrap Templates
-/Resources/tinymce_5.2.0
-/Resources/tinymce_5.2.0.zip
+/Resources
