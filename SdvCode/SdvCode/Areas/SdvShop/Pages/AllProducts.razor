@@ -19,7 +19,7 @@ else
 
     private List<ProductCardViewModel> productCards;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         if (Id == null)
         {

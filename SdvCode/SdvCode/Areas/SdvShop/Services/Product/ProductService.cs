@@ -42,7 +42,7 @@ namespace SdvCode.Areas.SdvShop.Services.Product
 
         public async Task<List<ProductCardViewModel>> ExtractProductsByCategoryId(string id)
         {
-            var products = this.db.Products.Where(x => x.Id == id).ToList();
+            var products = this.db.Products.Where(x => x.ProductCategoryId == id).ToList();
             var result = new List<ProductCardViewModel>();
 
             foreach (var item in products)
