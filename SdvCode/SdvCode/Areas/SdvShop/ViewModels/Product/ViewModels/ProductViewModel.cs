@@ -17,6 +17,10 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels
 
         public string Description { get; set; }
 
+        public int AvailableQuantity { get; set; }
+
+        public string SpecificationsDescription { get; set; }
+
         public decimal Price { get; set; }
 
         public DateTime CreatedOn { get; set; }

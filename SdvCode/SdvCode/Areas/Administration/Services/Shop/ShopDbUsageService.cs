@@ -72,6 +72,8 @@ namespace SdvCode.Areas.Administration.Services.Shop
                 UpdatedOn = DateTime.UtcNow,
                 ProductCategoryId = targetCategory.Id,
                 Price = productInputModel.Price,
+                AvailableQuantity = productInputModel.AvailableQuantity,
+                SpecificationsDescription = productInputModel.SanitaizedSpecifications,
             };
 
             for (int i = 0; i < productInputModel.ProductImages.Count(); i++)
@@ -124,7 +126,9 @@ namespace SdvCode.Areas.Administration.Services.Shop
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
+                SpecificationsDescription = product.SpecificationsDescription,
                 Price = product.Price,
+                AvailableQuantity = product.AvailableQuantity,
                 ProductCategory = category.Title,
             };
         }

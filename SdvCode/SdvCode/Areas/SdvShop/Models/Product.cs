@@ -33,6 +33,13 @@ namespace SdvCode.Areas.SdvShop.Models
         public decimal Price { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue)]
+        public int AvailableQuantity { get; set; }
+
+        [Required]
+        public string SpecificationsDescription { get; set; }
+
+        [Required]
         public DateTime CreatedOn { get; set; }
 
         public DateTime UpdatedOn { get; set; }

@@ -18,7 +18,9 @@
             $("#productName").val(data.name);
             $("#productCategory").val(data.productCategory);
             $("#productPrice").val(data.price);
+            $("#productQuantity").val(data.productQuantity);
             tinyMCE.get("productDescription").setContent(data.description);
+            tinyMCE.get("specificationsDescription").setContent(data.specificationsDescription);
             $("#productId").val(data.id);
         },
         error: function (msg) {

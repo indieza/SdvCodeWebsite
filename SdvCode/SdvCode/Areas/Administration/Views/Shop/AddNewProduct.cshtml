@@ -27,7 +27,7 @@
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@Model.ProductInputModel.ProductCategory"></label>
                 <select class="form-control" asp-for="@Model.ProductInputModel.ProductCategory">
-                    <option value="">Select Category...</option>
+                    <option value="" selected disabled>Select Category...</option>
                     @foreach (var category in Model.ProductCategories)
                     {
                         <option value=@category>@category</option>
@@ -35,15 +35,25 @@
                 </select>
                 <span asp-validation-for="@Model.ProductInputModel.ProductCategory" class="text-danger"></span>
             </div>
-            <div class="col-xl-12 col-md-12 mb-4">
+            <div class="col-xl-6 col-md-6 mb-4">
                 <label asp-for="@Model.ProductInputModel.Price"></label>
                 <input asp-for="@Model.ProductInputModel.Price" class="form-control" placeholder="Price" type="number" required />
                 <span asp-validation-for="@Model.ProductInputModel.Price" class="text-danger"></span>
+            </div>
+            <div class="col-xl-6 col-md-6 mb-4">
+                <label asp-for="@Model.ProductInputModel.AvailableQuantity"></label>
+                <input asp-for="@Model.ProductInputModel.AvailableQuantity" class="form-control" placeholder="Quantity" type="number" required />
+                <span asp-validation-for="@Model.ProductInputModel.AvailableQuantity" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@Model.ProductInputModel.Description"></label>
                 <textarea asp-for="@Model.ProductInputModel.Description" class="form-control edit-with-tinymce" style="resize: vertical" rows="10"></textarea>
                 <span asp-validation-for="@Model.ProductInputModel.Description" class="text-danger"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.ProductInputModel.SpecificationsDescription"></label>
+                <textarea asp-for="@Model.ProductInputModel.SpecificationsDescription" class="form-control edit-with-tinymce" style="resize: vertical" rows="10"></textarea>
+                <span asp-validation-for="@Model.ProductInputModel.SpecificationsDescription" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
                 <input asp-for="@Model.ProductInputModel.ProductImages" type="file" multiple>

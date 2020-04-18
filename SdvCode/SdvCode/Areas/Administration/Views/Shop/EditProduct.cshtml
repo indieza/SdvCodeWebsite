@@ -48,15 +48,25 @@
                 </select>
                 <span asp-validation-for="@Model.InputModel.ProductCategory" class="text-danger"></span>
             </div>
-            <div class="col-xl-12 col-md-12 mb-4">
+            <div class="col-xl-6 col-md-6 mb-4">
                 <label asp-for="@Model.InputModel.Price"></label>
                 <input asp-for="@Model.InputModel.Price" class="form-control" placeholder="Price" type="number" id="productPrice" required />
                 <span asp-validation-for="@Model.InputModel.Price" class="text-danger"></span>
+            </div>
+            <div class="col-xl-6 col-md-6 mb-4">
+                <label asp-for="@Model.InputModel.AvailableQuantity"></label>
+                <input asp-for="@Model.InputModel.AvailableQuantity" class="form-control" placeholder="Quantity" type="number" id="productQuantity" required />
+                <span asp-validation-for="@Model.InputModel.AvailableQuantity" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@Model.InputModel.Description"></label>
                 <textarea asp-for="@Model.InputModel.Description" class="form-control edit-with-tinymce" id="productDescription"></textarea>
                 <span asp-validation-for="@Model.InputModel.Description" class="text-danger"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.InputModel.SpecificationsDescription"></label>
+                <textarea asp-for="@Model.InputModel.SpecificationsDescription" class="form-control edit-with-tinymce" id="specificationsDescription"></textarea>
+                <span asp-validation-for="@Model.InputModel.SpecificationsDescription" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
                 <input asp-for="@Model.InputModel.ProductImages" type="file" multiple>

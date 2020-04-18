@@ -20,6 +20,15 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels
         public string Description { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue)]
+        [Display(Name = "Product Availability")]
+        public int AvailableQuantity { get; set; }
+
+        [Required]
+        [Display(Name = "Product Specifications")]
+        public string SpecificationsDescription { get; set; }
+
+        [Required]
         [Display(Name = "Product Price")]
         public decimal Price { get; set; }
 
