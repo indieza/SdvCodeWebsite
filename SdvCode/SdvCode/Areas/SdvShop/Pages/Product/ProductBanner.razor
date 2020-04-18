@@ -1,0 +1,31 @@
+﻿<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content d-md-flex justify-content-between align-items-center">
+                <div class="mb-3 mb-md-0">
+                    <h2>Product Details - @this.Name</h2>
+                    <p>Added on: @this.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</p>
+                    <p>Updated on: @this.UpdatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</p>
+                </div>
+                <div class="page_link">
+                    <a href="/SdvShop/Shop">Home</a>
+                    <a href="/SdvShop/Shop/Product/@this.Id">Product Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public DateTime CreatedOn { get; set; }
+
+    [Parameter]
+    public DateTime UpdatedOn { get; set; }
+}

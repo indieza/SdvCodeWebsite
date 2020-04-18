@@ -1,14 +1,12 @@
-﻿@if (this.Description != null)
-{
-    <div class="tab-pane fade"
-         id="home"
-         role="tabpanel"
-         aria-labelledby="home-tab">
-        <p>
-            @((MarkupString)this.Description)
-        </p>
-    </div>
-}
+﻿<div class="tab-pane fade"
+     id="home"
+     role="tabpanel"
+     aria-labelledby="home-tab">
+    <p>
+        @((MarkupString)this.Description)
+    </p>
+</div>
+
 @code {
     [Parameter]
     public string Description { get; set; }

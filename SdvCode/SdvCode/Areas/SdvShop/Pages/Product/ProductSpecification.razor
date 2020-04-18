@@ -1,0 +1,13 @@
+﻿<div class="tab-pane fade"
+     id="profile"
+     role="tabpanel"
+     aria-labelledby="profile-tab">
+    <div class="table-responsive">
+        @((MarkupString)this.Specification)
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Specification { get; set; }
+}

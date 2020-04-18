@@ -2,22 +2,7 @@
 
 @if (this.model != null)
 {
-    <section class="banner_area">
-        <div class="banner_inner d-flex align-items-center">
-            <div class="container">
-                <div class="banner_content d-md-flex justify-content-between align-items-center">
-                    <div class="mb-3 mb-md-0">
-                        <h2>Product Details - @this.model.Name</h2>
-                        <p>Added on: @this.model.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy")</p>
-                    </div>
-                    <div class="page_link">
-                        <a href="/SdvShop/Shop">Home</a>
-                        <a href="/SdvShop/Shop/Product/@this.model.Id">Product Details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <ProductBanner Id="@this.model.Id" Name="@this.model.Name" CreatedOn="@this.model.CreatedOn" UpdatedOn="@this.model.UpdatedOn"></ProductBanner>
 
     <ProductDetails Model="this.model"></ProductDetails>
     <!--================Product Description Area =================-->
@@ -63,81 +48,7 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <ProductDescription Description="@this.model.Description"></ProductDescription>
-                <div class="tab-pane fade"
-                     id="profile"
-                     role="tabpanel"
-                     aria-labelledby="profile-tab">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <h5>Width</h5>
-                                    </td>
-                                    <td>
-                                        <h5>128mm</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Height</h5>
-                                    </td>
-                                    <td>
-                                        <h5>508mm</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Depth</h5>
-                                    </td>
-                                    <td>
-                                        <h5>85mm</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Weight</h5>
-                                    </td>
-                                    <td>
-                                        <h5>52gm</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Quality checking</h5>
-                                    </td>
-                                    <td>
-                                        <h5>yes</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Freshness Duration</h5>
-                                    </td>
-                                    <td>
-                                        <h5>03days</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>When packeting</h5>
-                                    </td>
-                                    <td>
-                                        <h5>Without touch of hand</h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Each Box contains</h5>
-                                    </td>
-                                    <td>
-                                        <h5>60pcs</h5>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <ProductSpecification Specification="@this.model.SpecificationsDescription"></ProductSpecification>
                 <div class="tab-pane fade"
                      id="contact"
                      role="tabpanel"
