@@ -113,7 +113,7 @@ namespace SdvCode.Areas.Administration.Services.Shop
             if (product != null)
             {
                 var category = await this.db.ProductCategories
-                    .FirstOrDefaultAsync(x => x.Id == product.ProductCategoryId);
+                    .FirstOrDefaultAsync(x => x.Title.ToLower() == inputModel.ProductCategory.ToLower());
 
                 if (category != null)
                 {
