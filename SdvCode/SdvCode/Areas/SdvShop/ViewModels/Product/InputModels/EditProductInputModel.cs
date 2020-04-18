@@ -10,10 +10,12 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Product.InputModels
     using System.Threading.Tasks;
     using Ganss.XSS;
     using Microsoft.AspNetCore.Http;
-    using SdvCode.Areas.SdvShop.Models;
 
-    public class ProductInputModel
+    public class EditProductInputModel
     {
+        [Required]
+        public string Id { get; set; }
+
         [Required]
         [MaxLength(100)]
         [Display(Name = "Product Name")]

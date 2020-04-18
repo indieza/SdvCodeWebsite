@@ -10,8 +10,10 @@ namespace SdvCode.Areas.Administration.Services.Shop
     using System.Threading.Tasks;
     using CloudinaryDotNet;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.VisualBasic;
     using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Services.Cloud;
@@ -102,9 +104,29 @@ namespace SdvCode.Areas.Administration.Services.Shop
                 string.Format(SuccessMessages.SuccessfullyAddedProduct, product.Name.ToUpper()));
         }
 
-        public ICollection<string> ExtractAllCategories()
+        public ICollection<string> ExtractAllCategoriesNames()
         {
             return this.db.ProductCategories.Select(x => x.Title).ToList();
+        }
+
+        public ICollection<string> ExtractAllProductsNames()
+        {
+            return this.db.Products.Select(x => x.Name).ToList();
+        }
+
+        public async Task<EditProductViewModel> GeProductByName(string productName)
+        {
+            var product = await this.db.Products.FirstOrDefaultAsync(x => x.Name == productName);
+            var category = await this.db.ProductCategories.FirstOrDefaultAsync(x => x.Id == product.ProductCategoryId);
+
+            return new EditProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                ProductCategory = category.Title,
+            };
         }
     }
 }

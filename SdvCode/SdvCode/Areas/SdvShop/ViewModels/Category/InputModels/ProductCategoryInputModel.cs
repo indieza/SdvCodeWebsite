@@ -14,9 +14,11 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Category.InputModels
     {
         [Required]
         [MaxLength(50)]
+        [Display(Name = "Category Name")]
         public string Title { get; set; }
 
         [Required]
+        [Display(Name = "Category Description")]
         public string Description { get; set; }
 
         public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);

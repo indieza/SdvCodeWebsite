@@ -13,6 +13,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Areas.Administration.Services.Shop;
     using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]
@@ -54,7 +55,7 @@ namespace SdvCode.Areas.Administration.Controllers
             ProductIndexModel model = new ProductIndexModel
             {
                 ProductInputModel = new ProductInputModel(),
-                ProductCategories = this.shopDbUsageService.ExtractAllCategories(),
+                ProductCategories = this.shopDbUsageService.ExtractAllCategoriesNames(),
             };
 
             return this.View(model);
@@ -76,6 +77,25 @@ namespace SdvCode.Areas.Administration.Controllers
             }
 
             return this.RedirectToAction("AddNewProduct", "Shop");
+        }
+
+        public IActionResult EditProduct()
+        {
+            var model = new EditProductIndexModel
+            {
+                InputModel = new EditProductInputModel(),
+                ProductCategories = this.shopDbUsageService.ExtractAllCategoriesNames(),
+                AllProductsNames = this.shopDbUsageService.ExtractAllProductsNames(),
+            };
+
+            return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ExtractProductData(string productName)
+        {
+            EditProductViewModel product = await this.shopDbUsageService.GeProductByName(productName);
+            return new JsonResult(product);
         }
     }
 }

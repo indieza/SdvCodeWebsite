@@ -8,13 +8,18 @@ namespace SdvCode.Areas.Administration.Services.Shop
     using System.Linq;
     using System.Threading.Tasks;
     using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
 
     public interface IShopDbUsageService
     {
         Task<Tuple<string, string>> AddCategory(string title, string description);
 
-        ICollection<string> ExtractAllCategories();
+        ICollection<string> ExtractAllCategoriesNames();
 
         Task<Tuple<string, string>> AddProduct(ProductInputModel productInputModel);
+
+        ICollection<string> ExtractAllProductsNames();
+
+        Task<EditProductViewModel> GeProductByName(string productName);
     }
 }

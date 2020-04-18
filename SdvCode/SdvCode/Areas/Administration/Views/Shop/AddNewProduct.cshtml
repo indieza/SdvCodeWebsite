@@ -14,16 +14,18 @@
     <hr />
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h5 mb-0 text-gray-800">Add new product category</h1>
+        <h1 class="h5 mb-0 text-gray-800">Add new product</h1>
     </div>
     <form method="post" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.ProductInputModel.Name"></label>
                 <input asp-for="@Model.ProductInputModel.Name" class="form-control" placeholder="Name" required />
                 <span asp-validation-for="@Model.ProductInputModel.Name" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.ProductInputModel.ProductCategory"></label>
                 <select class="form-control" asp-for="@Model.ProductInputModel.ProductCategory">
                     <option value="">Select Category...</option>
                     @foreach (var category in Model.ProductCategories)
@@ -34,10 +36,12 @@
                 <span asp-validation-for="@Model.ProductInputModel.ProductCategory" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.ProductInputModel.Price"></label>
                 <input asp-for="@Model.ProductInputModel.Price" class="form-control" placeholder="Price" type="number" required />
                 <span asp-validation-for="@Model.ProductInputModel.Price" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.ProductInputModel.Description"></label>
                 <textarea asp-for="@Model.ProductInputModel.Description" class="form-control edit-with-tinymce" style="resize: vertical" rows="10"></textarea>
                 <span asp-validation-for="@Model.ProductInputModel.Description" class="text-danger"></span>
             </div>
