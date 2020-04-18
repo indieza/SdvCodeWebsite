@@ -21,5 +21,6 @@ namespace SdvCode.Areas.Administration.Services.Shop
         ICollection<string> ExtractAllProductsNames();
 
         Task<EditProductViewModel> GeProductByName(string productName);
+        Task<Tuple<string, string>> EditProduct(EditProductInputModel inputModel);
     }
 }

@@ -84,5 +84,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyAddedProductCategory = "\"{0}\" category was successfully created.";
 
         public const string SuccessfullyAddedProduct = "\"{0}\" product was successfully created.";
+
+        public const string SuccessfullyEditedProduct = "You successfully edit shop product";
     }
 }

@@ -91,6 +91,22 @@ namespace SdvCode.Areas.Administration.Controllers
             return this.View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditProduct(EditProductIndexModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                Tuple<string, string> tuple = await this.shopDbUsageService.EditProduct(model.InputModel);
+                this.TempData[tuple.Item1] = tuple.Item2;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("EditProduct", "Shop");
+        }
+
         [HttpGet]
         public async Task<IActionResult> ExtractProductData(string productName)
         {

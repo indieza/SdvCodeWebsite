@@ -106,6 +106,72 @@ namespace SdvCode.Areas.Administration.Services.Shop
                 string.Format(SuccessMessages.SuccessfullyAddedProduct, product.Name.ToUpper()));
         }
 
+        public async Task<Tuple<string, string>> EditProduct(EditProductInputModel inputModel)
+        {
+            var product = await this.db.Products.FirstOrDefaultAsync(x => x.Id == inputModel.Id);
+
+            if (product != null)
+            {
+                var category = await this.db.ProductCategories
+                    .FirstOrDefaultAsync(x => x.Id == product.ProductCategoryId);
+
+                if (category != null)
+                {
+                    product.ProductCategoryId = category.Id;
+                    product.Name = inputModel.Name;
+                    product.Description = inputModel.SanitaizedDescription;
+                    product.AvailableQuantity = inputModel.AvailableQuantity;
+                    product.SpecificationsDescription = inputModel.SanitaizedSpecifications;
+                    product.Price = inputModel.Price;
+                    product.UpdatedOn = DateTime.UtcNow;
+
+                    if (inputModel.ProductImages.Count != 0)
+                    {
+                        var images = this.db.ProductImages.Where(x => x.ProductId == inputModel.Id).ToList();
+
+                        foreach (var image in images)
+                        {
+                            ApplicationCloudinary.DeleteImage(this.cloudinary, image.Name);
+                        }
+
+                        this.db.ProductImages.RemoveRange(images);
+                        await this.db.SaveChangesAsync();
+
+                        for (int i = 0; i < inputModel.ProductImages.Count(); i++)
+                        {
+                            var imageName = string.Format(GlobalConstants.ProductImageName, product.Id, i);
+
+                            var imageUrl =
+                                await ApplicationCloudinary.UploadImage(
+                                    this.cloudinary,
+                                    inputModel.ProductImages.ElementAt(i),
+                                    imageName);
+
+                            if (imageUrl != null)
+                            {
+                                var image = new ProductImage
+                                {
+                                    ImageUrl = imageUrl,
+                                    Name = imageName,
+                                    ProductId = product.Id,
+                                };
+
+                                product.ProductImages.Add(image);
+                            }
+                        }
+                    }
+
+                    this.db.Products.Update(product);
+                    await this.db.SaveChangesAsync();
+                    return Tuple.Create("Success", SuccessMessages.SuccessfullyEditedProduct);
+                }
+
+                return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
+            }
+
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
+        }
+
         public ICollection<string> ExtractAllCategoriesNames()
         {
             return this.db.ProductCategories.Select(x => x.Title).ToList();
