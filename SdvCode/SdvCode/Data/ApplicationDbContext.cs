@@ -63,6 +63,8 @@ namespace SdvCode.Data
 
         public DbSet<ProductImage> ProductImages { get; set; }
 
+        public DbSet<ProductComment> ProductComments { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

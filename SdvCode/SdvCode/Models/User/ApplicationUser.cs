@@ -110,6 +110,8 @@ namespace SdvCode.Models.User
 
         public ICollection<RecommendedFriend> RecommendedFriends { get; set; } = new HashSet<RecommendedFriend>();
 
+        public ICollection<ProductComment> ProductComments { get; set; } = new HashSet<ProductComment>();
+
         //[NotMapped]
         //public int ActionsCount { get; set; }
 
