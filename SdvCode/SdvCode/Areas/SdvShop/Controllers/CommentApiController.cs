@@ -10,16 +10,17 @@ namespace SdvCode.Areas.SdvShop.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.SdvShop.ViewModels.Comment.InputModels;
+    using SdvCode.Constraints;
 
+    [Area(GlobalConstants.ShopArea)]
     [Route("api/[controller]")]
     [ApiController]
     public class CommentApiController : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> AddComment([FromBody]AddCommentInputModel model)
+        public async Task AddComment(AddCommentInputModel model)
         {
-            var m = model; //ignore this
-            return this.Ok();
+            var m = model;
         }
     }
 }

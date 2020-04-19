@@ -54,7 +54,6 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
 
-
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.10.0" />
@@ -88,15 +87,14 @@
     <PackageReference Include="TinyMCE" Version="5.2.1" />
     <PackageReference Include="Twilio" Version="5.39.0" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview2.20160.5" />
   </ItemGroup>
-
 
   <ItemGroup>
     <Content Update="wwwroot\favicon.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -1932,17 +1930,14 @@
     <None Include="wwwroot\shop\vendors\owl-carousel\owl.carousel.min.js" />
   </ItemGroup>
 
-
   <ItemGroup>
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
-
 
   <ItemGroup>
     <None Update="MlModels\PostModels\BlogPostMLModel.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

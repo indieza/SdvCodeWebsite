@@ -8,8 +8,9 @@ namespace SdvCode.Areas.SdvShop.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
 
-    [Area("SdvShop")]
+    [Area(GlobalConstants.ShopArea)]
     public class ShopController : Controller
     {
         public IActionResult Index()

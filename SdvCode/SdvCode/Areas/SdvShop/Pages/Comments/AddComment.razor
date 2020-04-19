@@ -3,7 +3,7 @@
     <div class="col-lg-6">
         <div class="review_box">
             <h4>Post a comment</h4>
-            <form class="row contact_form" method="post" id="contactForm" novalidate="novalidate">
+            <form class="row contact_form">
                 <div class="col-md-12">
                     <div class="form-group">
                         <input @bind="this.viewModel.FullName" type="text" class="form-control" placeholder="Your Name" />
@@ -56,9 +56,9 @@
             Username = this.HttpContextAccessor.HttpContext.User.Identity.Name,
         };
 
-        var json = JsonConvert.SerializeObject(comment, Formatting.None);
-        var stringContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+        //var json = JsonConvert.SerializeObject(comment, Formatting.None);
+        //var stringContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-        await this.HttpClient.PostAsync("api/CommentApi/AddComment", stringContent);
+        await this.HttpClient.PostJsonAsync("api/CommentApi/AddComment", comment);
     }
 }
