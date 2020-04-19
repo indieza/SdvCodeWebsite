@@ -13,8 +13,15 @@
 @using SdvCode.Areas.SdvShop.Services.Category
 @using SdvCode.Areas.SdvShop.Services.Product
 @using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels
+@using SdvCode.Areas.SdvShop.Pages.Comments
+@using SdvCode.Areas.SdvShop.Pages.Rating
+@using SdvCode.Areas.SdvShop.ViewModels.User
+@using SdvCode.Areas.SdvShop.Services.ProductComment
+@using Microsoft.AspNetCore.Http
 
+@inject IHttpContextAccessor HttpContextAccessor
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IProductCategoryService CategoryService
 @inject IProductService ProductService
+@inject IProductCommentService CommentService

@@ -35,6 +35,7 @@ namespace SdvCode
     using SdvCode.Areas.PrivateChat.Services.PrivateChat;
     using SdvCode.Areas.SdvShop.Services.Category;
     using SdvCode.Areas.SdvShop.Services.Product;
+    using SdvCode.Areas.SdvShop.Services.ProductComment;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -183,6 +184,7 @@ namespace SdvCode
             services.AddTransient<IShopDbUsageService, ShopDbUsageService>();
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductCommentService, ProductCommentService>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()
