@@ -9,7 +9,8 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel;
+    using SdvCode.Areas.SdvShop.Models;
+    using SdvCode.Areas.SdvShop.ViewModels.Comment.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.User;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -23,24 +24,43 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
             this.db = db;
         }
 
-        public async Task<AddCommentViewModel> ExtractCommentInformation(string username)
+        public async Task AddComment(AddCommentInputModel model)
+        {
+            var currentUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == model.Username);
+
+            this.db.ProductComments.Add(new ProductComment
+            {
+                ApplicationUserId = currentUser.Id ?? currentUser.Id,
+                Email = model.Email,
+                Content = model.SanitizedContent,
+                CreatedOn = DateTime.UtcNow,
+                UpdatedOn = DateTime.UtcNow,
+                PhoneNumber = model.PhoneNumber,
+                ProductId = model.ProductId,
+                UserFullName = model.FullName,
+            });
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task<AddCommentInputModel> ExtractCommentInformation(string username, string productId)
         {
             if (username != null)
             {
                 var currentUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-                return new AddCommentViewModel
+                return new AddCommentInputModel
                 {
-                    Id = currentUser.Id,
                     Username = currentUser.UserName,
                     Email = currentUser.Email,
                     FullName = $"{currentUser.FirstName} {currentUser.LastName}",
                     PhoneNumber = currentUser.PhoneNumber,
                     Content = string.Empty,
+                    ProductId = productId,
                 };
             }
 
-            return new AddCommentViewModel();
+            return new AddCommentInputModel();
         }
     }
 }

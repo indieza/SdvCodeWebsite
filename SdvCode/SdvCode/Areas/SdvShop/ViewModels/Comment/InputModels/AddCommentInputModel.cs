@@ -12,26 +12,26 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Comment.InputModels
 
     public class AddCommentInputModel
     {
-        [Required]
+        [Required(ErrorMessage = "Full name is required - range [0-50]")]
         [MaxLength(50)]
-        public string UserFullName { get; set; }
+        public string FullName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Phone number is required - range [0-20]")]
         [MaxLength(20)]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         public string Email { get; set; }
 
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Product Id is required")]
         public string ProductId { get; set; }
 
         public string ParentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Comment content is required")]
         public string Content { get; set; }
 
         public string SanitizedContent => new HtmlSanitizer().Sanitize(this.Content);

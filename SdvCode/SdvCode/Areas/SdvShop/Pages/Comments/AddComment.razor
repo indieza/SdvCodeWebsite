@@ -1,35 +1,40 @@
-﻿@if (this.viewModel != null)
+﻿@if (this.inputModel != null)
 {
     <div class="col-lg-6">
         <div class="review_box">
             <h4>Post a comment</h4>
-            <form class="row contact_form">
+            <EditForm Model="@this.inputModel" OnValidSubmit="@this.CreateComment" class="row contact_form">
+                <DataAnnotationsValidator />
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input @bind="this.viewModel.FullName" type="text" class="form-control" placeholder="Your Name" />
+                        <InputText id="fullName" @bind-Value="this.inputModel.FullName" type="text" class="form-control" placeholder="Your Name" />
+                        <ValidationMessage For="@(() => this.inputModel.FullName)" />
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input @bind="this.viewModel.Email" type="email" class="form-control" placeholder="Email Address" />
+                        <InputText id="email" @bind-Value="this.inputModel.Email" type="email" class="form-control" placeholder="Email Address" />
+                        <ValidationMessage For="@(() => this.inputModel.Email)" />
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input @bind="this.viewModel.PhoneNumber" type="text" class="form-control" placeholder="Phone Number" />
+                        <InputText id="phoneNumber" @bind-Value="this.inputModel.PhoneNumber" type="text" class="form-control" placeholder="Phone Number" />
+                        <ValidationMessage For="@(() => this.inputModel.PhoneNumber)" />
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <textarea @bind="viewModel.Content" class="form-control" rows="8" placeholder="Message"></textarea>
+                        <InputTextArea id="content" @bind-Value="this.inputModel.Content" class="form-control" rows="8" placeholder="Message" />
+                        <ValidationMessage For="@(() => this.inputModel.Content)" />
                     </div>
                 </div>
                 <div class="col-md-12 text-right">
-                    <button @onclick="this.CreateComment" value="submit" class="btn submit_btn">
+                    <button type="submit" value="submit" class="btn submit_btn">
                         Submit Now
                     </button>
                 </div>
-            </form>
+            </EditForm>
         </div>
     </div>
 }
@@ -37,28 +42,19 @@
     [Parameter]
     public string ProductId { get; set; }
 
-    private AddCommentViewModel viewModel;
+    private AddCommentInputModel inputModel = new AddCommentInputModel();
 
     protected override async Task OnInitializedAsync()
     {
-        viewModel = await this.CommentService.ExtractCommentInformation(this.HttpContextAccessor.HttpContext.User.Identity.Name);
+        var username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
+        inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId);
     }
 
     private async Task CreateComment()
     {
-        var comment = new AddCommentInputModel
-        {
-            Content = this.viewModel.Content,
-            Email = this.viewModel.Email,
-            UserFullName = this.viewModel.FullName,
-            PhoneNumber = this.viewModel.PhoneNumber,
-            ProductId = this.ProductId,
-            Username = this.HttpContextAccessor.HttpContext.User.Identity.Name,
-        };
+        inputModel.ProductId = this.ProductId;
+        inputModel.Username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
 
-        //var json = JsonConvert.SerializeObject(comment, Formatting.None);
-        //var stringContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-        await this.HttpClient.PostJsonAsync("api/CommentApi/AddComment", comment);
+        await this.CommentService.AddComment(this.inputModel);
     }
 }

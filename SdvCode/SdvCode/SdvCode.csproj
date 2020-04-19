@@ -1932,6 +1932,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Editor\Models\" />
+    <Folder Include="Areas\SdvShop\ViewModels\Comment\ViewModel\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 
