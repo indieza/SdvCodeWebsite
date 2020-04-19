@@ -1,0 +1,31 @@
+﻿<div class="comment_list">
+    @foreach (var comment in this.AllComments)
+    {
+        <div class="review_item">
+            <div class="media">
+                <div class="d-flex">
+                    <img src="img/product/single-product/review-1.png"
+                         alt="" />
+                </div>
+                <div class="media-body">
+                    <h4>@comment.FullName</h4>
+                    @if (comment.UpdatedOn == null)
+                    {
+                        <h5>@comment.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</h5>
+                    }
+                    else
+                    {
+                        <h5>@comment.UpdatedOn?.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt") (edited)</h5>
+                    }
+                    <a class="reply_btn" href="#">Reply</a>
+                </div>
+            </div>
+            <p>@comment.Content</p>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public ICollection<CommentViewModel> AllComments { get; set; }
+}

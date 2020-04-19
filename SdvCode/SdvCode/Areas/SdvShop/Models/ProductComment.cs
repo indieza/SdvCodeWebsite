@@ -40,7 +40,7 @@ namespace SdvCode.Areas.SdvShop.Models
         [Required]
         public DateTime CreatedOn { get; set; }
 
-        public DateTime UpdatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
 
         [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }

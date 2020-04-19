@@ -11,6 +11,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Areas.SdvShop.ViewModels.Comment.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel;
     using SdvCode.Areas.SdvShop.ViewModels.User;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -34,7 +35,6 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
                 Email = model.Email,
                 Content = model.SanitizedContent,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedOn = DateTime.UtcNow,
                 PhoneNumber = model.PhoneNumber,
                 ProductId = model.ProductId,
                 UserFullName = model.FullName,
@@ -61,6 +61,29 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
             }
 
             return new AddCommentInputModel();
+        }
+
+        public async Task<ICollection<CommentViewModel>> GetAllComments(string productId)
+        {
+            var comments = this.db.ProductComments.Where(x => x.ProductId == productId).ToList();
+
+            var result = new List<CommentViewModel>();
+
+            foreach (var comment in comments)
+            {
+                var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == comment.ApplicationUserId);
+
+                result.Add(new CommentViewModel
+                {
+                    Content = comment.Content,
+                    CreatedOn = comment.CreatedOn,
+                    UpdatedOn = comment.UpdatedOn,
+                    FullName = comment.UserFullName,
+                    Username = user.Id ?? user.Id,
+                });
+            }
+
+            return result.OrderByDescending(x => x.CreatedOn).ToList();
         }
     }
 }
