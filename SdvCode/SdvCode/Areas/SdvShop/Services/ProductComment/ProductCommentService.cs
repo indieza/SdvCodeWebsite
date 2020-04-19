@@ -8,23 +8,25 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.SdvShop.ViewModels.User;
+    using SdvCode.Data;
     using SdvCode.Models.User;
 
     public class ProductCommentService : IProductCommentService
     {
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext db;
 
-        public ProductCommentService(UserManager<ApplicationUser> userManager)
+        public ProductCommentService(ApplicationDbContext db)
         {
-            this.userManager = userManager;
+            this.db = db;
         }
 
         public async Task<UserViewModelForComment> ExtractUserInformation(string username)
         {
             if (username != null)
             {
-                var currentUser = await this.userManager.FindByNameAsync(username);
+                var currentUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
                 return new UserViewModelForComment
                 {

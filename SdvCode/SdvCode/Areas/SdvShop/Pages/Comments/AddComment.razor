@@ -1,0 +1,43 @@
+﻿@if (this.userInfo != null)
+{
+    <div class="col-lg-6">
+        <div class="review_box">
+            <h4>Post a comment</h4>
+            <form class="row contact_form" method="post" id="contactForm" novalidate="novalidate">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input value="@this.userInfo.FullName" type="text" class="form-control" id="name" name="name" placeholder="Your Name" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input value="@this.userInfo.Email" type="email" class="form-control" id="email" name="email" placeholder="Email Address" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input value="@this.userInfo.PhoneNumber" type="text" class="form-control" id="number" name="number" placeholder="Phone Number" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" id="message" rows="8" placeholder="Message"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button type="submit" value="submit" class="btn submit_btn">
+                        Submit Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+@code {
+    private UserViewModelForComment userInfo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userInfo = await this.CommentService.ExtractUserInformation(this.HttpContextAccessor.HttpContext.User.Identity.Name);
+    }
+}
