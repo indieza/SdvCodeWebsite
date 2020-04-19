@@ -13,6 +13,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
     using SdvCode.Areas.SdvShop.ViewModels.Comment.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel;
     using SdvCode.Areas.SdvShop.ViewModels.User;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
 
@@ -60,7 +61,11 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
                 };
             }
 
-            return new AddCommentInputModel();
+            return new AddCommentInputModel
+            {
+                ProductId = productId,
+                Content = string.Empty,
+            };
         }
 
         public async Task<ICollection<CommentViewModel>> GetAllComments(string productId)
@@ -79,7 +84,8 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
                     CreatedOn = comment.CreatedOn,
                     UpdatedOn = comment.UpdatedOn,
                     FullName = comment.UserFullName,
-                    Username = user.Id ?? user.Id,
+                    Username = user.UserName ?? user.UserName,
+                    ImageUrl = user.ImageUrl ?? GlobalConstants.NoAvatarImageLocation,
                 });
             }
 

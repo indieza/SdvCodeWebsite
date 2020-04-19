@@ -4,11 +4,14 @@
         <div class="review_item">
             <div class="media">
                 <div class="d-flex">
-                    <img src="img/product/single-product/review-1.png"
-                         alt="" />
+                    <img src="@comment.ImageUrl" class="commentAvatar" alt="avatar" />
                 </div>
                 <div class="media-body">
                     <h4>@comment.FullName</h4>
+                    @if (comment.Username != null)
+                    {
+                        <span><a href="/Profile/@comment.Username">@@@comment.Username</a></span>
+                    }
                     @if (comment.UpdatedOn == null)
                     {
                         <h5>@comment.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</h5>

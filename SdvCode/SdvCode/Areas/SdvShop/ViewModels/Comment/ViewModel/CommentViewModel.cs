@@ -10,6 +10,8 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel
 
     public class CommentViewModel
     {
+        public string ImageUrl { get; set; }
+
         public string FullName { get; set; }
 
         public string Username { get; set; }
