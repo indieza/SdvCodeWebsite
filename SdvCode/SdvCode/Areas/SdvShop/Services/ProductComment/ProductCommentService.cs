@@ -9,6 +9,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel;
     using SdvCode.Areas.SdvShop.ViewModels.User;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -22,23 +23,24 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
             this.db = db;
         }
 
-        public async Task<UserViewModelForComment> ExtractUserInformation(string username)
+        public async Task<AddCommentViewModel> ExtractCommentInformation(string username)
         {
             if (username != null)
             {
                 var currentUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-                return new UserViewModelForComment
+                return new AddCommentViewModel
                 {
                     Id = currentUser.Id,
                     Username = currentUser.UserName,
                     Email = currentUser.Email,
                     FullName = $"{currentUser.FirstName} {currentUser.LastName}",
                     PhoneNumber = currentUser.PhoneNumber,
+                    Content = string.Empty,
                 };
             }
 
-            return new UserViewModelForComment();
+            return new AddCommentViewModel();
         }
     }
 }

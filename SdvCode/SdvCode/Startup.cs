@@ -4,12 +4,15 @@
 namespace SdvCode
 {
     using System;
+    using System.Linq;
+    using System.Net.Http;
     using AutoMapper;
     using CloudinaryDotNet;
     using Hangfire;
     using Hangfire.Dashboard;
     using Hangfire.SqlServer;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.Services;
@@ -215,7 +218,25 @@ namespace SdvCode
             // Add the processing server as IHostedService
             services.AddHangfireServer();
 
+            // Add Server Side Blazor
             services.AddServerSideBlazor();
+
+            // Server Side Blazor doesn't register HttpClient by default
+            if (!services.Any(x => x.ServiceType == typeof(HttpClient)))
+            {
+                // Setup HttpClient for server side in a client side compatible fashion
+                services.AddScoped<HttpClient>(s =>
+                {
+                    // Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.
+                    var uriHelper = s.GetRequiredService<NavigationManager>();
+                    return new HttpClient
+                    {
+                        BaseAddress = new Uri(uriHelper.BaseUri),
+                    };
+                });
+            }
+
+            services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();

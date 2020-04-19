@@ -1,4 +1,4 @@
-﻿@if (this.userInfo != null)
+﻿@if (this.viewModel != null)
 {
     <div class="col-lg-6">
         <div class="review_box">
@@ -6,26 +6,26 @@
             <form class="row contact_form" method="post" id="contactForm" novalidate="novalidate">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input value="@this.userInfo.FullName" type="text" class="form-control" id="name" name="name" placeholder="Your Name" />
+                        <input @bind="this.viewModel.FullName" type="text" class="form-control" placeholder="Your Name" />
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input value="@this.userInfo.Email" type="email" class="form-control" id="email" name="email" placeholder="Email Address" />
+                        <input @bind="this.viewModel.Email" type="email" class="form-control" placeholder="Email Address" />
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input value="@this.userInfo.PhoneNumber" type="text" class="form-control" id="number" name="number" placeholder="Phone Number" />
+                        <input @bind="this.viewModel.PhoneNumber" type="text" class="form-control" placeholder="Phone Number" />
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <textarea class="form-control" name="message" id="message" rows="8" placeholder="Message"></textarea>
+                        <textarea @bind="viewModel.Content" class="form-control" rows="8" placeholder="Message"></textarea>
                     </div>
                 </div>
                 <div class="col-md-12 text-right">
-                    <button type="submit" value="submit" class="btn submit_btn">
+                    <button @onclick="this.CreateComment" value="submit" class="btn submit_btn">
                         Submit Now
                     </button>
                 </div>
@@ -34,10 +34,31 @@
     </div>
 }
 @code {
-    private UserViewModelForComment userInfo;
+    [Parameter]
+    public string ProductId { get; set; }
+
+    private AddCommentViewModel viewModel;
 
     protected override async Task OnInitializedAsync()
     {
-        userInfo = await this.CommentService.ExtractUserInformation(this.HttpContextAccessor.HttpContext.User.Identity.Name);
+        viewModel = await this.CommentService.ExtractCommentInformation(this.HttpContextAccessor.HttpContext.User.Identity.Name);
+    }
+
+    private async Task CreateComment()
+    {
+        var comment = new AddCommentInputModel
+        {
+            Content = this.viewModel.Content,
+            Email = this.viewModel.Email,
+            UserFullName = this.viewModel.FullName,
+            PhoneNumber = this.viewModel.PhoneNumber,
+            ProductId = this.ProductId,
+            Username = this.HttpContextAccessor.HttpContext.User.Identity.Name,
+        };
+
+        var json = JsonConvert.SerializeObject(comment, Formatting.None);
+        var stringContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+        await this.HttpClient.PostAsync("api/CommentApi/AddComment", stringContent);
     }
 }

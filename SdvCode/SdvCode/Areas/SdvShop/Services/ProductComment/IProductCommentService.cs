@@ -7,10 +7,11 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel;
     using SdvCode.Areas.SdvShop.ViewModels.User;
 
     public interface IProductCommentService
     {
-        Task<UserViewModelForComment> ExtractUserInformation(string username);
+        Task<AddCommentViewModel> ExtractCommentInformation(string username);
     }
 }

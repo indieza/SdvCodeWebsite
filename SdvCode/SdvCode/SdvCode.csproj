@@ -84,6 +84,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Net.Http.Json" Version="3.2.0-preview5.20210.3" />
     <PackageReference Include="TinyMCE" Version="5.2.1" />
     <PackageReference Include="Twilio" Version="5.39.0" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.5" />

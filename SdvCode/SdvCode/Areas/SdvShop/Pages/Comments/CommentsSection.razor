@@ -64,9 +64,10 @@
                 </div>
             </div>
         </div>
-        <AddComment></AddComment>
+        <AddComment ProductId="@this.ProductId"></AddComment>
     </div>
 </div>
 @code {
-
+    [Parameter]
+    public string ProductId { get; set; }
 }

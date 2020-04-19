@@ -18,6 +18,9 @@
 @using SdvCode.Areas.SdvShop.ViewModels.User
 @using SdvCode.Areas.SdvShop.Services.ProductComment
 @using Microsoft.AspNetCore.Http
+@using SdvCode.Areas.SdvShop.ViewModels.Comment.InputModels
+@using SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel
+@using Newtonsoft.Json
 
 @inject IHttpContextAccessor HttpContextAccessor
 @inject SignInManager<ApplicationUser> SignInManager
@@ -25,3 +28,4 @@
 @inject IProductCategoryService CategoryService
 @inject IProductService ProductService
 @inject IProductCommentService CommentService
+@inject HttpClient HttpClient
