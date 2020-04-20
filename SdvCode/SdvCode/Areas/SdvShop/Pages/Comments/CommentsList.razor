@@ -20,7 +20,9 @@
                     {
                         <h5>@comment.UpdatedOn?.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt") (edited)</h5>
                     }
-                    <a class="reply_btn" href="#">Reply</a>
+                    <AuthorizeView Roles="@GlobalConstants.AdministratorRole">
+                        <a class="reply_btn" @onclick="@(() => this.OnClick.InvokeAsync(comment.Id))">Reply</a>
+                    </AuthorizeView>
                 </div>
             </div>
             <p>@comment.Content</p>
@@ -31,4 +33,7 @@
 @code {
     [Parameter]
     public ICollection<CommentViewModel> AllComments { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnClick { get; set; }
 }

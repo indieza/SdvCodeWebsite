@@ -10,6 +10,10 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel
 
     public class CommentViewModel
     {
+        public string Id { get; set; }
+
+        public string ProductId { get; set; }
+
         public string ImageUrl { get; set; }
 
         public string FullName { get; set; }
@@ -21,5 +25,7 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel
         public DateTime CreatedOn { get; set; }
 
         public DateTime? UpdatedOn { get; set; }
+
+        public string ParentId { get; set; }
     }
 }

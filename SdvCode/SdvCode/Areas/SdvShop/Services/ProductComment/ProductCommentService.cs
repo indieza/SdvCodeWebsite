@@ -39,12 +39,13 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
                 PhoneNumber = model.PhoneNumber,
                 ProductId = model.ProductId,
                 UserFullName = model.FullName,
+                ParentCommentId = model.ParentId,
             });
 
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<AddCommentInputModel> ExtractCommentInformation(string username, string productId)
+        public async Task<AddCommentInputModel> ExtractCommentInformation(string username, string productId, string parrentId)
         {
             if (username != null)
             {
@@ -58,19 +59,27 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
                     PhoneNumber = currentUser.PhoneNumber,
                     Content = string.Empty,
                     ProductId = productId,
+                    ParentId = parrentId,
                 };
             }
 
             return new AddCommentInputModel
             {
-                ProductId = productId,
+                Username = string.Empty,
+                Email = string.Empty,
+                FullName = string.Empty,
+                PhoneNumber = string.Empty,
                 Content = string.Empty,
+                ProductId = productId,
+                ParentId = parrentId,
             };
         }
 
         public async Task<ICollection<CommentViewModel>> GetAllComments(string productId)
         {
-            var comments = this.db.ProductComments.Where(x => x.ProductId == productId).ToList();
+            var comments = this.db.ProductComments
+                .Where(x => x.ProductId == productId)
+                .ToList();
 
             var result = new List<CommentViewModel>();
 
@@ -80,12 +89,15 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
 
                 result.Add(new CommentViewModel
                 {
+                    Id = comment.Id,
                     Content = comment.Content,
                     CreatedOn = comment.CreatedOn,
                     UpdatedOn = comment.UpdatedOn,
                     FullName = comment.UserFullName,
                     Username = user.UserName ?? user.UserName,
                     ImageUrl = user.ImageUrl ?? GlobalConstants.NoAvatarImageLocation,
+                    ProductId = comment.ProductId,
+                    ParentId = comment.ParentCommentId,
                 });
             }
 

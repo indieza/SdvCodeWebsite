@@ -13,7 +13,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
 
     public interface IProductCommentService
     {
-        Task<AddCommentInputModel> ExtractCommentInformation(string username, string productId);
+        Task<AddCommentInputModel> ExtractCommentInformation(string username, string productId, string parrentId);
 
         Task AddComment(AddCommentInputModel model);
 

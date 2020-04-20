@@ -1,5 +1,4 @@
-﻿@attribute [AllowAnonymous]
-@if (this.allComments != null && this.inputModel != null)
+﻿@if (this.allComments != null && this.inputModel != null)
 {
     <div class="tab-pane fade"
          id="contact"
@@ -7,7 +6,7 @@
          aria-labelledby="contact-tab">
         <div class="row">
             <div class="col-lg-6">
-                <CommentsList AllComments="@this.allComments"></CommentsList>
+                <CommentsList AllComments="@this.allComments" OnClick="this.ClickHandler"></CommentsList>
             </div>
             <div class="col-lg-6">
                 <div class="review_box">
@@ -39,9 +38,18 @@
                             </div>
                         </div>
                         <div class="col-md-12 text-right">
-                            <button type="submit" value="submit" class="btn submit_btn">
-                                Submit Now
-                            </button>
+                            @if (this.inputModel.ParentId == string.Empty)
+                            {
+                                <button type="submit" value="submit" class="btn submit_btn">
+                                    <span>Submit Now</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="submit" value="submit" class="btn btn-info">
+                                    <span>Reply Now</span>
+                                </button>
+                            }
                         </div>
                     </EditForm>
                 </div>
@@ -60,7 +68,7 @@
     protected override async Task OnInitializedAsync()
     {
         var username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
-        inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId);
+        inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId, string.Empty);
         allComments = await this.CommentService.GetAllComments(this.ProductId);
     }
 
@@ -72,5 +80,10 @@
         await this.CommentService.AddComment(this.inputModel);
         this.inputModel.Content = string.Empty;
         allComments = await this.CommentService.GetAllComments(this.ProductId);
+    }
+
+    private void ClickHandler(string parentId)
+    {
+        inputModel.ParentId = parentId;
     }
 }
