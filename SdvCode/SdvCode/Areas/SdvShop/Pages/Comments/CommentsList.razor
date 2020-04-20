@@ -1,5 +1,5 @@
 ﻿<div class="comment_list">
-    @foreach (var comment in this.AllComments)
+    @foreach (var comment in this.AllComments.Where(x => x.ParentId == null))
     {
         <div class="review_item">
             <div class="media">
@@ -27,6 +27,12 @@
             </div>
             <p>@comment.Content</p>
         </div>
+
+        <CommentReply AllComments="this.AllComments"
+                      ReplyComments="this.AllComments
+                                     .Where(x => x.ParentId == comment.Id)
+                                     .ToList()">
+        </CommentReply>
     }
 </div>
 

@@ -1,0 +1,37 @@
+﻿@foreach (var reply in this.ReplyComments)
+{
+    <div class="review_item reply">
+        <div class="media">
+            <div class="d-flex">
+                <img src="@reply.ImageUrl" class="commentAvatar" alt="avatar" />
+            </div>
+            <div class="media-body">
+                <h4>@reply.FullName</h4>
+                @if (reply.Username != null)
+                {
+                    <span><a href="/Profile/@reply.Username">@@@reply.Username</a></span>
+                }
+                @if (reply.UpdatedOn == null)
+                {
+                    <h5>@reply.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</h5>
+                }
+                else
+                {
+                    <h5>@reply.UpdatedOn?.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt") (edited)</h5>
+                }
+                <a class="reply_btn" href="#">Reply</a>
+            </div>
+        </div>
+        <p>@reply.Content</p>
+    </div>
+
+    <CommentReply AllComments="this.AllComments" ReplyComments="this.AllComments.Where(x => x.ParentId == reply.Id).ToList()"></CommentReply>
+}
+
+@code {
+    [Parameter]
+    public ICollection<CommentViewModel> ReplyComments { get; set; }
+
+    [Parameter]
+    public ICollection<CommentViewModel> AllComments { get; set; }
+}

@@ -29,10 +29,9 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
         public async Task AddComment(AddCommentInputModel model)
         {
             var currentUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == model.Username);
-
-            this.db.ProductComments.Add(new ProductComment
+            var comment = new ProductComment
             {
-                ApplicationUserId = currentUser.Id ?? currentUser.Id,
+                ApplicationUserId = currentUser?.Id,
                 Email = model.Email,
                 Content = model.SanitizedContent,
                 CreatedOn = DateTime.UtcNow,
@@ -40,8 +39,9 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
                 ProductId = model.ProductId,
                 UserFullName = model.FullName,
                 ParentCommentId = model.ParentId,
-            });
+            };
 
+            await this.db.ProductComments.AddAsync(comment);
             await this.db.SaveChangesAsync();
         }
 
@@ -65,13 +65,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
 
             return new AddCommentInputModel
             {
-                Username = string.Empty,
-                Email = string.Empty,
-                FullName = string.Empty,
-                PhoneNumber = string.Empty,
-                Content = string.Empty,
                 ProductId = productId,
-                ParentId = parrentId,
             };
         }
 
@@ -94,14 +88,14 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
                     CreatedOn = comment.CreatedOn,
                     UpdatedOn = comment.UpdatedOn,
                     FullName = comment.UserFullName,
-                    Username = user.UserName ?? user.UserName,
-                    ImageUrl = user.ImageUrl ?? GlobalConstants.NoAvatarImageLocation,
+                    Username = user?.UserName,
+                    ImageUrl = user == null ? GlobalConstants.NoAvatarImageLocation : user.ImageUrl,
                     ProductId = comment.ProductId,
                     ParentId = comment.ParentCommentId,
                 });
             }
 
-            return result.OrderByDescending(x => x.CreatedOn).ToList();
+            return result.OrderBy(x => x.CreatedOn).ToList();
         }
     }
 }

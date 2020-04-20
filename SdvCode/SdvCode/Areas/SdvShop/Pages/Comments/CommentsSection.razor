@@ -38,16 +38,16 @@
                             </div>
                         </div>
                         <div class="col-md-12 text-right">
-                            @if (this.inputModel.ParentId == string.Empty)
+                            @if (this.inputModel.ParentId == null)
                             {
-                                <button type="submit" value="submit" class="btn submit_btn">
-                                    <span>Submit Now</span>
+                                <button type="submit" class="btn submit_btn">
+                                    Submit Now
                                 </button>
                             }
                             else
                             {
-                                <button type="submit" value="submit" class="btn btn-info">
-                                    <span>Reply Now</span>
+                                <button type="submit" class="btn btn-info">
+                                    Reply Now
                                 </button>
                             }
                         </div>
@@ -68,7 +68,7 @@
     protected override async Task OnInitializedAsync()
     {
         var username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
-        inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId, string.Empty);
+        inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId, null);
         allComments = await this.CommentService.GetAllComments(this.ProductId);
     }
 
@@ -76,7 +76,6 @@
     {
         inputModel.ProductId = this.ProductId;
         inputModel.Username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
-
         await this.CommentService.AddComment(this.inputModel);
         this.inputModel.Content = string.Empty;
         allComments = await this.CommentService.GetAllComments(this.ProductId);
