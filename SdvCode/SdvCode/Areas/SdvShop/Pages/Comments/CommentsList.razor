@@ -6,11 +6,11 @@
                 <div class="d-flex">
                     <img src="@comment.ImageUrl" class="commentAvatar" alt="avatar" />
                 </div>
-                <BSButton Color="Color.Success"
-                          Size="Size.Small"
+                <BSButton Color="@(this.collapses[comment.Id] == true ? Color.Danger : Color.Success)"
+                          Size=" Size.Small"
                           Class="btn-comment-circle"
                           OnClick="(() => this.onclick(comment.Id))">
-                    <i class="fas fa-caret-down comment-icon-collapse"></i>
+                    <i class="fas fa-caret-@(this.collapses[comment.Id] == true ? "up" : "down") comment-icon-collapse"></i>
                 </BSButton>
                 <div class="media-body">
                     <h4>@comment.FullName</h4>

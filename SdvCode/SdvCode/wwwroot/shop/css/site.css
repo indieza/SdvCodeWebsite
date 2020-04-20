@@ -16,9 +16,16 @@
 
 .btn-comment-circle {
     height: 20px;
+    position: relative;
     margin-right: 7px;
+    border-radius: 50% !important;
 }
 
 .comment-icon-collapse {
-    position: relative;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
 }
