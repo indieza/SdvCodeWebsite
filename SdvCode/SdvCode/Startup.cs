@@ -7,6 +7,7 @@ namespace SdvCode
     using System.Linq;
     using System.Net.Http;
     using AutoMapper;
+    using BlazorStrap;
     using CloudinaryDotNet;
     using Hangfire;
     using Hangfire.Dashboard;
@@ -235,6 +236,8 @@ namespace SdvCode
                     };
                 });
             }
+
+            services.AddBootstrapCss();
 
             services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup));
