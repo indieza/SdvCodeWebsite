@@ -1,0 +1,45 @@
+﻿@foreach (var review in this.Reviews)
+{
+    <div class="review_list">
+        <div class="review_item">
+            <div class="media">
+                <div class="d-flex">
+                    <img src="@review.ImageUrl" class="commentAvatar" alt="avatar" />
+                </div>
+                <div class="media-body">
+                    <h4>@review.FullName</h4>
+                    @if (review.Username != null)
+                    {
+                        <span><a href="/Profile/@review.Username">@@@review.Username</a></span>
+                    }
+                    else
+                    {
+                        <span><a>Anonymous</a></span>
+                    }
+                    @if (review.UpdatedOn == null)
+                    {
+                        <h5>@review.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</h5>
+                    }
+                    else
+                    {
+                        <h5>@review.UpdatedOn?.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt") (edited)</h5>
+                    }
+                    @for (int i = 0; i < review.Starts; i++)
+                    {
+                        <i class="fa fa-star"></i>
+                    }
+                    @for (int i = review.Starts; i < 5; i++)
+                    {
+                        <i class="fas fa-star notRatedStars"></i>
+                    }
+                </div>
+            </div>
+            <p>@review.Content</p>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public ICollection<ReviewViewModel> Reviews { get; set; }
+}

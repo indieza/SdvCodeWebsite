@@ -1,229 +1,166 @@
-﻿<div class="tab-pane fade show active"
-     id="review"
-     role="tabpanel"
-     aria-labelledby="review-tab">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="row total_rate">
-                <div class="col-6">
-                    <div class="box_total">
-                        <h5>Overall</h5>
-                        <h4>4.0</h4>
-                        <h6>(03 Reviews)</h6>
+﻿@if (this.allReviews != null && this.inputModel != null)
+{
+    <div class="tab-pane fade show active"
+         id="review"
+         role="tabpanel"
+         aria-labelledby="review-tab">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row total_rate">
+                    <div class="col-6">
+                        <div class="box_total">
+                            <h5>Overall</h5>
+                            <h4>4.0</h4>
+                            <h6>(03 Reviews)</h6>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="rating_list">
+                            <h3>Based on 3 Reviews</h3>
+                            <ul class="list">
+                                <li>
+                                    <a href="#">
+                                        5 Star
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i> 01
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        4 Star
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i> 01
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        3 Star
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i> 01
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        2 Star
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i> 01
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        1 Star
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i> 01
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="rating_list">
-                        <h3>Based on 3 Reviews</h3>
-                        <ul class="list">
-                            <li>
-                                <a href="#">
-                                    5 Star
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i> 01
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    4 Star
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i> 01
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    3 Star
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i> 01
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    2 Star
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i> 01
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    1 Star
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i> 01
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <ReviewsList Reviews="@this.allReviews"></ReviewsList>
             </div>
-            <div class="review_list">
-                <div class="review_item">
-                    <div class="media">
-                        <div class="d-flex">
-                            <img src="img/product/single-product/review-1.png"
-                                 alt="" />
-                        </div>
-                        <div class="media-body">
-                            <h4>Blake Ruiz</h4>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
+            <div class="col-lg-6">
+                <div class="review_box">
+                    <h4>Add a Review</h4>
+                    <p>Your Rating:</p>
+                    <div class="star-rating">
+                        <input @onclick="(() => this.inputModel.Stars = 5)" id="star5" type="radio" name="rating" value="star5" />
+                        <label for="star5" title="5 stars">
+                            <i class="fas fa-star"></i>
+                        </label>
+                        <input @onclick="(() => this.inputModel.Stars = 4)" id="star4" type="radio" name="rating" value="star4" />
+                        <label for="star4" title="4 stars">
+                            <i class="fas fa-star"></i>
+                        </label>
+                        <input @onclick="(() => this.inputModel.Stars = 3)" id="star3" type="radio" name="rating" value="star3" />
+                        <label for="star3" title="3 stars">
+                            <i class="fas fa-star"></i>
+                        </label>
+                        <input @onclick="(() => this.inputModel.Stars = 2)" id="star2" type="radio" name="rating" value="star2" />
+                        <label for="star2" title="2 stars">
+                            <i class="fas fa-star"></i>
+                        </label>
+                        <input @onclick="(() => this.inputModel.Stars = 1)" id="star1" type="radio" name="rating" value="star1" />
+                        <label for="star1" title="1 star">
+                            <i class="fas fa-star"></i>
+                        </label>
                     </div>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo
-                    </p>
+                    <EditForm Model="@this.inputModel" OnValidSubmit="@this.CreateReview" class="row contact_form">
+                        <DataAnnotationsValidator />
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <ValidationMessage For="(() => this.inputModel.Stars)" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <InputText id="fullName" @bind-Value="this.inputModel.FullName" type="text" class="form-control" placeholder="Your Name" />
+                                <ValidationMessage For="@(() => this.inputModel.FullName)" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <InputText id="email" @bind-Value="this.inputModel.Email" type="email" class="form-control" placeholder="Email Address" />
+                                <ValidationMessage For="@(() => this.inputModel.Email)" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <InputText id="phoneNumber" @bind-Value="this.inputModel.PhoneNumber" type="text" class="form-control" placeholder="Phone Number" />
+                                <ValidationMessage For="@(() => this.inputModel.PhoneNumber)" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <InputTextArea id="content" @bind-Value="this.inputModel.Content" class="form-control" rows="8" placeholder="Message" />
+                                <ValidationMessage For="@(() => this.inputModel.Content)" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn submit_btn">
+                                Submit Now
+                            </button>
+                        </div>
+                    </EditForm>
                 </div>
-                <div class="review_item">
-                    <div class="media">
-                        <div class="d-flex">
-                            <img src="img/product/single-product/review-2.png"
-                                 alt="" />
-                        </div>
-                        <div class="media-body">
-                            <h4>Blake Ruiz</h4>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo
-                    </p>
-                </div>
-                <div class="review_item">
-                    <div class="media">
-                        <div class="d-flex">
-                            <img src="img/product/single-product/review-3.png"
-                                 alt="" />
-                        </div>
-                        <div class="media-body">
-                            <h4>Blake Ruiz</h4>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="review_box">
-                <h4>Add a Review</h4>
-                <p>Your Rating:</p>
-                <ul class="list">
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                    </li>
-                </ul>
-                <p>Outstanding</p>
-                <form class="row contact_form"
-                      action="contact_process.php"
-                      method="post"
-                      id="contactForm"
-                      novalidate="novalidate">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="text"
-                                   class="form-control"
-                                   id="name"
-                                   name="name"
-                                   placeholder="Your Full name" />
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="email"
-                                   class="form-control"
-                                   id="email"
-                                   name="email"
-                                   placeholder="Email Address" />
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="text"
-                                   class="form-control"
-                                   id="number"
-                                   name="number"
-                                   placeholder="Phone Number" />
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <textarea class="form-control"
-                                      name="message"
-                                      id="message"
-                                      rows="1"
-                                      placeholder="Review"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 text-right">
-                        <button type="submit"
-                                value="submit"
-                                class="btn submit_btn">
-                            Submit Now
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
-</div>
+}
 @code {
+    private AddReviewInputModel inputModel = new AddReviewInputModel();
+    private ICollection<ReviewViewModel> allReviews;
 
+    [Parameter]
+    public string ProductId { get; set; }
+
+    private async Task CreateReview()
+    {
+        await this.ReviewService.AddReview(this.inputModel);
+        this.inputModel.Content = string.Empty;
+        this.inputModel.Stars = 0;
+        this.allReviews = await this.ReviewService.GetAllReviews(this.ProductId);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
+        inputModel = await this.ReviewService.ExtractReviewInformation(username, this.ProductId);
+        this.allReviews = await this.ReviewService.GetAllReviews(this.ProductId);
+    }
 }

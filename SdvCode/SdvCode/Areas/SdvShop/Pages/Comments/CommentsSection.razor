@@ -73,8 +73,6 @@
 
     private async Task CreateComment()
     {
-        inputModel.ProductId = this.ProductId;
-        inputModel.Username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
         await this.CommentService.AddComment(this.inputModel);
         this.inputModel.Content = string.Empty;
         allComments = await this.CommentService.GetAllComments(this.ProductId);

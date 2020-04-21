@@ -40,6 +40,7 @@ namespace SdvCode
     using SdvCode.Areas.SdvShop.Services.Category;
     using SdvCode.Areas.SdvShop.Services.Product;
     using SdvCode.Areas.SdvShop.Services.ProductComment;
+    using SdvCode.Areas.SdvShop.Services.ProductReview;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -189,6 +190,7 @@ namespace SdvCode
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductCommentService, ProductCommentService>();
+            services.AddTransient<IProductReviewService, ProductReviewService>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()

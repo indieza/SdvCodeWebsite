@@ -24,6 +24,9 @@
 @using SdvCode.Constraints
 @using BlazorStrap
 @using SdvCode.Areas.SdvShop.Views.Shared
+@using SdvCode.Areas.SdvShop.ViewModels.Review.InputModels
+@using SdvCode.Areas.SdvShop.Services.ProductReview
+@using SdvCode.Areas.SdvShop.ViewModels.Review.ViewModels
 
 @inject IHttpContextAccessor HttpContextAccessor
 @inject SignInManager<ApplicationUser> SignInManager
@@ -33,3 +36,4 @@
 @inject IProductCommentService CommentService
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
+@inject IProductReviewService ReviewService
