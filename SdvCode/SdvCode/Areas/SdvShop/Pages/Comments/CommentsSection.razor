@@ -6,7 +6,10 @@
          aria-labelledby="contact-tab">
         <div class="row">
             <div class="col-lg-6">
-                <CommentsList AllComments="@this.allComments" OnClick="this.ClickHandler"></CommentsList>
+                <CommentsList AllComments="@this.allComments"
+                              OnClick="this.ClickHandler"
+                              Collapses="this.collapses">
+                </CommentsList>
             </div>
             <div class="col-lg-6">
                 <div class="review_box">
@@ -59,18 +62,12 @@
 }
 
 @code {
-    [Parameter]
-    public string ProductId { get; set; }
-
     private AddCommentInputModel inputModel = new AddCommentInputModel();
     private ICollection<CommentViewModel> allComments;
+    private Dictionary<string, bool> collapses = new Dictionary<string, bool>();
 
-    protected override async Task OnInitializedAsync()
-    {
-        var username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
-        inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId, null);
-        allComments = await this.CommentService.GetAllComments(this.ProductId);
-    }
+    [Parameter]
+    public string ProductId { get; set; }
 
     private async Task CreateComment()
     {
@@ -79,10 +76,28 @@
         await this.CommentService.AddComment(this.inputModel);
         this.inputModel.Content = string.Empty;
         allComments = await this.CommentService.GetAllComments(this.ProductId);
+
+        collapses = new Dictionary<string, bool>();
+        foreach (var comment in this.allComments)
+        {
+            collapses.Add(comment.Id, false);
+        }
     }
 
     private void ClickHandler(string parentId)
     {
         inputModel.ParentId = parentId;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
+        inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId, null);
+        allComments = await this.CommentService.GetAllComments(this.ProductId);
+
+        foreach (var comment in this.allComments)
+        {
+            collapses.Add(comment.Id, false);
+        }
     }
 }

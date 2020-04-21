@@ -6,11 +6,11 @@
                 <div class="d-flex">
                     <img src="@comment.ImageUrl" class="commentAvatar" alt="avatar" />
                 </div>
-                <BSButton Color="@(this.collapses[comment.Id] == true ? Color.Danger : Color.Success)"
+                <BSButton Color="@(this.Collapses[comment.Id] == true ? Color.Danger : Color.Success)"
                           Size=" Size.Small"
                           Class="btn-comment-circle"
                           OnClick="(() => this.onclick(comment.Id))">
-                    <i class="fas fa-caret-@(this.collapses[comment.Id] == true ? "up" : "down") comment-icon-collapse"></i>
+                    <i class="fas fa-caret-@(this.Collapses[comment.Id] == true ? "up" : "down") comment-icon-collapse"></i>
                 </BSButton>
                 <div class="media-body">
                     <h4>@comment.FullName</h4>
@@ -37,11 +37,12 @@
             </div>
             <p>@comment.Content</p>
         </div>
-        <BSCollapse IsOpen="@this.collapses[comment.Id]">
+        <BSCollapse IsOpen="@this.Collapses[comment.Id]">
             <CommentReply AllComments="this.AllComments"
                           ReplyComments="this.AllComments
                                      .Where(x => x.ParentId == comment.Id)
-                                     .ToList()">
+                                     .ToList()"
+                          Collapses="this.Collapses">
             </CommentReply>
         </BSCollapse>
     }
@@ -54,19 +55,12 @@
     [Parameter]
     public EventCallback<string> OnClick { get; set; }
 
-    private Dictionary<string, bool> collapses = new Dictionary<string, bool>();
-
-    protected override void OnInitialized()
-    {
-        foreach (var comment in this.AllComments)
-        {
-            collapses.Add(comment.Id, false);
-        }
-    }
+    [Parameter]
+    public Dictionary<string, bool> Collapses { get; set; }
 
     private void onclick(string id)
     {
-        collapses[id] = !collapses[id];
+        this.Collapses[id] = !this.Collapses[id];
         StateHasChanged();
     }
 }

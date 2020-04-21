@@ -6,6 +6,7 @@ namespace SdvCode.Areas.SdvShop.Services.Product
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
@@ -46,9 +47,15 @@ namespace SdvCode.Areas.SdvShop.Services.Product
 
         public async Task<ProductViewModel> ExtractProductById(string productId)
         {
-            var product = await this.db.Products.FirstOrDefaultAsync(x => x.Id == productId);
-            var images = this.db.ProductImages.Where(x => x.ProductId == productId).OrderBy(x => x.Name).ToList();
-            var category = await this.db.ProductCategories.FirstOrDefaultAsync(x => x.Id == product.ProductCategoryId);
+            var product = await this.db.Products
+                .FirstOrDefaultAsync(x => x.Id == productId);
+            var images = this.db.ProductImages
+                .Where(x => x.ProductId == productId)
+                .OrderBy(x => x.Name)
+                .ToList();
+            var category = await this.db.ProductCategories
+                .FirstOrDefaultAsync(x => x.Id == product.ProductCategoryId);
+            var contentWithoutTags = Regex.Replace(product.Description, "<.*?>", string.Empty);
             return new ProductViewModel
             {
                 Id = product.Id,
@@ -56,6 +63,9 @@ namespace SdvCode.Areas.SdvShop.Services.Product
                 CreatedOn = product.CreatedOn,
                 AvailableQuantity = product.AvailableQuantity,
                 Description = product.Description,
+                ShortContent = contentWithoutTags.Length <= 347 ?
+                    contentWithoutTags :
+                    $"{contentWithoutTags.Substring(0, 347)}...",
                 SpecificationsDescription = product.SpecificationsDescription,
                 Price = product.Price,
                 ProductImages = images,

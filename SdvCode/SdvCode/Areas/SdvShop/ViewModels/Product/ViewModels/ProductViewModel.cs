@@ -17,6 +17,8 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels
 
         public string Description { get; set; }
 
+        public string ShortContent { get; set; }
+
         public int AvailableQuantity { get; set; }
 
         public string SpecificationsDescription { get; set; }

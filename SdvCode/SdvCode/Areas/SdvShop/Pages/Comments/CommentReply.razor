@@ -5,11 +5,11 @@
             <div class="d-flex">
                 <img src="@reply.ImageUrl" class="commentAvatar" alt="avatar" />
             </div>
-            <BSButton Color="@(this.collapses[reply.Id] == true ? Color.Danger : Color.Success)"
+            <BSButton Color="@(this.Collapses[reply.Id] == true ? Color.Danger : Color.Success)"
                       Size="Size.Small"
                       Class="btn-comment-circle"
                       OnClick="(() => this.onclick(reply.Id))">
-                <i class="fas fa-caret-@(this.collapses[reply.Id] == true ? "up" : "down") comment-icon-collapse"></i>
+                <i class="fas fa-caret-@(this.Collapses[reply.Id] == true ? "up" : "down") comment-icon-collapse"></i>
             </BSButton>
             <div class="media-body">
                 <h4>@reply.FullName</h4>
@@ -35,7 +35,7 @@
         <p>@reply.Content</p>
     </div>
 
-    <BSCollapse IsOpen="@this.collapses[reply.Id]">
+    <BSCollapse IsOpen="@this.Collapses[reply.Id]">
         <CommentReply AllComments="this.AllComments"
                       ReplyComments="this.AllComments
                                  .Where(x => x.ParentId == reply.Id)
@@ -51,19 +51,12 @@
     [Parameter]
     public ICollection<CommentViewModel> AllComments { get; set; }
 
-    private Dictionary<string, bool> collapses = new Dictionary<string, bool>();
-
-    protected override void OnInitialized()
-    {
-        foreach (var comment in this.ReplyComments)
-        {
-            collapses.Add(comment.Id, false);
-        }
-    }
+    [Parameter]
+    public Dictionary<string, bool> Collapses { get; set; }
 
     private void onclick(string id)
     {
-        collapses[id] = !collapses[id];
-        StateHasChanged();
+        this.Collapses[id] = !this.Collapses[id];
+        this.StateHasChanged();
     }
 }
