@@ -17,5 +17,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductReview
         Task AddReview(AddReviewInputModel inputModel);
 
         Task<ICollection<ReviewViewModel>> GetAllReviews(string productId);
+
+        ReviewBannerViewModel ExtractReviewsStatistics(ICollection<ReviewViewModel> reviews);
     }
 }

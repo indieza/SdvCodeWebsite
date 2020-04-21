@@ -89,5 +89,24 @@ namespace SdvCode.Areas.SdvShop.Services.ProductReview
                 ProductId = productId,
             };
         }
+
+        public ReviewBannerViewModel ExtractReviewsStatistics(ICollection<ReviewViewModel> reviews)
+        {
+            var sum = reviews.Sum(x => x.Starts);
+
+            return new ReviewBannerViewModel
+            {
+                ReviewsCount = reviews.Count,
+                Rating = sum == 0 ? 0 : sum / (decimal)reviews.Count,
+                Stars = new Dictionary<int, int>()
+                {
+                    { 5, reviews.Count(x => x.Starts == 5) },
+                    { 4, reviews.Count(x => x.Starts == 4) },
+                    { 3, reviews.Count(x => x.Starts == 3) },
+                    { 2, reviews.Count(x => x.Starts == 2) },
+                    { 1, reviews.Count(x => x.Starts == 1) },
+                },
+            };
+        }
     }
 }

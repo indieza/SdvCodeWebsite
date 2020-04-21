@@ -1,0 +1,53 @@
+﻿<div class="row total_rate">
+    <div class="col-6">
+        <div class="box_total">
+            <h5>Overall</h5>
+            <h4>@model.Rating.ToString("F2")</h4>
+            <h6>(@model.ReviewsCount Reviews)</h6>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="rating_list">
+            <h3>Based on @model.ReviewsCount Reviews</h3>
+            <ul class="list">
+                @for (int i = 5; i >= 1; i--)
+                {
+                    <li>
+                        @if (i == 1)
+                        {
+                            @i <span>Star &nbsp;</span>
+                        }
+                        else
+                        {
+                            @i <span>Stars</span>
+                        }
+                        @for (int j = 1; j <= 5; j++)
+                        {
+                            @if (i >= j)
+                            {
+                                <i class="fa fa-star ratedStar"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-star notRatedStars"></i>
+                            }
+                        }
+                        @model.Stars[i]
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@code {
+    private ReviewBannerViewModel model;
+
+    [Parameter]
+    public ICollection<ReviewViewModel> Reviews { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        model = this.ReviewService.ExtractReviewsStatistics(this.Reviews);
+    }
+}

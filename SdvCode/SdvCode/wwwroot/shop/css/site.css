@@ -58,3 +58,7 @@
 .notRatedStars {
     color: darkgrey !important;
 }
+
+.ratedStar {
+    color: gold !important;
+}
