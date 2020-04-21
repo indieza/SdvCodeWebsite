@@ -16,19 +16,24 @@
                             <option value="P_ASC">Price (Ascending)</option>
                             <option value="P_DESC">Price (Descending)</option>
                         </select>
-                        <select class="show">
-                            <option value="1">Show 12</option>
-                            <option value="2">Show 14</option>
-                            <option value="4">Show 16</option>
+                        <select class="show" @bind="this.productsForShowing">
+                            <option value="1">Show 1</option>
+                            <option value="2">Show 2</option>
+                            <option value="6">Show 6</option>
+                            <option value="9">Show 9</option>
+                            <option value="12">Show 12</option>
+                            <option value="15">Show 15</option>
+                            <option value="30">Show 30</option>
+                            <option value="33">Show 33</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="latest_product_inner">
-                    <div class="row">
-                        <AllProducts Id="@this.categoryId" Title="@this.categoryName" Sorting="@this.sorting"></AllProducts>
-                    </div>
-                </div>
+                <AllProducts Id="@this.categoryId"
+                             Title="@this.categoryName"
+                             Sorting="@this.sorting"
+                             ProductsForShowing="@this.productsForShowing">
+                </AllProducts>
             </div>
 
             <div class="col-lg-3">
@@ -72,20 +77,20 @@
 
 @code{
     private List<ProductCategoryViewModel> categories;
-
-    protected override Task OnInitializedAsync()
-    {
-        categories = this.CategoryService.ExtractAllCategories();
-        return base.OnInitializedAsync();
-    }
-
     private string categoryId = null;
     private string categoryName = "All";
     private string sorting = null;
+    private int productsForShowing = 6;
 
     private void SelectCategory(string id, string name)
     {
         this.categoryId = id;
         this.categoryName = name;
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        categories = this.CategoryService.ExtractAllCategories();
+        return base.OnInitializedAsync();
     }
 }
