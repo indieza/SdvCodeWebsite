@@ -65,6 +65,8 @@ namespace SdvCode.Data
 
         public DbSet<ProductComment> ProductComments { get; set; }
 
+        public DbSet<ProductReview> ProductReviews { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

@@ -112,6 +112,8 @@ namespace SdvCode.Models.User
 
         public ICollection<ProductComment> ProductComments { get; set; } = new HashSet<ProductComment>();
 
+        public ICollection<ProductReview> ProductReviews { get; set; } = new HashSet<ProductReview>();
+
         //[NotMapped]
         //public int ActionsCount { get; set; }
 
