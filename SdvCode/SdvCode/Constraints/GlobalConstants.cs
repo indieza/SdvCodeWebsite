@@ -58,5 +58,7 @@ namespace SdvCode.Constraints
         public const string NoCoverImageLocation = "/images/userProfileCityBackgroundImage.jpg";
 
         public const string ProductImageName = "{0}ProductImage{1}";
+
+        public const int ProductCommentsOnPage = 4;
     }
 }

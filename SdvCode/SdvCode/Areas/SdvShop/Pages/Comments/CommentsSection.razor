@@ -8,7 +8,8 @@
             <div class="col-lg-6">
                 <CommentsList AllComments="@this.allComments"
                               OnClick="this.ClickHandler"
-                              Collapses="this.collapses">
+                              Collapses="this.collapses"
+                              TotalPagesQuantity="this.totalPagesQuantity">
                 </CommentsList>
             </div>
             <div class="col-lg-6">
@@ -65,6 +66,7 @@
     private AddCommentInputModel inputModel = new AddCommentInputModel();
     private ICollection<CommentViewModel> allComments;
     private Dictionary<string, bool> collapses = new Dictionary<string, bool>();
+    private int totalPagesQuantity = 0;
 
     [Parameter]
     public string ProductId { get; set; }
@@ -77,6 +79,11 @@
         this.inputModel.Content = string.Empty;
         allComments = await this.CommentService.GetAllComments(this.ProductId);
 
+        totalPagesQuantity = Math.Max(1, (int)Math.Ceiling(
+            this.allComments
+            .Where(x => x.ParentId == null)
+            .Count() /
+            (decimal)GlobalConstants.ProductCommentsOnPage));
         collapses = new Dictionary<string, bool>();
         foreach (var comment in this.allComments)
         {
@@ -95,6 +102,11 @@
         inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId, null);
         allComments = await this.CommentService.GetAllComments(this.ProductId);
 
+        totalPagesQuantity = Math.Max(1, (int)Math.Ceiling(
+            this.allComments
+            .Where(x => x.ParentId == null)
+            .Count() /
+            (decimal)GlobalConstants.ProductCommentsOnPage));
         foreach (var comment in this.allComments)
         {
             collapses.Add(comment.Id, false);

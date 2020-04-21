@@ -1,5 +1,5 @@
 ﻿<div class="comment_list">
-    @foreach (var comment in this.AllComments.Where(x => x.ParentId == null))
+    @foreach (var comment in this.AllComments.Where(x => x.ParentId == null).Skip(this.skipQuantity).Take(this.takeQuantity))
     {
         <div class="review_item">
             <div class="media">
@@ -48,7 +48,17 @@
     }
 </div>
 
+<Pagination TotaPagesQuantity="this.TotalPagesQuantity"
+            CurrentPage="this.currentPage"
+            Radius="GlobalConstants.ProductCommentsOnPage"
+            SelectedPage="this.SelectedPage">
+</Pagination>
+
 @code {
+    private int currentPage = 1;
+    private int skipQuantity = 0;
+    private int takeQuantity = GlobalConstants.ProductCommentsOnPage;
+
     [Parameter]
     public ICollection<CommentViewModel> AllComments { get; set; }
 
@@ -58,9 +68,18 @@
     [Parameter]
     public Dictionary<string, bool> Collapses { get; set; }
 
+    [Parameter]
+    public int TotalPagesQuantity { get; set; }
+
     private void onclick(string id)
     {
         this.Collapses[id] = !this.Collapses[id];
-        StateHasChanged();
+        this.StateHasChanged();
+    }
+
+    private void SelectedPage(int page)
+    {
+        this.currentPage = page;
+        this.skipQuantity = (this.currentPage - 1) * GlobalConstants.ProductCommentsOnPage;
     }
 }
