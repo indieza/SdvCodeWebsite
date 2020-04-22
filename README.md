@@ -14,7 +14,11 @@
 ## :hammer: Built With
 - ASP.NET [CORE 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1 "CORE 3.1") MVC
 - Server-Side [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor "Blazor")
+- ASP.NET CORE view components
+- ASP.NET Core areas
+- MSSQL full text searching
 - MSSQL Server
+- ML.NET
 - SignalR
 - [HangFire](https://www.hangfire.io/ "HangFire")
 - Easy migration to Blazor on a WebAssembly
@@ -24,8 +28,12 @@
 - Cloudinary
 - TinyMCE
 - Twilio SMS
+- CodePen resources
+- Bootstrap
+- SVG
 - AJAX real-time Requests
 - jQuery and any kind of jQuery plugins ([DataTables](https://datatables.net/ "DataTables"))
+- JavaScript and JS animations
 - Facebook for developers
 - Twitter for developers
 - Google+ for developers
