@@ -11,8 +11,6 @@
 
 **SDV CodeShop** is for saleing any kind of softaware gadgets. Only Administators will have chance to add a new products, not authrized and authorized people will have chance to order, comment and gave reviews to all products.
 
-------------
-
 ## :hammer: Built With:
 - ASP.NET [CORE 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1 "CORE 3.1") MVC
 - Server-Side [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor "Blazor")
