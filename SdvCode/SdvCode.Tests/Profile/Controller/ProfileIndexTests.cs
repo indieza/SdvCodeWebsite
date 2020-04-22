@@ -42,14 +42,7 @@
             var controller =
                 new ProfileController(mockUserManager.Object, roleManagerMock.Object, mockService.Object);
             var result = await controller.Index("indieza", ProfileTab.Activities, 0);
-            Assert.IsType<ViewResult>(result);
-
-            var viewResult = result as ViewResult;
-            Assert.IsType<ProfileViewModel>(viewResult.Model);
-
-            var viewModel = viewResult.Model as ProfileViewModel;
-            Assert.Equal(ProfileTab.Activities, viewModel.ActiveTab);
-            Assert.Equal(0, viewModel.Page);
+            Assert.IsType<NotFoundResult>(result);
         }
     }
 }
