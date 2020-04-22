@@ -1,6 +1,6 @@
 ## :eyeglasses: Project Introduction
 
-**SDV Code Website** is my defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (February-April 2020). The website is part of a major **"SDV PROJECT"** project, and it consists of 2 parts (**SdvCode** and **SdvFitness**). Each of two parts have an online **store which is a SPA Application**.
+**SDV Code Website** is my defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (February-April 2020). The website is part of a major **"SDV PROJECT"** project, and it consists of 2 parts (**SdvCode** and **SdvFitness**). Each of two parts have an online **store which is a Single Page Application (SPA)**.
 
 ## &copy; SdvCode&trade; Logo
 ![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1587571752/SDV_Logo_yjizy9.png)
