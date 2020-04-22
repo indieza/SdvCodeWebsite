@@ -12,6 +12,8 @@ namespace SdvCode.Areas.Administration.Services.Shop
     using Microsoft.EntityFrameworkCore;
     using Microsoft.VisualBasic;
     using SdvCode.Areas.SdvShop.Models;
+    using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.Category.ViewModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
     using SdvCode.Constraints;
@@ -172,6 +174,22 @@ namespace SdvCode.Areas.Administration.Services.Shop
             return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
+        public async Task<Tuple<string, string>> EditProductCategory(EditProductCategoryInputModel inputModel)
+        {
+            var category = await this.db.ProductCategories.FirstOrDefaultAsync(x => x.Id == inputModel.Id);
+
+            if (category != null)
+            {
+                category.Title = inputModel.Title;
+                category.Description = inputModel.SanitaizedDescription;
+                this.db.Update(category);
+                await this.db.SaveChangesAsync();
+                return Tuple.Create("Success", SuccessMessages.SuccessfullyEditedProductCategory);
+            }
+
+            return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
+        }
+
         public ICollection<string> ExtractAllCategoriesNames()
         {
             return this.db.ProductCategories.Select(x => x.Title).ToList();
@@ -182,7 +200,7 @@ namespace SdvCode.Areas.Administration.Services.Shop
             return this.db.Products.Select(x => x.Name).ToList();
         }
 
-        public async Task<EditProductViewModel> GeProductByName(string productName)
+        public async Task<EditProductViewModel> GetProductByName(string productName)
         {
             var product = await this.db.Products.FirstOrDefaultAsync(x => x.Name == productName);
             var category = await this.db.ProductCategories.FirstOrDefaultAsync(x => x.Id == product.ProductCategoryId);
@@ -196,6 +214,17 @@ namespace SdvCode.Areas.Administration.Services.Shop
                 Price = product.Price,
                 AvailableQuantity = product.AvailableQuantity,
                 ProductCategory = category.Title,
+            };
+        }
+
+        public async Task<EditProductCategoryViewModel> GetProductCategoryByName(string categoryName)
+        {
+            var category = await this.db.ProductCategories.FirstOrDefaultAsync(x => x.Title == categoryName);
+            return new EditProductCategoryViewModel
+            {
+                Id = category.Id,
+                Title = category.Title,
+                Description = category.Description,
             };
         }
     }

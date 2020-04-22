@@ -12,6 +12,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.Services.Shop;
     using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.Category.ViewModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
     using SdvCode.Constraints;
@@ -110,8 +111,43 @@ namespace SdvCode.Areas.Administration.Controllers
         [HttpGet]
         public async Task<IActionResult> ExtractProductData(string productName)
         {
-            EditProductViewModel product = await this.shopDbUsageService.GeProductByName(productName);
+            EditProductViewModel product = await this.shopDbUsageService.GetProductByName(productName);
             return new JsonResult(product);
+        }
+
+        public IActionResult EditProductCategory()
+        {
+            var model = new EditProductCategoryIndexModel
+            {
+                InputModel = new EditProductCategoryInputModel(),
+                AllCategoriesNames = this.shopDbUsageService.ExtractAllCategoriesNames(),
+            };
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProductCategory(EditProductCategoryIndexModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                Tuple<string, string> tuple =
+                    await this.shopDbUsageService.EditProductCategory(model.InputModel);
+                this.TempData[tuple.Item1] = tuple.Item2;
+            }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
+
+            return this.RedirectToAction("EditProductCategory", "Shop");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ExtractProductCategoryData(string categoryName)
+        {
+            EditProductCategoryViewModel productCategory =
+                await this.shopDbUsageService.GetProductCategoryByName(categoryName);
+            return new JsonResult(productCategory);
         }
     }
 }

@@ -7,6 +7,8 @@ namespace SdvCode.Areas.Administration.Services.Shop
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.Category.ViewModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels;
 
@@ -20,7 +22,10 @@ namespace SdvCode.Areas.Administration.Services.Shop
 
         ICollection<string> ExtractAllProductsNames();
 
-        Task<EditProductViewModel> GeProductByName(string productName);
+        Task<EditProductViewModel> GetProductByName(string productName);
+
         Task<Tuple<string, string>> EditProduct(EditProductInputModel inputModel);
+        Task<EditProductCategoryViewModel> GetProductCategoryByName(string categoryName);
+        Task<Tuple<string, string>> EditProductCategory(EditProductCategoryInputModel inputModel);
     }
 }
