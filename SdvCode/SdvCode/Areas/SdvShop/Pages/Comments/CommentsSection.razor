@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <CommentsList AllComments="@this.allComments"
-                              OnClick="this.ClickHandler"
+                              OnReply="this.ReplyClickHandler"
                               Collapses="this.collapses"
                               TotalPagesQuantity="this.totalPagesQuantity">
                 </CommentsList>
@@ -89,7 +89,7 @@
         }
     }
 
-    private void ClickHandler(string parentId)
+    private void ReplyClickHandler(string parentId)
     {
         inputModel.ParentId = parentId;
     }

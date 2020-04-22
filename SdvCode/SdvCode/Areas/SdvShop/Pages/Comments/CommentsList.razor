@@ -9,7 +9,7 @@
                 <BSButton Color="@(this.Collapses[comment.Id] == true ? Color.Danger : Color.Success)"
                           Size=" Size.Small"
                           Class="btn-comment-circle"
-                          OnClick="(() => this.onclick(comment.Id))">
+                          OnClick="(() => this.CollapseComment(comment.Id))">
                     <i class="fas fa-caret-@(this.Collapses[comment.Id] == true ? "up" : "down") comment-icon-collapse"></i>
                 </BSButton>
                 <div class="media-body">
@@ -31,7 +31,7 @@
                         <h5>@comment.UpdatedOn?.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt") (edited)</h5>
                     }
                     <AuthorizeView Roles="@GlobalConstants.AdministratorRole">
-                        <a class="reply_btn" @onclick="@(() => this.OnClick.InvokeAsync(comment.Id))">Reply</a>
+                        <a class="reply_btn" @onclick="@(() => this.OnReply.InvokeAsync(comment.Id))">Reply</a>
                     </AuthorizeView>
                 </div>
             </div>
@@ -42,7 +42,8 @@
                           ReplyComments="this.AllComments
                                      .Where(x => x.ParentId == comment.Id)
                                      .ToList()"
-                          Collapses="this.Collapses">
+                          Collapses="this.Collapses"
+                          OnReply="@this.ReplyClickHandler">
             </CommentReply>
         </BSCollapse>
     }
@@ -63,7 +64,7 @@
     public ICollection<CommentViewModel> AllComments { get; set; }
 
     [Parameter]
-    public EventCallback<string> OnClick { get; set; }
+    public EventCallback<string> OnReply { get; set; }
 
     [Parameter]
     public Dictionary<string, bool> Collapses { get; set; }
@@ -71,10 +72,15 @@
     [Parameter]
     public int TotalPagesQuantity { get; set; }
 
-    private void onclick(string id)
+    private void CollapseComment(string id)
     {
         this.Collapses[id] = !this.Collapses[id];
         this.StateHasChanged();
+    }
+
+    private void ReplyClickHandler(string parentId)
+    {
+        this.OnReply.InvokeAsync(parentId);
     }
 
     private void SelectedPage(int page)

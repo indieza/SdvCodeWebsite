@@ -8,7 +8,7 @@
             <BSButton Color="@(this.Collapses[reply.Id] == true ? Color.Danger : Color.Success)"
                       Size="Size.Small"
                       Class="btn-comment-circle"
-                      OnClick="(() => this.onclick(reply.Id))">
+                      OnClick="(() => this.CollapseComment(reply.Id))">
                 <i class="fas fa-caret-@(this.Collapses[reply.Id] == true ? "up" : "down") comment-icon-collapse"></i>
             </BSButton>
             <div class="media-body">
@@ -29,7 +29,9 @@
                 {
                     <h5>@reply.UpdatedOn?.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt") (edited)</h5>
                 }
-                <a class="reply_btn" href="#">Reply</a>
+                <AuthorizeView Roles="@GlobalConstants.AdministratorRole">
+                    <a class="reply_btn" @onclick="@(() => this.OnReply.InvokeAsync(reply.Id))">Reply</a>
+                </AuthorizeView>
             </div>
         </div>
         <p>@reply.Content</p>
@@ -39,7 +41,9 @@
         <CommentReply AllComments="this.AllComments"
                       ReplyComments="this.AllComments
                                  .Where(x => x.ParentId == reply.Id)
-                                 .ToList()">
+                                 .ToList()"
+                      Collapses="this.Collapses"
+                      OnReply="this.OnReply">
         </CommentReply>
     </BSCollapse>
 }
@@ -54,7 +58,10 @@
     [Parameter]
     public Dictionary<string, bool> Collapses { get; set; }
 
-    private void onclick(string id)
+    [Parameter]
+    public EventCallback<string> OnReply { get; set; }
+
+    private void CollapseComment(string id)
     {
         this.Collapses[id] = !this.Collapses[id];
         this.StateHasChanged();
