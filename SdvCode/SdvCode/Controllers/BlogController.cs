@@ -135,6 +135,11 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> EditPost(string id)
         {
+            if (!await this.blogService.IsPostExist(id))
+            {
+                return this.NotFound();
+            }
+
             var currentUser = await this.userManager.GetUserAsync(this.User);
             var isBlocked = this.blogService.IsBlocked(currentUser);
             if (isBlocked)

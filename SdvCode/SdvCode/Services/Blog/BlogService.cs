@@ -290,5 +290,10 @@ namespace SdvCode.Services.Blog
             List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
             return postsModel;
         }
+
+        public async Task<bool> IsPostExist(string id)
+        {
+            return await this.db.Posts.AnyAsync(x => x.Id == id);
+        }
     }
 }

@@ -219,6 +219,11 @@ namespace SdvCode.Services.Profile
             return target == null ? 0 : target.Stars;
         }
 
+        public async Task<bool> IsUserExist(string username)
+        {
+            return await this.db.Users.AnyAsync(x => x.UserName == username);
+        }
+
         private double CalculateRatingScore(string username)
         {
             double score;

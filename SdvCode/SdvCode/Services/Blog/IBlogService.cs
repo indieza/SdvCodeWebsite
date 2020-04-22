@@ -30,5 +30,6 @@ namespace SdvCode.Services.Blog
         Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user);
 
         Task<Tuple<string, string>> EditPost(EditPostInputModel model, ApplicationUser user);
+        Task<bool> IsPostExist(string id);
     }
 }

@@ -137,6 +137,11 @@ namespace SdvCode.Services.Post
             return model;
         }
 
+        public async Task<bool> IsPostExist(string id)
+        {
+            return await this.db.Posts.AnyAsync(x => x.Id == id);
+        }
+
         public async Task<Tuple<string, string>> LikePost(string id, ApplicationUser user)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);

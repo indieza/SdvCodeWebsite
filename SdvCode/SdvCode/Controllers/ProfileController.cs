@@ -38,6 +38,11 @@ namespace SdvCode.Controllers
         [Route("Profile/{username}/{tab?}/{page?}")]
         public async Task<IActionResult> Index(string username, ProfileTab tab, int? page)
         {
+            if (!await this.profileService.IsUserExist(username))
+            {
+                return this.NotFound();
+            }
+
             var currentUser = await this.userManager.GetUserAsync(this.User);
             ApplicationUserViewModel user = await this.profileService.ExtractUserInfo(username, currentUser);
 

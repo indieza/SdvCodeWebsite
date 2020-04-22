@@ -36,6 +36,11 @@ namespace SdvCode.Controllers
         [Route("/Blog/Post/{id}")]
         public async Task<IActionResult> Index(string id)
         {
+            if (!await this.postService.IsPostExist(id))
+            {
+                return this.NotFound();
+            }
+
             var currentUser = await this.userManager.GetUserAsync(this.User);
             var isBlocked = this.postService.IsBlocked(currentUser);
             if (isBlocked == true)
