@@ -2,7 +2,7 @@
 
 **SDV Code Website** is my defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (February-April 2020). The website is part of a major **"SDV PROJECT"** project, and it consists of 2 parts (**SdvCode** and **SdvFitness**). Each of two parts have an online **store which is a SPA Application**.
 
-### &copy; SdvCode&trade; Logo
+## &copy; SdvCode&trade; Logo
 ![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1587571752/SDV_Logo_yjizy9.png)
 
 ## :pencil2: Overview
@@ -14,6 +14,7 @@
 ## :hammer: Built With
 - ASP.NET [CORE 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1 "CORE 3.1") MVC
 - Server-Side [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor "Blazor")
+- Comunication between Blazor components based on EventHandlers("click", "drag", ...)
 - ASP.NET CORE view components
 - ASP.NET Core areas
 - MSSQL full text searching

@@ -6,10 +6,20 @@
          aria-labelledby="contact-tab">
         <div class="row">
             <div class="col-lg-6">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <select class="form-control" @bind="this.sorting">
+                    <option value="Newest">Newest</option>
+                    <option value="Oldest">Oldest</option>
+                </select>
+                <br />
                 <CommentsList AllComments="@this.allComments"
                               OnReply="this.ReplyClickHandler"
                               Collapses="this.collapses"
-                              TotalPagesQuantity="this.totalPagesQuantity">
+                              TotalPagesQuantity="this.totalPagesQuantity"
+                              Sorting="@this.sorting">
                 </CommentsList>
             </div>
             <div class="col-lg-6">
@@ -67,6 +77,7 @@
     private ICollection<CommentViewModel> allComments;
     private Dictionary<string, bool> collapses = new Dictionary<string, bool>();
     private int totalPagesQuantity = 0;
+    private string sorting = "Newest";
 
     [Parameter]
     public string ProductId { get; set; }
@@ -75,13 +86,11 @@
     {
         await this.CommentService.AddComment(this.inputModel);
         this.inputModel.Content = string.Empty;
+        this.inputModel.ParentId = null;
+        this.sorting = "Newest";
         allComments = await this.CommentService.GetAllComments(this.ProductId);
 
-        totalPagesQuantity = Math.Max(1, (int)Math.Ceiling(
-            this.allComments
-            .Where(x => x.ParentId == null)
-            .Count() /
-            (decimal)GlobalConstants.ProductCommentsOnPage));
+        totalPagesQuantity = this.CalculateTotalPages();
         collapses = new Dictionary<string, bool>();
         foreach (var comment in this.allComments)
         {
@@ -94,17 +103,22 @@
         inputModel.ParentId = parentId;
     }
 
+    private int CalculateTotalPages()
+    {
+        return Math.Max(1, (int)Math.Ceiling(
+            this.allComments
+            .Where(x => x.ParentId == null)
+            .Count() /
+            (decimal)GlobalConstants.ProductCommentsOnPage));
+    }
+
     protected override async Task OnInitializedAsync()
     {
         var username = this.HttpContextAccessor.HttpContext.User.Identity.Name;
         inputModel = await this.CommentService.ExtractCommentInformation(username, this.ProductId, null);
         allComments = await this.CommentService.GetAllComments(this.ProductId);
 
-        totalPagesQuantity = Math.Max(1, (int)Math.Ceiling(
-            this.allComments
-            .Where(x => x.ParentId == null)
-            .Count() /
-            (decimal)GlobalConstants.ProductCommentsOnPage));
+        totalPagesQuantity = this.CalculateTotalPages();
         foreach (var comment in this.allComments)
         {
             collapses.Add(comment.Id, false);

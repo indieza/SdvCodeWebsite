@@ -64,7 +64,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductReview
                 });
             }
 
-            return result.OrderBy(x => x.CreatedOn).ToList();
+            return result.OrderByDescending(x => x.CreatedOn).ToList();
         }
 
         public async Task<AddReviewInputModel> ExtractReviewInformation(string username, string productId)

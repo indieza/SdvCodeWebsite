@@ -96,10 +96,12 @@
         this.inputModel.Stars = 0;
         this.allReviews = await this.ReviewService.GetAllReviews(this.ProductId);
 
-        totalPagesQuantity =
-            Math.Max(1, (int)Math.Ceiling(this.allReviews.Count /
-            (decimal)GlobalConstants.ReviewsOnPage));
+        totalPagesQuantity = this.CalculateTotalPages();
+    }
 
+    private int CalculateTotalPages()
+    {
+        return Math.Max(1, (int)Math.Ceiling(this.allReviews.Count / (decimal)GlobalConstants.ReviewsOnPage));
     }
 
     protected override async Task OnInitializedAsync()
@@ -108,9 +110,6 @@
         inputModel = await this.ReviewService.ExtractReviewInformation(username, this.ProductId);
         this.allReviews = await this.ReviewService.GetAllReviews(this.ProductId);
 
-        totalPagesQuantity =
-            Math.Max(1, (int)Math.Ceiling(this.allReviews.Count /
-            (decimal)GlobalConstants.ReviewsOnPage));
-
+        totalPagesQuantity = this.CalculateTotalPages();
     }
 }
