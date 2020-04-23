@@ -23,10 +23,13 @@
 @using SdvCode.Areas.SdvShop.ViewModels.Comment.ViewModel
 @using SdvCode.Constraints
 @using BlazorStrap
-@using SdvCode.Areas.SdvShop.Views.Shared
 @using SdvCode.Areas.SdvShop.ViewModels.Review.InputModels
 @using SdvCode.Areas.SdvShop.Services.ProductReview
 @using SdvCode.Areas.SdvShop.ViewModels.Review.ViewModels
+@using Blazored.SessionStorage
+@using Blazored.LocalStorage
+@using SdvCode.Areas.SdvShop.Services
+@using SdvCode.Areas.SdvShop.ViewModels.Order.ViewModels
 
 @inject IHttpContextAccessor HttpContextAccessor
 @inject SignInManager<ApplicationUser> SignInManager
@@ -37,3 +40,5 @@
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 @inject IProductReviewService ReviewService
+@inject ISessionStorageService SessionStorage
+@inject ILocalStorageService LocalStorage

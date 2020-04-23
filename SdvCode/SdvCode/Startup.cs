@@ -7,6 +7,8 @@ namespace SdvCode
     using System.Linq;
     using System.Net.Http;
     using AutoMapper;
+    using Blazored.LocalStorage;
+    using Blazored.SessionStorage;
     using BlazorStrap;
     using CloudinaryDotNet;
     using Hangfire;
@@ -37,6 +39,7 @@ namespace SdvCode
     using SdvCode.Areas.PrivateChat.Services;
     using SdvCode.Areas.PrivateChat.Services.ChatMessagesDbUsage;
     using SdvCode.Areas.PrivateChat.Services.PrivateChat;
+    using SdvCode.Areas.SdvShop.Services;
     using SdvCode.Areas.SdvShop.Services.Category;
     using SdvCode.Areas.SdvShop.Services.Product;
     using SdvCode.Areas.SdvShop.Services.ProductComment;
@@ -239,6 +242,10 @@ namespace SdvCode
                 });
             }
 
+            // Add Blazor Session and Local Storages
+            services.AddBlazoredSessionStorage();
+            services.AddBlazoredLocalStorage();
+
             services.AddBootstrapCss();
 
             services.AddHttpClient();
@@ -306,7 +313,8 @@ namespace SdvCode
         {
             // Edit recommended friend list for each user
             recurringJobManager
-                .AddOrUpdate<RecommendedFriends>("RecommendedFriends",
+                .AddOrUpdate<RecommendedFriends>(
+                "RecommendedFriends",
                 x => x.AddRecomendedFrinds(),
                 Cron.Weekly);
 

@@ -61,7 +61,9 @@
                         </button>
                     </div>
                     <div class="card_area">
-                        <a class="main_btn" href="#">Add to Cart</a>
+                        <a class="main_btn" @onclick="(() => this.AddProductToBasket(Model.Id, 1))">
+                            Add to Cart
+                        </a>
                         <a class="icon_btn" href="#">
                             <i class="lnr lnr lnr-diamond"></i>
                         </a>
@@ -78,4 +80,25 @@
 @code {
     [Parameter]
     public ProductViewModel Model { get; set; }
+
+    private async Task AddProductToBasket(string id, int count)
+    {
+        var oldValue = await this.SessionStorage.GetItemAsync<List<AddedProductViewModel>>("CodeShop");
+
+        if (oldValue.Any(x => x.Id == id))
+        {
+            oldValue.FirstOrDefault(x => x.Id == id).Quantity += count;
+        }
+        else
+        {
+            oldValue.Add(new AddedProductViewModel
+            {
+                Id = id,
+                Quantity = count,
+            });
+        }
+
+        await this.SessionStorage.SetItemAsync("CodeShop", oldValue);
+        this.StateHasChanged();
+    }
 }

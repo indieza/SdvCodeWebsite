@@ -11,7 +11,7 @@
                 <a href="#">
                     <i class="ti-heart"></i>
                 </a>
-                <a href="#">
+                <a @onclick="(() => this.AddProductToBasket(Card.Id, 1))">
                     <i class="ti-shopping-cart"></i>
                 </a>
             </div>
@@ -31,4 +31,25 @@
 @code {
     [Parameter]
     public ProductCardViewModel Card { get; set; }
+
+    private async Task AddProductToBasket(string id, int count)
+    {
+        var oldValue = await this.SessionStorage.GetItemAsync<List<AddedProductViewModel>>("CodeShop");
+
+        if (oldValue.Any(x => x.Id == id))
+        {
+            oldValue.FirstOrDefault(x => x.Id == id).Quantity += count;
+        }
+        else
+        {
+            oldValue.Add(new AddedProductViewModel
+            {
+                Id = id,
+                Quantity = count,
+            });
+        }
+
+        await this.SessionStorage.SetItemAsync("CodeShop", oldValue);
+        this.StateHasChanged();
+    }
 }
