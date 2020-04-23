@@ -42,26 +42,10 @@
                     <p>@this.Model.ShortContent</p>
                     <div class="product_count">
                         <label for="qty">Quantity:</label>
-                        <input type="text"
-                               name="qty"
-                               id="sst"
-                               maxlength="12"
-                               value="1"
-                               title="Quantity:"
-                               class="input-text qty" />
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                class="increase items-count"
-                                type="button">
-                            <i class="lnr lnr-chevron-up"></i>
-                        </button>
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                class="reduced items-count"
-                                type="button">
-                            <i class="lnr lnr-chevron-down"></i>
-                        </button>
+                        <input type="number" @bind="this.wantedQuantity" max="@this.Model.AvailableQuantity" min="1" />
                     </div>
                     <div class="card_area">
-                        <a class="main_btn" @onclick="(() => this.AddProductToBasket(Model.Id, 1))">
+                        <a class="main_btn" @onclick="(() => this.AddProductToBasket(Model.Id, this.wantedQuantity))">
                             Add to Cart
                         </a>
                         <a class="icon_btn" href="#">
@@ -81,24 +65,10 @@
     [Parameter]
     public ProductViewModel Model { get; set; }
 
-    private async Task AddProductToBasket(string id, int count)
+    private int wantedQuantity = 1;
+
+    private void AddProductToBasket(string id, int quantity)
     {
-        var oldValue = await this.SessionStorage.GetItemAsync<List<AddedProductViewModel>>("CodeShop");
-
-        if (oldValue.Any(x => x.Id == id))
-        {
-            oldValue.FirstOrDefault(x => x.Id == id).Quantity += count;
-        }
-        else
-        {
-            oldValue.Add(new AddedProductViewModel
-            {
-                Id = id,
-                Quantity = count,
-            });
-        }
-
-        await this.SessionStorage.SetItemAsync("CodeShop", oldValue);
-        this.StateHasChanged();
+        this.ShoppingCartState.AddProduct(id, quantity);
     }
 }

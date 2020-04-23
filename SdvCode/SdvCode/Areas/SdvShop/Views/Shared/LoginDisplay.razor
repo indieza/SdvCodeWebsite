@@ -1,4 +1,6 @@
-﻿<AuthorizeView>
+﻿@implements IDisposable
+
+<AuthorizeView>
     <Authorized>
         <li class="nav-item">
             <a href="#" class="icons">
@@ -7,8 +9,8 @@
         </li>
 
         <li class="nav-item">
-            <a href="#" class="icons">
-                <i class="ti-shopping-cart">@this.count</i>
+            <a href="/SdvShop/Shop/ShoppingCart" class="icons">
+                <i class="ti-shopping-cart">@this.ShoppingCartState.ShoppingCart.Count</i>
             </a>
         </li>
         <li class="nav-item">
@@ -30,36 +32,23 @@
         </li>
 
         <li class="nav-item">
-            <a href="#" class="icons">
-                <i class="ti-shopping-cart">@this.count</i>
+            <a href="/SdvShop/Shop/ShoppingCart" class="icons">
+                <i class="ti-shopping-cart">@this.ShoppingCartState.ShoppingCart.Count</i>
             </a>
         </li>
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
-    private int count = 0;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnInitialized()
     {
-        if (firstRender)
-        {
-            var items = await this.SessionStorage.GetItemAsync<List<AddedProductViewModel>>("CodeShop");
-
-            if (items == null)
-            {
-                await this.SessionStorage.SetItemAsync("CodeShop", new List<AddedProductViewModel>());
-            }
-            else
-            {
-                this.count = items.Count;
-                this.StateHasChanged();
-            }
-        }
-        else
-        {
-            var items = await this.SessionStorage.GetItemAsync<List<AddedProductViewModel>>("CodeShop");
-            this.count = items.Count;
-        }
+        this.ShoppingCartState.OnChange += StateHasChanged;
     }
+
+    public void Dispose()
+    {
+        this.ShoppingCartState.OnChange -= StateHasChanged;
+    }
+
 }

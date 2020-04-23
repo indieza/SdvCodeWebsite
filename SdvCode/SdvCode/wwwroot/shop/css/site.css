@@ -8,6 +8,11 @@
     height: 100%;
 }
 
+.shoppingCartImage {
+    width: 147px;
+    height: 100px;
+}
+
 .commentAvatar {
     width: 70px;
     height: 70px;

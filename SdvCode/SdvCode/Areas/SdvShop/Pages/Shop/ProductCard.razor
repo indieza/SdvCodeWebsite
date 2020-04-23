@@ -32,24 +32,9 @@
     [Parameter]
     public ProductCardViewModel Card { get; set; }
 
-    private async Task AddProductToBasket(string id, int count)
+    private void AddProductToBasket(string id, int quantity)
     {
-        var oldValue = await this.SessionStorage.GetItemAsync<List<AddedProductViewModel>>("CodeShop");
-
-        if (oldValue.Any(x => x.Id == id))
-        {
-            oldValue.FirstOrDefault(x => x.Id == id).Quantity += count;
-        }
-        else
-        {
-            oldValue.Add(new AddedProductViewModel
-            {
-                Id = id,
-                Quantity = count,
-            });
-        }
-
-        await this.SessionStorage.SetItemAsync("CodeShop", oldValue);
-        this.StateHasChanged();
+        this.ShoppingCartState.AddProduct(id, quantity);
+        this.NavigationManager.NavigateTo("/SdvShop/Shop/ShoppingCart");
     }
 }

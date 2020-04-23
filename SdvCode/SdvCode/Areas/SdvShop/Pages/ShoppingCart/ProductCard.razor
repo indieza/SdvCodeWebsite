@@ -1,0 +1,28 @@
+﻿<tr>
+    <td>
+        <div class="media">
+            <div class="d-flex">
+                <img class="shoppingCartImage" src="@this.Product.ImageUrl" alt="product image" />
+            </div>
+            <div class="media-body">
+                <p>@this.Product.Name</p>
+            </div>
+        </div>
+    </td>
+    <td>
+        <h5>@this.Product.Price.ToString("F2")</h5>
+    </td>
+    <td>
+        <div class="product_count">
+            <input type="number" value="@this.Product.WantedQuantity" />
+        </div>
+    </td>
+    <td>
+        <h5>@this.Product.TotalProductPrice.ToString("F2")</h5>
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public ProductInCartViewModel Product { get; set; }
+}

@@ -194,6 +194,7 @@ namespace SdvCode
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductCommentService, ProductCommentService>();
             services.AddTransient<IProductReviewService, ProductReviewService>();
+            services.AddScoped<ShoppingCartState>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()
@@ -225,7 +226,7 @@ namespace SdvCode
             services.AddHangfireServer();
 
             // Add Server Side Blazor
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
 
             // Server Side Blazor doesn't register HttpClient by default
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))

@@ -19,5 +19,7 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Product.ViewModels
         public string ImageUrl { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public int AvailableQuantity { get; set; }
     }
 }

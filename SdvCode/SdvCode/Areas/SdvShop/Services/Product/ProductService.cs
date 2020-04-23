@@ -39,6 +39,7 @@ namespace SdvCode.Areas.SdvShop.Services.Product
                     Price = item.Price,
                     ImageUrl = imageUrl,
                     CreatedOn = item.CreatedOn,
+                    AvailableQuantity = item.AvailableQuantity,
                 });
             }
 
