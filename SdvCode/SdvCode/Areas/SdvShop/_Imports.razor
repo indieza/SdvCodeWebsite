@@ -30,6 +30,8 @@
 @using Blazored.LocalStorage
 @using SdvCode.Areas.SdvShop.Services
 @using SdvCode.Areas.SdvShop.ViewModels.Order
+@using SdvCode.Areas.SdvShop.Pages.CheckoutOrder
+@using SdvCode.Areas.SdvShop.Services.Order
 
 @inject IHttpContextAccessor HttpContextAccessor
 @inject SignInManager<ApplicationUser> SignInManager
@@ -43,3 +45,4 @@
 @inject ISessionStorageService SessionStorage
 @inject ILocalStorageService LocalStorage
 @inject ShoppingCartState ShoppingCartState
+@inject IOrderService OrderService

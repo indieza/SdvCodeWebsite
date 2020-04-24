@@ -8,6 +8,10 @@
     height: 100%;
 }
 
+.validation-message {
+    color: red;
+}
+
 .shoppingCartImage {
     width: 147px;
     height: 100px;

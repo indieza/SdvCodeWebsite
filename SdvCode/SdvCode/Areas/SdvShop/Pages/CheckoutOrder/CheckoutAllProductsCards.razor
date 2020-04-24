@@ -1,0 +1,14 @@
+﻿@foreach (var product in this.Products)
+{
+    <li>
+        <a href="/SdvShop/Shop/Product/@product.Id">
+            @product.Name
+            <span class="last">@product.TotalProductPrice.ToString("F2")</span>
+        </a>
+    </li>
+}
+
+@code {
+    [Parameter]
+    public ICollection<ProductInCartViewModel> Products { get; set; }
+}

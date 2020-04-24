@@ -41,6 +41,7 @@ namespace SdvCode
     using SdvCode.Areas.PrivateChat.Services.PrivateChat;
     using SdvCode.Areas.SdvShop.Services;
     using SdvCode.Areas.SdvShop.Services.Category;
+    using SdvCode.Areas.SdvShop.Services.Order;
     using SdvCode.Areas.SdvShop.Services.Product;
     using SdvCode.Areas.SdvShop.Services.ProductComment;
     using SdvCode.Areas.SdvShop.Services.ProductReview;
@@ -194,6 +195,7 @@ namespace SdvCode
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductCommentService, ProductCommentService>();
             services.AddTransient<IProductReviewService, ProductReviewService>();
+            services.AddTransient<IOrderService, OrderService>();
             services.AddScoped<ShoppingCartState>();
 
             // Register ML Models

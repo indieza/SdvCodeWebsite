@@ -1,0 +1,104 @@
+﻿@page "/SdvShop/Shop/Checkout"
+
+@if (this.products != null && this.UserInformation != null)
+{
+    <section class="checkout_area section_gap">
+        <div class="container">
+            <div class="billing_details">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h3>Billing Details</h3>
+                        <EditForm Model="this.UserInformation" OnValidSubmit="this.PlaceOrder" class="row contact_form">
+                            <DataAnnotationsValidator />
+                            <div class="col-md-6 form-group p_star">
+                                <InputText @bind-Value="this.UserInformation.FirstName" id="FirstName" class="form-control" placeholder="First Name" />
+                                <ValidationMessage For="@(() => this.UserInformation.FirstName)" class="text-danger" />
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <InputText @bind-Value="this.UserInformation.LastName" id="LastName" class="form-control" placeholder="Last Name" />
+                                <ValidationMessage For="@(() => this.UserInformation.LastName)" class="text-danger" />
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <InputText @bind-Value="this.UserInformation.PhoneNumber" id="PhoneNumber" class="form-control" placeholder="Phone Number" />
+                                <ValidationMessage For="@(() => this.UserInformation.PhoneNumber)" class="text-danger" />
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <InputText @bind-Value="this.UserInformation.Email" id="Email" class="form-control" placeholder="Email" />
+                                <ValidationMessage For="@(() => this.UserInformation.Email)" class="text-danger" />
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <InputText @bind-Value="this.UserInformation.Country" id="Country" class="form-control" placeholder="Country" />
+                                <ValidationMessage For="@(() => this.UserInformation.Country)" class="text-danger" />
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <InputText @bind-Value="this.UserInformation.Address" id="Address" class="form-control" placeholder="Address" />
+                                <ValidationMessage For="@(() => this.UserInformation.Address)" class="text-danger" />
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <InputText @bind-Value="this.UserInformation.City" id="City" class="form-control" placeholder="City" />
+                                <ValidationMessage For="@(() => this.UserInformation.City)" class="text-danger" />
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <InputNumber @bind-Value="this.UserInformation.ZipCode" id="ZipCode" class="form-control" placeholder="ZIP Code" />
+                                <ValidationMessage For="@(() => this.UserInformation.ZipCode)" class="text-danger" />
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <InputTextArea @bind-Value="this.UserInformation.AditionalInfromation" id="AditionalInformation" class="form-control" placeholder="Aditional Information" />
+                                <ValidationMessage For="@(() => this.UserInformation.AditionalInfromation)" class="text-danger" />
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <button type="submit" class="btn btn-success">
+                                    Place Order
+                                </button>
+                            </div>
+                        </EditForm>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="order_box">
+                            <h2>Your Order</h2>
+                            <ul class="list">
+                                <li>
+                                    <a href="#">
+                                        Product
+                                        <span>Total</span>
+                                    </a>
+                                </li>
+                                <CheckoutAllProductsCards Products="this.products">
+                                </CheckoutAllProductsCards>
+                            </ul>
+                            <ul class="list list_2">
+                                <li>
+                                    <a>
+                                        Total
+                                        <span>
+                                            @this.products.Sum(x => x.WantedQuantity * x.Price).ToString("F2")
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+    private ICollection<ProductInCartViewModel> products = new List<ProductInCartViewModel>();
+
+    public CheckoutUserInformationViewModel UserInformation { get; set; }
+
+    private async Task PlaceOrder()
+    {
+        await this.OrderService.PlaceOrder(this.products, this.UserInformation);
+        this.NavigationManager.NavigateTo("/SdvShop/Shop");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userName = this.HttpContextAccessor.HttpContext.User.Identity.Name;
+        this.products = await this.ShoppingCartState.ExtractAllProducts();
+        this.UserInformation = await this.OrderService.GetUserInformation(userName);
+    }
+}
