@@ -51,13 +51,32 @@ namespace SdvCode.Areas.SdvShop.Services
                 {
                     Id = product.Id,
                     Name = product.Name,
-                    WantedQuantity = targetItem.Value,
+                    WantedQuantity = Math.Min(product.AvailableQuantity, targetItem.Value),
                     Price = product.Price,
                     ImageUrl = image,
-                    TotalProductPrice = targetItem.Value * product.Price,
+                    TotalProductPrice = Math.Min(product.AvailableQuantity, targetItem.Value) * product.Price,
                 });
             }
 
+            return result;
+        }
+
+        public async Task<Dictionary<string, int>> UpdateSession(Dictionary<string, int> items)
+        {
+            var result = new Dictionary<string, int>();
+
+            foreach (var item in items)
+            {
+                var targetProduct = await this.db.Products.FirstOrDefaultAsync(x => x.Id == item.Key);
+
+                if (targetProduct != null)
+                {
+                    result.Add(item.Key, Math.Min(targetProduct.AvailableQuantity, item.Value));
+                }
+            }
+
+            this.ShoppingCart = result;
+            this.NotifyStateChanged();
             return result;
         }
 

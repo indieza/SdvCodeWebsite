@@ -40,6 +40,22 @@
 </AuthorizeView>
 
 @code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var items = await this.SessionStorage.GetItemAsync<Dictionary<string, int>>("CodeShop");
+            if (items?.Count == null)
+            {
+                await this.SessionStorage.SetItemAsync("CodeShop", new Dictionary<string, int>());
+            }
+            else
+            {
+                items = await this.ShoppingCartState.UpdateSession(items);
+                await this.SessionStorage.SetItemAsync("CodeShop", items);
+            }
+        }
+    }
 
     protected override void OnInitialized()
     {
@@ -50,5 +66,4 @@
     {
         this.ShoppingCartState.OnChange -= StateHasChanged;
     }
-
 }

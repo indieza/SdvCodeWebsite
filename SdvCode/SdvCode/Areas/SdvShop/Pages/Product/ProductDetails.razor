@@ -67,8 +67,20 @@
 
     private int wantedQuantity = 1;
 
-    private void AddProductToBasket(string id, int quantity)
+    private async Task AddProductToBasket(string id, int quantity)
     {
         this.ShoppingCartState.AddProduct(id, quantity);
+
+        var oldValue = await this.SessionStorage.GetItemAsync<Dictionary<string, int>>("CodeShop");
+        if (oldValue.Any(x => x.Key == id))
+        {
+            oldValue[id] += quantity;
+        }
+        else
+        {
+            oldValue.Add(id, quantity);
+        }
+
+        await this.SessionStorage.SetItemAsync("CodeShop", oldValue);
     }
 }
