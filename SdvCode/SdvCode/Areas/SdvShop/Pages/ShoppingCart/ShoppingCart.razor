@@ -15,12 +15,15 @@
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Total</th>
+                                <th scope="col">Remove</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var product in this.products)
                             {
-                                <ProductCard Product="product"></ProductCard>
+                                <ProductCard Product="product"
+                                             OnRemovingProduct="@this.RemoveProductClickHandler">
+                                </ProductCard>
                             }
                             <tr>
                                 <td></td>
@@ -91,13 +94,15 @@
         </div>
     </section>
 }
-else
-{
-    <div class="loader"></div>
-}
 
 @code {
     private ICollection<ProductInCartViewModel> products = new List<ProductInCartViewModel>();
+
+    private void RemoveProductClickHandler(string productId)
+    {
+        this.ShoppingCartState.RemoveProduct(productId);
+        this.NavigationManager.NavigateTo($"/SdvShop/Shop/Product/{productId}");
+    }
 
     protected override async Task OnInitializedAsync()
     {

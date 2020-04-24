@@ -18,6 +18,8 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Order
 
         public int WantedQuantity { get; set; }
 
+        public int AvailableQuantity { get; set; }
+
         public string ImageUrl { get; set; }
 
         public decimal TotalProductPrice { get; set; }

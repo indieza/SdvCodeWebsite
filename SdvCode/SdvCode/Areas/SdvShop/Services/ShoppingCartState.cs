@@ -35,6 +35,15 @@ namespace SdvCode.Areas.SdvShop.Services
             this.NotifyStateChanged();
         }
 
+        public void RemoveProduct(string productId)
+        {
+            if (this.ShoppingCart.ContainsKey(productId))
+            {
+                this.ShoppingCart.Remove(productId);
+                this.NotifyStateChanged();
+            }
+        }
+
         public async Task<ICollection<ProductInCartViewModel>> ExtractAllProducts()
         {
             var result = new List<ProductInCartViewModel>();
@@ -51,6 +60,7 @@ namespace SdvCode.Areas.SdvShop.Services
                 {
                     Id = product.Id,
                     Name = product.Name,
+                    AvailableQuantity = product.AvailableQuantity,
                     WantedQuantity = Math.Min(product.AvailableQuantity, targetItem.Value),
                     Price = product.Price,
                     ImageUrl = image,

@@ -5,7 +5,8 @@
                 <img class="shoppingCartImage" src="@this.Product.ImageUrl" alt="product image" />
             </div>
             <div class="media-body">
-                <p>@this.Product.Name</p>
+                <a href="/SdvShop/Shop/Product/@this.Product.Id"><p>@this.Product.Name</p></a>
+                <p>Available Quantity: @this.Product.AvailableQuantity</p>
             </div>
         </div>
     </td>
@@ -14,15 +15,23 @@
     </td>
     <td>
         <div class="product_count">
-            <input type="number" value="@this.Product.WantedQuantity" />
+            <h5>@this.Product.WantedQuantity</h5>
         </div>
     </td>
     <td>
         <h5>@this.Product.TotalProductPrice.ToString("F2")</h5>
+    </td>
+    <td>
+        <button @onclick="(() => this.OnRemovingProduct.InvokeAsync(this.Product.Id))" class="btn btn-danger">
+            <i class="fas fa-trash-alt"></i>
+        </button>
     </td>
 </tr>
 
 @code {
     [Parameter]
     public ProductInCartViewModel Product { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnRemovingProduct { get; set; }
 }
