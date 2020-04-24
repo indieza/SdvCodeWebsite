@@ -15,6 +15,8 @@
 - ASP.NET [CORE 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1 "CORE 3.1") MVC
 - Server-Side [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor "Blazor")
 - Comunication between Blazor components based on EventHandlers("click", "drag", ...)
+- Blazored.SessionStorage
+- Blazored.LocalStorage
 - ASP.NET CORE view components
 - ASP.NET Core areas
 - MSSQL full text searching
