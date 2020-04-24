@@ -21,9 +21,9 @@
                         <tbody>
                             @foreach (var product in this.products)
                             {
-                                <ProductCard Product="product"
-                                             OnRemovingProduct="@this.RemoveProductClickHandler">
-                                </ProductCard>
+                                <BasketProductCard Product="product"
+                                                   OnRemovingProduct="@this.RemoveProductClickHandler">
+                                </BasketProductCard>
                             }
                             <tr>
                                 <td></td>
