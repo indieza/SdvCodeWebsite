@@ -34,7 +34,7 @@ namespace SdvCode.Data.Migrations
                     ApplicationUserId = table.Column<string>(nullable: false),
                     ReceiverUsername = table.Column<string>(nullable: false),
                     RecieverImageUrl = table.Column<string>(nullable: true),
-                    SendedOn = table.Column<DateTime>(nullable: false)
+                    SendedOn = table.Column<DateTime>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -58,7 +58,7 @@ namespace SdvCode.Data.Migrations
                 columns: table => new
                 {
                     GroupId = table.Column<int>(nullable: false),
-                    ApplicationUserId = table.Column<string>(nullable: false)
+                    ApplicationUserId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {

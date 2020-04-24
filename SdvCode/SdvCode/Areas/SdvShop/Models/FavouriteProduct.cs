@@ -13,18 +13,18 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class FavouriteProduct
     {
-        //[Required]
-        //[ForeignKey(nameof(Product))]
-        //public string ProductId { get; set; }
+        // [Required]
+        // [ForeignKey(nameof(Product))]
+        // public string ProductId { get; set; }
 
-        //public Product Product { get; set; }
+        // public Product Product { get; set; }
 
-        //[Required]
-        //[ForeignKey(nameof(ApplicationUser))]
-        //public string ApplicationUserId { get; set; }
+        // [Required]
+        // [ForeignKey(nameof(ApplicationUser))]
+        // public string ApplicationUserId { get; set; }
 
-        //public ApplicationUser ApplicationUser { get; set; }
+        // public ApplicationUser ApplicationUser { get; set; }
 
-        //public bool IsFavorite { get; set; }
+        // public bool IsFavorite { get; set; }
     }
 }

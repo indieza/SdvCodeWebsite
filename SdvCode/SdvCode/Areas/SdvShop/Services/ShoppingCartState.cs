@@ -90,6 +90,12 @@ namespace SdvCode.Areas.SdvShop.Services
             return result;
         }
 
+        public void ClearProductsCollection()
+        {
+            this.ShoppingCart = new Dictionary<string, int>();
+            this.NotifyStateChanged();
+        }
+
         private void NotifyStateChanged() => this.OnChange?.Invoke();
     }
 }

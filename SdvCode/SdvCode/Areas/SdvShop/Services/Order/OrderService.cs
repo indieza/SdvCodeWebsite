@@ -8,6 +8,7 @@ namespace SdvCode.Areas.SdvShop.Services.Order
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Areas.SdvShop.ViewModels.Order;
     using SdvCode.Data;
 
@@ -46,9 +47,38 @@ namespace SdvCode.Areas.SdvShop.Services.Order
             return new OrderInformationViewModel();
         }
 
-        public Task PlaceOrder(ICollection<ProductInCartViewModel> products, OrderInformationViewModel userInformation)
+        public async Task PlaceOrder(ICollection<ProductInCartViewModel> products, OrderInformationViewModel userInformation)
         {
-            throw new NotImplementedException();
+            var order = new Order
+            {
+                FirstName = userInformation.FirstName,
+                LastName = userInformation.LastName,
+                Address = userInformation.Address,
+                City = userInformation.City,
+                Country = userInformation.Country,
+                Email = userInformation.Email,
+                PhoneNumber = userInformation.PhoneNumber,
+                ZipCode = (int)userInformation.ZipCode,
+                AditionalInfromation = userInformation.SanitizedInformation,
+            };
+
+            foreach (var product in products)
+            {
+                var targetProduct = await this.db.Products.FirstOrDefaultAsync(x => x.Id == product.Id);
+                order.OrderProducts.Add(new OrderProduct
+                {
+                    ProductId = product.Id,
+                    OrderId = order.Id,
+                });
+
+                targetProduct.AvailableQuantity =
+                    Math.Max(0, product.AvailableQuantity - product.WantedQuantity);
+                this.db.Products.Update(targetProduct);
+                await this.db.SaveChangesAsync();
+            }
+
+            this.db.Orders.Add(order);
+            await this.db.SaveChangesAsync();
         }
     }
 }

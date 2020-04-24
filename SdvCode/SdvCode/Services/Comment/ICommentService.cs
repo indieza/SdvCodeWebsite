@@ -22,7 +22,9 @@ namespace SdvCode.Services.Comment
         Task<bool> IsParentCommentApproved(string parentId);
 
         Task<bool> IsCommentIdCorrect(string commentId, string postId);
+
         Task<EditCommentViewModel> ExtractCurrentComment(string commentId);
+
         Task<Tuple<string, string>> EditComment(EditCommentViewModel model);
     }
 }

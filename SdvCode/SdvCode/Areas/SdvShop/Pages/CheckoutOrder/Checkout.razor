@@ -93,6 +93,8 @@
     {
         await this.OrderService.PlaceOrder(this.products, this.UserInformation);
         this.NavigationManager.NavigateTo("/SdvShop/Shop");
+        await this.SessionStorage.ClearAsync();
+        this.ShoppingCartState.ClearProductsCollection();
     }
 
     protected override async Task OnInitializedAsync()

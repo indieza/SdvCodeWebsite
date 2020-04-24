@@ -9,18 +9,18 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class WishlistProduct
     {
-        //[Required]
-        //[ForeignKey(nameof(Product))]
-        //public string ProductId { get; set; }
+        // [Required]
+        // [ForeignKey(nameof(Product))]
+        // public string ProductId { get; set; }
 
-        //public Product Product { get; set; }
+        // public Product Product { get; set; }
 
-        //[Required]
-        //[ForeignKey(nameof(ApplicationUser))]
-        //public string ApplicationUserId { get; set; }
+        // [Required]
+        // [ForeignKey(nameof(ApplicationUser))]
+        // public string ApplicationUserId { get; set; }
 
-        //public ApplicationUser ApplicationUser { get; set; }
+        // public ApplicationUser ApplicationUser { get; set; }
 
-        //public bool IsWished { get; set; }
+        // public bool IsWished { get; set; }
     }
 }

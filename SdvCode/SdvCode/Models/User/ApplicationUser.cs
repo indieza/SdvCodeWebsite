@@ -74,24 +74,9 @@ namespace SdvCode.Models.User
 
         public bool IsBlocked { get; set; }
 
-        //[ForeignKey(nameof(Address))]
-        //public string AddressId { get; set; }
+        // public ICollection<FavouriteProduct> FavouriteProducts { get; set; } = new HashSet<FavouriteProduct>();
 
-        //public Address Address { get; set; }
-
-        //[ForeignKey(nameof(ShoppingCart))]
-        //public string ShoppingCartId { get; set; }
-
-        //public ShoppingCart ShoppingCart { get; set; }
-
-        //public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
-
-        //public ICollection<FavouriteProduct> FavouriteProducts { get; set; } = new HashSet<FavouriteProduct>();
-
-        //public ICollection<WishlistProduct> WishlistProducts { get; set; } = new HashSet<WishlistProduct>();
-
-        //public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
-
+        // public ICollection<WishlistProduct> WishlistProducts { get; set; } = new HashSet<WishlistProduct>();
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
 
         public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
@@ -113,14 +98,5 @@ namespace SdvCode.Models.User
         public ICollection<ProductComment> ProductComments { get; set; } = new HashSet<ProductComment>();
 
         public ICollection<ProductReview> ProductReviews { get; set; } = new HashSet<ProductReview>();
-
-        //[NotMapped]
-        //public int ActionsCount { get; set; }
-
-        //[NotMapped]
-        //public ICollection<ApplicationRole> Roles { get; set; } = new HashSet<ApplicationRole>();
-
-        //[NotMapped]
-        //public bool IsFollowed { get; set; }
     }
 }

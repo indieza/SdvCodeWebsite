@@ -23,6 +23,7 @@ namespace SdvCode.Services.Post
         Task<Tuple<string, string>> AddToFavorite(ApplicationUser user, string id);
 
         Task<Tuple<string, string>> RemoveFromFavorite(ApplicationUser user, string id);
+
         Task<bool> IsPostExist(string id);
     }
 }

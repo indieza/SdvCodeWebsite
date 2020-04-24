@@ -25,7 +25,9 @@ namespace SdvCode.Areas.Administration.Services.Shop
         Task<EditProductViewModel> GetProductByName(string productName);
 
         Task<Tuple<string, string>> EditProduct(EditProductInputModel inputModel);
+
         Task<EditProductCategoryViewModel> GetProductCategoryByName(string categoryName);
+
         Task<Tuple<string, string>> EditProductCategory(EditProductCategoryInputModel inputModel);
     }
 }

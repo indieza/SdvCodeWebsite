@@ -37,6 +37,7 @@ namespace SdvCode.Services.Profile
         double ExtractUserRatingScore(string username);
 
         Task<int> GetLatestScore(ApplicationUser currentUser, string username);
+
         Task<bool> IsUserExist(string username);
     }
 }
