@@ -8,8 +8,9 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Order
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+    using Ganss.XSS;
 
-    public class CheckoutUserInformationViewModel
+    public class OrderInformationViewModel
     {
         [Required(ErrorMessage = "First name is required.")]
         [MaxLength(15)]
@@ -43,5 +44,7 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Order
         public int? ZipCode { get; set; }
 
         public string AditionalInfromation { get; set; }
+
+        public string SanitizedInformation => new HtmlSanitizer().Sanitize(this.AditionalInfromation);
     }
 }

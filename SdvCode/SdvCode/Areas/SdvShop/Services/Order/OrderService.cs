@@ -20,7 +20,7 @@ namespace SdvCode.Areas.SdvShop.Services.Order
             this.db = db;
         }
 
-        public async Task<CheckoutUserInformationViewModel> GetUserInformation(string username)
+        public async Task<OrderInformationViewModel> GetUserInformation(string username)
         {
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
             if (user != null)
@@ -29,7 +29,7 @@ namespace SdvCode.Areas.SdvShop.Services.Order
                 var city = await this.db.Cities.FirstOrDefaultAsync(x => x.Id == user.CityId);
                 var zipCode = await this.db.ZipCodes.FirstOrDefaultAsync(x => x.Id == user.ZipCodeId);
 
-                return new CheckoutUserInformationViewModel
+                return new OrderInformationViewModel
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
@@ -43,10 +43,10 @@ namespace SdvCode.Areas.SdvShop.Services.Order
                 };
             }
 
-            return new CheckoutUserInformationViewModel();
+            return new OrderInformationViewModel();
         }
 
-        public Task PlaceOrder(ICollection<ProductInCartViewModel> products, CheckoutUserInformationViewModel userInformation)
+        public Task PlaceOrder(ICollection<ProductInCartViewModel> products, OrderInformationViewModel userInformation)
         {
             throw new NotImplementedException();
         }

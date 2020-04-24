@@ -58,7 +58,7 @@
                             <h2>Your Order</h2>
                             <ul class="list">
                                 <li>
-                                    <a href="#">
+                                    <a>
                                         Product
                                         <span>Total</span>
                                     </a>
@@ -87,7 +87,7 @@
 @code {
     private ICollection<ProductInCartViewModel> products = new List<ProductInCartViewModel>();
 
-    public CheckoutUserInformationViewModel UserInformation { get; set; }
+    public OrderInformationViewModel UserInformation { get; set; }
 
     private async Task PlaceOrder()
     {

@@ -11,8 +11,8 @@ namespace SdvCode.Areas.SdvShop.Services.Order
 
     public interface IOrderService
     {
-        Task PlaceOrder(ICollection<ProductInCartViewModel> products, CheckoutUserInformationViewModel userInformation);
+        Task PlaceOrder(ICollection<ProductInCartViewModel> products, OrderInformationViewModel userInformation);
 
-        Task<CheckoutUserInformationViewModel> GetUserInformation(string username);
+        Task<OrderInformationViewModel> GetUserInformation(string username);
     }
 }

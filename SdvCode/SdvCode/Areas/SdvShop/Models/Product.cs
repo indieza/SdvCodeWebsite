@@ -52,10 +52,8 @@ namespace SdvCode.Areas.SdvShop.Models
 
         public ICollection<ProductImage> ProductImages { get; set; } = new HashSet<ProductImage>();
 
-        //public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+        public ICollection<ProductReview> ProductReviews { get; set; } = new HashSet<ProductReview>();
 
-        //public ICollection<FavouriteProduct> FavouriteProducts { get; set; } = new HashSet<FavouriteProduct>();
-
-        //public ICollection<ShoppingCartProduct> ShoppingCartProducts { get; set; } = new HashSet<ShoppingCartProduct>();
+        public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
     }
 }

@@ -67,6 +67,10 @@ namespace SdvCode.Data
 
         public DbSet<ProductReview> ProductReviews { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -159,6 +163,12 @@ namespace SdvCode.Data
             {
                 k.Username,
                 k.RaterUsername,
+            });
+
+            builder.Entity<OrderProduct>().HasKey(k => new
+            {
+                k.OrderId,
+                k.ProductId,
             });
 
             base.OnModelCreating(builder);

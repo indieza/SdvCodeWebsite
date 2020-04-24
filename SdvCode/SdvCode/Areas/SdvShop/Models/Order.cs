@@ -13,26 +13,47 @@ namespace SdvCode.Areas.SdvShop.Models
 
     public class Order
     {
-        //public Order()
-        //{
-        //    this.Id = Guid.NewGuid().ToString();
-        //}
+        public Order()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
 
-        //[Key]
-        //public string Id { get; set; }
+        [Key]
+        public string Id { get; set; }
 
-        //[Required]
-        //[ForeignKey(nameof(Address))]
-        //public string AddressId { get; set; }
+        [Required]
+        [MaxLength(15)]
+        public string FirstName { get; set; }
 
-        //public Address Address { get; set; }
+        [Required]
+        [MaxLength(15)]
+        public string LastName { get; set; }
 
-        //[Required]
-        //[ForeignKey(nameof(ApplicationUser))]
-        //public string ApplicationUserId { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string Email { get; set; }
 
-        //public ApplicationUser ApplicationUser { get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string PhoneNumber { get; set; }
 
-        //public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+        [Required]
+        [MaxLength(100)]
+        public string Address { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string Country { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string City { get; set; }
+
+        [Required]
+        public int ZipCode { get; set; }
+
+        public string AditionalInfromation { get; set; }
+
+        public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
     }
 }
