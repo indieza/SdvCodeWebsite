@@ -1,0 +1,41 @@
+﻿@page "/SdvShop/Shop/FavoriteProducts"
+
+<FavoriteProductsBanner></FavoriteProductsBanner>
+
+@if (this.products != null)
+{
+    <br />
+    <div class="latest_product_inner">
+        <div class="container">
+            <div class="row">
+                @foreach (var product in this.products)
+                {
+                    <FavoriteProductCard Product="product"
+                                         OnRemove="this.RemoveFromFavoriteClickHandler">
+                    </FavoriteProductCard>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<FavoriteProductViewModel> products = new List<FavoriteProductViewModel>();
+
+    private async Task RemoveFromFavoriteClickHandler(string id)
+    {
+        products = await this.FavoriteProductsState.RemoveProduct(id);
+        var oldValues = await this.LocalStorage.GetItemAsync<List<string>>("CodeShopFavProducts");
+        if (oldValues.Any(x => x == id))
+        {
+            oldValues.Remove(id);
+        }
+
+        await this.LocalStorage.SetItemAsync("CodeShopFavProducts", oldValues);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.products = await this.FavoriteProductsState.ExtractAllProducts();
+    }
+}
