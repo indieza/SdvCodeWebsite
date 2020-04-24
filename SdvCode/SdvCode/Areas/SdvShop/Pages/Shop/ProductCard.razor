@@ -8,10 +8,10 @@
                 <a href="#">
                     <i class="ti-eye"></i>
                 </a>
-                <a href="#">
+                <a @onclick="(() => this.AddProductToFavorite(this.Card.Id))">
                     <i class="ti-heart"></i>
                 </a>
-                <a @onclick="(() => this.AddProductToBasket(Card.Id, 1))">
+                <a @onclick="(() => this.AddProductToBasket(this.Card.Id, 1))">
                     <i class="ti-shopping-cart"></i>
                 </a>
             </div>
@@ -47,5 +47,17 @@
 
         await this.SessionStorage.SetItemAsync("CodeShop", oldValue);
         this.NavigationManager.NavigateTo("/SdvShop/Shop/ShoppingCart");
+    }
+
+    private async Task AddProductToFavorite(string id)
+    {
+        this.FavoriteProductsState.AddProduct(id);
+        var oldValues = await this.LocalStorage.GetItemAsync<List<string>>("CodeShopFavProducts");
+        if (!oldValues.Any(x => x == id))
+        {
+            oldValues.Add(id);
+        }
+
+        await this.LocalStorage.SetItemAsync("CodeShopFavProducts", oldValues);
     }
 }

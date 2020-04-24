@@ -45,6 +45,8 @@ namespace SdvCode
     using SdvCode.Areas.SdvShop.Services.Product;
     using SdvCode.Areas.SdvShop.Services.ProductComment;
     using SdvCode.Areas.SdvShop.Services.ProductReview;
+    using SdvCode.Areas.SdvShop.Services.States.FavoriteProducts;
+    using SdvCode.Areas.SdvShop.Services.States.ShoppingCart;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -197,6 +199,7 @@ namespace SdvCode
             services.AddTransient<IProductReviewService, ProductReviewService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddScoped<ShoppingCartState>();
+            services.AddScoped<FavoriteProductsState>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()

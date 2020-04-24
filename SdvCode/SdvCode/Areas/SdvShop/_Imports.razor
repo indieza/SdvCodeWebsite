@@ -27,7 +27,8 @@
 @using SdvCode.Areas.SdvShop.ViewModels.Review.ViewModels
 @using Blazored.SessionStorage
 @using Blazored.LocalStorage
-@using SdvCode.Areas.SdvShop.Services
+@using SdvCode.Areas.SdvShop.Services.States.ShoppingCart
+@using SdvCode.Areas.SdvShop.Services.States.FavoriteProducts
 @using SdvCode.Areas.SdvShop.ViewModels.Order
 @using SdvCode.Areas.SdvShop.Pages.CheckoutOrder
 @using SdvCode.Areas.SdvShop.Services.Order
@@ -45,4 +46,5 @@
 @inject ISessionStorageService SessionStorage
 @inject ILocalStorageService LocalStorage
 @inject ShoppingCartState ShoppingCartState
+@inject FavoriteProductsState FavoriteProductsState
 @inject IOrderService OrderService

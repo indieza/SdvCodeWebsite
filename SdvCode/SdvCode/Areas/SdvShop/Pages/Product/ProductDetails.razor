@@ -45,13 +45,13 @@
                         <input type="number" @bind="this.wantedQuantity" max="@this.Model.AvailableQuantity" min="1" />
                     </div>
                     <div class="card_area">
-                        <a class="main_btn" @onclick="(() => this.AddProductToBasket(Model.Id, this.wantedQuantity))">
+                        <a class="main_btn" @onclick="(() => this.AddProductToBasket(this.Model.Id, this.wantedQuantity))">
                             Add to Cart
                         </a>
                         <a class="icon_btn" href="#">
                             <i class="lnr lnr lnr-diamond"></i>
                         </a>
-                        <a class="icon_btn" href="#">
+                        <a class="icon_btn" @onclick="(() => this.AddProductToFavorite(this.Model.Id))">
                             <i class="lnr lnr lnr-heart"></i>
                         </a>
                     </div>
@@ -82,5 +82,17 @@
         }
 
         await this.SessionStorage.SetItemAsync("CodeShop", oldValue);
+    }
+
+    private async Task AddProductToFavorite(string id)
+    {
+        this.FavoriteProductsState.AddProduct(id);
+        var oldValues = await this.LocalStorage.GetItemAsync<List<string>>("CodeShopFavProducts");
+        if (!oldValues.Any(x => x == id))
+        {
+            oldValues.Add(id);
+        }
+
+        await this.LocalStorage.SetItemAsync("CodeShopFavProducts", oldValues);
     }
 }
