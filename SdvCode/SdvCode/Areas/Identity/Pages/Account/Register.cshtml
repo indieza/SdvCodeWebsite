@@ -109,7 +109,7 @@
     <script src="https://www.google.com/recaptcha/api.js?render=@GoogleReCaptch.Value.SiteKey"></script>
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('_reCAPTCHA_site_key_', { action: 'homepage' }).then(function (token) {
+            grecaptcha.execute('@GoogleReCaptch.Value.SiteKey', { action: 'homepage' }).then(function (token) {
 
             });
         });
