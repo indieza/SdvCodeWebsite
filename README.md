@@ -41,3 +41,10 @@
 - Twitter for developers
 - Google+ for developers
 - Moq
+
+## :dash: Road To
+- WebRTC vide chat
+- Integrate MasterCard and any kind of payment methods
+- Work on shop section(logic, user access, Fron-End....)
+- Real time user notifications
+- Host the product(of course, when done, we don't do bullshits :grinning:)
