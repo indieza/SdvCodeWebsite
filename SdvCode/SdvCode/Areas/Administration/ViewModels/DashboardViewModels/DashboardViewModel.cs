@@ -17,6 +17,8 @@ namespace SdvCode.Areas.Administration.ViewModels.DashboardViewModels
 
         public int TotalShopProducts { get; set; }
 
+        public int TotalOrdersCount { get; set; }
+
         public ICollection<string> Usernames { get; set; } = new HashSet<string>();
     }
 }

@@ -43,6 +43,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
             int bannedPeople = this.db.Users.Count(x => x.IsBlocked == true);
             int postsCount = this.db.Posts.Count();
             int productsCount = this.db.Products.Count();
+            int ordersCount = this.db.Orders.Count();
 
             return new DashboardViewModel
             {
@@ -52,6 +53,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
                 TotalUsersInAdminRole = adminsCount,
                 Usernames = usernames,
                 TotalShopProducts = productsCount,
+                TotalOrdersCount = ordersCount,
             };
         }
 
