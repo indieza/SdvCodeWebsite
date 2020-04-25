@@ -1,0 +1,107 @@
+﻿@using SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels
+
+@{
+    ViewData["Title"] = "All Orders";
+}
+
+<link href="~/administration/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<partial name="_TempDataPartial" /><div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">All Shop Orders</h1>
+    <hr />
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Shop list all existing orders</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Address</th>
+                            <th>Zip Code</th>
+                            <th>Aditional Information</th>
+                            <th>All Products</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Address</th>
+                            <th>Zip Code</th>
+                            <th>Aditional Information</th>
+                            <th>All Products</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var order in Model)
+                        {
+                            <tr>
+                                <td width="50">
+                                    @order.UserFullName
+                                </td>
+                                <td width="60">
+                                    <div>
+                                        @order.Email
+                                    </div>
+                                </td>
+                                <td width="70">
+                                    <div>
+                                        @order.PhoneNumber
+                                    </div>
+                                </td>
+                                <td width="80">
+                                    <div>
+                                        @order.Address
+                                    </div>
+                                </td>
+                                <td width="40">
+                                    <div>
+                                        @order.ZipCode
+                                    </div>
+                                </td>
+                                <td width="80" height="120">
+                                    <div style="height: 120px; overflow: auto">
+                                        @Html.Raw(order.AditionalInformation)
+                                    </div>
+                                </td>
+                                <td width="450">
+                                    <div style="height: 120px; overflow: auto">
+                                        @foreach (var product in order.Products)
+                                        {
+                                            <div>@product.Name</div>
+                                            <div>Single Price: <strong>@product.Price</strong></div>
+                                            <div>Available Quantity: <strong>@product.AvailableQuantity</strong></div>
+                                            <div><span>@product.TotalProductPrice</span>(X <span>@product.WantedQuantity</span> )</div>
+                                            <hr />
+                                        }
+                                    </div>
+                                </td>
+                                <td width="40">
+                                    <div>
+                                        @order.TotalPrice
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/administration/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/administration/js/demo/datatables-demo.js"></script>
+}
+
+@model ICollection<ShopOrderViewModel>

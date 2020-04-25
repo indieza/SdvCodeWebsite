@@ -81,6 +81,7 @@
     <PackageReference Include="Microsoft.ML.LightGBM" Version="1.4.0" />
     <PackageReference Include="Microsoft.ML.Recommender" Version="0.16.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="morelinq" Version="3.3.2" />
     <PackageReference Include="SendGrid" Version="9.13.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -1934,6 +1935,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Administration\ViewModels\ShopViewModels\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>

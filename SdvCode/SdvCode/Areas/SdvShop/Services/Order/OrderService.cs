@@ -69,6 +69,7 @@ namespace SdvCode.Areas.SdvShop.Services.Order
                 {
                     ProductId = product.Id,
                     OrderId = order.Id,
+                    WantedQuantity = product.WantedQuantity,
                 });
 
                 targetProduct.AvailableQuantity =

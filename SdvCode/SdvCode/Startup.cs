@@ -31,6 +31,8 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.PendingComments;
     using SdvCode.Areas.Administration.Services.PendingPosts;
     using SdvCode.Areas.Administration.Services.Shop;
+    using SdvCode.Areas.Administration.Services.Shop.Orders;
+    using SdvCode.Areas.Administration.Services.Shop.ShopDbUsage;
     using SdvCode.Areas.Administration.Services.UserPenalties;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Areas.Editor.Services.Category;
@@ -193,6 +195,7 @@ namespace SdvCode
 
             // Register Shop Services
             services.AddTransient<IShopDbUsageService, ShopDbUsageService>();
+            services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductCommentService, ProductCommentService>();

@@ -11,6 +11,9 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.Services.Shop;
+    using SdvCode.Areas.Administration.Services.Shop.Orders;
+    using SdvCode.Areas.Administration.Services.Shop.ShopDbUsage;
+    using SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels;
     using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.Category.ViewModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
@@ -22,10 +25,12 @@ namespace SdvCode.Areas.Administration.Controllers
     public class ShopController : Controller
     {
         private readonly IShopDbUsageService shopDbUsageService;
+        private readonly IOrdersService ordersService;
 
-        public ShopController(IShopDbUsageService shopDbUsageService)
+        public ShopController(IShopDbUsageService shopDbUsageService, IOrdersService ordersService)
         {
             this.shopDbUsageService = shopDbUsageService;
+            this.ordersService = ordersService;
         }
 
         public IActionResult AddNewProductCategory()
@@ -148,6 +153,12 @@ namespace SdvCode.Areas.Administration.Controllers
             EditProductCategoryViewModel productCategory =
                 await this.shopDbUsageService.GetProductCategoryByName(categoryName);
             return new JsonResult(productCategory);
+        }
+
+        public async Task<IActionResult> AllOrders()
+        {
+            ICollection<ShopOrderViewModel> model = await this.ordersService.GetAllOrders();
+            return this.View(model);
         }
     }
 }

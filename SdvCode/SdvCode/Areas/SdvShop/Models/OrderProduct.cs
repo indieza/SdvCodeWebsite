@@ -23,5 +23,9 @@ namespace SdvCode.Areas.SdvShop.Models
         public string OrderId { get; set; }
 
         public Order Order { get; set; }
+
+        [Required]
+        [Range(1, int.MaxValue)]
+        public int WantedQuantity { get; set; }
     }
 }
