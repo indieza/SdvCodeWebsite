@@ -2,28 +2,44 @@
 
 <TrackOrderBanner></TrackOrderBanner>
 
-<section class="tracking_box_area section_gap">
-    <div class="container">
-        <div class="tracking_box_inner">
-            <p>
-                To track your order please enter your Order ID in the box below and press the "Track" button. This was given
-                to you on your receipt and in the confirmation email you should have received.
-            </p>
-            <form class="row tracking_form" action="#" method="post" novalidate="novalidate">
-                <div class="col-md-12 form-group">
-                    <input type="text" class="form-control" id="order" name="order" placeholder="Order ID">
-                </div>
-                <div class="col-md-12 form-group">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Billing Email Address">
-                </div>
-                <div class="col-md-12 form-group">
-                    <button type="submit" value="submit" class="btn submit_btn">Track Order</button>
-                </div>
-            </form>
+@if (this.InputModel != null)
+{
+    <section class="tracking_box_area section_gap">
+        <div class="container">
+            <div class="tracking_box_inner">
+                <p>
+                    To track your order please enter your Order ID in the box below and press the "Track" button. This was given
+                    to you on your receipt and in the confirmation email you should have received.
+                </p>
+                <EditForm Model="this.InputModel" OnValidSubmit="this.GetOrderInformation">
+                    <DataAnnotationsValidator />
+                    <div class="col-md-12 form-group">
+                        <InputText @bind-Value="this.InputModel.OrderId" class="form-control" id="orderId" placeholder="Order ID" />
+                        <ValidationMessage For="@(() => this.InputModel.OrderId)" class="text-danger" />
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <InputText @bind-Value="this.InputModel.Email" class="form-control" id="orderEmail" placeholder="Billing Email Address" />
+                        <ValidationMessage For="@(() => this.InputModel.Email)" class="text-danger" />
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <button type="submit" value="submit" class="btn submit_btn">Track Order</button>
+                    </div>
+                </EditForm>
+            </div>
+
+            <TrackProductsList Products="this.products">
+            </TrackProductsList>
         </div>
-    </div>
-</section>
+    </section>
+}
 
 @code {
+    private ICollection<ProductInCartViewModel> products = new List<ProductInCartViewModel>();
 
+    public TrackOrderInputModel InputModel { get; set; } = new TrackOrderInputModel();
+
+    public async Task GetOrderInformation()
+    {
+        this.products = await this.TrackOrderProducts.GetOrder(this.InputModel);
+    }
 }

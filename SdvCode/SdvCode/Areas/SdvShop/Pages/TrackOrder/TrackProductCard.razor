@@ -1,0 +1,29 @@
+﻿<tr>
+    <td>
+        <div class="media">
+            <div class="d-flex">
+                <img class="shoppingCartImage" src="@this.Product.ImageUrl" alt="product image" />
+            </div>
+            <div class="media-body">
+                <a href="/SdvShop/Shop/Product/@this.Product.Id"><p>@this.Product.Name</p></a>
+                <p>Available Quantity: @this.Product.AvailableQuantity</p>
+            </div>
+        </div>
+    </td>
+    <td>
+        <h5>@this.Product.Price.ToString("F2")</h5>
+    </td>
+    <td>
+        <div class="product_count">
+            <h5>@this.Product.WantedQuantity</h5>
+        </div>
+    </td>
+    <td>
+        <h5>@this.Product.TotalProductPrice.ToString("F2")</h5>
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public ProductInCartViewModel Product { get; set; }
+}

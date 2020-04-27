@@ -49,6 +49,7 @@ namespace SdvCode
     using SdvCode.Areas.SdvShop.Services.ProductReview;
     using SdvCode.Areas.SdvShop.Services.States.FavoriteProducts;
     using SdvCode.Areas.SdvShop.Services.States.ShoppingCart;
+    using SdvCode.Areas.SdvShop.Services.TrackOrder;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -201,6 +202,7 @@ namespace SdvCode
             services.AddTransient<IProductCommentService, ProductCommentService>();
             services.AddTransient<IProductReviewService, ProductReviewService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<ITrackOrder, TrackOrder>();
             services.AddScoped<ShoppingCartState>();
             services.AddScoped<FavoriteProductsState>();
 

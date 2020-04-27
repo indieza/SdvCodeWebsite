@@ -37,6 +37,8 @@
 @using SdvCode.Areas.SdvShop.ViewModels.FavoriteProducts
 @using SdvCode.Areas.SdvShop.Pages.ShoppingCart
 @using SdvCode.Areas.SdvShop.Pages.TrackOrder
+@using SdvCode.Areas.SdvShop.ViewModels.TrackOrder
+@using SdvCode.Areas.SdvShop.Services.TrackOrder
 
 @inject IHttpContextAccessor HttpContextAccessor
 @inject SignInManager<ApplicationUser> SignInManager
@@ -52,3 +54,4 @@
 @inject ShoppingCartState ShoppingCartState
 @inject FavoriteProductsState FavoriteProductsState
 @inject IOrderService OrderService
+@inject ITrackOrder TrackOrderProducts
