@@ -10,9 +10,11 @@ namespace SdvCode.Areas.SdvShop.Services.TrackOrder
     using MoreLinq.Extensions;
     using SdvCode.Areas.SdvShop.ViewModels.Order;
     using SdvCode.Areas.SdvShop.ViewModels.TrackOrder;
+    using SdvCode.Areas.SdvShop.ViewModels.TrackOrder.InputModels;
+    using SdvCode.Areas.SdvShop.ViewModels.TrackOrder.ViewModels;
 
     public interface ITrackOrder
     {
-        Task<ICollection<ProductInCartViewModel>> GetOrder(TrackOrderInputModel model);
+        Task<TrackOrderViewModel> GetOrder(TrackOrderInputModel model);
     }
 }

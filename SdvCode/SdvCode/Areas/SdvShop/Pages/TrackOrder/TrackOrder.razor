@@ -27,19 +27,19 @@
                 </EditForm>
             </div>
 
-            <TrackProductsList Products="this.products">
+            <TrackProductsList ViewModel="this.viewModel">
             </TrackProductsList>
         </div>
     </section>
 }
 
 @code {
-    private ICollection<ProductInCartViewModel> products = new List<ProductInCartViewModel>();
+    private TrackOrderViewModel viewModel;
 
     public TrackOrderInputModel InputModel { get; set; } = new TrackOrderInputModel();
 
     public async Task GetOrderInformation()
     {
-        this.products = await this.TrackOrderProducts.GetOrder(this.InputModel);
+        this.viewModel = await this.TrackOrderProducts.GetOrder(this.InputModel);
     }
 }

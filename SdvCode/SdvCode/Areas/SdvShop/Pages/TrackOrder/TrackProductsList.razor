@@ -1,4 +1,34 @@
-﻿@if (this.Products?.Count != 0)
+﻿@if (this.ViewModel != null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <span>Created On:</span>
+                <h5>@this.ViewModel.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</h5>
+            </div>
+            <div class="col-md-3">
+                <span>Finished On:</span>
+                <h5>
+                    @(this.ViewModel.FinishedOn == null ? "Not finished yet" : this.ViewModel.FinishedOn.Value.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt"))
+                </h5>
+            </div>
+            <div class="col-md-3">
+                <span>Canceled On:</span>
+                <h5>
+                    @(this.ViewModel.CanceledOn == null ? "Not canceled" : this.ViewModel.CanceledOn.Value.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt"))
+                </h5>
+            </div>
+            <div class="col-md-3">
+                <span>Order Status:</span>
+                <h5>
+                    @Enum.GetName(typeof(SdvCode.Areas.SdvShop.Models.Enums.OrderStatus), this.ViewModel.OrderStatus)
+                </h5>
+            </div>
+        </div>
+    </div>
+    <hr />
+}
+@if (this.ViewModel != null)
 {
     <div class="cart_inner">
         <div class="table-responsive">
@@ -12,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var product in this.Products)
+                    @foreach (var product in this.ViewModel.Products)
                     {
                         <TrackProductCard Product="product">
                         </TrackProductCard>
@@ -24,7 +54,7 @@
                             <h5>Subtotal</h5>
                         </td>
                         <td>
-                            <h5>@this.Products.Sum(x => x.TotalProductPrice).ToString("F2")</h5>
+                            <h5>@this.ViewModel.Products.Sum(x => x.TotalProductPrice).ToString("F2")</h5>
                         </td>
                     </tr>
                 </tbody>
@@ -35,12 +65,12 @@
 else
 {
     <div class="container">
-        <h3>No order with that Order ID and Email</h3>
+        <h3>Enter valid Order ID and Email</h3>
     </div>
 }
 
 @code {
     [Parameter]
-    public ICollection<ProductInCartViewModel> Products { get; set; } = new List<ProductInCartViewModel>();
+    public TrackOrderViewModel ViewModel { get; set; } = new TrackOrderViewModel();
 
 }
