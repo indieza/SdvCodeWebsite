@@ -9,6 +9,7 @@ namespace SdvCode.Areas.SdvShop.Services.Order
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.SdvShop.Models;
+    using SdvCode.Areas.SdvShop.Models.Enums;
     using SdvCode.Areas.SdvShop.ViewModels.Order;
     using SdvCode.Data;
 
@@ -60,6 +61,8 @@ namespace SdvCode.Areas.SdvShop.Services.Order
                 PhoneNumber = userInformation.PhoneNumber,
                 ZipCode = (int)userInformation.ZipCode,
                 AditionalInfromation = userInformation.SanitizedInformation,
+                CreatedOn = DateTime.UtcNow,
+                OrderStatus = OrderStatus.Pending,
             };
 
             foreach (var product in products)
