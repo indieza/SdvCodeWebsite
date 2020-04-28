@@ -9,6 +9,7 @@ namespace SdvCode.Areas.SdvShop.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Areas.SdvShop.Models.Enums;
     using SdvCode.Models.User;
 
     public class Order
@@ -53,6 +54,16 @@ namespace SdvCode.Areas.SdvShop.Models
         public int ZipCode { get; set; }
 
         public string AditionalInfromation { get; set; }
+
+        [Required]
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? FinishedOn { get; set; }
+
+        public DateTime? CanceledOn { get; set; }
+
+        [Required]
+        public OrderStatus OrderStatus { get; set; }
 
         public ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
     }
