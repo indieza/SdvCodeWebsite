@@ -24,6 +24,7 @@ namespace SdvCode
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.ML;
+    using OfficeOpenXml;
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.Services.Dashboard;
@@ -33,6 +34,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.Shop;
     using SdvCode.Areas.Administration.Services.Shop.Orders;
     using SdvCode.Areas.Administration.Services.Shop.ShopDbUsage;
+    using SdvCode.Areas.Administration.Services.SiteReports.BlogReports;
     using SdvCode.Areas.Administration.Services.UserPenalties;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Areas.Editor.Services.Category;
@@ -168,6 +170,7 @@ namespace SdvCode
             services.AddTransient<IEditorCommentService, EditorCommentService>();
             services.AddTransient<IPendingPostsService, PendingPostsService>();
             services.AddTransient<IPendingCommentsService, PendingCommentsService>();
+            services.AddTransient<IBlogPostReport, BlogPostReport>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();
@@ -252,6 +255,9 @@ namespace SdvCode
                     };
                 });
             }
+
+			// Register OfficeOpenXml License
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             // Add Blazor Session and Local Storages
             services.AddBlazoredSessionStorage();
