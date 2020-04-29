@@ -22,6 +22,8 @@ namespace SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels
 
         public string CreatorUsername { get; set; }
 
+        public string PostStatus { get; set; }
+
         public string Predicition { get; set; }
     }
 }

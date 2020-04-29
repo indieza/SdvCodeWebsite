@@ -28,7 +28,7 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRole)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> BlogPostsReport()
         {
             ICollection<BlogPostReportViewModel> posts = await this.blogPostReport.GetPostsData();
 
@@ -42,7 +42,7 @@ namespace SdvCode.Areas.Administration.Controllers
             }
 
             stream.Position = 0;
-            string excelName = $"Blog Posts Report - {DateTime.Now:dd-MMMM-yyyy HH:mm tt}.xlsx";
+            string excelName = $"Blog Posts Report - {DateTime.Now:dd-MMMM-yyyy}.xlsx";
             return this.File(
                 stream,
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

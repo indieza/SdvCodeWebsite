@@ -6,6 +6,7 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels;
@@ -17,7 +18,8 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
         private readonly ApplicationDbContext db;
         private readonly List<string> rudeWords = new List<string>
         {
-            "Bitch", "Fuck", "Suck", "Fuck yourself", "Suck balls", "Dick",
+            "Bitch", "Fuck", "Suck", "Fuck yourself", "Suck balls", "Dick", "Fucker", "Gypsy", "Idiot", "Pedal",
+            "MotherFucker", "Mother fucker",
         };
 
         public BlogPostReport(ApplicationDbContext db)
@@ -32,17 +34,22 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
 
             foreach (var post in posts)
             {
+                var contentWithoutTags = Regex.Replace(post.Content, "<.*?>", string.Empty);
+                List<string> contentWords = contentWithoutTags.ToLower()
+                .Split(new[] { " ", ",", "-", "!", "?", ":", ";" }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
                 var targetModel = new BlogPostReportViewModel
                 {
                     Title = post.Title,
-                    Description = post.Content,
+                    Description = contentWithoutTags,
+                    PostStatus = post.PostStatus.ToString(),
                     Likes = await this.db.PostsLikes.CountAsync(x => x.PostId == post.Id && x.IsLiked == true),
                     Category =
                         (await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId)).Name,
                     CreatorUsername =
                         (await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId)).UserName,
                     Predicition =
-                        post.Content.ToLower().Any(x => this.rudeWords.Any()) ? "Rude" : string.Empty,
+                        contentWords.Any(x => this.rudeWords.Any(y => y.ToLower() == x)) ? "Rude" : string.Empty,
                 };
 
                 var postTags = this.db.PostsTags.Where(x => x.PostId == post.Id).ToList();
