@@ -12,5 +12,6 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
     public interface IBlogPostReport
     {
         Task<ICollection<BlogPostReportViewModel>> GetPostsData();
+        Task<ICollection<BlogCommentReportViewModel>> GetCommentsData();
     }
 }

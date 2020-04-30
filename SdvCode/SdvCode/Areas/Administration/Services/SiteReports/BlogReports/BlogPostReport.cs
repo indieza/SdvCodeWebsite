@@ -27,6 +27,33 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
             this.db = db;
         }
 
+        public async Task<ICollection<BlogCommentReportViewModel>> GetCommentsData()
+        {
+            var comments = this.db.Comments.ToList();
+            var result = new List<BlogCommentReportViewModel>();
+
+            foreach (var comment in comments)
+            {
+                var contentWithoutTags = Regex.Replace(comment.Content, "<.*?>", string.Empty);
+                List<string> contentWords = contentWithoutTags.ToLower()
+                .Split(new[] { " ", ",", "-", "!", "?", ":", ";" }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+                var targetModel = new BlogCommentReportViewModel
+                {
+                    Content = contentWithoutTags,
+                    CommentStatus = comment.CommentStatus.ToString(),
+                    CreatorUsername = (await this.db.Users
+                        .FirstOrDefaultAsync(x => x.Id == comment.ApplicationUserId))
+                        .UserName,
+                    Predicition =
+                        contentWords.Any(x => this.rudeWords.Any(y => y.ToLower() == x)) ? "Rude" : string.Empty,
+                };
+                result.Add(targetModel);
+            }
+
+            return result;
+        }
+
         public async Task<ICollection<BlogPostReportViewModel>> GetPostsData()
         {
             var posts = this.db.Posts.ToList();
