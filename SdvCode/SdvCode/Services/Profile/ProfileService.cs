@@ -156,6 +156,11 @@ namespace SdvCode.Services.Profile
                 return;
             }
 
+            if (this.db.UserRoles.Any(x => x.RoleId == role.Id))
+            {
+                return;
+            }
+
             this.db.UserRoles.Add(new IdentityUserRole<string>
             {
                 RoleId = role.Id,
