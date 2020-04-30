@@ -42,6 +42,9 @@
 - Google+ for developers
 - Moq
 
+## :wrench: DB Diagram
+![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1588249614/Diagram_yuon3t.png)
+
 ## :dash: Road To
 - WebRTC vide chat
 - Integrate MasterCard and any kind of payment methods
