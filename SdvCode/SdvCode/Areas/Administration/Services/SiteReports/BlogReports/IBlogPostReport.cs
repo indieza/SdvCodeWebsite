@@ -8,10 +8,12 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
     using System.Linq;
     using System.Threading.Tasks;
     using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.BlogReports;
 
     public interface IBlogPostReport
     {
         Task<ICollection<BlogPostReportViewModel>> GetPostsData();
+
         Task<ICollection<BlogCommentReportViewModel>> GetCommentsData();
     }
 }

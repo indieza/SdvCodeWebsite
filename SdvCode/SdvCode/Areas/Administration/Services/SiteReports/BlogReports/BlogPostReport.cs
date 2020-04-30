@@ -10,6 +10,7 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.BlogReports;
     using SdvCode.Data;
     using Twilio.Rest.Api.V2010.Account.Usage.Record;
 
@@ -45,7 +46,7 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
                     CreatorUsername = (await this.db.Users
                         .FirstOrDefaultAsync(x => x.Id == comment.ApplicationUserId))
                         .UserName,
-                    Predicition =
+                    Prediction =
                         contentWords.Any(x => this.rudeWords.Any(y => y.ToLower() == x)) ? "Rude" : string.Empty,
                 };
                 result.Add(targetModel);

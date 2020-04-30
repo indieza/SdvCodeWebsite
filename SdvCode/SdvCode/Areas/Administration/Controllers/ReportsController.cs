@@ -13,7 +13,10 @@ namespace SdvCode.Areas.Administration.Controllers
     using OfficeOpenXml;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.Services.SiteReports.BlogReports;
+    using SdvCode.Areas.Administration.Services.SiteReports.ShopReports;
     using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.BlogReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.ShopReports;
     using SdvCode.Constraints;
     using SdvCode.Models.Blog;
 
@@ -21,10 +24,12 @@ namespace SdvCode.Areas.Administration.Controllers
     public class ReportsController : Controller
     {
         private readonly IBlogPostReport blogPostReport;
+        private readonly IShopReport shopReport;
 
-        public ReportsController(IBlogPostReport blogPostReport)
+        public ReportsController(IBlogPostReport blogPostReport, IShopReport shopReport)
         {
             this.blogPostReport = blogPostReport;
+            this.shopReport = shopReport;
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRole)]
@@ -65,6 +70,28 @@ namespace SdvCode.Areas.Administration.Controllers
 
             stream.Position = 0;
             string excelName = $"Blog Comments Report - {DateTime.Now:dd-MMMM-yyyy}.xlsx";
+            return this.File(
+                stream,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                excelName);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public IActionResult ShopCommentsReport()
+        {
+            ICollection<ShopCommentReportViewModel> comments = this.shopReport.GetCommentsData();
+
+            var stream = new MemoryStream();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet1");
+                workSheet.Cells.LoadFromCollection(comments, true);
+                package.Save();
+            }
+
+            stream.Position = 0;
+            string excelName = $"Shop Comments Report - {DateTime.Now:dd-MMMM-yyyy}.xlsx";
             return this.File(
                 stream,
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

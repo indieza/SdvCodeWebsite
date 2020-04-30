@@ -27,6 +27,7 @@
 - Easy migration to Blazor on a WebAssembly
 - [X.PagedList.Mvc](https://www.nuget.org/packages/X.PagedList.Mvc/ "X.PagedList.Mvc")
 - [BlazorStrap](https://blazorstrap.io/ "BlazorStrap")
+- EPPlus for exportd data reports in Excel files
 - SendGrid
 - Cloudinary
 - TinyMCE
