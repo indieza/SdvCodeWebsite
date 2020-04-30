@@ -97,5 +97,27 @@ namespace SdvCode.Areas.Administration.Controllers
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 excelName);
         }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
+        public IActionResult ShopReviewsReport()
+        {
+            ICollection<ShopReviewReportViewModel> comments = this.shopReport.GetReviewsData();
+
+            var stream = new MemoryStream();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet1");
+                workSheet.Cells.LoadFromCollection(comments, true);
+                package.Save();
+            }
+
+            stream.Position = 0;
+            string excelName = $"Shop Reviews Report - {DateTime.Now:dd-MMMM-yyyy}.xlsx";
+            return this.File(
+                stream,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                excelName);
+        }
     }
 }

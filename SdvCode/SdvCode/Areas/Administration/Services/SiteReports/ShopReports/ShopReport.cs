@@ -38,10 +38,37 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.ShopReports
                 .ToList();
                 var targetModel = new ShopCommentReportViewModel
                 {
-                    Content = comment.Content,
+                    Content = contentWithoutTags,
                     Email = comment.Email,
                     FullName = comment.UserFullName,
                     PhoneNumber = comment.PhoneNumber,
+                    Prediction =
+                        contentWords.Any(x => this.rudeWords.Any(y => y.ToLower() == x)) ? "Rude" : string.Empty,
+                };
+                result.Add(targetModel);
+            }
+
+            return result;
+        }
+
+        public ICollection<ShopReviewReportViewModel> GetReviewsData()
+        {
+            var reviews = this.db.ProductReviews.ToList();
+            var result = new List<ShopReviewReportViewModel>();
+
+            foreach (var review in reviews)
+            {
+                var contentWithoutTags = Regex.Replace(review.Content, "<.*?>", string.Empty);
+                List<string> contentWords = contentWithoutTags.ToLower()
+                .Split(new[] { " ", ",", "-", "!", "?", ":", ";" }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+                var targetModel = new ShopReviewReportViewModel
+                {
+                    Content = contentWithoutTags,
+                    Email = review.Email,
+                    Stars = review.Stars,
+                    FullName = review.UserFullName,
+                    PhoneNumber = review.PhoneNumber,
                     Prediction =
                         contentWords.Any(x => this.rudeWords.Any(y => y.ToLower() == x)) ? "Rude" : string.Empty,
                 };

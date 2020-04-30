@@ -12,5 +12,6 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.ShopReports
     public interface IShopReport
     {
         ICollection<ShopCommentReportViewModel> GetCommentsData();
+        ICollection<ShopReviewReportViewModel> GetReviewsData();
     }
 }
