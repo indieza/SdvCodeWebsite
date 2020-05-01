@@ -6,6 +6,11 @@
                 <div class="d-flex">
                     <img src="@review.ImageUrl" class="commentAvatar" alt="avatar" />
                 </div>
+                <AuthorizeView Roles="@GlobalConstants.AdministratorRole">
+                    <button @onclick="@(() => this.OnDeleteReview.InvokeAsync(review.Id))" class="btn btn-danger btn-review-circle">
+                        <i class="fas fa-trash-alt deleteReview-icon-collapse"></i>
+                    </button>
+                </AuthorizeView>
                 <div class="media-body">
                     <h4>@review.FullName</h4>
                     @if (review.Username != null)
@@ -55,6 +60,9 @@
 
     [Parameter]
     public int TotalPagesQuantity { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDeleteReview { get; set; }
 
     private void SelectedPage(int page)
     {

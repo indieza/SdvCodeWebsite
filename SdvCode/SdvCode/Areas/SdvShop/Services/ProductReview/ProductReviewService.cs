@@ -53,6 +53,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductReview
                 var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == review.ApplicationUserId);
                 result.Add(new ReviewViewModel
                 {
+                    Id = review.Id,
                     Starts = review.Stars,
                     ProductId = review.ProductId,
                     Content = review.Content,
@@ -107,6 +108,16 @@ namespace SdvCode.Areas.SdvShop.Services.ProductReview
                     { 1, reviews.Count(x => x.Starts == 1) },
                 },
             };
+        }
+
+        public async Task RemoveReview(string id)
+        {
+            var review = await this.db.ProductReviews.FirstOrDefaultAsync(x => x.Id == id);
+            if (review != null)
+            {
+                this.db.Remove(review);
+                await this.db.SaveChangesAsync();
+            }
         }
     }
 }

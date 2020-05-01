@@ -19,5 +19,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductReview
         Task<ICollection<ReviewViewModel>> GetAllReviews(string productId);
 
         ReviewBannerViewModel ExtractReviewsStatistics(ICollection<ReviewViewModel> reviews);
+
+        Task RemoveReview(string id);
     }
 }

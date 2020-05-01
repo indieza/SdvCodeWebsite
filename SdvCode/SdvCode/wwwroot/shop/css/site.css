@@ -39,6 +39,23 @@
     display: block;
 }
 
+.btn-review-circle {
+    height: 27px;
+    position: relative;
+    margin-right: 7px;
+    border-radius: 50% !important;
+}
+
+.deleteReview-icon-collapse {
+    position: absolute;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
 .star-rating {
     direction: rtl;
     display: inline-block;

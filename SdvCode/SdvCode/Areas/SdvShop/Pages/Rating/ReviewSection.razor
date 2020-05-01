@@ -8,7 +8,8 @@
             <div class="col-lg-6">
                 <ReviewBanner Reviews="@this.allReviews"></ReviewBanner>
                 <ReviewsList Reviews="@this.allReviews"
-                             TotalPagesQuantity="@this.totalPagesQuantity">
+                             TotalPagesQuantity="@this.totalPagesQuantity"
+                             OnDeleteReview="this.DeleteClickHandler">
                 </ReviewsList>
             </div>
             <div class="col-lg-6">
@@ -102,6 +103,12 @@
     private int CalculateTotalPages()
     {
         return Math.Max(1, (int)Math.Ceiling(this.allReviews.Count / (decimal)GlobalConstants.ReviewsOnPage));
+    }
+
+    private async Task DeleteClickHandler(string id)
+    {
+        await this.ReviewService.RemoveReview(id);
+        await this.OnInitializedAsync();
     }
 
     protected override async Task OnInitializedAsync()
