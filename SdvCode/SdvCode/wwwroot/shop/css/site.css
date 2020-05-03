@@ -88,3 +88,11 @@
 .ratedStar {
     color: gold !important;
 }
+
+.delete-product-comment {
+    color: red;
+}
+
+    .delete-product-comment:hover {
+        color: black;
+    }

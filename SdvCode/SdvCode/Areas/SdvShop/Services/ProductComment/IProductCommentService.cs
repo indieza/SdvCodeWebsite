@@ -18,5 +18,7 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
         Task AddComment(AddCommentInputModel model);
 
         Task<ICollection<CommentViewModel>> GetAllComments(string productId);
+
+        Task DeleteComment(string id);
     }
 }

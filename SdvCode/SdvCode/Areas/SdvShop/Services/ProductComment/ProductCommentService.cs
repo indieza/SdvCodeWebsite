@@ -45,6 +45,17 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
             await this.db.SaveChangesAsync();
         }
 
+        public async Task DeleteComment(string id)
+        {
+            var comment = await this.db.ProductComments.FirstOrDefaultAsync(m => m.Id == id);
+            if (comment != null)
+            {
+                await this.RemoveChildren(comment.Id);
+                this.db.ProductComments.Remove(comment);
+                await this.db.SaveChangesAsync();
+            }
+        }
+
         public async Task<AddCommentInputModel> ExtractCommentInformation(string username, string productId, string parrentId)
         {
             if (username != null)
@@ -96,6 +107,16 @@ namespace SdvCode.Areas.SdvShop.Services.ProductComment
             }
 
             return result.OrderBy(x => x.CreatedOn).ToList();
+        }
+
+        private async Task RemoveChildren(string i)
+        {
+            var children = this.db.ProductComments.Where(c => c.ParentCommentId == i).ToList();
+            foreach (var child in children)
+            {
+                await this.RemoveChildren(child.Id);
+                this.db.ProductComments.Remove(child);
+            }
         }
     }
 }

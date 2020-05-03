@@ -32,6 +32,9 @@
                     }
                     <AuthorizeView Roles="@GlobalConstants.AdministratorRole">
                         <a class="reply_btn" @onclick="@(() => this.OnReply.InvokeAsync(comment.Id))">Reply</a>
+                        <a @onclick="@(() => this.OnDelete.InvokeAsync(comment.Id))">
+                            Delete
+                        </a>
                     </AuthorizeView>
                 </div>
             </div>
@@ -43,7 +46,8 @@
                                      .Where(x => x.ParentId == comment.Id)
                                      .ToList()"
                           Collapses="this.Collapses"
-                          OnReply="@this.ReplyClickHandler">
+                          OnReply="@this.ReplyClickHandler"
+                          OnDelete="this.DeleteClickHandler">
             </CommentReply>
         </BSCollapse>
     }
@@ -68,6 +72,9 @@
     public EventCallback<string> OnReply { get; set; }
 
     [Parameter]
+    public EventCallback<string> OnDelete { get; set; }
+
+    [Parameter]
     public Dictionary<string, bool> Collapses { get; set; }
 
     [Parameter]
@@ -85,6 +92,11 @@
     private void ReplyClickHandler(string parentId)
     {
         this.OnReply.InvokeAsync(parentId);
+    }
+
+    private void DeleteClickHandler(string id)
+    {
+        this.OnDelete.InvokeAsync(id);
     }
 
     private void SelectedPage(int page)

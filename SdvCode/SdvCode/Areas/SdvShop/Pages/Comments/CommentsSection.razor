@@ -17,6 +17,7 @@
                 <br />
                 <CommentsList AllComments="@this.allComments"
                               OnReply="this.ReplyClickHandler"
+                              OnDelete="this.DeleteClickHandler"
                               Collapses="this.collapses"
                               TotalPagesQuantity="this.totalPagesQuantity"
                               Sorting="@this.sorting">
@@ -101,6 +102,13 @@
     private void ReplyClickHandler(string parentId)
     {
         inputModel.ParentId = parentId;
+    }
+
+    private async Task DeleteClickHandler(string id)
+    {
+        await this.CommentService.DeleteComment(id);
+        this.collapses = new Dictionary<string, bool>();
+        await this.OnInitializedAsync();
     }
 
     private int CalculateTotalPages()

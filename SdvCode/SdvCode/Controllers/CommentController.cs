@@ -87,7 +87,6 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Blog");
         }
 
-        [HttpPost]
         public async Task<IActionResult> DeleteById(string commentId, string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);

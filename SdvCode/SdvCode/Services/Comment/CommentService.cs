@@ -140,7 +140,7 @@ namespace SdvCode.Services.Comment
 
         private async Task RemoveChildren(string i)
         {
-            var children = await this.db.Comments.Where(c => c.ParentCommentId == i).ToListAsync();
+            var children = this.db.Comments.Where(c => c.ParentCommentId == i).ToList();
             foreach (var child in children)
             {
                 await this.RemoveChildren(child.Id);
