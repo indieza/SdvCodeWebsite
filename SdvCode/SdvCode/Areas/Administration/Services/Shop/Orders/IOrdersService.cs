@@ -12,5 +12,7 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
     public interface IOrdersService
     {
         Task<ICollection<ShopOrderViewModel>> GetAllOrders();
+
+        Task<int> GetOrderStatus(string orderId);
     }
 }

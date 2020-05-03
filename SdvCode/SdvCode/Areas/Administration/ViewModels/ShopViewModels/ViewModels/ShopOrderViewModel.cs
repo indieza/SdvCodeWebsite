@@ -11,6 +11,8 @@ namespace SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels
 
     public class ShopOrderViewModel
     {
+        public string Id { get; set; }
+
         public string UserFullName { get; set; }
 
         public string Email { get; set; }

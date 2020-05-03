@@ -15,7 +15,7 @@ namespace SdvCode.Areas.SdvShop.Models.Enums
         Pending = 1,
         [Display(Name = "Approved(Seller approved the order and package it.)")]
         Approved = 2,
-        [Display(Name = "Dispatched(Seller gave the order to th courier.)")]
+        [Display(Name = "Dispatched(Seller gave the order to the courier.)")]
         Dispatched = 3,
         [Display(Name = "Shipped(Your order is in the courier office.)")]
         Shipped = 4,

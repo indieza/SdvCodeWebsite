@@ -1,8 +1,11 @@
 ﻿@using SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels
+@using SdvCode.Areas.SdvShop.Models.Enums
 
 @{
     ViewData["Title"] = "All Orders";
 }
+
+@model ICollection<ShopOrderViewModel>
 
 <link href="~/administration/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -94,7 +97,9 @@
                                 <td width="160">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <button class="btn btn-info"><i class="fas fa-dolly"></i></button>
+                                            <button class="btn btn-info" data-toggle="modal" data-target="#editOrderStatusModal" onclick="setOrderIdAndStatus('@order.Id')">
+                                                <i class="fas fa-dolly"></i>
+                                            </button>
                                         </div>
                                         <div class="col-md-6">
                                             <button class="btn btn-success"><i class="fas fa-edit"></i></button>
@@ -107,6 +112,31 @@
                 </table>
             </div>
         </div>
+        <input id="targetOrderId" type="hidden" />
+    </div>
+</div>
+<div class="modal fade" id="editOrderStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Edit order status?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Please edit order status. Select some of the drop-down options.</div>
+            <div class="row">
+                <div class="modal-body">
+                    <select id="editStatusSelect" asp-items="Html.GetEnumSelectList<OrderStatus>()" class="form-control">
+                        <option selected="selected" disabled value="">Please select</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a asp-area="Identity" asp-page="/Account/Logout" class="btn btn-primary">Edit status</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -114,6 +144,5 @@
     <script src="~/administration/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="~/administration/js/demo/datatables-demo.js"></script>
+    <script src="~/administration/js/editOrderStatus.js"></script>
 }
-
-@model ICollection<ShopOrderViewModel>

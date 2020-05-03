@@ -6,6 +6,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Areas.Administration.Services.Shop.Orders;
     using SdvCode.Areas.Administration.Services.Shop.ShopDbUsage;
     using SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels;
+    using SdvCode.Areas.SdvShop.Models.Enums;
     using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.Category.ViewModels;
     using SdvCode.Areas.SdvShop.ViewModels.Product.InputModels;
@@ -159,6 +161,13 @@ namespace SdvCode.Areas.Administration.Controllers
         {
             ICollection<ShopOrderViewModel> model = await this.ordersService.GetAllOrders();
             return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetOrderStatus(string orderId)
+        {
+            var status = await this.ordersService.GetOrderStatus(orderId);
+            return new JsonResult(status);
         }
     }
 }

@@ -30,6 +30,7 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
             {
                 var currentOrderModel = new ShopOrderViewModel
                 {
+                    Id = order.Id,
                     Email = order.Email,
                     Address = $"{order.Country}, {order.City}, {order.Address}",
                     PhoneNumber = order.PhoneNumber,
@@ -59,6 +60,12 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
             }
 
             return result;
+        }
+
+        public async Task<int> GetOrderStatus(string orderId)
+        {
+            var order = await this.db.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+            return (int)order?.OrderStatus;
         }
     }
 }
