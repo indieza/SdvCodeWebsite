@@ -45,6 +45,10 @@ function changeOrderStatus() {
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
+            document.getElementById("editStatusButton").disabled = true;
+            document.getElementById("cancelEditStatusButton").disabled = false;
+            document.getElementById("messageStatus").innerHTML =
+                `<p>Successfully changed order status: <b style="color: green">${data}</b></p>`
             console.log(data);
         },
         error: function (msg) {

@@ -78,13 +78,13 @@
                                     </div>
                                 </td>
                                 <td width="450">
-                                    <div style="height: 120px; overflow: auto">
+                                    <div style="height: 120px; overflow: auto" id="@order.Id-orderDetails">
                                         @foreach (var product in order.Products)
                                         {
                                             <div>@product.Name</div>
                                             <div>Single Price: <strong>@product.Price</strong></div>
-                                            <div>Available Quantity: <strong>@product.AvailableQuantity</strong></div>
-                                            <div><span>@product.TotalProductPrice</span>(X <span>@product.WantedQuantity</span> )</div>
+                                            <div>Available Quantity: <b>@product.AvailableQuantity</b></div>
+                                            <div>Total product price: <b>@product.TotalProductPrice (X @product.WantedQuantity)</b></div>
                                             <hr />
                                         }
                                     </div>
@@ -102,7 +102,9 @@
                                             </button>
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-success"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-success" data-toggle="modal" data-target="#viewOrder" onclick="viewOrder('@order.Id')">
+                                                <i class="fas fa-glasses"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </td>
@@ -132,9 +134,32 @@
                     </select>
                 </div>
             </div>
+            <div class="row">
+                <div class="modal-body" id="messageStatus">
+                </div>
+            </div>
             <div class="modal-footer">
                 <button id="cancelEditStatusButton" class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <button id="editStatusButton" onclick="changeOrderStatus()" class="btn btn-primary" disabled>Edit status</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="viewOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to inspect order?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="row">
+                <div class="modal-body" id="orderDetails">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelEditStatusButton" class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -145,4 +170,5 @@
     <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="~/administration/js/demo/datatables-demo.js"></script>
     <script src="~/administration/js/editOrderStatus.js"></script>
+    <script src="~/administration/js/orderDetails.js"></script>
 }
