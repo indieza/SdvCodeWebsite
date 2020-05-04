@@ -1,4 +1,11 @@
-﻿function setOrderIdAndStatus(id) {
+﻿document.getElementById("editStatusSelect").addEventListener("change", function (e) {
+    e.preventDefault();
+
+    document.getElementById("editStatusButton").disabled = false;
+    document.getElementById("cancelEditStatusButton").disabled = true;
+})
+
+function setOrderIdAndStatus(id) {
     document.getElementById("targetOrderId").value = id;
     $.ajax({
         type: "GET",
@@ -14,6 +21,31 @@
         },
         success: function (data) {
             document.getElementById("editStatusSelect").value = data;
+        },
+        error: function (msg) {
+            console.error(msg);
+        }
+    });
+}
+
+function changeOrderStatus() {
+    let status = parseInt(document.getElementById("editStatusSelect").value);
+    let id = document.getElementById("targetOrderId").value;
+    $.ajax({
+        type: "POST",
+        url: `/Administration/Shop/EditOrderStatus`,
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: "json",
+        data: {
+            id: id,
+            status: status
+        },
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            console.log(data);
         },
         error: function (msg) {
             console.error(msg);

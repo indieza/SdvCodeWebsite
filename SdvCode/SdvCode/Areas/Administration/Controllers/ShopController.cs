@@ -169,5 +169,12 @@ namespace SdvCode.Areas.Administration.Controllers
             var status = await this.ordersService.GetOrderStatus(orderId);
             return new JsonResult(status);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditOrderStatus(string id, int status)
+        {
+            string result = await this.ordersService.EditOrderStatus(id, status);
+            return new JsonResult(result);
+        }
     }
 }

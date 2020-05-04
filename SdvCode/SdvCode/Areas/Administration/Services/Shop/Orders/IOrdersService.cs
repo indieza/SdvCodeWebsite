@@ -14,5 +14,6 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
         Task<ICollection<ShopOrderViewModel>> GetAllOrders();
 
         Task<int> GetOrderStatus(string orderId);
+        Task<string> EditOrderStatus(string orderId, int statusValue);
     }
 }

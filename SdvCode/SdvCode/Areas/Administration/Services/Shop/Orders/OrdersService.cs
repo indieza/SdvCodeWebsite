@@ -10,6 +10,7 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
     using Microsoft.EntityFrameworkCore;
     using MoreLinq.Extensions;
     using SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels;
+    using SdvCode.Areas.SdvShop.Models.Enums;
     using SdvCode.Data;
 
     public class OrdersService : IOrdersService
@@ -19,6 +20,22 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
         public OrdersService(ApplicationDbContext db)
         {
             this.db = db;
+        }
+
+        public async Task<string> EditOrderStatus(string orderId, int statusValue)
+        {
+            var order = await this.db.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+
+            if (order != null && Enum.IsDefined(typeof(OrderStatus), statusValue))
+            {
+                var status = (OrderStatus)statusValue;
+                order.OrderStatus = status;
+                this.db.Orders.Update(order);
+                await this.db.SaveChangesAsync();
+                return status.ToString();
+            }
+
+            return string.Empty;
         }
 
         public async Task<ICollection<ShopOrderViewModel>> GetAllOrders()
@@ -65,7 +82,12 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
         public async Task<int> GetOrderStatus(string orderId)
         {
             var order = await this.db.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
-            return (int)order?.OrderStatus;
+            if (order != null)
+            {
+                return (int)order.OrderStatus;
+            }
+
+            return 0;
         }
     }
 }
