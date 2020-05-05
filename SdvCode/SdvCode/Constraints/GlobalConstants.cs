@@ -62,5 +62,7 @@ namespace SdvCode.Constraints
         public const int PaginationRadius = 4;
 
         public const int ReviewsOnPage = 4;
+
+        public const int FavoriteProductsOnPage = 9;
     }
 }

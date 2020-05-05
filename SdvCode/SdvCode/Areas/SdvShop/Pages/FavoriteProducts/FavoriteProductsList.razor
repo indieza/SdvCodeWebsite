@@ -8,7 +8,7 @@
     <div class="latest_product_inner">
         <div class="container">
             <div class="row">
-                @foreach (var product in this.products)
+                @foreach (var product in this.products.Skip(this.skipQuantity).Take(this.takeQuantity))
                 {
                     <FavoriteProductCard Product="product"
                                          OnRemove="this.RemoveFromFavoriteClickHandler">
@@ -17,10 +17,27 @@
             </div>
         </div>
     </div>
+    <Pagination TotaPagesQuantity="this.TotalPagesQuantity"
+                CurrentPage="this.currentPage"
+                Radius="GlobalConstants.PaginationRadius"
+                SelectedPage="this.SelectedPage">
+    </Pagination>
+    <br />
 }
 
 @code {
+    private int currentPage = 1;
+    private int skipQuantity = 0;
+    private int takeQuantity = GlobalConstants.FavoriteProductsOnPage;
     private List<FavoriteProductViewModel> products = new List<FavoriteProductViewModel>();
+
+    public int TotalPagesQuantity { get; set; }
+
+    private void SelectedPage(int page)
+    {
+        this.currentPage = page;
+        this.skipQuantity = (this.currentPage - 1) * this.takeQuantity;
+    }
 
     private async Task RemoveFromFavoriteClickHandler(string id)
     {
@@ -37,5 +54,8 @@
     protected override async Task OnInitializedAsync()
     {
         this.products = await this.FavoriteProductsState.ExtractAllProducts();
+        this.skipQuantity = 0;
+        this.TotalPagesQuantity = Math.Max(1, (int)Math.Ceiling(this.products.Count / (decimal)GlobalConstants.FavoriteProductsOnPage));
+        this.currentPage = 1;
     }
 }
