@@ -1,7 +1,7 @@
 ﻿@page "/SdvShop/Shop"
 
 <ShopBanner CategoryName="@this.categoryName"></ShopBanner>
-<!--================Category Product Area =================-->
+
 <section class="cat_product_area section_gap">
     <div class="container">
         <div class="row flex-row-reverse">
@@ -17,8 +17,6 @@
                             <option value="P_DESC">Price (Descending)</option>
                         </select>
                         <select class="show" @bind="this.productsForShowing">
-                            <option value="1">Show 1</option>
-                            <option value="2">Show 2</option>
                             <option value="6">Show 6</option>
                             <option value="9">Show 9</option>
                             <option value="12">Show 12</option>
@@ -73,7 +71,6 @@
         </div>
     </div>
 </section>
-<!--================End Category Product Area =================-->
 
 @code{
     private List<ProductCategoryViewModel> categories;
