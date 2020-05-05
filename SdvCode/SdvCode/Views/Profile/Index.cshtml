@@ -11,8 +11,8 @@
 @{
     ViewData["Title"] = $"{Model.ApplicationUser.Username.Substring(0, 1).ToUpper() + Model.ApplicationUser.Username.Substring(1, Model.ApplicationUser.Username.Length - 1)} Profile";
 }
-<body onload="markRateStars(@Model.RatingScore, true)">
-</body>
+@*<body onload="markRateStars(@Model.RatingScore, true)">
+    </body>*@
 <div class="user-profile">
     <div class="profile-header-background">
         <img src=@Model.ApplicationUser.CoverImageUrl alt="Profile Header Background">
