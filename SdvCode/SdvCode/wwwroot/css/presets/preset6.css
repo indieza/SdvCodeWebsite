@@ -443,3 +443,9 @@ ul.navbar-nav > li.active > a {
     border: 1px solid #8C42BA;
     background: #8C42BA;
 }
+
+.pagination > .active > span {
+    background-color: #8C42BA !important;
+    border-color: #8C42BA !important;
+    margin-right: 6px !important;
+}
