@@ -36,6 +36,8 @@ namespace SdvCode.Controllers
             HomeViewModel model = new HomeViewModel
             {
                 TotalRegisteredUsers = this.homeService.GetRegisteredUsersCount(),
+                TotalBlogPosts = this.homeService.GetPostsCount(),
+                TotalShopProducts = this.homeService.GetPorductsCount(),
                 Administrators = await this.homeService.GetAllAdministrators(),
             };
 

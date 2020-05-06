@@ -10,6 +10,10 @@ namespace SdvCode.ViewModels.Home
     {
         public int TotalRegisteredUsers { get; set; }
 
+        public int TotalBlogPosts { get; set; }
+
+        public int TotalShopProducts { get; set; }
+
         public ICollection<ApplicationUser> Administrators { get; set; } = new HashSet<ApplicationUser>();
     }
 }

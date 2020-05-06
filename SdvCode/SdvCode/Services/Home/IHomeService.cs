@@ -17,5 +17,7 @@ namespace SdvCode.Services.Home
 
         Task<ICollection<ApplicationUser>> GetAllAdministrators();
         Task<ICollection<LatestPostViewModel>> GetLatestPosts();
+        int GetPostsCount();
+        int GetPorductsCount();
     }
 }

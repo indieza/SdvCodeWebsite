@@ -80,6 +80,16 @@ namespace SdvCode.Services.Home
             return result;
         }
 
+        public int GetPorductsCount()
+        {
+            return this.db.Products.Count(x => x.AvailableQuantity > 0);
+        }
+
+        public int GetPostsCount()
+        {
+            return this.db.Posts.Count(x => x.PostStatus == PostStatus.Approved);
+        }
+
         public int GetRegisteredUsersCount()
         {
             return this.db.Users.Count();
