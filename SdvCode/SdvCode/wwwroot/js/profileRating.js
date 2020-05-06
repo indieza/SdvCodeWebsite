@@ -1,10 +1,16 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-    let rating = document.getElementById("profileRating").innerHTML.split("/")[0];
-    markRateStars(rating, true);
+﻿let username = document.getElementsByTagName("h5")[0].innerText.substring(1);
+let profileRating = document.getElementById("profileRating");
+let starsDiv = document.getElementById("starScoreRating");
+let latestScore = document.getElementById("latestScore");
+
+document.addEventListener('DOMContentLoaded', function () {
+    let rating = profileRating.innerHTML.split("/")[0];
+    if (latestScore) {
+        markRateStars(Number(rating), parseInt(latestScore.innerText));
+    }
 }, false);
 
 function selectRate(rate) {
-    let username = document.getElementsByTagName("h5")[0].innerText.substring(1);
     $.ajax({
         url: `/RateUser`,
         type: "POST",
@@ -13,17 +19,9 @@ function selectRate(rate) {
             rate: rate
         },
         success: function (msg) {
-            document.getElementById("profileRating").innerText = msg;
-            var latestScore = document.getElementById("latestScore");
-
-            if (latestScore.innerText == "0") {
-                latestScore.innerText = rate;
-                markRateStars(msg.split("/")[0], true);
-            } else {
-                latestScore.innerText = rate;
-                markRateStars(msg.split("/")[0], false);
-            }
-            markRateStars(msg.split("/")[0], true);
+            profileRating.innerText = msg;
+            latestScore.innerText = rate;
+            markRateStars(Number(msg.split("/")[0]), parseInt(latestScore.innerText));
         },
         error: function (msg) {
             alert(msg);
@@ -31,13 +29,9 @@ function selectRate(rate) {
     });
 }
 
-function markRateStars(score, isFirst) {
-    let starsDiv = document.getElementById("starScoreRating");
-    let latestScore = document.getElementById("latestScore");
-    if (!isFirst) {
-        if (latestScore) {
-            document.getElementById(`rating-${latestScore.innerText}`).checked = false;
-        }
+function markRateStars(score, latestScore) {
+    if (latestScore != 0) {
+        document.getElementById(`rating-${latestScore}`).checked = true;
     }
     let div = document.createElement("div");
     starsDiv.innerHTML = "";
@@ -50,9 +44,4 @@ function markRateStars(score, isFirst) {
         div.innerHTML += `<span>★ </span>`;
     }
     starsDiv.appendChild(div);
-    if (isFirst) {
-        if (latestScore.innerText != "0" && score != 0) {
-            document.getElementById(`rating-${latestScore.innerText}`).checked = true;
-        }
-    }
 }
