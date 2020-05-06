@@ -64,5 +64,7 @@ namespace SdvCode.Constraints
         public const int ReviewsOnPage = 4;
 
         public const int FavoriteProductsOnPage = 9;
+
+        public const int LatestLayoutPostsCount = 9;
     }
 }

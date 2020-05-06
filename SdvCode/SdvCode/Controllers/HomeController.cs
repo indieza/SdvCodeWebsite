@@ -4,6 +4,8 @@
 namespace SdvCode.Controllers
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
@@ -38,6 +40,13 @@ namespace SdvCode.Controllers
             };
 
             return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetLatestBlogPosts()
+        {
+            ICollection<LatestPostViewModel> latestPosts = await this.homeService.GetLatestPosts();
+            return new JsonResult(latestPosts);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

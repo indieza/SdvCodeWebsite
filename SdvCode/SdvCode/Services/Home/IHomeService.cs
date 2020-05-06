@@ -7,6 +7,7 @@ namespace SdvCode.Services.Home
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Home;
 
     public interface IHomeService
     {
@@ -15,5 +16,6 @@ namespace SdvCode.Services.Home
         Task<IdentityResult> CreateRole(string role);
 
         Task<ICollection<ApplicationUser>> GetAllAdministrators();
+        Task<ICollection<LatestPostViewModel>> GetLatestPosts();
     }
 }

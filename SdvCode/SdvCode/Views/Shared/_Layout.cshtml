@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="~/css/notificaitonButton.css">
     <link rel="stylesheet" href="~/css/profileRating.css">
 </head>
-<body onload="setSiteTheme();">
+<body onload="setSiteTheme(); getLatestBlogPosts();">
     <div class="style-switch-wrapper">
         <div class="style-switch-button">
             <i class="fas fa-sliders"></i>
@@ -104,37 +104,11 @@
                 <div class="row">
 
                     <div class="col-md-4 col-sm-12 footer-widget">
-                        <h3 class="widget-title">Flickr Photos</h3>
+                        <h3 class="widget-title">Latest Blog Posts</h3>
 
                         <div class="img-gallery">
-                            <div class="img-container">
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/1.jpg">
-                                    <img src="~/images/gallery/1.jpg" alt="">
-                                </a>
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/2.jpg">
-                                    <img src="~/images/gallery/2.jpg" alt="">
-                                </a>
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/3.jpg">
-                                    <img src="~/images/gallery/3.jpg" alt="">
-                                </a>
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/4.jpg">
-                                    <img src="~/images/gallery/4.jpg" alt="">
-                                </a>
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/5.jpg">
-                                    <img src="~/images/gallery/5.jpg" alt="">
-                                </a>
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/6.jpg">
-                                    <img src="~/images/gallery/6.jpg" alt="">
-                                </a>
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/6.jpg">
-                                    <img src="~/images/gallery/7.jpg" alt="">
-                                </a>
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/6.jpg">
-                                    <img src="~/images/gallery/8.jpg" alt="">
-                                </a>
-                                <a class="thumb-holder" data-rel="prettyPhoto" href="~/images/gallery/6.jpg">
-                                    <img src="~/images/gallery/9.jpg" alt="">
-                                </a>
+                            <div class="img-container" id="latesBlogPosts">
+                                @*Here come latest blog posts*@
                             </div>
                         </div>
                     </div>
@@ -243,6 +217,7 @@
         <script type="text/javascript" src="~/js/custom.js"></script>
         <script type="text/javascript" src="~/lib/statusCodes/404/lionScript.js"></script>
         <script type="text/javascript" src="~/js/profileScripts.js"></script>
+        <script type="text/javascript" src="~/js/layoutScript.js"></script>
         <script src="https://kit.fontawesome.com/b0b195894f.js" crossorigin="anonymous"></script>
         <script src="~/lib/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
         <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
