@@ -10,6 +10,7 @@ namespace SdvCode.Models.User
     using Microsoft.AspNetCore.Identity;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.SdvShop.Models;
+    using SdvCode.Areas.UserNotifications.Models;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
@@ -98,5 +99,7 @@ namespace SdvCode.Models.User
         public ICollection<ProductComment> ProductComments { get; set; } = new HashSet<ProductComment>();
 
         public ICollection<ProductReview> ProductReviews { get; set; } = new HashSet<ProductReview>();
+
+        public ICollection<UserNotification> UserNotifications { get; set; } = new HashSet<UserNotification>();
     }
 }

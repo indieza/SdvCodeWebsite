@@ -16,8 +16,11 @@ namespace SdvCode.Services.Home
         Task<IdentityResult> CreateRole(string role);
 
         Task<ICollection<ApplicationUser>> GetAllAdministrators();
+
         Task<ICollection<LatestPostViewModel>> GetLatestPosts();
+
         int GetPostsCount();
+
         int GetPorductsCount();
     }
 }

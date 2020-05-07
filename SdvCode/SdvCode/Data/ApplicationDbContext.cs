@@ -7,6 +7,7 @@ namespace SdvCode.Data
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.SdvShop.Models;
+    using SdvCode.Areas.UserNotifications.Models;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
 
@@ -70,6 +71,8 @@ namespace SdvCode.Data
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public DbSet<UserNotification> UserNotifications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
