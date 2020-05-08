@@ -191,7 +191,7 @@
 
         @if (SignInManager.IsSignedIn(User))
         {
-            <a class="float">
+            <a asp-area="UserNotifications" asp-controller="Notification" asp-action="Index" class="float">
                 <i class="fas fa-bell my-float"></i>
                 <span class="badge">3</span>
             </a>

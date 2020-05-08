@@ -5,6 +5,8 @@ namespace SdvCode.Constraints
 {
     public static class GlobalConstants
     {
+        public const string NotificationsArea = "UserNotifications";
+
         public const string ShopArea = "SdvShop";
 
         public const string PrivateChatArea = "PrivateChat";
