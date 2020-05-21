@@ -44,6 +44,8 @@
     <Compile Remove="Data\Migrations\20200409085050_InitializeRecommendedFriedsTable.Designer.cs" />
     <Compile Remove="Data\Migrations\20200416143748_InitialCreateForShop.cs" />
     <Compile Remove="Data\Migrations\20200416143748_InitialCreateForShop.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200521072139_AddUserActionStatusColumn.cs" />
+    <Compile Remove="Data\Migrations\20200521072139_AddUserActionStatusColumn.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

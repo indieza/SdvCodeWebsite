@@ -11,6 +11,11 @@ namespace SdvCode.Models.User
 
     public class UserAction
     {
+        public UserAction()
+        {
+            this.ActionStatus = UserActionsStatus.Unread;
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -44,5 +49,8 @@ namespace SdvCode.Models.User
 
         [MaxLength(350)]
         public string PostContent { get; set; }
+
+        [Required]
+        public UserActionsStatus ActionStatus { get; set; }
     }
 }
