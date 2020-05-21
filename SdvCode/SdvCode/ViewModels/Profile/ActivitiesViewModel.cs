@@ -40,5 +40,7 @@ namespace SdvCode.ViewModels.Profile
 
         [MaxLength(350)]
         public string PostContent { get; set; }
+
+        public UserActionsStatus ActionStatus { get; set; }
     }
 }

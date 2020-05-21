@@ -171,6 +171,24 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{username}");
         }
 
+        [HttpPost]
+        [Route("/Profile/{username}/MarkActionAsRead")]
+        public async Task<string> MarkActionAsRead(string username, int id)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            await this.profileService.ChangeActionStatus(currentUser, username, id, UserActionsStatus.Read);
+            return UserActionsStatus.Read.ToString();
+        }
+
+        [HttpPost]
+        [Route("/Profile/{username}/PinAction")]
+        public async Task<string> PinAction(string username, int id)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            await this.profileService.ChangeActionStatus(currentUser, username, id, UserActionsStatus.Pinned);
+            return UserActionsStatus.Pinned.ToString();
+        }
+
         public IActionResult MakeYourselfAdmin(string username)
         {
             this.profileService.MakeYourselfAdmin(username);

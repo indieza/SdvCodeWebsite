@@ -229,6 +229,22 @@ namespace SdvCode.Services.Profile
             return await this.db.Users.AnyAsync(x => x.UserName == username);
         }
 
+        public async Task ChangeActionStatus(ApplicationUser currentUser, string username, int id, UserActionsStatus status)
+        {
+            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            if (user != null)
+            {
+                var action = await this.db.UserActions.FirstOrDefaultAsync(x => x.Id == id && x.PersonUsername == user.UserName);
+
+                if (action != null)
+                {
+                    action.ActionStatus = status;
+                    this.db.UserActions.Update(action);
+                    await this.db.SaveChangesAsync();
+                }
+            }
+        }
+
         private double CalculateRatingScore(string username)
         {
             double score;

@@ -6,6 +6,7 @@ namespace SdvCode.Services.Profile
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users.ViewModels;
@@ -39,5 +40,7 @@ namespace SdvCode.Services.Profile
         Task<int> GetLatestScore(ApplicationUser currentUser, string username);
 
         Task<bool> IsUserExist(string username);
+
+        Task ChangeActionStatus(ApplicationUser currentUser, string username, int id, UserActionsStatus status);
     }
 }

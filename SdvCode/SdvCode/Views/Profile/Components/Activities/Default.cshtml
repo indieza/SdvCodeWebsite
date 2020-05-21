@@ -8,6 +8,12 @@
 
 @{
     ViewData["Title"] = "Activities";
+    var colors = new Dictionary<string, string>()
+{
+        { UserActionsStatus.Unread.ToString(), "red" },
+        { UserActionsStatus.Read.ToString(), "green"},
+        { UserActionsStatus.Pinned.ToString(), "blue"},
+    };
 }
 
 <div class="tab-pane fade in active">
@@ -28,6 +34,17 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
@@ -39,6 +56,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -60,6 +79,17 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
@@ -71,6 +101,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -92,6 +124,17 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
@@ -103,6 +146,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -124,6 +169,17 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
@@ -135,6 +191,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -153,6 +211,17 @@
                             <b>@action.PersonUsername</b>
                         </a> update his/her personal information
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
@@ -164,6 +233,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -182,6 +253,17 @@
                             <b>@action.PersonUsername</b>
                         </a> has changed his/her cover picture
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="thumbnail">
@@ -198,6 +280,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -216,6 +300,17 @@
                             <b>@action.PersonUsername</b>
                         </a> has changed his/her profile picture
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="thumbnail">
@@ -232,6 +327,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -255,6 +352,17 @@
                             <b>post</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
@@ -276,6 +384,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -299,6 +409,17 @@
                             <b>post</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
@@ -320,6 +441,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -348,6 +471,17 @@
                             <b>post</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
@@ -369,6 +503,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -397,6 +533,17 @@
                             </b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
@@ -418,6 +565,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -441,6 +590,17 @@
                             <b>post</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.PersonUsername)
@@ -452,6 +612,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -480,6 +642,17 @@
                             <b>post</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.PersonUsername)
@@ -491,6 +664,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -519,6 +694,17 @@
                             </b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.PersonUsername)
@@ -530,6 +716,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -548,6 +736,17 @@
                             <b>@action.PersonUsername</b>
                         </a> delete his/her own blog post
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
@@ -559,6 +758,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -580,6 +781,17 @@
                             <b>@action.FollowerUsername</b>
                         </a> blog post
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
@@ -591,6 +803,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -612,6 +826,17 @@
                             <b>@action.FollowerUsername</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 </div>
                 @if (User.Identity.Name == action.ApplicationUser.UserName)
@@ -623,6 +848,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -651,6 +878,17 @@
                             <b>post</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
@@ -672,6 +910,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -700,6 +940,17 @@
                             </b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
@@ -721,6 +972,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
@@ -744,6 +997,17 @@
                             <b>post</b>
                         </a>
                     </p>
+                    @if (User.Identity.Name == action.ApplicationUser.UserName)
+                    {
+                        <p>
+                            <span style="font-size: 14px">Status: </span>
+                            <span>
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                    @action.ActionStatus.ToString()
+                                </b>
+                            </span>
+                        </p>
+                    }
                     <small class="text-muted">@action.ActionDate.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")</small>
                     <div class="activity-attachment">
                         <h4>
@@ -765,6 +1029,8 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
+                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
+                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
                         </ul>
                     </div>
                 }
