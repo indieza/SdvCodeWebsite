@@ -45,7 +45,7 @@ namespace SdvCode.Services.Profile.Pagination.Profile
                     PostId = item.PostId,
                     PostTitle = item.PostTitle,
                     PostContent = item.PostContent,
-                    ActionStatus = item.ActionStatus
+                    ActionStatus = item.ActionStatus,
                 });
             }
 

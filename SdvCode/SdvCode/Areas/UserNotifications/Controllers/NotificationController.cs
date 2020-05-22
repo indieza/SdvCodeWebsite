@@ -7,15 +7,36 @@ namespace SdvCode.Areas.UserNotifications.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.UserNotifications.Services;
+    using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
     using SdvCode.Constraints;
+    using SdvCode.Models.User;
 
     [Area(GlobalConstants.NotificationsArea)]
+    [Authorize]
     public class NotificationController : Controller
     {
-        public IActionResult Index()
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly INotificationService notificationService;
+
+        public NotificationController(
+            UserManager<ApplicationUser> userManager,
+            INotificationService notificationService)
         {
-            return this.View();
+            this.userManager = userManager;
+            this.notificationService = notificationService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            ICollection<NotificationViewModel> notifications =
+                await this.notificationService.GetAllNotifications(currentUser);
+
+            return this.View(notifications);
         }
     }
 }

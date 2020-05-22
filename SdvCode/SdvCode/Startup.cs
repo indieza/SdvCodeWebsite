@@ -53,6 +53,7 @@ namespace SdvCode
     using SdvCode.Areas.SdvShop.Services.States.FavoriteProducts;
     using SdvCode.Areas.SdvShop.Services.States.ShoppingCart;
     using SdvCode.Areas.SdvShop.Services.TrackOrder;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -187,6 +188,9 @@ namespace SdvCode
             services.AddTransient<IUserPostsService, UserPostsService>();
             services.AddTransient<IPrivateChatService, PrivateChatService>();
             services.AddTransient<ICommentService, CommentService>();
+
+            // Register User Notification Services
+            services.AddTransient<INotificationService, NotificationService>();
 
             // Register Pagination Services
             services.AddTransient<IProfileActivitiesService, ProfileActivitiesService>();

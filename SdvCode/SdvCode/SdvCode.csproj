@@ -1940,7 +1940,7 @@
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\ShopViewModels\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
-    <Folder Include="Areas\UserNotifications\Data\" />
+    <Folder Include="Areas\UserNotifications\ViewModels\InputModels\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 
