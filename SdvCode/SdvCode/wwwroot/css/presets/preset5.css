@@ -449,3 +449,7 @@ ul.navbar-nav > li.active > a {
     border-color: #334F96 !important;
     margin-right: 6px !important;
 }
+
+.userNotificationsHeading {
+    color: #334F96;
+}

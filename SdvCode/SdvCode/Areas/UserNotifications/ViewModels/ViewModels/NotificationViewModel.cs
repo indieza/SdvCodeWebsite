@@ -16,7 +16,7 @@ namespace SdvCode.Areas.UserNotifications.ViewModels.ViewModels
         public string Id { get; set; }
 
         [Required]
-        public NotificationType NotificationType { get; set; }
+        public string NotificationHeading { get; set; }
 
         [Required]
         public string ApplicationUserId { get; set; }

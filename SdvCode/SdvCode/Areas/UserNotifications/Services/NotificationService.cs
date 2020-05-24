@@ -8,6 +8,7 @@ namespace SdvCode.Areas.UserNotifications.Services
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.UserNotifications.Models.Enums;
     using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -28,14 +29,15 @@ namespace SdvCode.Areas.UserNotifications.Services
 
             foreach (var notification in notifications)
             {
+                var user = await this.db.Users
+                           .FirstOrDefaultAsync(x => x.Id == notification.ApplicationUserId);
                 var item = new NotificationViewModel
                 {
                     Id = notification.Id,
                     CreatedOn = notification.CreatedOn,
-                    ApplicationUser = await this.db.Users
-                    .FirstOrDefaultAsync(x => x.Id == notification.ApplicationUserId),
+                    ApplicationUser = user,
                     ApplicationUserId = notification.ApplicationUserId,
-                    NotificationType = notification.NotificationType,
+                    NotificationHeading = this.GetNotificationHeading(notification.NotificationType, user),
                     TargetUsername = notification.TargetUsername,
                     Link = string.Empty, // TODO::
                 };
@@ -43,6 +45,42 @@ namespace SdvCode.Areas.UserNotifications.Services
             }
 
             return result;
+        }
+
+        private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user)
+        {
+            string message = string.Empty;
+
+            switch (notificationType)
+            {
+                case NotificationType.Message:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> send you a new message";
+                    break;
+
+                case NotificationType.Followed:
+                    break;
+
+                case NotificationType.Liked:
+                    break;
+
+                case NotificationType.Unfollowed:
+                    break;
+
+                case NotificationType.Unliked:
+                    break;
+
+                case NotificationType.AddToFavorite:
+                    break;
+
+                case NotificationType.RemoveFromFavorite:
+                    break;
+
+                default:
+                    break;
+            }
+
+            return message;
         }
     }
 }
