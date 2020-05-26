@@ -58,19 +58,23 @@
                                 @Html.Raw(item.NotificationHeading)
                             </span>
                         </h4>
-                        <h6 class="ts-testimonial-text">
-                            <span>
-                                <a class="notificationStatusArrow">
-                                    <i class="fas fa-chevron-down"></i>
-                                </a>
-                            </span>
+                        <div class="ts-testimonial-text dropdownNotification">
+                            <button class="dropbtn">
+                                <i class="fas fa-chevron-down notificationArrow"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                @foreach (var status in Enum.GetValues(typeof(NotificationStatus)))
+                                {
+                                    <a onclick="updateStatus('@status.ToString()', '@item.Id')">@status.ToString()</a>
+                                }
+                            </div>
                             <span>Status: </span>
                             <b>
-                                <span style="color: @colors[item.Status.ToString()]">
+                                <span id="orderStatus" style="color: @colors[item.Status.ToString()]; text-transform: uppercase">
                                     @item.Status.ToString()
                                 </span>
                             </b>
-                        </h6>
+                        </div>
                         <p class="ts-testimonial-text">
                             @item.Text
                         </p>
@@ -91,3 +95,8 @@
         </div>
     </div>
 </section>
+<input type="hidden" />
+
+@section Scripts{
+    <script type="text/javascript" src="~/notification/js/notificationActions.js"></script>
+}

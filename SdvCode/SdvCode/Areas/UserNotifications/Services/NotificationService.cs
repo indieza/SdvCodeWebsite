@@ -23,6 +23,22 @@ namespace SdvCode.Areas.UserNotifications.Services
             this.db = db;
         }
 
+        public async Task<bool> EditStatus(ApplicationUser currentUser, string newStatus, string id)
+        {
+            var notification = await this.db.UserNotifications
+                .FirstOrDefaultAsync(x => x.Id == id && x.TargetUsername == currentUser.UserName);
+
+            if (notification != null)
+            {
+                notification.Status = (NotificationStatus)Enum.Parse(typeof(NotificationStatus), newStatus);
+                this.db.UserNotifications.Update(notification);
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<ICollection<NotificationViewModel>> GetAllNotifications(ApplicationUser currentUser)
         {
             var result = new List<NotificationViewModel>();

@@ -229,19 +229,16 @@ namespace SdvCode.Services.Profile
             return await this.db.Users.AnyAsync(x => x.UserName == username);
         }
 
-        public async Task ChangeActionStatus(ApplicationUser currentUser, string username, int id, UserActionsStatus status)
+        public async Task ChangeActionStatus(string username, int id, string newStatus)
         {
-            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
-            if (user != null)
-            {
-                var action = await this.db.UserActions.FirstOrDefaultAsync(x => x.Id == id && x.PersonUsername == user.UserName);
+            var action = await this.db.UserActions
+                .FirstOrDefaultAsync(x => x.Id == id && x.PersonUsername == username);
 
-                if (action != null)
-                {
-                    action.ActionStatus = status;
-                    this.db.UserActions.Update(action);
-                    await this.db.SaveChangesAsync();
-                }
+            if (action != null)
+            {
+                action.ActionStatus = (UserActionsStatus)Enum.Parse(typeof(UserActionsStatus), newStatus);
+                this.db.UserActions.Update(action);
+                await this.db.SaveChangesAsync();
             }
         }
 

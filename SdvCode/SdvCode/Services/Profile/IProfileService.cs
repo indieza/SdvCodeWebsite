@@ -41,6 +41,6 @@ namespace SdvCode.Services.Profile
 
         Task<bool> IsUserExist(string username);
 
-        Task ChangeActionStatus(ApplicationUser currentUser, string username, int id, UserActionsStatus status);
+        Task ChangeActionStatus(string username, int id, string status);
     }
 }

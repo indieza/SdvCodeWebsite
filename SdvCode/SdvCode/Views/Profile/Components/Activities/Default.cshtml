@@ -39,7 +39,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -56,8 +56,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -84,7 +90,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -101,8 +107,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -129,7 +141,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -146,8 +158,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -174,7 +192,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -191,8 +209,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -216,7 +240,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -233,8 +257,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -258,7 +288,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -280,8 +310,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -305,7 +341,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -327,8 +363,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -357,7 +399,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -384,8 +426,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -414,7 +462,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -441,8 +489,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -476,7 +530,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -503,8 +557,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -538,7 +598,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -565,8 +625,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -595,7 +661,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -612,8 +678,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -647,7 +719,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -664,8 +736,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -699,7 +777,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -716,8 +794,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -741,7 +825,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -758,8 +842,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -786,7 +876,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -803,8 +893,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -831,7 +927,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -848,8 +944,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -883,7 +985,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -910,8 +1012,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -945,7 +1053,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -972,8 +1080,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -1002,7 +1116,7 @@
                         <p>
                             <span style="font-size: 14px">Status: </span>
                             <span>
-                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]">
+                                <b id="@action.Id" style="color: @colors[action.ActionStatus.ToString()]; text-transform: uppercase">
                                     @action.ActionStatus.ToString()
                                 </b>
                             </span>
@@ -1029,8 +1143,14 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            <li><a onclick="markActionAsRead(@action.Id, '@action.ApplicationUser.UserName')">Mark as read</a></li>
-                            <li><a onclick="pinAction(@action.Id, '@action.ApplicationUser.UserName')">Pin it!</a></li>
+                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            {
+                                <li>
+                                    <a onclick="changeActionStatus(@action.Id, '@action.ApplicationUser.UserName', '@status')">
+                                        @status.ToString()
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }

@@ -38,5 +38,14 @@ namespace SdvCode.Areas.UserNotifications.Controllers
 
             return this.View(notifications);
         }
+
+        [HttpPost]
+        [Route("/UserNotifications/Notification/EditStatus")]
+        public async Task<bool> EditStatus(string newStatus, string id)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isEdited = await this.notificationService.EditStatus(currentUser, newStatus, id);
+            return isEdited;
+        }
     }
 }

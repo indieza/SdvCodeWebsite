@@ -172,21 +172,11 @@ namespace SdvCode.Controllers
         }
 
         [HttpPost]
-        [Route("/Profile/{username}/MarkActionAsRead")]
-        public async Task<string> MarkActionAsRead(string username, int id)
+        [Route("/Profile/{username}/changeActionStatus")]
+        public async Task<string> ChangeActionStatus(string username, int id, string newStatus)
         {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            await this.profileService.ChangeActionStatus(currentUser, username, id, UserActionsStatus.Read);
-            return UserActionsStatus.Read.ToString();
-        }
-
-        [HttpPost]
-        [Route("/Profile/{username}/PinAction")]
-        public async Task<string> PinAction(string username, int id)
-        {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            await this.profileService.ChangeActionStatus(currentUser, username, id, UserActionsStatus.Pinned);
-            return UserActionsStatus.Pinned.ToString();
+            await this.profileService.ChangeActionStatus(username, id, newStatus);
+            return newStatus;
         }
 
         public IActionResult MakeYourselfAdmin(string username)
