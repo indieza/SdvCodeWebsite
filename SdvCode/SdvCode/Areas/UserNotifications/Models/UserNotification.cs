@@ -9,6 +9,7 @@ namespace SdvCode.Areas.UserNotifications.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+    using Ganss.XSS;
     using SdvCode.Areas.UserNotifications.Models.Enums;
     using SdvCode.Models.User;
 
@@ -45,7 +46,6 @@ namespace SdvCode.Areas.UserNotifications.Models
         public string Link { get; set; }
 
         [Required]
-        [MaxLength(500)]
         public string Text { get; set; }
     }
 }

@@ -6,6 +6,7 @@ namespace SdvCode.Areas.UserNotifications.Services
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.UserNotifications.Models.Enums;
@@ -31,6 +32,8 @@ namespace SdvCode.Areas.UserNotifications.Services
             {
                 var user = await this.db.Users
                            .FirstOrDefaultAsync(x => x.Id == notification.ApplicationUserId);
+                var contentWithoutTags =
+                    Regex.Replace(notification.Text, "<.*?>", string.Empty);
                 var item = new NotificationViewModel
                 {
                     Id = notification.Id,
@@ -38,6 +41,10 @@ namespace SdvCode.Areas.UserNotifications.Services
                     ApplicationUser = user,
                     ApplicationUserId = notification.ApplicationUserId,
                     NotificationHeading = this.GetNotificationHeading(notification.NotificationType, user),
+                    Status = notification.Status,
+                    Text = contentWithoutTags.Length < 487 ?
+                        contentWithoutTags :
+                        $"{contentWithoutTags.Substring(0, 487)}...",
                     TargetUsername = notification.TargetUsername,
                     Link = string.Empty, // TODO::
                 };
