@@ -26,6 +26,9 @@ namespace SdvCode.Areas.UserNotifications.Models
         public NotificationType NotificationType { get; set; }
 
         [Required]
+        public NotificationStatus Status { get; set; }
+
+        [Required]
         [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }
 
@@ -40,5 +43,9 @@ namespace SdvCode.Areas.UserNotifications.Models
 
         [Required]
         public string Link { get; set; }
+
+        [Required]
+        [MaxLength(500)]
+        public string Text { get; set; }
     }
 }
