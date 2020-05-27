@@ -41,16 +41,15 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="@(username)Notifications">
             @foreach (var item in this.Model)
             {
-
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6" id="@item.Id">
                     <div class="ts-testimonial-content">
                         <img src="@item.ApplicationUser.ImageUrl" alt="avatar">
                         <h4 class="ts-testimonial-text userNotificationsHeading">
                             <span>
-                                <a class="deleteNotificationIcon">
+                                <a class="deleteNotificationIcon" onclick="deleteNotification('@item.Id', '@username')">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </span>

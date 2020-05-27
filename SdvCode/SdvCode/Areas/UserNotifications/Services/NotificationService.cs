@@ -23,6 +23,20 @@ namespace SdvCode.Areas.UserNotifications.Services
             this.db = db;
         }
 
+        public async Task<bool> DeleteNotification(string username, string id)
+        {
+            var notification = await this.db.UserNotifications
+                .FirstOrDefaultAsync(x => x.Id == id && x.TargetUsername == username);
+            if (notification != null)
+            {
+                this.db.UserNotifications.Remove(notification);
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<bool> EditStatus(ApplicationUser currentUser, string newStatus, string id)
         {
             var notification = await this.db.UserNotifications

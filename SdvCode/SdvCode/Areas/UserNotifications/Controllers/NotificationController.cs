@@ -47,5 +47,13 @@ namespace SdvCode.Areas.UserNotifications.Controllers
             bool isEdited = await this.notificationService.EditStatus(currentUser, newStatus, id);
             return isEdited;
         }
+
+        [HttpPost]
+        [Route("/UserNotifications/Notification/DeleteNotification")]
+        public async Task<bool> DeleteNotification(string id, string username)
+        {
+            bool isDeleted = await this.notificationService.DeleteNotification(username, id);
+            return isDeleted;
+        }
     }
 }

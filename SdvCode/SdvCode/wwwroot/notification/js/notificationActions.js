@@ -27,3 +27,27 @@
         }
     });
 }
+
+function deleteNotification(id, username) {
+    $.ajax({
+        type: "POST",
+        url: `/UserNotifications/Notification/DeleteNotification`,
+        data: {
+            'id': id,
+            'username': username
+        },
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            if (data) {
+                let notification = document.getElementById(id);
+                document.getElementById(`${username}Notifications`).removeChild(notification);
+            }
+        },
+        error: function (msg) {
+            console.error(msg);
+        }
+    });
+}
