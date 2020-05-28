@@ -58,10 +58,10 @@
                             </span>
                         </h4>
                         <div class="ts-testimonial-text dropdownNotification">
-                            <button class="dropbtn">
+                            <button class="dropbtnNotification">
                                 <i class="fas fa-chevron-down notificationArrow"></i>
                             </button>
-                            <div class="dropdown-content">
+                            <div class="dropdown-content-notification">
                                 @foreach (var status in Enum.GetValues(typeof(NotificationStatus)))
                                 {
                                     <a onclick="updateStatus('@status.ToString()', '@item.Id')">@status.ToString()</a>

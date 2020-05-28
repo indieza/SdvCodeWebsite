@@ -10,7 +10,7 @@
     color: black;
 }
 
-.dropbtn {
+.dropbtnNotification {
     background-color: transparent;
     color: green;
     border: none;
@@ -20,7 +20,7 @@
     position: relative;
 }
 
-.dropdown-content {
+.dropdown-content-notification {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
@@ -30,21 +30,21 @@
     left: initial;
 }
 
-    .dropdown-content a {
+    .dropdown-content-notification a {
         color: black;
         padding: 6px 10px;
         text-decoration: none;
         display: block;
     }
 
-        .dropdown-content a:hover {
+        .dropdown-content-notification a:hover {
             background-color: #ddd;
         }
 
-.dropdownNotification:hover .dropdown-content {
+.dropdownNotification:hover .dropdown-content-notification {
     display: block;
 }
 
-.dropdownNotification:hover .dropbtn {
+.dropdownNotification:hover .dropbtnNotification {
     background-color: transparent;
 }
