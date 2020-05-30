@@ -34,9 +34,6 @@ namespace SdvCode.Areas.UserNotifications.ViewModels.ViewModels
         public DateTime CreatedOn { get; set; }
 
         [Required]
-        public string Link { get; set; }
-
-        [Required]
         [MaxLength(500)]
         public string Text { get; set; }
     }

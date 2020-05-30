@@ -72,13 +72,12 @@ namespace SdvCode.Areas.UserNotifications.Services
                     CreatedOn = notification.CreatedOn,
                     ApplicationUser = user,
                     ApplicationUserId = notification.ApplicationUserId,
-                    NotificationHeading = this.GetNotificationHeading(notification.NotificationType, user),
+                    NotificationHeading = this.GetNotificationHeading(notification.NotificationType, user, notification.Link),
                     Status = notification.Status,
                     Text = contentWithoutTags.Length < 487 ?
                         contentWithoutTags :
                         $"{contentWithoutTags.Substring(0, 487)}...",
                     TargetUsername = notification.TargetUsername,
-                    Link = notification.Link,
                 };
                 result.Add(item);
             }
@@ -93,7 +92,7 @@ namespace SdvCode.Areas.UserNotifications.Services
             return count;
         }
 
-        private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user)
+        private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
         {
             string message = string.Empty;
 
@@ -101,7 +100,7 @@ namespace SdvCode.Areas.UserNotifications.Services
             {
                 case NotificationType.Message:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> send you a new message";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> send you a new <a href=\"{link}\" style=\"text-decoration: underline\">message</a>";
                     break;
 
                 case NotificationType.Followed:

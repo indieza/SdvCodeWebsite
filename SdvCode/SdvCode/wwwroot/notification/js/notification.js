@@ -12,4 +12,4 @@ notificationConnection.start().then(function () {
 
 notificationConnection.on("ReceiveNotification", function (count) {
     document.getElementById("notificationCount").innerText = count;
-})
+});

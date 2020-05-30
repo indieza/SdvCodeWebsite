@@ -18,8 +18,8 @@
         },
         success: function (data) {
             if (data) {
-                document.getElementById("orderStatus").innerText = newStatus;
-                document.getElementById("orderStatus").style.color = colors[newStatus];
+                document.getElementById(`${id}orderStatus`).innerText = newStatus;
+                document.getElementById(`${id}orderStatus`).style.color = colors[newStatus];
             }
         },
         error: function (msg) {

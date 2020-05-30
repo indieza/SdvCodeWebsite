@@ -10,6 +10,8 @@ namespace SdvCode.Hubs
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.PrivateChat.Models;
+    using SdvCode.Areas.UserNotifications.Models;
+    using SdvCode.Areas.UserNotifications.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
 
@@ -86,8 +88,24 @@ namespace SdvCode.Hubs
                 RecieverImageUrl = toUser.ImageUrl,
                 Content = message,
             });
+
+            this.db.UserNotifications.Add(new UserNotification
+            {
+                ApplicationUserId = fromUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = message,
+                TargetUsername = toUser.UserName,
+                Link = $"/PrivateChat/With/{fromUser.UserName}/Group/{group}",
+                NotificationType = NotificationType.Message,
+            });
             await this.db.SaveChangesAsync();
 
+            var count = await this.db.UserNotifications
+                   .CountAsync(x => x.TargetUsername == toUser.UserName &&
+                   x.Status == NotificationStatus.Unread);
+
+            await this.notificationHubContext.Clients.User(toUser.Id).SendAsync("ReceiveNotification", count);
             await this.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
         }
 
