@@ -50,22 +50,27 @@ namespace SdvCode.Areas.UserNotifications.Controllers
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
             bool isEdited = await this.notificationService.EditStatus(currentUser, newStatus, id);
-            if (isEdited)
-            {
-                var user = await this.userManager.GetUserAsync(this.User);
-                int count = await this.notificationService.GetUserNotificationsCount(user.UserName);
-                await this.hubContext.Clients.User(user.Id).SendAsync("ReceiveNotification", count);
-            }
-
+            await this.ChangeNotificationCounter(isEdited, currentUser);
             return isEdited;
         }
 
         [HttpPost]
         [Route("/UserNotifications/Notification/DeleteNotification")]
-        public async Task<bool> DeleteNotification(string id, string username)
+        public async Task<bool> DeleteNotification(string id)
         {
-            bool isDeleted = await this.notificationService.DeleteNotification(username, id);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isDeleted = await this.notificationService.DeleteNotification(currentUser.UserName, id);
+            await this.ChangeNotificationCounter(isDeleted, currentUser);
             return isDeleted;
+        }
+
+        private async Task ChangeNotificationCounter(bool isForChange, ApplicationUser user)
+        {
+            if (isForChange)
+            {
+                int count = await this.notificationService.GetUserNotificationsCount(user.UserName);
+                await this.hubContext.Clients.User(user.Id).SendAsync("ReceiveNotification", count);
+            }
         }
     }
 }

@@ -56,7 +56,9 @@ namespace SdvCode.Areas.UserNotifications.Services
         public async Task<ICollection<NotificationViewModel>> GetAllNotifications(ApplicationUser currentUser)
         {
             var result = new List<NotificationViewModel>();
-            var notifications = this.db.UserNotifications.OrderByDescending(x => x.CreatedOn).ToList();
+            var notifications = this.db.UserNotifications
+                .Where(x => x.TargetUsername == currentUser.UserName)
+                .OrderByDescending(x => x.CreatedOn).ToList();
 
             foreach (var notification in notifications)
             {
@@ -76,7 +78,7 @@ namespace SdvCode.Areas.UserNotifications.Services
                         contentWithoutTags :
                         $"{contentWithoutTags.Substring(0, 487)}...",
                     TargetUsername = notification.TargetUsername,
-                    Link = string.Empty, // TODO::
+                    Link = notification.Link,
                 };
                 result.Add(item);
             }

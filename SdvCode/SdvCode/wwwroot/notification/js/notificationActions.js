@@ -28,13 +28,12 @@
     });
 }
 
-function deleteNotification(id, username) {
+function deleteNotification(id) {
     $.ajax({
         type: "POST",
         url: `/UserNotifications/Notification/DeleteNotification`,
         data: {
-            'id': id,
-            'username': username
+            'id': id
         },
         headers: {
             RequestVerificationToken:
