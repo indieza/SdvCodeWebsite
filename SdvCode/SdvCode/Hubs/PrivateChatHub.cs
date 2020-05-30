@@ -16,10 +16,12 @@ namespace SdvCode.Hubs
     public class PrivateChatHub : Hub
     {
         private readonly ApplicationDbContext db;
+        private readonly IHubContext<NotificationHub> notificationHubContext;
 
-        public PrivateChatHub(ApplicationDbContext db)
+        public PrivateChatHub(ApplicationDbContext db, IHubContext<NotificationHub> notificationHubContext)
         {
             this.db = db;
+            this.notificationHubContext = notificationHubContext;
         }
 
         public async Task AddToGroup(string groupName, string toUsername, string fromUsername)
