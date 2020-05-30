@@ -325,7 +325,7 @@ namespace SdvCode
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapHub<PrivateChatHub>("/privateChatHub");
-                endpoints.MapHub<PrivateChatHub>("notificationHub");
+                endpoints.MapHub<NotificationHub>("/notificationHub");
 
                 endpoints.MapRazorPages();
                 endpoints.MapBlazorHub();
