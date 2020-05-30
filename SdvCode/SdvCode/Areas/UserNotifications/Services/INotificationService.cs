@@ -15,6 +15,9 @@ namespace SdvCode.Areas.UserNotifications.Services
         Task<ICollection<NotificationViewModel>> GetAllNotifications(ApplicationUser currentUser);
 
         Task<bool> EditStatus(ApplicationUser currentUser, string newStatus, string id);
+
         Task<bool> DeleteNotification(string username, string id);
+
+        Task<int> GetUserNotificationsCount(string userName);
     }
 }

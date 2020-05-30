@@ -10,9 +10,11 @@ namespace SdvCode.Areas.UserNotifications.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
     using SdvCode.Constraints;
+    using SdvCode.Hubs;
     using SdvCode.Models.User;
 
     [Area(GlobalConstants.NotificationsArea)]
@@ -21,13 +23,16 @@ namespace SdvCode.Areas.UserNotifications.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly INotificationService notificationService;
+        private readonly IHubContext<NotificationHub> hubContext;
 
         public NotificationController(
             UserManager<ApplicationUser> userManager,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IHubContext<NotificationHub> hubContext)
         {
             this.userManager = userManager;
             this.notificationService = notificationService;
+            this.hubContext = hubContext;
         }
 
         public async Task<IActionResult> Index()
@@ -45,6 +50,13 @@ namespace SdvCode.Areas.UserNotifications.Controllers
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
             bool isEdited = await this.notificationService.EditStatus(currentUser, newStatus, id);
+            if (isEdited)
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+                int count = await this.notificationService.GetUserNotificationsCount(user.UserName);
+                await this.hubContext.Clients.User(user.Id).SendAsync("ReceiveNotification", count);
+            }
+
             return isEdited;
         }
 

@@ -84,6 +84,13 @@ namespace SdvCode.Areas.UserNotifications.Services
             return result;
         }
 
+        public async Task<int> GetUserNotificationsCount(string userName)
+        {
+            var count = await this.db.UserNotifications
+                    .CountAsync(x => x.TargetUsername == userName && x.Status == NotificationStatus.Unread);
+            return count;
+        }
+
         private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user)
         {
             string message = string.Empty;
