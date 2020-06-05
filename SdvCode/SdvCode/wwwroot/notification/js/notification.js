@@ -12,8 +12,7 @@ notificationConnection.start().then(function () {
 
 notificationConnection.on("ReceiveNotification", function (count) {
     document.getElementById("notificationCount").innerText = count;
-    document.querySelector("audio").play().catch(function () {
-        let s = document.querySelector("audio");
-        s.play();
-    });
+    if (count > 0) {
+        document.querySelector("audio").play();
+    }
 });
