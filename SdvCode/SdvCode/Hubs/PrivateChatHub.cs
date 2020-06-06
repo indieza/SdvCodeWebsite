@@ -6,14 +6,18 @@ namespace SdvCode.Hubs
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.UserNotifications.Models;
     using SdvCode.Areas.UserNotifications.Models.Enums;
+    using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using Group = SdvCode.Areas.PrivateChat.Models.Group;
 
     public class PrivateChatHub : Hub
     {
@@ -89,7 +93,7 @@ namespace SdvCode.Hubs
                 Content = message,
             });
 
-            this.db.UserNotifications.Add(new UserNotification
+            var notification = new UserNotification
             {
                 ApplicationUserId = fromUser.Id,
                 CreatedOn = DateTime.UtcNow,
@@ -98,7 +102,9 @@ namespace SdvCode.Hubs
                 TargetUsername = toUser.UserName,
                 Link = $"/PrivateChat/With/{fromUser.UserName}/Group/{group}",
                 NotificationType = NotificationType.Message,
-            });
+            };
+
+            this.db.UserNotifications.Add(notification);
             await this.db.SaveChangesAsync();
 
             var count = await this.db.UserNotifications
@@ -106,6 +112,23 @@ namespace SdvCode.Hubs
                    x.Status == NotificationStatus.Unread);
 
             await this.notificationHubContext.Clients.User(toUser.Id).SendAsync("ReceiveNotification", count);
+
+            var contentWithoutTags = Regex.Replace(message, "<.*?>", string.Empty);
+            var result = new NotificationViewModel
+            {
+                Id = notification.Id,
+                CreatedOn = notification.CreatedOn,
+                ApplicationUser = fromUser,
+                ApplicationUserId = notification.ApplicationUserId,
+                NotificationHeading = "Test HEading",
+                Status = notification.Status,
+                Text = contentWithoutTags.Length < 487 ?
+                    contentWithoutTags :
+                    $"{contentWithoutTags.Substring(0, 487)}...",
+                TargetUsername = notification.TargetUsername,
+            };
+
+            await this.notificationHubContext.Clients.User(toUser.Id).SendAsync("VisualizeNotification", JsonConvert.SerializeObject(result));
             await this.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
         }
 

@@ -42,7 +42,7 @@ function deleteNotification(id) {
         success: function (data) {
             if (data) {
                 let notification = document.getElementById(id);
-                document.getElementById(`${username}Notifications`).removeChild(notification);
+                document.getElementById(`allUserNotifications`).removeChild(notification);
             }
         },
         error: function (msg) {
