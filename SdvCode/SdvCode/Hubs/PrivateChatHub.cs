@@ -112,23 +112,6 @@ namespace SdvCode.Hubs
                    x.Status == NotificationStatus.Unread);
 
             await this.notificationHubContext.Clients.User(toUser.Id).SendAsync("ReceiveNotification", count);
-
-            var contentWithoutTags = Regex.Replace(message, "<.*?>", string.Empty);
-            var result = new NotificationViewModel
-            {
-                Id = notification.Id,
-                CreatedOn = notification.CreatedOn,
-                ApplicationUser = fromUser,
-                ApplicationUserId = notification.ApplicationUserId,
-                NotificationHeading = "Test HEading",
-                Status = notification.Status,
-                Text = contentWithoutTags.Length < 487 ?
-                    contentWithoutTags :
-                    $"{contentWithoutTags.Substring(0, 487)}...",
-                TargetUsername = notification.TargetUsername,
-            };
-
-            await this.notificationHubContext.Clients.User(toUser.Id).SendAsync("VisualizeNotification", JsonConvert.SerializeObject(result));
             await this.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
         }
 
