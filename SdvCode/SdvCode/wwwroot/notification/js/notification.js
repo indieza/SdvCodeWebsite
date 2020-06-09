@@ -16,3 +16,7 @@ notificationConnection.on("ReceiveNotification", function (count) {
         document.querySelector("audio").play();
     }
 });
+
+notificationConnection.on("VisualizeNotification", function (x) {
+    console.log(x);
+});
