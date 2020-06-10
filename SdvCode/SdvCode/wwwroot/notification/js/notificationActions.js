@@ -54,7 +54,7 @@ function deleteNotification(id) {
     });
 }
 
-function createNotitfication(notification) {
+function createNotification(notification) {
     let newNotification = document.createElement("div");
     newNotification.id = notification.id;
 
@@ -128,11 +128,14 @@ function loadMoreNotifications(take) {
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            savedNotificationsForHide.push(data.length);
-            for (var notification of data) {
-                let result = createNotitfication(notification);
+            savedNotificationsForHide.push(data.newNotifications.length);
+            for (var notification of data.newNotifications) {
+                let result = createNotification(notification);
                 div.appendChild(result);
                 document.getElementById("loadLessNotifications").style.display = "";
+            }
+            if (!data.hasMore) {
+                document.getElementById("loadMoreNotifications").disabled = true;
             }
         },
         error: function (msg) {
@@ -153,4 +156,6 @@ function hideNotifications(maxCount) {
     if (div.children.length <= maxCount) {
         document.getElementById("loadLessNotifications").style.display = "none";
     }
+
+    document.getElementById("loadMoreNotifications").disabled = false;
 }

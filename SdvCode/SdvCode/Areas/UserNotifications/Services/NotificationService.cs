@@ -80,7 +80,7 @@ namespace SdvCode.Areas.UserNotifications.Services
             return false;
         }
 
-        public async Task<ICollection<NotificationViewModel>> GetUserNotifications(ApplicationUser currentUser, int count, int skip)
+        public async Task<Tuple<List<NotificationViewModel>, bool>> GetUserNotifications(ApplicationUser currentUser, int count, int skip)
         {
             var result = new List<NotificationViewModel>();
             var notifications = this.db.UserNotifications
@@ -99,7 +99,9 @@ namespace SdvCode.Areas.UserNotifications.Services
                 result.Add(item);
             }
 
-            return result;
+            var notificationsCount = await this.GetUserNotificationsCount(currentUser.UserName);
+
+            return Tuple.Create(result, notificationsCount > skip + count ? true : false);
         }
 
         public async Task<NotificationViewModel> GetNotificationById(string id)

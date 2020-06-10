@@ -12,7 +12,7 @@ namespace SdvCode.Areas.UserNotifications.Services
 
     public interface INotificationService
     {
-        Task<ICollection<NotificationViewModel>> GetUserNotifications(ApplicationUser currentUser, int count, int skip);
+        Task<Tuple<List<NotificationViewModel>, bool>> GetUserNotifications(ApplicationUser currentUser, int count, int skip);
 
         Task<bool> EditStatus(ApplicationUser currentUser, string newStatus, string id);
 

@@ -13,7 +13,7 @@
     };
 }
 
-@model ICollection<NotificationViewModel>
+@model Tuple<List<NotificationViewModel>, bool>
 
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div id="allUserNotifications">
-            @foreach (var item in this.Model)
+            @foreach (var item in this.Model.Item1)
             {
                 <div id="@item.Id">
                     <div class="ts-testimonial-content">
@@ -95,7 +95,7 @@
     </div>
     <br />
     <div class="row" style="text-align: center">
-        <button type="button" class="btn btn-success" onclick="loadMoreNotifications(@GlobalConstants.NotificationOnClick)">
+        <button id="loadMoreNotifications" type="button" class="btn btn-success" onclick="loadMoreNotifications(@GlobalConstants.NotificationOnClick)" @(Model.Item2 == false ? "disabled" : "")>
             <i class="fas fa-plus"></i> Load More
         </button>
         <button id="loadLessNotifications" type="button" class="btn btn-danger" style="display: none" onclick="hideNotifications(@GlobalConstants.NotificationOnClick)">

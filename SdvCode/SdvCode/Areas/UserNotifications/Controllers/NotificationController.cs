@@ -39,10 +39,10 @@ namespace SdvCode.Areas.UserNotifications.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            ICollection<NotificationViewModel> notifications =
-                await this.notificationService.GetUserNotifications(currentUser, GlobalConstants.NotificationOnClick, 0);
+            var result = await this.notificationService
+                .GetUserNotifications(currentUser, GlobalConstants.NotificationOnClick, 0);
 
-            return this.View(notifications);
+            return this.View(result);
         }
 
         [HttpPost]
@@ -70,8 +70,8 @@ namespace SdvCode.Areas.UserNotifications.Controllers
         public async Task<IActionResult> GetMoreNotitification(int skip, int take)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var newNotifications = await this.notificationService.GetUserNotifications(currentUser, take, skip);
-            return new JsonResult(newNotifications);
+            var result = await this.notificationService.GetUserNotifications(currentUser, take, skip);
+            return new JsonResult(new { newNotifications = result.Item1, hasMore = result.Item2 });
         }
 
         private async Task ChangeNotificationCounter(bool isForChange, ApplicationUser user)

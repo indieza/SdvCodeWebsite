@@ -17,20 +17,21 @@ notificationConnection.on("ReceiveNotification", function (count) {
     }
 });
 
-notificationConnection.on("VisualizeNotification", function (notification, maxCount) {
+notificationConnection.on("VisualizeNotification", function (notification) {
     let div = document.getElementById("allUserNotifications");
 
     if (div) {
         let newNotification = createNotification(notification);
-        if (div.children.length % maxCount == 0) {
-            div.children.removeChild(div.lastChild);
+        if (div.children.length % 5 == 0) {
+            let lastNotification = div.lastElementChild;
+            div.removeChild(lastNotification);
         }
 
         div.insertBefore(newNotification, div.childNodes[0]);
     }
 });
 
-function createNotitfication(notification) {
+function createNotification(notification) {
     let newNotification = document.createElement("div");
     newNotification.id = notification.id;
 
