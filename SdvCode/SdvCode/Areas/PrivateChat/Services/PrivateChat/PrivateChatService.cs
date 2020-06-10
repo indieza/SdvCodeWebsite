@@ -9,26 +9,70 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.User;
 
     public class PrivateChatService : IPrivateChatService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly IHubContext<PrivateChatHub> hubContext;
 
         public PrivateChatService(
             ApplicationDbContext db,
             UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager)
+            IHubContext<PrivateChatHub> hubContext)
         {
             this.db = db;
             this.userManager = userManager;
-            this.roleManager = roleManager;
+            this.hubContext = hubContext;
+        }
+
+        public async Task AddUserToGroup(string groupName, string toUsername, string fromUsername)
+        {
+            var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
+            var toId = toUser.Id;
+            var toImage = toUser.ImageUrl;
+
+            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            var targetGroup = await this.db.Groups
+                .FirstOrDefaultAsync(x => x.Name.ToLower() == groupName.ToLower());
+
+            if (targetGroup == null)
+            {
+                targetGroup = new Group
+                {
+                    Name = groupName,
+                };
+
+                var targetToUser = new UserGroup
+                {
+                    ApplicationUser = toUser,
+                    Group = targetGroup,
+                };
+
+                var targetFromUser = new UserGroup
+                {
+                    ApplicationUser = fromUser,
+                    Group = targetGroup,
+                };
+
+                targetGroup.UsersGroups.Add(targetToUser);
+                targetGroup.UsersGroups.Add(targetFromUser);
+
+                this.db.Groups.Add(targetGroup);
+                await this.db.SaveChangesAsync();
+            }
+
+            await this.hubContext.Clients.Group(groupName).SendAsync("ReceiveMessage", fromUsername, fromImage, $"{fromUsername} has joined the group {groupName}.");
         }
 
         public async Task<ICollection<ChatMessage>> ExtractAllMessages(string group)
@@ -99,6 +143,53 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             }
 
             return true;
+        }
+
+        public async Task ReceiveNewMessage(string fromUsername, string message, string group)
+        {
+            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            this.db.ChatMessages.Add(new ChatMessage
+            {
+                ApplicationUser = fromUser,
+                Group = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()),
+                SendedOn = DateTime.UtcNow,
+                ReceiverUsername = fromUser.UserName,
+                RecieverImageUrl = fromUser.ImageUrl,
+                Content = message,
+            });
+
+            await this.db.SaveChangesAsync();
+            await this.hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, message);
+        }
+
+        public async Task<string> SendMessageToUser(string fromUsername, string toUsername, string message, string group)
+        {
+            var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
+            var toId = toUser.Id;
+            var toImage = toUser.ImageUrl;
+
+            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            var newMessage = new ChatMessage
+            {
+                ApplicationUser = fromUser,
+                Group = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()),
+                SendedOn = DateTime.UtcNow,
+                ReceiverUsername = toUser.UserName,
+                RecieverImageUrl = toUser.ImageUrl,
+                Content = message,
+            };
+
+            this.db.ChatMessages.Add(newMessage);
+            await this.db.SaveChangesAsync();
+            await this.hubContext.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
+
+            return toId;
         }
     }
 }

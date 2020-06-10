@@ -24,6 +24,32 @@ namespace SdvCode.Areas.UserNotifications.Services
             this.db = db;
         }
 
+        public async Task<string> AddMessageNotification(string fromUsername, string toUsername, string message, string group)
+        {
+            var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
+            var toId = toUser.Id;
+            var toImage = toUser.ImageUrl;
+
+            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            var notification = new UserNotification
+            {
+                ApplicationUserId = fromUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = message,
+                TargetUsername = toUser.UserName,
+                Link = $"/PrivateChat/With/{fromUser.UserName}/Group/{group}",
+                NotificationType = NotificationType.Message,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
         public async Task<bool> DeleteNotification(string username, string id)
         {
             var notification = await this.db.UserNotifications

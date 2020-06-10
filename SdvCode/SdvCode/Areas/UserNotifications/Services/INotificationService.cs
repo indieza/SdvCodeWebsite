@@ -20,5 +20,6 @@ namespace SdvCode.Areas.UserNotifications.Services
 
         Task<int> GetUserNotificationsCount(string userName);
         Task<NotificationViewModel> GetNotificationById(string id);
+        Task<string> AddMessageNotification(string fromUsername, string toUsername, string message, string group);
     }
 }

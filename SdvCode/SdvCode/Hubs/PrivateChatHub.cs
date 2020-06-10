@@ -10,6 +10,7 @@ namespace SdvCode.Hubs
     using Microsoft.EntityFrameworkCore;
     using Newtonsoft.Json;
     using SdvCode.Areas.PrivateChat.Models;
+    using SdvCode.Areas.PrivateChat.Services.PrivateChat;
     using SdvCode.Areas.UserNotifications.Models;
     using SdvCode.Areas.UserNotifications.Models.Enums;
     using SdvCode.Areas.UserNotifications.Services;
@@ -19,125 +20,44 @@ namespace SdvCode.Hubs
 
     public class PrivateChatHub : Hub
     {
-        private readonly ApplicationDbContext db;
         private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly INotificationService notificationService;
+        private readonly IPrivateChatService privateChatService;
 
         public PrivateChatHub(
-            ApplicationDbContext db,
             IHubContext<NotificationHub> notificationHubContext,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IPrivateChatService privateChatService)
         {
-            this.db = db;
             this.notificationHubContext = notificationHubContext;
             this.notificationService = notificationService;
+            this.privateChatService = privateChatService;
         }
 
         public async Task AddToGroup(string groupName, string toUsername, string fromUsername)
         {
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, groupName);
-            var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
-            var toId = toUser.Id;
-            var toImage = toUser.ImageUrl;
-
-            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
-            var fromId = fromUser.Id;
-            var fromImage = fromUser.ImageUrl;
-
-            var targetGroup = await this.db.Groups
-                .FirstOrDefaultAsync(x => x.Name.ToLower() == groupName.ToLower());
-
-            if (targetGroup == null)
-            {
-                targetGroup = new Group
-                {
-                    Name = groupName,
-                };
-
-                var targetToUser = new UserGroup
-                {
-                    ApplicationUser = toUser,
-                    Group = targetGroup,
-                };
-
-                var targetFromUser = new UserGroup
-                {
-                    ApplicationUser = fromUser,
-                    Group = targetGroup,
-                };
-
-                targetGroup.UsersGroups.Add(targetToUser);
-                targetGroup.UsersGroups.Add(targetFromUser);
-
-                this.db.Groups.Add(targetGroup);
-                await this.db.SaveChangesAsync();
-            }
-
-            await this.Clients.Group(groupName).SendAsync("ReceiveMessage", fromUsername, fromImage, $"{fromUsername} has joined the group {groupName}.");
+            await this.privateChatService.AddUserToGroup(groupName, toUsername, fromUsername);
         }
 
         public async Task SendMessage(string fromUsername, string toUsername, string message, string group)
         {
-            var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
-            var toId = toUser.Id;
-            var toImage = toUser.ImageUrl;
-
-            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
-            var fromId = fromUser.Id;
-            var fromImage = fromUser.ImageUrl;
-
-            this.db.ChatMessages.Add(new ChatMessage
-            {
-                ApplicationUser = fromUser,
-                Group = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()),
-                SendedOn = DateTime.UtcNow,
-                ReceiverUsername = toUser.UserName,
-                RecieverImageUrl = toUser.ImageUrl,
-                Content = message,
-            });
-
-            var notification = new UserNotification
-            {
-                ApplicationUserId = fromUser.Id,
-                CreatedOn = DateTime.UtcNow,
-                Status = NotificationStatus.Unread,
-                Text = message,
-                TargetUsername = toUser.UserName,
-                Link = $"/PrivateChat/With/{fromUser.UserName}/Group/{group}",
-                NotificationType = NotificationType.Message,
-            };
-
-            this.db.UserNotifications.Add(notification);
-            await this.db.SaveChangesAsync();
-
-            await this.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
+            string toId =
+                await this.privateChatService.SendMessageToUser(fromUsername, toUsername, message, group);
+            string notificationId =
+                await this.notificationService.AddMessageNotification(fromUsername, toUsername, message, group);
 
             var count = await this.notificationService.GetUserNotificationsCount(toUsername);
             await this.notificationHubContext.Clients.User(toId).SendAsync("ReceiveNotification", count);
 
-            var newNotification = await this.notificationService.GetNotificationById(notification.Id);
+            var notification = await this.notificationService.GetNotificationById(notificationId);
             await this.notificationHubContext.Clients.User(toId)
-                .SendAsync("VisualizeNotification", newNotification);
+                .SendAsync("VisualizeNotification", notification);
         }
 
         public async Task ReceiveMessage(string fromUsername, string message, string group)
         {
-            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
-            var fromId = fromUser.Id;
-            var fromImage = fromUser.ImageUrl;
-
-            this.db.ChatMessages.Add(new ChatMessage
-            {
-                ApplicationUser = fromUser,
-                Group = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()),
-                SendedOn = DateTime.UtcNow,
-                ReceiverUsername = fromUser.UserName,
-                RecieverImageUrl = fromUser.ImageUrl,
-                Content = message,
-            });
-            await this.db.SaveChangesAsync();
-
-            await this.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, message);
+            await this.privateChatService.ReceiveNewMessage(fromUsername, message, group);
         }
     }
 }
