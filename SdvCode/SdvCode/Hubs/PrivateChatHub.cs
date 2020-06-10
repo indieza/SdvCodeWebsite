@@ -4,9 +4,7 @@
 namespace SdvCode.Hubs
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
@@ -18,7 +16,6 @@ namespace SdvCode.Hubs
     using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
-    using Group = SdvCode.Areas.PrivateChat.Models.Group;
 
     public class PrivateChatHub : Hub
     {
@@ -119,7 +116,8 @@ namespace SdvCode.Hubs
             await this.notificationHubContext.Clients.User(toId).SendAsync("ReceiveNotification", count);
 
             var newNotification = await this.notificationService.GetNotificationById(notification.Id);
-            await this.notificationHubContext.Clients.User(toId).SendAsync("VisualizeNotification", newNotification);
+            await this.notificationHubContext.Clients.User(toId)
+                .SendAsync("VisualizeNotification", newNotification);
         }
 
         public async Task ReceiveMessage(string fromUsername, string message, string group)

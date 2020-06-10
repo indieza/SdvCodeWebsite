@@ -24,6 +24,13 @@ notificationConnection.on("VisualizeNotification", function (notification) {
         let newNotification = document.createElement("div");
         newNotification.classList.add("col-md-6", "col-sm-6");
         newNotification.id = notification.id;
+
+        let allStatuses = "";
+
+        for (var status of notification.allStatuses) {
+            allStatuses += `<a onclick="updateStatus('${status}', '${notification.id}')">${status}</a>`;
+        }
+
         newNotification.innerHTML =
             `<div class="ts-testimonial-content">
                         <img src="${notification.imageUrl}" alt="avatar">
@@ -42,15 +49,12 @@ notificationConnection.on("VisualizeNotification", function (notification) {
                                 <i class="fas fa-chevron-down notificationArrow"></i>
                             </button>
                             <div class="dropdown-content-notification">
-                                @foreach (var status in item.AllStatuses)
-                                {
-                                    <a onclick="updateStatus('@status', '@item.Id')">@status</a>
-                                }
+                                ${allStatuses}
                             </div>
                             <span>Status: </span>
                             <b>
-                                <span id="${notification.id}orderStatus" style="color: @colors[item.Status.ToString()]; text - transform: uppercase">
-                                    @item.Status.ToString()
+                                <span id="${notification.id}orderStatus" style="color: red; text-transform: uppercase">
+                                   ${notification.allStatuses[notification.status - 1]}
                                 </span>
                             </b>
                         </div>
