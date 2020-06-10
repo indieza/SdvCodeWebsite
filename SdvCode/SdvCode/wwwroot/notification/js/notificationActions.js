@@ -45,7 +45,7 @@ function deleteNotification(id) {
             if (data) {
                 let notification = document.getElementById(id);
                 document.getElementById(`allUserNotifications`).removeChild(notification);
-                loadMoreNotifications(1);
+                loadMoreNotifications(1, true);
             }
         },
         error: function (msg) {
@@ -110,7 +110,7 @@ function createNotification(notification) {
     return newNotification;
 }
 
-function loadMoreNotifications(take) {
+function loadMoreNotifications(take, isForDeleted) {
     let skip = document.getElementById("allUserNotifications").children.length;
     let div = document.getElementById("allUserNotifications");
 
@@ -128,14 +128,18 @@ function loadMoreNotifications(take) {
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            savedNotificationsForHide.push(data.newNotifications.length);
+            if (!isForDeleted) {
+                savedNotificationsForHide.push(data.newNotifications.length);
+            }
             for (var notification of data.newNotifications) {
                 let result = createNotification(notification);
                 div.appendChild(result);
-                document.getElementById("loadLessNotifications").style.display = "";
             }
             if (!data.hasMore) {
                 document.getElementById("loadMoreNotifications").disabled = true;
+            }
+            if (savedNotificationsForHide.length > 0) {
+                document.getElementById("loadLessNotifications").style.display = "";
             }
         },
         error: function (msg) {

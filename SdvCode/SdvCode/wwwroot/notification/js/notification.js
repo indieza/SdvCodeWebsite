@@ -25,9 +25,13 @@ notificationConnection.on("VisualizeNotification", function (notification) {
         if (div.children.length % 5 == 0) {
             let lastNotification = div.lastElementChild;
             div.removeChild(lastNotification);
+            document.getElementById("loadMoreNotifications").disabled = false;
         }
-
-        div.insertBefore(newNotification, div.childNodes[0]);
+        if (div.children.length == 0) {
+            div.appendChild(newNotification);
+        } else {
+            div.insertBefore(newNotification, div.childNodes[0]);
+        }
     }
 });
 

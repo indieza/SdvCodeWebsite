@@ -95,7 +95,7 @@
     </div>
     <br />
     <div class="row" style="text-align: center">
-        <button id="loadMoreNotifications" type="button" class="btn btn-success" onclick="loadMoreNotifications(@GlobalConstants.NotificationOnClick)" @(Model.Item2 == false ? "disabled" : "")>
+        <button id="loadMoreNotifications" type="button" class="btn btn-success" onclick="loadMoreNotifications(@GlobalConstants.NotificationOnClick, false)" @(Model.Item2 == false ? "disabled" : "")>
             <i class="fas fa-plus"></i> Load More
         </button>
         <button id="loadLessNotifications" type="button" class="btn btn-danger" style="display: none" onclick="hideNotifications(@GlobalConstants.NotificationOnClick)">
