@@ -2657,6 +2657,7 @@ h4.panel-title {
 
 .ts-testimonial-text {
     padding-left: 110px;
+    word-wrap: break-word;
 }
 
 .ts-testimonial-author {

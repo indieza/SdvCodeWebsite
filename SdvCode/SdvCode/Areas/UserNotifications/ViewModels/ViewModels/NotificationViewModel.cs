@@ -16,22 +16,27 @@ namespace SdvCode.Areas.UserNotifications.ViewModels.ViewModels
         public string Id { get; set; }
 
         [Required]
-        public string NotificationHeading { get; set; }
+        public string Heading { get; set; }
 
         [Required]
         public NotificationStatus Status { get; set; }
 
         [Required]
-        public string ApplicationUserId { get; set; }
+        public ICollection<string> AllStatuses { get; set; } = new HashSet<string>();
 
-        public ApplicationUser ApplicationUser { get; set; }
+        [Required]
+        public string ImageUrl { get; set; }
+
+        public string TargetFirstName { get; set; }
+
+        public string TargetLastName { get; set; }
 
         [Required]
         [MaxLength(20)]
         public string TargetUsername { get; set; }
 
         [Required]
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; }
 
         [Required]
         [MaxLength(500)]

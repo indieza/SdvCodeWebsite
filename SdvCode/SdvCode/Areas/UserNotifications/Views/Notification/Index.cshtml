@@ -45,7 +45,7 @@
             {
                 <div class="col-md-6 col-sm-6" id="@item.Id">
                     <div class="ts-testimonial-content">
-                        <img src="@item.ApplicationUser.ImageUrl" alt="avatar">
+                        <img src="@item.ImageUrl" alt="avatar">
                         <h4 class="ts-testimonial-text userNotificationsHeading">
                             <span>
                                 <a class="deleteNotificationIcon" onclick="deleteNotification('@item.Id')">
@@ -53,7 +53,7 @@
                                 </a>
                             </span>
                             <span>
-                                @Html.Raw(item.NotificationHeading)
+                                @Html.Raw(item.Heading)
                             </span>
                         </h4>
                         <div class="ts-testimonial-text dropdownNotification">
@@ -61,9 +61,9 @@
                                 <i class="fas fa-chevron-down notificationArrow"></i>
                             </button>
                             <div class="dropdown-content-notification">
-                                @foreach (var status in Enum.GetValues(typeof(NotificationStatus)))
+                                @foreach (var status in item.AllStatuses)
                                 {
-                                    <a onclick="updateStatus('@status.ToString()', '@item.Id')">@status.ToString()</a>
+                                    <a onclick="updateStatus('@status', '@item.Id')">@status</a>
                                 }
                             </div>
                             <span>Status: </span>
@@ -79,11 +79,11 @@
 
                         <div class="ts-testimonial-author">
                             <h3 class="name userNotificationsHeading">
-                                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@item.ApplicationUser.UserName">
-                                    @item.ApplicationUser.FirstName @item.ApplicationUser.LastName
+                                <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@item.TargetUsername">
+                                    @item.TargetFirstName @item.TargetLastName
                                 </a>
                                 <span>
-                                    @item.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt")
+                                    @item.CreatedOn
                                 </span>
                             </h3>
                         </div>

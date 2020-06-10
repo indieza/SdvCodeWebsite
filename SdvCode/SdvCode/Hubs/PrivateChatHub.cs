@@ -14,6 +14,7 @@ namespace SdvCode.Hubs
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.UserNotifications.Models;
     using SdvCode.Areas.UserNotifications.Models.Enums;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -23,11 +24,16 @@ namespace SdvCode.Hubs
     {
         private readonly ApplicationDbContext db;
         private readonly IHubContext<NotificationHub> notificationHubContext;
+        private readonly INotificationService notificationService;
 
-        public PrivateChatHub(ApplicationDbContext db, IHubContext<NotificationHub> notificationHubContext)
+        public PrivateChatHub(
+            ApplicationDbContext db,
+            IHubContext<NotificationHub> notificationHubContext,
+            INotificationService notificationService)
         {
             this.db = db;
             this.notificationHubContext = notificationHubContext;
+            this.notificationService = notificationService;
         }
 
         public async Task AddToGroup(string groupName, string toUsername, string fromUsername)
@@ -107,12 +113,13 @@ namespace SdvCode.Hubs
             this.db.UserNotifications.Add(notification);
             await this.db.SaveChangesAsync();
 
-            var count = await this.db.UserNotifications
-                   .CountAsync(x => x.TargetUsername == toUser.UserName &&
-                   x.Status == NotificationStatus.Unread);
-
-            await this.notificationHubContext.Clients.User(toUser.Id).SendAsync("ReceiveNotification", count);
             await this.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
+
+            var count = await this.notificationService.GetUserNotificationsCount(toUsername);
+            await this.notificationHubContext.Clients.User(toId).SendAsync("ReceiveNotification", count);
+
+            var newNotification = await this.notificationService.GetNotificationById(notification.Id);
+            await this.notificationHubContext.Clients.User(toId).SendAsync("VisualizeNotification", newNotification);
         }
 
         public async Task ReceiveMessage(string fromUsername, string message, string group)

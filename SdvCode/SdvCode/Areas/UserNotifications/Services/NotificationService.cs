@@ -9,6 +9,7 @@ namespace SdvCode.Areas.UserNotifications.Services
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.UserNotifications.Models;
     using SdvCode.Areas.UserNotifications.Models.Enums;
     using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
     using SdvCode.Data;
@@ -64,25 +65,22 @@ namespace SdvCode.Areas.UserNotifications.Services
             {
                 var user = await this.db.Users
                            .FirstOrDefaultAsync(x => x.Id == notification.ApplicationUserId);
-                var contentWithoutTags =
-                    Regex.Replace(notification.Text, "<.*?>", string.Empty);
-                var item = new NotificationViewModel
-                {
-                    Id = notification.Id,
-                    CreatedOn = notification.CreatedOn,
-                    ApplicationUser = user,
-                    ApplicationUserId = notification.ApplicationUserId,
-                    NotificationHeading = this.GetNotificationHeading(notification.NotificationType, user, notification.Link),
-                    Status = notification.Status,
-                    Text = contentWithoutTags.Length < 487 ?
-                        contentWithoutTags :
-                        $"{contentWithoutTags.Substring(0, 487)}...",
-                    TargetUsername = notification.TargetUsername,
-                };
+
+                NotificationViewModel item = this.ParseNotificationViewModel(notification, user);
                 result.Add(item);
             }
 
             return result;
+        }
+
+        public async Task<NotificationViewModel> GetNotificationById(string id)
+        {
+            var notification = await this.db.UserNotifications.FirstOrDefaultAsync(x => x.Id == id);
+
+            var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == notification.ApplicationUserId);
+            NotificationViewModel item = this.ParseNotificationViewModel(notification, user);
+
+            return item;
         }
 
         public async Task<int> GetUserNotificationsCount(string userName)
@@ -126,6 +124,28 @@ namespace SdvCode.Areas.UserNotifications.Services
             }
 
             return message;
+        }
+
+        private NotificationViewModel ParseNotificationViewModel(UserNotification notification, ApplicationUser user)
+        {
+            var contentWithoutTags =
+                Regex.Replace(notification.Text, "<.*?>", string.Empty);
+
+            return new NotificationViewModel
+            {
+                Id = notification.Id,
+                CreatedOn = notification.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt"),
+                TargetFirstName = user.FirstName,
+                TargetLastName = user.LastName,
+                ImageUrl = user.ImageUrl,
+                Heading = this.GetNotificationHeading(notification.NotificationType, user, notification.Link),
+                Status = notification.Status,
+                Text = contentWithoutTags.Length < 487 ?
+                                contentWithoutTags :
+                                $"{contentWithoutTags.Substring(0, 487)}...",
+                TargetUsername = notification.TargetUsername,
+                AllStatuses = Enum.GetValues(typeof(NotificationStatus)).Cast<NotificationStatus>().Select(x => x.ToString()).ToList(),
+            };
         }
     }
 }
