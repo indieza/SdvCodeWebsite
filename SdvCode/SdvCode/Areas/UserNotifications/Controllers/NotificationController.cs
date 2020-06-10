@@ -67,10 +67,10 @@ namespace SdvCode.Areas.UserNotifications.Controllers
 
         [HttpGet]
         [Route("/UserNotifications/Notification/GetMoreNotitification")]
-        public async Task<IActionResult> GetMoreNotitification(int skip)
+        public async Task<IActionResult> GetMoreNotitification(int skip, int take)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var newNotifications = await this.notificationService.GetUserNotifications(currentUser, GlobalConstants.NotificationOnClick, skip);
+            var newNotifications = await this.notificationService.GetUserNotifications(currentUser, take, skip);
             return new JsonResult(newNotifications);
         }
 
