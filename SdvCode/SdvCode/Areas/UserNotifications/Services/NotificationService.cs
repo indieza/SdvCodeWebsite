@@ -80,12 +80,15 @@ namespace SdvCode.Areas.UserNotifications.Services
             return false;
         }
 
-        public async Task<ICollection<NotificationViewModel>> GetAllNotifications(ApplicationUser currentUser)
+        public async Task<ICollection<NotificationViewModel>> GetUserNotifications(ApplicationUser currentUser, int count, int skip)
         {
             var result = new List<NotificationViewModel>();
             var notifications = this.db.UserNotifications
                 .Where(x => x.TargetUsername == currentUser.UserName)
-                .OrderByDescending(x => x.CreatedOn).ToList();
+                .OrderByDescending(x => x.CreatedOn)
+                .Skip(skip)
+                .Take(count)
+                .ToList();
 
             foreach (var notification in notifications)
             {

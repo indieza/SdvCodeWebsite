@@ -52,7 +52,7 @@ namespace SdvCode.Hubs
 
             var notification = await this.notificationService.GetNotificationById(notificationId);
             await this.notificationHubContext.Clients.User(toId)
-                .SendAsync("VisualizeNotification", notification);
+                .SendAsync("VisualizeNotification", notification, GlobalConstants.NotificationOnClick);
         }
 
         public async Task ReceiveMessage(string fromUsername, string message, string group)

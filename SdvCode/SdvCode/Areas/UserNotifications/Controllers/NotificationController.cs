@@ -11,6 +11,7 @@ namespace SdvCode.Areas.UserNotifications.Controllers
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
     using SdvCode.Constraints;
@@ -39,7 +40,7 @@ namespace SdvCode.Areas.UserNotifications.Controllers
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
             ICollection<NotificationViewModel> notifications =
-                await this.notificationService.GetAllNotifications(currentUser);
+                await this.notificationService.GetUserNotifications(currentUser, GlobalConstants.NotificationOnClick, 0);
 
             return this.View(notifications);
         }
@@ -62,6 +63,15 @@ namespace SdvCode.Areas.UserNotifications.Controllers
             bool isDeleted = await this.notificationService.DeleteNotification(currentUser.UserName, id);
             await this.ChangeNotificationCounter(isDeleted, currentUser);
             return isDeleted;
+        }
+
+        [HttpGet]
+        [Route("/UserNotifications/Notification/GetMoreNotitification")]
+        public async Task<IActionResult> GetMoreNotitification(int skip)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var newNotifications = await this.notificationService.GetUserNotifications(currentUser, GlobalConstants.NotificationOnClick, skip);
+            return new JsonResult(newNotifications);
         }
 
         private async Task ChangeNotificationCounter(bool isForChange, ApplicationUser user)

@@ -1,5 +1,6 @@
 ﻿@using SdvCode.Areas.UserNotifications.ViewModels.ViewModels
 @using SdvCode.Areas.UserNotifications.Models.Enums
+@using SdvCode.Constraints
 
 @{
     string username = this.User.Identity.Name;
@@ -43,7 +44,7 @@
         <div id="allUserNotifications">
             @foreach (var item in this.Model)
             {
-                <div class="col-md-6 col-sm-6" id="@item.Id">
+                <div id="@item.Id">
                     <div class="ts-testimonial-content">
                         <img src="@item.ImageUrl" alt="avatar">
                         <h4 class="ts-testimonial-text userNotificationsHeading">
@@ -91,6 +92,15 @@
                 </div>
             }
         </div>
+    </div>
+    <br />
+    <div class="row" style="text-align: center">
+        <button type="button" class="btn btn-success" onclick="loadMoreNotifications()">
+            <i class="fas fa-plus"></i> Load More
+        </button>
+        <button id="loadLessNotifications" type="button" class="btn btn-danger" style="display: none" onclick="hideNotifications(@GlobalConstants.NotificationOnClick)">
+            <i class="fas fa-minus"></i> Load Less
+        </button>
     </div>
 </section>
 <input type="hidden" />

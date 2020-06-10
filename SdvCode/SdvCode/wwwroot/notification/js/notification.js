@@ -1,6 +1,7 @@
 ﻿"use strict"
 
 let notificationConnection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+let savedNotificationsForHide = [];
 
 notificationConnection.start().then(function () {
     notificationConnection.invoke("GetUserNotificationCount").catch(function (err) {
@@ -17,22 +18,31 @@ notificationConnection.on("ReceiveNotification", function (count) {
     }
 });
 
-notificationConnection.on("VisualizeNotification", function (notification) {
+notificationConnection.on("VisualizeNotification", function (notification, maxCount) {
     let div = document.getElementById("allUserNotifications");
 
     if (div) {
-        let newNotification = document.createElement("div");
-        newNotification.classList.add("col-md-6", "col-sm-6");
-        newNotification.id = notification.id;
-
-        let allStatuses = "";
-
-        for (var status of notification.allStatuses) {
-            allStatuses += `<a onclick="updateStatus('${status}', '${notification.id}')">${status}</a>`;
+        let newNotification = createNotification(notification);
+        if (div.children.length % maxCount == 0) {
+            div.children.removeChild(div.lastChild);
         }
 
-        newNotification.innerHTML =
-            `<div class="ts-testimonial-content">
+        div.insertBefore(newNotification, div.childNodes[0]);
+    }
+});
+
+function createNotitfication(notification) {
+    let newNotification = document.createElement("div");
+    newNotification.id = notification.id;
+
+    let allStatuses = "";
+
+    for (var status of notification.allStatuses) {
+        allStatuses += `<a onclick="updateStatus('${status}', '${notification.id}')">${status}</a>`;
+    }
+
+    newNotification.innerHTML =
+        `<div class="ts-testimonial-content">
                         <img src="${notification.imageUrl}" alt="avatar">
                         <h4 class="ts-testimonial-text userNotificationsHeading">
                             <span>
@@ -73,6 +83,50 @@ notificationConnection.on("VisualizeNotification", function (notification) {
                             </h3>
                         </div>
                     </div>`;
-        div.insertBefore(newNotification, div.childNodes[0]);
+
+    return newNotification;
+}
+
+function loadMoreNotifications() {
+    let skip = document.getElementById("allUserNotifications").children.length;
+    let div = document.getElementById("allUserNotifications");
+
+    $.ajax({
+        type: "GET",
+        url: `/UserNotifications/Notification/GetMoreNotitification`,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: {
+            "skip": skip
+        },
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            savedNotificationsForHide.push(data.length);
+            for (var notification of data) {
+                let result = createNotitfication(notification);
+                div.appendChild(result);
+                document.getElementById("loadLessNotifications").style.display = "";
+            }
+        },
+        error: function (msg) {
+            console.error(msg);
+        }
+    });
+}
+
+function hideNotifications(maxCount) {
+    let div = document.getElementById("allUserNotifications");
+
+    for (var i = 0; i < Math.min(savedNotificationsForHide[savedNotificationsForHide.length - 1], div.children.length); i++) {
+        div.removeChild(div.lastChild);
     }
-});
+
+    savedNotificationsForHide.pop();
+
+    if (div.children.length <= maxCount) {
+        document.getElementById("loadLessNotifications").style.display = "none";
+    }
+}

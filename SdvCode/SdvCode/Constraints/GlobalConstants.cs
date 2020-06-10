@@ -68,5 +68,7 @@ namespace SdvCode.Constraints
         public const int FavoriteProductsOnPage = 9;
 
         public const int LatestLayoutPostsCount = 9;
+
+        public const int NotificationOnClick = 5;
     }
 }
