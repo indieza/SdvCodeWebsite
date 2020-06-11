@@ -30,7 +30,7 @@
 
                         <h5>
                             <span class="userStatusDot" id="userStatusDot"></span>
-                            <span id="userSatus">
+                            <span id="@(Model.ApplicationUser.Username)userSatus">
                                 Online
                             </span>
                         </h5>
@@ -39,7 +39,7 @@
                         <div class="ratingStars" id="starScoreRating">
                             @*Here Goes Rating Stars*@
                         </div>
-                        <h5>@@@Model.ApplicationUser.Username</h5>
+                        <h5 id="currentUsername">@@@Model.ApplicationUser.Username</h5>
                     </div>
                     <div class="action-buttons">
                         <div class="row">
