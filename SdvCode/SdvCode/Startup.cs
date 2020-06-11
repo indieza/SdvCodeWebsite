@@ -326,6 +326,7 @@ namespace SdvCode
 
                 endpoints.MapHub<PrivateChatHub>("/privateChatHub");
                 endpoints.MapHub<NotificationHub>("/notificationHub");
+                endpoints.MapHub<UserStatusHub>("/userStatusHub");
 
                 endpoints.MapRazorPages();
                 endpoints.MapBlazorHub();
