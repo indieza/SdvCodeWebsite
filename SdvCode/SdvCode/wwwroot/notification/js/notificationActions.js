@@ -128,9 +128,6 @@ function loadMoreNotifications(take, isForDeleted) {
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            if (!isForDeleted) {
-                savedNotificationsForHide.push(data.newNotifications.length);
-            }
             for (var notification of data.newNotifications) {
                 let result = createNotification(notification);
                 div.appendChild(result);
@@ -138,7 +135,9 @@ function loadMoreNotifications(take, isForDeleted) {
             if (!data.hasMore) {
                 document.getElementById("loadMoreNotifications").disabled = true;
             }
-            if (savedNotificationsForHide.length > 0) {
+            if (isForDeleted) {
+                document.getElementById("loadLessNotifications").style.display = "none";
+            } else {
                 document.getElementById("loadLessNotifications").style.display = "";
             }
         },
@@ -151,11 +150,9 @@ function loadMoreNotifications(take, isForDeleted) {
 function hideNotifications(maxCount) {
     let div = document.getElementById("allUserNotifications");
 
-    for (var i = 0; i < Math.min(savedNotificationsForHide[savedNotificationsForHide.length - 1], div.children.length); i++) {
+    for (var i = 0; i < Math.min(maxCount, div.children.length % maxCount + div.children.length / maxCount); i++) {
         div.removeChild(div.lastChild);
     }
-
-    savedNotificationsForHide.pop();
 
     if (div.children.length <= maxCount) {
         document.getElementById("loadLessNotifications").style.display = "none";

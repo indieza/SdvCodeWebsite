@@ -22,7 +22,7 @@ notificationConnection.on("VisualizeNotification", function (notification) {
 
     if (div) {
         let newNotification = createNotification(notification);
-        if (div.children.length % 5 == 0) {
+        if (div.children.length % 5 == 0 && div.children.length > 0) {
             let lastNotification = div.lastElementChild;
             div.removeChild(lastNotification);
             document.getElementById("loadMoreNotifications").disabled = false;
