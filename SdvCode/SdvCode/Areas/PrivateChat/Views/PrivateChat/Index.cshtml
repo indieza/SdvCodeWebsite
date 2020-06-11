@@ -24,8 +24,10 @@
             <div class="panel">
                 <!--Heading-->
                 <div class="panel-heading">
-                    <h3 class="panel-title" style="float: left" id="toUser">@Model.ToUser.UserName</h3>
-                    <h3 class="panel-title" style="float: right" id="fromUser">@Model.FromUser.UserName</h3>
+                    <div class="row">
+                        <h3 class="panel-title" style="float: left" id="toUser">@Model.ToUser.UserName</h3>
+                        <h3 class="panel-title" style="float: right" id="fromUser">@Model.FromUser.UserName</h3>
+                    </div>
                 </div>
                 <div class="nano">
                     <div id="demo-chat-body" class="nano-content pad-all" tabindex="0">
