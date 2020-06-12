@@ -13,6 +13,7 @@ notificationConnection.start().then(function () {
 notificationConnection.on("ReceiveNotification", function (count) {
     document.getElementById("notificationCount").innerText = count;
     if (count > 0) {
+        document.querySelector("audio").load();
         document.querySelector("audio").play();
     }
 });
