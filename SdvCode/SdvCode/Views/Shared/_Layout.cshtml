@@ -46,7 +46,7 @@
 </head>
 <body onload="setSiteTheme(); getLatestBlogPosts();">
     <audio id="notificationAudio">
-        <source src="~/NotificationSounds.mp3" type="audio/mpeg">
+        <source id="targetAudio" src="~/NotificationSound1.mp3" type="audio/mpeg">
     </audio>
     <div class="style-switch-wrapper">
         <div class="style-switch-button">
@@ -59,6 +59,13 @@
         <button id="preset4" class="btn btn-sm btn-primary"></button>
         <button id="preset5" class="btn btn-sm btn-primary"></button>
         <button id="preset6" class="btn btn-sm btn-primary"></button>
+        <h3>Sound Options</h3>
+        <button id="sound1" class="btn btn-sm btn-primary">1</button>
+        <button id="sound2" class="btn btn-sm btn-primary">2</button>
+        <button id="sound3" class="btn btn-sm btn-primary">3</button>
+        <button id="sound4" class="btn btn-sm btn-primary">4</button>
+        <button id="sound5" class="btn btn-sm btn-primary">5</button>
+        <button id="sound6" class="btn btn-sm btn-primary">6</button>
         <br /><br />
         <a class="btn btn-sm btn-primary close-styler pull-right">Close X</a>
     </div>
