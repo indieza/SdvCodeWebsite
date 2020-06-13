@@ -48,7 +48,7 @@ namespace SdvCode.Hubs
                 await this.notificationService.AddMessageNotification(fromUsername, toUsername, message, group);
 
             var count = await this.notificationService.GetUserNotificationsCount(toUsername);
-            await this.notificationHubContext.Clients.User(toId).SendAsync("ReceiveNotification", count);
+            await this.notificationHubContext.Clients.User(toId).SendAsync("ReceiveNotification", count, true);
 
             var notification = await this.notificationService.GetNotificationById(notificationId);
             await this.notificationHubContext.Clients.User(toId)

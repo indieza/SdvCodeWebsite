@@ -3,18 +3,26 @@
 let notificationConnection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
 
 notificationConnection.start().then(function () {
-    notificationConnection.invoke("GetUserNotificationCount").catch(function (err) {
+    if (!sessionStorage.getItem("isFirstNotificaitonSound")) {
+        sessionStorage.setItem("isFirstNotificaitonSound", true);
+    } else {
+        sessionStorage.setItem("isFirstNotificaitonSound", false);
+    }
+    let isFirstNotificaitonSound = sessionStorage.getItem("isFirstNotificaitonSound") == "true" ? true : false;
+    notificationConnection.invoke("GetUserNotificationCount", isFirstNotificaitonSound).catch(function (err) {
         return console.error(err.toString());
     });
 }).catch(function (err) {
     return console.error(err.toString());
 });
 
-notificationConnection.on("ReceiveNotification", function (count) {
+notificationConnection.on("ReceiveNotification", function (count, isFirstNotificaitonSound) {
     document.getElementById("notificationCount").innerText = count;
     if (count > 0) {
-        document.querySelector("audio").load();
-        document.querySelector("audio").play();
+        if (isFirstNotificaitonSound) {
+            document.querySelector("audio").load();
+            document.querySelector("audio").play();
+        }
     }
 });
 

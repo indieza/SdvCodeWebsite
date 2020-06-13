@@ -26,7 +26,7 @@ namespace SdvCode.Hubs
             this.userManager = userManager;
         }
 
-        public async Task GetUserNotificationCount()
+        public async Task GetUserNotificationCount(bool isFirstNotificaitonSound)
         {
             var username = this.Context.User.Identity.Name;
             if (username != null)
@@ -35,7 +35,7 @@ namespace SdvCode.Hubs
                 var count = await this.db.UserNotifications
                     .CountAsync(x => x.TargetUsername == username && x.Status == NotificationStatus.Unread);
 
-                await this.Clients.User(targetUser.Id).SendAsync("ReceiveNotification", count);
+                await this.Clients.User(targetUser.Id).SendAsync("ReceiveNotification", count, isFirstNotificaitonSound);
             }
         }
     }

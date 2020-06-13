@@ -79,7 +79,7 @@ namespace SdvCode.Areas.UserNotifications.Controllers
             if (isForChange)
             {
                 int count = await this.notificationService.GetUserNotificationsCount(user.UserName);
-                await this.hubContext.Clients.User(user.Id).SendAsync("ReceiveNotification", count);
+                await this.hubContext.Clients.User(user.Id).SendAsync("ReceiveNotification", count, false);
             }
         }
     }
