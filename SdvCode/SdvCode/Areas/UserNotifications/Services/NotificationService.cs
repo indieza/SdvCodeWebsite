@@ -12,6 +12,7 @@ namespace SdvCode.Areas.UserNotifications.Services
     using SdvCode.Areas.UserNotifications.Models;
     using SdvCode.Areas.UserNotifications.Models.Enums;
     using SdvCode.Areas.UserNotifications.ViewModels.ViewModels;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
 
@@ -44,6 +45,21 @@ namespace SdvCode.Areas.UserNotifications.Services
                 Link = $"/PrivateChat/With/{fromUser.UserName}/Group/{group}",
                 NotificationType = NotificationType.Message,
             };
+
+            var targetNotifications = this.db.UserNotifications
+                .Where(x => x.NotificationType == NotificationType.Message &&
+                x.TargetUsername == toUser.UserName &&
+                x.ApplicationUserId == fromUser.Id)
+                .OrderByDescending(x => x.CreatedOn)
+                .ToList();
+
+            if (targetNotifications.Count + 1 > GlobalConstants.MaxChatNotificationsPerUser)
+            {
+                targetNotifications = targetNotifications
+                    .Skip(GlobalConstants.MaxChatNotificationsPerUser - 1)
+                    .ToList();
+                this.db.UserNotifications.RemoveRange(targetNotifications);
+            }
 
             this.db.UserNotifications.Add(notification);
             await this.db.SaveChangesAsync();

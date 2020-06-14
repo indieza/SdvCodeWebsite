@@ -70,5 +70,7 @@ namespace SdvCode.Constraints
         public const int LatestLayoutPostsCount = 9;
 
         public const int NotificationOnClick = 5;
+
+        public const int MaxChatNotificationsPerUser = 4;
     }
 }

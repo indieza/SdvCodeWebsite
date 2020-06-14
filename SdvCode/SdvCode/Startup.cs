@@ -54,6 +54,7 @@ namespace SdvCode
     using SdvCode.Areas.SdvShop.Services.States.ShoppingCart;
     using SdvCode.Areas.SdvShop.Services.TrackOrder;
     using SdvCode.Areas.UserNotifications.Services;
+    using SdvCode.Areas.UserNotifications.Services.NotificationDbUsage;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -357,6 +358,10 @@ namespace SdvCode
             // Delete all chat messages
             recurringJobManager
                 .AddOrUpdate<DeleteMessages>("DeleteMessages", x => x.DeleteAllChatMessages(), Cron.Yearly);
+
+            // Delete all user notification
+            recurringJobManager
+                .AddOrUpdate<NotificationDbUsage>("DeleteNotifications", x => x.DeleteNotifications(), Cron.Yearly);
         }
 
         public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
