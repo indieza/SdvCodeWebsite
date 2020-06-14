@@ -18,12 +18,22 @@ notificationConnection.start().then(function () {
 
 notificationConnection.on("ReceiveNotification", function (count, isFirstNotificaitonSound) {
     document.getElementById("notificationCount").innerText = count;
+    let title = document.querySelector("head title");
+    let bracketIndex = title.innerText.indexOf(")");
+    let newTitle = "";
+
     if (count > 0) {
         if (isFirstNotificaitonSound) {
             document.querySelector("audio").load();
             document.querySelector("audio").play();
         }
+
+        newTitle = `(${count}) ${title.innerText.substring(bracketIndex + 1, title.innerText.length)}`;
+    } else {
+        newTitle = `${title.innerText.substring(bracketIndex + 1, title.innerText.length)}`;
     }
+
+    title.innerText = newTitle;
 });
 
 notificationConnection.on("VisualizeNotification", function (notification) {
