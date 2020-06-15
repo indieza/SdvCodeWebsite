@@ -17,5 +17,6 @@ namespace SdvCode.Areas.UserNotifications.Models.Enums
         Unliked = 5,
         AddToFavorite = 6,
         RemoveFromFavorite = 7,
+        CreateNewBlogPost = 8,
     }
 }

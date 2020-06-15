@@ -190,6 +190,9 @@ namespace SdvCode.Areas.UserNotifications.Services
                 case NotificationType.RemoveFromFavorite:
                     break;
 
+                case NotificationType.CreateNewBlogPost:
+                    break;
+
                 default:
                     break;
             }
