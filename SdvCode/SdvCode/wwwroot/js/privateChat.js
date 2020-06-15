@@ -69,6 +69,9 @@ connection.start().then(function () {
     connection.invoke("AddToGroup", `${group}`, toUser, fromUser).catch(function (err) {
         return console.error(err.toString());
     });
+    connection.invoke("UpdateMessageNotifications", toUser, fromUser).catch(function (err) {
+        return console.error(err.toString());
+    });
 }).catch(function (err) {
     return console.error(err.toString());
 });

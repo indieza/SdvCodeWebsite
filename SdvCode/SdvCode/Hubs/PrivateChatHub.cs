@@ -59,5 +59,18 @@ namespace SdvCode.Hubs
         {
             await this.privateChatService.ReceiveNewMessage(fromUsername, message, group);
         }
+
+        public async Task UpdateMessageNotifications(string fromUsername, string username)
+        {
+            var toId = await this.notificationService.UpdateMessageNotifications(fromUsername, username);
+            if (toId != string.Empty)
+            {
+                var count = await this.notificationService.GetUserNotificationsCount(username);
+                await this.notificationHubContext
+                    .Clients
+                    .User(toId)
+                    .SendAsync("ReceiveNotification", count, false);
+            }
+        }
     }
 }

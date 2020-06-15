@@ -23,5 +23,7 @@ namespace SdvCode.Areas.UserNotifications.Services
         Task<NotificationViewModel> GetNotificationById(string id);
 
         Task<string> AddMessageNotification(string fromUsername, string toUsername, string message, string group);
+
+        Task<string> UpdateMessageNotifications(string fromUsername, string username);
     }
 }

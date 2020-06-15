@@ -137,6 +137,30 @@ namespace SdvCode.Areas.UserNotifications.Services
             return count;
         }
 
+        public async Task<string> UpdateMessageNotifications(string fromUsername, string username)
+        {
+            var fromUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == fromUsername);
+            var toUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
+
+            if (fromUser != null && toUser != null)
+            {
+                var notifications = this.db.UserNotifications
+                    .Where(x => x.Status == NotificationStatus.Unread &&
+                    x.TargetUsername == toUser.UserName &&
+                    x.ApplicationUserId == fromUser.Id)
+                    .ToList();
+
+                foreach (var notification in notifications)
+                {
+                    await this.EditStatus(toUser, NotificationStatus.Read.ToString(), notification.Id);
+                }
+
+                return toUser.Id;
+            }
+
+            return string.Empty;
+        }
+
         private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
         {
             string message = string.Empty;
