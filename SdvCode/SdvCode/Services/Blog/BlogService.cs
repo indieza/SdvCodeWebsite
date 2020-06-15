@@ -282,9 +282,19 @@ namespace SdvCode.Services.Blog
             }
             else
             {
-                posts = posts
-                    .Where(x => x.PostStatus != PostStatus.Banned && x.PostStatus != PostStatus.Pending)
-                    .ToList();
+                if (user != null)
+                {
+                    posts = posts
+                        .Where(x => x.PostStatus == PostStatus.Approved ||
+                        x.ApplicationUserId == user.Id)
+                        .ToList();
+                }
+                else
+                {
+                    posts = posts
+                        .Where(x => x.PostStatus == PostStatus.Approved)
+                        .ToList();
+                }
             }
 
             List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);

@@ -54,10 +54,14 @@ namespace SdvCode.Constraints
                     currentPostModel.IsLiked = this.db.PostsLikes.Any(x => x.PostId == post.Id && x.UserId == user.Id && x.IsLiked == true);
                     currentPostModel.IsFavourite = this.db.FavouritePosts
                         .Any(x => x.ApplicationUserId == user.Id && x.PostId == post.Id && x.IsFavourite == true);
-                    currentPostModel.IsAuthor = user.Id == post.ApplicationUserId ? true : false;
+                    currentPostModel.IsAuthor = user.Id == post.ApplicationUserId;
                 }
 
-                var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
+                var usersIds = this.db.PostsLikes
+                    .Where(x => x.PostId == post.Id && x.IsLiked == true)
+                    .Select(x => x.UserId)
+                    .ToList();
+
                 foreach (var userId in usersIds)
                 {
                     currentPostModel.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));

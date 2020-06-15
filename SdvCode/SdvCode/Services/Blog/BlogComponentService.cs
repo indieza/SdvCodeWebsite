@@ -38,16 +38,25 @@ namespace SdvCode.Services.Blog
                 await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
             {
                 comments = this.db.Comments
-                    .Where(x => x.CommentStatus == CommentStatus.Pending || x.CommentStatus == CommentStatus.Approved)
                     .OrderByDescending(x => x.UpdatedOn)
                     .ToList();
             }
             else
             {
-                comments = this.db.Comments
-                    .Where(x => x.CommentStatus != CommentStatus.Pending)
-                    .OrderByDescending(x => x.UpdatedOn)
-                    .ToList();
+                if (currentUser != null)
+                {
+                    comments = this.db.Comments
+                        .Where(x => x.CommentStatus == CommentStatus.Approved ||
+                        x.ApplicationUserId == currentUser.Id)
+                        .ToList();
+                }
+                else
+                {
+                    comments = this.db.Comments
+                        .Where(x => x.CommentStatus == CommentStatus.Approved)
+                        .OrderByDescending(x => x.UpdatedOn)
+                        .ToList();
+                }
             }
 
             var recentComments = new List<RecentCommentsViewModel>();
@@ -79,16 +88,24 @@ namespace SdvCode.Services.Blog
                 await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
             {
                 posts = this.db.Posts
-                    .Where(x => x.PostStatus == PostStatus.Banned || x.PostStatus == PostStatus.Pending || x.PostStatus == PostStatus.Approved)
                     .OrderByDescending(x => x.UpdatedOn)
                     .ToList();
             }
             else
             {
-                posts = this.db.Posts
-                    .Where(x => x.PostStatus != PostStatus.Banned && x.PostStatus != PostStatus.Pending)
-                    .OrderByDescending(x => x.UpdatedOn)
-                    .ToList();
+                if (currentUser != null)
+                {
+                    posts = this.db.Posts
+                        .Where(x => x.PostStatus == PostStatus.Approved ||
+                        x.ApplicationUserId == currentUser.Id)
+                        .ToList();
+                }
+                else
+                {
+                    posts = this.db.Posts
+                        .Where(x => x.PostStatus == PostStatus.Approved)
+                        .ToList();
+                }
             }
 
             var recentPosts = new List<RecentPostsViewModel>();
