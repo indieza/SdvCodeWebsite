@@ -25,5 +25,7 @@ namespace SdvCode.Areas.UserNotifications.Services
         Task<string> AddMessageNotification(string fromUsername, string toUsername, string message, string group);
 
         Task<string> UpdateMessageNotifications(string fromUsername, string username);
+
+        Task<string> AddBlogPostNotification(ApplicationUser toUser, ApplicationUser fromUser, string shortContent, string postId);
     }
 }

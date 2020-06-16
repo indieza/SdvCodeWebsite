@@ -13,10 +13,13 @@ namespace SdvCode.Services.Blog
     using Ganss.XSS;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
@@ -31,6 +34,8 @@ namespace SdvCode.Services.Blog
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly INotificationService notificationService;
+        private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly GlobalPostsExtractor postExtractor;
         private readonly AddCyclicActivity cyclicActivity;
         private readonly AddNonCyclicActivity nonCyclicActivity;
@@ -38,12 +43,16 @@ namespace SdvCode.Services.Blog
         public BlogService(
             ApplicationDbContext db,
             Cloudinary cloudinary,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            INotificationService notificationService,
+            IHubContext<NotificationHub> notificationHubContext)
             : base(userManager, db)
         {
             this.db = db;
             this.cloudinary = cloudinary;
             this.userManager = userManager;
+            this.notificationService = notificationService;
+            this.notificationHubContext = notificationHubContext;
             this.postExtractor = new GlobalPostsExtractor(this.db);
             this.cyclicActivity = new AddCyclicActivity(this.db);
             this.nonCyclicActivity = new AddNonCyclicActivity(this.db);
@@ -90,6 +99,20 @@ namespace SdvCode.Services.Blog
                 });
             }
 
+            var adminRole =
+                await this.db.Roles.FirstOrDefaultAsync(x => x.Name == Roles.Administrator.ToString());
+            var editorRole =
+                await this.db.Roles.FirstOrDefaultAsync(x => x.Name == Roles.Editor.ToString());
+
+            var allAdminIds = this.db.UserRoles
+                .Where(x => x.RoleId == adminRole.Id)
+                .Select(x => x.UserId)
+                .ToList();
+            var allEditorIds = this.db.UserRoles
+                .Where(x => x.RoleId == editorRole.Id)
+                .Select(x => x.UserId)
+                .ToList();
+
             if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()))
@@ -105,6 +128,24 @@ namespace SdvCode.Services.Blog
                     PostId = post.Id,
                     IsPending = true,
                 });
+            }
+
+            foreach (var specialId in allAdminIds.Union(allEditorIds))
+            {
+                var toUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == specialId);
+
+                string notificationId =
+                    await this.notificationService.AddBlogPostNotification(toUser, user, post.ShortContent, post.Id);
+
+                var count = await this.notificationService.GetUserNotificationsCount(toUser.UserName);
+                await this.notificationHubContext
+                    .Clients
+                    .User(toUser.Id)
+                    .SendAsync("ReceiveNotification", count, true);
+
+                var notification = await this.notificationService.GetNotificationById(notificationId);
+                await this.notificationHubContext.Clients.User(toUser.Id)
+                    .SendAsync("VisualizeNotification", notification);
             }
 
             this.db.Posts.Add(post);

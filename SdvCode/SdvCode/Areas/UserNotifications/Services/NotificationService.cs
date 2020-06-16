@@ -117,7 +117,7 @@ namespace SdvCode.Areas.UserNotifications.Services
 
             var notificationsCount = await this.GetUserNotificationsCount(currentUser.UserName);
 
-            return Tuple.Create(result, notificationsCount > skip + count ? true : false);
+            return Tuple.Create(result, notificationsCount > skip + count);
         }
 
         public async Task<NotificationViewModel> GetNotificationById(string id)
@@ -161,6 +161,24 @@ namespace SdvCode.Areas.UserNotifications.Services
             return string.Empty;
         }
 
+        public async Task<string> AddBlogPostNotification(ApplicationUser toUser, ApplicationUser fromUser, string shortContent, string postId)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = fromUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = shortContent,
+                TargetUsername = toUser.UserName,
+                Link = $"/Blog/Post/{postId}",
+                NotificationType = NotificationType.CreateNewBlogPost,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
         private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
         {
             string message = string.Empty;
@@ -191,6 +209,8 @@ namespace SdvCode.Areas.UserNotifications.Services
                     break;
 
                 case NotificationType.CreateNewBlogPost:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> create a new <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>";
                     break;
 
                 default:
