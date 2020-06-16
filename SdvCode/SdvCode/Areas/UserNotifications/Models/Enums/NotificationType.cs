@@ -11,10 +11,10 @@ namespace SdvCode.Areas.UserNotifications.Models.Enums
     public enum NotificationType
     {
         Message = 1,
-        Followed = 2,
+        ApprovedPost = 2,
         Liked = 3,
-        Unfollowed = 4,
-        Unliked = 5,
+        BannedPost = 4,
+        UnbannedPost = 5,
         AddToFavorite = 6,
         RemoveFromFavorite = 7,
         CreateNewBlogPost = 8,

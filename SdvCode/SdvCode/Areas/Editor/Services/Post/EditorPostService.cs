@@ -14,6 +14,7 @@ namespace SdvCode.Areas.Editor.Services.Post
     using SdvCode.Data;
     using SdvCode.Hubs;
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User;
     using SdvCode.Services;
 
     public class EditorPostService : UserValidationService, IEditorPostService
@@ -46,7 +47,7 @@ namespace SdvCode.Areas.Editor.Services.Post
             this.notificationHubContext = notificationHubContext;
         }
 
-        public async Task<bool> ApprovePost(string id)
+        public async Task<bool> ApprovePost(string id, ApplicationUser currentUser)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
             if (post != null)
@@ -94,6 +95,22 @@ namespace SdvCode.Areas.Editor.Services.Post
                         await this.notificationHubContext.Clients.User(toUser.Id)
                             .SendAsync("VisualizeNotification", notification);
                     }
+
+                    var targetUser = await this.db.Users
+                        .FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
+                    string notificationForApprovingId =
+                           await this.notificationService
+                           .AddApprovedPostNotification(targetUser, currentUser, post.ShortContent, post.Id);
+
+                    var targetUserNotificationsCount = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
+                    await this.notificationHubContext
+                        .Clients
+                        .User(targetUser.Id)
+                        .SendAsync("ReceiveNotification", targetUserNotificationsCount, true);
+
+                    var notificationForApproving = await this.notificationService.GetNotificationById(notificationForApprovingId);
+                    await this.notificationHubContext.Clients.User(targetUser.Id)
+                        .SendAsync("VisualizeNotification", notificationForApproving);
 
                     return true;
                 }

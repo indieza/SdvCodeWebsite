@@ -45,7 +45,7 @@ namespace SdvCode.Areas.Editor.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isApproved = await this.postService.ApprovePost(id);
+            bool isApproved = await this.postService.ApprovePost(id, currentUser);
             if (isApproved)
             {
                 this.TempData["Success"] = SuccessMessages.SuccessfullyApprovedBlogPost;
