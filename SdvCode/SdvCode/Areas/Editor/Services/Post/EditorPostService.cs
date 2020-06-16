@@ -7,14 +7,20 @@ namespace SdvCode.Areas.Editor.Services.Post
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.Enums;
     using SdvCode.Services;
 
     public class EditorPostService : UserValidationService, IEditorPostService
     {
         private readonly ApplicationDbContext db;
+        private readonly INotificationService notificationService;
+        private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly List<UserActionsType> actionsForBann = new List<UserActionsType>()
         {
             UserActionsType.LikedPost,
@@ -29,10 +35,15 @@ namespace SdvCode.Areas.Editor.Services.Post
             UserActionsType.UnlikeOwnPost,
         };
 
-        public EditorPostService(ApplicationDbContext db)
+        public EditorPostService(
+            ApplicationDbContext db,
+            INotificationService notificationService,
+            IHubContext<NotificationHub> notificationHubContext)
             : base(db)
         {
             this.db = db;
+            this.notificationService = notificationService;
+            this.notificationHubContext = notificationHubContext;
         }
 
         public async Task<bool> ApprovePost(string id)
@@ -49,6 +60,41 @@ namespace SdvCode.Areas.Editor.Services.Post
                     this.db.PendingPosts.Update(targetApprovedEntity);
                     this.db.Posts.Update(post);
                     await this.db.SaveChangesAsync();
+
+                    var specialRoleIds = this.db.Roles
+                        .Where(x => x.Name == Roles.Administrator.ToString() ||
+                        x.Name == Roles.Editor.ToString())
+                        .Select(x => x.Id)
+                        .ToList();
+                    var specialIds = this.db.UserRoles
+                        .Where(x => specialRoleIds.Contains(x.RoleId))
+                        .Select(x => x.UserId)
+                        .ToList();
+                    var followerIds = this.db.FollowUnfollows
+                    .Where(x => x.PersonId == post.ApplicationUserId && !specialIds.Contains(x.FollowerId))
+                    .Select(x => x.FollowerId)
+                    .ToList();
+
+                    foreach (var followerId in followerIds)
+                    {
+                        var toUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == followerId);
+                        var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
+
+                        string notificationId =
+                            await this.notificationService
+                            .AddBlogPostNotification(toUser, user, post.ShortContent, post.Id);
+
+                        var count = await this.notificationService.GetUserNotificationsCount(toUser.UserName);
+                        await this.notificationHubContext
+                            .Clients
+                            .User(toUser.Id)
+                            .SendAsync("ReceiveNotification", count, true);
+
+                        var notification = await this.notificationService.GetNotificationById(notificationId);
+                        await this.notificationHubContext.Clients.User(toUser.Id)
+                            .SendAsync("VisualizeNotification", notification);
+                    }
+
                     return true;
                 }
 
