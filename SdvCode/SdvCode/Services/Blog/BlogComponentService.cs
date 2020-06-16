@@ -154,16 +154,26 @@ namespace SdvCode.Services.Blog
                 await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
             {
                 posts = this.db.Posts
-                    .Where(x => x.PostStatus == PostStatus.Banned || x.PostStatus == PostStatus.Pending || x.PostStatus == PostStatus.Approved)
                     .OrderByDescending(x => x.Comments.Count + x.Likes)
                     .ToList();
             }
             else
             {
-                posts = this.db.Posts
-                    .Where(x => x.PostStatus != PostStatus.Banned && x.PostStatus != PostStatus.Pending)
-                    .OrderByDescending(x => x.Comments.Count + x.Likes)
-                    .ToList();
+                if (currentUser != null)
+                {
+                    posts = this.db.Posts
+                        .Where(x => x.PostStatus == PostStatus.Approved ||
+                        x.ApplicationUserId == currentUser.Id)
+                        .OrderByDescending(x => x.Comments.Count + x.Likes)
+                        .ToList();
+                }
+                else
+                {
+                    posts = this.db.Posts
+                        .Where(x => x.PostStatus == PostStatus.Approved)
+                        .OrderByDescending(x => x.Comments.Count + x.Likes)
+                        .ToList();
+                }
             }
 
             var topPosts = new List<TopPostsViewModel>();
