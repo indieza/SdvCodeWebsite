@@ -112,12 +112,19 @@ namespace SdvCode.Services.Blog
                 .Where(x => x.RoleId == editorRole.Id)
                 .Select(x => x.UserId)
                 .ToList();
+            var specialIds = allAdminIds.Union(allEditorIds).ToList();
 
             if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()))
             {
                 post.PostStatus = PostStatus.Approved;
+                var followerIds = this.db.FollowUnfollows
+                    .Where(x => x.PersonId == user.Id && !specialIds.Contains(x.FollowerId))
+                    .Select(x => x.FollowerId)
+                    .ToList();
+                specialIds = specialIds.Union(followerIds).ToList();
+                specialIds.Remove(user.Id);
             }
             else
             {
@@ -130,7 +137,7 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            foreach (var specialId in allAdminIds.Union(allEditorIds))
+            foreach (var specialId in specialIds)
             {
                 var toUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == specialId);
 
