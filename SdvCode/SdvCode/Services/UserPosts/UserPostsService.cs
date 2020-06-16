@@ -10,9 +10,11 @@ namespace SdvCode.Services.UserPosts
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
     using X.PagedList;
@@ -20,16 +22,45 @@ namespace SdvCode.Services.UserPosts
     public class UserPostsService : GlobalPostsExtractor, IUserPostsService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public UserPostsService(ApplicationDbContext db)
+        public UserPostsService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
             : base(db)
         {
             this.db = db;
+            this.userManager = userManager;
         }
 
         public async Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, ApplicationUser currentUser)
         {
-            var posts = await this.db.Posts.Where(x => x.ApplicationUser.UserName == username).ToListAsync();
+            var posts = this.db.Posts.Where(x => x.ApplicationUser.UserName == username).ToList();
+            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
+
+            if (currentUser != null &&
+                (await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
+            {
+                posts = posts
+                    .Where(x => x.PostStatus == PostStatus.Banned || x.PostStatus == PostStatus.Pending || x.PostStatus == PostStatus.Approved)
+                    .ToList();
+            }
+            else
+            {
+                if (currentUser != null)
+                {
+                    posts = posts
+                        .Where(x => x.PostStatus == PostStatus.Approved &&
+                        x.ApplicationUserId == user.Id)
+                        .ToList();
+                }
+                else
+                {
+                    posts = posts
+                        .Where(x => x.PostStatus == PostStatus.Approved)
+                        .ToList();
+                }
+            }
+
             List<PostViewModel> postsModel = await this.ExtractPosts(currentUser, posts);
 
             return postsModel;
@@ -45,6 +76,31 @@ namespace SdvCode.Services.UserPosts
             foreach (var postId in postsIds)
             {
                 posts.Add(await this.db.Posts.FirstOrDefaultAsync(x => x.Id == postId));
+            }
+
+            if (currentUser != null &&
+                (await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
+            {
+                posts = posts
+                    .Where(x => x.PostStatus == PostStatus.Banned || x.PostStatus == PostStatus.Pending || x.PostStatus == PostStatus.Approved)
+                    .ToList();
+            }
+            else
+            {
+                if (currentUser != null)
+                {
+                    posts = posts
+                        .Where(x => x.PostStatus == PostStatus.Approved &&
+                        x.ApplicationUserId == user.Id)
+                        .ToList();
+                }
+                else
+                {
+                    posts = posts
+                        .Where(x => x.PostStatus == PostStatus.Approved)
+                        .ToList();
+                }
             }
 
             List<PostViewModel> postsModel = await this.ExtractPosts(currentUser, posts);
