@@ -1,11 +1,14 @@
 ﻿namespace SdvCode.Tests.Blog.Services
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Moq;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Services.Blog;
@@ -39,9 +42,13 @@
                     new Mock<IServiceProvider>().Object,
                     new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
 
+            var mockService = new Mock<INotificationService>();
+
+            var mockHub = new Mock<IHubContext<NotificationHub>>();
+
             using (var db = new ApplicationDbContext(options))
             {
-                IBlogService blogService = new BlogService(db, null, mockUserManager.Object);
+                IBlogService blogService = new BlogService(db, null, mockUserManager.Object, mockService.Object, mockHub.Object);
                 db.Categories.Add(category);
                 db.Posts.Add(post);
                 await db.SaveChangesAsync();

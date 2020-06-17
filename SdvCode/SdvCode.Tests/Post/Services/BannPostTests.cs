@@ -1,9 +1,13 @@
 ﻿namespace SdvCode.Tests.Post.Services
 {
     using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+    using Moq;
     using SdvCode.Areas.Editor.Services.Post;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
@@ -19,13 +23,18 @@
         [Fact]
         public async Task BannNoneExistingPost()
         {
+            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "pesho" };
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
+            var mockService = new Mock<INotificationService>();
+
+            var mockHub = new Mock<IHubContext<NotificationHub>>();
+
             using (var db = new ApplicationDbContext(options))
             {
-                IEditorPostService commentService = new EditorPostService(db);
-                var result = await commentService.BannPost(Guid.NewGuid().ToString());
+                IEditorPostService commentService = new EditorPostService(db, mockService.Object, mockHub.Object);
+                var result = await commentService.BannPost(Guid.NewGuid().ToString(), user);
 
                 Assert.False(result);
             }
@@ -34,6 +43,8 @@
         [Fact]
         public async Task BannBannedPost()
         {
+            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "pesho" };
+
             Post post = new Post
             {
                 Id = Guid.NewGuid().ToString(),
@@ -51,13 +62,17 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
+            var mockService = new Mock<INotificationService>();
+
+            var mockHub = new Mock<IHubContext<NotificationHub>>();
+
             using (var db = new ApplicationDbContext(options))
             {
-                IEditorPostService commentService = new EditorPostService(db);
+                IEditorPostService commentService = new EditorPostService(db, mockService.Object, mockHub.Object);
                 db.Posts.Add(post);
                 db.BlockedPosts.Add(blockedPost);
                 await db.SaveChangesAsync();
-                var result = await commentService.BannPost(post.Id);
+                var result = await commentService.BannPost(post.Id, user);
 
                 Assert.False(result);
             }
@@ -66,6 +81,8 @@
         [Fact]
         public async Task BannPost()
         {
+            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "pesho" };
+
             Post post = new Post
             {
                 Id = Guid.NewGuid().ToString(),
@@ -103,16 +120,20 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
+            var mockService = new Mock<INotificationService>();
+
+            var mockHub = new Mock<IHubContext<NotificationHub>>();
+
             using (var db = new ApplicationDbContext(options))
             {
-                IEditorPostService commentService = new EditorPostService(db);
+                IEditorPostService commentService = new EditorPostService(db, mockService.Object, mockHub.Object);
                 db.Posts.Add(post);
                 db.BlockedPosts.Add(blockedPost);
                 db.FavouritePosts.Add(favouritePost);
                 db.UserActions.Add(userAction);
                 db.PostsLikes.Add(postLike);
                 await db.SaveChangesAsync();
-                var result = await commentService.BannPost(post.Id);
+                var result = await commentService.BannPost(post.Id, user);
 
                 Assert.True(result);
                 Assert.Equal(1, db.BlockedPosts.Count());
