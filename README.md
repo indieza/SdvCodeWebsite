@@ -23,6 +23,8 @@
 - MSSQL Server
 - ML.NET
 - SignalR
+- Real-time notification based on SignalR connection
+- Real-time user status(online-offline) based on SignalR connection
 - [HangFire](https://www.hangfire.io/ "HangFire")
 - Easy migration to Blazor on a WebAssembly
 - [X.PagedList.Mvc](https://www.nuget.org/packages/X.PagedList.Mvc/ "X.PagedList.Mvc")
@@ -50,5 +52,4 @@
 - WebRTC vide chat
 - Integrate MasterCard and any kind of payment methods
 - Work on shop section(logic, user access, Fron-End....)
-- Real time user notifications
 - Host the product(of course, when done, we don't do bullshits :grinning:)
