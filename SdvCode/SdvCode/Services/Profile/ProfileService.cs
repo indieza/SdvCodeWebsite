@@ -11,10 +11,13 @@ namespace SdvCode.Services.Profile
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Razor.Language.Intermediate;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
@@ -23,11 +26,18 @@ namespace SdvCode.Services.Profile
     public class ProfileService : AddCyclicActivity, IProfileService
     {
         private readonly ApplicationDbContext db;
+        private readonly IHubContext<NotificationHub> notificationHubContext;
+        private readonly INotificationService notificationService;
 
-        public ProfileService(ApplicationDbContext db)
+        public ProfileService(
+            ApplicationDbContext db,
+            IHubContext<NotificationHub> notificationHubContext,
+            INotificationService notificationService)
             : base(db)
         {
             this.db = db;
+            this.notificationHubContext = notificationHubContext;
+            this.notificationService = notificationService;
         }
 
         public async Task DeleteActivity(ApplicationUser user)
@@ -209,6 +219,21 @@ namespace SdvCode.Services.Profile
             }
 
             await this.db.SaveChangesAsync();
+
+            string notificationId =
+                   await this.notificationService
+                   .AddProfileRatingNotification(user, currentUser, rate);
+
+            var count = await this.notificationService.GetUserNotificationsCount(user.UserName);
+            await this.notificationHubContext
+                .Clients
+                .User(user.Id)
+                .SendAsync("ReceiveNotification", count, true);
+
+            var notificationForApproving = await this.notificationService.GetNotificationById(notificationId);
+            await this.notificationHubContext.Clients.User(user.Id)
+                .SendAsync("VisualizeNotification", notificationForApproving);
+
             return this.CalculateRatingScore(username);
         }
 

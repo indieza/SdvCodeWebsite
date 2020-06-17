@@ -251,6 +251,24 @@ namespace SdvCode.Areas.UserNotifications.Services
             return notification.Id;
         }
 
+        public async Task<string> AddProfileRatingNotification(ApplicationUser user, ApplicationUser currentUser, int rate)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = currentUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = $"{currentUser.UserName.ToUpper()} rate your profile with {rate} stars",
+                TargetUsername = user.UserName,
+                Link = $"/Profile/{user.UserName}",
+                NotificationType = NotificationType.RateProfile,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
         private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
         {
             string message = string.Empty;
@@ -287,7 +305,9 @@ namespace SdvCode.Areas.UserNotifications.Services
                         $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> added your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a> to his <a href=\"/Profile/{user.UserName}/Favorites\" style=\"text-decoration: underline\">favorite list</a>";
                     break;
 
-                case NotificationType.RemoveFromFavorite:
+                case NotificationType.RateProfile:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> rate your <a href=\"{link}\" style=\"text-decoration: underline\">profile</a>";
                     break;
 
                 case NotificationType.CreateNewBlogPost:

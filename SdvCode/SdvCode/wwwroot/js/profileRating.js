@@ -1,4 +1,4 @@
-﻿let username = document.getElementsByTagName("h5")[0].innerText.substring(1);
+﻿let username = document.getElementById("currentUsername").innerText.substring(1);
 let profileRating = document.getElementById("profileRating");
 let starsDiv = document.getElementById("starScoreRating");
 let latestScore = document.getElementById("latestScore");

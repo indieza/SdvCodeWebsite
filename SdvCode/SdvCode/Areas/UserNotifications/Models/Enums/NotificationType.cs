@@ -16,7 +16,7 @@ namespace SdvCode.Areas.UserNotifications.Models.Enums
         BannedPost = 4,
         UnbannedPost = 5,
         AddToFavorite = 6,
-        RemoveFromFavorite = 7,
+        RateProfile = 7,
         CreateNewBlogPost = 8,
     }
 }
