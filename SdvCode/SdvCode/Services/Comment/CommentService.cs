@@ -42,6 +42,21 @@ namespace SdvCode.Services.Comment
                 UpdatedOn = DateTime.UtcNow,
             };
 
+            var adminRole =
+                await this.db.Roles.FirstOrDefaultAsync(x => x.Name == Roles.Administrator.ToString());
+            var editorRole =
+                await this.db.Roles.FirstOrDefaultAsync(x => x.Name == Roles.Editor.ToString());
+
+            var allAdminIds = this.db.UserRoles
+                .Where(x => x.RoleId == adminRole.Id)
+                .Select(x => x.UserId)
+                .ToList();
+            var allEditorIds = this.db.UserRoles
+                .Where(x => x.RoleId == editorRole.Id)
+                .Select(x => x.UserId)
+                .ToList();
+            var specialIds = allAdminIds.Union(allEditorIds).ToList();
+
             if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()))

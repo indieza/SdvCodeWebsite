@@ -33,5 +33,7 @@ namespace SdvCode.Areas.UserNotifications.Services
         Task<string> AddUnbannPostNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId);
 
         Task<string> AddBannPostNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId);
+
+        Task<string> AddPostToFavoriteNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId);
     }
 }

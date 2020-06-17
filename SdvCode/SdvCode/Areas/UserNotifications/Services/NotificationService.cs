@@ -233,6 +233,24 @@ namespace SdvCode.Areas.UserNotifications.Services
             return notification.Id;
         }
 
+        public async Task<string> AddPostToFavoriteNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = currentUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = shortContent,
+                TargetUsername = targetUser.UserName,
+                Link = $"/Blog/Post/{postId}",
+                NotificationType = NotificationType.AddToFavorite,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
         private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
         {
             string message = string.Empty;
@@ -249,7 +267,9 @@ namespace SdvCode.Areas.UserNotifications.Services
                         $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> approved your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>";
                     break;
 
-                case NotificationType.Liked:
+                case NotificationType.Comment:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> comment your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>";
                     break;
 
                 case NotificationType.BannedPost:
@@ -263,6 +283,8 @@ namespace SdvCode.Areas.UserNotifications.Services
                     break;
 
                 case NotificationType.AddToFavorite:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> added your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a> to his <a href=\"/Profile/{user.UserName}/Favorites\" style=\"text-decoration: underline\">favorite list</a>";
                     break;
 
                 case NotificationType.RemoveFromFavorite:

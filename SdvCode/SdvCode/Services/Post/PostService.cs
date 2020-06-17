@@ -9,10 +9,13 @@ namespace SdvCode.Services.Post
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
@@ -22,13 +25,21 @@ namespace SdvCode.Services.Post
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IHubContext<NotificationHub> notificationHubContext;
+        private readonly INotificationService notificationService;
         private readonly AddCyclicActivity cyclicActivity;
 
-        public PostService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public PostService(
+            ApplicationDbContext db,
+            UserManager<ApplicationUser> userManager,
+            IHubContext<NotificationHub> notificationHubContext,
+            INotificationService notificationService)
             : base(userManager, db)
         {
             this.db = db;
             this.userManager = userManager;
+            this.notificationHubContext = notificationHubContext;
+            this.notificationService = notificationService;
             this.cyclicActivity = new AddCyclicActivity(this.db);
         }
 
@@ -51,6 +62,28 @@ namespace SdvCode.Services.Post
                 }
 
                 await this.db.SaveChangesAsync();
+
+                var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (post.ApplicationUserId != user.Id)
+                {
+                    var targetUser = await this.db.Users
+                            .FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
+                    string notificationForApprovingId =
+                           await this.notificationService
+                           .AddPostToFavoriteNotification(targetUser, user, post.ShortContent, post.Id);
+
+                    var targetUserNotificationsCount = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
+                    await this.notificationHubContext
+                        .Clients
+                        .User(targetUser.Id)
+                        .SendAsync("ReceiveNotification", targetUserNotificationsCount, true);
+
+                    var notificationForApproving = await this.notificationService.GetNotificationById(notificationForApprovingId);
+                    await this.notificationHubContext.Clients.User(targetUser.Id)
+                        .SendAsync("VisualizeNotification", notificationForApproving);
+                }
+
                 return Tuple.Create("Success", SuccessMessages.SuccessfullyAddedToFavorite);
             }
 
