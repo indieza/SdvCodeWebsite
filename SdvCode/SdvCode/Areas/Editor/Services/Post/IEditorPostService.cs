@@ -14,8 +14,8 @@ namespace SdvCode.Areas.Editor.Services.Post
     {
         Task<bool> ApprovePost(string id, ApplicationUser currentUser);
 
-        Task<bool> BannPost(string id);
+        Task<bool> BannPost(string id, ApplicationUser currentUser);
 
-        Task<bool> UnbannPost(string id);
+        Task<bool> UnbannPost(string id, ApplicationUser currentUser);
     }
 }

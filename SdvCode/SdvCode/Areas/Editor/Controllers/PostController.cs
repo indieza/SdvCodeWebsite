@@ -68,8 +68,8 @@ namespace SdvCode.Areas.Editor.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isBanned = await this.postService.UnbannPost(id);
-            if (isBanned)
+            bool isUnbanned = await this.postService.UnbannPost(id, currentUser);
+            if (isUnbanned)
             {
                 this.TempData["Success"] = SuccessMessages.SuccessfullyUnannedBlogPost;
             }
@@ -91,7 +91,7 @@ namespace SdvCode.Areas.Editor.Controllers
                 return this.RedirectToAction("Index", "Blog");
             }
 
-            bool isBanned = await this.postService.BannPost(id);
+            bool isBanned = await this.postService.BannPost(id, currentUser);
             if (isBanned)
             {
                 this.TempData["Success"] = SuccessMessages.SuccessfullyBannedBlogPost;

@@ -197,6 +197,24 @@ namespace SdvCode.Areas.UserNotifications.Services
             return notification.Id;
         }
 
+        public async Task<string> AddUnbannPostNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = currentUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = shortContent,
+                TargetUsername = targetUser.UserName,
+                Link = $"/Blog/Post/{postId}",
+                NotificationType = NotificationType.UnbannedPost,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
         private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
         {
             string message = string.Empty;
@@ -264,6 +282,24 @@ namespace SdvCode.Areas.UserNotifications.Services
                 TargetUsername = notification.TargetUsername,
                 AllStatuses = Enum.GetValues(typeof(NotificationStatus)).Cast<NotificationStatus>().Select(x => x.ToString()).ToList(),
             };
+        }
+
+        public async Task<string> AddBannPostNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = currentUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = shortContent,
+                TargetUsername = targetUser.UserName,
+                Link = $"/Blog/Post/{postId}",
+                NotificationType = NotificationType.BannedPost,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
         }
     }
 }

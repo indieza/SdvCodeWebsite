@@ -29,5 +29,9 @@ namespace SdvCode.Areas.UserNotifications.Services
         Task<string> AddBlogPostNotification(ApplicationUser toUser, ApplicationUser fromUser, string shortContent, string postId);
 
         Task<string> AddApprovedPostNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId);
+
+        Task<string> AddUnbannPostNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId);
+
+        Task<string> AddBannPostNotification(ApplicationUser targetUser, ApplicationUser currentUser, string shortContent, string postId);
     }
 }

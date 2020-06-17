@@ -121,7 +121,7 @@ namespace SdvCode.Areas.Editor.Services.Post
             return false;
         }
 
-        public async Task<bool> BannPost(string id)
+        public async Task<bool> BannPost(string id, ApplicationUser currentUser)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
 
@@ -157,6 +157,23 @@ namespace SdvCode.Areas.Editor.Services.Post
                     this.db.BlockedPosts.Update(targetApprovedEntity);
                     this.db.Posts.Update(post);
                     await this.db.SaveChangesAsync();
+
+                    var targetUser = await this.db.Users
+                           .FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
+                    string notificationId =
+                           await this.notificationService
+                           .AddBannPostNotification(targetUser, currentUser, post.ShortContent, post.Id);
+
+                    var count = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
+                    await this.notificationHubContext
+                        .Clients
+                        .User(targetUser.Id)
+                        .SendAsync("ReceiveNotification", count, true);
+
+                    var notificationForApproving = await this.notificationService.GetNotificationById(notificationId);
+                    await this.notificationHubContext.Clients.User(targetUser.Id)
+                        .SendAsync("VisualizeNotification", notificationForApproving);
+
                     return true;
                 }
 
@@ -166,7 +183,7 @@ namespace SdvCode.Areas.Editor.Services.Post
             return false;
         }
 
-        public async Task<bool> UnbannPost(string id)
+        public async Task<bool> UnbannPost(string id, ApplicationUser currentUser)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
 
@@ -181,6 +198,23 @@ namespace SdvCode.Areas.Editor.Services.Post
                     this.db.BlockedPosts.Update(targetApprovedEntity);
                     this.db.Posts.Update(post);
                     await this.db.SaveChangesAsync();
+
+                    var targetUser = await this.db.Users
+                           .FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
+                    string notificationId =
+                           await this.notificationService
+                           .AddUnbannPostNotification(targetUser, currentUser, post.ShortContent, post.Id);
+
+                    var count = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
+                    await this.notificationHubContext
+                        .Clients
+                        .User(targetUser.Id)
+                        .SendAsync("ReceiveNotification", count, true);
+
+                    var notificationForApproving = await this.notificationService.GetNotificationById(notificationId);
+                    await this.notificationHubContext.Clients.User(targetUser.Id)
+                        .SendAsync("VisualizeNotification", notificationForApproving);
+
                     return true;
                 }
 
