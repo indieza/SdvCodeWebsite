@@ -29,11 +29,13 @@ namespace SdvCode.Constraints
                     x.PersonUsername == userPost.UserName &&
                     x.FollowerUsername == user.UserName))
             {
-                this.db.UserActions
+                var targetAction = this.db.UserActions
                     .FirstOrDefault(x => x.Action == action &&
                     x.ApplicationUserId == userPost.Id &&
                     x.PersonUsername == userPost.UserName &&
-                    x.FollowerUsername == user.UserName).ActionDate = DateTime.UtcNow;
+                    x.FollowerUsername == user.UserName);
+                targetAction.ActionDate = DateTime.UtcNow;
+                targetAction.ActionStatus = UserActionsStatus.Unread;
             }
             else
             {
@@ -45,6 +47,7 @@ namespace SdvCode.Constraints
                     PersonUsername = userPost.UserName,
                     FollowerUsername = user.UserName,
                     ProfileImageUrl = user.ImageUrl,
+                    ActionStatus = UserActionsStatus.Unread,
                 });
             }
         }
@@ -65,6 +68,7 @@ namespace SdvCode.Constraints
                     x.FollowerUsername == postUser.UserName &&
                     x.Action == action);
                 targetAction.ActionDate = DateTime.UtcNow;
+                targetAction.ActionStatus = UserActionsStatus.Unread;
             }
             else
             {
@@ -79,6 +83,7 @@ namespace SdvCode.Constraints
                     PostId = post.Id,
                     PostTitle = post.Title,
                     PostContent = post.ShortContent,
+                    ActionStatus = UserActionsStatus.Unread,
                 });
             }
         }
