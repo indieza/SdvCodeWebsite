@@ -32,35 +32,64 @@ namespace SdvCode.Areas.Editor.Services.Comment
 
         public async Task<bool> ApprovedCommentById(string commentId, ApplicationUser currentUser)
         {
-            var targetComment = await this.db.Comments.FirstOrDefaultAsync(x => x.Id == commentId);
+            var comment = await this.db.Comments.FirstOrDefaultAsync(x => x.Id == commentId);
 
-            if (targetComment != null)
+            if (comment != null)
             {
-                targetComment.CommentStatus = CommentStatus.Approved;
-                this.db.Comments.Update(targetComment);
-                await this.db.SaveChangesAsync();
+                comment.CommentStatus = CommentStatus.Approved;
+
+                var specialRoleIds = this.db.Roles
+                        .Where(x => x.Name == Roles.Administrator.ToString() ||
+                        x.Name == Roles.Editor.ToString())
+                        .Select(x => x.Id)
+                        .ToList();
+                var specialIds = this.db.UserRoles
+                    .Where(x => specialRoleIds.Contains(x.RoleId) && x.UserId != currentUser.Id)
+                    .Select(x => x.UserId)
+                    .ToList();
 
                 var postUserId = await this.db.Posts
-                    .Where(x => x.Id == targetComment.PostId)
+                    .Where(x => x.Id == comment.PostId)
                     .Select(x => x.ApplicationUserId)
                     .FirstOrDefaultAsync();
-
-                var toUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == postUserId);
-                var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == targetComment.ApplicationUserId);
+                var commentUser = await this.db.Users
+                    .FirstOrDefaultAsync(x => x.Id == comment.ApplicationUserId);
+                specialIds.Add(commentUser.Id);
+                var postId = await this.db.Posts
+                    .Where(x => x.Id == comment.PostId)
+                    .Select(x => x.Id)
+                    .FirstOrDefaultAsync();
 
                 string notificationId =
-                    await this.notificationService
-                    .AddApprovedCommentNotification(toUser, user, targetComment.Content, targetComment.PostId);
+                    await this.notificationService.AddApprovedCommentNotification(commentUser, currentUser, comment.Content, postId);
 
-                var count = await this.notificationService.GetUserNotificationsCount(toUser.UserName);
+                var count = await this.notificationService.GetUserNotificationsCount(commentUser.UserName);
                 await this.notificationHubContext
                     .Clients
-                    .User(toUser.Id)
+                    .User(commentUser.Id)
                     .SendAsync("ReceiveNotification", count, true);
 
                 var notification = await this.notificationService.GetNotificationById(notificationId);
-                await this.notificationHubContext.Clients.User(toUser.Id)
+                await this.notificationHubContext.Clients.User(commentUser.Id)
                     .SendAsync("VisualizeNotification", notification);
+
+                this.db.Comments.Update(comment);
+                await this.db.SaveChangesAsync();
+
+                var targetUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == postUserId);
+                string notificationForApprovingId =
+                       await this.notificationService
+                       .AddCommentPostNotification(targetUser, commentUser, comment.Content, postId);
+
+                var targetUserNotificationsCount = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
+                await this.notificationHubContext
+                    .Clients
+                    .User(targetUser.Id)
+                    .SendAsync("ReceiveNotification", targetUserNotificationsCount, true);
+
+                var notificationForApproving = await this.notificationService.GetNotificationById(notificationForApprovingId);
+                await this.notificationHubContext.Clients.User(targetUser.Id)
+                    .SendAsync("VisualizeNotification", notificationForApproving);
 
                 return true;
             }
