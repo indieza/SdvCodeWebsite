@@ -72,16 +72,28 @@ namespace SdvCode.Services.Comment
                 await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()))
             {
-                var postUserId = await this.db.Posts
-                    .Where(x => x.Id == postId)
-                    .Select(x => x.ApplicationUserId)
-                    .FirstOrDefaultAsync();
-                comment.CommentStatus = CommentStatus.Approved;
-                if (!specialIds.Contains(postId))
+                var targetUserId = string.Empty;
+                if (parentId == null)
                 {
-                    specialIds.Add(postUserId);
+                    targetUserId = await this.db.Posts
+                        .Where(x => x.Id == postId)
+                        .Select(x => x.ApplicationUserId)
+                        .FirstOrDefaultAsync();
+                }
+                else
+                {
+                    targetUserId = await this.db.Comments
+                        .Where(x => x.Id == postId && x.ParentCommentId == parentId)
+                        .Select(x => x.ApplicationUserId)
+                        .FirstOrDefaultAsync();
                 }
 
+                if (!specialIds.Contains(postId))
+                {
+                    specialIds.Add(targetUserId);
+                }
+
+                comment.CommentStatus = CommentStatus.Approved;
                 specialIds.Remove(user.Id);
             }
             else
@@ -91,17 +103,28 @@ namespace SdvCode.Services.Comment
 
             foreach (var specialId in specialIds)
             {
-                var notificationId =
-                    await this.notificationService.AddCommentPostNotification(toUser, user, content, postId);
+                var specialUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == specialId);
+                var notificationId = string.Empty;
 
-                var count = await this.notificationService.GetUserNotificationsCount(toUser.UserName);
+                if (parentId == null)
+                {
+                    notificationId =
+                        await this.notificationService.AddCommentPostNotification(toUser, user, content, postId);
+                }
+                else
+                {
+                    notificationId =
+                        await this.notificationService.AddCommentReplyNotification(toUser, user, content, postId);
+                }
+
+                var count = await this.notificationService.GetUserNotificationsCount(specialUser.UserName);
                 await this.notificationHubContext
                     .Clients
-                    .User(toUser.Id)
+                    .User(specialUser.Id)
                     .SendAsync("ReceiveNotification", count, true);
 
                 var notification = await this.notificationService.GetNotificationById(notificationId);
-                await this.notificationHubContext.Clients.User(toUser.Id)
+                await this.notificationHubContext.Clients.User(specialUser.Id)
                     .SendAsync("VisualizeNotification", notification);
             }
 
