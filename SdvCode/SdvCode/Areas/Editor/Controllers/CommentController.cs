@@ -8,25 +8,30 @@ namespace SdvCode.Areas.Editor.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Editor.Services.Comment;
     using SdvCode.Constraints;
+    using SdvCode.Models.User;
 
     [Authorize(Roles = GlobalConstants.EditorRole + "," + GlobalConstants.AdministratorRole)]
     [Area(GlobalConstants.EditorArea)]
     public class CommentController : Controller
     {
         private readonly IEditorCommentService commentService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public CommentController(IEditorCommentService commentService)
+        public CommentController(IEditorCommentService commentService, UserManager<ApplicationUser> userManager)
         {
             this.commentService = commentService;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> ApproveComment(string commentId, string postId)
         {
-            bool isApproved = await this.commentService.ApprovedCommentById(commentId);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isApproved = await this.commentService.ApprovedCommentById(commentId, currentUser);
 
             if (isApproved)
             {

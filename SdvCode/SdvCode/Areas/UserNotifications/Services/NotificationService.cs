@@ -309,7 +309,25 @@ namespace SdvCode.Areas.UserNotifications.Services
             return notification.Id;
         }
 
-        private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link, ApplicationUser targetUser)
+        public async Task<string> AddApprovedCommentNotification(ApplicationUser toUser, ApplicationUser user, string content, string postId)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = user.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = content,
+                TargetUsername = toUser.UserName,
+                Link = $"/Blog/Post/{postId}",
+                NotificationType = NotificationType.ApprovedComment,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
+        private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
         {
             string message = string.Empty;
 
@@ -352,12 +370,17 @@ namespace SdvCode.Areas.UserNotifications.Services
 
                 case NotificationType.CommentPost:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> comment <a href=\"/Profile/{targetUser.UserName}\" style=\"text-decoration: underline\">{targetUser.UserName}</a> <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>.";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> add new <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a> comment.";
                     break;
 
                 case NotificationType.ReplyToComment:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> reply to <a href=\"/Profile/{targetUser.UserName}\" style=\"text-decoration: underline\">{targetUser.UserName}</a> <a href=\"{link}\" style=\"text-decoration: underline\">blog post comment</a>.";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> reply to <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a> comment.";
+                    break;
+
+                case NotificationType.ApprovedComment:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> approved <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a> comment.";
                     break;
 
                 default:
@@ -379,7 +402,7 @@ namespace SdvCode.Areas.UserNotifications.Services
                 TargetFirstName = targetUser.FirstName,
                 TargetLastName = targetUser.LastName,
                 ImageUrl = user.ImageUrl,
-                Heading = this.GetNotificationHeading(notification.NotificationType, user, notification.Link, targetUser),
+                Heading = this.GetNotificationHeading(notification.NotificationType, user, notification.Link),
                 Status = notification.Status,
                 Text = contentWithoutTags.Length < 487 ?
                                 contentWithoutTags :

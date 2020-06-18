@@ -103,29 +103,32 @@ namespace SdvCode.Services.Comment
 
             foreach (var specialId in specialIds)
             {
-                var specialUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == specialId);
+                ApplicationUser toUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == specialId);
                 var notificationId = string.Empty;
 
-                if (parentId == null)
+                if (toUser.Id != user.Id)
                 {
-                    notificationId =
-                        await this.notificationService.AddCommentPostNotification(toUser, user, content, postId);
-                }
-                else
-                {
-                    notificationId =
-                        await this.notificationService.AddCommentReplyNotification(toUser, user, content, postId);
-                }
+                    if (parentId == null)
+                    {
+                        notificationId =
+                           await this.notificationService.AddCommentPostNotification(toUser, user, content, postId);
+                    }
+                    else
+                    {
+                        notificationId = await this.notificationService
+                           .AddCommentReplyNotification(toUser, user, content, postId);
+                    }
 
-                var count = await this.notificationService.GetUserNotificationsCount(specialUser.UserName);
-                await this.notificationHubContext
-                    .Clients
-                    .User(specialUser.Id)
-                    .SendAsync("ReceiveNotification", count, true);
+                    var count = await this.notificationService.GetUserNotificationsCount(toUser.UserName);
+                    await this.notificationHubContext
+                        .Clients
+                        .User(toUser.Id)
+                        .SendAsync("ReceiveNotification", count, true);
 
-                var notification = await this.notificationService.GetNotificationById(notificationId);
-                await this.notificationHubContext.Clients.User(specialUser.Id)
-                    .SendAsync("VisualizeNotification", notification);
+                    var notification = await this.notificationService.GetNotificationById(notificationId);
+                    await this.notificationHubContext.Clients.User(toUser.Id)
+                        .SendAsync("VisualizeNotification", notification);
+                }
             }
 
             await this.db.Comments.AddAsync(comment);

@@ -19,5 +19,6 @@ namespace SdvCode.Areas.UserNotifications.Models.Enums
         CreateNewBlogPost = 7,
         CommentPost = 8,
         ReplyToComment = 9,
+        ApprovedComment = 10,
     }
 }
