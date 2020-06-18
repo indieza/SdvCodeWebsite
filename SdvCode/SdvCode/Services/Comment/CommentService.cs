@@ -104,11 +104,9 @@ namespace SdvCode.Services.Comment
                 await this.notificationHubContext.Clients.User(toUser.Id)
                     .SendAsync("VisualizeNotification", notification);
             }
-        }
 
-        private await this.db.Comments.AddAsync(comment);
-
-        await this.db.SaveChangesAsync();
+            await this.db.Comments.AddAsync(comment);
+            await this.db.SaveChangesAsync();
             return Tuple.Create("Success", SuccessMessages.SuccessfullyAddedPostComment);
         }
 
