@@ -9,10 +9,13 @@ namespace SdvCode.Services.Comment
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
@@ -22,12 +25,20 @@ namespace SdvCode.Services.Comment
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IHubContext<NotificationHub> notificationHubContext;
+        private readonly INotificationService notificationService;
 
-        public CommentService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public CommentService(
+            ApplicationDbContext db,
+            UserManager<ApplicationUser> userManager,
+            IHubContext<NotificationHub> notificationHubContext,
+            INotificationService notificationService)
             : base(userManager, db)
         {
             this.db = db;
             this.userManager = userManager;
+            this.notificationHubContext = notificationHubContext;
+            this.notificationService = notificationService;
         }
 
         public async Task<Tuple<string, string>> Create(string postId, ApplicationUser user, string content, string parentId)
@@ -61,15 +72,43 @@ namespace SdvCode.Services.Comment
                 await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()))
             {
+                var postUserId = await this.db.Posts
+                    .Where(x => x.Id == postId)
+                    .Select(x => x.ApplicationUserId)
+                    .FirstOrDefaultAsync();
                 comment.CommentStatus = CommentStatus.Approved;
+                if (!specialIds.Contains(postId))
+                {
+                    specialIds.Add(postUserId);
+                }
+
+                specialIds.Remove(user.Id);
             }
             else
             {
                 comment.CommentStatus = CommentStatus.Pending;
             }
 
-            await this.db.Comments.AddAsync(comment);
-            await this.db.SaveChangesAsync();
+            foreach (var specialId in specialIds)
+            {
+                var notificationId =
+                    await this.notificationService.AddCommentPostNotification(toUser, user, content, postId);
+
+                var count = await this.notificationService.GetUserNotificationsCount(toUser.UserName);
+                await this.notificationHubContext
+                    .Clients
+                    .User(toUser.Id)
+                    .SendAsync("ReceiveNotification", count, true);
+
+                var notification = await this.notificationService.GetNotificationById(notificationId);
+                await this.notificationHubContext.Clients.User(toUser.Id)
+                    .SendAsync("VisualizeNotification", notification);
+            }
+        }
+
+        private await this.db.Comments.AddAsync(comment);
+
+        await this.db.SaveChangesAsync();
             return Tuple.Create("Success", SuccessMessages.SuccessfullyAddedPostComment);
         }
 

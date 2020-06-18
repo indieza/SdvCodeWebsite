@@ -110,8 +110,10 @@ namespace SdvCode.Areas.UserNotifications.Services
             {
                 var user = await this.db.Users
                            .FirstOrDefaultAsync(x => x.Id == notification.ApplicationUserId);
+                var targetUser = await this.db.Users
+                        .FirstOrDefaultAsync(x => x.UserName == notification.TargetUsername);
 
-                NotificationViewModel item = this.ParseNotificationViewModel(notification, user);
+                NotificationViewModel item = this.ParseNotificationViewModel(notification, user, targetUser);
                 result.Add(item);
             }
 
@@ -125,7 +127,9 @@ namespace SdvCode.Areas.UserNotifications.Services
             var notification = await this.db.UserNotifications.FirstOrDefaultAsync(x => x.Id == id);
 
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == notification.ApplicationUserId);
-            NotificationViewModel item = this.ParseNotificationViewModel(notification, user);
+            var targetUser = await this.db.Users
+                .FirstOrDefaultAsync(x => x.UserName == notification.TargetUsername);
+            NotificationViewModel item = this.ParseNotificationViewModel(notification, user, targetUser);
 
             return item;
         }
@@ -269,7 +273,43 @@ namespace SdvCode.Areas.UserNotifications.Services
             return notification.Id;
         }
 
-        private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
+        public async Task<string> AddCommentPostNotification(ApplicationUser toUser, ApplicationUser user, string content, string postId)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = user.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = content,
+                TargetUsername = toUser.UserName,
+                Link = $"/Blog/Post/{postId}",
+                NotificationType = NotificationType.CommentPost,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
+        public async Task<string> AddCommentReplyNotification(ApplicationUser toUser, ApplicationUser user, string content, string postId)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = user.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = content,
+                TargetUsername = toUser.UserName,
+                Link = $"/Blog/Post/{postId}",
+                NotificationType = NotificationType.ReplyToComment,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
+        private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link, ApplicationUser targetUser)
         {
             string message = string.Empty;
 
@@ -277,42 +317,47 @@ namespace SdvCode.Areas.UserNotifications.Services
             {
                 case NotificationType.Message:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> send you a new <a href=\"{link}\" style=\"text-decoration: underline\">message</a>";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> send you a new <a href=\"{link}\" style=\"text-decoration: underline\">message</a>.";
                     break;
 
                 case NotificationType.ApprovedPost:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> approved your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>";
-                    break;
-
-                case NotificationType.Comment:
-                    message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> comment your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> approved your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>.";
                     break;
 
                 case NotificationType.BannedPost:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> banned your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> banned your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>.";
                     break;
 
                 case NotificationType.UnbannedPost:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> unbanned your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> unbanned your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>.";
                     break;
 
                 case NotificationType.AddToFavorite:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> added your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a> to his <a href=\"/Profile/{user.UserName}/Favorites\" style=\"text-decoration: underline\">favorite list</a>";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> added your <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a> to his <a href=\"/Profile/{user.UserName}/Favorites\" style=\"text-decoration: underline\">favorite list</a>.";
                     break;
 
                 case NotificationType.RateProfile:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> rate your <a href=\"{link}\" style=\"text-decoration: underline\">profile</a>";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> rate your <a href=\"{link}\" style=\"text-decoration: underline\">profile</a>.";
                     break;
 
                 case NotificationType.CreateNewBlogPost:
                     message =
-                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> create a new <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>";
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> create a new <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>.";
+                    break;
+
+                case NotificationType.CommentPost:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> comment <a href=\"/Profile/{targetUser.UserName}\" style=\"text-decoration: underline\">{targetUser.UserName}</a> <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a>.";
+                    break;
+
+                case NotificationType.ReplyToComment:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> reply to <a href=\"/Profile/{targetUser.UserName}\" style=\"text-decoration: underline\">{targetUser.UserName}</a> <a href=\"{link}\" style=\"text-decoration: underline\">blog post comment</a>.";
                     break;
 
                 default:
@@ -322,7 +367,7 @@ namespace SdvCode.Areas.UserNotifications.Services
             return message;
         }
 
-        private NotificationViewModel ParseNotificationViewModel(UserNotification notification, ApplicationUser user)
+        private NotificationViewModel ParseNotificationViewModel(UserNotification notification, ApplicationUser user, ApplicationUser targetUser)
         {
             var contentWithoutTags =
                 Regex.Replace(notification.Text, "<.*?>", string.Empty);
@@ -331,15 +376,15 @@ namespace SdvCode.Areas.UserNotifications.Services
             {
                 Id = notification.Id,
                 CreatedOn = notification.CreatedOn.ToLocalTime().ToString("dd-MMMM-yyyy HH:mm tt"),
-                TargetFirstName = user.FirstName,
-                TargetLastName = user.LastName,
+                TargetFirstName = targetUser.FirstName,
+                TargetLastName = targetUser.LastName,
                 ImageUrl = user.ImageUrl,
-                Heading = this.GetNotificationHeading(notification.NotificationType, user, notification.Link),
+                Heading = this.GetNotificationHeading(notification.NotificationType, user, notification.Link, targetUser),
                 Status = notification.Status,
                 Text = contentWithoutTags.Length < 487 ?
                                 contentWithoutTags :
                                 $"{contentWithoutTags.Substring(0, 487)}...",
-                TargetUsername = notification.TargetUsername,
+                TargetUsername = targetUser.UserName,
                 AllStatuses = Enum.GetValues(typeof(NotificationStatus)).Cast<NotificationStatus>().Select(x => x.ToString()).ToList(),
             };
         }

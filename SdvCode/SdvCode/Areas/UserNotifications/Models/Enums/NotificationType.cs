@@ -12,11 +12,12 @@ namespace SdvCode.Areas.UserNotifications.Models.Enums
     {
         Message = 1,
         ApprovedPost = 2,
-        Comment = 3,
-        BannedPost = 4,
-        UnbannedPost = 5,
-        AddToFavorite = 6,
-        RateProfile = 7,
-        CreateNewBlogPost = 8,
+        BannedPost = 3,
+        UnbannedPost = 4,
+        AddToFavorite = 5,
+        RateProfile = 6,
+        CreateNewBlogPost = 7,
+        CommentPost = 8,
+        ReplyToComment = 9,
     }
 }

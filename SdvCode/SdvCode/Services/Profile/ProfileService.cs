@@ -220,19 +220,22 @@ namespace SdvCode.Services.Profile
 
             await this.db.SaveChangesAsync();
 
-            string notificationId =
-                   await this.notificationService
-                   .AddProfileRatingNotification(user, currentUser, rate);
+            if (currentUser.UserName != username)
+            {
+                string notificationId =
+                       await this.notificationService
+                       .AddProfileRatingNotification(user, currentUser, rate);
 
-            var count = await this.notificationService.GetUserNotificationsCount(user.UserName);
-            await this.notificationHubContext
-                .Clients
-                .User(user.Id)
-                .SendAsync("ReceiveNotification", count, true);
+                var count = await this.notificationService.GetUserNotificationsCount(user.UserName);
+                await this.notificationHubContext
+                    .Clients
+                    .User(user.Id)
+                    .SendAsync("ReceiveNotification", count, true);
 
-            var notificationForApproving = await this.notificationService.GetNotificationById(notificationId);
-            await this.notificationHubContext.Clients.User(user.Id)
-                .SendAsync("VisualizeNotification", notificationForApproving);
+                var notificationForApproving = await this.notificationService.GetNotificationById(notificationId);
+                await this.notificationHubContext.Clients.User(user.Id)
+                    .SendAsync("VisualizeNotification", notificationForApproving);
+            }
 
             return this.CalculateRatingScore(username);
         }
