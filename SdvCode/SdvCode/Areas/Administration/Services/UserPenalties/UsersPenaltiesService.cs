@@ -7,24 +7,34 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.SignalR;
+    using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.User;
 
     public class UsersPenaltiesService : IUsersPenaltiesService
     {
         private readonly ApplicationDbContext db;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly IHubContext<NotificationHub> notificationHubContext;
+        private readonly INotificationService notificationService;
 
         public UsersPenaltiesService(
             ApplicationDbContext db,
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager,
+            IHubContext<NotificationHub> notificationHubContext,
+            INotificationService notificationService)
         {
             this.db = db;
             this.roleManager = roleManager;
+            this.notificationHubContext = notificationHubContext;
+            this.notificationService = notificationService;
         }
 
-        public async Task<bool> BlockUser(string username)
+        public async Task<bool> BlockUser(string username, ApplicationUser currentUser)
         {
             var user = this.db.Users.FirstOrDefault(x => x.UserName == username);
             var adminRole = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
@@ -37,6 +47,25 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
             if (user != null && user.IsBlocked == false)
             {
                 user.IsBlocked = true;
+
+                var targetUser = await this.db.Users
+                        .FirstOrDefaultAsync(x => x.Id == user.Id);
+                var message = "Your profile was banned for some reason. Contact with administrators for more information.";
+
+                string notificationId =
+                       await this.notificationService
+                       .AddBannUserNotification(targetUser, currentUser, message);
+
+                var count = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
+                await this.notificationHubContext
+                    .Clients
+                    .User(targetUser.Id)
+                    .SendAsync("ReceiveNotification", count, true);
+
+                var notificationForApproving = await this.notificationService.GetNotificationById(notificationId);
+                await this.notificationHubContext.Clients.User(targetUser.Id)
+                    .SendAsync("VisualizeNotification", notificationForApproving);
+
                 this.db.Users.Update(user);
                 await this.db.SaveChangesAsync();
                 return true;
@@ -45,13 +74,32 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
             return false;
         }
 
-        public async Task<bool> UnblockUser(string username)
+        public async Task<bool> UnblockUser(string username, ApplicationUser currentUser)
         {
             var user = this.db.Users.FirstOrDefault(x => x.UserName == username);
 
             if (user != null && user.IsBlocked == true)
             {
                 user.IsBlocked = false;
+
+                var targetUser = await this.db.Users
+                        .FirstOrDefaultAsync(x => x.Id == user.Id);
+                var message = "Your profile was unbanned. Please follow the website rules!!!";
+
+                string notificationId =
+                       await this.notificationService
+                       .AddUnbannUserNotification(targetUser, currentUser, message);
+
+                var count = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
+                await this.notificationHubContext
+                    .Clients
+                    .User(targetUser.Id)
+                    .SendAsync("ReceiveNotification", count, true);
+
+                var notificationForApproving = await this.notificationService.GetNotificationById(notificationId);
+                await this.notificationHubContext.Clients.User(targetUser.Id)
+                    .SendAsync("VisualizeNotification", notificationForApproving);
+
                 this.db.Users.Update(user);
                 await this.db.SaveChangesAsync();
                 return true;

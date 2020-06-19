@@ -5,20 +5,26 @@ namespace SdvCode.Areas.Administration.Controllers
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Areas.Administration.Services.UserPenalties;
     using SdvCode.Areas.Administration.ViewModels.UsersPenalties;
     using SdvCode.Constraints;
+    using SdvCode.Models.User;
 
     [Area(GlobalConstants.AdministrationArea)]
     public class UsersPenaltiesController : Controller
     {
         private readonly IUsersPenaltiesService usersPenaltiesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public UsersPenaltiesController(IUsersPenaltiesService usersPenaltiesService)
+        public UsersPenaltiesController(
+            IUsersPenaltiesService usersPenaltiesService,
+            UserManager<ApplicationUser> userManager)
         {
             this.usersPenaltiesService = usersPenaltiesService;
+            this.userManager = userManager;
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRole)]
@@ -44,7 +50,8 @@ namespace SdvCode.Areas.Administration.Controllers
             if (this.ModelState.IsValid)
             {
                 string username = model.UsersPenaltiesInputModel.BlockedUsername;
-                bool isBlocked = await this.usersPenaltiesService.BlockUser(username);
+                var currentUser = await this.userManager.GetUserAsync(this.User);
+                bool isBlocked = await this.usersPenaltiesService.BlockUser(username, currentUser);
 
                 if (isBlocked)
                 {
@@ -70,7 +77,8 @@ namespace SdvCode.Areas.Administration.Controllers
             if (this.ModelState.IsValid)
             {
                 string username = model.UsersPenaltiesInputModel.UnblockedUsername;
-                bool isUnblocked = await this.usersPenaltiesService.UnblockUser(username);
+                var currentUser = await this.userManager.GetUserAsync(this.User);
+                bool isUnblocked = await this.usersPenaltiesService.UnblockUser(username, currentUser);
 
                 if (isUnblocked)
                 {

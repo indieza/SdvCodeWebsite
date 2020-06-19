@@ -43,5 +43,7 @@ namespace SdvCode.Areas.UserNotifications.Services
         Task<string> AddCommentReplyNotification(ApplicationUser toUser, ApplicationUser user, string content, string postId);
 
         Task<string> AddApprovedCommentNotification(ApplicationUser toUser, ApplicationUser user, string content, string postId);
+        Task<string> AddBannUserNotification(ApplicationUser targetUser, ApplicationUser currentUser, string message);
+        Task<string> AddUnbannUserNotification(ApplicationUser targetUser, ApplicationUser currentUser, string message);
     }
 }

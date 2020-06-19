@@ -20,5 +20,7 @@ namespace SdvCode.Areas.UserNotifications.Models.Enums
         CommentPost = 8,
         ReplyToComment = 9,
         ApprovedComment = 10,
+        BannedProfile = 11,
+        UnbannedProfile = 12,
     }
 }

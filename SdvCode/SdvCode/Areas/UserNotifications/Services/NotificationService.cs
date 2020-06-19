@@ -327,6 +327,42 @@ namespace SdvCode.Areas.UserNotifications.Services
             return notification.Id;
         }
 
+        public async Task<string> AddBannUserNotification(ApplicationUser targetUser, ApplicationUser currentUser, string message)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = currentUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = message,
+                TargetUsername = targetUser.UserName,
+                Link = $"/Profile/{targetUser.UserName}",
+                NotificationType = NotificationType.BannedProfile,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
+        public async Task<string> AddUnbannUserNotification(ApplicationUser targetUser, ApplicationUser currentUser, string message)
+        {
+            var notification = new UserNotification
+            {
+                ApplicationUserId = currentUser.Id,
+                CreatedOn = DateTime.UtcNow,
+                Status = NotificationStatus.Unread,
+                Text = message,
+                TargetUsername = targetUser.UserName,
+                Link = $"/Profile/{targetUser.UserName}",
+                NotificationType = NotificationType.UnbannedProfile,
+            };
+
+            this.db.UserNotifications.Add(notification);
+            await this.db.SaveChangesAsync();
+            return notification.Id;
+        }
+
         private string GetNotificationHeading(NotificationType notificationType, ApplicationUser user, string link)
         {
             string message = string.Empty;
@@ -381,6 +417,16 @@ namespace SdvCode.Areas.UserNotifications.Services
                 case NotificationType.ApprovedComment:
                     message =
                         $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> approved <a href=\"{link}\" style=\"text-decoration: underline\">blog post</a> comment.";
+                    break;
+
+                case NotificationType.BannedProfile:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> banned <a href=\"{link}\" style=\"text-decoration: underline\">your profile</a>.";
+                    break;
+
+                case NotificationType.UnbannedProfile:
+                    message =
+                        $"<a href=\"/Profile/{user.UserName}\" style=\"text-decoration: underline\">{user.UserName}</a> unbanned <a href=\"{link}\" style=\"text-decoration: underline\">your profile</a>.";
                     break;
 
                 default:
