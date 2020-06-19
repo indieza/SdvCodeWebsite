@@ -44,7 +44,7 @@ namespace SdvCode.Areas.Editor.Services.Comment
                         .Select(x => x.Id)
                         .ToList();
                 var specialIds = this.db.UserRoles
-                    .Where(x => specialRoleIds.Contains(x.RoleId) && x.UserId != currentUser.Id)
+                    .Where(x => specialRoleIds.Contains(x.RoleId))
                     .Select(x => x.UserId)
                     .ToList();
 
@@ -54,7 +54,7 @@ namespace SdvCode.Areas.Editor.Services.Comment
                     .FirstOrDefaultAsync();
                 var commentUser = await this.db.Users
                     .FirstOrDefaultAsync(x => x.Id == comment.ApplicationUserId);
-                specialIds.Add(commentUser.Id);
+
                 var postId = await this.db.Posts
                     .Where(x => x.Id == comment.PostId)
                     .Select(x => x.Id)
@@ -77,19 +77,49 @@ namespace SdvCode.Areas.Editor.Services.Comment
                 await this.db.SaveChangesAsync();
 
                 var targetUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == postUserId);
-                string notificationForApprovingId =
-                       await this.notificationService
-                       .AddCommentPostNotification(targetUser, commentUser, comment.Content, postId);
+                if (!specialIds.Contains(targetUser.Id))
+                {
+                    string notificationForApprovingId = string.Empty;
 
-                var targetUserNotificationsCount = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
-                await this.notificationHubContext
-                    .Clients
-                    .User(targetUser.Id)
-                    .SendAsync("ReceiveNotification", targetUserNotificationsCount, true);
+                    if (comment.ParentCommentId == null)
+                    {
+                        notificationForApprovingId =
+                               await this.notificationService
+                               .AddCommentPostNotification(targetUser, commentUser, comment.Content, postId);
+                    }
+                    else
+                    {
+                        var parentCommentUserId = await this.db.Comments
+                            .Where(x => x.Id == comment.ParentCommentId)
+                            .Select(x => x.ApplicationUserId)
+                            .FirstOrDefaultAsync();
+                        var replyUser = await this.db.Users
+                            .FirstOrDefaultAsync(x => x.Id == parentCommentUserId);
 
-                var notificationForApproving = await this.notificationService.GetNotificationById(notificationForApprovingId);
-                await this.notificationHubContext.Clients.User(targetUser.Id)
-                    .SendAsync("VisualizeNotification", notificationForApproving);
+                        if (parentCommentUserId != comment.ApplicationUserId)
+                        {
+                            notificationForApprovingId =
+                                   await this.notificationService
+                                   .AddCommentReplyNotification(replyUser, commentUser, comment.Content, postId);
+                        }
+                        else
+                        {
+                            notificationForApprovingId =
+                                   await this.notificationService
+                                   .AddCommentReplyNotification(targetUser, commentUser, comment.Content, postId);
+                        }
+                    }
+
+                    var targetUserNotificationsCount = await this.notificationService.GetUserNotificationsCount(targetUser.UserName);
+                    await this.notificationHubContext
+                        .Clients
+                        .User(targetUser.Id)
+                        .SendAsync("ReceiveNotification", targetUserNotificationsCount, true);
+
+                    var notificationForApproving = await this.notificationService.GetNotificationById(notificationForApprovingId);
+                    await this.notificationHubContext.Clients.User(targetUser.Id)
+                        .SendAsync("VisualizeNotification", notificationForApproving);
+                }
 
                 return true;
             }
