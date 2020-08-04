@@ -83,12 +83,12 @@ namespace SdvCode.Services.Comment
                 else
                 {
                     targetUserId = await this.db.Comments
-                        .Where(x => x.Id == postId && x.ParentCommentId == parentId)
+                        .Where(x => x.ParentCommentId == parentId)
                         .Select(x => x.ApplicationUserId)
                         .FirstOrDefaultAsync();
                 }
 
-                if (!specialIds.Contains(postId))
+                if (!specialIds.Contains(targetUserId))
                 {
                     specialIds.Add(targetUserId);
                 }
