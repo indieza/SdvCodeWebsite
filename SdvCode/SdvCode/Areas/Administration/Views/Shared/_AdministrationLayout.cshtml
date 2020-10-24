@@ -75,6 +75,19 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsersInformation" aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Users Information</span>
+                </a>
+                <div id="collapseUsersInformation" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Users Filters:</h6>
+                        <a asp-area="Administration" asp-controller="UsersInformation" asp-action="AllUsers" class="collapse-item">All Users</a>
+                        <a asp-area="Administration" asp-controller="UsersPenalties" asp-action="HangFire" class="collapse-item">Banned Users</a>
+                    </div>
+                </div>
+            </li>
             <li>
                 <hr class="sidebar-divider">
             </li>

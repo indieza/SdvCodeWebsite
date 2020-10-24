@@ -200,7 +200,7 @@ namespace SdvCode.Services.Blog
             var tags = this.db.Tags.ToList();
             var topTags = new List<TopTagsViewModel>();
 
-            foreach (var tag in tags.Take(10))
+            foreach (var tag in tags)
             {
                 topTags.Add(new TopTagsViewModel
                 {
@@ -210,7 +210,7 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            return topTags.OrderByDescending(x => x.Count).ToList();
+            return topTags.OrderByDescending(x => x.Count).Take(10).ToList();
         }
     }
 }

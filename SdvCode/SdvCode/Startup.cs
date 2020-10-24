@@ -37,6 +37,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.SiteReports.BlogReports;
     using SdvCode.Areas.Administration.Services.SiteReports.ShopReports;
     using SdvCode.Areas.Administration.Services.UserPenalties;
+    using SdvCode.Areas.Administration.Services.UsersInformation;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Areas.Editor.Services.Category;
     using SdvCode.Areas.Editor.Services.Comment;
@@ -175,6 +176,7 @@ namespace SdvCode
             services.AddTransient<IPendingCommentsService, PendingCommentsService>();
             services.AddTransient<IBlogPostReport, BlogPostReport>();
             services.AddTransient<IShopReport, ShopReport>();
+            services.AddTransient<IUsersInformation, UsersInformation>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();

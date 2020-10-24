@@ -1,0 +1,105 @@
+﻿@using SdvCode.Areas.Administration.ViewModels.UsersInformation
+
+@{
+    ViewData["Title"] = "Users Information";
+}
+
+@model AllUsersViewModel
+
+<link href="~/administration/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Users Information</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">All Users</h1>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Information For Each User</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Roles</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Registered On</th>
+                            <th>Is Blocked</th>
+                            <th>Place</th>
+                            <th>About Me</th>
+                            <th>Birthday</th>
+                            <th>Gender</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Roles</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Registered On</th>
+                            <th>Is Blocked</th>
+                            <th>Place</th>
+                            <th>About Me</th>
+                            <th>Birthday</th>
+                            <th>Gender</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var user in this.Model.ApplicationUsers)
+                        {
+                            <tr>
+                                <td height="80px" width="10%">
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" target="_blank">
+                                        @user.Username
+                                    </a>
+                                </td>
+                                <td height="80px" width="9%">@user.FirstName @user.LastName</td>
+                                <td height="80px" width="9%">Roles</td>
+                                <td height="80px" width="9%">@user.Email - @user.EmailConfirmed.ToString().ToUpper()</td>
+                                <td height="80px" width="9%">@user.PhoneNumber - @user.PhoneNumberConfirmed.ToString().ToUpper()</td>
+                                <td height="80px" width="9%">@user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy hh:mm:ss tt")</td>
+                                <td height="80px" width="9%">
+                                    @if (@user.IsBlocked)
+                                    {
+                                        <span style="color: red">@user.IsBlocked.ToString().ToUpper()</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@user.IsBlocked.ToString().ToUpper()</span>
+                                    }
+                                </td>
+                                <td height="80px" width="9%">Place</td>
+                                <td height="80px" width="10%">
+                                    <div style="width: 100%; height: 80px; overflow: auto">
+                                        @user.AboutMe
+                                    </div>
+                                </td>
+                                <td height="80px" width="9%">@user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy")</td>
+                                <td height="80px" width="9%">@user.Gender</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/administration/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/administration/js/demo/datatables-demo.js"></script>
+}
