@@ -21,6 +21,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Models.Blog;
 
     [Area(GlobalConstants.AdministrationArea)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class ReportsController : Controller
     {
         private readonly IBlogPostReport blogPostReport;
@@ -32,7 +33,6 @@ namespace SdvCode.Areas.Administration.Controllers
             this.shopReport = shopReport;
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> BlogPostsReport()
         {
             ICollection<BlogPostReportViewModel> posts = await this.blogPostReport.GetPostsData();
@@ -54,7 +54,6 @@ namespace SdvCode.Areas.Administration.Controllers
                 excelName);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> BlogCommentsReport()
         {
             ICollection<BlogCommentReportViewModel> comments = await this.blogPostReport.GetCommentsData();
@@ -76,7 +75,6 @@ namespace SdvCode.Areas.Administration.Controllers
                 excelName);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult ShopCommentsReport()
         {
             ICollection<ShopCommentReportViewModel> comments = this.shopReport.GetCommentsData();
@@ -98,7 +96,6 @@ namespace SdvCode.Areas.Administration.Controllers
                 excelName);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult ShopReviewsReport()
         {
             ICollection<ShopReviewReportViewModel> comments = this.shopReport.GetReviewsData();

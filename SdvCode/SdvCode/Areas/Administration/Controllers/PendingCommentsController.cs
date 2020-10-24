@@ -5,6 +5,7 @@ namespace SdvCode.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.ML;
     using SdvCode.Areas.Administration.Services;
@@ -14,6 +15,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.MlModels.CommentModels;
 
     [Area(GlobalConstants.AdministrationArea)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class PendingCommentsController : Controller
     {
         private readonly IPendingCommentsService pendingCommentsService;

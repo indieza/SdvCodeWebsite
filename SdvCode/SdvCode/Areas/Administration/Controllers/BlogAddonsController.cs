@@ -16,6 +16,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class BlogAddonsController : Controller
     {
         private readonly IBlogAddonsService addonsService;
@@ -25,20 +26,17 @@ namespace SdvCode.Areas.Administration.Controllers
             this.addonsService = addonsService;
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult AddTag()
         {
             return this.View();
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult AddCategory()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> AddNewCategory(AddCategoryInputModel model)
         {
             if (this.ModelState.IsValid)
@@ -56,7 +54,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> AddNewTag(AddTagInputModel model)
         {
             if (this.ModelState.IsValid)
@@ -73,7 +70,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> RemoveTag(string name)
         {
             if (name != null)

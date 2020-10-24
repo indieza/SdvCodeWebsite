@@ -4,6 +4,7 @@
 namespace SdvCode.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
     using SdvCode.Services.Contact;
     using SdvCode.ViewModels.Contacts;
 
@@ -30,11 +31,12 @@ namespace SdvCode.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(model);
             }
 
             this.contactsService.SendEmail(model);
-            this.TempData["Success"] = $"Your message has been sent. Be patient you will receive a reply within 1 day.";
+            this.TempData["Success"] =
+                string.Format(SuccessMessages.SuccessfullySubmitedContactForm, model.Name);
             return this.RedirectToPage("/");
         }
     }

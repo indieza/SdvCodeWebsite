@@ -86,5 +86,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyEditedProduct = "You successfully edit shop product";
 
         public const string SuccessfullyEditedProductCategory = "You successfully edit shop product category.";
+
+        public const string SuccessfullySubmitedContactForm = "{0}, your message has been sent. Be patient you will receive a reply within 1 day.";
     }
 }

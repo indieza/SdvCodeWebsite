@@ -7,6 +7,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.ML;
     using SdvCode.Areas.Administration.Services.PendingPosts;
@@ -15,6 +16,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.MlModels.PostModels;
 
     [Area(GlobalConstants.AdministrationArea)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class PendingPostsController : Controller
     {
         private readonly IPendingPostsService pendingPostsService;

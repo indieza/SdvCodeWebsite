@@ -15,6 +15,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Models.Enums;
 
     [Area(GlobalConstants.AdministrationArea)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class DbUsageController : Controller
     {
         private readonly IDbUsageService dbUsageService;
@@ -24,13 +25,11 @@ namespace SdvCode.Areas.Administration.Controllers
             this.dbUsageService = dbUsageService;
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult DeleteUsersActivities()
         {
             return this.View();
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult DeleteUsersImages()
         {
             var model = new DeleteUsersImagesViewModel
@@ -43,7 +42,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> DeleteActivityByName(DeleteActivitiesByNameInputModel model)
         {
             if (this.ModelState.IsValid)
@@ -72,7 +70,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> DeleteAllActivities()
         {
             int count = await this.dbUsageService.RemoveAllActivities();
@@ -90,7 +87,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> DeleteUserImages(DeleteUsersImagesViewModel model)
         {
             if (this.ModelState.IsValid)
@@ -116,7 +112,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> DeleteAllusersImages()
         {
             int count = await this.dbUsageService.DeleteAllUsersImages();

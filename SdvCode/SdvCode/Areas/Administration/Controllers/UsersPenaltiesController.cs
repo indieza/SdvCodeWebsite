@@ -14,6 +14,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Models.User;
 
     [Area(GlobalConstants.AdministrationArea)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class UsersPenaltiesController : Controller
     {
         private readonly IUsersPenaltiesService usersPenaltiesService;
@@ -27,7 +28,6 @@ namespace SdvCode.Areas.Administration.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> BlockUnblockUser()
         {
             var model = new UsersPenaltiesIndexModel
@@ -44,7 +44,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> BlockUser(UsersPenaltiesIndexModel model)
         {
             if (this.ModelState.IsValid)
@@ -71,7 +70,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> UnblockUser(UsersPenaltiesIndexModel model)
         {
             if (this.ModelState.IsValid)
@@ -98,7 +96,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> BlockAllUsers()
         {
             int count = await this.usersPenaltiesService.BlockAllUsers();
@@ -116,7 +113,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> UnblockAllUsers()
         {
             int count = await this.usersPenaltiesService.UnblockAllUsers();
@@ -133,7 +129,6 @@ namespace SdvCode.Areas.Administration.Controllers
             return this.RedirectToAction("BlockUnblockUser", "UsersPenalties");
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult HangFire()
         {
             return this.RedirectToPage("/Administration/UsersPenalties/HangFire");

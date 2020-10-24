@@ -13,6 +13,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class DashboardController : Controller
     {
         private readonly IDashboardService dashboardService;
@@ -22,7 +23,6 @@ namespace SdvCode.Areas.Administration.Controllers
             this.dashboardService = dashboardService;
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult Index()
         {
             DashboardViewModel dashboard = this.dashboardService.GetDashboardInformation();
@@ -36,7 +36,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> CreateRole(DashboardIndexViewModel model)
         {
             string role = model.CreateRole.Role;
@@ -63,7 +62,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> AddUserInRole(DashboardIndexViewModel model)
         {
             string inputRole = model.AddUserInRole.Role;
@@ -91,7 +89,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> RemoveUserFromRole(DashboardIndexViewModel model)
         {
             if (this.ModelState.IsValid)
@@ -119,7 +116,6 @@ namespace SdvCode.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public async Task<IActionResult> SyncFollowUnfollow()
         {
             bool isSync = await this.dashboardService.SyncFollowUnfollow();
