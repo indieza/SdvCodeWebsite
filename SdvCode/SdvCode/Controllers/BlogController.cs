@@ -115,21 +115,16 @@ namespace SdvCode.Controllers
             if (this.ModelState.IsValid)
             {
                 var currentUser = await this.userManager.GetUserAsync(this.User);
-                if (this.ModelState.IsValid)
-                {
-                    var tuple = await this.blogService.CreatePost(model, currentUser);
-                    this.TempData[tuple.Item1] = tuple.Item2;
-                }
-                else
-                {
-                    this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-                }
-
+                var tuple = await this.blogService.CreatePost(model, currentUser);
+                this.TempData[tuple.Item1] = tuple.Item2;
                 return this.RedirectToAction("Index", "Blog");
             }
+            else
+            {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+            }
 
-            this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            return this.RedirectToAction("Index", "Blog");
+            return this.RedirectToAction("Index", "Blog", model);
         }
 
         [Authorize]
