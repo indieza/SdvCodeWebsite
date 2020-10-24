@@ -83,7 +83,7 @@ namespace SdvCode.Services.Comment
                 else
                 {
                     targetUserId = await this.db.Comments
-                        .Where(x => x.ParentCommentId == parentId)
+                        .Where(x => x.Id == parentId)
                         .Select(x => x.ApplicationUserId)
                         .FirstOrDefaultAsync();
                 }
