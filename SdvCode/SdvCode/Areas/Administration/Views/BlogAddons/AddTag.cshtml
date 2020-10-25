@@ -3,7 +3,7 @@
     ViewData["Title"] = "Blog addons";
 }
 
-@model AddTagInputModel
+@model AddRemoveTagBaseModel
 
 <partial name="_TempDataPartial" />
 
@@ -17,12 +17,14 @@
         <h1 class="h5 mb-0 text-gray-800">Add new tag</h1>
     </div>
     <form method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row">
             <div class="col-xl-6 col-md-9 mb-4">
-                <input asp-for="Name" class="form-control" placeholder="Name" required />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="@Model.AddRemoveTagInputModel.Name"></label>
+                <input asp-for="@Model.AddRemoveTagInputModel.Name" class="form-control" placeholder="Name" />
+                <span asp-validation-for="@Model.AddRemoveTagInputModel.Name" class="text-danger"></span>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xl-4 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="BlogAddons" asp-action="AddNewTag" class="btn btn-success btn-icon-split">
                     <span class="icon text-white-50">
@@ -41,8 +43,14 @@
     <form method="post">
         <div class="row">
             <div class="col-xl-6 col-md-9 mb-4">
-                <input name="Name" class="form-control" placeholder="Name" required />
+                <label asp-for="@Model.AddRemoveTagInputModel.Name"></label>
+                <select class="form-control" asp-for="@Model.AddRemoveTagInputModel.Name" asp-items="@(new SelectList(Model.TagsNames))">
+                    <option value="" selected disabled>Select Tag Name</option>
+                </select>
+                <span asp-validation-for="@Model.AddRemoveTagInputModel.Name" class="text-danger"></span>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xl-4 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="BlogAddons" asp-action="RemoveTag" class="btn btn-danger btn-icon-split">
                     <span class="icon text-white-50">
@@ -55,3 +63,7 @@
     </form>
     <hr />
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

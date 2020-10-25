@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-xl-6 col-md-9 mb-4">
                 <div class="card border-left-info shadow h-100 py-4">
-                    <input asp-for="@Model.DeleteUserImages.Username" class="chosen-value addUserValueForUserInRole" type="text" value="" placeholder="Type to filter" autocomplete="off" required />
+                    <input asp-for="@Model.DeleteUserImages.Username" class="chosen-value addUserValueForUserInRole" type="text" value="" placeholder="Type to filter" autocomplete="off" />
                     <ul class="value-list usersListForUserInRole">
                         @foreach (var username in Model.Usernames)
                         {
@@ -36,6 +36,11 @@
                     </span>
                     <span class="text">Delete user images</span>
                 </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-9 mb-4">
+                <span asp-validation-for="@Model.DeleteUserImages.Username" class="text-danger"></span>
             </div>
         </div>
     </form>
@@ -56,4 +61,5 @@
 </div>
 @section Scripts {
     <script src="~/administration/js/addUserInRoleUsersDropDown.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 }

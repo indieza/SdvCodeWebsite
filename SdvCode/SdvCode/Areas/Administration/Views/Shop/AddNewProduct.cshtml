@@ -17,7 +17,6 @@
         <h1 class="h5 mb-0 text-gray-800">Add new product</h1>
     </div>
     <form method="post" enctype="multipart/form-data">
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@Model.ProductInputModel.Name"></label>
@@ -57,6 +56,7 @@
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
                 <input asp-for="@Model.ProductInputModel.ProductImages" type="file" multiple>
+                <span asp-validation-for="@Model.ProductInputModel.ProductImages" class="text-danger"></span>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="Shop" asp-action="AddNewProduct" class="btn btn-success btn-icon-split">

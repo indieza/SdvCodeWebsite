@@ -13,8 +13,8 @@ namespace SdvCode.Areas.Editor.ViewModels
         [Display(Name = "Category name")]
         public string Name { get; set; }
 
-        [MaxLength(550)]
         [Display(Name = "Category description")]
+        [Required]
         public string Description { get; set; }
 
         public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);

@@ -8,6 +8,7 @@ namespace SdvCode.Areas.Administration.ViewModels.DbUsageViewModels.DeleteActivi
     public class DeleteActivitiesByNameInputModel
     {
         [Required]
+        [Display(Name = "Activity Name")]
         public string ActivityName { get; set; }
     }
 }

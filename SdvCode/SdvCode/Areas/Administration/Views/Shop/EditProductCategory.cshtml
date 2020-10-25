@@ -30,11 +30,10 @@
     <hr />
 
     <form method="post" enctype="multipart/form-data" id="contentForm" style="display: none">
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@Model.InputModel.Title"></label>
-                <input asp-for="@Model.InputModel.Title" class="form-control" placeholder="Name" id="categoryTitle" required />
+                <input asp-for="@Model.InputModel.Title" class="form-control" placeholder="Name" id="categoryTitle" />
                 <span asp-validation-for="@Model.InputModel.Title" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">

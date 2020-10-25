@@ -139,7 +139,7 @@
         <div class="row">
             <div class="col-xl-6 col-md-9 mb-4">
                 <div class="card border-left-warning shadow h-100 py-4">
-                    <input asp-for="@Model.CreateRole.Role" class="chosen-value addNewRoleValue" type="text" value="" placeholder="Type to filter" autocomplete="off" required />
+                    <input asp-for="@Model.CreateRole.Role" class="chosen-value addNewRoleValue" type="text" value="" placeholder="Type to filter" autocomplete="off" />
                     <ul class="value-list newRolesList">
                         @foreach (var role in @Html.GetEnumSelectList<Roles>())
                         {
@@ -155,6 +155,11 @@
                     </span>
                     <span class="text">Add new role</span>
                 </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-9 mb-4">
+                <span asp-validation-for="@Model.CreateRole.Role" class="text-danger"></span>
             </div>
         </div>
     </form>
@@ -196,6 +201,14 @@
                 </button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-9 mb-4">
+                <span asp-validation-for="@Model.AddUserInRole.Username" class="text-danger"></span>
+            </div>
+            <div class="col-xl-3 col-md-9 mb-4">
+                <span asp-validation-for="@Model.AddUserInRole.Role" class="text-danger"></span>
+            </div>
+        </div>
     </form>
     <hr />
 
@@ -235,6 +248,14 @@
                 </button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-9 mb-4">
+                <span asp-validation-for="@Model.RemoveUserFromRole.Username" class="text-danger"></span>
+            </div>
+            <div class="col-xl-3 col-md-9 mb-4">
+                <span asp-validation-for="@Model.RemoveUserFromRole.Role" class="text-danger"></span>
+            </div>
+        </div>
     </form>
     <hr />
 </div>
@@ -244,4 +265,5 @@
     <script src="~/administration/js/removeUserInRoleRolesDropDown.js"></script>
     <script src="~/administration/js/removeUserInRoleUsersDropDown.js"></script>
     <script src="~/administration/js/addNewRoleDropDown.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 }

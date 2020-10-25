@@ -56,6 +56,7 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("Index", "Dashboard", model);
             }
 
             return this.RedirectToAction("Index", "Dashboard");
@@ -83,6 +84,7 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("Index", "Dashboard", model);
             }
 
             return this.RedirectToAction("Index", "Dashboard");
@@ -110,6 +112,7 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("Index", "Dashboard", model);
             }
 
             return this.RedirectToAction("Index", "Dashboard");

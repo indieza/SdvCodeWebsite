@@ -63,6 +63,8 @@ namespace SdvCode.ViewModels.Users.ViewModels
 
         public bool IsBlocked { get; set; }
 
+        public string ReasonToBeBlocked { get; set; }
+
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
 
         public ICollection<Post> Posts { get; set; } = new HashSet<Post>();

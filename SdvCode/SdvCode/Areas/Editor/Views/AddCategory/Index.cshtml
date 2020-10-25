@@ -24,11 +24,10 @@
 <div class="container">
     <h2 class="headerSwitch">Add new category</h2>
     <form method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row">
             <div class="form-group col-md-12">
                 <label asp-for="@Model.Name"></label>
-                <input asp-for="@Model.Name" class="form-control" placeholder="Name" required />
+                <input asp-for="@Model.Name" class="form-control" placeholder="Name" />
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
         </div>
@@ -49,3 +48,7 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

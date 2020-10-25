@@ -64,6 +64,7 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("DeleteUsersActivities", "DbUsage", model);
             }
 
             return this.RedirectToAction("DeleteUsersActivities", "DbUsage");
@@ -106,6 +107,7 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("DeleteUsersImages", "DbUsage", model);
             }
 
             return this.RedirectToAction("DeleteUsersImages", "DbUsage");

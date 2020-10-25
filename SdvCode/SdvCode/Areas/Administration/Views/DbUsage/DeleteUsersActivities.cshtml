@@ -38,6 +38,11 @@
                 </button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-9 mb-4">
+                <span asp-validation-for="@Model.ActivityName" class="text-danger"></span>
+            </div>
+        </div>
     </form>
     <hr />
 
@@ -56,4 +61,5 @@
 </div>
 @section Scripts {
     <script src="~/administration/js/clearUserActionsDropDown.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 }

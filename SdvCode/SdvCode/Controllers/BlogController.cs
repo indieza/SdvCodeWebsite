@@ -112,9 +112,23 @@ namespace SdvCode.Controllers
         [Authorize]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var isBlocked = this.blogService.IsBlocked(currentUser);
+            if (isBlocked)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
+            var isInRole = await this.blogService.IsInBlogRole(currentUser);
+            if (!isInRole)
+            {
+                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             if (this.ModelState.IsValid)
             {
-                var currentUser = await this.userManager.GetUserAsync(this.User);
                 var tuple = await this.blogService.CreatePost(model, currentUser);
                 this.TempData[tuple.Item1] = tuple.Item2;
                 return this.RedirectToAction("Index", "Blog");

@@ -30,11 +30,10 @@
     <hr />
 
     <form method="post" enctype="multipart/form-data" id="contentForm" style="display: none">
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@Model.InputModel.Name"></label>
-                <input asp-for="@Model.InputModel.Name" class="form-control" placeholder="Name" id="productName" required />
+                <input asp-for="@Model.InputModel.Name" class="form-control" placeholder="Name" id="productName" />
                 <span asp-validation-for="@Model.InputModel.Name" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
@@ -50,12 +49,12 @@
             </div>
             <div class="col-xl-6 col-md-6 mb-4">
                 <label asp-for="@Model.InputModel.Price"></label>
-                <input asp-for="@Model.InputModel.Price" class="form-control" placeholder="Price" type="number" id="productPrice" required />
+                <input asp-for="@Model.InputModel.Price" class="form-control" placeholder="Price" type="number" id="productPrice" />
                 <span asp-validation-for="@Model.InputModel.Price" class="text-danger"></span>
             </div>
             <div class="col-xl-6 col-md-6 mb-4">
                 <label asp-for="@Model.InputModel.AvailableQuantity"></label>
-                <input asp-for="@Model.InputModel.AvailableQuantity" class="form-control" placeholder="Quantity" type="number" id="availableQuantity" required />
+                <input asp-for="@Model.InputModel.AvailableQuantity" class="form-control" placeholder="Quantity" type="number" id="availableQuantity" />
                 <span asp-validation-for="@Model.InputModel.AvailableQuantity" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">

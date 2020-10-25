@@ -1,17 +1,16 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Areas.Administration.Services.UsersInformation
+namespace SdvCode.Areas.Administration.ViewModels.UsersInformation
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.UsersInformation;
+    using SdvCode.ViewModels.Users.ViewModels;
 
-    public interface IUsersInformationService
+    public class AllBannedUsersViewModel
     {
-        Task<AllUsersViewModel> GetAllUsers();
-        Task<AllBannedUsersViewModel> GetAllBannedUsers();
+        public ICollection<ApplicationUserViewModel> ApplicationUsers { get; set; } = new HashSet<ApplicationUserViewModel>();
     }
 }

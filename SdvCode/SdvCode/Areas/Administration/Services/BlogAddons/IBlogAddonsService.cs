@@ -7,6 +7,7 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.Blog;
 
     public interface IBlogAddonsService
     {
@@ -15,5 +16,7 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
         Task<Tuple<string, string>> CreateTag(string name);
 
         Task<Tuple<string, string>> RemoveTag(string name);
+
+        ICollection<string> GetAllTags();
     }
 }

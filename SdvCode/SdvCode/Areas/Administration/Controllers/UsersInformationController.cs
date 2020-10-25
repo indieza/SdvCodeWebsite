@@ -29,5 +29,11 @@ namespace SdvCode.Areas.Administration.Controllers
             AllUsersViewModel model = await this.usersInformation.GetAllUsers();
             return this.View(model);
         }
+
+        public async Task<IActionResult> BannedUsers()
+        {
+            AllBannedUsersViewModel model = await this.usersInformation.GetAllBannedUsers();
+            return this.View(model);
+        }
     }
 }

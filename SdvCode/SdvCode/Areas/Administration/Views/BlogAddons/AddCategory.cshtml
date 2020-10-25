@@ -17,13 +17,14 @@
         <h1 class="h5 mb-0 text-gray-800">Add new category</h1>
     </div>
     <form method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" placeholder="Name" required />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="Description"></label>
                 <textarea asp-for="Description" class="form-control" placeholder="Description" rows="7"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>

@@ -31,6 +31,12 @@ namespace SdvCode.Areas.Editor.Controllers
         public async Task<IActionResult> ApproveComment(string commentId, string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
+            if (currentUser.IsBlocked)
+            {
+                this.TempData["Error"] = ErrorMessages.YouAreBlock;
+                return this.RedirectToAction("Index", "Blog");
+            }
+
             bool isApproved = await this.commentService.ApprovedCommentById(commentId, currentUser);
 
             if (isApproved)

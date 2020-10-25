@@ -5,14 +5,14 @@ namespace SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Models.Blog;
 
-    public class AddTagInputModel
+    public class AddRemoveTagBaseModel
     {
-        [Required]
-        [MaxLength(15)]
-        public string Name { get; set; }
+        public ICollection<string> TagsNames { get; set; }
+
+        public AddRemoveTagInputModel AddRemoveTagInputModel { get; set; }
     }
 }

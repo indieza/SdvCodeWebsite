@@ -28,7 +28,7 @@ namespace SdvCode.Models.Blog
 
         public DateTime UpdatedOn { get; set; }
 
-        [MaxLength(550)]
+        [Required]
         public string Description { get; set; }
 
         public ICollection<Post> Posts { get; set; } = new HashSet<Post>();

@@ -46,6 +46,8 @@ namespace SdvCode.Areas.SdvShop.ViewModels.Product.InputModels
         [Display(Name = "Product Category")]
         public string ProductCategory { get; set; }
 
+        [Required]
+        [Display(Name = "Product Images")]
         public List<IFormFile> ProductImages { get; set; } = new List<IFormFile>();
     }
 }

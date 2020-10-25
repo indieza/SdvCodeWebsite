@@ -28,7 +28,12 @@ namespace SdvCode.Areas.Administration.Controllers
 
         public IActionResult AddTag()
         {
-            return this.View();
+            var model = new AddRemoveTagBaseModel
+            {
+                AddRemoveTagInputModel = new AddRemoveTagInputModel(),
+                TagsNames = this.addonsService.GetAllTags(),
+            };
+            return this.View(model);
         }
 
         public IActionResult AddCategory()
@@ -48,38 +53,41 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("AddCategory", "BlogAddons", model);
             }
 
             return this.RedirectToAction("AddCategory", "BlogAddons");
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewTag(AddTagInputModel model)
+        public async Task<IActionResult> AddNewTag(AddRemoveTagBaseModel model)
         {
             if (this.ModelState.IsValid)
             {
-                var tuple = await this.addonsService.CreateTag(model.Name);
+                var tuple = await this.addonsService.CreateTag(model.AddRemoveTagInputModel.Name);
                 this.TempData[tuple.Item1] = tuple.Item2;
             }
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("AddTag", "BlogAddons", model);
             }
 
             return this.RedirectToAction("AddTag", "BlogAddons");
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveTag(string name)
+        public async Task<IActionResult> RemoveTag(AddRemoveTagBaseModel model)
         {
-            if (name != null)
+            if (this.ModelState.IsValid)
             {
-                var tuple = await this.addonsService.RemoveTag(name);
+                var tuple = await this.addonsService.RemoveTag(model.AddRemoveTagInputModel.Name);
                 this.TempData[tuple.Item1] = tuple.Item2;
             }
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("AddTag", "BlogAddons", model);
             }
 
             return this.RedirectToAction("AddTag", "BlogAddons");

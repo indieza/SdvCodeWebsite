@@ -48,6 +48,11 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
             return Tuple.Create("Success", string.Format(SuccessMessages.SuccessfullyAddedTag, name));
         }
 
+        public ICollection<string> GetAllTags()
+        {
+            return this.db.Tags.Select(x => x.Name).OrderBy(x => x).ToList();
+        }
+
         public async Task<Tuple<string, string>> RemoveTag(string name)
         {
             var targetTag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());

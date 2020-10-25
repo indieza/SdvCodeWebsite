@@ -21,17 +21,20 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly INotificationService notificationService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public UsersPenaltiesService(
             ApplicationDbContext db,
             RoleManager<ApplicationRole> roleManager,
             IHubContext<NotificationHub> notificationHubContext,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            UserManager<ApplicationUser> userManager)
         {
             this.db = db;
             this.roleManager = roleManager;
             this.notificationHubContext = notificationHubContext;
             this.notificationService = notificationService;
+            this.userManager = userManager;
         }
 
         public async Task<bool> BlockUser(string username, ApplicationUser currentUser, string reasonToBeBlocked)
@@ -130,25 +133,20 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
 
         public async Task<int> BlockAllUsers()
         {
-            var role = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
+            var users = this.db.Users.Where(x => x.IsBlocked == false).ToList();
             int count = 0;
 
-            if (role != null)
+            foreach (var user in users)
             {
-                var noneAdminsIds = this.db.UserRoles.Where(x => x.RoleId != role.Id).Select(x => x.UserId).ToList();
-                var users = this.db.Users.Where(x => noneAdminsIds.Contains(x.Id) && x.IsBlocked == false).ToList();
-                count = users.Count();
-
-                foreach (var user in users)
+                if (!await this.userManager.IsInRoleAsync(user, GlobalConstants.AdministratorRole))
                 {
+                    count++;
                     user.IsBlocked = true;
                 }
-
-                this.db.Users.UpdateRange(users);
-                await this.db.SaveChangesAsync();
-                return count;
             }
 
+            this.db.Users.UpdateRange(users);
+            await this.db.SaveChangesAsync();
             return count;
         }
 
