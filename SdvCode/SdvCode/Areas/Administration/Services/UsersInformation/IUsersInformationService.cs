@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Administration.Services.UsersInformation
     using System.Threading.Tasks;
     using SdvCode.Areas.Administration.ViewModels.UsersInformation;
 
-    public interface IUsersInformation
+    public interface IUsersInformationService
     {
         Task<AllUsersViewModel> GetAllUsers();
     }

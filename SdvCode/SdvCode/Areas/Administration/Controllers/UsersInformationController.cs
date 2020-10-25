@@ -17,9 +17,9 @@ namespace SdvCode.Areas.Administration.Controllers
     [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class UsersInformationController : Controller
     {
-        private readonly IUsersInformation usersInformation;
+        private readonly IUsersInformationService usersInformation;
 
-        public UsersInformationController(IUsersInformation usersInformation)
+        public UsersInformationController(IUsersInformationService usersInformation)
         {
             this.usersInformation = usersInformation;
         }

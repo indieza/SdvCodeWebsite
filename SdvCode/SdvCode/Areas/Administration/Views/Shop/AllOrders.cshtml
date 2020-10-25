@@ -48,7 +48,7 @@
                     <tbody>
                         @foreach (var order in Model)
                         {
-                            <tr>
+                            <tr onmouseover="markTableRow()">
                                 <td width="50">
                                     @order.UserFullName
                                 </td>
@@ -171,4 +171,5 @@
     <script src="~/administration/js/demo/datatables-demo.js"></script>
     <script src="~/administration/js/editOrderStatus.js"></script>
     <script src="~/administration/js/orderDetails.js"></script>
+    <script src="~/administration/js/dataTableScripts.js"></script>
 }

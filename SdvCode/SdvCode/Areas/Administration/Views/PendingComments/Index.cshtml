@@ -42,7 +42,7 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
+                            <tr onmouseover="markTableRow()">
                                 <td width="120px" height="80">
                                     <div style="height: 80px; overflow: auto">
                                         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@item.Comment.Post.Id">
@@ -99,4 +99,5 @@
     <script src="~/administration/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="~/administration/js/demo/datatables-demo.js"></script>
+    <script src="~/administration/js/dataTableScripts.js"></script>
 }

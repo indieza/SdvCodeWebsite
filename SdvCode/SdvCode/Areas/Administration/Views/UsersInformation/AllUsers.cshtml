@@ -1,4 +1,5 @@
 ﻿@using SdvCode.Areas.Administration.ViewModels.UsersInformation
+@using SdvCode.Areas.Administration.Models.Enums
 
 @{
     ViewData["Title"] = "Users Information";
@@ -60,18 +61,46 @@
                     <tbody>
                         @foreach (var user in this.Model.ApplicationUsers)
                         {
-                            <tr>
-                                <td height="80px" width="10%">
+                            <tr onmouseover="markTableRow()">
+                                <td height="125px">
                                     <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" target="_blank">
                                         @user.Username
                                     </a>
                                 </td>
-                                <td height="80px" width="9%">@user.FirstName @user.LastName</td>
-                                <td height="80px" width="9%">Roles</td>
-                                <td height="80px" width="9%">@user.Email - @user.EmailConfirmed.ToString().ToUpper()</td>
-                                <td height="80px" width="9%">@user.PhoneNumber - @user.PhoneNumberConfirmed.ToString().ToUpper()</td>
-                                <td height="80px" width="9%">@user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy hh:mm:ss tt")</td>
-                                <td height="80px" width="9%">
+                                <td height="125px">@user.FirstName @user.LastName</td>
+                                <td height="125px">
+                                    @foreach (var role in user.Roles.OrderBy(x => x.RoleLevel))
+                                    {
+                                        @if (role.Name == Roles.Administrator.ToString())
+                                        {
+                                            <span class="badge badge-success">@role.Name</span>
+                                        }
+                                        @if (role.Name == Roles.Editor.ToString())
+                                        {
+                                            <span class="badge badge-primary">@role.Name</span>
+
+                                        }
+                                        @if (role.Name == Roles.Author.ToString())
+                                        {
+                                            <span class="badge badge-warning">@role.Name</span>
+
+                                        }
+                                        @if (role.Name == Roles.Contributor.ToString())
+                                        {
+                                            <span class="badge badge-info">@role.Name</span>
+
+                                        }
+                                        @if (role.Name == Roles.Subscriber.ToString())
+                                        {
+                                            <span class="badge badge-secondary">@role.Name</span>
+
+                                        }
+                                    }
+                                </td>
+                                <td height="125px">@user.Email - @user.EmailConfirmed.ToString().ToUpper()</td>
+                                <td height="125px">(@user.CountryCode.ToString()) @user.PhoneNumber - @user.PhoneNumberConfirmed.ToString().ToUpper()</td>
+                                <td height="125px">@user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy hh:mm:ss tt")</td>
+                                <td height="125px">
                                     @if (@user.IsBlocked)
                                     {
                                         <span style="color: red">@user.IsBlocked.ToString().ToUpper()</span>
@@ -81,14 +110,26 @@
                                         <span>@user.IsBlocked.ToString().ToUpper()</span>
                                     }
                                 </td>
-                                <td height="80px" width="9%">Place</td>
-                                <td height="80px" width="10%">
-                                    <div style="width: 100%; height: 80px; overflow: auto">
+                                <td height="125px">@user.Country.Name, @user.State.Name, @user.City.Name, @user.ZipCode.Code</td>
+                                <td height="125px" width="120px">
+                                    <div style="width: 250px !important; height: 125px; overflow: auto">
                                         @user.AboutMe
                                     </div>
                                 </td>
-                                <td height="80px" width="9%">@user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy")</td>
-                                <td height="80px" width="9%">@user.Gender</td>
+                                <td height="125px">
+                                    @if (user.BirthDate.ToLocalTime().Day == DateTime.Now.Day && user.BirthDate.ToLocalTime().Month == DateTime.Now.Month)
+                                    {
+                                        <span style="color: chartreuse">
+                                            <i class="fas fa-birthday-cake"></i>
+                                            @user.BirthDate.ToLocalTime().ToString("dd-MMMM-yyyy")
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        @user.BirthDate.ToLocalTime().ToString("dd-MMMM-yyyy")
+                                    }
+                                </td>
+                                <td height="125px">@user.Gender</td>
                             </tr>
                         }
                     </tbody>
@@ -102,4 +143,5 @@
     <script src="~/administration/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="~/administration/js/demo/datatables-demo.js"></script>
+    <script src="~/administration/js/dataTableScripts.js"></script>
 }

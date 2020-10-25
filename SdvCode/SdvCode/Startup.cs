@@ -176,7 +176,7 @@ namespace SdvCode
             services.AddTransient<IPendingCommentsService, PendingCommentsService>();
             services.AddTransient<IBlogPostReport, BlogPostReport>();
             services.AddTransient<IShopReport, ShopReport>();
-            services.AddTransient<IUsersInformation, UsersInformation>();
+            services.AddTransient<IUsersInformationService, UsersInformationService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();

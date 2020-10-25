@@ -14,13 +14,13 @@ namespace SdvCode.Areas.Administration.Services.UsersInformation
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Users.ViewModels;
 
-    public class UsersInformation : IUsersInformation
+    public class UsersInformationService : IUsersInformationService
     {
         private readonly ApplicationDbContext db;
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public UsersInformation(
+        public UsersInformationService(
             ApplicationDbContext db,
             RoleManager<ApplicationRole> roleManager,
             UserManager<ApplicationUser> userManager)
