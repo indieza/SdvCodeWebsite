@@ -23,16 +23,16 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
-            using (var db = new ApplicationDbContext(options))
-            {
-                IProfileService profileService = new ProfileService(db);
-                db.Users.Add(user);
-                db.UserActions.Add(activity);
-                await db.SaveChangesAsync();
-                await profileService.DeleteActivity(user);
+            //using (var db = new ApplicationDbContext(options))
+            //{
+            //    IProfileService profileService = new ProfileService(db);
+            //    db.Users.Add(user);
+            //    db.UserActions.Add(activity);
+            //    await db.SaveChangesAsync();
+            //    await profileService.DeleteActivity(user);
 
-                Assert.Equal(0, db.UserActions.Count());
-            }
+            //    Assert.Equal(0, db.UserActions.Count());
+            //}
         }
     }
 }

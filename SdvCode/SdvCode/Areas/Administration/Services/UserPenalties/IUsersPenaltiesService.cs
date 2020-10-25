@@ -3,9 +3,9 @@
 
 namespace SdvCode.Areas.Administration.Services.UserPenalties
 {
-    using SdvCode.Models.User;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using SdvCode.Models.User;
 
     public interface IUsersPenaltiesService
     {
@@ -13,7 +13,7 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
 
         Task<ICollection<string>> GetAllNotBlockedUsers();
 
-        Task<bool> BlockUser(string username, ApplicationUser currentUser);
+        Task<bool> BlockUser(string username, ApplicationUser currentUser, string reasonToBeBlocked);
 
         Task<bool> UnblockUser(string username, ApplicationUser currentUser);
 

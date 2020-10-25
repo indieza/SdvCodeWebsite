@@ -18,9 +18,9 @@
     </div>
     <form method="post">
         <div class="row">
-            <div class="col-xl-6 col-md-9 mb-4">
+            <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card border-left-danger shadow h-100 py-4">
-                    <input asp-for="@Model.UsersPenaltiesInputModel.BlockedUsername" class="chosen-value addUserValueForUserInRole" type="text" value="" placeholder="Type to filter" autocomplete="off" required />
+                    <input asp-for="@Model.UsersPenaltiesInputModel.Username" class="chosen-value addUserValueForUserInRole" type="text" value="" placeholder="Type to filter" autocomplete="off" />
                     <ul class="value-list usersListForUserInRole">
                         @foreach (var username in Model.UsersPenaltiesViewModel.NotBlockedUsernames)
                         {
@@ -29,6 +29,20 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <span asp-validation-for="@Model.UsersPenaltiesInputModel.Username" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.UsersPenaltiesInputModel.ReasonToBeBlocked"></label>
+                <textarea class="form-control" asp-for="@Model.UsersPenaltiesInputModel.ReasonToBeBlocked" rows="100" style="max-height: 200px"></textarea>
+                <span asp-validation-for="@Model.UsersPenaltiesInputModel.ReasonToBeBlocked" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="UsersPenalties" asp-action="BlockUser" class="btn btn-danger btn-icon-split">
                     <span class="icon text-white-50">
@@ -45,9 +59,9 @@
     </div>
     <form method="post">
         <div class="row">
-            <div class="col-xl-6 col-md-9 mb-4">
+            <div class="col-xl-12 col-md-12 mb-4">
                 <div class="card border-left-success shadow h-100 py-4">
-                    <input asp-for="@Model.UsersPenaltiesInputModel.UnblockedUsername" class="chosen-value addUserValueForUserRemoveRole" type="text" value="" placeholder="Type to filter" autocomplete="off" required />
+                    <input asp-for="@Model.UsersPenaltiesInputModel.Username" class="chosen-value addUserValueForUserRemoveRole" type="text" value="" placeholder="Type to filter" autocomplete="off" />
                     <ul class="value-list usersListForUserRemoveRole">
                         @foreach (var username in Model.UsersPenaltiesViewModel.BlockedUsernames)
                         {
@@ -56,6 +70,13 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <span asp-validation-for="@Model.UsersPenaltiesInputModel.Username" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="UsersPenalties" asp-action="UnblockUser" class="btn btn-success btn-icon-split">
                     <span class="icon text-white-50">
@@ -91,4 +112,5 @@
 @section Scripts {
     <script src="~/administration/js/addUserInRoleUsersDropDown.js"></script>
     <script src="~/administration/js/removeUserInRoleUsersDropDown.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 }

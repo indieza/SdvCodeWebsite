@@ -22,15 +22,15 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
-            using (var db = new ApplicationDbContext(options))
-            {
-                IProfileService profileService = new ProfileService(db);
-                db.Users.Add(user);
-                await db.SaveChangesAsync();
-                profileService.MakeYourselfAdmin(user.UserName);
+            //using (var db = new ApplicationDbContext(options))
+            //{
+            //    IProfileService profileService = new ProfileService(db);
+            //    db.Users.Add(user);
+            //    await db.SaveChangesAsync();
+            //    profileService.MakeYourselfAdmin(user.UserName);
 
-                Assert.Equal(0, db.UserRoles.Count());
-            }
+            //    Assert.Equal(0, db.UserRoles.Count());
+            //}
         }
 
         [Fact]
@@ -42,16 +42,16 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
-            using (var db = new ApplicationDbContext(options))
-            {
-                IProfileService profileService = new ProfileService(db);
-                db.Users.Add(user);
-                db.Roles.Add(role);
-                await db.SaveChangesAsync();
-                profileService.MakeYourselfAdmin(user.UserName);
+            //using (var db = new ApplicationDbContext(options))
+            //{
+            //    IProfileService profileService = new ProfileService(db);
+            //    db.Users.Add(user);
+            //    db.Roles.Add(role);
+            //    await db.SaveChangesAsync();
+            //    profileService.MakeYourselfAdmin(user.UserName);
 
-                Assert.Equal(1, db.UserRoles.Count());
-            }
+            //    Assert.Equal(1, db.UserRoles.Count());
+            //}
         }
     }
 }

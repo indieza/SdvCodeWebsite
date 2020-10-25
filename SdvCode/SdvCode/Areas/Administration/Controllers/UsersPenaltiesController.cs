@@ -48,9 +48,9 @@ namespace SdvCode.Areas.Administration.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                string username = model.UsersPenaltiesInputModel.BlockedUsername;
+                string username = model.UsersPenaltiesInputModel.Username;
                 var currentUser = await this.userManager.GetUserAsync(this.User);
-                bool isBlocked = await this.usersPenaltiesService.BlockUser(username, currentUser);
+                bool isBlocked = await this.usersPenaltiesService.BlockUser(username, currentUser, model.UsersPenaltiesInputModel.ReasonToBeBlocked);
 
                 if (isBlocked)
                 {
@@ -64,6 +64,7 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("BlockUnblockUser", "UsersPenalties", model);
             }
 
             return this.RedirectToAction("BlockUnblockUser", "UsersPenalties");
@@ -74,7 +75,7 @@ namespace SdvCode.Areas.Administration.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                string username = model.UsersPenaltiesInputModel.UnblockedUsername;
+                string username = model.UsersPenaltiesInputModel.Username;
                 var currentUser = await this.userManager.GetUserAsync(this.User);
                 bool isUnblocked = await this.usersPenaltiesService.UnblockUser(username, currentUser);
 
@@ -90,6 +91,7 @@ namespace SdvCode.Areas.Administration.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("BlockUnblockUser", "UsersPenalties", model);
             }
 
             return this.RedirectToAction("BlockUnblockUser", "UsersPenalties");

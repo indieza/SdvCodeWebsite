@@ -67,7 +67,9 @@
                                         @user.Username
                                     </a>
                                 </td>
-                                <td height="125px">@user.FirstName @user.LastName</td>
+                                <td height="125px">
+                                    @user.FirstName @user.LastName
+                                </td>
                                 <td height="125px">
                                     @foreach (var role in user.Roles.OrderBy(x => x.RoleLevel))
                                     {
@@ -97,9 +99,15 @@
                                         }
                                     }
                                 </td>
-                                <td height="125px">@user.Email - @user.EmailConfirmed.ToString().ToUpper()</td>
-                                <td height="125px">(@user.CountryCode.ToString()) @user.PhoneNumber - @user.PhoneNumberConfirmed.ToString().ToUpper()</td>
-                                <td height="125px">@user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy hh:mm:ss tt")</td>
+                                <td height="125px">
+                                    @user.Email - @user.EmailConfirmed.ToString().ToUpper()
+                                </td>
+                                <td height="125px">
+                                    (@user.CountryCode.ToString()) @user.PhoneNumber - @user.PhoneNumberConfirmed.ToString().ToUpper()
+                                </td>
+                                <td height="125px">
+                                    @user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy hh:mm:ss tt")
+                                </td>
                                 <td height="125px">
                                     @if (@user.IsBlocked)
                                     {
@@ -110,7 +118,9 @@
                                         <span>@user.IsBlocked.ToString().ToUpper()</span>
                                     }
                                 </td>
-                                <td height="125px">@user.Country.Name, @user.State.Name, @user.City.Name, @user.ZipCode.Code</td>
+                                <td height="125px">
+                                    @user.Country.Name, @user.State.Name, @user.City.Name, @user.ZipCode.Code
+                                </td>
                                 <td height="125px" width="120px">
                                     <div style="width: 250px !important; height: 125px; overflow: auto">
                                         @user.AboutMe
@@ -129,7 +139,9 @@
                                         @user.BirthDate.ToLocalTime().ToString("dd-MMMM-yyyy")
                                     }
                                 </td>
-                                <td height="125px">@user.Gender</td>
+                                <td height="125px">
+                                    @user.Gender
+                                </td>
                             </tr>
                         }
                     </tbody>

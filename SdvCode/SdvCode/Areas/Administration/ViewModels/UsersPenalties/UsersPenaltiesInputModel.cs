@@ -3,10 +3,15 @@
 
 namespace SdvCode.Areas.Administration.ViewModels.UsersPenalties
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class UsersPenaltiesInputModel
     {
-        public string BlockedUsername { get; set; }
+        [Required]
+        public string Username { get; set; }
 
-        public string UnblockedUsername { get; set; }
+        [MaxLength(200)]
+        [Display(Name = "Reason To Be Blocked")]
+        public string ReasonToBeBlocked { get; set; }
     }
 }

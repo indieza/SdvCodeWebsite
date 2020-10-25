@@ -75,6 +75,9 @@ namespace SdvCode.Models.User
 
         public bool IsBlocked { get; set; }
 
+        [MaxLength(200)]
+        public string ReasonToBeBlocked { get; set; }
+
         // public ICollection<FavouriteProduct> FavouriteProducts { get; set; } = new HashSet<FavouriteProduct>();
 
         // public ICollection<WishlistProduct> WishlistProducts { get; set; } = new HashSet<WishlistProduct>();

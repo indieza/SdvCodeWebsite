@@ -34,7 +34,7 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
             this.notificationService = notificationService;
         }
 
-        public async Task<bool> BlockUser(string username, ApplicationUser currentUser)
+        public async Task<bool> BlockUser(string username, ApplicationUser currentUser, string reasonToBeBlocked)
         {
             var user = this.db.Users.FirstOrDefault(x => x.UserName == username);
             var adminRole = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
@@ -47,10 +47,11 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
             if (user != null && user.IsBlocked == false)
             {
                 user.IsBlocked = true;
+                user.ReasonToBeBlocked = reasonToBeBlocked ?? "Your profile was banned for some reason. Contact with administrators for more information.";
 
                 var targetUser = await this.db.Users
                         .FirstOrDefaultAsync(x => x.Id == user.Id);
-                var message = "Your profile was banned for some reason. Contact with administrators for more information.";
+                var message = reasonToBeBlocked ?? "Your profile was banned for some reason. Contact with administrators for more information.";
 
                 string notificationId =
                        await this.notificationService
@@ -81,6 +82,7 @@ namespace SdvCode.Areas.Administration.Services.UserPenalties
             if (user != null && user.IsBlocked == true)
             {
                 user.IsBlocked = false;
+                user.ReasonToBeBlocked = string.Empty;
 
                 var targetUser = await this.db.Users
                         .FirstOrDefaultAsync(x => x.Id == user.Id);
