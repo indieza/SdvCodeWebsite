@@ -33,7 +33,7 @@
 <section id="main-container">
     <div class="container">
         <h2 class="headerSwitch"><i class="fas fa-tag"></i> @Model.Category.Name</h2>
-        <p>@Model.Category.Description</p>
+        <p>@Html.Raw(Model.Category.Description)</p>
 
         @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
         {

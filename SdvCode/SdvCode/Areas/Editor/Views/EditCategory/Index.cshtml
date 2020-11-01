@@ -1,7 +1,7 @@
 ﻿@using SdvCode.Areas.Editor.ViewModels
 @model EditCategoryInputModel
 @{
-    ViewData["Title"] = $"Edit {@Model.Name} Category";
+    ViewData["Title"] = $"Edit {Model.Name} Category";
 }
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="form-group col-md-12">
                 <label asp-for="@Model.Description"></label>
-                <textarea asp-for="@Model.Description" class="form-control" placeholder="Description" rows="7"></textarea>
+                <textarea asp-for="@Model.Description" class="form-control edit-with-tinymce" style="resize: vertical" rows="30"></textarea>
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
         </div>
@@ -51,4 +51,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script src="~/lib/tinymce/visualizer.js" type="text/javascript"></script>
 }

@@ -31,6 +31,7 @@ namespace SdvCode.Controllers
         {
             if (!this.ModelState.IsValid)
             {
+                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
                 return this.View(model);
             }
 
