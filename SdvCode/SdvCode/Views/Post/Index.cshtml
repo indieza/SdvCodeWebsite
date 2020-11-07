@@ -1,4 +1,5 @@
 ﻿@model PostViewModel
+
 @{
     ViewData["Title"] = Model.Title;
 
@@ -194,6 +195,10 @@
                     <div class="about-author">
                         <div class="author-img pull-left">
                             <img src=@Model.ApplicationUser.ImageUrl alt="avatar" />
+                            <div class='status-circle-blog-post' id="@(Model.ApplicationUser.UserName)usersBlogPostStatus">
+                                <input type="hidden" value="@Model.ApplicationUser.UserName" />
+                                @*Here go the dot status*@
+                            </div>
                         </div>
                         <div class="author-info">
                             <h3>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName<span>@Model.ApplicationUser.CountryCode.ToString().Split("_")[0], @Model.ApplicationUser.City</span></h3>
