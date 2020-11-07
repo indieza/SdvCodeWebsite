@@ -12,6 +12,7 @@ namespace SdvCode.Areas.Administration.Services.UsersInformation
     public interface IUsersInformationService
     {
         Task<AllUsersViewModel> GetAllUsers();
+
         Task<AllBannedUsersViewModel> GetAllBannedUsers();
     }
 }

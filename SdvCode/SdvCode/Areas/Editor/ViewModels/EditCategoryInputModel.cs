@@ -13,6 +13,7 @@ namespace SdvCode.Areas.Editor.ViewModels
     public class EditCategoryInputModel
     {
         [Required]
+        [Display(Name = "Category name")]
         public string Id { get; set; }
 
         [Required]
@@ -20,7 +21,6 @@ namespace SdvCode.Areas.Editor.ViewModels
         [Display(Name = "Category name")]
         public string Name { get; set; }
 
-        [MaxLength(550)]
         [Display(Name = "Category description")]
         public string Description { get; set; }
 

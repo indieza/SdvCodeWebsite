@@ -1,0 +1,61 @@
+﻿@using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels.ViewModels
+@{
+    ViewData["Title"] = "Blog addons";
+}
+
+@model EditCategoryBaseModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Blog Addons - Edit category</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Edit existing category</h1>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.EditCategoryInputModel.Id"></label>
+                <select class="form-control" asp-for="@this.Model.EditCategoryInputModel.Id" onchange="selectedName(this)">
+                    <option value="" disabled selected>Select Category...</option>
+                    @foreach (var category in this.Model.EditCategoryViewModels)
+                    {
+                        <option value=@category.Id>@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@this.Model.EditCategoryInputModel.Id"></span>
+            </div>
+        </div>
+        <div class="row" id="contentForm" style="display: none">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.EditCategoryInputModel.Name"></label>
+                <input asp-for="@Model.EditCategoryInputModel.Name" class="form-control" placeholder="Name" id="categoryName" />
+                <span asp-validation-for="@Model.EditCategoryInputModel.Name" class="text-danger"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.EditCategoryInputModel.Description"></label>
+                <textarea asp-for="@Model.EditCategoryInputModel.Description" class="form-control edit-with-tinymce" id="categoryDescription"></textarea>
+                <span asp-validation-for="@Model.EditCategoryInputModel.Description" class="text-danger"></span>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="BlogAddons" asp-action="EditExistingCategory" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Edit Category</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script src="~/lib/tinymce/visualizer.js" type="text/javascript"></script>
+    <script src="~/administration/js/editBlogCategoryScript.js"></script>
+}

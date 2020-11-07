@@ -9,8 +9,10 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
     using System.Threading.Tasks;
     using AngleSharp.Common;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels.ViewModels;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Areas.Editor.Services.Category;
+    using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
@@ -48,9 +50,46 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
             return Tuple.Create("Success", string.Format(SuccessMessages.SuccessfullyAddedTag, name));
         }
 
+        public async Task EditExistingCategory(EditCategoryInputModel model)
+        {
+            var category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == model.Id);
+            category.Name = model.Name;
+            category.Description = model.SanitizedDescription;
+            category.UpdatedOn = DateTime.UtcNow;
+            this.db.Categories.Update(category);
+            await this.db.SaveChangesAsync();
+        }
+
+        public ICollection<EditCategoryViewModel> GetAllCategories()
+        {
+            var categories = this.db.Categories.ToList();
+            var result = new List<EditCategoryViewModel>();
+
+            foreach (var category in categories)
+            {
+                result.Add(new EditCategoryViewModel
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                });
+            }
+
+            return result;
+        }
+
         public ICollection<string> GetAllTags()
         {
             return this.db.Tags.Select(x => x.Name).OrderBy(x => x).ToList();
+        }
+
+        public async Task<GetCategoryDataViewModel> GetCategoryById(string categoryId)
+        {
+            var targetCategory = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
+            return new GetCategoryDataViewModel
+            {
+                Name = targetCategory.Name,
+                Description = targetCategory.Description,
+            };
         }
 
         public async Task<Tuple<string, string>> RemoveTag(string name)

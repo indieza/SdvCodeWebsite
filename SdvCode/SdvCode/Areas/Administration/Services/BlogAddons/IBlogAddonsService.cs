@@ -7,6 +7,8 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels.ViewModels;
+    using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Models.Blog;
 
     public interface IBlogAddonsService
@@ -18,5 +20,11 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
         Task<Tuple<string, string>> RemoveTag(string name);
 
         ICollection<string> GetAllTags();
+
+        ICollection<EditCategoryViewModel> GetAllCategories();
+
+        Task<GetCategoryDataViewModel> GetCategoryById(string categoryId);
+
+        Task EditExistingCategory(EditCategoryInputModel model);
     }
 }
