@@ -1,8 +1,4 @@
-﻿@using SdvCode.Areas.UserNotifications.ViewModels.ViewModels
-@using SdvCode.Areas.UserNotifications.Models.Enums
-@using SdvCode.Constraints
-
-@{
+﻿@{
     string username = this.User.Identity.Name;
     ViewData["Title"] = $"{username} Notifications";
     var colors = new Dictionary<string, string>()

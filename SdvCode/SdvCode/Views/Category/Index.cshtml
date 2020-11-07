@@ -1,16 +1,9 @@
-﻿@using SdvCode.ViewModels.Category
-@using SdvCode.Models.User
-@using Microsoft.AspNetCore.Identity
-@using SdvCode.Areas.Administration.Models.Enums
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-@model CategoryViewModel
-@{
+﻿@{
     ViewData["Title"] = Model.Category.Name;
 }
+
+@model CategoryViewModel
+
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>

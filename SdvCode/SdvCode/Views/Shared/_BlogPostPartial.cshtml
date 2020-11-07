@@ -1,14 +1,5 @@
-﻿@using SdvCode.Models.User
-@using Microsoft.AspNetCore.Identity
-@using SdvCode.ViewModels.Post.ViewModels
-@using SdvCode.Areas.Administration.Models.Enums
-@using SdvCode.Models.Enums;
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-@model PostViewModel
+﻿@model PostViewModel
+
 <div class="post">
     <div class="post-image-wrapper">
         <img src=@Model.ImageUrl class="img-responsive" alt="post cover image" />

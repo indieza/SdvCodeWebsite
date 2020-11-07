@@ -1,17 +1,10 @@
-﻿@using SdvCode.Models.User
-@using Microsoft.AspNetCore.Identity
-@using SdvCode.ViewModels.Blog.ViewModels
-@using SdvCode.Areas.Administration.Models.Enums
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-@model BlogViewModel
-@{
+﻿@{
     var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
     ViewData["Title"] = "Blog";
 }
+
+@model BlogViewModel
+
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>

@@ -1,13 +1,8 @@
-﻿@using SdvCode.ViewModels.Profile
-@using SdvCode.ViewModels.Pagination.Profile
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@model FollowersPaginationViewModel
-
-@{
+﻿@{
     ViewData["Title"] = "Followers";
 }
+
+@model FollowersPaginationViewModel
 
 <div class="tab-pane fade in active">
     @foreach (var follower in Model.Followers)

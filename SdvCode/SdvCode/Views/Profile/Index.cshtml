@@ -1,16 +1,8 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using SdvCode.Areas.Administration.Models.Enums
-@using SdvCode.ViewModels.Profile
-@using SdvCode.Models.Enums
-@using SdvCode.Models.User
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@model ProfileViewModel
-@inject UserManager<ApplicationUser> UserManager
-@{
+﻿@{
     ViewData["Title"] = $"{Model.ApplicationUser.Username.Substring(0, 1).ToUpper() + Model.ApplicationUser.Username.Substring(1, Model.ApplicationUser.Username.Length - 1)} Profile";
 }
+
+@model ProfileViewModel
 
 <div class="user-profile">
     <div class="profile-header-background">

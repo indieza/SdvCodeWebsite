@@ -1,6 +1,4 @@
-﻿@using SdvCode.Areas.Administration.ViewModels.DashboardViewModels
-@using SdvCode.Areas.Administration.Models.Enums
-@{
+﻿@{
     ViewData["Title"] = "Dashboard";
     var proportion = (decimal)Model.DashboardViewModel.TotalBannedUsers / Model.DashboardViewModel.TotalUsersCount;
     var bannedUsersPercentage = proportion * 100;

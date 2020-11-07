@@ -1,17 +1,8 @@
-﻿@using SdvCode.Models.User
-@using Microsoft.AspNetCore.Identity
-@using SdvCode.ViewModels.UserPosts
-@using SdvCode.ViewModels.Blog.ViewModels
-@using SdvCode.Areas.Administration.Models.Enums
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-@{
+﻿@{
     var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
     ViewData["Title"] = $"{Model.Action} Posts - {@Model.Username}";
 }
+
 @model UserPostsViewModel
 
 <div id="banner-area">

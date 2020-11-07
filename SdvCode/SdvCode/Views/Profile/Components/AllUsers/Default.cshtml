@@ -1,13 +1,9 @@
-﻿@using SdvCode.ViewModels.Profile
-@using SdvCode.ViewModels.Pagination.AllUsers
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@model AllUsersPaginationViewModel
-
-@{
+﻿@{
     ViewData["Title"] = "All Users";
 }
+
+@model AllUsersPaginationViewModel
+
 <div class="row">
     @foreach (var user in Model.AllUsers)
     {

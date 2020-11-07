@@ -1,9 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using SdvCode.Models.User
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-
-@if (SignInManager.IsSignedIn(User))
+﻿@if (this.SignInManager.IsSignedIn(User))
 {
     <li>
         <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@User.Identity.Name">Profile</a>

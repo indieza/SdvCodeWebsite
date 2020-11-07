@@ -1,12 +1,8 @@
-﻿@using SdvCode.Areas.Administration.Models.Enums
-@using SdvCode.ViewModels.Pagination.Profile
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@model PendingPostsPaginationViewModel
-@{
+﻿@{
     ViewData["Title"] = "Pending Posts";
 }
+
+@model PendingPostsPaginationViewModel
 
 <div class="tab-pane fade in active">
     @foreach (var post in Model.PendingPosts)

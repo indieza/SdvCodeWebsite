@@ -1,18 +1,10 @@
-﻿@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList
-@using SdvCode.ViewModels.Users.ViewModels
-@using SdvCode.Models.Enums
-@using Microsoft.AspNetCore.Identity
-@using SdvCode.Models.User
-@inject UserManager<ApplicationUser> UserManager
-
-@{
+﻿@{
     ViewData["Title"] = "All Users";
     var currentUser = await UserManager.GetUserAsync(this.User);
 }
 
 @model UsersViewModel
+
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
