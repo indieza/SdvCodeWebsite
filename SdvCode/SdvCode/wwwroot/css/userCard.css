@@ -23,13 +23,25 @@
 .user img {
     position: relative;
     margin: 0 auto;
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     border-radius: 90px;
     border: 2px solid #fff;
     bottom: 50px;
     overflow: visible;
     z-index: 5;
+}
+
+.status-circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: grey;
+    border: 2px solid white;
+    bottom: 215px;
+    right: 110px;
+    position: absolute;
+    z-index: 6;
 }
 
 .user p {

@@ -37,11 +37,19 @@
 
         @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
         {
-            <a asp-area="Editor" asp-controller="EditCategory" asp-action="Index" asp-route-id="@Model.Category.Id" class="btn btn-success" type="submit"><i class="fas fa-edit"></i> Edit Category</a>
+            <a asp-area="Editor" asp-controller="EditCategory" asp-action="Index" asp-route-id="@Model.Category.Id" class="btn btn-success" type="submit">
+                <i class="fas fa-edit"></i> Edit Category
+            </a>
         }
+        <br />
+        <br />
         <div>
-            <div class="headerSwitch" style="text-align: right"><i class="fas fa-clock"></i> @Model.Category.CreatedOn.ToString("MMMM dd,yyyy")</div>
-            <div class="headerSwitch" style="text-align: right"><i class="fas fa-edit"></i> @Model.Category.UpdatedOn.ToString("MMMM dd,yyyy")</div>
+            <div class="headerSwitch pull-right" style="text-align: right">
+                <i class="fas fa-clock"></i> @Model.Category.CreatedOn.ToString("MMMM dd,yyyy")
+            </div>
+            <div class="headerSwitch" style="text-align: left">
+                <i class="fas fa-edit"></i> @Model.Category.UpdatedOn.ToString("MMMM dd,yyyy")
+            </div>
         </div>
         <hr />
         <partial name="_TempDataPartial" />

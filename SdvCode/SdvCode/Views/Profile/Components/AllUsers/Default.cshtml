@@ -19,6 +19,10 @@
 
                 <div class="user">
                     <img src=@user.ImageUrl>
+                    <div class='status-circle'>
+                        @*<i class="fas fa-check" style="color: white"></i>*@
+                        <i class="fas fa-times" style="color: white"></i>
+                    </div>
                     <p>@user.FirstName @user.LastName</p>
                     <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" class="allUsersUsername">@@@user.Username</a></p>
                     @if (User.Identity.Name == user.Username)

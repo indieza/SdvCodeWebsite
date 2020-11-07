@@ -14,7 +14,7 @@
         <img src=@Model.ImageUrl class="img-responsive" alt="post cover image" />
         <span class="blog-date">
             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
-                @Model.UpdatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
+                <i class="fas fa-edit"></i> @Model.UpdatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
             </a>
         </span>
     </div>
@@ -143,7 +143,7 @@
     <div class="post-body">
         <p>@Html.Raw(Model.ShortContent)</p>
     </div>
-    <div class="post-footer">
+    <div class="post-footer row" style="padding: 0px 7px 0px 7px">
         <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-primary">
             Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
         </a>
@@ -151,7 +151,7 @@
         {
             @if (!Model.IsFavourite)
             {
-                <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-id="@Model.Id" style="float: right" class="btn btn-primary">
+                <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-id="@Model.Id" class="btn btn-primary pull-right">
                     <i class="far fa-heart"></i> Add to favorite
                 </a>
             }

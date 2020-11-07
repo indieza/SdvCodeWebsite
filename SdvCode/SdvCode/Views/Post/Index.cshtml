@@ -9,7 +9,7 @@
 @{
     ViewData["Title"] = Model.Title;
 
-    async Task DisplayComments(string parentId)
+    async Task DisplayComments(string parentId, int count)
     {
         var comments = this.Model.Comments.Where(x => x.ParentCommentId == parentId);
         if (!comments.Any())
@@ -31,48 +31,42 @@
                         </a>
                     </h4>
                     <div class="comment-date">@comment.UpdatedOn.ToLocalTime().ToString("dd-MMMM-yyyy dddd HH:mm tt")</div>
+
+                    <span class="post-meta-cats">
+                        Comment status:
+                        <font color="@(comment.CommentStatus == CommentStatus.Pending ? "blue" : "green")" size="2"><b>@comment.CommentStatus.ToString()</b></font>
+                    </span>
+                    <p>@Html.Raw(comment.Content)</p>
+                </div>
+                <div class="text-right weight-600">
+                    @if (User.Identity.Name == comment.ApplicationUser.UserName || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                    {
+                        <a asp-area="" asp-controller="Comment" asp-action="EditComment" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left; margin-right: 8px" class="comment-reply">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                    }
+                    @if (comment.ApplicationUser.UserName == User.Identity.Name || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
+                    {
+                        <a asp-area="" asp-controller="Comment" asp-action="DeleteById" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left; margin-right: 8px" class="comment-reply">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    }
                     @if (comment.CommentStatus == CommentStatus.Pending)
                     {
-                        <span class="post-meta-cats">
-                            Comment status:
-                            <font color="blue" size="2"><b>@comment.CommentStatus.ToString()</b></font>
-                        </span>
                         @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
                         {
-                            <a asp-area="Editor" asp-controller="Comment" asp-action="ApproveComment" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: right" class="comment-reply">
+                            <a asp-area="Editor" asp-controller="Comment" asp-action="ApproveComment" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left" class="comment-reply">
                                 <i class="far fa-check-circle"></i> Approve
                             </a>
                         }
                     }
-                    else
-                    {
-                        <span class="post-meta-cats">
-                            Comment status:
-                            <font color="green" size="2"><b>@comment.CommentStatus.ToString()</b></font>
-                        </span>
-                    }
-                    <p>@Html.Raw(comment.Content)</p>
-                    <div class="text-right weight-600">
-                        @if (User.Identity.Name == comment.ApplicationUser.UserName || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
-                        {
-                            <a asp-area="" asp-controller="Comment" asp-action="EditComment" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left; margin-right: 8px" class="comment-reply">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                        }
-                        @if (comment.ApplicationUser.UserName == User.Identity.Name || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
-                        {
-                            <a asp-area="" asp-controller="Comment" asp-action="DeleteById" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left" class="comment-reply">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </a>
-                        }
-                        <a class="comment-reply" onclick="showAddCommentForm('@comment.Id')">
-                            <i class="fa fa-mail-reply"></i> Reply
-                        </a>
-                    </div>
+                    <a class="comment-reply" onclick="showAddCommentForm('@comment.Id')">
+                        <i class="fa fa-mail-reply"></i> Reply
+                    </a>
                 </div>
             </div>
-            <div class="comments-reply collapse" id="@comment.Id">
-                @{ await DisplayComments(comment.Id); }
+            <div class="@(count > 1 ? "" : "comments-reply") collapse" id="@comment.Id">
+                @{ await DisplayComments(comment.Id, count + 1); }
             </div>
         }
     }
@@ -110,7 +104,7 @@
                         <img src=@Model.ImageUrl class="img-responsive" alt="" />
                         <span class="blog-date">
                             <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
-                                @Model.CreatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
+                                <i class="fas fa-clock"></i> @Model.CreatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
                             </a>
                         </span>
                     </div><!-- post image end -->
@@ -265,7 +259,7 @@
                     <div id="post-comments">
                         <div class="comments-counter"><a>@Model.Comments.Count Comments found</a></div>
                         <ul class="comments-list">
-                            @{ await DisplayComments(null); }
+                            @{ await DisplayComments(null, 1); }
                         </ul>
                     </div>
 
