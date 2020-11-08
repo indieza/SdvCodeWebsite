@@ -39,12 +39,14 @@ userStatusConnection.on("UserIsOnline", function (username) {
     let profileStatus = document.getElementById(`${username}userSatus`);
     if (profileStatus) {
         profileStatus.innerText = "Online";
+        document.getElementById("userStatusDot").classList.add("circle", "pulse");
         document.getElementById("userStatusDot").style.backgroundColor = "green";
     }
 
     let allUserProfileStatus = document.getElementById(`${username}allUsersStatus`);
     if (allUserProfileStatus) {
         allUserProfileStatus.style.backgroundColor = "green";
+        allUserProfileStatus.classList.add("circle", "pulse");
         allUserProfileStatus.innerHTML = `
             <input type="hidden" value="${username}" />
             <span class="tooltipUserStatus">User Online!</span>
@@ -54,10 +56,11 @@ userStatusConnection.on("UserIsOnline", function (username) {
     let postDot = document.getElementById(`${username}usersBlogPostStatus`);
     if (postDot) {
         postDot.style.backgroundColor = "green";
+        postDot.classList.add("circle", "pulse");
         postDot.innerHTML = `
             <input type="hidden" value="${username}" />
             <span class="tooltipUserStatus">User Online!</span>
-            <i class="fas fa-check" style="color: white; margin-top: 4px; font-size: x-large;"></i>`;
+            <i class="fas fa-check" style="color: white; margin-top: 2px; font-size: x-large;"></i>`;
     }
 });
 
@@ -65,12 +68,14 @@ userStatusConnection.on("UserIsOffline", function (username) {
     let profileStatus = document.getElementById(`${username}userSatus`);
     if (profileStatus) {
         profileStatus.innerText = "Offline";
+        document.getElementById("userStatusDot").classList.remove("circle", "pulse");
         document.getElementById("userStatusDot").style.backgroundColor = "red";
     }
 
     let allUserProfileStatus = document.getElementById(`${username}allUsersStatus`);
     if (allUserProfileStatus) {
         allUserProfileStatus.style.backgroundColor = "red";
+        allUserProfileStatus.classList.remove("circle", "pulse");
         allUserProfileStatus.innerHTML = `
             <input type="hidden" value="${username}" />
             <span class="tooltipUserStatus">User Offline!</span>
@@ -80,9 +85,10 @@ userStatusConnection.on("UserIsOffline", function (username) {
     let postDot = document.getElementById(`${username}usersBlogPostStatus`);
     if (postDot) {
         postDot.style.backgroundColor = "red";
+        postDot.classList.remove("circle", "pulse");
         postDot.innerHTML = `
             <input type="hidden" value="${username}" />
             <span class="tooltipUserStatus">User Offline!</span>
-            <i class="fas fa-times" style="color: white; margin-top: 4px; font-size: x-large;"></i>`;
+            <i class="fas fa-times" style="color: white; margin-top: 2px; font-size: x-large;"></i>`;
     }
 });

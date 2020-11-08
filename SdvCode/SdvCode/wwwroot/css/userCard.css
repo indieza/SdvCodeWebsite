@@ -74,6 +74,48 @@
         visibility: visible;
     }
 
+.status-circle-blog-post {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: grey;
+    border: 2px solid white;
+    bottom: 0px;
+    right: 35px;
+    position: absolute;
+    z-index: 6;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.circle {
+    border-radius: 50%;
+    box-shadow: 0px 0px 1px 1px #0000001a;
+}
+
+.pulse {
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(51, 217, 178, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(51, 217, 178, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(51, 217, 178, 0);
+    }
+}
+
 .status-circle-blog-post .tooltipUserStatus {
     visibility: hidden;
     width: 120px;
@@ -102,48 +144,6 @@
 .status-circle-blog-post:hover .tooltipUserStatus {
     visibility: visible;
 }
-
-.status-circle-blog-post {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: grey;
-    border: 2px solid white;
-    bottom: 0px;
-    right: 35px;
-    position: absolute;
-    z-index: 6;
-    text-align: center;
-}
-
-    .status-circle-blog-post .tooltipUserStatus {
-        visibility: hidden;
-        width: 120px;
-        background-color: black;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
-        position: absolute;
-        z-index: 1;
-        top: 0px;
-        left: 110%;
-    }
-
-        .status-circle-blog-post .tooltipUserStatus::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            right: 100%;
-            margin-top: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: transparent black transparent transparent;
-        }
-
-    .status-circle-blog-post:hover .tooltipUserStatus {
-        visibility: visible;
-    }
 
 .user p {
     font-size: 1.3em;
