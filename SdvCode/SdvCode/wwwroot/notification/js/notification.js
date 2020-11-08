@@ -28,8 +28,10 @@ notificationConnection.on("ReceiveNotification", function (count, isFirstNotific
             document.querySelector("audio").play();
         }
 
+        document.getElementById("notificationCount").classList.add("notificationCircle", "notificationPulse");
         newTitle = `(${count}) ${title.innerText.substring(bracketIndex + 1, title.innerText.length)}`;
     } else {
+        document.getElementById("notificationCount").classList.remove("notificationCircle", "notificationPulse");
         newTitle = `${title.innerText.substring(bracketIndex + 1, title.innerText.length)}`;
     }
 
