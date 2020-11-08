@@ -15,6 +15,10 @@
 
                 <div class="user">
                     <img src=@user.ImageUrl>
+                    <div class='status-circle' id="@(user.Username)allUsersStatus">
+                        <input type="hidden" value="@user.Username" />
+                        @*Here go the dot status*@
+                    </div>
                     <p>@user.FirstName @user.LastName</p>
                     <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" class="allUsersUsername">@@@user.Username</a></p>
                     @if (User.Identity.Name == user.Username)
