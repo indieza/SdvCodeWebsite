@@ -37,8 +37,6 @@
     <link rel="stylesheet" href="~/css/profileRating.css">
     <link rel="stylesheet" href="~/notification/css/notificationStyle.css">
     <link rel="stylesheet" href="~/userStatus/css/userStatusSheet.css" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/emoji/css/emoji.css" />
 </head>
 <body onload="setSiteTheme(); getLatestBlogPosts();">
     <audio id="notificationAudio">
@@ -232,24 +230,6 @@
         <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
         <script type="text/javascript" src="~/notification/js/notification.js"></script>
         <script type="text/javascript" src="~/userStatus/js/userStatus.js"></script>
-        <script src="~/emoji/js/config.js"></script>
-        <script src="~/emoji/js/emoji-picker.js"></script>
-        <script src="~/emoji/js/jquery.emojiarea.js"></script>
-        <script src="~/emoji/js/util.js"></script>
-        <script>
-            $(function () {
-                // Initializes and creates emoji set from sprite sheet
-                window.emojiPicker = new EmojiPicker({
-                    emojiable_selector: '[data-emojiable=true]',
-                    assetsPath: '~/emoji/img/',
-                    popupButtonClasses: 'fa fa-smile-o'
-                });
-                // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
-                // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
-                // It can be called as many times as necessary; previously converted input fields will not be converted again
-                window.emojiPicker.discover();
-            });
-        </script>
         @RenderSection("Scripts", required: false)
     </div>
 </body>
