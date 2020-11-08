@@ -29,7 +29,7 @@ namespace SdvCode.ViewComponents
             var currentUser = await this.userManager.GetUserAsync(this.HttpContext.User);
             BlogComponentViewModel components = new BlogComponentViewModel
             {
-                RecentPosts = await this.blogComponentService.ExtractRecentPosts(currentUser),
+                RecentPosts = this.blogComponentService.ExtractRecentPosts(currentUser),
                 TopCategories = await this.blogComponentService.ExtractTopCategories(),
                 TopPosts = await this.blogComponentService.ExtractTopPosts(currentUser),
                 TopTags = await this.blogComponentService.ExtractTopTags(),

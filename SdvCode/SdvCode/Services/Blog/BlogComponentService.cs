@@ -80,12 +80,12 @@ namespace SdvCode.Services.Blog
             return recentComments;
         }
 
-        public async Task<List<RecentPostsViewModel>> ExtractRecentPosts(ApplicationUser currentUser)
+        public List<RecentPostsViewModel> ExtractRecentPosts(ApplicationUser currentUser)
         {
             List<Post> posts = new List<Post>();
             if (currentUser != null &&
-                (await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) ||
-                await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
+                (this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()).GetAwaiter().GetResult() ||
+                this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString()).GetAwaiter().GetResult()))
             {
                 posts = this.db.Posts
                     .OrderByDescending(x => x.UpdatedOn)
