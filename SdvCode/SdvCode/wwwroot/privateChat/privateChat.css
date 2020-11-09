@@ -175,5 +175,14 @@
 }
 
 .chat-input {
-    padding-right: 50px !important;
+    padding-right: 35px !important;
+    height: auto !important;
+}
+
+.chat-emoji-icon {
+    float: right;
+    margin-right: 10px;
+    top: -28px;
+    position: relative;
+    font-size: large;
 }
