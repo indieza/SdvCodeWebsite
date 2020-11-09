@@ -87,8 +87,92 @@
                     <div class="row">
                         <div class="col-md-10">
                             <input autocomplete="off" type="text" placeholder="Enter your text" class="form-control chat-input" id="messageInput">
-                            <div class="chat-emoji-icon">
+                            <div class="chat-emoji-icon pop-up-emoji" onclick="myFunction()">
                                 <i class="far fa-smile"></i>
+                                <span class="popuptext" id="myPopup">
+                                    <span>&#128512;</span>
+                                    <span>&#128513;</span>
+                                    <span>&#128514;</span>
+                                    <span>&#128515;</span>
+                                    <span>&#128516;</span>
+                                    <span>&#128517;</span>
+                                    <span>&#128518;</span>
+                                    <span>&#128519;</span>
+                                    <span>&#128520;</span>
+                                    <span>&#128521;</span>
+                                    <span>&#128522;</span>
+                                    <span>&#128523;</span>
+                                    <span>&#128524;</span>
+                                    <span>&#128525;</span>
+                                    <span>&#128526;</span>
+                                    <span>&#128527;</span>
+                                    <span>&#128528;</span>
+                                    <span>&#128529;</span>
+                                    <span>&#128530;</span>
+                                    <span>&#128531;</span>
+                                    <span>&#128532;</span>
+                                    <span>&#128533;</span>
+                                    <span>&#128534;</span>
+                                    <span>&#128535;</span>
+                                    <span>&#128536;</span>
+                                    <span>&#128537;</span>
+                                    <span>&#128538;</span>
+                                    <span>&#128539;</span>
+                                    <span>&#128540;</span>
+                                    <span>&#128541;</span>
+                                    <span>&#128542;</span>
+                                    <span>&#128543;</span>
+                                    <span>&#128544;</span>
+                                    <span>&#128545;</span>
+                                    <span>&#128546;</span>
+                                    <span>&#128547;</span>
+                                    <span>&#128548;</span>
+                                    <span>&#128549;</span>
+                                    <span>&#128550;</span>
+                                    <span>&#128551;</span>
+                                    <span>&#128552;</span>
+                                    <span>&#128553;</span>
+                                    <span>&#128554;</span>
+                                    <span>&#128555;</span>
+                                    <span>&#128556;</span>
+                                    <span>&#128557;</span>
+                                    <span>&#128558;</span>
+                                    <span>&#128559;</span>
+                                    <span>&#128560;</span>
+                                    <span>&#128561;</span>
+                                    <span>&#128562;</span>
+                                    <span>&#128563;</span>
+                                    <span>&#128564;</span>
+                                    <span>&#128565;</span>
+                                    <span>&#128566;</span>
+                                    <span>&#128567;</span>
+                                    <span>&#128577;</span>
+                                    <span>&#128578;</span>
+                                    <span>&#128579;</span>
+                                    <span>&#128580;</span>
+                                    <span>&#129296;</span>
+                                    <span>&#129297;</span>
+                                    <span>&#129298;</span>
+                                    <span>&#129299;</span>
+                                    <span>&#129300;</span>
+                                    <span>&#129301;</span>
+                                    <span>&#129312;</span>
+                                    <span>&#129313;</span>
+                                    <span>&#129314;</span>
+                                    <span>&#129315;</span>
+                                    <span>&#129316;</span>
+                                    <span>&#129317;</span>
+                                    <span>&#129319;</span>
+                                    <span>&#129320;</span>
+                                    <span>&#129321;</span>
+                                    <span>&#129322;</span>
+                                    <span>&#129323;</span>
+                                    <span>&#129324;</span>
+                                    <span>&#129325;</span>
+                                    <span>&#129326;</span>
+                                    <span>&#129327;</span>
+                                    <span>&#129488;</span>
+                                </span>
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -103,4 +187,9 @@
 
 @section Scripts{
     <script src="~/js/privateChat.js"></script>
+    <script>
+        function myFunction() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }</script>
 }
