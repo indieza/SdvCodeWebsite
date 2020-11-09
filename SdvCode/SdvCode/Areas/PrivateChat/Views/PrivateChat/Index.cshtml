@@ -1,5 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Private Chat";
+
+    var icons = new Dictionary<EmojiType, string>()
+{
+        { EmojiType.SmilesAndPeople, "fas fa-smile" },
+        { EmojiType.AnimalsAndNature, "fas fa-tree" },
+        { EmojiType.EatAndDrink, "fas fa-utensils" },
+        { EmojiType.Activities, "fas fa-futbol" },
+        { EmojiType.TravelAndPlaces, "fas fa-car-side" },
+        { EmojiType.Objects, "fas fa-mobile-alt" },
+        { EmojiType.Symbols, "fas fa-trademark" }
+    };
 }
 
 @model PrivateChatViewModel
@@ -93,10 +104,7 @@
                                     @*<input autocomplete="off" class="filter-emoji-input" type="text" placeholder="Filter Emojis" />*@
                                     @foreach (var key in this.Model.Emojis.Keys)
                                     {
-                                        @foreach (var emoji in this.Model.Emojis[key])
-                                        {
-                                            <span>@emoji.Code</span>
-                                        }
+                                        <span><i class="@icons[key] emoji-bar-icon"></i></span>
                                     }
                                 </span>
                             </div>

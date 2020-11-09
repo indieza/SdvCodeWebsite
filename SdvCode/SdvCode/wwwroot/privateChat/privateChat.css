@@ -199,7 +199,7 @@
     /* The actual popup */
     .pop-up-emoji .popupEmojiBox {
         visibility: hidden;
-        width: 160px;
+        width: 185px;
         height: 160px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -211,7 +211,7 @@
         position: absolute;
         z-index: 1;
         bottom: 125%;
-        left: -170%;
+        left: -320%;
         margin-left: -80px;
     }
 
@@ -246,7 +246,7 @@
         animation: fadeIn 1s;
     }
 
-.popupEmojiBox span:hover {
+.popupEmojiBox singleEmoji:hover {
     background-color: #727272;
     padding: 1px 1px 1px 1px;
 }
@@ -276,4 +276,8 @@
     padding: 1px 3px 1px 3px;
     font-size: 10px;
     border-style: none;
+}
+
+.emoji-bar-icon {
+    padding: 0px 2px 0px 1px;
 }
