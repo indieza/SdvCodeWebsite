@@ -197,9 +197,11 @@
 }
 
     /* The actual popup */
-    .pop-up-emoji .popuptext {
+    .pop-up-emoji .popupEmojiBox {
         visibility: hidden;
         width: 160px;
+        height: 160px;
+        overflow-y: auto;
         background-color: #555;
         color: #fff;
         text-align: center;
@@ -212,8 +214,20 @@
         margin-left: -80px;
     }
 
+        .pop-up-emoji .popupEmojiBox::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .pop-up-emoji .popupEmojiBox::-webkit-scrollbar-track {
+            background: #f1f1f1
+        }
+
+        .pop-up-emoji .popupEmojiBox::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
         /* Popup arrow */
-        .pop-up-emoji .popuptext::after {
+        .pop-up-emoji .popupEmojiBox::after {
             content: "";
             position: absolute;
             top: 100%;
@@ -231,6 +245,10 @@
         animation: fadeIn 1s;
     }
 
+.popupEmojiBox span:hover {
+    background-color: #727272;
+    padding: 1px 1px 1px 1px;
+}
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
     from {

@@ -87,9 +87,9 @@
                     <div class="row">
                         <div class="col-md-10">
                             <input autocomplete="off" type="text" placeholder="Enter your text" class="form-control chat-input" id="messageInput">
-                            <div class="chat-emoji-icon pop-up-emoji" onclick="myFunction()">
+                            <div class="chat-emoji-icon pop-up-emoji" onclick="popUpEmoji()">
                                 <i class="far fa-smile"></i>
-                                <span class="popuptext" id="myPopup">
+                                <span class="popupEmojiBox" id="popupEmoji">
                                     <span>&#128512;</span>
                                     <span>&#128513;</span>
                                     <span>&#128514;</span>
@@ -187,9 +187,4 @@
 
 @section Scripts{
     <script src="~/js/privateChat.js"></script>
-    <script>
-        function myFunction() {
-            var popup = document.getElementById("myPopup");
-            popup.classList.toggle("show");
-        }</script>
 }
