@@ -13,6 +13,11 @@ namespace SdvCode.Areas.Administration.ViewModels.EmojiViewModels.InputModels
     public class AddEmojiInputModel
     {
         [Required]
+        [MaxLength(60)]
+        [Display(Name = "Emoji Name")]
+        public string Name { get; set; }
+
+        [Required]
         [MaxLength(15)]
         [Display(Name = "Emoji Unicode")]
         public string Code { get; set; }

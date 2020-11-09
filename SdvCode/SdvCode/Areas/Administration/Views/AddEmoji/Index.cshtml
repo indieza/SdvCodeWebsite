@@ -16,6 +16,11 @@
     <form method="post">
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.Name"></label>
+                <input asp-for="@this.Model.Name" class="form-control" placeholder="Emoji name" />
+                <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.Code"></label>
                 <input asp-for="@this.Model.Code" class="form-control" placeholder="Emoji code" />
                 <span class="text-danger" asp-validation-for="@this.Model.Code"></span>
