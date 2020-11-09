@@ -9,6 +9,8 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using SdvCode.Areas.PrivateChat.Models;
+    using SdvCode.Areas.PrivateChat.Models.Enums;
+    using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
     using SdvCode.Models.User;
 
     public interface IPrivateChatService
@@ -22,5 +24,6 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         Task<string> SendMessageToUser(string fromUsername, string toUsername, string message, string group);
 
         Task ReceiveNewMessage(string fromUsername, string message, string group);
+        Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> GetAllEmojis();
     }
 }

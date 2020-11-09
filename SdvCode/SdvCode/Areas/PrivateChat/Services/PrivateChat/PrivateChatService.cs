@@ -12,6 +12,8 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.PrivateChat.Models;
+    using SdvCode.Areas.PrivateChat.Models.Enums;
+    using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -108,6 +110,33 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             }
 
             return null;
+        }
+
+        public Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> GetAllEmojis()
+        {
+            var result = new Dictionary<EmojiType, ICollection<ChatEmojiViewModel>>();
+
+            foreach (var emojiType in Enum.GetValues(typeof(EmojiType)))
+            {
+                result.Add((EmojiType)emojiType, new List<ChatEmojiViewModel>());
+                var emojis = this.db.Emojis
+                    .Where(x => x.EmojiType == (EmojiType)emojiType)
+                    .OrderBy(x => x.Position)
+                    .ToList();
+
+                foreach (var emoji in emojis)
+                {
+                    result[(EmojiType)emojiType].Add(new ChatEmojiViewModel
+                    {
+                        Id = emoji.Id,
+                        Name = emoji.Name,
+                        Position = emoji.Position,
+                        Code = char.ConvertFromUtf32(emoji.Code),
+                    });
+                }
+            }
+
+            return result;
         }
 
         public async Task<bool> IsUserAbleToChat(string username, string group, ApplicationUser currentUser)

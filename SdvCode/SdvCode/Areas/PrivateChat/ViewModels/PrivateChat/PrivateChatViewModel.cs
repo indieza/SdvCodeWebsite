@@ -6,6 +6,7 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
     using System.Collections;
     using System.Collections.Generic;
     using SdvCode.Areas.PrivateChat.Models;
+    using SdvCode.Areas.PrivateChat.Models.Enums;
     using SdvCode.Models.User;
 
     public class PrivateChatViewModel
@@ -17,5 +18,7 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
         public ICollection<ChatMessage> ChatMessages { get; set; } = new HashSet<ChatMessage>();
 
         public string GroupName { get; set; }
+
+        public Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> Emojis { get; set; } = new Dictionary<EmojiType, ICollection<ChatEmojiViewModel>>();
     }
 }

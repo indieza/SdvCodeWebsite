@@ -53,6 +53,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
                 ToUser = this.db.Users.FirstOrDefault(x => x.UserName == username),
                 ChatMessages = await this.privateChatService.ExtractAllMessages(group),
                 GroupName = group,
+                Emojis = this.privateChatService.GetAllEmojis(),
             };
 
             return this.View(model);

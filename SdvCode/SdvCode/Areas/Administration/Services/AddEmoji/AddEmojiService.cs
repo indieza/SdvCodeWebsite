@@ -34,7 +34,11 @@ namespace SdvCode.Areas.Administration.Services.AddEmoji
             }
             else
             {
-                var lastNumber = await this.db.Emojis.Where(x => x.EmojiType == model.EmojiType).Select(x => x.Position).OrderByDescending(x => x).FirstOrDefaultAsync();
+                var lastNumber = await this.db.Emojis
+                    .Where(x => x.EmojiType == model.EmojiType)
+                    .Select(x => x.Position)
+                    .OrderByDescending(x => x)
+                    .FirstOrDefaultAsync();
                 var emoji = new Emoji
                 {
                     Code = emojiToUtf,
