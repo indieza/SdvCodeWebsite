@@ -74,6 +74,8 @@ namespace SdvCode.Data
 
         public DbSet<UserNotification> UserNotifications { get; set; }
 
+        public DbSet<Emoji> Emojis { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
