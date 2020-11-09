@@ -173,3 +173,7 @@
     -webkit-transition: all .7s;
     transition: all .7s;
 }
+
+.chat-input {
+    padding-right: 50px !important;
+}
