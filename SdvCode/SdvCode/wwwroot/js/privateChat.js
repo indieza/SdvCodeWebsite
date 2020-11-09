@@ -95,8 +95,3 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     }
     event.preventDefault();
 });
-
-function popUpEmoji() {
-    var popup = document.getElementById("popupEmoji");
-    popup.classList.toggle("show");
-}

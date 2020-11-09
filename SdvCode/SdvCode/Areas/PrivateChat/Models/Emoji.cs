@@ -22,8 +22,7 @@
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(15)]
-        public string Code { get; set; }
+        public int Code { get; set; }
 
         [Required]
         public int Position { get; set; }

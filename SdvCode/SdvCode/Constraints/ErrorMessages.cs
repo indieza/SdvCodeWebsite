@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class ErrorMessages
@@ -68,5 +70,7 @@ namespace SdvCode.Constraints
         public const string ProductCategoryAlreadyExist = "\"{0}\" category already exist.";
 
         public const string ProductAlreadyExist = "\"{0}\" product already exist.";
+
+        public const string EmojiAlreadyExist = "\"{0}\" emoji, already exist.";
     }
 }

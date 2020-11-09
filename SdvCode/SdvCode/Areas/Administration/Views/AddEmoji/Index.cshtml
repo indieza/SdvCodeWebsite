@@ -4,6 +4,8 @@
 
 @model AddEmojiInputModel
 
+<partial name="_TempDataPartial" />
+
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Emojis Addons - Add new emoji</h1>
@@ -17,12 +19,12 @@
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.Name"></label>
-                <input asp-for="@this.Model.Name" class="form-control" placeholder="Emoji name" />
+                <input autocomplete="off" asp-for="@this.Model.Name" class="form-control" placeholder="Emoji name" />
                 <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.Code"></label>
-                <input asp-for="@this.Model.Code" class="form-control" placeholder="Emoji code" />
+                <input autocomplete="off" asp-for="@this.Model.Code" class="form-control" placeholder="Emoji code" />
                 <span class="text-danger" asp-validation-for="@this.Model.Code"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
@@ -33,7 +35,7 @@
                 <span class="text-danger" asp-validation-for="@this.Model.EmojiType"></span>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
-                <button asp-area="Administration" asp-controller="AddEmojji" asp-action="AddNewEmoji" class="btn btn-success btn-icon-split">
+                <button asp-area="Administration" asp-controller="AddEmoji" asp-action="AddNewEmoji" class="btn btn-success btn-icon-split">
                     <span class="icon text-white-50">
                         <i class="fas fa-check"></i>
                     </span>

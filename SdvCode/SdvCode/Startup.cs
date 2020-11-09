@@ -26,6 +26,7 @@ namespace SdvCode
     using Microsoft.Extensions.ML;
     using OfficeOpenXml;
     using SdvCode.Areas.Administration.Services;
+    using SdvCode.Areas.Administration.Services.AddEmoji;
     using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.Services.Dashboard;
     using SdvCode.Areas.Administration.Services.DbUsage;
@@ -177,6 +178,7 @@ namespace SdvCode
             services.AddTransient<IBlogPostReport, BlogPostReport>();
             services.AddTransient<IShopReport, ShopReport>();
             services.AddTransient<IUsersInformationService, UsersInformationService>();
+            services.AddTransient<IAddEmojiService, AddEmojiService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();
