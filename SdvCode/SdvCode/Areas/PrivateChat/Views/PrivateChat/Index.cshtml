@@ -3,13 +3,13 @@
 
     var icons = new Dictionary<EmojiType, string>()
 {
-        { EmojiType.SmilesAndPeople, "fas fa-smile" },
-        { EmojiType.AnimalsAndNature, "fas fa-tree" },
-        { EmojiType.EatAndDrink, "fas fa-utensils" },
-        { EmojiType.Activities, "fas fa-futbol" },
-        { EmojiType.TravelAndPlaces, "fas fa-car-side" },
-        { EmojiType.Objects, "fas fa-mobile-alt" },
-        { EmojiType.Symbols, "fas fa-trademark" }
+        { EmojiType.SmilesAndPeople, "😃" },
+        { EmojiType.AnimalsAndNature, "🐶" },
+        { EmojiType.EatAndDrink, "🍏" },
+        { EmojiType.Activities, "⚽" },
+        { EmojiType.TravelAndPlaces, "🚑" },
+        { EmojiType.Objects, "⌚" },
+        { EmojiType.Symbols, "💕" }
     };
 }
 
@@ -98,13 +98,28 @@
                     <div class="row">
                         <div class="col-md-10">
                             <input autocomplete="off" type="text" placeholder="Enter your text" class="form-control chat-input" id="messageInput">
-                            <div class="chat-emoji-icon pop-up-emoji" onclick="popUpEmoji()">
+                            <div class="chat-emoji-icon pop-up-emoji" id="emojiButton">
                                 <i class="far fa-smile"></i>
                                 <span class="popupEmojiBox" id="popupEmoji">
                                     @*<input autocomplete="off" class="filter-emoji-input" type="text" placeholder="Filter Emojis" />*@
-                                    @foreach (var key in this.Model.Emojis.Keys)
+                                    <span class="emojiTypesTabs">
+                                        @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
+                                        {
+                                            <span onclick="changeEmojisTabs('@this.Model.Emojis.Keys.ElementAt(i).ToString()')" class="emoji-type-tab">
+                                                <span id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab" class="singleEmoji" style="background-color: @(i == 0 ? "#727272" : ""); height: 22px;">
+                                                    @icons[this.Model.Emojis.Keys.ElementAt(i)]
+                                                </span>
+                                            </span>
+                                        }
+                                    </span>
+                                    @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                     {
-                                        <span><i class="@icons[key] emoji-bar-icon"></i></span>
+                                        <span class="tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
+                                            @foreach (var emoji in this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)])
+                                            {
+                                                <span class="singleEmoji" onclick="addEmoji(this)">@emoji.Code</span>
+                                            }
+                                        </span>
                                     }
                                 </span>
                             </div>

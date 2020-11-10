@@ -199,7 +199,7 @@
     /* The actual popup */
     .pop-up-emoji .popupEmojiBox {
         visibility: hidden;
-        width: 185px;
+        width: 215px;
         height: 160px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -211,7 +211,7 @@
         position: absolute;
         z-index: 1;
         bottom: 125%;
-        left: -320%;
+        left: -448%;
         margin-left: -80px;
     }
 
@@ -246,10 +246,25 @@
         animation: fadeIn 1s;
     }
 
-.popupEmojiBox singleEmoji:hover {
+.singleEmoji:hover {
     background-color: #727272;
     padding: 1px 1px 1px 1px;
 }
+
+.singleEmoji {
+    display: inline-flex;
+    align-items: center;
+}
+
+.emoji-type-tab {
+    display: inline-flex;
+    align-items: center;
+}
+
+    .emoji-type-tab:hover {
+        background-color: #727272;
+        padding: 1px 1px 1px 1px;
+    }
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
     from {
@@ -279,5 +294,9 @@
 }
 
 .emoji-bar-icon {
-    padding: 0px 2px 0px 1px;
+    padding: 0px 1px 0px 1px;
+}
+
+.emojiTypesTabs {
+    border: 1px solid whitesmoke;
 }
