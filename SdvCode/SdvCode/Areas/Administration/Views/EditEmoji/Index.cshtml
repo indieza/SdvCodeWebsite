@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Edit Emoji";
+}
+
+@model EditEmojiBaseModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Emojis Addons - Edit emoji</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Edit emoji - please select the emoji and edit it</h1>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.EditEmojiInputModel.Id"></label>
+                <select asp-for="@this.Model.EditEmojiInputModel.Id" class="form-control" onchange="selectedName(this)">
+                    <option value="" disabled selected>Select emoji name...</option>
+                    @foreach (var emoji in this.Model.EditEmojiViewModel)
+                    {
+                        <option value=@emoji.Id>@emoji.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@this.Model.EditEmojiInputModel.Id" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row" id="contentForm" style="display: none">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.EditEmojiInputModel.Name"></label>
+                <input asp-for="@Model.EditEmojiInputModel.Name" class="form-control" placeholder="Name" id="emojiName" />
+                <span asp-validation-for="@Model.EditEmojiInputModel.Name" class="text-danger"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.EditEmojiInputModel.Code"></label>
+                <input asp-for="@Model.EditEmojiInputModel.Code" class="form-control" placeholder="Name" id="emojiCode" />
+                <span asp-validation-for="@Model.EditEmojiInputModel.Code" class="text-danger"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.EditEmojiInputModel.EmojiType"></label>
+                <select class="form-control" asp-for="@Model.EditEmojiInputModel.EmojiType" asp-items="Html.GetEnumSelectList<EmojiType>()" id="emojiType">
+                    <option value="" selected disabled>Select Emoji Type...</option>
+                </select>
+                <span asp-validation-for="@Model.EditEmojiInputModel.EmojiType" class="text-danger"></span>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="EditEmoji" asp-action="EditEmoji" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Edit Emoji</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+    <input type="hidden" />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/administration/js/editEmoji.js"></script>
+}

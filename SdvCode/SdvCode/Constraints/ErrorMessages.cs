@@ -72,5 +72,7 @@ namespace SdvCode.Constraints
         public const string ProductAlreadyExist = "\"{0}\" product already exist.";
 
         public const string EmojiAlreadyExist = "\"{0}\" emoji, already exist.";
+
+        public const string EmojiDoesNotExist = "Emoji ID does not exist.";
     }
 }
