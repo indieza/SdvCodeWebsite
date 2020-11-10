@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Areas.Administration.ViewModels.EmojiViewModels.InputModels
+namespace SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.InputModels
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +10,12 @@ namespace SdvCode.Areas.Administration.ViewModels.EmojiViewModels.InputModels
     using System.Threading.Tasks;
     using SdvCode.Areas.PrivateChat.Models.Enums;
 
-    public class AddEmojiInputModel
+    public class EditEmojiInputModel
     {
+        [Required]
+        [Display(Name = "Emoji Name")]
+        public string Id { get; set; }
+
         [Required]
         [MaxLength(60)]
         [Display(Name = "Emoji Name")]
@@ -21,9 +25,6 @@ namespace SdvCode.Areas.Administration.ViewModels.EmojiViewModels.InputModels
         [MaxLength(15)]
         [Display(Name = "Emoji Unicode")]
         public string Code { get; set; }
-
-        [Required]
-        public int Position { get; set; }
 
         [Required]
         [EnumDataType(typeof(EmojiType))]

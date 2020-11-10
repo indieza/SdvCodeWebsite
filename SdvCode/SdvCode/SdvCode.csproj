@@ -1938,6 +1938,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Administration\ViewModels\AddEmojiViewModels\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\ShopViewModels\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />

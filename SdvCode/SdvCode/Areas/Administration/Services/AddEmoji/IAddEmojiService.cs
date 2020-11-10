@@ -7,7 +7,7 @@ namespace SdvCode.Areas.Administration.Services.AddEmoji
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.EmojiViewModels.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.AddEmojiViewModels.InputModels;
 
     public interface IAddEmojiService
     {

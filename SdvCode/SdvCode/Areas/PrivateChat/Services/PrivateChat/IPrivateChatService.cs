@@ -24,6 +24,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         Task<string> SendMessageToUser(string fromUsername, string toUsername, string message, string group);
 
         Task ReceiveNewMessage(string fromUsername, string message, string group);
+
         Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> GetAllEmojis();
     }
 }

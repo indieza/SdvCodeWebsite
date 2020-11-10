@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Areas.Administration.ViewModels.EmojiViewModels.ViewModels
+namespace SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Administration.ViewModels.EmojiViewModels.ViewModels
     using System.Threading.Tasks;
     using SdvCode.Areas.PrivateChat.Models.Enums;
 
-    public class GetEmojiDataViewModel
+    public class GetEditEmojiDataViewModel
     {
         public string Name { get; set; }
 

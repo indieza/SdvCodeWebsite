@@ -8,8 +8,8 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.Administration.ViewModels.EmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EmojiViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
 
@@ -62,10 +62,10 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
             return result;
         }
 
-        public async Task<GetEmojiDataViewModel> GetEmojiById(string emojiId)
+        public async Task<GetEditEmojiDataViewModel> GetEmojiById(string emojiId)
         {
             var emoji = await this.db.Emojis.FirstOrDefaultAsync(x => x.Id == emojiId);
-            return new GetEmojiDataViewModel
+            return new GetEditEmojiDataViewModel
             {
                 Name = emoji.Name,
                 EmojiType = emoji.EmojiType,

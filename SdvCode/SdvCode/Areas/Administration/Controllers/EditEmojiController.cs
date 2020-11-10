@@ -1,4 +1,7 @@
-﻿namespace SdvCode.Areas.Administration.Controllers
+﻿// Copyright (c) SDV Code Project. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace SdvCode.Areas.Administration.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +10,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Services.EditEmoji;
-    using SdvCode.Areas.Administration.ViewModels.EmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EmojiViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.ViewModels;
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]
@@ -36,7 +39,7 @@
         [HttpGet]
         public async Task<IActionResult> GetEmojiData(string emojiId)
         {
-            GetEmojiDataViewModel section = await this.editEmojiService.GetEmojiById(emojiId);
+            GetEditEmojiDataViewModel section = await this.editEmojiService.GetEmojiById(emojiId);
             return new JsonResult(section);
         }
 
