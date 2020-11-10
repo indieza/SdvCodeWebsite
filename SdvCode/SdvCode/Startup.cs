@@ -30,6 +30,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.Services.Dashboard;
     using SdvCode.Areas.Administration.Services.DbUsage;
+    using SdvCode.Areas.Administration.Services.DeleteEmoji;
     using SdvCode.Areas.Administration.Services.EditEmoji;
     using SdvCode.Areas.Administration.Services.PendingComments;
     using SdvCode.Areas.Administration.Services.PendingPosts;
@@ -181,6 +182,7 @@ namespace SdvCode
             services.AddTransient<IUsersInformationService, UsersInformationService>();
             services.AddTransient<IAddEmojiService, AddEmojiService>();
             services.AddTransient<IEditEmojiService, EditEmojiService>();
+            services.AddTransient<IDeleteEmojiService, DeleteEmojiService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class SuccessMessages
@@ -92,5 +94,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyAddedEmoji = "You successfully add \"{0}\" emoji.";
 
         public const string SuccessfullyEditedEmoji = "You successfully edit \"{0}\" emoji.";
+
+        public const string SuccessfullyDeleteEmoji = "Successfully delete \"{0}\" emoji.";
     }
 }

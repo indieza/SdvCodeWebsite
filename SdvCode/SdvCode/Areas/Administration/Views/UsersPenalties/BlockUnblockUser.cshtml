@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@Model.UsersPenaltiesInputModel.ReasonToBeBlocked"></label>
-                <textarea class="form-control" asp-for="@Model.UsersPenaltiesInputModel.ReasonToBeBlocked" rows="100" style="max-height: 200px"></textarea>
+                <textarea placeholder="Type reason to block the user..." class="form-control" asp-for="@Model.UsersPenaltiesInputModel.ReasonToBeBlocked" rows="100" style="max-height: 200px"></textarea>
                 <span asp-validation-for="@Model.UsersPenaltiesInputModel.ReasonToBeBlocked" class="text-danger"></span>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="UsersPenalties" asp-action="BlockUser" class="btn btn-danger btn-icon-split">
                     <span class="icon text-white-50">
-                        <i class="fas fa-check"></i>
+                        <i class="fas fa-ban"></i>
                     </span>
                     <span class="text">Block User</span>
                 </button>
@@ -79,7 +79,7 @@
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="UsersPenalties" asp-action="UnblockUser" class="btn btn-success btn-icon-split">
                     <span class="icon text-white-50">
-                        <i class="fas fa-check"></i>
+                        <i class="fas fa-unlock"></i>
                     </span>
                     <span class="text">Unblock user</span>
                 </button>
@@ -94,14 +94,14 @@
     <form method="post">
         <button asp-area="Administration" asp-controller="UsersPenalties" asp-action="BlockAllUsers" class="btn btn-danger btn-icon-split">
             <span class="icon text-white-50">
-                <i class="fas fa-check"></i>
+                <i class="fas fa-ban"></i>
             </span>
             <span class="text">Block all users</span>
         </button>
 
         <button asp-area="Administration" asp-controller="UsersPenalties" asp-action="UnBlockAllUsers" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
-                <i class="fas fa-check"></i>
+                <i class="fas fa-unlock"></i>
             </span>
             <span class="text">Unblock all users</span>
         </button>
