@@ -32,6 +32,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.DbUsage;
     using SdvCode.Areas.Administration.Services.DeleteEmoji;
     using SdvCode.Areas.Administration.Services.EditEmoji;
+    using SdvCode.Areas.Administration.Services.EditEmojiPosition;
     using SdvCode.Areas.Administration.Services.PendingComments;
     using SdvCode.Areas.Administration.Services.PendingPosts;
     using SdvCode.Areas.Administration.Services.Shop;
@@ -183,6 +184,7 @@ namespace SdvCode
             services.AddTransient<IAddEmojiService, AddEmojiService>();
             services.AddTransient<IEditEmojiService, EditEmojiService>();
             services.AddTransient<IDeleteEmojiService, DeleteEmojiService>();
+            services.AddTransient<IEditEmojiPositionService, EditEmojiPositionService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();

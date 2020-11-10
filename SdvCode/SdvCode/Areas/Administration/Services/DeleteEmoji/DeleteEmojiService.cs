@@ -31,16 +31,16 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
             if (emoji != null)
             {
                 this.db.Emojis.Remove(emoji);
-                await this.db.SaveChangesAsync();
+                this.db.SaveChanges();
 
                 var targetToUpdate = this.db.Emojis
                     .Where(x => x.EmojiType == emojiType)
                     .OrderBy(x => x.Position)
                     .ToList();
 
-                for (int i = 1; i <= targetToUpdate.Count(); i++)
+                for (int i = 0; i < targetToUpdate.Count(); i++)
                 {
-                    targetToUpdate[i].Position = i;
+                    targetToUpdate[i].Position = i + 1;
                 }
 
                 this.db.Emojis.UpdateRange(targetToUpdate);
