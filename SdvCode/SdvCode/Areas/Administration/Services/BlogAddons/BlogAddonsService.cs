@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
     using System.Threading.Tasks;
     using AngleSharp.Common;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.BlogAddons.ViewModels;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Areas.Editor.Services.Category;
     using SdvCode.Areas.Editor.ViewModels;

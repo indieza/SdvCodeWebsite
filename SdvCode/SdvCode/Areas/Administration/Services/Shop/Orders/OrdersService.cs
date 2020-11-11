@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using MoreLinq.Extensions;
-    using SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.Shop.ViewModels;
     using SdvCode.Areas.SdvShop.Models.Enums;
     using SdvCode.Data;
 

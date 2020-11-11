@@ -10,7 +10,7 @@ namespace SdvCode.Areas.Administration.Services.PendingComments
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.ML;
-    using SdvCode.Areas.Administration.ViewModels.PendingCommentsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.PendingComments;
     using SdvCode.Data;
     using SdvCode.MlModels.CommentModels;
     using SdvCode.Models.Enums;

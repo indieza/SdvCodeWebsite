@@ -184,7 +184,11 @@
             </div>
         </div>
         <div class="widget widget-categories">
-            <h3 class="widget-title">Blog Categories</h3>
+            <h3 class="widget-title">
+                <a asp-area="" asp-controller="AllCategories" asp-action="Index">
+                    Blog Categories
+                </a>
+            </h3>
             <ul class="category-list clearfix" style="height: 250px; overflow: auto">
                 @foreach (var category in Model.TopCategories)
                 {
@@ -193,7 +197,7 @@
             </ul>
         </div>
         <div class="widget widget-tags">
-            <h3 class="widget-title">Popular Tags</h3>
+            <h3 class="widget-title">Blog Tags</h3>
             <ul class="unstyled clearfix">
                 @foreach (var tag in Model.TopTags)
                 {

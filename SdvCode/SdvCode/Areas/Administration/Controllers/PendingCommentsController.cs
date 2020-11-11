@@ -10,7 +10,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.Extensions.ML;
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Areas.Administration.Services.PendingComments;
-    using SdvCode.Areas.Administration.ViewModels.PendingCommentsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.PendingComments;
     using SdvCode.Constraints;
     using SdvCode.MlModels.CommentModels;
 

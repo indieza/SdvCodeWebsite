@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "Blog Categories";
+}
+
+@model List<AllCategoriesViewModel>
+
+<div id="banner-area">
+    <img src="images/banner/banner2.jpg" alt="" />
+    <div class="parallax-overlay"></div>
+    <!-- Subpage title start -->
+    <div class="banner-title-content">
+        <div class="text-center">
+            <h2>All Blog Categories</h2>
+            <ul class="breadcrumb">
+                <li>Home</li>
+                <li>
+                    <a asp-area="" asp-controller="Blog" asp-action="Index">
+                        Blog
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="AllCategories" asp-action="Index">
+                        Blog Categories
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div><!-- Subpage title end -->
+</div><!-- Banner area end -->
+<!-- Portfolio item start -->
+<section id="portfolio-item">
+    <div class="container">
+        <!-- Portfolio item row start -->
+        @foreach (var category in this.Model)
+        {
+            <div class="row">
+                <!-- Portfolio item slider start -->
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div class="portfolio-slider">
+                        <div class="flexportfolio flexslider">
+                            <ul class="slides" style="position: relative">
+                                @if (category.PostsImages.Count > 0)
+                                {
+                                    @foreach (var image in category.PostsImages)
+                                    {
+                                        <li>
+                                            <img src="@image.Key" alt="">
+                                            <div class="all-categories-float-heading">
+                                                <p>@image.Value</p>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li>
+                                        <img src="~/images/NoBlogPostsYet.png" alt="">
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Portfolio item slider end -->
+                <!-- sidebar start -->
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="sidebar">
+                        <div class="portfolio-desc">
+                            <h3>@category.Name</h3>
+                            <p>
+                                @Html.Raw(category.Description)
+                            </p>
+                            <br />
+                            <h5>
+                                Blog Posts Statistics
+                            </h5>
+                            <p>
+                                <span style="color: green; font-weight: bold">
+                                    <i class="fas fa-check-circle"></i> Approved
+                                </span>: @category.ApprovedPostsCount
+                            </p>
+                            <p>
+                                <span style="color: blue; font-weight: bold">
+                                    <i class="fas fa-pause-circle"></i> Pending
+                                </span>: @category.PendingPostsCount
+                            </p>
+                            <p>
+                                <span style="color: red; font-weight: bold">
+                                    <i class="fas fa-ban"></i> Banned
+                                </span>: @category.BannedPostsCount
+                            </p>
+                            <br />
+                            <h3 class="widget-title">Other Information</h3>
+                            <p>
+                                <span style="font-weight: bold">
+                                    <i class="fas fa-clock"></i>  Created On:
+                                </span>@category.CreatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
+                            </p>
+                            <p>
+                                <span style="font-weight: bold">
+                                    <i class="fas fa-edit"></i> Updated On:
+                                </span>@category.UpdatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
+                            </p>
+                            <p>
+                                <a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@category.Id" class="project-btn btn btn-primary">
+                                    Read More
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- sidebar end -->
+            </div><!-- Portfolio item row end -->
+            <hr />
+        }
+    </div><!-- Container end -->
+</section><!-- Portfolio item end -->
+
+<div class="gap-40"></div>

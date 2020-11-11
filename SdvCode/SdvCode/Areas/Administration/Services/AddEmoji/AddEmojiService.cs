@@ -9,8 +9,8 @@ namespace SdvCode.Areas.Administration.Services.AddEmoji
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Server.IIS.Core;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.Administration.ViewModels.AddEmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.AddEmoji.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmoji.InputModels;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Constraints;
     using SdvCode.Data;

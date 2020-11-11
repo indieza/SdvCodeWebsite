@@ -5,7 +5,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
-    using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
+    using SdvCode.Areas.Administration.ViewModels.Dashboard;
 
     public interface IDashboardService
     {

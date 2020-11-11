@@ -8,8 +8,8 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.Administration.ViewModels.DeleteEmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.DeleteEmojiViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.DeleteEmoji.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.DeleteEmoji.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
 

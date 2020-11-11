@@ -8,8 +8,8 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmoji.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmoji.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
 

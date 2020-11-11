@@ -11,8 +11,8 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using SdvCode.Areas.Administration.Services.EditEmojiPosition;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiPositionViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiPositionViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiPosition.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiPosition.ViewModels;
     using SdvCode.Areas.PrivateChat.Models.Enums;
     using SdvCode.Constraints;
 

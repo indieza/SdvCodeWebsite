@@ -10,8 +10,8 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Services.EditEmoji;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmoji.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmoji.ViewModels;
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]

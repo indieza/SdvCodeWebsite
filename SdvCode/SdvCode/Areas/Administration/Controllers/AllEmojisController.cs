@@ -11,7 +11,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.Services.AllEmojis;
-    using SdvCode.Areas.Administration.ViewModels.AllEmojisViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.AllEmojis.ViewModels;
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]

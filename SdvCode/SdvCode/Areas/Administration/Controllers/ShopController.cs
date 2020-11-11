@@ -14,7 +14,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Areas.Administration.Services.Shop;
     using SdvCode.Areas.Administration.Services.Shop.Orders;
     using SdvCode.Areas.Administration.Services.Shop.ShopDbUsage;
-    using SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.Shop.ViewModels;
     using SdvCode.Areas.SdvShop.Models.Enums;
     using SdvCode.Areas.SdvShop.ViewModels.Category.InputModels;
     using SdvCode.Areas.SdvShop.ViewModels.Category.ViewModels;

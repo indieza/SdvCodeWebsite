@@ -9,8 +9,8 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.BlogReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports.BlogReports;
     using SdvCode.Data;
     using Twilio.Rest.Api.V2010.Account.Usage.Record;
 

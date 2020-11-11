@@ -7,8 +7,8 @@ namespace SdvCode.Areas.Administration.Services.EditEmojiPosition
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiPositionViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiPositionViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiPosition.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiPosition.ViewModels;
     using SdvCode.Areas.PrivateChat.Models.Enums;
 
     public interface IEditEmojiPositionService

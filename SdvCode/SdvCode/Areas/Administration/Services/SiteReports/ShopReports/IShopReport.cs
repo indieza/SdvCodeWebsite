@@ -7,7 +7,7 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.ShopReports
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.ShopReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports.ShopReports;
 
     public interface IShopReport
     {

@@ -8,8 +8,8 @@ namespace SdvCode.Areas.Administration.Services.EditEmojiPosition
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiPositionViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiPositionViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiPosition.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmojiPosition.ViewModels;
     using SdvCode.Areas.PrivateChat.Models.Enums;
     using SdvCode.Data;
     using Twilio.Rest.Api.V2010.Account.Usage.Record;

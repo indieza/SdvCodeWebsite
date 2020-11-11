@@ -7,8 +7,8 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.BlogReports
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.BlogReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports.BlogReports;
 
     public interface IBlogPostReport
     {

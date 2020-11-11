@@ -68,6 +68,7 @@ namespace SdvCode
     using SdvCode.MlModels.PostModels;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;
+    using SdvCode.Services.AllCategories;
     using SdvCode.Services.Blog;
     using SdvCode.Services.Category;
     using SdvCode.Services.Cloud;
@@ -201,6 +202,7 @@ namespace SdvCode
             services.AddTransient<IUserPostsService, UserPostsService>();
             services.AddTransient<IPrivateChatService, PrivateChatService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IAllCategoriesService, AllCategoriesService>();
 
             // Register User Notification Services
             services.AddTransient<INotificationService, NotificationService>();

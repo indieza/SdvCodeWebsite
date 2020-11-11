@@ -7,8 +7,8 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.DeleteEmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.DeleteEmojiViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.DeleteEmoji.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.DeleteEmoji.ViewModels;
 
     public interface IDeleteEmojiService
     {

@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.Models.Enums;
-    using SdvCode.Areas.Administration.ViewModels.DashboardViewModels;
+    using SdvCode.Areas.Administration.ViewModels.Dashboard;
     using SdvCode.Data;
     using SdvCode.Models.User;
 

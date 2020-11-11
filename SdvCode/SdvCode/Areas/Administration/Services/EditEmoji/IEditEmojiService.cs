@@ -7,8 +7,8 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.EditEmojiViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmoji.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.EditEmoji.ViewModels;
 
     public interface IEditEmojiService
     {

@@ -7,7 +7,7 @@ namespace SdvCode.Areas.Administration.Services.AllEmojis
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.AllEmojisViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.AllEmojis.ViewModels;
     using SdvCode.Areas.PrivateChat.Models.Enums;
 
     public interface IAllEmojisService

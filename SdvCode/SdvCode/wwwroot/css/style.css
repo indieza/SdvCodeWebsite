@@ -88,6 +88,21 @@ h1, h2, h3 {
     height: 100%;
 }
 
+.all-categories-float-heading {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(169, 169, 169, 0.5);
+    border-radius: 20px;
+    color: white;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+    .all-categories-float-heading p {
+        opacity: 1;
+    }
+
 .body-inner {
     position: relative;
     overflow: hidden;

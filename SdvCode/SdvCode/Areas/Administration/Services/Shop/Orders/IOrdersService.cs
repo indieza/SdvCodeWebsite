@@ -7,7 +7,7 @@ namespace SdvCode.Areas.Administration.Services.Shop.Orders
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.ShopViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.Shop.ViewModels;
 
     public interface IOrdersService
     {

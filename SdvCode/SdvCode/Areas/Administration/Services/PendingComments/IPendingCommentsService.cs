@@ -8,7 +8,7 @@ namespace SdvCode.Areas.Administration.Services.PendingComments
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Extensions.ML;
-    using SdvCode.Areas.Administration.ViewModels.PendingCommentsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.PendingComments;
     using SdvCode.MlModels.CommentModels;
 
     public interface IPendingCommentsService

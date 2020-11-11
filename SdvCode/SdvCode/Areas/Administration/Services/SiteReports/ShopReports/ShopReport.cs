@@ -8,7 +8,7 @@ namespace SdvCode.Areas.Administration.Services.SiteReports.ShopReports
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.ShopReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports.ShopReports;
     using SdvCode.Data;
 
     public class ShopReport : IShopReport

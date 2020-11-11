@@ -11,8 +11,8 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.Services.DeleteEmoji;
-    using SdvCode.Areas.Administration.ViewModels.DeleteEmojiViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.DeleteEmojiViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.DeleteEmoji.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.DeleteEmoji.ViewModels;
     using SdvCode.Constraints;
 
     [Area(GlobalConstants.AdministrationArea)]

@@ -11,7 +11,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.ML;
     using SdvCode.Areas.Administration.Services.PendingPosts;
-    using SdvCode.Areas.Administration.ViewModels.PendingPostsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.PendingPosts;
     using SdvCode.Constraints;
     using SdvCode.MlModels.PostModels;
 

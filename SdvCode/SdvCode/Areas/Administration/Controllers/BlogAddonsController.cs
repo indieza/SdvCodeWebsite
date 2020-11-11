@@ -11,8 +11,8 @@ namespace SdvCode.Areas.Administration.Controllers
     using Microsoft.AspNetCore.Mvc;
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Areas.Administration.Services.BlogAddons;
-    using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels.InputModels;
-    using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.BlogAddons.InputModels;
+    using SdvCode.Areas.Administration.ViewModels.BlogAddons.ViewModels;
     using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Constraints;
 

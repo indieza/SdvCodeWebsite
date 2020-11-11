@@ -8,7 +8,7 @@ namespace SdvCode.Areas.Administration.Services.PendingPosts
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Extensions.ML;
-    using SdvCode.Areas.Administration.ViewModels.PendingPostsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.PendingPosts;
     using SdvCode.MlModels.PostModels;
 
     public interface IPendingPostsService

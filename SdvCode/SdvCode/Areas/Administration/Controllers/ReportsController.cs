@@ -14,9 +14,9 @@ namespace SdvCode.Areas.Administration.Controllers
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.Services.SiteReports.BlogReports;
     using SdvCode.Areas.Administration.Services.SiteReports.ShopReports;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.BlogReports;
-    using SdvCode.Areas.Administration.ViewModels.SiteReportsViewModels.ShopReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports.BlogReports;
+    using SdvCode.Areas.Administration.ViewModels.SiteReports.ShopReports;
     using SdvCode.Constraints;
     using SdvCode.Models.Blog;
 

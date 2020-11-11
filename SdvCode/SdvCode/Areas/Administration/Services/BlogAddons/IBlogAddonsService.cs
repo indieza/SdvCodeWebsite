@@ -7,7 +7,7 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Areas.Administration.ViewModels.BlogAddonsViewModels.ViewModels;
+    using SdvCode.Areas.Administration.ViewModels.BlogAddons.ViewModels;
     using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Models.Blog;
 

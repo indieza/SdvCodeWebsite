@@ -10,7 +10,7 @@ namespace SdvCode.Areas.Administration.Services.PendingPosts
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.ML;
-    using SdvCode.Areas.Administration.ViewModels.PendingPostsViewModels;
+    using SdvCode.Areas.Administration.ViewModels.PendingPosts;
     using SdvCode.Data;
     using SdvCode.MlModels.PostModels;
     using SdvCode.Models.Blog;
