@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Emojis addons";
+    var emojiTypeNames = new Dictionary<EmojiType, string>()
+{
+        { EmojiType.Activities, "Activities" },
+        { EmojiType.AnimalsAndNature, "Animals And Nature" },
+        { EmojiType.EatAndDrink, "Eat And Drink" },
+        { EmojiType.Objects, "Objects" },
+        { EmojiType.SmilesAndPeople, "Smiles And People" },
+        { EmojiType.Symbols, "Symbols" },
+        { EmojiType.TravelAndPlaces, "Travel And Places" }
+    };
+}
+
+@model AllEmojisViewModel
+
+<link href="~/administration/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Emojis Information</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">All Emojis</h1>
+    </div>
+
+    @foreach (var key in this.Model.AllEmojisViewModels.Keys.OrderBy(x => x))
+    {
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Information For Each Emoji - Type "@emojiTypeNames[key]"</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Emoji Type</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Position</th>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Emoji Type</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var emoji in this.Model.AllEmojisViewModels[key].OrderBy(x => x.Position))
+                            {
+                                <tr onmouseover="markTableRow()">
+                                    <td>
+                                        @emoji.Position
+                                    </td>
+                                    <td>
+                                        @emoji.Code
+                                    </td>
+                                    <td>
+                                        @emoji.Name
+                                    </td>
+                                    <td>
+                                        @emojiTypeNames[emoji.EmojiType]
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script src="~/administration/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/administration/js/demo/datatables-demo.js"></script>
+    <script src="~/administration/js/dataTableScripts.js"></script>
+}

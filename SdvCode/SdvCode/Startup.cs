@@ -27,6 +27,7 @@ namespace SdvCode
     using OfficeOpenXml;
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Areas.Administration.Services.AddEmoji;
+    using SdvCode.Areas.Administration.Services.AllEmojis;
     using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.Services.Dashboard;
     using SdvCode.Areas.Administration.Services.DbUsage;
@@ -185,6 +186,7 @@ namespace SdvCode
             services.AddTransient<IEditEmojiService, EditEmojiService>();
             services.AddTransient<IDeleteEmojiService, DeleteEmojiService>();
             services.AddTransient<IEditEmojiPositionService, EditEmojiPositionService>();
+            services.AddTransient<IAllEmojisService, AllEmojisService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();
