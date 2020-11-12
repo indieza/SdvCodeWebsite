@@ -3,6 +3,10 @@
 
 namespace SdvCode.Areas.Administration.Services.AddChatTheme
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using CloudinaryDotNet;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.ViewModels.AddChatTheme.InputModels;
@@ -10,10 +14,6 @@ namespace SdvCode.Areas.Administration.Services.AddChatTheme
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Services.Cloud;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class AddChatThemeService : IAddChatThemeService
     {
