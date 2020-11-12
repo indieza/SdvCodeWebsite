@@ -14,7 +14,7 @@ namespace SdvCode.Areas.Administration.Services.DeleteChatTheme
     {
         ICollection<DeleteChatThemeViewModel> GetAllChatThemes();
 
-        Task<GetThemeDataViewModel> GetThemeById(int themeId);
+        Task<GetDeleteChatThemeDataViewModel> GetThemeById(string themeId);
 
         Task<Tuple<bool, string>> DeleteChatTheme(DeleteChatThemeInputModel model);
     }

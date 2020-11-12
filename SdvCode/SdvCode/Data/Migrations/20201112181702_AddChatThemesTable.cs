@@ -9,21 +9,19 @@ namespace SdvCode.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<string>(
                 name: "ChatThemeId",
                 table: "Groups",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "ChatThemes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 30, nullable: false),
                     Url = table.Column<string>(nullable: false),
-                    GroupId = table.Column<int>(nullable: false),
+                    GroupId = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -40,7 +38,8 @@ namespace SdvCode.Data.Migrations
                 name: "IX_ChatThemes_GroupId",
                 table: "ChatThemes",
                 column: "GroupId",
-                unique: true);
+                unique: true,
+                filter: "[GroupId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

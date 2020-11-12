@@ -162,10 +162,8 @@ namespace SdvCode.Data.Migrations
 
             modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.ChatTheme", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
@@ -219,8 +217,8 @@ namespace SdvCode.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ChatThemeId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChatThemeId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(100)")

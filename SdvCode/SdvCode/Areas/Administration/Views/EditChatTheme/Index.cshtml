@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Chat addons";
+}
+
+@model EditChatThemeBaseModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chat Addons - Edit existing chat theme</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Edit existing chat theme</h1>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.EditChatThemeInput.Id"></label>
+                <select class="form-control" asp-for="@this.Model.EditChatThemeInput.Id" onchange="selectedName(this)">
+                    <option disabled selected>Select theme name...</option>
+                    @foreach (var theme in this.Model.EditChatThemeViewModels)
+                    {
+                        <option value="@theme.Id">@theme.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@this.Model.EditChatThemeInput.Id"></span>
+            </div>
+        </div>
+        <hr />
+        <div id="contentForm" style="display: none">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 mb-4">
+                    <label asp-for="@Model.EditChatThemeInput.Name"></label>
+                    <input asp-for="@Model.EditChatThemeInput.Name" class="form-control" placeholder="Theme Name" id="themeName" autocomplete="off" />
+                    <span asp-validation-for="@Model.EditChatThemeInput.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 mb-4">
+                    <img style="width: 100%; height: 350px; object-fit: cover; object-position: 50% 50%;" id="themeImage" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 mb-4">
+                    <input asp-for="@Model.EditChatThemeInput.Image" type="file" />
+                    <span asp-validation-for="@Model.EditChatThemeInput.Image" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 mb-4">
+                    <button asp-area="Administration" asp-controller="EditChatTheme" asp-action="EditChatTheme" class="btn btn-danger btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-edit"></i>
+                        </span>
+                        <span class="text">Edit Theme</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <hr />
+</div>
+<input type="hidden" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/administration/js/editChatTheme.js"></script>
+}

@@ -1,5 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class SuccessMessages
@@ -99,5 +101,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyAddedChatTheme = "Successfully add a new chat theme - \"{0}\".";
 
         public const string SuccessfullyDeleteChatTheme = "Successfully delete \"{0}\" chat theme.";
+
+        public const string SuccessfullyEditChatTheme = "Successfully edit \"{0}\" chat theme.";
     }
 }

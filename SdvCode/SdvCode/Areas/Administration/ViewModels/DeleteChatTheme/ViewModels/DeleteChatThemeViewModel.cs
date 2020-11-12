@@ -10,7 +10,7 @@ namespace SdvCode.Areas.Administration.ViewModels.DeleteChatTheme.ViewModels
 
     public class DeleteChatThemeViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
     }

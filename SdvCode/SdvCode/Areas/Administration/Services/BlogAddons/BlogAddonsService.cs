@@ -97,7 +97,7 @@ namespace SdvCode.Areas.Administration.Services.BlogAddons
             var targetTag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
             if (targetTag == null)
             {
-                return Tuple.Create("Error", string.Format(ErrorMessages.TagDoesNotExist, name));
+                return Tuple.Create("Error", ErrorMessages.TagDoesNotExist);
             }
 
             this.db.Tags.Remove(targetTag);

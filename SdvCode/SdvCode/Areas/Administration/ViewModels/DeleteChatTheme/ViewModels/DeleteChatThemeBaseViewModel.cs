@@ -11,7 +11,7 @@ namespace SdvCode.Areas.Administration.ViewModels.DeleteChatTheme.ViewModels
 
     public class DeleteChatThemeBaseViewModel
     {
-        public ICollection<DeleteChatThemeViewModel> DeleteChatThemeView { get; set; } = new HashSet<DeleteChatThemeViewModel>();
+        public ICollection<DeleteChatThemeViewModel> DeleteChatThemeViewModels { get; set; } = new HashSet<DeleteChatThemeViewModel>();
 
         public DeleteChatThemeInputModel DeleteChatThemeInputModel { get; set; } =
             new DeleteChatThemeInputModel();

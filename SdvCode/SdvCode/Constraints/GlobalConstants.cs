@@ -74,5 +74,7 @@ namespace SdvCode.Constraints
         public const int NotificationOnClick = 5;
 
         public const int MaxChatNotificationsPerUser = 4;
+
+        public const string ChatThemeName = "{0}-ChatTheme";
     }
 }

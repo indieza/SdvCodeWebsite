@@ -31,16 +31,16 @@ namespace SdvCode.Areas.Administration.Controllers
             var model = new DeleteChatThemeBaseViewModel
             {
                 DeleteChatThemeInputModel = new DeleteChatThemeInputModel(),
-                DeleteChatThemeView = this.removeChatThemeService.GetAllChatThemes(),
+                DeleteChatThemeViewModels = this.removeChatThemeService.GetAllChatThemes(),
             };
 
             return this.View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ExtractThemeData(int themeId)
+        public async Task<IActionResult> ExtractThemeData(string themeId)
         {
-            GetThemeDataViewModel section = await this.removeChatThemeService.GetThemeById(themeId);
+            GetDeleteChatThemeDataViewModel section = await this.removeChatThemeService.GetThemeById(themeId);
             return new JsonResult(section);
         }
 

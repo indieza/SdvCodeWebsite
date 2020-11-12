@@ -46,6 +46,12 @@
     <Compile Remove="Data\Migrations\20200416143748_InitialCreateForShop.Designer.cs" />
     <Compile Remove="Data\Migrations\20200521072139_AddUserActionStatusColumn.cs" />
     <Compile Remove="Data\Migrations\20200521072139_AddUserActionStatusColumn.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201112143643_AddChatThemesTable.cs" />
+    <Compile Remove="Data\Migrations\20201112143643_AddChatThemesTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201112151626_UpdateForeignKeysInChatThemes.cs" />
+    <Compile Remove="Data\Migrations\20201112151626_UpdateForeignKeysInChatThemes.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201112180408_UpdateChatThemeIdValue.cs" />
+    <Compile Remove="Data\Migrations\20201112180408_UpdateChatThemeIdValue.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

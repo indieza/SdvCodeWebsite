@@ -20,7 +20,7 @@ namespace SdvCode.Areas.PrivateChat.Models
         public string Name { get; set; }
 
         [ForeignKey(nameof(ChatTheme))]
-        public int? ChatThemeId { get; set; }
+        public string ChatThemeId { get; set; }
 
         public ChatTheme ChatTheme { get; set; }
 

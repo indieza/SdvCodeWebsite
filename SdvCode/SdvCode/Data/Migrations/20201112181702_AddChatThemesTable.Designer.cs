@@ -10,7 +10,7 @@ using SdvCode.Data;
 namespace SdvCode.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201112143643_AddChatThemesTable")]
+    [Migration("20201112181702_AddChatThemesTable")]
     partial class AddChatThemesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,12 +164,10 @@ namespace SdvCode.Data.Migrations
 
             modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.ChatTheme", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -184,7 +182,8 @@ namespace SdvCode.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[GroupId] IS NOT NULL");
 
                     b.ToTable("ChatThemes");
                 });
@@ -220,8 +219,8 @@ namespace SdvCode.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ChatThemeId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChatThemeId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(100)")

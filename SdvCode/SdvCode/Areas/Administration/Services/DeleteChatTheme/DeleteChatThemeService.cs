@@ -37,7 +37,9 @@ namespace SdvCode.Areas.Administration.Services.DeleteChatTheme
                     string.Format(ErrorMessages.ChatThemeDoesNotAlreadyExist, model.Name.ToUpper()));
             }
 
-            ApplicationCloudinary.DeleteImage(this.cloudinary, model.Name);
+            ApplicationCloudinary.DeleteImage(
+                this.cloudinary,
+                string.Format(GlobalConstants.ChatThemeName, targetTheme.Id));
             this.db.ChatThemes.Remove(targetTheme);
             await this.db.SaveChangesAsync();
 
@@ -62,11 +64,11 @@ namespace SdvCode.Areas.Administration.Services.DeleteChatTheme
             return result;
         }
 
-        public async Task<GetThemeDataViewModel> GetThemeById(int themeId)
+        public async Task<GetDeleteChatThemeDataViewModel> GetThemeById(string themeId)
         {
             var theme = await this.db.ChatThemes.FirstOrDefaultAsync(x => x.Id == themeId);
 
-            return new GetThemeDataViewModel
+            return new GetDeleteChatThemeDataViewModel
             {
                 Name = theme.Name,
                 ImageUrl = theme.Url,

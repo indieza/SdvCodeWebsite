@@ -8,7 +8,7 @@ namespace SdvCode.Areas.Administration.ViewModels.DeleteChatTheme.ViewModels
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class GetThemeDataViewModel
+    public class GetDeleteChatThemeDataViewModel
     {
         public string Name { get; set; }
 

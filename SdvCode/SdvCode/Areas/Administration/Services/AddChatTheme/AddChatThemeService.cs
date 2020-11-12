@@ -38,12 +38,15 @@ namespace SdvCode.Areas.Administration.Services.AddChatTheme
                     string.Format(ErrorMessages.ChatThemeAlreadyExist, model.Name.ToUpper()));
             }
 
-            var imageUrl = await ApplicationCloudinary.UploadImage(this.cloudinary, model.Image, model.Name);
             targetTheme = new ChatTheme
             {
                 Name = model.Name,
-                Url = imageUrl,
             };
+            var imageUrl = await ApplicationCloudinary.UploadImage(
+                this.cloudinary,
+                model.Image,
+                string.Format(GlobalConstants.ChatThemeName, targetTheme.Id));
+            targetTheme.Url = imageUrl;
 
             this.db.ChatThemes.Add(targetTheme);
             await this.db.SaveChangesAsync();

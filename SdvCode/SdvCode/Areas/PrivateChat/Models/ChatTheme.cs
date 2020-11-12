@@ -13,8 +13,13 @@ namespace SdvCode.Areas.PrivateChat.Models
 
     public class ChatTheme
     {
+        public ChatTheme()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Required]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MaxLength(30)]
