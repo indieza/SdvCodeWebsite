@@ -52,6 +52,8 @@ namespace SdvCode.Data
 
         public DbSet<UserGroup> UsersGroups { get; set; }
 
+        public DbSet<ChatTheme> ChatThemes { get; set; }
+
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
         public DbSet<RecommendedFriend> RecommendedFriends { get; set; }
@@ -175,6 +177,11 @@ namespace SdvCode.Data
                 k.OrderId,
                 k.ProductId,
             });
+
+            builder.Entity<Group>().HasOne(x => x.ChatTheme)
+                .WithOne(x => x.Group)
+                .HasForeignKey<ChatTheme>(x => x.GroupId)
+                .IsRequired(false);
 
             base.OnModelCreating(builder);
         }
