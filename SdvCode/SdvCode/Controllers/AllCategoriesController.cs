@@ -9,8 +9,10 @@ namespace SdvCode.Controllers
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Constraints;
     using SdvCode.Services.AllCategories;
     using SdvCode.ViewModels.AllCategories.ViewModels;
+    using X.PagedList;
 
     [Authorize]
     public class AllCategoriesController : Controller
@@ -22,11 +24,13 @@ namespace SdvCode.Controllers
             this.allCategoriesService = allCategoriesService;
         }
 
-        public IActionResult Index()
+        [Route("AllCategories/{page?}")]
+        public IActionResult Index(int? page)
         {
-            ICollection<AllCategoriesViewModel> model = this.allCategoriesService.GetAllBlogCategories();
+            var pageNumber = page ?? 1;
+            IEnumerable<AllCategoriesViewModel> model = this.allCategoriesService.GetAllBlogCategories();
 
-            return this.View(model);
+            return this.View(model.ToPagedList(pageNumber, GlobalConstants.BlogCategoriesOnPage));
         }
     }
 }

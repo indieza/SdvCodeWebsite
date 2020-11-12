@@ -1943,7 +1943,6 @@
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="ViewModels\AllCategories\InputModels\" />
-    <Folder Include="Views\AllCategories\Components\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 

@@ -2,10 +2,10 @@
     ViewData["Title"] = "Blog Categories";
 }
 
-@model List<AllCategoriesViewModel>
+@model IEnumerable<AllCategoriesViewModel>
 
 <div id="banner-area">
-    <img src="images/banner/banner2.jpg" alt="" />
+    <img src="~/images/banner/banner2.jpg" alt="" />
     <div class="parallax-overlay"></div>
     <!-- Subpage title start -->
     <div class="banner-title-content">
@@ -113,6 +113,12 @@
             </div><!-- Portfolio item row end -->
             <hr />
         }
+        <div class="row" style="text-align: center">
+            @Html.PagedListPager((IPagedList)Model,
+                    page => Url.Action("Index", "AllCategories",
+            new { page = page }),
+            PagedListRenderOptions.OnlyShowFivePagesAtATime)
+        </div>
     </div><!-- Container end -->
 </section><!-- Portfolio item end -->
 
