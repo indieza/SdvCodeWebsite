@@ -36,10 +36,10 @@
                 div.innerHTML += `
                     <div class="row emojiElements">
                         <div class="col-xl-1 col-md-1 mb-4">
-                            <input class="form-control" type="text" placeholder="Code" value="${currentEmoji.code}" readonly="true"/>
+                            <input class="form-control" type="text" placeholder="Code" value="${currentEmoji.code}" readonly />
                         </div>
                         <div class="col-xl-9 col-md-9 mb-4">
-                            <input class="form-control" type="text" placeholder="Name" value="${currentEmoji.name}" readonly="true"/>
+                            <input class="form-control" type="text" placeholder="Name" value="${currentEmoji.name}" readonly />
                         </div>
                         <div class="col-xl-2 col-md-2 mb-4">
                             <input id="${currentEmoji.id}position" class="form-control" type="number" min="1" placeholder="0"  value="${currentEmoji.position}" onchange="positionChange(this)"/>
