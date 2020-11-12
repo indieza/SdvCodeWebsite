@@ -161,11 +161,11 @@
                 Others
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOthers" aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmojiAddons" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-icons"></i>
                     <span>Emojis Addons</span>
                 </a>
-                <div id="collapseOthers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseEmojiAddons" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Add/Remove/Edit Emojis:</h6>
                         <a asp-area="Administration" asp-controller="AddEmoji" asp-action="Index" class="collapse-item">Add Emoji</a>
@@ -173,6 +173,18 @@
                         <a asp-area="Administration" asp-controller="EditEmojiPosition" asp-action="Index" class="collapse-item">Edit Emoji Position</a>
                         <a asp-area="Administration" asp-controller="AllEmojis" asp-action="Index" class="collapse-item">All Emojis</a>
                         <a asp-area="Administration" asp-controller="DeleteEmoji" asp-action="Index" class="collapse-item">Delete Emoji</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseChatAddons" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Chat Addons</span>
+                </a>
+                <div id="collapseChatAddons" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Add/Remove Themes:</h6>
+                        <a asp-area="Administration" asp-controller="AddChatTheme" asp-action="Index" class="collapse-item">Add Theme</a>
                     </div>
                 </div>
             </li>

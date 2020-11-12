@@ -1,5 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class ErrorMessages
@@ -71,5 +73,7 @@ namespace SdvCode.Constraints
         public const string EmojiAlreadyExist = "\"{0}\" emoji, already exist.";
 
         public const string EmojiDoesNotExist = "Emoji ID does not exist.";
+
+        public const string ChatThemeAlreadyExist = "\"{0}\" chat theme name already exist.";
     }
 }
