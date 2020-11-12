@@ -44,7 +44,7 @@
                                     @foreach (var image in category.PostsImages)
                                     {
                                         <li>
-                                            <img src="@image.Key" alt="">
+                                            <img style="width: 100%; height: 350px; object-fit: cover; object-position: 50% 50%;" src="@image.Key" alt="">
                                             <div class="all-categories-float-heading">
                                                 <p>@image.Value</p>
                                             </div>
@@ -54,7 +54,7 @@
                                 else
                                 {
                                     <li>
-                                        <img src="~/images/NoBlogPostsYet.png" alt="">
+                                        <img style="width: 100%; height: 350px; object-fit: cover; object-position: 50% 50%;" src="~/images/NoBlogPostsYet.png" alt="">
                                     </li>
                                 }
                             </ul>
