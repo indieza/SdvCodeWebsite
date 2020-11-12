@@ -22,7 +22,7 @@ namespace SdvCode.Services.AllCategories
 
         public ICollection<AllCategoriesViewModel> GetAllBlogCategories()
         {
-            var categories = this.db.Categories.ToList();
+            var categories = this.db.Categories.OrderBy(x => x.Name).ToList();
             var result = new List<AllCategoriesViewModel>();
 
             foreach (var category in categories)
