@@ -3,7 +3,7 @@
 **SDV Code Website** is my defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (February-April 2020). The website is part of a major **"SDV PROJECT"** project, and it consists of 2 parts (**SdvCode** and **SdvFitness**). Each of two parts have an online **store which is a Single Page Application (SPA)**.
 
 ## &copy; SdvCode&trade; Logo
-![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1587571752/SDV_Logo_yjizy9.png)
+![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1605256646/SDV_Logo_fkpahd.png)
 
 ## :pencil2: Overview
 
@@ -46,7 +46,7 @@
 - Moq
 
 ## :wrench: DB Diagram
-![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1592430038/Diagram_pseqgk.png)
+![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1605257543/Diagram_qox653.png)
 
 ## :dash: Road To
 - WebRTC vide chat
