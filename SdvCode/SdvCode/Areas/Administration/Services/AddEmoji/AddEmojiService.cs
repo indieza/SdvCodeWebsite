@@ -31,7 +31,7 @@ namespace SdvCode.Areas.Administration.Services.AddEmoji
 
         public async Task<Tuple<bool, string>> AddEmoji(AddEmojiInputModel model)
         {
-            if (this.db.Emojis.Any(x => x.Name.ToLower() == model.Name.ToLower()))
+            if (this.db.Emojis.Any(x => x.Name.ToUpper() == model.Name.ToUpper() && x.EmojiType == model.EmojiType))
             {
                 return Tuple.Create(false, string.Format(ErrorMessages.EmojiAlreadyExist, model.Name.ToUpper()));
             }

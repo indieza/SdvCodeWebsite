@@ -28,7 +28,7 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
 
         public async Task<Tuple<bool, string>> EditEmoji(EditEmojiInputModel model)
         {
-            if (this.db.Emojis.Any(x => x.Name == model.Name && x.EmojiType == model.EmojiType))
+            if (this.db.Emojis.Any(x => x.Name.ToUpper() == model.Name.ToUpper() && x.EmojiType == model.EmojiType))
             {
                 return Tuple.Create(false, string.Format(ErrorMessages.EmojiAlreadyExist, model.Name.ToUpper()));
             }
