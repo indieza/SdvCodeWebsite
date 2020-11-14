@@ -1945,6 +1945,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\AddChatTheme\ViewModels\" />
+    <Folder Include="Areas\Administration\ViewModels\AddEmojis\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmoji\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AllEmojis\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />

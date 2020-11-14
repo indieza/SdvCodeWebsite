@@ -103,5 +103,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyDeleteChatTheme = "Successfully delete \"{0}\" chat theme.";
 
         public const string SuccessfullyEditChatTheme = "Successfully edit \"{0}\" chat theme.";
+
+        public const string SuccessfullyAddedEmojis = "Successfully add\"{0}\" emojis, \"{1}\" of them already exist.";
     }
 }

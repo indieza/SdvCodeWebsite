@@ -14,6 +14,7 @@
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
+            document.getElementById("emojiSection").style.display = "block";
             $("#emojiImage").attr("src", data.url);
         },
         error: function (msg) {

@@ -29,6 +29,11 @@
                 <span class="text-danger" asp-validation-for="@this.Model.DeleteEmojiInputModel.Id"></span>
             </div>
         </div>
+        <div class="row" id="emojiSection" style="display: none">
+            <div class="col-xl-1 col-md-1 mb-4">
+                <img style="width: 2.4em;" id="emojiImage" />
+            </div>
+        </div>
         <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="DeleteEmoji" asp-action="DeleteEmoji" class="btn btn-danger btn-icon-split">
@@ -37,11 +42,6 @@
                     </span>
                     <span class="text">Delete Emoji</span>
                 </button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-1 col-md-1 mb-4">
-                <img style="width: 2.4em;" id="emojiImage" />
             </div>
         </div>
     </form>

@@ -35,9 +35,6 @@ namespace SdvCode.Areas.PrivateChat.Models
         [EnumDataType(typeof(EmojiType))]
         public EmojiType EmojiType { get; set; }
 
-        [ForeignKey(nameof(EmojiSkin))]
-        public string EmojiSkinId { get; set; }
-
-        public EmojiSkin EmojiSkin { get; set; }
+        public ICollection<EmojiSkin> EmojiSkins { get; set; } = new HashSet<EmojiSkin>();
     }
 }

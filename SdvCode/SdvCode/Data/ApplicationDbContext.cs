@@ -185,10 +185,11 @@ namespace SdvCode.Data
                 .HasForeignKey<ChatTheme>(x => x.GroupId)
                 .IsRequired(false);
 
-            builder.Entity<Emoji>().HasOne(x => x.EmojiSkin)
+            builder.Entity<Emoji>()
+                .HasMany(x => x.EmojiSkins)
                 .WithOne(x => x.Emoji)
-                .HasForeignKey<EmojiSkin>(x => x.EmojiId)
-                .IsRequired(false);
+                .HasForeignKey(x => x.EmojiId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }
