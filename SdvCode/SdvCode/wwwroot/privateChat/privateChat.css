@@ -275,11 +275,11 @@
     width: 1.4em;
 }
 
-.singleEmojiForInput {
+/*.singleEmojiForInput {
     display: inline-flex;
     align-items: center;
     width: 1.4em;
-}
+}*/
 
 .emoji-type-tab {
     display: inline-flex;

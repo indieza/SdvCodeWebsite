@@ -42,5 +42,6 @@ function changeEmojisTabs(emojiType) {
 }
 
 function addEmoji(emojiSpan) {
-    document.getElementById("messageInput").innerHTML += emojiSpan.innerHTML;
+    let src = emojiSpan.children[0].src;
+    document.getElementById("messageInput").innerHTML += `<img style="width: 1.4em;" src="${src}" /> `;
 }
