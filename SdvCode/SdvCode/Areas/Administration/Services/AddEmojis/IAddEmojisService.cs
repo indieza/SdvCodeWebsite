@@ -3,11 +3,11 @@
 
 namespace SdvCode.Areas.Administration.Services.AddEmojis
 {
-    using SdvCode.Areas.Administration.ViewModels.AddEmojis.InputModels;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SdvCode.Areas.Administration.ViewModels.AddEmojis.InputModels;
 
     public interface IAddEmojisService
     {

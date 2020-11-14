@@ -3,13 +3,14 @@
 
     var icons = new Dictionary<EmojiType, string>()
 {
-        { EmojiType.SmilesAndPeople, "😃" },
-        { EmojiType.AnimalsAndNature, "🐶" },
-        { EmojiType.EatAndDrink, "🍏" },
-        { EmojiType.Activities, "⚽" },
-        { EmojiType.TravelAndPlaces, "🚑" },
-        { EmojiType.Objects, "⌚" },
-        { EmojiType.Symbols, "💕" }
+        { EmojiType.SmilesAndPeople, "../../../../images/Emojis/SmilesAndPeople.png" },
+        { EmojiType.AnimalsAndNature, "../../../../images/Emojis/AnimalsAndNature.png" },
+        { EmojiType.EatAndDrink, "../../../../images/Emojis/EatAndDrink.png" },
+        { EmojiType.Activities, "../../../../images/Emojis/Activities.png" },
+        { EmojiType.TravelAndPlaces, "../../../../images/Emojis/TravelAndPlaces.png" },
+        { EmojiType.Objects, "../../../../images/Emojis/Objects.png" },
+        { EmojiType.Symbols, "../../../../images/Emojis/Symbols.png" },
+        {EmojiType.Flags, "../../../../images/Emojis/Flags.png" }
     };
 }
 
@@ -57,7 +58,7 @@
                                             <div class="media-body pad-hor speech-right">
                                                 <div class="speech">
                                                     <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.FromUser.UserName" class="media-heading">@Model.FromUser.UserName</a>
-                                                    <p>@message.Content</p>
+                                                    <p>@Html.Raw(message.Content)</p>
                                                     <p class="speech-time">
                                                         <i class="fa fa-clock-o fa-fw"></i> @message.SendedOn
                                                     </p>
@@ -76,7 +77,7 @@
                                                 <div class="media-body pad-hor">
                                                     <div class="speech">
                                                         <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ToUser.UserName" class="media-heading">@Model.ToUser.UserName</a>
-                                                        <p>@message.Content</p>
+                                                        <p>@Html.Raw(message.Content)</p>
                                                         <p class="speech-time">
                                                             <i class="fa fa-clock-o fa-fw"></i>@message.SendedOn
                                                         </p>
@@ -90,14 +91,17 @@
                             @*Here Goose your messages*@
                         </ul>
                     </div>
-                    <div class="nano-pane"><div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div></div>
+                    <div class="nano-pane">
+                        <div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div>
+                    </div>
                 </div>
 
                 <!--Widget footer-->
                 <div class="panel-footer">
                     <div class="row">
-                        <div class="col-md-10">
-                            <input autocomplete="off" type="text" placeholder="Enter your text" class="form-control chat-input" id="messageInput">
+                        <div class="col-md-10 col-xs-9">
+                            <div class="chat-input" contenteditable="true" id="messageInput"></div>
+                            @*<input autocomplete="off" type="text" placeholder="Enter your text" class="form-control chat-input" id="messageInput">*@
                             <div class="chat-emoji-icon pop-up-emoji" id="emojiButton">
                                 <i class="far fa-smile"></i>
                                 <span class="popupEmojiBox" id="popupEmoji">
@@ -105,10 +109,8 @@
                                     <span class="emojiTypesTabs">
                                         @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                         {
-                                            <span onclick="changeEmojisTabs('@this.Model.Emojis.Keys.ElementAt(i).ToString()')" class="emoji-type-tab">
-                                                <span id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab" class="singleEmoji" style="background-color: @(i == 0 ? "#727272" : ""); height: 22px;">
-                                                    @icons[this.Model.Emojis.Keys.ElementAt(i)]
-                                                </span>
+                                            <span style="margin: 0px 3px 0px 3px">
+                                                <img onclick="changeEmojisTabs('@this.Model.Emojis.Keys.ElementAt(i).ToString()')" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab" class="singleEmoji emoji-type-tab" style="background-color: @(i == 0 ? "#727272" : "");" src="@icons[this.Model.Emojis.Keys.ElementAt(i)]" />
                                             </span>
                                         }
                                     </span>
@@ -117,14 +119,16 @@
                                         <span class="tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
                                             @foreach (var emoji in this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)])
                                             {
-                                                <span class="singleEmoji" onclick="addEmoji(this)">@emoji.Url</span>
+                                                <span onclick="addEmoji(this)">
+                                                    <img style="width: 1.4em;" class="singleEmojiForInput" src="@emoji.Url" />
+                                                </span>
                                             }
                                         </span>
                                     }
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-xs-3">
                             <button class="btn btn-info btn-block" type="submit" id="sendButton">Send</button>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ function updateScroll() {
 document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, image, message) {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    var msg = message;//message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     let dateTime = new Date()
     let formattedDate =
         `${dateTime.getDate()}-${(dateTime.getMonth() + 1)}-${dateTime.getFullYear()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
@@ -36,7 +36,7 @@ connection.on("ReceiveMessage", function (user, image, message) {
 });
 
 connection.on("SendMessage", function (user, image, message) {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    var msg = message;//message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     let dateTime = new Date()
     let formattedDate =
         `${dateTime.getDate()}-${(dateTime.getMonth() + 1)}-${dateTime.getFullYear()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
@@ -79,7 +79,7 @@ connection.start().then(function () {
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var toUser = document.getElementById("toUser").textContent;
     var fromUser = document.getElementById("fromUser").textContent;
-    var message = document.getElementById("messageInput").value;
+    var message = document.getElementById("messageInput").innerHTML;
     var group = document.getElementById("groupName").textContent;
 
     if (message) {
@@ -93,5 +93,6 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
         document.getElementById("messageInput").value = "";
     }
+    document.getElementById("messageInput").innerHTML = "";
     event.preventDefault();
 });

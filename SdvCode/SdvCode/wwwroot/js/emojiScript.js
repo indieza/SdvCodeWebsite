@@ -23,10 +23,10 @@ function changeEmojisTabs(emojiType) {
     let tabs = document.querySelectorAll(".emoji-type-tab");
 
     for (let tab of tabs) {
-        if (tab.children[0].id == `${emojiType}-Tab`) {
-            tab.children[0].style.backgroundColor = "#727272";
+        if (tab.id == `${emojiType}-Tab`) {
+            tab.style.backgroundColor = "#727272";
         } else {
-            tab.children[0].style.backgroundColor = "";
+            tab.style.backgroundColor = "";
         }
     }
 
@@ -42,5 +42,5 @@ function changeEmojisTabs(emojiType) {
 }
 
 function addEmoji(emojiSpan) {
-    document.getElementById("messageInput").value += emojiSpan.innerText;
+    document.getElementById("messageInput").innerHTML += emojiSpan.innerHTML;
 }

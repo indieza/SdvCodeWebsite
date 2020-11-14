@@ -52,6 +52,8 @@
     <Compile Remove="Data\Migrations\20201112151626_UpdateForeignKeysInChatThemes.Designer.cs" />
     <Compile Remove="Data\Migrations\20201112180408_UpdateChatThemeIdValue.cs" />
     <Compile Remove="Data\Migrations\20201112180408_UpdateChatThemeIdValue.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201114151847_UpdateChantMessageLength.cs" />
+    <Compile Remove="Data\Migrations\20201114151847_UpdateChantMessageLength.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

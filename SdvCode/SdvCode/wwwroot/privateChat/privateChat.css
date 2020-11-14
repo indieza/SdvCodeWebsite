@@ -177,7 +177,25 @@
 .chat-input {
     padding-right: 35px !important;
     height: auto !important;
+    border: 1px solid #808080;
+    line-height: 33px;
+    -webkit-appearance: textfield;
+    overflow-y: scroll;
+    max-height: 51px;
+    overflow-x: hidden;
 }
+
+    .chat-input::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .chat-input::-webkit-scrollbar-track {
+        background: #f1f1f1
+    }
+
+    .chat-input::-webkit-scrollbar-thumb {
+        background: #888;
+    }
 
 .chat-emoji-icon {
     float: right;
@@ -199,20 +217,20 @@
     /* The actual popup */
     .pop-up-emoji .popupEmojiBox {
         visibility: hidden;
-        width: 215px;
+        width: 294px;
         height: 160px;
         overflow-y: auto;
         overflow-x: hidden;
         background-color: #555;
         color: #fff;
         text-align: center;
-        border-radius: 6px;
+        /*border-radius: 6px;*/
         padding: 8px 0;
         position: absolute;
         z-index: 1;
-        bottom: 125%;
-        left: -448%;
-        margin-left: -80px;
+        bottom: -684%;
+        left: 20%;
+        margin-left: -189px;
     }
 
         .pop-up-emoji .popupEmojiBox::-webkit-scrollbar {
@@ -254,6 +272,13 @@
 .singleEmoji {
     display: inline-flex;
     align-items: center;
+    width: 1.4em;
+}
+
+.singleEmojiForInput {
+    display: inline-flex;
+    align-items: center;
+    width: 1.4em;
 }
 
 .emoji-type-tab {
@@ -299,4 +324,5 @@
 
 .emojiTypesTabs {
     border: 1px solid whitesmoke;
+    padding-bottom: 4px;
 }

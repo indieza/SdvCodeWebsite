@@ -7,10 +7,12 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.PrivateChat.Models.Enums;
     using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
@@ -187,7 +189,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 SendedOn = DateTime.UtcNow,
                 ReceiverUsername = fromUser.UserName,
                 RecieverImageUrl = fromUser.ImageUrl,
-                Content = message,
+                Content = new HtmlSanitizer().Sanitize(message.Trim()),
             });
 
             await this.db.SaveChangesAsync();
@@ -211,7 +213,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 SendedOn = DateTime.UtcNow,
                 ReceiverUsername = toUser.UserName,
                 RecieverImageUrl = toUser.ImageUrl,
-                Content = message,
+                Content = new HtmlSanitizer().Sanitize(message.Trim()),
             };
 
             this.db.ChatMessages.Add(newMessage);
