@@ -44,4 +44,6 @@ function changeEmojisTabs(emojiType) {
 function addEmoji(emojiSpan) {
     let src = emojiSpan.children[0].src;
     document.getElementById("messageInput").innerHTML += `<img style="width: 1.4em;" src="${src}" /> `;
+    let scroller = document.getElementById("messageInput");
+    scroller.scrollTop = scroller.scrollHeight;
 }

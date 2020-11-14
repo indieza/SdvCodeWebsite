@@ -96,3 +96,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     document.getElementById("messageInput").innerHTML = "";
     event.preventDefault();
 });
+
+function updateInputScroller() {
+    let scroller = document.getElementById("messageInput");
+    scroller.scrollTop = scroller.scrollHeight;
+}

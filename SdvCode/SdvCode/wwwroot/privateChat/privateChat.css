@@ -176,6 +176,7 @@
 
 .chat-input {
     padding-right: 35px !important;
+    padding-left: 10px !important;
     height: auto !important;
     border: 1px solid #808080;
     line-height: 33px;
@@ -203,6 +204,14 @@
     top: -28px;
     position: relative;
     font-size: large;
+    float: right;
+    margin-right: 10px;
+    font-size: large;
+    position: absolute;
+    top: 50%;
+    right: 1%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
 }
 
 .pop-up-emoji {
@@ -228,9 +237,10 @@
         padding: 8px 0;
         position: absolute;
         z-index: 1;
-        bottom: -684%;
-        left: 20%;
+        /*bottom: -684%;
+        left: 20%;*/
         margin-left: -189px;
+        transform: translate(0%,4%);
     }
 
         .pop-up-emoji .popupEmojiBox::-webkit-scrollbar {
@@ -243,18 +253,6 @@
 
         .pop-up-emoji .popupEmojiBox::-webkit-scrollbar-thumb {
             background: #888;
-        }
-
-        /* Popup arrow */
-        .pop-up-emoji .popupEmojiBox::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 74%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
         }
 
     /* Toggle this class - hide and show the popup */

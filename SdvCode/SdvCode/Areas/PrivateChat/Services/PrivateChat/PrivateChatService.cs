@@ -193,7 +193,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             });
 
             await this.db.SaveChangesAsync();
-            await this.hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, message);
+            await this.hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, new HtmlSanitizer().Sanitize(message.Trim()));
         }
 
         public async Task<string> SendMessageToUser(string fromUsername, string toUsername, string message, string group)
@@ -218,7 +218,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
             this.db.ChatMessages.Add(newMessage);
             await this.db.SaveChangesAsync();
-            await this.hubContext.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, message);
+            await this.hubContext.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, new HtmlSanitizer().Sanitize(message.Trim()));
 
             return toId;
         }
