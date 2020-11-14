@@ -7,6 +7,7 @@ namespace SdvCode.Areas.Administration.Services.AddEmoji
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Microsoft.AspNetCore.Server.IIS.Core;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.ViewModels.AddEmoji.InputModels;
@@ -14,43 +15,49 @@ namespace SdvCode.Areas.Administration.Services.AddEmoji
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Services.Cloud;
     using Twilio.Rest.Authy.V1.Service.Entity.Factor;
 
     public class AddEmojiService : IAddEmojiService
     {
         private readonly ApplicationDbContext db;
+        private readonly Cloudinary cloudinary;
 
-        public AddEmojiService(ApplicationDbContext db)
+        public AddEmojiService(ApplicationDbContext db, Cloudinary cloudinary)
         {
             this.db = db;
+            this.cloudinary = cloudinary;
         }
 
         public async Task<Tuple<bool, string>> AddEmoji(AddEmojiInputModel model)
         {
-            int emojiToUtf = char.ConvertToUtf32(model.Code, 0);
-
-            if (this.db.Emojis.Any(x => x.Code == emojiToUtf))
+            if (this.db.Emojis.Any(x => x.Name.ToLower() == model.Name.ToLower()))
             {
-                return Tuple.Create(false, string.Format(ErrorMessages.EmojiAlreadyExist, model.Code));
+                return Tuple.Create(false, string.Format(ErrorMessages.EmojiAlreadyExist, model.Name.ToUpper()));
             }
             else
             {
                 var lastNumber = await this.db.Emojis
-                    .Where(x => x.EmojiType == model.EmojiType)
-                    .Select(x => x.Position)
-                    .OrderByDescending(x => x)
-                    .FirstOrDefaultAsync();
+                .Where(x => x.EmojiType == model.EmojiType)
+                .Select(x => x.Position)
+                .OrderByDescending(x => x)
+                .FirstOrDefaultAsync();
                 var emoji = new Emoji
                 {
-                    Code = emojiToUtf,
                     EmojiType = model.EmojiType,
                     Name = model.Name,
                     Position = lastNumber + 1,
                 };
 
+                var imageUrl = await ApplicationCloudinary.UploadImage(
+                    this.cloudinary,
+                    model.Image,
+                    string.Format(GlobalConstants.EmojiName, emoji.Id));
+                emoji.Url = imageUrl;
+
                 this.db.Emojis.Add(emoji);
                 await this.db.SaveChangesAsync();
-                return Tuple.Create(true, string.Format(SuccessMessages.SuccessfullyAddedEmoji, model.Code));
+                return Tuple.Create(true, string.Format(SuccessMessages.SuccessfullyAddedEmoji, emoji.Name));
             }
         }
     }

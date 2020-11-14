@@ -78,6 +78,8 @@ namespace SdvCode.Data
 
         public DbSet<Emoji> Emojis { get; set; }
 
+        public DbSet<EmojiSkin> EmojiSkins { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -181,6 +183,11 @@ namespace SdvCode.Data
             builder.Entity<Group>().HasOne(x => x.ChatTheme)
                 .WithOne(x => x.Group)
                 .HasForeignKey<ChatTheme>(x => x.GroupId)
+                .IsRequired(false);
+
+            builder.Entity<Emoji>().HasOne(x => x.EmojiSkin)
+                .WithOne(x => x.Emoji)
+                .HasForeignKey<EmojiSkin>(x => x.EmojiId)
                 .IsRequired(false);
 
             base.OnModelCreating(builder);

@@ -15,17 +15,12 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h5 mb-0 text-gray-800">Add new emoji</h1>
     </div>
-    <form method="post">
-        <div class="row">
+    <form method="post" enctype="multipart/form-data">
+        <div class="row" method="post" enctype="multipart/form-data">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.Name"></label>
-                <input autocomplete="off" asp-for="@this.Model.Name" class="form-control" placeholder="Emoji name" />
+                <input readonly id="emojiName" autocomplete="off" asp-for="@this.Model.Name" class="form-control" placeholder="Emoji name" />
                 <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
-            </div>
-            <div class="col-xl-12 col-md-12 mb-4">
-                <label asp-for="@this.Model.Code"></label>
-                <input autocomplete="off" asp-for="@this.Model.Code" class="form-control" placeholder="Emoji code" />
-                <span class="text-danger" asp-validation-for="@this.Model.Code"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.EmojiType"></label>
@@ -33,6 +28,10 @@
                     <option disabled selected>Select emoji type...</option>
                 </select>
                 <span class="text-danger" asp-validation-for="@this.Model.EmojiType"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <input onchange="selectedImage(this)" asp-for="@this.Model.Image" type="file" />
+                <span class="text-danger" asp-validation-for="@this.Model.Image"></span>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="AddEmoji" asp-action="AddNewEmoji" class="btn btn-success btn-icon-split">
@@ -49,4 +48,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/administration/js/addEmojiScript.js"></script>
 }

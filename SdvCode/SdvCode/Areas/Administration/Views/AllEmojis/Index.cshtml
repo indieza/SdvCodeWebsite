@@ -8,7 +8,8 @@
         { EmojiType.Objects, "Objects" },
         { EmojiType.SmilesAndPeople, "Smiles And People" },
         { EmojiType.Symbols, "Symbols" },
-        { EmojiType.TravelAndPlaces, "Travel And Places" }
+        { EmojiType.TravelAndPlaces, "Travel And Places" },
+        { EmojiType.Flags, "Flags" }
     };
 }
 
@@ -40,7 +41,7 @@
                         <thead>
                             <tr>
                                 <th>Position</th>
-                                <th>Code</th>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Emoji Type</th>
                             </tr>
@@ -48,7 +49,7 @@
                         <tfoot>
                             <tr>
                                 <th>Position</th>
-                                <th>Code</th>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Emoji Type</th>
                             </tr>
@@ -61,7 +62,7 @@
                                         @emoji.Position
                                     </td>
                                     <td>
-                                        @emoji.Code
+                                        <img style="width: 2.4em;" src="@emoji.Url" />
                                     </td>
                                     <td>
                                         @emoji.Name

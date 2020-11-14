@@ -13,7 +13,7 @@ namespace SdvCode.Areas.Administration.ViewModels.EditEmoji.ViewModels
     {
         public string Name { get; set; }
 
-        public string Code { get; set; }
+        public string Url { get; set; }
 
         public EmojiType EmojiType { get; set; }
     }

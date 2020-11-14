@@ -53,7 +53,7 @@ namespace SdvCode.Areas.Administration.Services.EditEmojiPosition
                 {
                     Id = emoji.Id,
                     Name = emoji.Name,
-                    Code = char.ConvertFromUtf32(emoji.Code),
+                    Url = emoji.Url,
                     Position = emoji.Position,
                     EmojiType = emoji.EmojiType,
                 });

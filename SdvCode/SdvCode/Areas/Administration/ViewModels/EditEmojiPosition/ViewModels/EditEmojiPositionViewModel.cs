@@ -15,7 +15,7 @@ namespace SdvCode.Areas.Administration.ViewModels.EditEmojiPosition.ViewModels
 
         public string Name { get; set; }
 
-        public string Code { get; set; }
+        public string Url { get; set; }
 
         public int Position { get; set; }
 

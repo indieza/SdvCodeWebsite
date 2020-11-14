@@ -25,7 +25,7 @@
                                 <span class="icon text-white-50">
                                     <i class="fas fa-sync-alt"></i>
                                 </span>
-                                <span class="text">Edit Positions</span>
+                                <span class="text">Reset Positions</span>
                             </button>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 div.innerHTML += `
                     <div class="row emojiElements">
                         <div class="col-xl-1 col-md-1 mb-4">
-                            <input class="form-control" type="text" placeholder="Code" value="${currentEmoji.code}" readonly />
+                            <img style="width: 2.4em;" src="${currentEmoji.url}"/>
                         </div>
                         <div class="col-xl-9 col-md-9 mb-4">
                             <input class="form-control" type="text" placeholder="Name" value="${currentEmoji.name}" readonly />

@@ -7,29 +7,40 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.ViewModels.DeleteEmoji.InputModels;
     using SdvCode.Areas.Administration.ViewModels.DeleteEmoji.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Services.Cloud;
 
     public class DeleteEmojiService : IDeleteEmojiService
     {
         private readonly ApplicationDbContext db;
+        private readonly Cloudinary cloudinary;
 
-        public DeleteEmojiService(ApplicationDbContext db)
+        public DeleteEmojiService(ApplicationDbContext db, Cloudinary cloudinary)
         {
             this.db = db;
+            this.cloudinary = cloudinary;
         }
 
         public async Task<Tuple<bool, string>> DeleteEmoji(DeleteEmojiInputModel model)
         {
             var emoji = await this.db.Emojis.FirstOrDefaultAsync(x => x.Id == model.Id);
             var emojiType = emoji.EmojiType;
-            string emojiUtf = char.ConvertFromUtf32(emoji.Code);
 
             if (emoji != null)
             {
+                string emojiName = emoji.Name;
+
+                // TODO For Skins Cloudinary
+                var emojiSkins = this.db.EmojiSkins.Where(x => x.EmojiId == emoji.Id).ToList();
+                ApplicationCloudinary.DeleteImage(
+                    this.cloudinary,
+                    string.Format(GlobalConstants.EmojiName, emoji.Id));
+                this.db.EmojiSkins.RemoveRange(emojiSkins);
                 this.db.Emojis.Remove(emoji);
                 this.db.SaveChanges();
 
@@ -46,7 +57,9 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
                 this.db.Emojis.UpdateRange(targetToUpdate);
                 await this.db.SaveChangesAsync();
 
-                return Tuple.Create(true, emojiUtf);
+                return Tuple.Create(
+                    true,
+                    string.Format(SuccessMessages.SuccessfullyDeleteEmoji, emojiName.ToUpper()));
             }
             else
             {
@@ -63,11 +76,17 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
                 result.Add(new DeleteEmojiViewModel
                 {
                     Id = emoji.Id,
-                    Name = $"{char.ConvertFromUtf32(emoji.Code)} - {emoji.Name}",
+                    Name = emoji.Name,
                 });
             }
 
             return result;
+        }
+
+        public async Task<string> GetEmojiUrl(string emojiId)
+        {
+            var emoji = await this.db.Emojis.FirstOrDefaultAsync(x => x.Id == emojiId);
+            return emoji.Url;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace SdvCode.Areas.Administration.Services.AllEmojis
                         Id = emoji.Id,
                         Name = emoji.Name,
                         Position = emoji.Position,
-                        Code = char.ConvertFromUtf32(emoji.Code),
+                        Url = emoji.Url,
                         EmojiType = emoji.EmojiType,
                     });
                 }

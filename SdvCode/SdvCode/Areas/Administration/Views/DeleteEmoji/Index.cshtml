@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.DeleteEmojiInputModel.Id"></label>
-                <select class="form-control" asp-for="@this.Model.DeleteEmojiInputModel.Id">
+                <select onchange="selectedName(this)" class="form-control" asp-for="@this.Model.DeleteEmojiInputModel.Id">
                     <option disabled selected>Select emoji name...</option>
                     @foreach (var emoji in this.Model.DeleteEmojiViewModels)
                     {
@@ -28,6 +28,8 @@
                 </select>
                 <span class="text-danger" asp-validation-for="@this.Model.DeleteEmojiInputModel.Id"></span>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="DeleteEmoji" asp-action="DeleteEmoji" class="btn btn-danger btn-icon-split">
                     <span class="icon text-white-50">
@@ -37,10 +39,17 @@
                 </button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xl-1 col-md-1 mb-4">
+                <img style="width: 2.4em;" id="emojiImage" />
+            </div>
+        </div>
     </form>
     <hr />
 </div>
+<input type="hidden" />
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/administration/js/deleteEmojiScript.js"></script>
 }

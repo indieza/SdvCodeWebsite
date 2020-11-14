@@ -25,5 +25,7 @@ namespace SdvCode.Areas.PrivateChat.Models.Enums
         Objects = 6,
         [Display(Name = "Symbols")]
         Symbols = 7,
+        [Display(Name = "Flags")]
+        Flags = 8,
     }
 }

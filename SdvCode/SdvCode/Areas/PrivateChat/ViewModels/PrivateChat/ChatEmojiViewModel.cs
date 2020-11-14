@@ -14,7 +14,7 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
 
         public string Name { get; set; }
 
-        public string Code { get; set; }
+        public string Url { get; set; }
 
         public int Position { get; set; }
     }

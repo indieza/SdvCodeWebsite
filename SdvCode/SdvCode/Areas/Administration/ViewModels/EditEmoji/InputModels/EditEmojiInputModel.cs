@@ -8,6 +8,7 @@ namespace SdvCode.Areas.Administration.ViewModels.EditEmoji.InputModels
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using SdvCode.Areas.PrivateChat.Models.Enums;
 
     public class EditEmojiInputModel
@@ -17,14 +18,12 @@ namespace SdvCode.Areas.Administration.ViewModels.EditEmoji.InputModels
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(60)]
+        [MaxLength(120)]
         [Display(Name = "Emoji Name")]
         public string Name { get; set; }
 
-        [Required]
-        [MaxLength(15)]
-        [Display(Name = "Emoji Unicode")]
-        public string Code { get; set; }
+        [Display(Name = "Emoji Image")]
+        public IFormFile Image { get; set; }
 
         [Required]
         [EnumDataType(typeof(EmojiType))]

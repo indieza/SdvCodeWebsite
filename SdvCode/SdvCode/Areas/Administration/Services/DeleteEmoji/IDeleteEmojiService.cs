@@ -15,5 +15,6 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
         ICollection<DeleteEmojiViewModel> GetAllEmojis();
 
         Task<Tuple<bool, string>> DeleteEmoji(DeleteEmojiInputModel model);
+        Task<string> GetEmojiUrl(string emojiId);
     }
 }

@@ -7,38 +7,51 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Microsoft.EntityFrameworkCore;
     using SdvCode.Areas.Administration.ViewModels.EditEmoji.InputModels;
     using SdvCode.Areas.Administration.ViewModels.EditEmoji.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Services.Cloud;
 
     public class EditEmojiService : IEditEmojiService
     {
         private readonly ApplicationDbContext db;
+        private readonly Cloudinary cloudinary;
 
-        public EditEmojiService(ApplicationDbContext db)
+        public EditEmojiService(ApplicationDbContext db, Cloudinary cloudinary)
         {
             this.db = db;
+            this.cloudinary = cloudinary;
         }
 
         public async Task<Tuple<bool, string>> EditEmoji(EditEmojiInputModel model)
         {
-            int emojiToUtf = char.ConvertToUtf32(model.Code, 0);
-            if (this.db.Emojis.Any(x => x.Code == emojiToUtf && x.EmojiType == model.EmojiType))
+            if (this.db.Emojis.Any(x => x.Name == model.Name && x.EmojiType == model.EmojiType))
             {
-                return Tuple.Create(false, string.Format(ErrorMessages.EmojiAlreadyExist, model.Code));
+                return Tuple.Create(false, string.Format(ErrorMessages.EmojiAlreadyExist, model.Name.ToUpper()));
             }
 
             var targetEmoji = await this.db.Emojis.FirstOrDefaultAsync(x => x.Id == model.Id);
             if (targetEmoji != null)
             {
+                if (model.Image != null)
+                {
+                    var imageUrl = await ApplicationCloudinary.UploadImage(
+                        this.cloudinary,
+                        model.Image,
+                        string.Format(GlobalConstants.EmojiName, model.Id));
+                    targetEmoji.Url = imageUrl;
+                }
+
                 targetEmoji.Name = model.Name;
-                targetEmoji.Code = emojiToUtf;
                 targetEmoji.EmojiType = model.EmojiType;
                 this.db.Emojis.Update(targetEmoji);
                 await this.db.SaveChangesAsync();
-                return Tuple.Create(true, string.Format(SuccessMessages.SuccessfullyEditedEmoji, model.Code));
+                return Tuple.Create(
+                    true,
+                    string.Format(SuccessMessages.SuccessfullyEditedEmoji, model.Name.ToUpper()));
             }
             else
             {
@@ -55,7 +68,7 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
                 result.Add(new EditEmojiViewModel
                 {
                     Id = emoji.Id,
-                    Name = $"{char.ConvertFromUtf32(emoji.Code)} - {emoji.Name}",
+                    Name = emoji.Name,
                 });
             }
 
@@ -69,7 +82,7 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
             {
                 Name = emoji.Name,
                 EmojiType = emoji.EmojiType,
-                Code = char.ConvertFromUtf32(emoji.Code),
+                Url = emoji.Url,
             };
         }
     }

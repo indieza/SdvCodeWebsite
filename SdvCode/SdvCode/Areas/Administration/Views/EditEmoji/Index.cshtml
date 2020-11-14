@@ -33,14 +33,12 @@
         <hr />
         <div class="row" id="contentForm" style="display: none">
             <div class="col-xl-12 col-md-12 mb-4">
-                <label asp-for="@Model.EditEmojiInputModel.Name"></label>
-                <input asp-for="@Model.EditEmojiInputModel.Name" class="form-control" placeholder="Name" id="emojiName" />
-                <span asp-validation-for="@Model.EditEmojiInputModel.Name" class="text-danger"></span>
+                <img id="emojiImage" />
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
-                <label asp-for="@Model.EditEmojiInputModel.Code"></label>
-                <input asp-for="@Model.EditEmojiInputModel.Code" class="form-control" placeholder="Name" id="emojiCode" />
-                <span asp-validation-for="@Model.EditEmojiInputModel.Code" class="text-danger"></span>
+                <label asp-for="@Model.EditEmojiInputModel.Name"></label>
+                <input asp-for="@Model.EditEmojiInputModel.Name" class="form-control" placeholder="Name" id="emojiName" autocomplete="off" />
+                <span asp-validation-for="@Model.EditEmojiInputModel.Name" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@Model.EditEmojiInputModel.EmojiType"></label>
@@ -48,6 +46,10 @@
                     <option value="" selected disabled>Select Emoji Type...</option>
                 </select>
                 <span asp-validation-for="@Model.EditEmojiInputModel.EmojiType" class="text-danger"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <input asp-for="@Model.EditEmojiInputModel.Image" type="file" onchange="selectedImage(this)" />
+                <span asp-validation-for="@Model.EditEmojiInputModel.Image" class="text-danger"></span>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <button asp-area="Administration" asp-controller="EditEmoji" asp-action="EditEmoji" class="btn btn-success btn-icon-split">
@@ -66,4 +68,5 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/administration/js/editEmoji.js"></script>
+    <script src="~/administration/js/addEmojiScript.js"></script>
 }

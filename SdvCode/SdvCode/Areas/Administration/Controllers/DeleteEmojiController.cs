@@ -37,6 +37,13 @@ namespace SdvCode.Areas.Administration.Controllers
             return this.View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetEmojiData(string emojiId)
+        {
+            string url = await this.deleteEmojiService.GetEmojiUrl(emojiId);
+            return new JsonResult(new { url = url });
+        }
+
         [HttpPost]
         public async Task<IActionResult> DeleteEmoji(DeleteEmojiBaseModel model)
         {
@@ -49,7 +56,7 @@ namespace SdvCode.Areas.Administration.Controllers
                     return this.RedirectToAction("Index", "DeleteEmoji", model);
                 }
 
-                this.TempData["Success"] = string.Format(SuccessMessages.SuccessfullyDeleteEmoji, result.Item2);
+                this.TempData["Success"] = result.Item2;
                 return this.RedirectToAction("Index", "DeleteEmoji");
             }
             else

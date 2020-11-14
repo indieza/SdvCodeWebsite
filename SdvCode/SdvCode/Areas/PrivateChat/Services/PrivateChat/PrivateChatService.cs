@@ -131,7 +131,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                         Id = emoji.Id,
                         Name = emoji.Name,
                         Position = emoji.Position,
-                        Code = char.ConvertFromUtf32(emoji.Code),
+                        Url = emoji.Url,
                     });
                 }
             }

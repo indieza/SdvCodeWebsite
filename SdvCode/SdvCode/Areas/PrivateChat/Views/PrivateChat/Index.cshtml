@@ -117,7 +117,7 @@
                                         <span class="tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
                                             @foreach (var emoji in this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)])
                                             {
-                                                <span class="singleEmoji" onclick="addEmoji(this)">@emoji.Code</span>
+                                                <span class="singleEmoji" onclick="addEmoji(this)">@emoji.Url</span>
                                             }
                                         </span>
                                     }
