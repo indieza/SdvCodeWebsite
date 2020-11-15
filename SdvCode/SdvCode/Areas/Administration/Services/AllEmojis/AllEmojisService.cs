@@ -41,6 +41,7 @@ namespace SdvCode.Areas.Administration.Services.AllEmojis
                         Position = emoji.Position,
                         Url = emoji.Url,
                         EmojiType = emoji.EmojiType,
+                        SkinsUrls = this.db.EmojiSkins.Where(x => x.EmojiId == emoji.Id).OrderBy(x => x.Position).Select(x => x.Url).ToList(),
                     });
                 }
             }

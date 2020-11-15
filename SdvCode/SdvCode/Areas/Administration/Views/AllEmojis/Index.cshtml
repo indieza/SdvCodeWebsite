@@ -62,7 +62,15 @@
                                         @emoji.Position
                                     </td>
                                     <td>
-                                        <img style="width: 2.4em;" src="@emoji.Url" />
+                                        <span>
+                                            <img style="width: 2.4em;" src="@emoji.Url" />
+                                        </span>
+                                        @foreach (var skinUrl in emoji.SkinsUrls)
+                                        {
+                                            <span>
+                                                <img style="width: 2.4em;" src="@skinUrl" />
+                                            </span>
+                                        }
                                     </td>
                                     <td>
                                         @emoji.Name

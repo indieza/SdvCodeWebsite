@@ -20,5 +20,7 @@ namespace SdvCode.Areas.Administration.ViewModels.AllEmojis.ViewModels
         public int Position { get; set; }
 
         public EmojiType EmojiType { get; set; }
+
+        public ICollection<string> SkinsUrls { get; set; } = new HashSet<string>();
     }
 }
