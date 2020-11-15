@@ -42,7 +42,14 @@ function changeEmojisTabs(emojiType) {
 }
 
 function addEmoji(emojiSpan) {
-    let src = emojiSpan.children[0].src;
+    let src = emojiSpan.src;
+    document.getElementById("messageInput").innerHTML += `<img style="width: 1.4em;" src="${src}" /> `;
+    let scroller = document.getElementById("messageInput");
+    scroller.scrollTop = scroller.scrollHeight;
+}
+
+function addEmojiSkin(emojiSkin) {
+    let src = emojiSkin.src;
     document.getElementById("messageInput").innerHTML += `<img style="width: 1.4em;" src="${src}" /> `;
     let scroller = document.getElementById("messageInput");
     scroller.scrollTop = scroller.scrollHeight;

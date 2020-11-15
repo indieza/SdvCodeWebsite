@@ -67,7 +67,8 @@
                 <span asp-validation-for="@Model.InputModel.SpecificationsDescription" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
-                <input asp-for="@Model.InputModel.ProductImages" type="file" multiple>
+                <label asp-for="@this.Model.InputModel.ProductImages"></label>
+                <input class="form-control-file" asp-for="@Model.InputModel.ProductImages" type="file" multiple>
             </div>
             <input asp-for="@Model.InputModel.Id" id="productId" type="hidden" />
             <div class="col-xl-3 col-md-6 mb-4">

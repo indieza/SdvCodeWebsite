@@ -17,5 +17,7 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
         public string Url { get; set; }
 
         public int Position { get; set; }
+
+        public ICollection<string> SkinsUrls { get; set; } = new HashSet<string>();
     }
 }

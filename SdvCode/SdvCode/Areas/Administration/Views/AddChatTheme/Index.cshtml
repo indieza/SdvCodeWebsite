@@ -23,7 +23,8 @@
                 <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
-                <input asp-for="@Model.Image" type="file">
+                <label asp-for="@this.Model.Image"></label>
+                <input class="form-control-file" asp-for="@Model.Image" type="file">
                 <span asp-validation-for="@Model.Image" class="text-danger"></span>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">

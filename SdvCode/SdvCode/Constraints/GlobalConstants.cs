@@ -80,5 +80,7 @@ namespace SdvCode.Constraints
         public const string ChatThemeName = "{0}-ChatTheme";
 
         public const string EmojiName = "{0}-ChatEmoji";
+
+        public const string EmojiSkin = "{0}-ChatEmojiSkin";
     }
 }

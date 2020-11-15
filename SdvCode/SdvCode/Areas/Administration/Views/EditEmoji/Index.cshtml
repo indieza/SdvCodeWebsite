@@ -48,7 +48,8 @@
                 <span asp-validation-for="@Model.EditEmojiInputModel.EmojiType" class="text-danger"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
-                <input asp-for="@Model.EditEmojiInputModel.Image" type="file" onchange="selectedImage(this)" />
+                <label asp-for="@this.Model.EditEmojiInputModel.Image"></label>
+                <input class="form-control-file" asp-for="@Model.EditEmojiInputModel.Image" type="file" onchange="selectedImage(this)" />
                 <span asp-validation-for="@Model.EditEmojiInputModel.Image" class="text-danger"></span>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">

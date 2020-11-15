@@ -2,26 +2,28 @@
     ViewData["Title"] = "Emojis addons";
 }
 
-@model AddEmojiInputModel
+@model AddEmojiWithSkinInputModel
 
 <partial name="_TempDataPartial" />
 
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Emojis Addons - Add new emoji</h1>
+        <h1 class="h3 mb-0 text-gray-800">Emojis Addons - Add new emoji with skin</h1>
     </div>
     <hr />
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h5 mb-0 text-gray-800">Add new emoji</h1>
+        <h1 class="h5 mb-0 text-gray-800">Add new emoji with skin</h1>
     </div>
     <form method="post" enctype="multipart/form-data">
-        <div class="row" method="post" enctype="multipart/form-data">
+        <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.Name"></label>
                 <input readonly id="emojiName" autocomplete="off" asp-for="@this.Model.Name" class="form-control" placeholder="Emoji name" />
                 <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.EmojiType"></label>
                 <select class="form-control" asp-for="@this.Model.EmojiType" asp-items="Html.GetEnumSelectList<EmojiType>()">
@@ -29,17 +31,28 @@
                 </select>
                 <span class="text-danger" asp-validation-for="@this.Model.EmojiType"></span>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.Image"></label>
                 <input class="form-control-file" onchange="selectedImage(this)" asp-for="@this.Model.Image" type="file" />
                 <span class="text-danger" asp-validation-for="@this.Model.Image"></span>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.ImageSkins"></label>
+                <input class="form-control-file" asp-for="@this.Model.ImageSkins" type="file" multiple />
+                <span class="text-danger" asp-validation-for="@this.Model.ImageSkins"></span>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
-                <button asp-area="Administration" asp-controller="AddEmoji" asp-action="AddNewEmoji" class="btn btn-success btn-icon-split">
+                <button asp-area="Administration" asp-controller="AddEmojiWithSkin" asp-action="AddNewEmojiWithSkin" class="btn btn-success btn-icon-split">
                     <span class="icon text-white-50">
                         <i class="fas fa-check"></i>
                     </span>
-                    <span class="text">Add Emoji</span>
+                    <span class="text">Add Emoji With Skin</span>
                 </button>
             </div>
         </div>

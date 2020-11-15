@@ -45,7 +45,8 @@
             </div>
             <div class="row">
                 <div class="col-xl-12 col-md-12 mb-4">
-                    <input asp-for="@Model.EditChatThemeInput.Image" type="file" />
+                    <label asp-for="@this.Model.EditChatThemeInput.Image"></label>
+                    <input class="form-control-file" asp-for="@Model.EditChatThemeInput.Image" type="file" />
                     <span asp-validation-for="@Model.EditChatThemeInput.Image" class="text-danger"></span>
                 </div>
             </div>

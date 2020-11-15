@@ -25,7 +25,8 @@
                 <span class="text-danger" asp-validation-for="@this.Model.EmojiType"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
-                <input asp-for="@this.Model.Images" type="file" multiple />
+                <label asp-for="@this.Model.Images"></label>
+                <input class="form-control-file" asp-for="@this.Model.Images" type="file" multiple />
                 <span class="text-danger" asp-validation-for="@this.Model.Images"></span>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">

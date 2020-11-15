@@ -35,8 +35,14 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
             {
                 string emojiName = emoji.Name;
 
-                // TODO For Skins Cloudinary
                 var emojiSkins = this.db.EmojiSkins.Where(x => x.EmojiId == emoji.Id).ToList();
+                foreach (var emojiSkin in emojiSkins)
+                {
+                    ApplicationCloudinary.DeleteImage(
+                       this.cloudinary,
+                       string.Format(GlobalConstants.EmojiSkin, emojiSkin.Id));
+                }
+
                 ApplicationCloudinary.DeleteImage(
                     this.cloudinary,
                     string.Format(GlobalConstants.EmojiName, emoji.Id));

@@ -134,6 +134,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                         Name = emoji.Name,
                         Position = emoji.Position,
                         Url = emoji.Url,
+                        SkinsUrls = this.db.EmojiSkins.Where(x => x.EmojiId == emoji.Id).OrderBy(x => x.Position).Select(x => x.Url).ToList(),
                     });
                 }
             }
