@@ -11,6 +11,14 @@
 
     $('body').click(function () {
         $('#popupEmoji').removeClass("show");
+        let allSkins = document.getElementsByClassName("hasEmojiSkin");
+        for (var skin of allSkins) {
+            if (skin.parentNode.children[1].style.visibility == "visible") {
+                skin.parentNode.children[1].style.visibility = "";
+                skin.setAttribute('onclick', 'addEmoji();'); // for FF
+                skin.onclick = function () { addEmoji(event.currentTarget); }; // for IE
+            }
+        }
     });
 });
 
@@ -46,6 +54,14 @@ function addEmoji(emojiSpan) {
     document.getElementById("messageInput").innerHTML += `<img style="width: 1.4em;" src="${src}" /> `;
     let scroller = document.getElementById("messageInput");
     scroller.scrollTop = scroller.scrollHeight;
+    let allSkins = document.getElementsByClassName("hasEmojiSkin");
+    for (var skin of allSkins) {
+        if (skin.parentNode.children[1].style.visibility == "visible") {
+            skin.parentNode.children[1].style.visibility = "";
+            skin.setAttribute('onclick', 'addEmoji();'); // for FF
+            skin.onclick = function () { addEmoji(event.currentTarget); }; // for IE
+        }
+    }
 }
 
 function addEmojiSkin(emojiSkin) {
@@ -53,4 +69,32 @@ function addEmojiSkin(emojiSkin) {
     document.getElementById("messageInput").innerHTML += `<img style="width: 1.4em;" src="${src}" /> `;
     let scroller = document.getElementById("messageInput");
     scroller.scrollTop = scroller.scrollHeight;
+    let allSkins = document.getElementsByClassName("hasEmojiSkin");
+    for (var skin of allSkins) {
+        if (skin.parentNode.children[1].style.visibility == "visible") {
+            skin.parentNode.children[1].style.visibility = "";
+            skin.setAttribute('onclick', 'addEmoji();'); // for FF
+            skin.onclick = function () { addEmoji(event.currentTarget); }; // for IE
+        }
+    }
 }
+
+$(function () {
+    $(".hasEmojiSkin").bind("taphold", tapholdHandler);
+    $(".hasEmojiSkin").on("contextmenu", function (e) {
+        return false;
+    });
+
+    function tapholdHandler(event) {
+        let allSkins = document.getElementsByClassName("hasEmojiSkin");
+        for (var skin of allSkins) {
+            if (skin.parentNode.children[1].style.visibility == "visible") {
+                skin.parentNode.children[1].style.visibility = "";
+                skin.setAttribute('onclick', 'addEmoji();'); // for FF
+                skin.onclick = function () { addEmoji(event.currentTarget); }; // for IE
+            }
+        }
+        event.currentTarget.removeAttribute("onclick");
+        event.currentTarget.parentNode.children[1].style.visibility = "visible";
+    }
+});

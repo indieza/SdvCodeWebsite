@@ -120,7 +120,7 @@
                                             @for (int j = 0; j < this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].Count; j++)
                                             {
                                                 <span class="tooltipEmoji" style="position: relative; display: inline-block;">
-                                                    <img class="singleEmoji" onclick="addEmoji(this)" src="@this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).Url" />
+                                                    <img class="singleEmoji @(this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0 ? "hasEmojiSkin" : "")" onclick="addEmoji(this)" src="@this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).Url" />
                                                     @if (this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0)
                                                     {
                                                         <span class="@(j % 10 < 5 ? "tooltipEmojiSpanRight" : "tooltipEmojiSpanLeft")">
@@ -148,6 +148,7 @@
 </div>
 
 @section Scripts{
+    <script src="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
     <script src="~/js/privateChat.js"></script>
     <script src="~/js/emojiScript.js"></script>
 }

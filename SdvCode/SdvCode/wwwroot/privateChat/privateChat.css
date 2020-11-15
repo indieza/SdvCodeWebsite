@@ -357,7 +357,7 @@
     z-index: 1;
 }
 
-.tooltipEmoji:hover .tooltipEmojiSpanRight {
+/*.tooltipEmoji:hover .tooltipEmojiSpanRight {
     visibility: visible;
     z-index: 10;
 }
@@ -365,4 +365,4 @@
 .tooltipEmoji:hover .tooltipEmojiSpanLeft {
     visibility: visible;
     z-index: 10;
-}
+}*/
