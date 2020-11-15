@@ -232,9 +232,9 @@
         overflow-x: hidden;
         background-color: #555;
         color: #fff;
-        text-align: center;
+        /*text-align: center;*/
         /*border-radius: 6px;*/
-        padding: 8px 0;
+        padding: 8px 0px 2px 2px;
         position: absolute;
         z-index: 1;
         /*bottom: -684%;
@@ -323,4 +323,46 @@
 .emojiTypesTabs {
     border: 1px solid whitesmoke;
     padding-bottom: 4px;
+}
+
+.tooltipEmojiSpanRight {
+    visibility: hidden;
+    width: 150px;
+    bottom: 100%;
+    left: 230%;
+    margin-left: -60px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltipEmojiSpanLeft {
+    visibility: hidden;
+    width: 150px;
+    bottom: 100%;
+    left: -250%;
+    margin-left: -60px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltipEmoji:hover .tooltipEmojiSpanRight {
+    visibility: visible;
+    z-index: 10;
+}
+
+.tooltipEmoji:hover .tooltipEmojiSpanLeft {
+    visibility: visible;
+    z-index: 10;
 }

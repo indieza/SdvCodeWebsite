@@ -14,40 +14,6 @@
     };
 }
 
-<style>
-    .tooltiptext {
-        visibility: hidden;
-        width: 150px;
-        bottom: 100%;
-        left: 50%;
-        margin-left: -60px;
-        background-color: black;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
-        /* Position the tooltip */
-        position: absolute;
-        z-index: 1;
-    }
-
-    .tooltipEmoji:hover .tooltiptext {
-        visibility: visible;
-        z-index: 10;
-    }
-
-    .tooltipEmoji .tooltiptext::after {
-        content: " ";
-        position: absolute;
-        top: 100%; /* At the bottom of the tooltip */
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: black transparent transparent transparent;
-    }
-</style>
-
 @model PrivateChatViewModel
 
 <div id="banner-area">
@@ -151,14 +117,14 @@
                                     @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                     {
                                         <span class="tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
-                                            @foreach (var emoji in this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)])
+                                            @for (int j = 0; j < this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].Count; j++)
                                             {
                                                 <span class="tooltipEmoji" style="position: relative; display: inline-block;">
-                                                    <img class="singleEmoji" onclick="addEmoji(this)" src="@emoji.Url" />
-                                                    @if (emoji.SkinsUrls.Count > 0)
+                                                    <img class="singleEmoji" onclick="addEmoji(this)" src="@this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).Url" />
+                                                    @if (this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0)
                                                     {
-                                                        <span class="tooltiptext">
-                                                            @foreach (var skinUrl in emoji.SkinsUrls)
+                                                        <span class="@(j % 10 < 5 ? "tooltipEmojiSpanRight" : "tooltipEmojiSpanLeft")">
+                                                            @foreach (var skinUrl in this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls)
                                                             {
                                                                 <img onclick="addEmojiSkin(this)" class="singleEmoji" src="@skinUrl" />
                                                             }
