@@ -1,7 +1,7 @@
 ﻿(function ($) {
     // Default options
     var defaults = {
-        duration: 1000, // ms
+        duration: 500, // ms
         clickHandler: null
     }
 

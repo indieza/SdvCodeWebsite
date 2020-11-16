@@ -12,13 +12,7 @@
     $('body').click(function () {
         $('#popupEmoji').removeClass("show");
         let allSkins = document.getElementsByClassName("hasEmojiSkin");
-        for (var skin of allSkins) {
-            if (skin.parentNode.children[1].style.visibility == "visible") {
-                skin.parentNode.children[1].style.visibility = "";
-                skin.setAttribute('onclick', 'addEmoji();'); // for FF
-                skin.onclick = function () { addEmoji(event.currentTarget); }; // for IE
-            }
-        }
+        resetEmojiSkins(allSkins);
     });
 });
 
@@ -55,13 +49,7 @@ function addEmoji(emojiSpan) {
     let scroller = document.getElementById("messageInput");
     scroller.scrollTop = scroller.scrollHeight;
     let allSkins = document.getElementsByClassName("hasEmojiSkin");
-    for (var skin of allSkins) {
-        if (skin.parentNode.children[1].style.visibility == "visible") {
-            skin.parentNode.children[1].style.visibility = "";
-            skin.setAttribute('onclick', 'addEmoji();'); // for FF
-            skin.onclick = function () { addEmoji(event.currentTarget); }; // for IE
-        }
-    }
+    resetEmojiSkins(allSkins);
 }
 
 function addEmojiSkin(emojiSkin) {
@@ -70,31 +58,59 @@ function addEmojiSkin(emojiSkin) {
     let scroller = document.getElementById("messageInput");
     scroller.scrollTop = scroller.scrollHeight;
     let allSkins = document.getElementsByClassName("hasEmojiSkin");
-    for (var skin of allSkins) {
-        if (skin.parentNode.children[1].style.visibility == "visible") {
-            skin.parentNode.children[1].style.visibility = "";
-            skin.setAttribute('onclick', 'addEmoji();'); // for FF
-            skin.onclick = function () { addEmoji(event.currentTarget); }; // for IE
-        }
-    }
+    resetEmojiSkins(allSkins);
 }
 
 $(function () {
-    $(".hasEmojiSkin").bind("taphold", tapholdHandler);
     $(".hasEmojiSkin").on("contextmenu", function (e) {
         return false;
     });
+    var start;
+    var end;
+    var delta;
+    var isPhone = false;
 
-    function tapholdHandler(event) {
-        let allSkins = document.getElementsByClassName("hasEmojiSkin");
-        for (var skin of allSkins) {
-            if (skin.parentNode.children[1].style.visibility == "visible") {
-                skin.parentNode.children[1].style.visibility = "";
-                skin.setAttribute('onclick', 'addEmoji();'); // for FF
-                skin.onclick = function () { addEmoji(event.currentTarget); }; // for IE
+    let emojisWithSkins = this.documentElement.getElementsByClassName("hasEmojiSkin");
+    for (let emojiWithSkin of emojisWithSkins) {
+        emojiWithSkin.addEventListener("touchstart", function () {
+            start = new Date();
+            isPhone = true;
+        });
+        emojiWithSkin.addEventListener("touchend", function () {
+            end = new Date();
+            delta = (end - start) / 1000.0;
+            if (delta >= 0.5) {
+                resetEmojiSkins(emojisWithSkins);
+                emojiWithSkin.parentNode.children[1].style.visibility = "visible";
+            } else {
+                addEmoji(emojiWithSkin);
             }
-        }
-        event.currentTarget.removeAttribute("onclick");
-        event.currentTarget.parentNode.children[1].style.visibility = "visible";
+        });
+
+        emojiWithSkin.addEventListener("mousedown", function () {
+            start = new Date();
+        });
+        emojiWithSkin.addEventListener("mouseup", function () {
+            end = new Date();
+            delta = (end - start) / 1000.0;
+            if (delta >= 0.5) {
+                resetEmojiSkins(emojisWithSkins);
+                emojiWithSkin.parentNode.children[1].style.visibility = "visible";
+            } else {
+                if (!isPhone) {
+                    addEmoji(emojiWithSkin);
+                } else {
+                    isPhone = false;
+                }
+            }
+        });
     }
 });
+
+function resetEmojiSkins(emojisWithSkins) {
+    for (var skin of emojisWithSkins) {
+        if (skin.parentNode.children[1].style.visibility == "visible") {
+            skin.parentNode.children[1].style.visibility = "";
+        }
+    }
+}
