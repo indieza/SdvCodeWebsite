@@ -357,6 +357,28 @@
     z-index: 1;
 }
 
+    .tooltipEmojiSpanLeft::after {
+        content: " ";
+        position: absolute;
+        top: 100%; /* At the bottom of the tooltip */
+        left: 90%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+
+.tooltipEmojiSpanRight::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 10%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
 /*.tooltipEmoji:hover .tooltipEmojiSpanRight {
     visibility: visible;
     z-index: 10;
