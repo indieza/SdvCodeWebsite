@@ -1,0 +1,66 @@
+﻿.singleEmoji:hover {
+    background-color: #727272;
+    padding: 1px 1px 1px 1px;
+}
+
+.singleEmoji {
+    display: inline-flex;
+    align-items: center;
+    width: 1.4em;
+}
+
+.hasEmojiSkin:hover {
+    background-color: #727272;
+    padding: 1px 1px 1px 1px;
+}
+
+.hasEmojiSkin {
+    display: inline-flex;
+    align-items: center;
+    width: 1.4em;
+}
+
+.singleEmojiForDelete {
+    width: 2.3em;
+    margin: 1px 1px 1px 1px;
+}
+
+    .singleEmojiForDelete:hover {
+        background-color: #727272;
+        padding: 1px 1px 1px 1px;
+    }
+
+.singleEmojiForDeleteTooltip {
+    position: relative;
+    display: inline-block;
+}
+
+    .singleEmojiForDeleteTooltip .singleEmojiSkinForDelete {
+        visibility: hidden;
+        width: 46px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 10;
+        bottom: 96%;
+        left: 275%;
+        margin-left: -111px;
+    }
+
+        .singleEmojiForDeleteTooltip .singleEmojiSkinForDelete::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+        }
+
+    .singleEmojiForDeleteTooltip:hover .singleEmojiSkinForDelete {
+        visibility: visible;
+    }

@@ -66,6 +66,14 @@ $(function () {
         return false;
     });
 
+    let singleEmojis = document.getElementsByClassName("singleEmoji");
+
+    for (let singleEmoji of singleEmojis) {
+        singleEmoji.addEventListener("click", function () {
+            addEmoji(singleEmoji);
+        });
+    }
+
     let emojiSkinTimer;
     let isSelectedForSkin = false;
     let isEventsForPhone = false;

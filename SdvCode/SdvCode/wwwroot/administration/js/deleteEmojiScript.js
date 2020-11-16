@@ -22,3 +22,8 @@
         }
     });
 }
+
+function selectedEmoji(emojiId) {
+    document.getElementById("emojisOptions").value = emojiId;
+    selectedName(document.getElementById("emojisOptions"));
+}

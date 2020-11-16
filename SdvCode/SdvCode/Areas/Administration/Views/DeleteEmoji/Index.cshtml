@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.DeleteEmojiInputModel.Id"></label>
-                <select onchange="selectedName(this)" class="form-control" asp-for="@this.Model.DeleteEmojiInputModel.Id">
+                <select id="emojisOptions" onchange="selectedName(this)" class="form-control" asp-for="@this.Model.DeleteEmojiInputModel.Id">
                     <option disabled selected>Select emoji name...</option>
                     @foreach (var emoji in this.Model.DeleteEmojiViewModels)
                     {
@@ -27,6 +27,25 @@
                     }
                 </select>
                 <span class="text-danger" asp-validation-for="@this.Model.DeleteEmojiInputModel.Id"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                @foreach (var emoji in this.Model.DeleteEmojiViewModels)
+                {
+                    <span class="singleEmojiForDeleteTooltip" onclick="selectedEmoji('@emoji.Id')">
+                        <img class="singleEmojiForDelete" src="@emoji.Url" />
+                        @if (emoji.SkinsUrls.Count > 0)
+                        {
+                            <span class="singleEmojiSkinForDelete">
+                                @foreach (var emojiSkinUrl in emoji.SkinsUrls)
+                                {
+                                    <img class="singleEmojiForDelete" src="@emojiSkinUrl" />
+                                }
+                            </span>
+                        }
+                    </span>
+                }
             </div>
         </div>
         <div class="row" id="emojiSection" style="display: none">

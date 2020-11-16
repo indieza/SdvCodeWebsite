@@ -262,23 +262,6 @@
         animation: fadeIn 1s;
     }
 
-.singleEmoji:hover {
-    background-color: #727272;
-    padding: 1px 1px 1px 1px;
-}
-
-.singleEmoji {
-    display: inline-flex;
-    align-items: center;
-    width: 1.4em;
-}
-
-/*.singleEmojiForInput {
-    display: inline-flex;
-    align-items: center;
-    width: 1.4em;
-}*/
-
 .emoji-type-tab {
     display: inline-flex;
     align-items: center;
@@ -378,13 +361,3 @@
     border-style: solid;
     border-color: black transparent transparent transparent;
 }
-
-/*.tooltipEmoji:hover .tooltipEmojiSpanRight {
-    visibility: visible;
-    z-index: 10;
-}
-
-.tooltipEmoji:hover .tooltipEmojiSpanLeft {
-    visibility: visible;
-    z-index: 10;
-}*/
