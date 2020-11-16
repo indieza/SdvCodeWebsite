@@ -20,6 +20,17 @@
     width: 1.4em;
 }
 
+.singleEmojiForTab:hover {
+    background-color: #727272;
+    padding: 1px 1px 1px 1px;
+}
+
+.singleEmojiForTab {
+    display: inline-flex;
+    align-items: center;
+    width: 1.4em;
+}
+
 .singleEmojiForDelete {
     width: 2.3em;
     margin: 1px 1px 1px 1px;

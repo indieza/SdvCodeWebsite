@@ -110,7 +110,7 @@
                                         @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                         {
                                             <span style="margin: 0px 3px 0px 3px">
-                                                <img onclick="changeEmojisTabs('@this.Model.Emojis.Keys.ElementAt(i).ToString()')" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab" class="singleEmoji emoji-type-tab" style="background-color: @(i == 0 ? "#727272" : "");" src="@icons[this.Model.Emojis.Keys.ElementAt(i)]" />
+                                                <img onclick="changeEmojisTabs('@this.Model.Emojis.Keys.ElementAt(i).ToString()')" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab" class="singleEmojiForTab emoji-type-tab" style="background-color: @(i == 0 ? "#727272" : "");" src="@icons[this.Model.Emojis.Keys.ElementAt(i)]" />
                                             </span>
                                         }
                                     </span>
