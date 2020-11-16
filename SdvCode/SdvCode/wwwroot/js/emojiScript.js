@@ -65,43 +65,44 @@ $(function () {
     $(".hasEmojiSkin").on("contextmenu", function (e) {
         return false;
     });
-    var start;
-    var end;
-    var delta;
-    var isPhone = false;
+
+    let emojiSkinTimer;
+    let isSelectedForSkin = false;
+    let isEventsForPhone = false;
 
     let emojisWithSkins = this.documentElement.getElementsByClassName("hasEmojiSkin");
     for (let emojiWithSkin of emojisWithSkins) {
         emojiWithSkin.addEventListener("touchstart", function () {
-            start = new Date();
-            isPhone = true;
+            isEventsForPhone = true;
+            emojiSkinTimer = setTimeout(function sayHi() {
+                resetEmojiSkins([...emojisWithSkins].filter(x => x.parentNode.children[1].style.visibility == "visible"));
+                emojiWithSkin.parentNode.children[1].style.visibility = "visible";
+                isSelectedForSkin = true;
+            }, 350)
         });
         emojiWithSkin.addEventListener("touchend", function () {
-            end = new Date();
-            delta = (end - start) / 1000.0;
-            if (delta >= 0.5) {
-                resetEmojiSkins(emojisWithSkins);
-                emojiWithSkin.parentNode.children[1].style.visibility = "visible";
-            } else {
+            clearTimeout(emojiSkinTimer);
+            if (!isSelectedForSkin) {
                 addEmoji(emojiWithSkin);
+            } else {
+                isSelectedForSkin = false;
             }
         });
 
         emojiWithSkin.addEventListener("mousedown", function () {
-            start = new Date();
+            emojiSkinTimer = setTimeout(function sayHi() {
+                resetEmojiSkins([...emojisWithSkins].filter(x => x.parentNode.children[1].style.visibility == "visible"));
+                emojiWithSkin.parentNode.children[1].style.visibility = "visible";
+                isSelectedForSkin = true;
+            }, 350)
         });
         emojiWithSkin.addEventListener("mouseup", function () {
-            end = new Date();
-            delta = (end - start) / 1000.0;
-            if (delta >= 0.5) {
-                resetEmojiSkins(emojisWithSkins);
-                emojiWithSkin.parentNode.children[1].style.visibility = "visible";
+            clearTimeout(emojiSkinTimer);
+            if (!isSelectedForSkin && !isEventsForPhone) {
+                addEmoji(emojiWithSkin);
             } else {
-                if (!isPhone) {
-                    addEmoji(emojiWithSkin);
-                } else {
-                    isPhone = false;
-                }
+                isSelectedForSkin = false;
+                isEventsForPhone = false;
             }
         });
     }
