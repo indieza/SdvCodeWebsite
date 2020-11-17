@@ -15,6 +15,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.PrivateChat.Models.Enums;
+    using SdvCode.Areas.PrivateChat.ViewModels.ChatTheme;
     using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -137,6 +138,24 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                         SkinsUrls = this.db.EmojiSkins.Where(x => x.EmojiId == emoji.Id).OrderBy(x => x.Position).Select(x => x.Url).ToList(),
                     });
                 }
+            }
+
+            return result;
+        }
+
+        public ICollection<ChatThemeViewModel> GetAllThemes()
+        {
+            var result = new List<ChatThemeViewModel>();
+            var allThemes = this.db.ChatThemes.OrderBy(x => x.Name).ToList();
+
+            foreach (var theme in allThemes)
+            {
+                result.Add(new ChatThemeViewModel
+                {
+                    Id = theme.Id,
+                    Name = theme.Name,
+                    Url = theme.Url,
+                });
             }
 
             return result;

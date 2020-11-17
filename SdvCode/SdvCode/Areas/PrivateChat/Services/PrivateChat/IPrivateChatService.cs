@@ -10,6 +10,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using Microsoft.AspNetCore.Http;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.PrivateChat.Models.Enums;
+    using SdvCode.Areas.PrivateChat.ViewModels.ChatTheme;
     using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
     using SdvCode.Models.User;
 
@@ -26,5 +27,6 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         Task ReceiveNewMessage(string fromUsername, string message, string group);
 
         Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> GetAllEmojis();
+        ICollection<ChatThemeViewModel> GetAllThemes();
     }
 }

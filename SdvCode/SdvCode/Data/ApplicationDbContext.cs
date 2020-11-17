@@ -180,9 +180,10 @@ namespace SdvCode.Data
                 k.ProductId,
             });
 
-            builder.Entity<Group>().HasOne(x => x.ChatTheme)
-                .WithOne(x => x.Group)
-                .HasForeignKey<ChatTheme>(x => x.GroupId)
+            builder.Entity<Group>()
+                .HasOne(x => x.ChatTheme)
+                .WithMany(x => x.Groups)
+                .HasForeignKey(x => x.ChatThemeId)
                 .IsRequired(false);
 
             builder.Entity<Emoji>()

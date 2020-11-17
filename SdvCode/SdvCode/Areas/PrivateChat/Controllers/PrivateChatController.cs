@@ -54,6 +54,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
                 ChatMessages = await this.privateChatService.ExtractAllMessages(group),
                 GroupName = group,
                 Emojis = this.privateChatService.GetAllEmojis(),
+                AllChatThemes = this.privateChatService.GetAllThemes(),
             };
 
             return this.View(model);

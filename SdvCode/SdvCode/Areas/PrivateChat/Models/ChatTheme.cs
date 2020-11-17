@@ -28,9 +28,6 @@ namespace SdvCode.Areas.PrivateChat.Models
         [Required]
         public string Url { get; set; }
 
-        [ForeignKey(nameof(Group))]
-        public int? GroupId { get; set; }
-
-        public Group Group { get; set; }
+        public ICollection<Group> Groups { get; set; } = new HashSet<Group>();
     }
 }

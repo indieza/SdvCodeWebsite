@@ -383,3 +383,13 @@
     border-style: solid;
     border-color: black transparent transparent transparent;
 }
+
+.chat-action-icon {
+    font-size: 1.4em;
+    color: aliceblue;
+}
+
+    .chat-action-icon:hover {
+        font-size: 1.6em;
+        color: cornflowerblue;
+    }
