@@ -161,6 +161,19 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             return result;
         }
 
+        public ChatThemeViewModel GetGroupTheme(string group)
+        {
+            var targetThemeId = this.db.Groups
+                .Where(x => x.Name.ToLower() == group.ToLower()).Select(x => x.ChatThemeId).FirstOrDefault();
+            var targetTheme = this.db.ChatThemes.FirstOrDefault(x => x.Id == targetThemeId);
+            return new ChatThemeViewModel
+            {
+                Id = targetTheme?.Id,
+                Name = targetTheme?.Name,
+                Url = targetTheme?.Url,
+            };
+        }
+
         public async Task<bool> IsUserAbleToChat(string username, string group, ApplicationUser currentUser)
         {
             var targetUser = this.db.Users.FirstOrDefault(x => x.UserName == username);

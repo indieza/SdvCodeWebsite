@@ -386,10 +386,68 @@
 
 .chat-action-icon {
     font-size: 1.4em;
-    color: aliceblue;
+    color: floralwhite;
+    position: relative;
+    display: inline-block;
+    text-shadow: 0 0 3px black;
 }
 
     .chat-action-icon:hover {
-        font-size: 1.6em;
         color: cornflowerblue;
+    }
+
+.chat-theme-toolt-image {
+    visibility: hidden;
+    width: 58px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: 177%;
+    margin-left: -60px;
+    overflow-y: auto;
+    max-height: 140px;
+    overflow-x: hidden;
+}
+
+    .chat-theme-toolt-image::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .chat-theme-toolt-image::-webkit-scrollbar-track {
+        background: #f1f1f1
+    }
+
+    .chat-theme-toolt-image::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    .chat-theme-toolt-image::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent black transparent;
+    }
+
+.theme-image img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    object-position: 50% 50%;
+    border: 2px solid white;
+    margin-bottom: 5px;
+}
+
+    .theme-image img:hover {
+        width: 45px;
+        height: 45px;
     }
