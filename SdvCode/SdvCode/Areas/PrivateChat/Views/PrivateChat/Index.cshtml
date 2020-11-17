@@ -34,12 +34,16 @@
     <div class="row">
         <h3 id="groupName" style="text-align:center">@Model.GroupName</h3>
         <div class="col-md-12">
-            <div class="panel">
+            <div class="panel" style="background: url(https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80); background-position: center; background-repeat: no-repeat; background-size: cover;">
                 <!--Heading-->
                 <div class="panel-heading">
                     <div class="row">
-                        <h3 class="panel-title" style="float: left" id="toUser">@Model.ToUser.UserName</h3>
-                        <h3 class="panel-title" style="float: right" id="fromUser">@Model.FromUser.UserName</h3>
+                        <div class="col-md-6 col-xs-6">
+                            <h3 class="panel-title" style="float: left" id="toUser">@Model.ToUser.UserName</h3>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <h3 class="panel-title" style="float: right" id="fromUser">@Model.FromUser.UserName</h3>
+                        </div>
                     </div>
                 </div>
                 <div class="nano">
@@ -97,7 +101,7 @@
                 </div>
 
                 <!--Widget footer-->
-                <div class="panel-footer">
+                <div class="panel-chat-footer">
                     <div class="row">
                         <div class="col-md-10 col-xs-9">
                             <div class="chat-input" contenteditable="true" id="messageInput" oninput="updateInputScroller()"></div>

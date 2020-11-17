@@ -14,6 +14,14 @@
     border-bottom: 1px solid #eee;
 }
 
+.panel-chat-footer {
+    padding: 10px 15px;
+    background-color: rgba(245,245,245, 0.7);
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
 .panel-control {
     height: 100%;
     position: relative;
@@ -24,11 +32,13 @@
 .panel-title {
     font-weight: normal;
     padding: 0 20px 0 20px;
-    font-size: 1.416em;
-    line-height: 50px;
+    font-size: 2.5em;
+    line-height: 58px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: white;
+    -webkit-text-stroke: 2px black;
 }
 
 .panel-control > .btn:last-child, .panel-control > .btn-group:last-child > .btn:first-child {
@@ -114,17 +124,23 @@
 }
 
 .speech .media-heading {
-    font-size: 1.2em;
+    font-size: 1em;
     color: #317787;
     display: block;
     border-bottom: 1px solid rgba(0,0,0,0.1);
-    margin-bottom: 10px;
-    padding-bottom: 5px;
+    /*margin-bottom: 10px;
+    padding-bottom: 5px;*/
     font-weight: 300;
+    text-transform: uppercase;
+    font-weight: bolder;
 }
 
+    .speech .media-heading:hover {
+        color: white;
+    }
+
 .speech-time {
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     margin-bottom: 0;
     font-size: .8em;
     font-weight: 300;
@@ -147,11 +163,16 @@
     background: #ffda87;
     color: #a07617;
     text-align: right;
+    max-width: 200px;
 }
 
     .speech-right > .speech .media-heading {
         color: #a07617;
     }
+
+        .speech-right > .speech .media-heading:hover {
+            color: white;
+        }
 
 .form-control {
     font-size: 11px;
@@ -184,6 +205,7 @@
     overflow-y: scroll;
     max-height: 51px;
     overflow-x: hidden;
+    background: #f1f1f1;
 }
 
     .chat-input::-webkit-scrollbar {
