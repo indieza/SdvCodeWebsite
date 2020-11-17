@@ -155,7 +155,15 @@
                                         @foreach (var theme in this.Model.AllChatThemes)
                                         {
                                             <span class="theme-image">
-                                                <img onclick="changeTheme(this)" src="@theme.Url" />
+                                                <span style="position: relative">
+                                                    <img onclick="changeTheme(this)" src="@theme.Url" />
+                                                </span>
+                                                @if (this.Model.ChatThemeViewModel.Id == theme.Id)
+                                                {
+                                                    <span class="select-theme-badge">
+                                                        <i class="fas fa-check"></i>
+                                                    </span>
+                                                }
                                             </span>
                                         }
                                     </span>

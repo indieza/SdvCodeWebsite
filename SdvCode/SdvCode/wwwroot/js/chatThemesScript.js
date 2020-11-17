@@ -26,4 +26,14 @@ function changeTheme(image) {
     if (panel) {
         panel.style.backgroundImage = `url(${src})`;
     }
+
+    let oldBadge = document.querySelector(".theme-image .select-theme-badge");
+
+    if (oldBadge) {
+        let child = oldBadge.parentElement.children[1];
+        oldBadge.parentElement.removeChild(child);
+    }
+    image.parentElement.innerHTML += `<span class="select-theme-badge">
+                                          <i class="fas fa-check"></i>
+                                      </span>`;
 }
