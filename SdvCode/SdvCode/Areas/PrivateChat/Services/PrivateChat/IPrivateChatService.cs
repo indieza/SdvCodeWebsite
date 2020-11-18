@@ -29,5 +29,6 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> GetAllEmojis();
         ICollection<ChatThemeViewModel> GetAllThemes();
         ChatThemeViewModel GetGroupTheme(string group);
+        Task ChangeChatTheme(string username, string group, string themeId);
     }
 }

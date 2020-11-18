@@ -35,6 +35,14 @@ connection.on("ReceiveMessage", function (user, image, message) {
     updateScroll();
 });
 
+connection.on("ReceiveThemeUpdate", function (themeUrl) {
+    let panel = document.getElementById("chatPanel");
+    if (panel) {
+        panel.style.backgroundImage = `url(${themeUrl})`;
+    }
+    updateScroll();
+});
+
 connection.on("SendMessage", function (user, image, message) {
     var msg = message;//message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     let dateTime = new Date()

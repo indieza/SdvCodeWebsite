@@ -80,6 +80,21 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             await this.hubContext.Clients.Group(groupName).SendAsync("ReceiveMessage", fromUsername, fromImage, $"{fromUsername} has joined the group {groupName}.");
         }
 
+        public async Task ChangeChatTheme(string username, string group, string themeId)
+        {
+            var toId = await this.db.Users
+                .Where(x => x.UserName.ToUpper() == username.ToUpper())
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+            var targetTheme = await this.db.ChatThemes.FirstOrDefaultAsync(x => x.Id == themeId);
+            var targetGroup = await this.db.Groups.FirstOrDefaultAsync(x => x.Name.ToUpper() == group.ToUpper());
+
+            targetGroup.ChatThemeId = targetTheme.Id;
+            this.db.Groups.Update(targetGroup);
+            await this.db.SaveChangesAsync();
+            await this.hubContext.Clients.User(toId).SendAsync("ReceiveThemeUpdate", targetTheme.Url);
+        }
+
         public async Task<ICollection<ChatMessage>> ExtractAllMessages(string group)
         {
             var targetGroup = await this.db.Groups.FirstOrDefaultAsync(x => x.Name.ToLower() == group.ToLower());

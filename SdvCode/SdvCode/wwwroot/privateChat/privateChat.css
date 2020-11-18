@@ -448,7 +448,8 @@
 }
 
     .theme-image img:hover {
-        border: 2px solid grey;
+        width: 43px;
+        height: 43px;
     }
 
 .select-theme-badge {
@@ -462,8 +463,13 @@
     left: 24px;
 }
 
-    .select-theme-badge i {
-        text-align: center;
-        font-size: 10px;
-        vertical-align: super;
-    }
+.theme-image:hover .select-theme-badge {
+    top: 23px;
+    left: 27px;
+}
+
+.select-theme-badge i {
+    text-align: center;
+    font-size: 10px;
+    vertical-align: super;
+}

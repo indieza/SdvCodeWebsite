@@ -60,5 +60,12 @@ namespace SdvCode.Areas.PrivateChat.Controllers
 
             return this.View(model);
         }
+
+        [HttpPost]
+        [Route("PrivateChat/With/{username?}/Group/{group?}/ChangeChatTheme")]
+        public async Task ChangeChatTheme(string username, string group, string themeId)
+        {
+            await this.privateChatService.ChangeChatTheme(username, group, themeId);
+        }
     }
 }
