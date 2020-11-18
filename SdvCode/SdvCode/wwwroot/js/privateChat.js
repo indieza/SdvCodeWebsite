@@ -40,6 +40,21 @@ connection.on("ReceiveThemeUpdate", function (themeUrl) {
     if (panel) {
         panel.style.backgroundImage = `url(${themeUrl})`;
     }
+
+    let oldBadge = document.querySelector(".theme-image .select-theme-badge");
+    if (oldBadge) {
+        let child = oldBadge.parentElement.children[1];
+        oldBadge.parentElement.removeChild(child);
+    }
+
+    let allImages = document.querySelectorAll(".theme-image img");
+    let targetImage = [...allImages].find(x => x.src == themeUrl);
+
+    if (targetImage) {
+        targetImage.parentElement.innerHTML += `<span class="select-theme-badge">
+                                                    <i class="fas fa-check"></i>
+                                                </span>`;
+    }
     updateScroll();
 });
 
