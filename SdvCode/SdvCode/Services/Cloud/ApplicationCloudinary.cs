@@ -37,7 +37,7 @@ namespace SdvCode.Services.Cloud
                     var uploadParams = new ImageUploadParams()
                     {
                         File = new FileDescription(name, ms),
-                        PublicId = $"{folderName}/{name}", // TODO This is for folders
+                        PublicId = $"{folderName}/{name}",
                     };
 
                     var uploadResult = cloudinary.Upload(uploadParams);
@@ -52,7 +52,7 @@ namespace SdvCode.Services.Cloud
         {
             var delParams = new DelResParams()
             {
-                PublicIds = new List<string>() { $"{folderName}/{name}" }, // TODO This is for folders
+                PublicIds = new List<string>() { $"{folderName}/{name}" },
                 Invalidate = true,
             };
 
