@@ -37,6 +37,7 @@
         <li role="presentation" class="@(Model.ActiveTab == AllUsersTab.AllUsers ? "active" : string.Empty )"><a asp-route-tab="AllUsers" asp-route-page="@Model.Page" asp-action="SwitchToAllUsersTabs">ALL USERS</a></li>
         <li role="presentation" class="@(Model.ActiveTab == AllUsersTab.RecommendedUsers ? "active" : string.Empty )"><a asp-route-tab="RecommendedUsers" asp-route-page="@Model.Page" asp-action="SwitchToAllUsersTabs">RECOMMENDED USERS</a></li>
         <li role="presentation" class="@(Model.ActiveTab == AllUsersTab.BannedUsers ? "active" : string.Empty )"><a asp-route-tab="BannedUsers" asp-route-page="@Model.Page" asp-action="SwitchToAllUsersTabs">BANNED USERS</a></li>
+        <li role="presentation" class="@(Model.ActiveTab == AllUsersTab.AllAdministrators ? "active" : string.Empty )"><a asp-route-tab="AllAdministrators" asp-route-page="@Model.Page" asp-action="SwitchToAllUsersTabs">ALL ADMINISTRATORS</a></li>
     </ul>
     <div class="tab-content">
         @switch (Model.ActiveTab)
@@ -49,6 +50,9 @@
                 break;
             case AllUsersTab.BannedUsers:
                 @await Component.InvokeAsync("BannedUsers", new { username = currentUser.UserName, page = Model.Page, search = Model.Search });
+                break;
+            case AllUsersTab.AllAdministrators:
+                @await Component.InvokeAsync("AllAdministrators", new { username = currentUser.UserName, page = Model.Page, search = Model.Search });
                 break;
             default:
                 break;

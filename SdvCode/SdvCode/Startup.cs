@@ -229,6 +229,7 @@ namespace SdvCode
             services.AddTransient<IAllUsersService, AllUsersService>();
             services.AddTransient<IBannedUsersService, BannedUsersService>();
             services.AddTransient<IRecommendedUsersService, RecommendedUsersService>();
+            services.AddTransient<IAllAdministratorsService, AllAdministratorsService>();
 
             // Register Shop Services
             services.AddTransient<IShopDbUsageService, ShopDbUsageService>();

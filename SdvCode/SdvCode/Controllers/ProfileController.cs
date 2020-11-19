@@ -96,6 +96,7 @@ namespace SdvCode.Controllers
                 "AllUsers" => AllUsersTab.AllUsers,
                 "RecommendedUsers" => AllUsersTab.RecommendedUsers,
                 "BannedUsers" => AllUsersTab.BannedUsers,
+                "AllAdministrators" => AllUsersTab.AllAdministrators,
                 _ => AllUsersTab.AllUsers,
             };
 
