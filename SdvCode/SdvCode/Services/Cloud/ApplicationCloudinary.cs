@@ -12,7 +12,7 @@ namespace SdvCode.Services.Cloud
 
     public class ApplicationCloudinary
     {
-        public static async Task<string> UploadImage(Cloudinary cloudinary, IFormFile image, string name)
+        public static async Task<string> UploadImage(Cloudinary cloudinary, IFormFile image, string name, string folderName)
         {
             if (image != null)
             {
@@ -37,7 +37,7 @@ namespace SdvCode.Services.Cloud
                     var uploadParams = new ImageUploadParams()
                     {
                         File = new FileDescription(name, ms),
-                        PublicId = name,
+                        PublicId = $"{folderName}/{name}", // TODO This is for folders
                     };
 
                     var uploadResult = cloudinary.Upload(uploadParams);
@@ -48,11 +48,11 @@ namespace SdvCode.Services.Cloud
             return null;
         }
 
-        public static void DeleteImage(Cloudinary cloudinary, string name)
+        public static void DeleteImage(Cloudinary cloudinary, string name, string folderName)
         {
             var delParams = new DelResParams()
             {
-                PublicIds = new List<string>() { name },
+                PublicIds = new List<string>() { $"{folderName}/{name}" }, // TODO This is for folders
                 Invalidate = true,
             };
 

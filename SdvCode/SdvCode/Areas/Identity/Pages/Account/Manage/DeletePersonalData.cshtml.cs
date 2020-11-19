@@ -7,13 +7,16 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.Services.Cloud;
     using SdvCode.Services.Comment;
 
     public class DeletePersonalDataModel : PageModel
@@ -23,19 +26,22 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
         private readonly ILogger<DeletePersonalDataModel> logger;
         private readonly ApplicationDbContext db;
         private readonly ICommentService commentService;
+        private readonly Cloudinary cloudinary;
 
         public DeletePersonalDataModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<DeletePersonalDataModel> logger,
             ApplicationDbContext db,
-            ICommentService commentService)
+            ICommentService commentService,
+            Cloudinary cloudinary)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.db = db;
             this.commentService = commentService;
+            this.cloudinary = cloudinary;
         }
 
         [BindProperty]
@@ -114,6 +120,23 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var ratings = this.db.UserRatings
                 .Where(x => x.RaterUsername == user.UserName || x.Username == user.UserName)
                 .ToList();
+
+            ApplicationCloudinary.DeleteImage(
+                this.cloudinary,
+                string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName),
+                string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
+            ApplicationCloudinary.DeleteImage(
+                this.cloudinary,
+                string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName),
+                string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
+
+            foreach (var post in posts)
+            {
+                ApplicationCloudinary.DeleteImage(
+                    this.cloudinary,
+                    string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id),
+                    GlobalConstants.PostBaseImageFolder);
+            }
 
             this.db.PostsLikes.RemoveRange(likes);
             this.db.FollowUnfollows.RemoveRange(followFollowed);

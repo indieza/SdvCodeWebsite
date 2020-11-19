@@ -39,7 +39,17 @@ namespace SdvCode.Areas.Administration.Services.DeleteChatTheme
 
             ApplicationCloudinary.DeleteImage(
                 this.cloudinary,
-                string.Format(GlobalConstants.ChatThemeName, targetTheme.Id));
+                string.Format(GlobalConstants.ChatThemeName, targetTheme.Id),
+                GlobalConstants.ChatThemesFolderName);
+            var targetGroups = this.db.Groups.Where(x => x.ChatThemeId == targetTheme.Id);
+
+            foreach (var group in targetGroups)
+            {
+                group.ChatThemeId = null;
+            }
+
+            this.db.Groups.UpdateRange(targetGroups);
+            await this.db.SaveChangesAsync();
             this.db.ChatThemes.Remove(targetTheme);
             await this.db.SaveChangesAsync();
 

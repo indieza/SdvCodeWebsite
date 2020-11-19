@@ -52,7 +52,8 @@ namespace SdvCode.Areas.Administration.Services.AddEmoji
                 var imageUrl = await ApplicationCloudinary.UploadImage(
                     this.cloudinary,
                     model.Image,
-                    string.Format(GlobalConstants.EmojiName, emoji.Id));
+                    string.Format(GlobalConstants.EmojiName, emoji.Id),
+                    GlobalConstants.EmojisFolder);
                 emoji.Url = imageUrl;
 
                 this.db.Emojis.Add(emoji);

@@ -55,7 +55,11 @@ namespace SdvCode.Areas.Administration.Services.AddEmojis
                         EmojiType = model.EmojiType,
                     };
 
-                    var emojiUrl = await ApplicationCloudinary.UploadImage(this.cloudinary, file, string.Format(GlobalConstants.EmojiName, emoji.Id));
+                    var emojiUrl = await ApplicationCloudinary.UploadImage(
+                        this.cloudinary,
+                        file,
+                        string.Format(GlobalConstants.EmojiName, emoji.Id),
+                        GlobalConstants.EmojisFolder);
                     emoji.Url = emojiUrl;
 
                     lastNumber++;

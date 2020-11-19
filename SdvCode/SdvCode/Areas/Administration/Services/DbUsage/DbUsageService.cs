@@ -38,7 +38,8 @@ namespace SdvCode.Areas.Administration.Services.DbUsage
                     user.ImageUrl = null;
                     ApplicationCloudinary.DeleteImage(
                         this.cloudinary,
-                        string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName));
+                        string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName),
+                        string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
                     count++;
                 }
 
@@ -47,7 +48,8 @@ namespace SdvCode.Areas.Administration.Services.DbUsage
                     user.CoverImageUrl = null;
                     ApplicationCloudinary.DeleteImage(
                         this.cloudinary,
-                        string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName));
+                        string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName),
+                        string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
                     count++;
                 }
             }
@@ -66,12 +68,14 @@ namespace SdvCode.Areas.Administration.Services.DbUsage
                 user.ImageUrl = null;
                 ApplicationCloudinary.DeleteImage(
                     this.cloudinary,
-                    string.Format(GlobalConstants.CloudinaryUserProfilePictureName, username));
+                    string.Format(GlobalConstants.CloudinaryUserProfilePictureName, username),
+                    string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
 
                 user.CoverImageUrl = null;
                 ApplicationCloudinary.DeleteImage(
                     this.cloudinary,
-                    string.Format(GlobalConstants.CloudinaryUserCoverImageName, username));
+                    string.Format(GlobalConstants.CloudinaryUserCoverImageName, username),
+                    string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
 
                 this.db.Users.Update(user);
                 await this.db.SaveChangesAsync();

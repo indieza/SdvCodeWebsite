@@ -51,7 +51,8 @@ namespace SdvCode.Areas.Administration.Services.AddEmojiWithSkin
                 var imgeUrl = await ApplicationCloudinary.UploadImage(
                     this.cloudinary,
                     model.Image,
-                    string.Format(GlobalConstants.EmojiName, targetEmoji.Id));
+                    string.Format(GlobalConstants.EmojiName, targetEmoji.Id),
+                    GlobalConstants.EmojisFolder);
                 targetEmoji.Url = imgeUrl;
 
                 var lastEmojiSkinNumber = await this.db.EmojiSkins
@@ -72,7 +73,8 @@ namespace SdvCode.Areas.Administration.Services.AddEmojiWithSkin
                     var skinUrl = await ApplicationCloudinary.UploadImage(
                         this.cloudinary,
                         skinFile,
-                        string.Format(GlobalConstants.EmojiSkin, emojiSkin.Id));
+                        string.Format(GlobalConstants.EmojiSkin, emojiSkin.Id),
+                        GlobalConstants.EmojisFolder);
                     emojiSkin.Url = skinUrl;
 
                     this.db.Emojis.Add(targetEmoji);
@@ -111,7 +113,8 @@ namespace SdvCode.Areas.Administration.Services.AddEmojiWithSkin
                         var skinUrl = await ApplicationCloudinary.UploadImage(
                         this.cloudinary,
                         skinFile,
-                        string.Format(GlobalConstants.EmojiSkin, emojiSkin.Id));
+                        string.Format(GlobalConstants.EmojiSkin, emojiSkin.Id),
+                        GlobalConstants.EmojisFolder);
                         emojiSkin.Url = skinUrl;
 
                         targetSkins.Add(emojiSkin);

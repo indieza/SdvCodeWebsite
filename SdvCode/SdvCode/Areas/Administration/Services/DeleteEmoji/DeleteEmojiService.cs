@@ -40,12 +40,14 @@ namespace SdvCode.Areas.Administration.Services.DeleteEmoji
                 {
                     ApplicationCloudinary.DeleteImage(
                        this.cloudinary,
-                       string.Format(GlobalConstants.EmojiSkin, emojiSkin.Id));
+                       string.Format(GlobalConstants.EmojiSkin, emojiSkin.Id),
+                       GlobalConstants.EmojisFolder);
                 }
 
                 ApplicationCloudinary.DeleteImage(
                     this.cloudinary,
-                    string.Format(GlobalConstants.EmojiName, emoji.Id));
+                    string.Format(GlobalConstants.EmojiName, emoji.Id),
+                    GlobalConstants.EmojisFolder);
                 this.db.EmojiSkins.RemoveRange(emojiSkins);
                 this.db.Emojis.Remove(emoji);
                 this.db.SaveChanges();

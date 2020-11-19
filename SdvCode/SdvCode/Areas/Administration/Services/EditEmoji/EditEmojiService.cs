@@ -41,7 +41,8 @@ namespace SdvCode.Areas.Administration.Services.EditEmoji
                     var imageUrl = await ApplicationCloudinary.UploadImage(
                         this.cloudinary,
                         model.Image,
-                        string.Format(GlobalConstants.EmojiName, model.Id));
+                        string.Format(GlobalConstants.EmojiName, model.Id),
+                        GlobalConstants.EmojisFolder);
                     targetEmoji.Url = imageUrl;
                 }
 

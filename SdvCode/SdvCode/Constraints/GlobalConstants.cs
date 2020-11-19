@@ -1,8 +1,5 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-using System;
-
 namespace SdvCode.Constraints
 {
     public static class GlobalConstants
@@ -82,5 +79,15 @@ namespace SdvCode.Constraints
         public const string EmojiName = "{0}-ChatEmoji";
 
         public const string EmojiSkin = "{0}-ChatEmojiSkin";
+
+        public const string ChatThemesFolderName = "Private Chat Themes";
+
+        public const string EmojisFolder = "Emojis";
+
+        public const string PostBaseImageFolder = "Blog Posts/Wallpapers";
+
+        public const string UserProfilePicturesFolder = "Users Pictures/{0}";
+
+        public const string ShopProductsFolder = "Shop Products";
     }
 }

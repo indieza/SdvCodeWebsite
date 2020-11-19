@@ -224,7 +224,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var profileImageUrl = await ApplicationCloudinary.UploadImage(
                 this.cloudinary,
                 this.Input.ProfilePicture,
-                string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName));
+                string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName),
+                string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
 
             if (profileImageUrl != null)
             {
@@ -238,7 +239,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var coverImageUrl = await ApplicationCloudinary.UploadImage(
                 this.cloudinary,
                 this.Input.CoverImage,
-                string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName));
+                string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName),
+                string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
 
             if (coverImageUrl != null)
             {

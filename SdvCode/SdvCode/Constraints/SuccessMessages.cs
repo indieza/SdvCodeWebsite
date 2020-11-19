@@ -104,7 +104,13 @@ namespace SdvCode.Constraints
 
         public const string SuccessfullyEditChatTheme = "Successfully edit \"{0}\" chat theme.";
 
-        public const string SuccessfullyAddedEmojis = "Successfully add \"{0}\" emojis, \"{1}\" of them already exist.";
-        public const string SuccessfullyAddedEmojiWithSkins = "Successfully add \"{0}\" emoji with \"{1}\" skins.";
+        public const string SuccessfullyAddedEmojis =
+            "Successfully add \"{0}\" emojis, \"{1}\" of them already exist.";
+
+        public const string SuccessfullyAddedEmojiWithSkins =
+            "Successfully add \"{0}\" emoji with \"{1}\" skins.";
+
+        public const string SuccessfullyDeletedEmojisByType =
+            "Successfully delete \"{0}\" emojis of type \"{1}\".";
     }
 }

@@ -80,9 +80,8 @@ namespace SdvCode.Services.Blog
             var imageUrl = await ApplicationCloudinary.UploadImage(
                 this.cloudinary,
                 model.PostInputModel.CoverImage,
-                string.Format(
-                    GlobalConstants.CloudinaryPostCoverImageName,
-                    post.Id));
+                string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id),
+                GlobalConstants.PostBaseImageFolder);
 
             if (imageUrl != null)
             {
@@ -177,8 +176,10 @@ namespace SdvCode.Services.Blog
             {
                 if (post.ImageUrl != null)
                 {
-                    ApplicationCloudinary
-                        .DeleteImage(this.cloudinary, string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id));
+                    ApplicationCloudinary.DeleteImage(
+                        this.cloudinary,
+                        string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id),
+                        GlobalConstants.PostBaseImageFolder);
                 }
 
                 if (user.Id == post.ApplicationUserId)
@@ -226,7 +227,8 @@ namespace SdvCode.Services.Blog
                     model.CoverImage,
                     string.Format(
                         GlobalConstants.CloudinaryPostCoverImageName,
-                        post.Id));
+                        post.Id),
+                    GlobalConstants.PostBaseImageFolder);
 
                 if (imageUrl != null)
                 {

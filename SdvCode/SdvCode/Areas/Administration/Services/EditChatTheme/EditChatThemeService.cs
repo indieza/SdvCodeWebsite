@@ -49,7 +49,8 @@ namespace SdvCode.Areas.Administration.Services.EditChatTheme
                     await ApplicationCloudinary.UploadImage(
                         this.cloudinary,
                         model.Image,
-                        string.Format(GlobalConstants.ChatThemeName, targetTheme.Id));
+                        string.Format(GlobalConstants.ChatThemeName, targetTheme.Id),
+                        GlobalConstants.ChatThemesFolderName);
                 targetTheme.Url = imageUrl;
             }
 

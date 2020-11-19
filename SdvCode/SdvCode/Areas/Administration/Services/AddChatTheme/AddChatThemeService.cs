@@ -45,7 +45,8 @@ namespace SdvCode.Areas.Administration.Services.AddChatTheme
             var imageUrl = await ApplicationCloudinary.UploadImage(
                 this.cloudinary,
                 model.Image,
-                string.Format(GlobalConstants.ChatThemeName, targetTheme.Id));
+                string.Format(GlobalConstants.ChatThemeName, targetTheme.Id),
+                GlobalConstants.ChatThemesFolderName);
             targetTheme.Url = imageUrl;
 
             this.db.ChatThemes.Add(targetTheme);

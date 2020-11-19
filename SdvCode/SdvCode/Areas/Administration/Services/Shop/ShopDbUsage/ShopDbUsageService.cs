@@ -86,7 +86,8 @@ namespace SdvCode.Areas.Administration.Services.Shop.ShopDbUsage
                     await ApplicationCloudinary.UploadImage(
                         this.cloudinary,
                         productInputModel.ProductImages.ElementAt(i),
-                        imageName);
+                        imageName,
+                        GlobalConstants.ShopProductsFolder);
 
                 if (imageUrl != null)
                 {
@@ -133,7 +134,10 @@ namespace SdvCode.Areas.Administration.Services.Shop.ShopDbUsage
 
                         foreach (var image in images)
                         {
-                            ApplicationCloudinary.DeleteImage(this.cloudinary, image.Name);
+                            ApplicationCloudinary.DeleteImage(
+                                this.cloudinary,
+                                image.Name,
+                                GlobalConstants.ShopProductsFolder);
                         }
 
                         this.db.ProductImages.RemoveRange(images);
@@ -147,7 +151,8 @@ namespace SdvCode.Areas.Administration.Services.Shop.ShopDbUsage
                                 await ApplicationCloudinary.UploadImage(
                                     this.cloudinary,
                                     inputModel.ProductImages.ElementAt(i),
-                                    imageName);
+                                    imageName,
+                                    GlobalConstants.ShopProductsFolder);
 
                             if (imageUrl != null)
                             {
