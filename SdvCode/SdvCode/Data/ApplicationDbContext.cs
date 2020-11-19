@@ -24,6 +24,8 @@ namespace SdvCode.Data
 
         public DbSet<Post> Posts { get; set; }
 
+        public DbSet<PostImage> PostImages { get; set; }
+
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Category> Categories { get; set; }
@@ -102,6 +104,11 @@ namespace SdvCode.Data
                 entity.HasOne(x => x.Category)
                     .WithMany(x => x.Posts)
                     .HasForeignKey(x => x.CategoryId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(x => x.PostImages)
+                    .WithOne(x => x.Post)
+                    .HasForeignKey(x => x.PostId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 

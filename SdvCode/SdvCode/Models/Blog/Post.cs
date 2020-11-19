@@ -70,5 +70,7 @@ namespace SdvCode.Models.Blog
         public ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
 
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
+
+        public ICollection<PostImage> PostImages { get; set; } = new HashSet<PostImage>();
     }
 }
