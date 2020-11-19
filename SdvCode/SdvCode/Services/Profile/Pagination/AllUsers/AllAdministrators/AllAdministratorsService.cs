@@ -1,24 +1,28 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Services.Profile.Pagination.AllUsers
+namespace SdvCode.Services.Profile.Pagination.AllUsers.AllAdministrators
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Users.ViewModels;
 
-    public class AllUsersService : IAllUsersService
+    public class AllAdministratorsService : IAllAdministratorsService
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public AllUsersService(ApplicationDbContext db)
+        public AllAdministratorsService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
 
         public async Task<List<UserCardViewModel>> ExtractAllUsers(string username, string search)
@@ -43,15 +47,18 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers
 
             foreach (var targetUser in targetUsers)
             {
-                allUsers.Add(new UserCardViewModel
+                if (await this.userManager.IsInRoleAsync(targetUser, GlobalConstants.AdministratorRole))
                 {
-                    UserId = targetUser.Id,
-                    Username = targetUser.UserName,
-                    FirstName = targetUser.FirstName,
-                    LastName = targetUser.LastName,
-                    ImageUrl = targetUser.ImageUrl,
-                    CoverImageUrl = targetUser.CoverImageUrl,
-                });
+                    allUsers.Add(new UserCardViewModel
+                    {
+                        UserId = targetUser.Id,
+                        Username = targetUser.UserName,
+                        FirstName = targetUser.FirstName,
+                        LastName = targetUser.LastName,
+                        ImageUrl = targetUser.ImageUrl,
+                        CoverImageUrl = targetUser.CoverImageUrl,
+                    });
+                }
             }
 
             foreach (var targetUser in allUsers)

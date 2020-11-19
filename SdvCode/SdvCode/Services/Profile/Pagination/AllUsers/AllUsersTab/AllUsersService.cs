@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Services.Profile.Pagination.AllUsers
+namespace SdvCode.Services.Profile.Pagination.AllUsers.AllUsersTab
 {
     using System;
     using System.Collections.Generic;
@@ -12,11 +12,11 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Users.ViewModels;
 
-    public class RecommendedUsersService : IRecommendedUsersService
+    public class AllUsersService : IAllUsersService
     {
         private readonly ApplicationDbContext db;
 
-        public RecommendedUsersService(ApplicationDbContext db)
+        public AllUsersService(ApplicationDbContext db)
         {
             this.db = db;
         }
@@ -26,35 +26,31 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers
             List<UserCardViewModel> allUsers = new List<UserCardViewModel>();
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-            var targetUsers = new List<RecommendedFriend>();
+            var targetUsers = new List<ApplicationUser>();
 
             if (search == null)
             {
-                targetUsers = await this.db.RecommendedFriends
-                    .Where(x => x.ApplicationUserId == user.Id)
-                    .ToListAsync();
+                targetUsers = await this.db.Users.ToListAsync();
             }
             else
             {
-                targetUsers = await this.db.RecommendedFriends
-                     .Where(x => (EF.Functions.Contains(x.RecommendedUsername, search) ||
-                     EF.Functions.Contains(x.RecommendedFirstName, search) ||
-                     EF.Functions.Contains(x.RecommendedLastName, search)) &&
-                     x.ApplicationUserId == user.Id)
+                targetUsers = await this.db.Users
+                     .Where(x => EF.Functions.Contains(x.UserName, search) ||
+                     EF.Functions.Contains(x.FirstName, search) ||
+                     EF.Functions.Contains(x.LastName, search))
                      .ToListAsync();
             }
 
             foreach (var targetUser in targetUsers)
             {
-                var recommendedUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == targetUser.RecommendedUsername);
                 allUsers.Add(new UserCardViewModel
                 {
-                    UserId = recommendedUser.Id,
-                    Username = targetUser.RecommendedUsername,
-                    FirstName = targetUser.RecommendedFirstName,
-                    LastName = targetUser.RecommendedLastName,
-                    ImageUrl = targetUser.RecommendedImageUrl,
-                    CoverImageUrl = targetUser.RecommendedCoverImage,
+                    UserId = targetUser.Id,
+                    Username = targetUser.UserName,
+                    FirstName = targetUser.FirstName,
+                    LastName = targetUser.LastName,
+                    ImageUrl = targetUser.ImageUrl,
+                    CoverImageUrl = targetUser.CoverImageUrl,
                 });
             }
 

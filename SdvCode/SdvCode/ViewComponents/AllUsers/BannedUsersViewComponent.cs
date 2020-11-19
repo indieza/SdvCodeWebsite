@@ -11,6 +11,7 @@ namespace SdvCode.ViewComponents.AllUsers
     using SdvCode.Constraints;
     using SdvCode.Services.Profile.Pagination;
     using SdvCode.Services.Profile.Pagination.AllUsers;
+    using SdvCode.Services.Profile.Pagination.AllUsers.BannedUsers;
     using SdvCode.ViewModels.Pagination;
     using SdvCode.ViewModels.Pagination.AllUsers;
     using SdvCode.ViewModels.Users.ViewModels;

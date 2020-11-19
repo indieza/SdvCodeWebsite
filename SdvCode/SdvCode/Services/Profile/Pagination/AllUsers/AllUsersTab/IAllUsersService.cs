@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Services.Profile.Pagination.AllUsers
+namespace SdvCode.Services.Profile.Pagination.AllUsers.AllUsersTab
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers
     using System.Threading.Tasks;
     using SdvCode.ViewModels.Users.ViewModels;
 
-    public interface IRecommendedUsersService
+    public interface IAllUsersService
     {
         Task<List<UserCardViewModel>> ExtractAllUsers(string username, string search);
     }

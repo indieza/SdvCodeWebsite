@@ -1,28 +1,24 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.Services.Profile.Pagination.AllUsers
+namespace SdvCode.Services.Profile.Pagination.AllUsers.BannedUsers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Users.ViewModels;
 
-    public class AllAdministratorsService : IAllAdministratorsService
+    public class BannedUsersService : IBannedUsersService
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public AllAdministratorsService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public BannedUsersService(ApplicationDbContext db)
         {
             this.db = db;
-            this.userManager = userManager;
         }
 
         public async Task<List<UserCardViewModel>> ExtractAllUsers(string username, string search)
@@ -34,31 +30,29 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers
 
             if (search == null)
             {
-                targetUsers = await this.db.Users.ToListAsync();
+                targetUsers = await this.db.Users.Where(x => x.IsBlocked == true).ToListAsync();
             }
             else
             {
                 targetUsers = await this.db.Users
-                     .Where(x => EF.Functions.Contains(x.UserName, search) ||
+                     .Where(x => (EF.Functions.Contains(x.UserName, search) ||
                      EF.Functions.Contains(x.FirstName, search) ||
-                     EF.Functions.Contains(x.LastName, search))
+                     EF.Functions.Contains(x.LastName, search)) &&
+                     x.IsBlocked == true)
                      .ToListAsync();
             }
 
             foreach (var targetUser in targetUsers)
             {
-                if (await this.userManager.IsInRoleAsync(targetUser, GlobalConstants.AdministratorRole))
+                allUsers.Add(new UserCardViewModel
                 {
-                    allUsers.Add(new UserCardViewModel
-                    {
-                        UserId = targetUser.Id,
-                        Username = targetUser.UserName,
-                        FirstName = targetUser.FirstName,
-                        LastName = targetUser.LastName,
-                        ImageUrl = targetUser.ImageUrl,
-                        CoverImageUrl = targetUser.CoverImageUrl,
-                    });
-                }
+                    UserId = targetUser.Id,
+                    Username = targetUser.UserName,
+                    FirstName = targetUser.FirstName,
+                    LastName = targetUser.LastName,
+                    ImageUrl = targetUser.ImageUrl,
+                    CoverImageUrl = targetUser.CoverImageUrl,
+                });
             }
 
             foreach (var targetUser in allUsers)
