@@ -56,7 +56,7 @@
         </div>
         <hr />
         <div class="row">
-            <h2 class="headerSwitch container">Post Cover Image</h2>
+            <h2 class="headerSwitch container">Post Images</h2>
             <div class="form-group col-md-4">
                 <label asp-for="@Model.PostInputModel.CoverImage"></label>
                 <div class="file-upload" id="chooseCoverImage">
@@ -68,6 +68,22 @@
                     </div>
                 </div>
             </div>
+            @if (this.User.IsInRole(SdvCode.Constraints.GlobalConstants.AdministratorRole) ||
+                  this.User.IsInRole(SdvCode.Constraints.GlobalConstants.EditorRole) ||
+                  this.User.IsInRole(SdvCode.Constraints.GlobalConstants.AuthorRole))
+            {
+                <div class="form-group col-md-4">
+                    <label asp-for="@this.Model.PostInputModel.PostImages"></label>
+                    <div class="file-upload" id="chooseProfileImage">
+                        <div class="file-select">
+                            <div class="file-select-button" id="fileName">Choose File</div>
+                            <div class="file-select-name" id="noProfileFile">No file chosen...</div>
+                            <input type="file" multiple asp-for="@this.Model.PostInputModel.PostImages" id="chooseProfileFile" class="form-control">
+                        </div>
+                    </div>
+                    <span class="text-danger" asp-validation-for="@this.Model.PostInputModel.PostImages"></span>
+                </div>
+            }
         </div>
         <hr />
 

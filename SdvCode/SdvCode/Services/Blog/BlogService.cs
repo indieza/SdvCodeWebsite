@@ -83,6 +83,23 @@ namespace SdvCode.Services.Blog
                 string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id),
                 GlobalConstants.PostBaseImageFolder);
 
+            foreach (var image in model.PostInputModel.PostImages)
+            {
+                var postImage = new PostImage
+                {
+                    PostId = post.Id,
+                };
+
+                var postImageUrl = await ApplicationCloudinary.UploadImage(
+                    this.cloudinary,
+                    image,
+                    string.Format(GlobalConstants.CloudinaryPostImageName, postImage.Id),
+                    GlobalConstants.PostBaseImagesFolder);
+
+                postImage.Url = postImageUrl;
+                post.PostImages.Add(postImage);
+            }
+
             if (imageUrl != null)
             {
                 post.ImageUrl = imageUrl;
@@ -182,6 +199,18 @@ namespace SdvCode.Services.Blog
                         GlobalConstants.PostBaseImageFolder);
                 }
 
+                var allPostImages = this.db.PostImages
+                    .Where(x => x.PostId == post.Id)
+                    .ToList();
+
+                foreach (var postImage in allPostImages)
+                {
+                    ApplicationCloudinary.DeleteImage(
+                        this.cloudinary,
+                        string.Format(GlobalConstants.CloudinaryPostImageName, postImage.Id),
+                        GlobalConstants.PostBaseImagesFolder);
+                }
+
                 if (user.Id == post.ApplicationUserId)
                 {
                     this.cyclicActivity.AddUserAction(user, UserActionsType.DeleteOwnPost, user);
@@ -196,6 +225,7 @@ namespace SdvCode.Services.Blog
                 var comments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
                 this.db.Comments.RemoveRange(comments);
                 this.db.UserActions.RemoveRange(postActivities);
+                this.db.PostImages.RemoveRange(allPostImages);
                 this.db.Posts.Remove(post);
 
                 await this.db.SaveChangesAsync();

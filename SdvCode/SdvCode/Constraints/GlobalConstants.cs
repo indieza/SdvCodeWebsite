@@ -1,5 +1,6 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 namespace SdvCode.Constraints
 {
     public static class GlobalConstants
@@ -37,6 +38,8 @@ namespace SdvCode.Constraints
         public const int FollowingCountOnPage = 1;
 
         public const string CloudinaryPostCoverImageName = "{0}PostCoverImage";
+
+        public const string CloudinaryPostImageName = "{0}PostImage";
 
         public const int PasswordRequiredLength = 7;
 
@@ -89,5 +92,7 @@ namespace SdvCode.Constraints
         public const string UserProfilePicturesFolder = "Users Pictures/{0}";
 
         public const string ShopProductsFolder = "Shop Products";
+
+        public const string PostBaseImagesFolder = "Blog Posts/Post Images";
     }
 }

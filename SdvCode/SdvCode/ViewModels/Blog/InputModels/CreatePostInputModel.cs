@@ -34,5 +34,8 @@ namespace SdvCode.ViewModels.Blog.InputModels
 
         [Display(Name = "Tags")]
         public ICollection<string> TagsNames { get; set; } = new HashSet<string>();
+
+        [Display(Name = "Post Images")]
+        public ICollection<IFormFile> PostImages { get; set; } = new HashSet<IFormFile>();
     }
 }
