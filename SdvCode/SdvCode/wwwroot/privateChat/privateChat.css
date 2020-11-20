@@ -396,6 +396,10 @@
         color: cornflowerblue;
     }
 
+.input-image-box {
+    display: none;
+}
+
 .chat-theme-toolt-image {
     visibility: hidden;
     width: 58px;
@@ -472,4 +476,37 @@
     text-align: center;
     font-size: 10px;
     vertical-align: super;
+}
+
+.select-image-badge {
+    height: 17px;
+    width: 17px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 14px;
+    left: 62px;
+    text-align: center;
+    font-size: 10px;
+    line-height: 17.5px;
+    color: white;
+    font-weight: bold;
+}
+
+@keyframes pulse-green {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(51, 217, 178, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(51, 217, 178, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(51, 217, 178, 0);
+    }
 }
