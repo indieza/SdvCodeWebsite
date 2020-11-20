@@ -54,5 +54,7 @@ namespace SdvCode.ViewModels.Post.ViewModels
         public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
 
         public ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
+
+        public ICollection<PostImageViewModel> AllPostImages { get; set; } = new HashSet<PostImageViewModel>();
     }
 }

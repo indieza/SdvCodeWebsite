@@ -389,6 +389,7 @@
     position: relative;
     display: inline-block;
     text-shadow: 0 0 3px black;
+    padding-right: 10px;
 }
 
     .chat-action-icon:hover {
@@ -406,7 +407,7 @@
     position: absolute;
     z-index: 1;
     top: 110%;
-    left: 177%;
+    left: 125%;
     margin-left: -60px;
     overflow-y: auto;
     max-height: 140px;

@@ -83,11 +83,14 @@ namespace SdvCode.Services.Blog
                 string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id),
                 GlobalConstants.PostBaseImageFolder);
 
-            foreach (var image in model.PostInputModel.PostImages)
+            for (int i = 0; i < model.PostInputModel.PostImages.Count; i++)
             {
+                var image = model.PostInputModel.PostImages.ElementAt(i);
+
                 var postImage = new PostImage
                 {
                     PostId = post.Id,
+                    Name = string.Format(GlobalConstants.BlogPostImageNameTemplate, i + 1),
                 };
 
                 var postImageUrl = await ApplicationCloudinary.UploadImage(

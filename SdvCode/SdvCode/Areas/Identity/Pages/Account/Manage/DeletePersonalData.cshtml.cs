@@ -132,6 +132,18 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
             foreach (var post in posts)
             {
+                var allPostImages = this.db.PostImages
+                       .Where(x => x.PostId == post.Id)
+                       .ToList();
+
+                foreach (var postImage in allPostImages)
+                {
+                    ApplicationCloudinary.DeleteImage(
+                        this.cloudinary,
+                        string.Format(GlobalConstants.CloudinaryPostImageName, postImage.Id),
+                        GlobalConstants.PostBaseImagesFolder);
+                }
+
                 ApplicationCloudinary.DeleteImage(
                     this.cloudinary,
                     string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id),

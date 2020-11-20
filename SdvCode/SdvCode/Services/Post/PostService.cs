@@ -161,10 +161,27 @@ namespace SdvCode.Services.Post
                 });
             }
 
-            var usersIds = this.db.PostsLikes.Where(x => x.PostId == post.Id && x.IsLiked == true).Select(x => x.UserId).ToList();
+            var usersIds = this.db.PostsLikes
+                .Where(x => x.PostId == post.Id && x.IsLiked == true)
+                .Select(x => x.UserId)
+                .ToList();
             foreach (var userId in usersIds)
             {
                 model.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
+            }
+
+            var allPostImages = this.db.PostImages
+                    .Where(x => x.PostId == post.Id)
+                    .OrderBy(x => x.Name)
+                    .ToList();
+            foreach (var postImage in allPostImages)
+            {
+                model.AllPostImages.Add(new PostImageViewModel
+                {
+                    Id = postImage.Id,
+                    Name = postImage.Name,
+                    Url = postImage.Url,
+                });
             }
 
             return model;

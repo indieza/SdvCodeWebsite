@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="~/notification/css/notificationStyle.css">
     <link rel="stylesheet" href="~/userStatus/css/userStatusSheet.css" />
     <link href="~/privateChat/emojiSheet.css" rel="stylesheet" />
+    <link href="~/css/imageModalSheet.css" rel="stylesheet" />
 </head>
 <body onload="setSiteTheme(); getLatestBlogPosts();">
     <audio id="notificationAudio">
@@ -231,6 +232,7 @@
         <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
         <script type="text/javascript" src="~/notification/js/notification.js"></script>
         <script type="text/javascript" src="~/userStatus/js/userStatus.js"></script>
+        <script src="~/js/imageModalScript.js"></script>
         @RenderSection("Scripts", required: false)
     </div>
 </body>
