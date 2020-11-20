@@ -58,6 +58,8 @@ namespace SdvCode.Data
 
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
+        public DbSet<ChatImage> ChatImages { get; set; }
+
         public DbSet<RecommendedFriend> RecommendedFriends { get; set; }
 
         public DbSet<UserRating> UserRatings { get; set; }
@@ -187,11 +189,19 @@ namespace SdvCode.Data
                 k.ProductId,
             });
 
-            builder.Entity<Group>()
-                .HasOne(x => x.ChatTheme)
-                .WithMany(x => x.Groups)
-                .HasForeignKey(x => x.ChatThemeId)
-                .IsRequired(false);
+            builder.Entity<Group>(entity =>
+            {
+                entity.HasOne(x => x.ChatTheme)
+                    .WithMany(x => x.Groups)
+                    .HasForeignKey(x => x.ChatThemeId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
+
+                entity.HasMany(x => x.ChatImages)
+                    .WithOne(x => x.Group)
+                    .HasForeignKey(x => x.GroupId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
             builder.Entity<Emoji>()
                 .HasMany(x => x.EmojiSkins)

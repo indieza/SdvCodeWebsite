@@ -27,5 +27,7 @@ namespace SdvCode.Areas.PrivateChat.Models
         public ICollection<UserGroup> UsersGroups { get; set; } = new HashSet<UserGroup>();
 
         public ICollection<ChatMessage> ChatMessages { get; set; } = new HashSet<ChatMessage>();
+
+        public ICollection<ChatImage> ChatImages { get; set; } = new HashSet<ChatImage>();
     }
 }

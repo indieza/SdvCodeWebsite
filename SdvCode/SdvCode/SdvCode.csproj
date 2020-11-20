@@ -54,6 +54,12 @@
     <Compile Remove="Data\Migrations\20201112180408_UpdateChatThemeIdValue.Designer.cs" />
     <Compile Remove="Data\Migrations\20201114151847_UpdateChantMessageLength.cs" />
     <Compile Remove="Data\Migrations\20201114151847_UpdateChantMessageLength.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201120173428_AddChatImagesDbTable.cs" />
+    <Compile Remove="Data\Migrations\20201120173428_AddChatImagesDbTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201120173659_UpdateRelationshipBetweenImagesAndGroups.cs" />
+    <Compile Remove="Data\Migrations\20201120173659_UpdateRelationshipBetweenImagesAndGroups.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201120174042_AddChatImagesDbTable.cs" />
+    <Compile Remove="Data\Migrations\20201120174042_AddChatImagesDbTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
