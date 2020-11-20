@@ -46,7 +46,7 @@
 - Moq
 
 ## :wrench: DB Diagram
-![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1605806076/Diagram_vtgedw.png)
+![](https://res.cloudinary.com/dvlw1ehpa/image/upload/v1605894320/Diagram_a5qh5x.png)
 
 ## :dash: Road To
 - WebRTC vide chat
