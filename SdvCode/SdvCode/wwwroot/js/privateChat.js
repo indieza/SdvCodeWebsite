@@ -121,10 +121,26 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         });
 
         document.getElementById("messageInput").value = "";
-    } else if (!message && files.length > 0) {
-        // Upload only files
     } else {
-        // Upload files with message
+        $.ajax({
+            url: `/PrivateChat/With/${toUser}/Group/${group}/SendImages`,
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: {
+                "toUsername": toUser,
+                "group": group,
+                "fromUsername": fromUser,
+                "message": message,
+                "data": data
+            },
+            success: function (result) {
+                alert(result);
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
     }
 
     document.getElementById("messageInput").innerHTML = "";

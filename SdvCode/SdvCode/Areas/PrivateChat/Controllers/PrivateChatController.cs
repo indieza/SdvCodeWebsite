@@ -26,18 +26,15 @@ namespace SdvCode.Areas.PrivateChat.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
         private readonly IPrivateChatService privateChatService;
-        private readonly IHubContext<PrivateChatHub> hubContext;
 
         public PrivateChatController(
             UserManager<ApplicationUser> userManager,
             ApplicationDbContext db,
-            IPrivateChatService privateChatService,
-            IHubContext<PrivateChatHub> hubContext)
+            IPrivateChatService privateChatService)
         {
             this.userManager = userManager;
             this.db = db;
             this.privateChatService = privateChatService;
-            this.hubContext = hubContext;
         }
 
         [Route("PrivateChat/With/{username?}/Group/{group?}")]
@@ -71,6 +68,13 @@ namespace SdvCode.Areas.PrivateChat.Controllers
         public async Task ChangeChatTheme(string username, string group, string themeId)
         {
             await this.privateChatService.ChangeChatTheme(username, group, themeId);
+        }
+
+        [HttpPost]
+        [Route("PrivateChat/With/{toUsername?}/Group/{group?}/SendImages")]
+        public async Task SendImages(string toUsername, string group, string fromUsername, string message)
+        {
+            var files = this.HttpContext.Request.Form.Files;
         }
     }
 }
