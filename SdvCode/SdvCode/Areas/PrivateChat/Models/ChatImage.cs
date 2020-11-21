@@ -32,5 +32,11 @@ namespace SdvCode.Areas.PrivateChat.Models
         public int GroupId { get; set; }
 
         public Group Group { get; set; }
+
+        [ForeignKey(nameof(ChatMessage))]
+        [Required]
+        public int ChatMessageId { get; set; }
+
+        public ChatMessage ChatMessage { get; set; }
     }
 }

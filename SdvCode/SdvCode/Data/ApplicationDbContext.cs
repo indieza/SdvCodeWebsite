@@ -209,6 +209,12 @@ namespace SdvCode.Data
                 .HasForeignKey(x => x.EmojiId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<ChatMessage>()
+                .HasMany(x => x.ChatImages)
+                .WithOne(x => x.ChatMessage)
+                .HasForeignKey(x => x.ChatMessageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
     }

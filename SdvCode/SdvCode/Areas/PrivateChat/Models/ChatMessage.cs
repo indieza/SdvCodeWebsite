@@ -4,6 +4,8 @@
 namespace SdvCode.Areas.PrivateChat.Models
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using SdvCode.Models.User;
@@ -35,5 +37,7 @@ namespace SdvCode.Areas.PrivateChat.Models
 
         [Required]
         public DateTime SendedOn { get; set; }
+
+        public ICollection<ChatImage> ChatImages { get; set; } = new HashSet<ChatImage>();
     }
 }

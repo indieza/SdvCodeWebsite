@@ -108,7 +108,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     let data = new FormData();
 
     for (var i = 0; i < files.length; i++) {
-        data.append(files[i].name, files[i]);
+        data.append('files', files[i]);
     }
 
     if (message && files.length == 0) {
@@ -122,18 +122,17 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
         document.getElementById("messageInput").value = "";
     } else {
+        data.append('toUsername', toUser);
+        data.append('fromUsername', fromUser);
+        data.append('group', group);
+        data.append('message', message);
+
         $.ajax({
             url: `/PrivateChat/With/${toUser}/Group/${group}/SendImages`,
-            type: "POST",
-            contentType: false,
             processData: false,
-            data: {
-                "toUsername": toUser,
-                "group": group,
-                "fromUsername": fromUser,
-                "message": message,
-                "data": data
-            },
+            contentType: false,
+            type: "POST",
+            data: data,
             success: function (result) {
                 alert(result);
             },

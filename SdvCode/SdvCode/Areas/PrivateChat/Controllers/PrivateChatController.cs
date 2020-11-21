@@ -8,6 +8,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
@@ -72,9 +73,9 @@ namespace SdvCode.Areas.PrivateChat.Controllers
 
         [HttpPost]
         [Route("PrivateChat/With/{toUsername?}/Group/{group?}/SendImages")]
-        public async Task SendImages(string toUsername, string group, string fromUsername, string message)
+        public async Task SendImages(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
         {
-            var files = this.HttpContext.Request.Form.Files;
+            var filess = this.HttpContext.Request.Form.Files;
         }
     }
 }
