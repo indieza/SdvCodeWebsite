@@ -10,11 +10,13 @@ namespace SdvCode.Areas.PrivateChat.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
     using SdvCode.Areas.PrivateChat.Services;
     using SdvCode.Areas.PrivateChat.Services.PrivateChat;
     using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Hubs;
     using SdvCode.Models.User;
 
     [Authorize]
@@ -24,15 +26,18 @@ namespace SdvCode.Areas.PrivateChat.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext db;
         private readonly IPrivateChatService privateChatService;
+        private readonly IHubContext<PrivateChatHub> hubContext;
 
         public PrivateChatController(
             UserManager<ApplicationUser> userManager,
             ApplicationDbContext db,
-            IPrivateChatService privateChatService)
+            IPrivateChatService privateChatService,
+            IHubContext<PrivateChatHub> hubContext)
         {
             this.userManager = userManager;
             this.db = db;
             this.privateChatService = privateChatService;
+            this.hubContext = hubContext;
         }
 
         [Route("PrivateChat/With/{username?}/Group/{group?}")]

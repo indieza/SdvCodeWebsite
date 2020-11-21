@@ -117,6 +117,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         document.getElementById("messageInput").value = "";
     }
     document.getElementById("messageInput").innerHTML = "";
+    document.getElementById("uploadImage").value = "";
     event.preventDefault();
 });
 
