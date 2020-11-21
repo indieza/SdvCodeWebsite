@@ -100,12 +100,18 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    var toUser = document.getElementById("toUser").textContent;
-    var fromUser = document.getElementById("fromUser").textContent;
-    var message = document.getElementById("messageInput").innerHTML;
-    var group = document.getElementById("groupName").textContent;
+    let toUser = document.getElementById("toUser").textContent;
+    let fromUser = document.getElementById("fromUser").textContent;
+    let message = document.getElementById("messageInput").innerHTML;
+    let group = document.getElementById("groupName").textContent;
+    let files = document.getElementById("uploadImage").files;
+    let data = new FormData();
 
-    if (message) {
+    for (var i = 0; i < files.length; i++) {
+        data.append(files[i].name, files[i]);
+    }
+
+    if (message && files.length == 0) {
         connection.invoke("SendMessage", fromUser, toUser, message, group).catch(function (err) {
             return console.error(err.toString());
         });
@@ -115,9 +121,19 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         });
 
         document.getElementById("messageInput").value = "";
+    } else if (!message && files.length > 0) {
+        // Upload only files
+    } else {
+        // Upload files with message
     }
+
     document.getElementById("messageInput").innerHTML = "";
     document.getElementById("uploadImage").value = "";
+
+    let badge = document.querySelector(".select-image-badge");
+    badge.style.boxShadow = "";
+    badge.style.animation = "";
+    badge.textContent = "0";
     event.preventDefault();
 });
 
