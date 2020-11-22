@@ -55,7 +55,7 @@
                                 {
                                     @if (message.ReceiverUsername == Model.ToUser.UserName && message.ApplicationUser.UserName != Model.ToUser.UserName)
                                     {
-                                        <li class="mar-btm">
+                                        <li class="mar-btm" id="@message.Id">
                                             <div class="media-right">
                                                 <img src=@message.ApplicationUser.ImageUrl class="img-circle img-sm" alt="Profile Picture">
                                             </div>
@@ -74,7 +74,7 @@
                                     {
                                         @if (message.ReceiverUsername != Model.ToUser.UserName && message.ApplicationUser.UserName != Model.FromUser.UserName)
                                         {
-                                            <li class="mar-btm">
+                                            <li class="mar-btm" id="@message.Id">
                                                 <div class="media-left">
                                                     <img src=@message.ApplicationUser.ImageUrl class="img-circle img-sm" alt="Profile Picture">
                                                 </div>

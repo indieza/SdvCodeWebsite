@@ -114,6 +114,22 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 if (messages.Count > GlobalConstants.SavedChatMessagesCount)
                 {
                     var oldMessages = messages.Take(GlobalConstants.SavedChatMessagesCount);
+
+                    foreach (var oldMessageId in oldMessages.Select(x => x.Id).ToList())
+                    {
+                        var oldImages = this.db.ChatImages.Where(x => x.ChatMessageId == oldMessageId).ToList();
+
+                        foreach (var oldImage in oldImages)
+                        {
+                            ApplicationCloudinary.DeleteImage(
+                                this.cloudinary,
+                                string.Format(GlobalConstants.ChatFileName, oldImage.Id),
+                                GlobalConstants.PrivateChatImagesFolder);
+                        }
+
+                        this.db.ChatImages.RemoveRange(oldImages);
+                    }
+
                     this.db.ChatMessages.RemoveRange(oldMessages);
                     await this.db.SaveChangesAsync();
 
@@ -235,18 +251,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             var fromId = fromUser.Id;
             var fromImage = fromUser.ImageUrl;
 
-            this.db.ChatMessages.Add(new ChatMessage
-            {
-                ApplicationUser = fromUser,
-                Group = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()),
-                SendedOn = DateTime.UtcNow,
-                ReceiverUsername = fromUser.UserName,
-                RecieverImageUrl = fromUser.ImageUrl,
-                Content = new HtmlSanitizer().Sanitize(message.Trim()),
-            });
-
-            await this.db.SaveChangesAsync();
-            await this.hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, new HtmlSanitizer().Sanitize(message.Trim()));
+            await this.hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, message.Trim());
         }
 
         public async Task<string> SendMessageToUser(string fromUsername, string toUsername, string message, string group)
@@ -297,7 +302,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             };
 
             string messageContent =
-                message == null ? string.Empty : $"{message}<hr style=\"margin-bottom: 8px !important;\" />";
+                message == null ? string.Empty : $"{new HtmlSanitizer().Sanitize(message.Trim())}<hr style=\"margin-bottom: 8px !important;\" />";
 
             foreach (var file in files)
             {
@@ -325,7 +330,10 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
             this.db.ChatMessages.Add(newMessage);
             await this.db.SaveChangesAsync();
-            await this.hubContext.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, new HtmlSanitizer().Sanitize(messageContent.Trim()));
+            await this.hubContext
+                .Clients
+                .User(toId)
+                .SendAsync("ReceiveMessage", fromUsername, fromImage, messageContent.Trim());
             return messageContent;
         }
     }
