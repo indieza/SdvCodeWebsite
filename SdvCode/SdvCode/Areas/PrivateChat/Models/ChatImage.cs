@@ -21,7 +21,7 @@ namespace SdvCode.Areas.PrivateChat.Models
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(25)]
+        [MaxLength(60)]
         public string Name { get; set; }
 
         [Required]

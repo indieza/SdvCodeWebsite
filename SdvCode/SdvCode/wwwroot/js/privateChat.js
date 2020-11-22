@@ -158,3 +158,12 @@ function updateInputScroller() {
     let scroller = document.getElementById("messageInput");
     scroller.scrollTop = scroller.scrollHeight;
 }
+
+function zoomChatImage(imageUrl) {
+    document.querySelector(".modalChatImage").style.display = "block";
+    document.querySelector("#image-content").src = imageUrl;
+}
+
+function closeChatZoomedImage() {
+    document.querySelector(".modalChatImage").style.display = "none";
+}

@@ -314,11 +314,11 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                     GlobalConstants.PrivateChatImagesFolder);
 
                 chatImage.Url = imageUrl;
-                chatImage.Name = "Test";
+                chatImage.Name = string.Format(GlobalConstants.ChatFileName, chatImage.Id);
                 newMessage.ChatImages.Add(chatImage);
 
                 messageContent +=
-                    $"<span><img src=\"{imageUrl}\" style=\"margin-right: 10px; width: 27px; height: 35px;\"></span>";
+                    $"<span onclick=\"zoomChatImage('{imageUrl}')\"><img src=\"{imageUrl}\" style=\"margin-right: 10px; width: 27px; height: 35px;\"></span>";
             }
 
             newMessage.Content = messageContent;

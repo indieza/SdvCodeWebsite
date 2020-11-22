@@ -510,3 +510,96 @@
         box-shadow: 0 0 0 0 rgba(51, 217, 178, 0);
     }
 }
+
+.modalChatImage {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.modalText:hover {
+    color: dodgerblue;
+}
+/* Modal Content (image) */
+.imageModalContent {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    position: relative
+}
+
+/* Caption of Modal Image */
+.myCaption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.imageModalContent, .myCaption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+/* The Close Button */
+.closeImage {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    float: right;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    transition: 0.3s;
+    z-index: 1;
+}
+
+    .closeImage:hover,
+    .closeImage:focus {
+        color: blue;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 100%) {
+    .imageModalContent {
+        width: 100%;
+    }
+}
