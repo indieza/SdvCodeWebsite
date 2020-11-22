@@ -7,6 +7,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Ganss.XSS;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -21,21 +22,25 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using SdvCode.Data;
     using SdvCode.Hubs;
     using SdvCode.Models.User;
+    using SdvCode.Services.Cloud;
 
     public class PrivateChatService : IPrivateChatService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IHubContext<PrivateChatHub> hubContext;
+        private readonly Cloudinary cloudinary;
 
         public PrivateChatService(
             ApplicationDbContext db,
             UserManager<ApplicationUser> userManager,
-            IHubContext<PrivateChatHub> hubContext)
+            IHubContext<PrivateChatHub> hubContext,
+            Cloudinary cloudinary)
         {
             this.db = db;
             this.userManager = userManager;
             this.hubContext = hubContext;
+            this.cloudinary = cloudinary;
         }
 
         public async Task AddUserToGroup(string groupName, string toUsername, string fromUsername)
@@ -269,6 +274,59 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             await this.hubContext.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, new HtmlSanitizer().Sanitize(message.Trim()));
 
             return toId;
+        }
+
+        public async Task<string> SendMessageWitImagesToUser(
+            IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
+        {
+            var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
+            var toId = toUser.Id;
+            var toImage = toUser.ImageUrl;
+
+            var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            var newMessage = new ChatMessage
+            {
+                ApplicationUser = fromUser,
+                Group = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()),
+                SendedOn = DateTime.UtcNow,
+                ReceiverUsername = toUser.UserName,
+                RecieverImageUrl = toUser.ImageUrl,
+            };
+
+            string messageContent =
+                message == null ? string.Empty : $"{message}<hr style=\"margin-bottom: 8px !important;\" />";
+
+            foreach (var file in files)
+            {
+                var chatImage = new ChatImage
+                {
+                    ChatMessageId = newMessage.Id,
+                    GroupId = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()).Id,
+                };
+
+                string imageUrl = await ApplicationCloudinary.UploadImage(
+                    this.cloudinary,
+                    file,
+                    string.Format(GlobalConstants.ChatFileName, chatImage.Id),
+                    GlobalConstants.PrivateChatImagesFolder);
+
+                chatImage.Url = imageUrl;
+                chatImage.Name = "Test";
+                newMessage.ChatImages.Add(chatImage);
+
+                messageContent +=
+                    $"<span><img src=\"{imageUrl}\" style=\"margin-right: 10px; width: 27px; height: 35px;\"></span>";
+            }
+
+            newMessage.Content = messageContent;
+
+            this.db.ChatMessages.Add(newMessage);
+            await this.db.SaveChangesAsync();
+            await this.hubContext.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, new HtmlSanitizer().Sanitize(messageContent.Trim()));
+            return messageContent;
         }
     }
 }

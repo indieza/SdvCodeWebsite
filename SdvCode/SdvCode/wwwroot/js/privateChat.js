@@ -127,19 +127,21 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         data.append('group', group);
         data.append('message', message);
 
-        $.ajax({
-            url: `/PrivateChat/With/${toUser}/Group/${group}/SendImages`,
-            processData: false,
-            contentType: false,
-            type: "POST",
-            data: data,
-            success: function (result) {
-                alert(result);
-            },
-            error: function (err) {
-                alert(err.statusText);
-            }
-        });
+        if (files.length > 0) {
+            $.ajax({
+                url: `/PrivateChat/With/${toUser}/Group/${group}/SendImages`,
+                processData: false,
+                contentType: false,
+                type: "POST",
+                data: data,
+                success: function (result) {
+                    // spinner CSS
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
     }
 
     document.getElementById("messageInput").innerHTML = "";

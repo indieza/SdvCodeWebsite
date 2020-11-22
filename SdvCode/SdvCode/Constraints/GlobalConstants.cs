@@ -98,5 +98,9 @@ namespace SdvCode.Constraints
         public const string PostBaseImagesFolder = "Blog Posts/Post Images";
 
         public const string BlogPostImageNameTemplate = "Blog Post Image {0}";
+
+        public const string ChatFileName = "{0}-PrivateChatFile";
+
+        public const string PrivateChatImagesFolder = "Private Chat Files";
     }
 }

@@ -73,9 +73,12 @@ namespace SdvCode.Areas.PrivateChat.Controllers
 
         [HttpPost]
         [Route("PrivateChat/With/{toUsername?}/Group/{group?}/SendImages")]
-        public async Task SendImages(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
+        public async Task SendImages(
+            IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
         {
-            var filess = this.HttpContext.Request.Form.Files;
+            string resultMessage = await this.privateChatService
+                .SendMessageWitImagesToUser(files, group, toUsername, fromUsername, message);
+            await this.privateChatService.ReceiveNewMessage(fromUsername, resultMessage, group);
         }
     }
 }

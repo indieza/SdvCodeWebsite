@@ -27,8 +27,13 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         Task ReceiveNewMessage(string fromUsername, string message, string group);
 
         Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> GetAllEmojis();
+
         ICollection<ChatThemeViewModel> GetAllThemes();
+
         ChatThemeViewModel GetGroupTheme(string group);
+
         Task ChangeChatTheme(string username, string group, string themeId);
+
+        Task<string> SendMessageWitImagesToUser(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message);
     }
 }
