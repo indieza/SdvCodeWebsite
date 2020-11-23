@@ -123,7 +123,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                         {
                             ApplicationCloudinary.DeleteImage(
                                 this.cloudinary,
-                                string.Format(GlobalConstants.ChatFileName, oldImage.Id),
+                                oldImage.Name,
                                 GlobalConstants.PrivateChatImagesFolder);
                         }
 
