@@ -128,6 +128,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         data.append('message', message);
 
         if (files.length > 0) {
+            document.getElementById("imageSpinner").style.display = "block";
             $.ajax({
                 url: `/PrivateChat/With/${toUser}/Group/${group}/SendImages`,
                 processData: false,
@@ -135,7 +136,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                 type: "POST",
                 data: data,
                 success: function (result) {
-                    // spinner CSS
+                    document.getElementById("imageSpinner").style.display = "none";
                 },
                 error: function (err) {
                     alert(err.statusText);
