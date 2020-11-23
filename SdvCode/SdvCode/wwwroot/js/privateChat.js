@@ -154,16 +154,17 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                     console.log(err.statusText);
                 }
             });
+
+            document.getElementById("uploadImage").value = "";
+
+            let badge = document.querySelector(".select-image-badge");
+            badge.style.boxShadow = "";
+            badge.style.animation = "";
+            badge.textContent = "0";
         }
     }
 
     document.getElementById("messageInput").innerHTML = "";
-    document.getElementById("uploadImage").value = "";
-
-    let badge = document.querySelector(".select-image-badge");
-    badge.style.boxShadow = "";
-    badge.style.animation = "";
-    badge.textContent = "0";
     event.preventDefault();
 });
 

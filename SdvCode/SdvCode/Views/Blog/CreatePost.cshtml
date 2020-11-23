@@ -63,14 +63,14 @@
                     <div class="file-select">
                         <div class="file-select-button" id="fileName">Choose File</div>
                         <div class="file-select-name" id="noCoverFile">No file chosen...</div>
-                        <input type="file" asp-for="@Model.PostInputModel.CoverImage" id="chooseCoverFile" class="form-control">
+                        <input type="file" onchange="checkFileExtension(this)" accept="image/*" asp-for="@Model.PostInputModel.CoverImage" id="chooseCoverFile" class="form-control">
                         <span asp-validation-for="@Model.PostInputModel.CoverImage" class="text-danger"></span>
                     </div>
                 </div>
             </div>
             @if (this.User.IsInRole(SdvCode.Constraints.GlobalConstants.AdministratorRole) ||
-                  this.User.IsInRole(SdvCode.Constraints.GlobalConstants.EditorRole) ||
-                  this.User.IsInRole(SdvCode.Constraints.GlobalConstants.AuthorRole))
+             this.User.IsInRole(SdvCode.Constraints.GlobalConstants.EditorRole) ||
+             this.User.IsInRole(SdvCode.Constraints.GlobalConstants.AuthorRole))
             {
                 <div class="form-group col-md-4">
                     <label asp-for="@this.Model.PostInputModel.PostImages"></label>
@@ -78,7 +78,7 @@
                         <div class="file-select">
                             <div class="file-select-button" id="fileName">Choose File</div>
                             <div class="file-select-name" id="noProfileFile">No file chosen...</div>
-                            <input type="file" multiple asp-for="@this.Model.PostInputModel.PostImages" id="chooseProfileFile" class="form-control">
+                            <input type="file" onchange="checkFileExtension(this)" accept="image/*" multiple asp-for="@this.Model.PostInputModel.PostImages" id="chooseProfileFile" class="form-control">
                         </div>
                     </div>
                     <span class="text-danger" asp-validation-for="@this.Model.PostInputModel.PostImages"></span>
@@ -107,6 +107,7 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script type="text/javascript" src="~/js/multiSelect.js"></script>
+    <script type="text/javascript" src="~/js/blogPostScript.js"></script>
     <script src="~/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
     <script src="~/lib/tinymce/visualizer.js" type="text/javascript"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=@GoogleReCaptch.Value.SiteKey"></script>

@@ -69,7 +69,7 @@
                     <div class="file-select">
                         <div class="file-select-button" id="fileName">Choose File</div>
                         <div class="file-select-name" id="noCoverFile">No file chosen...</div>
-                        <input type="file" asp-for="@Model.CoverImage" id="chooseCoverFile" class="form-control">
+                        <input type="file" accept="image/*" asp-for="@Model.CoverImage" id="chooseCoverFile" class="form-control">
                         <span asp-validation-for="@Model.CoverImage" class="text-danger"></span>
                     </div>
                 </div>
