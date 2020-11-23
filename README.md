@@ -7,7 +7,7 @@
 
 ## :pencil2: Overview
 
-**SDV Code** is a website where software engineers can share their experience, give advices one to other. The site has one on one private chat where they can discuss privately. The main idea is to improve and sort all of the information in the internet in one place, the website has Editor and Administrators, they will follow for uncorrectly information and some kind of spamming content. Users which are rude and don't respect the site rules will be blocked for some days or permenantly.
+**SDV Code** is a website where software engineers can share their experience, give advices one to other. The site has one on one private chat where they can discuss privately. In the private chat users have a possibility to change their chat themes, write messages, use emojis which are images and also have the chance to upload images and send them one to another at real-time. The main idea is to improve and sort all of the information in the internet in one place, the website has Editor and Administrators, they will follow for uncorrectly information and some kind of spamming content. Users which are rude and don't respect the site rules will be blocked for some days or permenantly.
 
 **SDV CodeShop** is for saleing any kind of softaware gadgets. Only Administators will have chance to add a new products, not authrized and authorized people will have chance to order, comment and gave reviews to all products.
 

@@ -323,7 +323,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 newMessage.ChatImages.Add(chatImage);
 
                 messageContent +=
-                    $"<span onclick=\"zoomChatImage('{imageUrl}')\"><img src=\"{imageUrl}\" style=\"margin-right: 10px; width: 27px; height: 35px;\"></span>";
+                    $"<span onclick=\"zoomChatImage('{imageUrl}')\"><img src=\"{imageUrl}\" style=\"margin-right: 10px; width: 27px; height: 35px; margin-top: 5px;\"></span>";
             }
 
             newMessage.Content = messageContent;
