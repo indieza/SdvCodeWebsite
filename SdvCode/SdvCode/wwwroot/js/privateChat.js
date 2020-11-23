@@ -83,6 +83,10 @@ connection.on("SendMessage", function (user, image, message) {
     updateScroll();
 });
 
+connection.on("UpdateFilesUploadCount", function (count) {
+    document.querySelector(".select-image-badge").innerHTML = count;
+})
+
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
     var toUser = document.getElementById("toUser").textContent;
@@ -129,6 +133,10 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
         if (files.length > 0) {
             document.getElementById("imageSpinner").style.display = "block";
+            document.querySelector("#imageButton i").classList = "";
+            document.querySelector("#imageButton i").classList.add("fas", "fa-cloud-upload-alt");
+            document.getElementById("uploadImage").disabled = true;
+
             $.ajax({
                 url: `/PrivateChat/With/${toUser}/Group/${group}/SendImages`,
                 processData: false,
@@ -137,9 +145,13 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                 data: data,
                 success: function (result) {
                     document.getElementById("imageSpinner").style.display = "none";
+                    document.querySelector("#imageButton i").classList = "";
+                    document.querySelector("#imageButton i").classList.add("far", "fa-images");
+                    document.querySelector(".select-image-badge").innerHTML = "0";
+                    document.getElementById("uploadImage").disabled = false;
                 },
                 error: function (err) {
-                    alert(err.statusText);
+                    console.log(err.statusText);
                 }
             });
         }

@@ -304,6 +304,8 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             string messageContent =
                 message == null ? string.Empty : $"{new HtmlSanitizer().Sanitize(message.Trim())}<hr style=\"margin-bottom: 8px !important;\" />";
 
+            var count = files.Count;
+
             foreach (var file in files)
             {
                 var chatImage = new ChatImage
@@ -324,6 +326,9 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
                 messageContent +=
                     $"<span onclick=\"zoomChatImage('{imageUrl}')\"><img src=\"{imageUrl}\" style=\"margin-right: 10px; width: 27px; height: 35px; margin-top: 5px;\"></span>";
+
+                await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", count);
+                count--;
             }
 
             newMessage.Content = messageContent;
