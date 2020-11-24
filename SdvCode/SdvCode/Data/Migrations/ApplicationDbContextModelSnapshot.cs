@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
-namespace SdvCode.Data.Migrations
+namespace SdvCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -898,7 +898,7 @@ namespace SdvCode.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CountryCode")
+                    b.Property<int?>("CountryCodeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CountryId")
@@ -999,6 +999,8 @@ namespace SdvCode.Data.Migrations
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("CountryCodeId");
+
                     b.HasIndex("CountryId");
 
                     b.HasIndex("NormalizedEmail")
@@ -1056,6 +1058,23 @@ namespace SdvCode.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.CountryCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CountryCodes");
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.FollowUnfollow", b =>
@@ -1527,6 +1546,10 @@ namespace SdvCode.Data.Migrations
                     b.HasOne("SdvCode.Models.User.City", "City")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("CityId");
+
+                    b.HasOne("SdvCode.Models.User.CountryCode", "CountryCode")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("CountryCodeId");
 
                     b.HasOne("SdvCode.Models.User.Country", "Country")
                         .WithMany("ApplicationUsers")

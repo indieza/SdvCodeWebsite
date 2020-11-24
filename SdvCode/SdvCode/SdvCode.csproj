@@ -16,53 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20200320191038_ConnectActionsTableToPostsTable.cs" />
-    <Compile Remove="Data\Migrations\20200320191038_ConnectActionsTableToPostsTable.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200324095902_test.cs" />
-    <Compile Remove="Data\Migrations\20200324095902_test.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200324100049_test.cs" />
-    <Compile Remove="Data\Migrations\20200324100049_test.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200328162251_InitialPostCodeCreate.cs" />
-    <Compile Remove="Data\Migrations\20200328162251_InitialPostCodeCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200328162412_InitialPostCodeCreate.cs" />
-    <Compile Remove="Data\Migrations\20200328162412_InitialPostCodeCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200328162721_InitialPostCodeCreate.cs" />
-    <Compile Remove="Data\Migrations\20200328162721_InitialPostCodeCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200328162842_InitialPostCodeCreate.cs" />
-    <Compile Remove="Data\Migrations\20200328162842_InitialPostCodeCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200328163006_InitialPostCodeCreate.cs" />
-    <Compile Remove="Data\Migrations\20200328163006_InitialPostCodeCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200328163250_InitialPostCodeCreate.cs" />
-    <Compile Remove="Data\Migrations\20200328163250_InitialPostCodeCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200329200721_InitialVillageCreate.cs" />
-    <Compile Remove="Data\Migrations\20200329200721_InitialVillageCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200329201033_InitialVillageCreate.cs" />
-    <Compile Remove="Data\Migrations\20200329201033_InitialVillageCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200329201424_InitialVillageCreate.cs" />
-    <Compile Remove="Data\Migrations\20200329201424_InitialVillageCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200409085050_InitializeRecommendedFriedsTable.cs" />
-    <Compile Remove="Data\Migrations\20200409085050_InitializeRecommendedFriedsTable.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200416143748_InitialCreateForShop.cs" />
-    <Compile Remove="Data\Migrations\20200416143748_InitialCreateForShop.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200521072139_AddUserActionStatusColumn.cs" />
-    <Compile Remove="Data\Migrations\20200521072139_AddUserActionStatusColumn.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201112143643_AddChatThemesTable.cs" />
-    <Compile Remove="Data\Migrations\20201112143643_AddChatThemesTable.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201112151626_UpdateForeignKeysInChatThemes.cs" />
-    <Compile Remove="Data\Migrations\20201112151626_UpdateForeignKeysInChatThemes.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201112180408_UpdateChatThemeIdValue.cs" />
-    <Compile Remove="Data\Migrations\20201112180408_UpdateChatThemeIdValue.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201114151847_UpdateChantMessageLength.cs" />
-    <Compile Remove="Data\Migrations\20201114151847_UpdateChantMessageLength.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201120173428_AddChatImagesDbTable.cs" />
-    <Compile Remove="Data\Migrations\20201120173428_AddChatImagesDbTable.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201120173659_UpdateRelationshipBetweenImagesAndGroups.cs" />
-    <Compile Remove="Data\Migrations\20201120173659_UpdateRelationshipBetweenImagesAndGroups.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201120174042_AddChatImagesDbTable.cs" />
-    <Compile Remove="Data\Migrations\20201120174042_AddChatImagesDbTable.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="stylecop.json" />
   </ItemGroup>
 

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
-namespace SdvCode.Data.Migrations
+namespace SdvCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200409085220_InitializeRecommendedFriedsTable")]
-    partial class InitializeRecommendedFriedsTable
+    [Migration("20201124214137_InitialCreateAgain")]
+    partial class InitialCreateAgain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,6 +125,35 @@ namespace SdvCode.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.ChatImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ChatMessageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatMessageId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("ChatImages");
+                });
+
             modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.ChatMessage", b =>
                 {
                     b.Property<int>("Id")
@@ -137,8 +166,8 @@ namespace SdvCode.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(550)")
-                        .HasMaxLength(550);
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
@@ -162,6 +191,77 @@ namespace SdvCode.Data.Migrations
                     b.ToTable("ChatMessages");
                 });
 
+            modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.ChatTheme", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChatThemes");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.Emoji", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("EmojiType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emojis");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.EmojiSkin", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EmojiId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmojiId");
+
+                    b.ToTable("EmojiSkins");
+                });
+
             modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.Group", b =>
                 {
                     b.Property<int>("Id")
@@ -169,11 +269,16 @@ namespace SdvCode.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ChatThemeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChatThemeId");
 
                     b.ToTable("Groups");
                 });
@@ -191,6 +296,310 @@ namespace SdvCode.Data.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("UsersGroups");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.Order", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("AditionalInfromation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CanceledOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<DateTime?>("FinishedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
+
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.OrderProduct", b =>
+                {
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("WantedQuantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderProducts");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.Product", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AvailableQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(15, 2)");
+
+                    b.Property<string>("ProductCategoryId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SpecificationsDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.ProductCategory", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.ProductComment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1500)")
+                        .HasMaxLength(1500);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParentCommentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserFullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ParentCommentId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductComments");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.ProductImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.ProductReview", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1500)")
+                        .HasMaxLength(1500);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Stars")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserFullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductReviews");
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.UserNotifications.Models.UserNotification", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NotificationType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TargetUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("UserNotifications");
                 });
 
             modelBuilder.Entity("SdvCode.Models.Blog.BlockedPost", b =>
@@ -220,8 +629,8 @@ namespace SdvCode.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(550)")
-                        .HasMaxLength(550);
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -364,6 +773,30 @@ namespace SdvCode.Data.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("SdvCode.Models.Blog.PostImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostImages");
+                });
+
             modelBuilder.Entity("SdvCode.Models.Blog.PostLike", b =>
                 {
                     b.Property<string>("PostId")
@@ -467,7 +900,7 @@ namespace SdvCode.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CountryCode")
+                    b.Property<int?>("CountryCodeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CountryId")
@@ -535,6 +968,10 @@ namespace SdvCode.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ReasonToBeBlocked")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
                     b.Property<DateTime>("RegisteredOn")
                         .HasColumnType("datetime2");
 
@@ -563,6 +1000,8 @@ namespace SdvCode.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("CountryCodeId");
 
                     b.HasIndex("CountryId");
 
@@ -621,6 +1060,23 @@ namespace SdvCode.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.CountryCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CountryCodes");
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.FollowUnfollow", b =>
@@ -711,6 +1167,9 @@ namespace SdvCode.Data.Migrations
                     b.Property<DateTime>("ActionDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ActionStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -745,6 +1204,23 @@ namespace SdvCode.Data.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("UserActions");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.UserRating", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RaterUsername")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Stars")
+                        .HasColumnType("int")
+                        .HasMaxLength(5);
+
+                    b.HasKey("Username", "RaterUsername");
+
+                    b.ToTable("UserRatings");
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.ZipCode", b =>
@@ -817,6 +1293,21 @@ namespace SdvCode.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.ChatImage", b =>
+                {
+                    b.HasOne("SdvCode.Areas.PrivateChat.Models.ChatMessage", "ChatMessage")
+                        .WithMany("ChatImages")
+                        .HasForeignKey("ChatMessageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Areas.PrivateChat.Models.Group", "Group")
+                        .WithMany("ChatImages")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.ChatMessage", b =>
                 {
                     b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
@@ -832,6 +1323,22 @@ namespace SdvCode.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.EmojiSkin", b =>
+                {
+                    b.HasOne("SdvCode.Areas.PrivateChat.Models.Emoji", "Emoji")
+                        .WithMany("EmojiSkins")
+                        .HasForeignKey("EmojiId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.Group", b =>
+                {
+                    b.HasOne("SdvCode.Areas.PrivateChat.Models.ChatTheme", "ChatTheme")
+                        .WithMany("Groups")
+                        .HasForeignKey("ChatThemeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.UserGroup", b =>
                 {
                     b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
@@ -843,6 +1350,78 @@ namespace SdvCode.Data.Migrations
                     b.HasOne("SdvCode.Areas.PrivateChat.Models.Group", "Group")
                         .WithMany("UsersGroups")
                         .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.OrderProduct", b =>
+                {
+                    b.HasOne("SdvCode.Areas.SdvShop.Models.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SdvCode.Areas.SdvShop.Models.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.Product", b =>
+                {
+                    b.HasOne("SdvCode.Areas.SdvShop.Models.ProductCategory", "ProductCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.ProductComment", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
+                        .WithMany("ProductComments")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("SdvCode.Areas.SdvShop.Models.ProductComment", "ParentComment")
+                        .WithMany()
+                        .HasForeignKey("ParentCommentId");
+
+                    b.HasOne("SdvCode.Areas.SdvShop.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.ProductImage", b =>
+                {
+                    b.HasOne("SdvCode.Areas.SdvShop.Models.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.SdvShop.Models.ProductReview", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
+                        .WithMany("ProductReviews")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("SdvCode.Areas.SdvShop.Models.Product", "Product")
+                        .WithMany("ProductReviews")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SdvCode.Areas.UserNotifications.Models.UserNotification", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserNotifications")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -926,6 +1505,14 @@ namespace SdvCode.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SdvCode.Models.Blog.PostImage", b =>
+                {
+                    b.HasOne("SdvCode.Models.Blog.Post", "Post")
+                        .WithMany("PostImages")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("SdvCode.Models.Blog.PostLike", b =>
                 {
                     b.HasOne("SdvCode.Models.Blog.Post", "Post")
@@ -961,6 +1548,10 @@ namespace SdvCode.Data.Migrations
                     b.HasOne("SdvCode.Models.User.City", "City")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("CityId");
+
+                    b.HasOne("SdvCode.Models.User.CountryCode", "CountryCode")
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("CountryCodeId");
 
                     b.HasOne("SdvCode.Models.User.Country", "Country")
                         .WithMany("ApplicationUsers")

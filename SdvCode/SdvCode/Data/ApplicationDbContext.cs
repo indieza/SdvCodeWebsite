@@ -48,6 +48,8 @@ namespace SdvCode.Data
 
         public DbSet<Country> Countries { get; set; }
 
+        public DbSet<CountryCode> CountryCodes { get; set; }
+
         public DbSet<City> Cities { get; set; }
 
         public DbSet<Group> Groups { get; set; }
@@ -132,6 +134,11 @@ namespace SdvCode.Data
                 entity.HasOne(x => x.ZipCode)
                     .WithMany(x => x.ApplicationUsers)
                     .HasForeignKey(x => x.ZipCodeId)
+                    .IsRequired(false);
+
+                entity.HasOne(x => x.CountryCode)
+                    .WithMany(x => x.ApplicationUsers)
+                    .HasForeignKey(x => x.CountryCodeId)
                     .IsRequired(false);
             });
 

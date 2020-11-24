@@ -82,7 +82,7 @@ namespace SdvCode.Services.Profile
                 Country = this.db.Countries.FirstOrDefault(x => x.Id == user.CountryId),
                 City = this.db.Cities.FirstOrDefault(x => x.Id == user.CityId),
                 ZipCode = this.db.ZipCodes.FirstOrDefault(x => x.Id == user.ZipCodeId),
-                CountryCode = user.CountryCode,
+                CountryCode = this.db.CountryCodes.FirstOrDefault(x => x.Id == user.CountryCodeId),
                 ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id),
                 IsFollowed = this.db.FollowUnfollows
                     .Any(x => x.FollowerId == currentUser.Id && x.PersonId == user.Id && x.IsFollowed == true),

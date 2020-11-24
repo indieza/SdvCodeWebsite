@@ -10,6 +10,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Enums;
@@ -215,10 +216,24 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 isUpdatePersonalData = true;
             }
 
-            if (this.Input.CountryCode != user.CountryCode)
+            if (this.Input.CountryCode != string.Empty && this.Input.CountryCode != null)
             {
-                user.CountryCode = this.Input.CountryCode;
-                isUpdatePersonalData = true;
+                var targetCode = this.db.CountryCodes.FirstOrDefault(x => x.Code == this.Input.CountryCode);
+
+                if (targetCode == null)
+                {
+                    targetCode = new CountryCode
+                    {
+                        Code = this.Input.CountryCode,
+                    };
+                    this.db.CountryCodes.Add(targetCode);
+                }
+
+                if (user.CountryCodeId != targetCode.Id)
+                {
+                    user.CountryCode = targetCode;
+                    isUpdatePersonalData = true;
+                }
             }
 
             var profileImageUrl = await ApplicationCloudinary.UploadImage(
@@ -323,6 +338,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var country = this.db.Countries.FirstOrDefault(x => x.Id == user.CountryId);
             var state = this.db.States.FirstOrDefault(x => x.Id == user.StateId);
             var city = this.db.Cities.FirstOrDefault(x => x.Id == user.CityId);
+            var countryCode = this.db.CountryCodes.FirstOrDefault(x => x.Id == user.CountryCodeId);
 
             this.Username = userName;
 
@@ -344,7 +360,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 TwitterUrl = user.TwitterUrl,
                 LinkedinUrl = user.LinkedinUrl,
                 RegisteredOn = user.RegisteredOn,
-                CountryCode = user.CountryCode,
+                CountryCode = countryCode == null ? string.Empty : countryCode.Code,
                 Email = user.Email,
                 ZipCode = zipCode == null ? 0 : zipCode.Code,
 

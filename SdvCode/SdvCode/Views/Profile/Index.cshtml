@@ -150,7 +150,7 @@
                         @if (Model.ApplicationUser.PhoneNumber != null)
                         {
                             <p>
-                                <i class="fas fa-phone"></i> (@Model.ApplicationUser.CountryCode.ToString().Split("_")[0]) @Model.ApplicationUser.PhoneNumber
+                                <i class="fas fa-phone"></i> (@Model.ApplicationUser.CountryCode?.Code) @Model.ApplicationUser.PhoneNumber
 
                                 @if (User.Identity.Name == Model.ApplicationUser.Username && Model.ApplicationUser.PhoneNumberConfirmed == false)
                                 {

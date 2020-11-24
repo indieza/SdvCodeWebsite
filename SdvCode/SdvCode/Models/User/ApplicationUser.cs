@@ -46,6 +46,9 @@ namespace SdvCode.Models.User
 
         public Gender Gender { get; set; }
 
+        [ForeignKey(nameof(CountryCode))]
+        public int? CountryCodeId { get; set; }
+
         public CountryCode CountryCode { get; set; }
 
         [MaxLength(600)]

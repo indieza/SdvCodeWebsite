@@ -53,7 +53,7 @@ namespace SdvCode.ViewModels.Users.InputModels
 
         [PersonalData]
         [Display(Name = "Country Code")]
-        public CountryCode CountryCode { get; set; }
+        public string CountryCode { get; set; }
 
         [PersonalData]
         [Display(Name = "About Me")]
