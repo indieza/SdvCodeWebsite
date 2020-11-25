@@ -16,6 +16,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20201124214137_InitialCreateAgain.cs" />
+    <Compile Remove="Data\Migrations\20201124214137_InitialCreateAgain.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="stylecop.json" />
   </ItemGroup>
 
@@ -1914,6 +1919,7 @@
     <Folder Include="Areas\Administration\ViewModels\DeleteEmojisByType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
+    <Folder Include="Data\Migrations\" />
     <Folder Include="ViewModels\AllCategories\InputModels\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>

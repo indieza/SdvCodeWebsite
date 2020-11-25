@@ -10,8 +10,8 @@ using SdvCode.Data;
 namespace SdvCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201124214137_InitialCreateAgain")]
-    partial class InitialCreateAgain
+    [Migration("20201125210403_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1053,6 +1053,9 @@ namespace SdvCode.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CountryCodeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
@@ -1074,7 +1077,13 @@ namespace SdvCode.Migrations
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId")
+                        .IsUnique();
 
                     b.ToTable("CountryCodes");
                 });
@@ -1230,14 +1239,15 @@ namespace SdvCode.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("ZipCodes");
                 });
@@ -1581,6 +1591,15 @@ namespace SdvCode.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SdvCode.Models.User.CountryCode", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.Country", "Country")
+                        .WithOne("CountryCode")
+                        .HasForeignKey("SdvCode.Models.User.CountryCode", "CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SdvCode.Models.User.RecommendedFriend", b =>
                 {
                     b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
@@ -1610,6 +1629,15 @@ namespace SdvCode.Migrations
                     b.HasOne("SdvCode.Models.Blog.Post", "Post")
                         .WithMany("UserActions")
                         .HasForeignKey("PostId");
+                });
+
+            modelBuilder.Entity("SdvCode.Models.User.ZipCode", b =>
+                {
+                    b.HasOne("SdvCode.Models.User.City", "City")
+                        .WithMany("ZipCodes")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

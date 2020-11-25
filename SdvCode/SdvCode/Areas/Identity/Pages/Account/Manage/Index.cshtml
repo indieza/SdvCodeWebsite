@@ -12,9 +12,9 @@
     <div class="row">
         <h2 class="headerSwitch container">Biography</h2>
         <div class="form-group col-md-12">
-            <label asp-for="Input.AboutMe"></label>
-            <textarea asp-for="Input.AboutMe" class="form-control" style="resize: vertical" rows="6"></textarea>
-            <span asp-validation-for="Input.AboutMe" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.AboutMe"></label>
+            <textarea asp-for="ManageAccountBaseModel.ManageAccountInputModel.AboutMe" class="form-control" style="resize: vertical" rows="6"></textarea>
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.AboutMe" class="text-danger"></span>
         </div>
     </div>
     <hr />
@@ -26,12 +26,12 @@
             <input asp-for="Username" class="form-control" disabled />
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.Email"></label>
-            <input asp-for="Input.Email" class="form-control" disabled />
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.Email"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.Email" class="form-control" disabled />
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.RegisteredOn"></label>
-            <input asp-for="Input.RegisteredOn" class="form-control" disabled />
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.RegisteredOn"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.RegisteredOn" class="form-control" disabled />
         </div>
     </div>
     <hr />
@@ -39,53 +39,62 @@
     <div class="row">
         <h2 class="headerSwitch container">Inicials</h2>
         <div class="form-group col-md-4">
-            <label asp-for="Input.FirstName"></label>
-            <input asp-for="Input.FirstName" class="form-control" />
-            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.FirstName"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.FirstName" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.FirstName" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.LastName"></label>
-            <input asp-for="Input.LastName" class="form-control" />
-            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.LastName"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.LastName" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.LastName" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.BirthDate"></label>
-            <input type="date" asp-for="Input.BirthDate" class="form-control">
-            <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.BirthDate"></label>
+            <input type="date" asp-for="ManageAccountBaseModel.ManageAccountInputModel.BirthDate" class="form-control">
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.BirthDate" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="Input.Country"></label>
-            <input asp-for="Input.Country" type="hidden" id="countryValue" />
-            <select asp-for="Input.Country" name="country" class="form-control countries order-alpha presel-byip " id="countryId" onchange="changeCountry()">
-                <option value="">Select Country</option>
-            </select>
-            <span asp-validation-for="Input.Country" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.Country"></label>
+            <input autocomplete="off" list="countries" asp-for="ManageAccountBaseModel.ManageAccountInputModel.Country" class="form-control" type="text" />
+            <datalist id="countries">
+                @foreach (var countryCode in this.Model.ManageAccountBaseModel.ManageAccountViewModel.Countries)
+                {
+                    <option>@countryCode</option>
+                }
+            </datalist>
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.Country" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="Input.State"></label>
-            <input asp-for="Input.State" type="hidden" id="stateValue" />
-            <select name="state" class="form-control states order-alpha" id="stateId" onchange="changeState()">
-                <option value="">Select State</option>
-            </select>
-            <span asp-validation-for="Input.State" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.State"></label>
+            <input autocomplete="off" list="states" asp-for="ManageAccountBaseModel.ManageAccountInputModel.State" class="form-control" type="text" />
+            <datalist id="states">
+                @foreach (var countryCode in this.Model.ManageAccountBaseModel.ManageAccountViewModel.States)
+                {
+                    <option>@countryCode</option>
+                }
+            </datalist>
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.State" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="Input.City"></label>
-            <input asp-for="Input.City" type="hidden" id="cityValue" />
-            <select asp-for="Input.City" name="city" class="form-control cities order-alpha" id="cityId" onchange="changeCity()">
-                <option value="">Select City</option>
-            </select>
-            <span asp-validation-for="Input.City" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.City"></label>
+            <input autocomplete="off" list="cities" asp-for="ManageAccountBaseModel.ManageAccountInputModel.City" class="form-control" type="text" />
+            <datalist id="cities">
+                @foreach (var countryCode in this.Model.ManageAccountBaseModel.ManageAccountViewModel.Cities)
+                {
+                    <option>@countryCode</option>
+                }
+            </datalist>
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.City" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="Input.ZipCode"></label>
-            <input asp-for="Input.ZipCode" class="form-control" type="number" />
-            <span asp-validation-for="Input.ZipCode" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.ZipCode"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.ZipCode" class="form-control" type="number" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.ZipCode" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
-            <label asp-for="Input.Gender"></label>
-            <select class="form-control" asp-for="Input.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"></select>
-            <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.Gender"></label>
+            <select class="form-control" asp-for="ManageAccountBaseModel.ManageAccountInputModel.Gender" asp-items="@Html.GetEnumSelectList<Gender>()"></select>
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.Gender" class="text-danger"></span>
         </div>
     </div>
     <hr />
@@ -93,44 +102,50 @@
     <div class="row">
         <h2 class="headerSwitch container">Contacts and Social Media</h2>
         <div class="form-group col-md-4">
-            <label asp-for="Input.CountryCode"></label>
-            <input class="form-control" type="text" asp-for="Input.CountryCode" />
-            <span asp-validation-for="Input.CountryCode" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.CountryCode"></label>
+            <input autocomplete="off" list="countryCodes" class="form-control" type="text" asp-for="ManageAccountBaseModel.ManageAccountInputModel.CountryCode" />
+            <datalist id="countryCodes">
+                @foreach (var countryCode in this.Model.ManageAccountBaseModel.ManageAccountViewModel.CountryCodes)
+                {
+                    <option>@countryCode</option>
+                }
+            </datalist>
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.CountryCode" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.PhoneNumber"></label>
-            <input asp-for="Input.PhoneNumber" class="form-control" />
-            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.PhoneNumber"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.PhoneNumber" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.PhoneNumber" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.GitHubUrl"></label>
-            <input asp-for="Input.GitHubUrl" class="form-control" />
-            <span asp-validation-for="Input.GitHubUrl" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.GitHubUrl"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.GitHubUrl" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.GitHubUrl" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.StackoverflowUrl"></label>
-            <input asp-for="Input.StackoverflowUrl" class="form-control" />
-            <span asp-validation-for="Input.StackoverflowUrl" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.StackoverflowUrl"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.StackoverflowUrl" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.StackoverflowUrl" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.FacebookUrl"></label>
-            <input asp-for="Input.FacebookUrl" class="form-control" />
-            <span asp-validation-for="Input.FacebookUrl" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.FacebookUrl"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.FacebookUrl" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.FacebookUrl" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.LinkedinUrl"></label>
-            <input asp-for="Input.LinkedinUrl" class="form-control" />
-            <span asp-validation-for="Input.LinkedinUrl" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.LinkedinUrl"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.LinkedinUrl" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.LinkedinUrl" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.TwitterUrl"></label>
-            <input asp-for="Input.TwitterUrl" class="form-control" />
-            <span asp-validation-for="Input.TwitterUrl" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.TwitterUrl"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.TwitterUrl" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.TwitterUrl" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.InstagramUrl"></label>
-            <input asp-for="Input.InstagramUrl" class="form-control" />
-            <span asp-validation-for="Input.InstagramUrl" class="text-danger"></span>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.InstagramUrl"></label>
+            <input asp-for="ManageAccountBaseModel.ManageAccountInputModel.InstagramUrl" class="form-control" />
+            <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.InstagramUrl" class="text-danger"></span>
         </div>
     </div>
     <hr />
@@ -138,22 +153,22 @@
     <div class="row">
         <h2 class="headerSwitch container">Profile Identity</h2>
         <div class="form-group col-md-4">
-            <label asp-for="Input.ProfilePicture"></label>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.ProfilePicture"></label>
             <div class="file-upload" id="chooseProfileImage">
                 <div class="file-select">
                     <div class="file-select-button" id="fileName">Choose File</div>
                     <div class="file-select-name" id="noProfileFile">No file chosen...</div>
-                    <input type="file" asp-for="Input.ProfilePicture" id="chooseProfileFile" class="form-control">
+                    <input type="file" asp-for="ManageAccountBaseModel.ManageAccountInputModel.ProfilePicture" id="chooseProfileFile" class="form-control">
                 </div>
             </div>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Input.CoverImage"></label>
+            <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.CoverImage"></label>
             <div class="file-upload" id="chooseCoverImage">
                 <div class="file-select">
                     <div class="file-select-button" id="fileName">Choose File</div>
                     <div class="file-select-name" id="noCoverFile">No file chosen...</div>
-                    <input type="file" asp-for="Input.CoverImage" id="chooseCoverFile" class="form-control">
+                    <input type="file" asp-for="ManageAccountBaseModel.ManageAccountInputModel.CoverImage" id="chooseCoverFile" class="form-control">
                 </div>
             </div>
         </div>
@@ -168,7 +183,4 @@
 </form>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//geodata.solutions/includes/countrystatecity.js"></script>
-    <script src="~/js/manageLocationScript.js"></script>
 }

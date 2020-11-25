@@ -6,6 +6,7 @@ namespace SdvCode.Models.User
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
@@ -17,6 +18,12 @@ namespace SdvCode.Models.User
 
         [MaxLength(20)]
         public string Name { get; set; }
+
+        [ForeignKey(nameof(CountryCode))]
+        [Required]
+        public int CountryCodeId { get; set; }
+
+        public CountryCode CountryCode { get; set; }
 
         public ICollection<State> States { get; set; } = new HashSet<State>();
 

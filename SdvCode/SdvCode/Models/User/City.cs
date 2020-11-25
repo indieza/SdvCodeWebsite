@@ -30,6 +30,8 @@ namespace SdvCode.Models.User
 
         public Country Country { get; set; }
 
+        public ICollection<ZipCode> ZipCodes { get; set; } = new HashSet<ZipCode>();
+
         public ICollection<ApplicationUser> ApplicationUsers { get; set; } = new HashSet<ApplicationUser>();
     }
 }

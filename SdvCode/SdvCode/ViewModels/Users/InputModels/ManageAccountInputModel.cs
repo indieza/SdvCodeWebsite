@@ -12,47 +12,52 @@ namespace SdvCode.ViewModels.Users.InputModels
 
     public class ManageAccountInputModel
     {
-        [Phone]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Phone]
         [Display(Name = "Phone number")]
         [MaxLength(15)]
+        [Required]
         public string PhoneNumber { get; set; }
 
         [PersonalData]
         [Display(Name = "Country")]
         [MaxLength(20)]
-        [BindProperty]
+        [Required]
         public string Country { get; set; }
 
         [PersonalData]
         [Display(Name = "State")]
         [MaxLength(20)]
-        [BindProperty]
+        [Required]
         public string State { get; set; }
 
         [PersonalData]
         [Display(Name = "City")]
         [MaxLength(20)]
-        [BindProperty]
+        [Required]
         public string City { get; set; }
 
         [PersonalData]
         [Display(Name = "Birth Date")]
+        [Required]
         public DateTime BirthDate { get; set; }
 
         [PersonalData]
         [Display(Name = "Registered On")]
+        [Required]
         public DateTime RegisteredOn { get; set; }
 
         [PersonalData]
         [Display(Name = "Gender")]
+        [Required]
         public Gender Gender { get; set; }
 
         [PersonalData]
         [Display(Name = "Country Code")]
+        [Required]
         public string CountryCode { get; set; }
 
         [PersonalData]
@@ -63,11 +68,13 @@ namespace SdvCode.ViewModels.Users.InputModels
         [PersonalData]
         [Display(Name = "First Name")]
         [MaxLength(15)]
+        [Required]
         public string FirstName { get; set; }
 
         [PersonalData]
         [Display(Name = "Last Name")]
         [MaxLength(15)]
+        [Required]
         public string LastName { get; set; }
 
         [PersonalData]
@@ -104,6 +111,7 @@ namespace SdvCode.ViewModels.Users.InputModels
 
         [PersonalData]
         [Display(Name = "Zip Code")]
+        [Required]
         public int ZipCode { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     using SdvCode.Services;
     using SdvCode.Services.Cloud;
     using SdvCode.ViewModels.Users.InputModels;
+    using SdvCode.ViewModels.Users.ViewModels;
 
     public partial class IndexModel : PageModel
     {
@@ -44,7 +45,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
         public string StatusMessage { get; set; }
 
         [BindProperty]
-        public ManageAccountInputModel Input { get; set; }
+        public ManageAccountBaseModel ManageAccountBaseModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -77,9 +78,9 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             }
 
             var phoneNumber = await this.userManager.GetPhoneNumberAsync(user);
-            if (this.Input.PhoneNumber != phoneNumber && this.Input.PhoneNumber != null)
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.PhoneNumber != phoneNumber && this.ManageAccountBaseModel.ManageAccountInputModel.PhoneNumber != null)
             {
-                var setPhoneResult = await this.userManager.SetPhoneNumberAsync(user, this.Input.PhoneNumber);
+                var setPhoneResult = await this.userManager.SetPhoneNumberAsync(user, this.ManageAccountBaseModel.ManageAccountInputModel.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
                     var userId = await this.userManager.GetUserIdAsync(user);
@@ -89,17 +90,20 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 isUpdatePersonalData = true;
             }
 
-            var targetCountry = this.db.Countries.FirstOrDefault(x => x.Name == this.Input.Country);
-            var targetState = this.db.States.FirstOrDefault(x => x.Name == this.Input.State);
-            var targetCity = this.db.Cities.FirstOrDefault(x => x.Name == this.Input.City);
+            var targetCountry = this.db.Countries.FirstOrDefault(x => x.Name == this.ManageAccountBaseModel.ManageAccountInputModel.Country);
+            var targetState = this.db.States.FirstOrDefault(x => x.Name == this.ManageAccountBaseModel.ManageAccountInputModel.State);
+            var targetCity = this.db.Cities.FirstOrDefault(x => x.Name == this.ManageAccountBaseModel.ManageAccountInputModel.City);
+            var targetZipCode = this.db.ZipCodes.FirstOrDefault(x => x.Code == this.ManageAccountBaseModel.ManageAccountInputModel.ZipCode);
+            var targetCountryCode = this.db.CountryCodes.FirstOrDefault(x => x.Code == this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode);
 
-            if (this.Input.Country != null)
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.Country != null)
             {
                 if (targetCountry == null)
                 {
                     targetCountry = new Country
                     {
-                        Name = this.Input.Country,
+                        Name = this.ManageAccountBaseModel.ManageAccountInputModel.Country,
+                        CountryCode = targetCountryCode, // TODO
                     };
                     this.db.Countries.Add(targetCountry);
                 }
@@ -111,13 +115,13 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (this.Input.State != null)
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.State != null)
             {
                 if (targetState == null)
                 {
                     targetState = new State
                     {
-                        Name = this.Input.State,
+                        Name = this.ManageAccountBaseModel.ManageAccountInputModel.State,
                         Country = targetCountry,
                     };
                     this.db.States.Add(targetState);
@@ -130,13 +134,13 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (this.Input.City != null)
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.City != null)
             {
                 if (targetCity == null)
                 {
                     targetCity = new City
                     {
-                        Name = this.Input.City,
+                        Name = this.ManageAccountBaseModel.ManageAccountInputModel.City,
                         Country = targetCountry,
                         State = targetState,
                     };
@@ -150,95 +154,116 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (this.Input.BirthDate != user.BirthDate)
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode != null)
             {
-                user.BirthDate = this.Input.BirthDate;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.Gender != user.Gender)
-            {
-                user.Gender = this.Input.Gender;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.AboutMe != user.AboutMe)
-            {
-                user.AboutMe = this.Input.AboutMe;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.FirstName != user.FirstName)
-            {
-                user.FirstName = this.Input.FirstName;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.LastName != user.LastName)
-            {
-                user.LastName = this.Input.LastName;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.GitHubUrl != user.GitHubUrl)
-            {
-                user.GitHubUrl = this.Input.GitHubUrl;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.StackoverflowUrl != user.StackoverflowUrl)
-            {
-                user.StackoverflowUrl = this.Input.StackoverflowUrl;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.FacebookUrl != user.FacebookUrl)
-            {
-                user.FacebookUrl = this.Input.FacebookUrl;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.LinkedinUrl != user.LinkedinUrl)
-            {
-                user.LinkedinUrl = this.Input.LinkedinUrl;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.TwitterUrl != user.TwitterUrl)
-            {
-                user.TwitterUrl = this.Input.TwitterUrl;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.InstagramUrl != user.InstagramUrl)
-            {
-                user.InstagramUrl = this.Input.InstagramUrl;
-                isUpdatePersonalData = true;
-            }
-
-            if (this.Input.CountryCode != string.Empty && this.Input.CountryCode != null)
-            {
-                var targetCode = this.db.CountryCodes.FirstOrDefault(x => x.Code == this.Input.CountryCode);
-
-                if (targetCode == null)
+                if (targetCountryCode == null)
                 {
-                    targetCode = new CountryCode
+                    targetCountryCode = new CountryCode
                     {
-                        Code = this.Input.CountryCode,
+                        Code = this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode,
+                        Country = targetCountry, // TODO
                     };
-                    this.db.CountryCodes.Add(targetCode);
+
+                    targetCountry.CountryCode = targetCountryCode; // TODO
+                    this.db.CountryCodes.Add(targetCountryCode);
                 }
 
-                if (user.CountryCodeId != targetCode.Id)
+                if (user.CountryCodeId != targetCountryCode.Id)
                 {
-                    user.CountryCode = targetCode;
+                    user.CountryCode = targetCountryCode;
                     isUpdatePersonalData = true;
                 }
             }
 
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.ZipCode != 0)
+            {
+                if (targetZipCode == null)
+                {
+                    targetZipCode = new ZipCode
+                    {
+                        Code = this.ManageAccountBaseModel.ManageAccountInputModel.ZipCode,
+                        City = targetCity,
+                    };
+
+                    this.db.ZipCodes.Add(targetZipCode);
+                }
+
+                if (user.ZipCodeId != targetZipCode.Id)
+                {
+                    user.ZipCode = targetZipCode;
+                    isUpdatePersonalData = true;
+                }
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.BirthDate != user.BirthDate)
+            {
+                user.BirthDate = this.ManageAccountBaseModel.ManageAccountInputModel.BirthDate;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.Gender != user.Gender)
+            {
+                user.Gender = this.ManageAccountBaseModel.ManageAccountInputModel.Gender;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.AboutMe != user.AboutMe)
+            {
+                user.AboutMe = this.ManageAccountBaseModel.ManageAccountInputModel.AboutMe;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.FirstName != user.FirstName)
+            {
+                user.FirstName = this.ManageAccountBaseModel.ManageAccountInputModel.FirstName;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.LastName != user.LastName)
+            {
+                user.LastName = this.ManageAccountBaseModel.ManageAccountInputModel.LastName;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.GitHubUrl != user.GitHubUrl)
+            {
+                user.GitHubUrl = this.ManageAccountBaseModel.ManageAccountInputModel.GitHubUrl;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.StackoverflowUrl != user.StackoverflowUrl)
+            {
+                user.StackoverflowUrl = this.ManageAccountBaseModel.ManageAccountInputModel.StackoverflowUrl;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.FacebookUrl != user.FacebookUrl)
+            {
+                user.FacebookUrl = this.ManageAccountBaseModel.ManageAccountInputModel.FacebookUrl;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.LinkedinUrl != user.LinkedinUrl)
+            {
+                user.LinkedinUrl = this.ManageAccountBaseModel.ManageAccountInputModel.LinkedinUrl;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.TwitterUrl != user.TwitterUrl)
+            {
+                user.TwitterUrl = this.ManageAccountBaseModel.ManageAccountInputModel.TwitterUrl;
+                isUpdatePersonalData = true;
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.InstagramUrl != user.InstagramUrl)
+            {
+                user.InstagramUrl = this.ManageAccountBaseModel.ManageAccountInputModel.InstagramUrl;
+                isUpdatePersonalData = true;
+            }
+
             var profileImageUrl = await ApplicationCloudinary.UploadImage(
                 this.cloudinary,
-                this.Input.ProfilePicture,
+                this.ManageAccountBaseModel.ManageAccountInputModel.ProfilePicture,
                 string.Format(GlobalConstants.CloudinaryUserProfilePictureName, user.UserName),
                 string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
 
@@ -253,7 +278,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
             var coverImageUrl = await ApplicationCloudinary.UploadImage(
                 this.cloudinary,
-                this.Input.CoverImage,
+                this.ManageAccountBaseModel.ManageAccountInputModel.CoverImage,
                 string.Format(GlobalConstants.CloudinaryUserCoverImageName, user.UserName),
                 string.Format(GlobalConstants.UserProfilePicturesFolder, user.UserName));
 
@@ -303,27 +328,6 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 });
             }
 
-            if (this.Input.ZipCode != 0)
-            {
-                var targetCode = this.db.ZipCodes.FirstOrDefault(x => x.Code == this.Input.ZipCode);
-
-                if (targetCode == null)
-                {
-                    targetCode = new ZipCode
-                    {
-                        Code = this.Input.ZipCode,
-                        City = this.Input.City,
-                    };
-                    this.db.ZipCodes.Add(targetCode);
-                }
-
-                if (user.ZipCodeId != targetCode.Id)
-                {
-                    user.ZipCode = targetCode;
-                    isUpdatePersonalData = true;
-                }
-            }
-
             await this.userManager.UpdateAsync(user);
             await this.signInManager.RefreshSignInAsync(user);
             this.StatusMessage = "Your profile has been updated";
@@ -340,31 +344,46 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var city = this.db.Cities.FirstOrDefault(x => x.Id == user.CityId);
             var countryCode = this.db.CountryCodes.FirstOrDefault(x => x.Id == user.CountryCodeId);
 
+            var allCountryCodesNames = this.db.CountryCodes.Select(x => x.Code).OrderBy(x => x).ToList();
+            var allCities = this.db.Cities.Select(x => x.Name).OrderBy(x => x).ToList();
+            var allStates = this.db.States.Select(x => x.Name).OrderBy(x => x).ToList();
+            var allCountries = this.db.Countries.Select(x => x.Name).OrderBy(x => x).ToList();
+
             this.Username = userName;
 
-            this.Input = new ManageAccountInputModel
+            this.ManageAccountBaseModel = new ManageAccountBaseModel
             {
-                PhoneNumber = phoneNumber,
-                State = state == null ? string.Empty : state.Name,
-                Country = country == null ? string.Empty : country.Name,
-                City = city == null ? string.Empty : city.Name,
-                BirthDate = user.BirthDate,
-                Gender = user.Gender,
-                AboutMe = user.AboutMe,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                GitHubUrl = user.GitHubUrl,
-                StackoverflowUrl = user.StackoverflowUrl,
-                FacebookUrl = user.FacebookUrl,
-                InstagramUrl = user.InstagramUrl,
-                TwitterUrl = user.TwitterUrl,
-                LinkedinUrl = user.LinkedinUrl,
-                RegisteredOn = user.RegisteredOn,
-                CountryCode = countryCode == null ? string.Empty : countryCode.Code,
-                Email = user.Email,
-                ZipCode = zipCode == null ? 0 : zipCode.Code,
+                ManageAccountInputModel = new ManageAccountInputModel
+                {
+                    PhoneNumber = phoneNumber,
+                    State = state == null ? string.Empty : state.Name,
+                    Country = country == null ? string.Empty : country.Name,
+                    City = city == null ? string.Empty : city.Name,
+                    BirthDate = user.BirthDate,
+                    Gender = user.Gender,
+                    AboutMe = user.AboutMe,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    GitHubUrl = user.GitHubUrl,
+                    StackoverflowUrl = user.StackoverflowUrl,
+                    FacebookUrl = user.FacebookUrl,
+                    InstagramUrl = user.InstagramUrl,
+                    TwitterUrl = user.TwitterUrl,
+                    LinkedinUrl = user.LinkedinUrl,
+                    RegisteredOn = user.RegisteredOn,
+                    CountryCode = countryCode == null ? string.Empty : countryCode.Code,
+                    Email = user.Email,
+                    ZipCode = zipCode == null ? 0 : zipCode.Code,
 
-                // TODO Image URL
+                    // TODO Image URL
+                },
+                ManageAccountViewModel = new ManageAccountViewModel
+                {
+                    CountryCodes = allCountryCodesNames,
+                    Cities = allCities,
+                    States = allStates,
+                    Countries = allCountries,
+                },
             };
         }
     }

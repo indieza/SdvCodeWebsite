@@ -119,14 +119,20 @@ namespace SdvCode.Data
             builder.Entity<City>(entity =>
             {
                 entity.HasOne(x => x.State)
-                .WithMany(x => x.Cities)
-                .HasForeignKey(x => x.StateId)
-                .OnDelete(DeleteBehavior.Restrict);
+                    .WithMany(x => x.Cities)
+                    .HasForeignKey(x => x.StateId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(x => x.Country)
-                .WithMany(x => x.Cities)
-                .HasForeignKey(x => x.CountryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                    .WithMany(x => x.Cities)
+                    .HasForeignKey(x => x.CountryId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(x => x.ZipCodes)
+                    .WithOne(x => x.City)
+                    .HasForeignKey(x => x.CityId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(true);
             });
 
             builder.Entity<ApplicationUser>(entity =>
@@ -221,6 +227,13 @@ namespace SdvCode.Data
                 .WithOne(x => x.ChatMessage)
                 .HasForeignKey(x => x.ChatMessageId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Country>()
+                .HasOne(x => x.CountryCode)
+                .WithOne(x => x.Country)
+                .HasForeignKey<CountryCode>(x => x.CountryId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(true);
 
             base.OnModelCreating(builder);
         }

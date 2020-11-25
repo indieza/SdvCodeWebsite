@@ -6,7 +6,7 @@ namespace SdvCode.Migrations
     using System;
     using Microsoft.EntityFrameworkCore.Migrations;
 
-    public partial class InitialCreateAgain : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace SdvCode.Migrations
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    RoleLevel = table.Column<int>(nullable: false),
+                    RoleLevel = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,7 +33,7 @@ namespace SdvCode.Migrations
                     Name = table.Column<string>(maxLength: 30, nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     UpdatedOn = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,7 +46,7 @@ namespace SdvCode.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 30, nullable: false),
-                    Url = table.Column<string>(nullable: false),
+                    Url = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,23 +60,11 @@ namespace SdvCode.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
+                    CountryCodeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CountryCodes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(maxLength: 10, nullable: false),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CountryCodes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,7 +75,7 @@ namespace SdvCode.Migrations
                     Name = table.Column<string>(maxLength: 120, nullable: false),
                     Url = table.Column<string>(nullable: false),
                     Position = table.Column<int>(nullable: false),
-                    EmojiType = table.Column<int>(nullable: false),
+                    EmojiType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,7 +88,7 @@ namespace SdvCode.Migrations
                 {
                     PersonId = table.Column<string>(nullable: false),
                     FollowerId = table.Column<string>(nullable: false),
-                    IsFollowed = table.Column<bool>(nullable: false),
+                    IsFollowed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,7 +112,7 @@ namespace SdvCode.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     FinishedOn = table.Column<DateTime>(nullable: true),
                     CanceledOn = table.Column<DateTime>(nullable: true),
-                    OrderStatus = table.Column<int>(nullable: false),
+                    OrderStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,7 +125,7 @@ namespace SdvCode.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Title = table.Column<string>(maxLength: 50, nullable: false),
-                    Description = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,7 +138,7 @@ namespace SdvCode.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 15, nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -163,25 +151,11 @@ namespace SdvCode.Migrations
                 {
                     Username = table.Column<string>(nullable: false),
                     RaterUsername = table.Column<string>(nullable: false),
-                    Stars = table.Column<int>(maxLength: 5, nullable: false),
+                    Stars = table.Column<int>(maxLength: 5, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRatings", x => new { x.Username, x.RaterUsername });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ZipCodes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<int>(nullable: false),
-                    City = table.Column<string>(maxLength: 20, nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ZipCodes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,7 +166,7 @@ namespace SdvCode.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,7 +186,7 @@ namespace SdvCode.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 100, nullable: true),
-                    ChatThemeId = table.Column<string>(nullable: true),
+                    ChatThemeId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -226,13 +200,33 @@ namespace SdvCode.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CountryCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(maxLength: 10, nullable: false),
+                    CountryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CountryCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CountryCodes_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "States",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
-                    CountryId = table.Column<int>(nullable: false),
+                    CountryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -253,7 +247,7 @@ namespace SdvCode.Migrations
                     Name = table.Column<string>(maxLength: 120, nullable: false),
                     Url = table.Column<string>(nullable: false),
                     Position = table.Column<int>(nullable: false),
-                    EmojiId = table.Column<string>(nullable: true),
+                    EmojiId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -278,7 +272,7 @@ namespace SdvCode.Migrations
                     SpecificationsDescription = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     UpdatedOn = table.Column<DateTime>(nullable: false),
-                    ProductCategoryId = table.Column<string>(nullable: false),
+                    ProductCategoryId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -361,6 +355,26 @@ namespace SdvCode.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ZipCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<int>(nullable: false),
+                    CityId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ZipCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ZipCodes_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1086,6 +1100,12 @@ namespace SdvCode.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CountryCodes_CountryId",
+                table: "CountryCodes",
+                column: "CountryId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmojiSkins_EmojiId",
                 table: "EmojiSkins",
                 column: "EmojiId");
@@ -1199,6 +1219,11 @@ namespace SdvCode.Migrations
                 name: "IX_UsersGroups_ApplicationUserId",
                 table: "UsersGroups",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ZipCodes_CityId",
+                table: "ZipCodes",
+                column: "CityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1312,13 +1337,13 @@ namespace SdvCode.Migrations
                 name: "ChatThemes");
 
             migrationBuilder.DropTable(
-                name: "Cities");
-
-            migrationBuilder.DropTable(
                 name: "CountryCodes");
 
             migrationBuilder.DropTable(
                 name: "ZipCodes");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "States");
