@@ -4,12 +4,14 @@
 namespace SdvCode.Areas.Identity.Pages.Account
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Options;
+    using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;
     using Twilio.Rest.Verify.V2.Service;
@@ -19,11 +21,16 @@ namespace SdvCode.Areas.Identity.Pages.Account
     {
         private readonly TwilioVerifySettings settings;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext db;
 
-        public VerifyPhoneModel(IOptions<TwilioVerifySettings> settings, UserManager<ApplicationUser> userManager)
+        public VerifyPhoneModel(
+            IOptions<TwilioVerifySettings> settings,
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext db)
         {
             this.settings = settings.Value;
             this.userManager = userManager;
+            this.db = db;
         }
 
         public string PhoneNumber { get; set; }
@@ -43,7 +50,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
             try
             {
                 var verification = await VerificationResource.CreateAsync(
-                    to: $"+{this.CountryCode}{this.PhoneNumber}",
+                    to: $"{this.CountryCode}{this.PhoneNumber}",
                     channel: "sms",
                     pathServiceSid: this.settings.VerificationServiceSID);
 
@@ -73,7 +80,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
             }
 
             this.PhoneNumber = user.PhoneNumber;
-            this.CountryCode = user.CountryCode.ToString().Split("_")[1];
+            this.CountryCode = this.db.CountryCodes.FirstOrDefault(x => x.Id == user.CountryCodeId).Code;
         }
     }
 }

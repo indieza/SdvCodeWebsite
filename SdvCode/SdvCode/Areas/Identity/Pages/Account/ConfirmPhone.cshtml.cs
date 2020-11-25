@@ -5,6 +5,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using SdvCode.Areas.Administration.Services;
     using SdvCode.Areas.Administration.Services.Dashboard;
     using SdvCode.Constraints;
+    using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.SecurityModels;
     using Twilio.Rest.Verify.V2.Service;
@@ -24,14 +26,17 @@ namespace SdvCode.Areas.Identity.Pages.Account
         private readonly TwilioVerifySettings settings;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDashboardService dashboardService;
+        private readonly ApplicationDbContext db;
 
         public ConfirmPhoneModel(
             UserManager<ApplicationUser> userManager,
             IOptions<TwilioVerifySettings> settings,
-            IDashboardService dashboardService)
+            IDashboardService dashboardService,
+            ApplicationDbContext db)
         {
             this.userManager = userManager;
             this.dashboardService = dashboardService;
+            this.db = db;
             this.settings = settings.Value;
         }
 
@@ -61,7 +66,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
             try
             {
                 var verification = await VerificationCheckResource.CreateAsync(
-                    to: $"+{this.CountryCode}{this.PhoneNumber}",
+                    to: $"{this.CountryCode}{this.PhoneNumber}",
                     code: this.VerificationCode,
                     pathServiceSid: this.settings.VerificationServiceSID);
                 if (verification.Status == "approved")
@@ -118,7 +123,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
             }
 
             this.PhoneNumber = user.PhoneNumber;
-            this.CountryCode = user.CountryCode.ToString().Split("_")[1];
+            this.CountryCode = this.db.CountryCodes.FirstOrDefault(x => x.Id == user.CountryCodeId).Code;
         }
     }
 }

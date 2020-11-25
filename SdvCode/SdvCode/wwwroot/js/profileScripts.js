@@ -1,12 +1,4 @@
-﻿function enablePhone() {
-    let code = document.getElementById("countryCodeDrop");
-
-    if (code.value) {
-        document.getElementById("profilePhoneNumber").disabled = false;
-    }
-}
-
-$('#chooseProfileFile').bind('change', function () {
+﻿$('#chooseProfileFile').bind('change', function () {
     var filename = $("#chooseProfileFile").val();
     if (/^\s*$/.test(filename)) {
         $("#chooseProfileImage").removeClass('active');
