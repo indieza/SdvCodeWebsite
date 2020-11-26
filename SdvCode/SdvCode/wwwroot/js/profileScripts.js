@@ -21,3 +21,13 @@ $('#chooseCoverFile').bind('change', function () {
         $("#noCoverFile").text(filename.replace("C:\\fakepath\\", ""));
     }
 });
+
+function checkCountryCode(field) {
+    let code = field.value;
+    let pattern = new RegExp('^(\\+{1}\\d{1,3}|\\+{1}\\d{1,4})$');
+
+    if (!pattern.test(code)) {
+        alert("Invalid Country Code, example +359, +1, +569 etc.");
+        field.value = "";
+    }
+}

@@ -57,9 +57,9 @@
             <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.Country"></label>
             <input autocomplete="off" list="countries" asp-for="ManageAccountBaseModel.ManageAccountInputModel.Country" class="form-control" type="text" />
             <datalist id="countries">
-                @foreach (var countryCode in this.Model.ManageAccountBaseModel.ManageAccountViewModel.Countries)
+                @foreach (var country in this.Model.ManageAccountBaseModel.ManageAccountViewModel.Countries)
                 {
-                    <option>@countryCode</option>
+                    <option>@country</option>
                 }
             </datalist>
             <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.Country" class="text-danger"></span>
@@ -68,9 +68,9 @@
             <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.State"></label>
             <input autocomplete="off" list="states" asp-for="ManageAccountBaseModel.ManageAccountInputModel.State" class="form-control" type="text" />
             <datalist id="states">
-                @foreach (var countryCode in this.Model.ManageAccountBaseModel.ManageAccountViewModel.States)
+                @foreach (var state in this.Model.ManageAccountBaseModel.ManageAccountViewModel.States)
                 {
-                    <option>@countryCode</option>
+                    <option>@state</option>
                 }
             </datalist>
             <span asp-validation-for="ManageAccountBaseModel.ManageAccountInputModel.State" class="text-danger"></span>
@@ -103,7 +103,7 @@
         <h2 class="headerSwitch container">Contacts and Social Media</h2>
         <div class="form-group col-md-4">
             <label asp-for="ManageAccountBaseModel.ManageAccountInputModel.CountryCode"></label>
-            <input autocomplete="off" list="countryCodes" class="form-control" type="text" asp-for="ManageAccountBaseModel.ManageAccountInputModel.CountryCode" />
+            <input onblur="checkCountryCode(this)" autocomplete="off" list="countryCodes" class="form-control" type="text" asp-for="ManageAccountBaseModel.ManageAccountInputModel.CountryCode" />
             <datalist id="countryCodes">
                 @foreach (var countryCode in this.Model.ManageAccountBaseModel.ManageAccountViewModel.CountryCodes)
                 {

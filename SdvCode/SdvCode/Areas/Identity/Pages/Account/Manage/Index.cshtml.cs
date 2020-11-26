@@ -90,9 +90,9 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 isUpdatePersonalData = true;
             }
 
-            var targetCountry = this.db.Countries.FirstOrDefault(x => x.Name == this.ManageAccountBaseModel.ManageAccountInputModel.Country);
-            var targetState = this.db.States.FirstOrDefault(x => x.Name == this.ManageAccountBaseModel.ManageAccountInputModel.State);
-            var targetCity = this.db.Cities.FirstOrDefault(x => x.Name == this.ManageAccountBaseModel.ManageAccountInputModel.City);
+            var targetCountry = this.db.Countries.FirstOrDefault(x => x.Name.ToUpper() == this.ManageAccountBaseModel.ManageAccountInputModel.Country.ToUpper());
+            var targetState = this.db.States.FirstOrDefault(x => x.Name.ToUpper() == this.ManageAccountBaseModel.ManageAccountInputModel.State.ToUpper());
+            var targetCity = this.db.Cities.FirstOrDefault(x => x.Name.ToUpper() == this.ManageAccountBaseModel.ManageAccountInputModel.City.ToUpper());
             var targetZipCode = this.db.ZipCodes.FirstOrDefault(x => x.Code == this.ManageAccountBaseModel.ManageAccountInputModel.ZipCode);
             var targetCountryCode = this.db.CountryCodes.FirstOrDefault(x => x.Code == this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode);
 
