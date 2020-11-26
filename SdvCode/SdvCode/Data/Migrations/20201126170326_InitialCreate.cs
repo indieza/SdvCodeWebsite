@@ -54,16 +54,15 @@ namespace SdvCode.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "CountryCodes",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(maxLength: 20, nullable: true),
-                    CountryCodeId = table.Column<string>(nullable: false)
+                    Code = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
+                    table.PrimaryKey("PK_CountryCodes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,41 +197,22 @@ namespace SdvCode.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CountryCodes",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Code = table.Column<string>(maxLength: 10, nullable: false),
-                    CountryId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CountryCodes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CountryCodes_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "States",
+                name: "Countries",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
-                    CountryId = table.Column<string>(nullable: false)
+                    CountryCodeId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_States", x => x.Id);
+                    table.PrimaryKey("PK_Countries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_States_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
+                        name: "FK_Countries_CountryCodes_CountryCodeId",
+                        column: x => x.CountryCodeId,
+                        principalTable: "CountryCodes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,29 +262,22 @@ namespace SdvCode.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cities",
+                name: "States",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
-                    StateId = table.Column<string>(nullable: false),
                     CountryId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.PrimaryKey("PK_States", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cities_Countries_CountryId",
+                        name: "FK_States_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Cities_States_StateId",
-                        column: x => x.StateId,
-                        principalTable: "States",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -350,6 +323,32 @@ namespace SdvCode.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 20, nullable: true),
+                    StateId = table.Column<string>(nullable: false),
+                    CountryId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cities_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Cities_States_StateId",
+                        column: x => x.StateId,
+                        principalTable: "States",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1091,10 +1090,9 @@ namespace SdvCode.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CountryCodes_CountryId",
-                table: "CountryCodes",
-                column: "CountryId",
-                unique: true);
+                name: "IX_Countries_CountryCodeId",
+                table: "Countries",
+                column: "CountryCodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmojiSkins_EmojiId",
@@ -1328,9 +1326,6 @@ namespace SdvCode.Migrations
                 name: "ChatThemes");
 
             migrationBuilder.DropTable(
-                name: "CountryCodes");
-
-            migrationBuilder.DropTable(
                 name: "ZipCodes");
 
             migrationBuilder.DropTable(
@@ -1341,6 +1336,9 @@ namespace SdvCode.Migrations
 
             migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "CountryCodes");
         }
     }
 }

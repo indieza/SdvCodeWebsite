@@ -96,24 +96,6 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var targetZipCode = this.db.ZipCodes.FirstOrDefault(x => x.Code == this.ManageAccountBaseModel.ManageAccountInputModel.ZipCode);
             var targetCountryCode = this.db.CountryCodes.FirstOrDefault(x => x.Code == this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode);
 
-            if (this.ManageAccountBaseModel.ManageAccountInputModel.Country != null)
-            {
-                if (targetCountry == null)
-                {
-                    targetCountry = new Country
-                    {
-                        Name = this.ManageAccountBaseModel.ManageAccountInputModel.Country,
-                    };
-                    this.db.Countries.Add(targetCountry);
-                }
-
-                if (user.CountryId != targetCountry.Id)
-                {
-                    user.Country = targetCountry;
-                    isUpdatePersonalData = true;
-                }
-            }
-
             if (this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode != null)
             {
                 if (targetCountryCode == null)
@@ -121,16 +103,33 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     targetCountryCode = new CountryCode
                     {
                         Code = this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode,
-                        CountryId = targetCountry.Id,
                     };
 
-                    targetCountry.CountryCodeId = targetCountryCode.Id;
                     this.db.CountryCodes.Add(targetCountryCode);
                 }
 
                 if (user.CountryCodeId != targetCountryCode.Id)
                 {
-                    user.CountryCode = targetCountryCode;
+                    user.CountryCodeId = targetCountryCode.Id;
+                    isUpdatePersonalData = true;
+                }
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.Country != null)
+            {
+                if (targetCountry == null)
+                {
+                    targetCountry = new Country
+                    {
+                        Name = this.ManageAccountBaseModel.ManageAccountInputModel.Country,
+                        CountryCode = targetCountryCode,
+                    };
+                    this.db.Countries.Add(targetCountry);
+                }
+
+                if (user.CountryId != targetCountry.Id)
+                {
+                    user.CountryId = targetCountry.Id;
                     isUpdatePersonalData = true;
                 }
             }
@@ -149,7 +148,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
                 if (user.StateId != targetState.Id)
                 {
-                    user.State = targetState;
+                    user.StateId = targetState.Id;
                     isUpdatePersonalData = true;
                 }
             }
@@ -169,7 +168,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
                 if (user.CityId != targetCity.Id)
                 {
-                    user.City = targetCity;
+                    user.CityId = targetCity.Id;
                     isUpdatePersonalData = true;
                 }
             }
@@ -189,7 +188,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
                 if (user.ZipCodeId != targetZipCode.Id)
                 {
-                    user.ZipCode = targetZipCode;
+                    user.ZipCode.Id = targetZipCode.Id;
                     isUpdatePersonalData = true;
                 }
             }

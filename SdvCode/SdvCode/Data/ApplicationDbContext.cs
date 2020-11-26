@@ -230,8 +230,8 @@ namespace SdvCode.Data
 
             builder.Entity<Country>()
                 .HasOne(x => x.CountryCode)
-                .WithOne(x => x.Country)
-                .HasForeignKey<CountryCode>(x => x.CountryId)
+                .WithMany(x => x.Coutries)
+                .HasForeignKey(x => x.CountryCodeId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(true);
 

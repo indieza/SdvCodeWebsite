@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
 namespace SdvCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201126144147_InitialCreate")]
-    partial class InitialCreate
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1052,13 +1050,15 @@ namespace SdvCode.Migrations
 
                     b.Property<string>("CountryCodeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryCodeId");
 
                     b.ToTable("Countries");
                 });
@@ -1073,14 +1073,7 @@ namespace SdvCode.Migrations
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
-                    b.Property<string>("CountryId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CountryId")
-                        .IsUnique();
 
                     b.ToTable("CountryCodes");
                 });
@@ -1582,11 +1575,11 @@ namespace SdvCode.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SdvCode.Models.User.CountryCode", b =>
+            modelBuilder.Entity("SdvCode.Models.User.Country", b =>
                 {
-                    b.HasOne("SdvCode.Models.User.Country", "Country")
-                        .WithOne("CountryCode")
-                        .HasForeignKey("SdvCode.Models.User.CountryCode", "CountryId")
+                    b.HasOne("SdvCode.Models.User.CountryCode", "CountryCode")
+                        .WithMany("Coutries")
+                        .HasForeignKey("CountryCodeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

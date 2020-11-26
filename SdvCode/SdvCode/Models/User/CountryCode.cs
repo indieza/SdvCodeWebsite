@@ -25,11 +25,7 @@ namespace SdvCode.Models.User
         [MaxLength(10)]
         public string Code { get; set; }
 
-        [ForeignKey(nameof(Country))]
-        [Required]
-        public string CountryId { get; set; }
-
-        public Country Country { get; set; }
+        public ICollection<Country> Coutries { get; set; } = new HashSet<Country>();
 
         public ICollection<ApplicationUser> ApplicationUsers { get; set; } = new HashSet<ApplicationUser>();
     }
