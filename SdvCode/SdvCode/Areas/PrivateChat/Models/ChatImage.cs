@@ -29,13 +29,13 @@ namespace SdvCode.Areas.PrivateChat.Models
 
         [ForeignKey(nameof(Group))]
         [Required]
-        public int GroupId { get; set; }
+        public string GroupId { get; set; }
 
         public Group Group { get; set; }
 
         [ForeignKey(nameof(ChatMessage))]
         [Required]
-        public int ChatMessageId { get; set; }
+        public string ChatMessageId { get; set; }
 
         public ChatMessage ChatMessage { get; set; }
     }

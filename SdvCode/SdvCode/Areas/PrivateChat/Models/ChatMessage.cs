@@ -12,15 +12,20 @@ namespace SdvCode.Areas.PrivateChat.Models
 
     public class ChatMessage
     {
+        public ChatMessage()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Content { get; set; }
 
         [Required]
         [ForeignKey(nameof(Group))]
-        public int GroupId { get; set; }
+        public string GroupId { get; set; }
 
         public Group Group { get; set; }
 

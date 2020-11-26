@@ -57,10 +57,9 @@ namespace SdvCode.Migrations
                 name: "Countries",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
-                    CountryCodeId = table.Column<int>(nullable: false)
+                    CountryCodeId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,8 +182,7 @@ namespace SdvCode.Migrations
                 name: "Groups",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: true),
                     ChatThemeId = table.Column<string>(nullable: true)
                 },
@@ -203,10 +201,9 @@ namespace SdvCode.Migrations
                 name: "CountryCodes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Code = table.Column<string>(maxLength: 10, nullable: false),
-                    CountryId = table.Column<int>(nullable: false)
+                    CountryId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,10 +220,9 @@ namespace SdvCode.Migrations
                 name: "States",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
-                    CountryId = table.Column<int>(nullable: false)
+                    CountryId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -289,11 +285,10 @@ namespace SdvCode.Migrations
                 name: "Cities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: true),
-                    StateId = table.Column<int>(nullable: false),
-                    CountryId = table.Column<int>(nullable: false)
+                    StateId = table.Column<string>(nullable: false),
+                    CountryId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -361,10 +356,9 @@ namespace SdvCode.Migrations
                 name: "ZipCodes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Code = table.Column<int>(nullable: false),
-                    CityId = table.Column<int>(nullable: false)
+                    CityId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -396,14 +390,14 @@ namespace SdvCode.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    ZipCodeId = table.Column<int>(nullable: true),
-                    CountryId = table.Column<int>(nullable: true),
-                    StateId = table.Column<int>(nullable: true),
-                    CityId = table.Column<int>(nullable: true),
+                    ZipCodeId = table.Column<string>(nullable: true),
+                    CountryId = table.Column<string>(nullable: true),
+                    StateId = table.Column<string>(nullable: true),
+                    CityId = table.Column<string>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: false),
                     RegisteredOn = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<int>(nullable: false),
-                    CountryCodeId = table.Column<int>(nullable: true),
+                    CountryCodeId = table.Column<string>(nullable: true),
                     AboutMe = table.Column<string>(maxLength: 600, nullable: true),
                     FirstName = table.Column<string>(maxLength: 15, nullable: true),
                     LastName = table.Column<string>(maxLength: 15, nullable: true),
@@ -542,10 +536,9 @@ namespace SdvCode.Migrations
                 name: "ChatMessages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Content = table.Column<string>(nullable: false),
-                    GroupId = table.Column<int>(nullable: false),
+                    GroupId = table.Column<string>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: false),
                     ReceiverUsername = table.Column<string>(nullable: false),
                     RecieverImageUrl = table.Column<string>(nullable: true),
@@ -675,8 +668,7 @@ namespace SdvCode.Migrations
                 name: "RecommendedFriends",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     RecommendedUsername = table.Column<string>(nullable: false),
                     RecommendedFirstName = table.Column<string>(maxLength: 15, nullable: true),
                     RecommendedLastName = table.Column<string>(maxLength: 15, nullable: true),
@@ -723,7 +715,7 @@ namespace SdvCode.Migrations
                 name: "UsersGroups",
                 columns: table => new
                 {
-                    GroupId = table.Column<int>(nullable: false),
+                    GroupId = table.Column<string>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -750,8 +742,8 @@ namespace SdvCode.Migrations
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 60, nullable: false),
                     Url = table.Column<string>(nullable: false),
-                    GroupId = table.Column<int>(nullable: false),
-                    ChatMessageId = table.Column<int>(nullable: false)
+                    GroupId = table.Column<string>(nullable: false),
+                    ChatMessageId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -954,8 +946,7 @@ namespace SdvCode.Migrations
                 name: "UserActions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: false),
                     Action = table.Column<int>(nullable: false),
                     ActionDate = table.Column<DateTime>(nullable: false),

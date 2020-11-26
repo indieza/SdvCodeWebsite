@@ -21,22 +21,22 @@ namespace SdvCode.Models.User
         }
 
         [ForeignKey(nameof(ZipCode))]
-        public int? ZipCodeId { get; set; }
+        public string ZipCodeId { get; set; }
 
         public ZipCode ZipCode { get; set; }
 
         [ForeignKey(nameof(Country))]
-        public int? CountryId { get; set; }
+        public string CountryId { get; set; }
 
         public Country Country { get; set; }
 
         [ForeignKey(nameof(State))]
-        public int? StateId { get; set; }
+        public string StateId { get; set; }
 
         public State State { get; set; }
 
         [ForeignKey(nameof(City))]
-        public int? CityId { get; set; }
+        public string CityId { get; set; }
 
         public City City { get; set; }
 
@@ -47,7 +47,7 @@ namespace SdvCode.Models.User
         public Gender Gender { get; set; }
 
         [ForeignKey(nameof(CountryCode))]
-        public int? CountryCodeId { get; set; }
+        public string CountryCodeId { get; set; }
 
         public CountryCode CountryCode { get; set; }
 

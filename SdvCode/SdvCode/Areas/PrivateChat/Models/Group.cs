@@ -13,8 +13,13 @@ namespace SdvCode.Areas.PrivateChat.Models
 
     public class Group
     {
+        public Group()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [MaxLength(100)]
         public string Name { get; set; }

@@ -11,7 +11,7 @@ namespace SdvCode.Areas.PrivateChat.Models
     {
         [Required]
         [ForeignKey(nameof(Group))]
-        public int GroupId { get; set; }
+        public string GroupId { get; set; }
 
         public Group Group { get; set; }
 

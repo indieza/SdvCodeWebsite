@@ -47,7 +47,7 @@ namespace SdvCode.Services.Profile
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<string> DeleteActivityById(ApplicationUser user, int activityId)
+        public async Task<string> DeleteActivityById(ApplicationUser user, string activityId)
         {
             var trash = this.db.UserActions.FirstOrDefault(x => x.ApplicationUserId == user.Id && x.Id == activityId);
             var activityName = trash.Action.ToString();
@@ -257,7 +257,7 @@ namespace SdvCode.Services.Profile
             return await this.db.Users.AnyAsync(x => x.UserName == username);
         }
 
-        public async Task ChangeActionStatus(string username, int id, string newStatus)
+        public async Task ChangeActionStatus(string username, string id, string newStatus)
         {
             var action = await this.db.UserActions
                 .FirstOrDefaultAsync(x => x.Id == id && x.PersonUsername == username);

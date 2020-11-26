@@ -12,9 +12,14 @@ namespace SdvCode.Models.User
 
     public class CountryCode
     {
+        public CountryCode()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
         [Required]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MaxLength(10)]
@@ -22,7 +27,7 @@ namespace SdvCode.Models.User
 
         [ForeignKey(nameof(Country))]
         [Required]
-        public int CountryId { get; set; }
+        public string CountryId { get; set; }
 
         public Country Country { get; set; }
 

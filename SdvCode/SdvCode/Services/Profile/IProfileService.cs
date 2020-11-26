@@ -21,7 +21,7 @@ namespace SdvCode.Services.Profile
 
         Task DeleteActivity(ApplicationUser user);
 
-        Task<string> DeleteActivityById(ApplicationUser user, int activityId);
+        Task<string> DeleteActivityById(ApplicationUser user, string activityId);
 
         Task<bool> HasAdmin(ApplicationRole role);
 
@@ -41,6 +41,6 @@ namespace SdvCode.Services.Profile
 
         Task<bool> IsUserExist(string username);
 
-        Task ChangeActionStatus(string username, int id, string status);
+        Task ChangeActionStatus(string username, string id, string status);
     }
 }

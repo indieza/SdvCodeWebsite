@@ -12,15 +12,20 @@ namespace SdvCode.Models.User
 
     public class ZipCode
     {
+        public ZipCode()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public int Code { get; set; }
 
         [ForeignKey(nameof(City))]
         [Required]
-        public int CityId { get; set; }
+        public string CityId { get; set; }
 
         public City City { get; set; }
 

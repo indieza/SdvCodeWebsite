@@ -12,15 +12,20 @@ namespace SdvCode.Models.User
 
     public class State
     {
+        public State()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [MaxLength(20)]
         public string Name { get; set; }
 
         [Required]
         [ForeignKey(nameof(Country))]
-        public int CountryId { get; set; }
+        public string CountryId { get; set; }
 
         public Country Country { get; set; }
 

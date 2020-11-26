@@ -12,8 +12,13 @@ namespace SdvCode.Models.User
 
     public class RecommendedFriend
     {
+        public RecommendedFriend()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string RecommendedUsername { get; set; }

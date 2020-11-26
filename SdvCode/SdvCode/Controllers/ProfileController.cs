@@ -163,7 +163,7 @@ namespace SdvCode.Controllers
         }
 
         [Route("/DeleteActivityById/{username}/{activityId}")]
-        public async Task<IActionResult> DeleteActivityById(string username, int activityId)
+        public async Task<IActionResult> DeleteActivityById(string username, string activityId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
             string activityName = await this.profileService.DeleteActivityById(currentUser, activityId);
@@ -174,7 +174,7 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Route("/Profile/{username}/changeActionStatus")]
-        public async Task<string> ChangeActionStatus(string username, int id, string newStatus)
+        public async Task<string> ChangeActionStatus(string username, string id, string newStatus)
         {
             await this.profileService.ChangeActionStatus(username, id, newStatus);
             return newStatus;

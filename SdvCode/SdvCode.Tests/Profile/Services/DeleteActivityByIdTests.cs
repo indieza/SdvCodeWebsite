@@ -17,10 +17,10 @@
         [Fact]
         public async Task TestDeleteActivityById()
         {
-            var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "pesho" };
-            var activity = new UserAction { Id = 1, ApplicationUser = user, Action = UserActionsType.Follow };
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            //var user = new ApplicationUser { Id = Guid.NewGuid().ToString(), UserName = "pesho" };
+            //var activity = new UserAction { Id = 1, ApplicationUser = user, Action = UserActionsType.Follow };
+            //var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            //    .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
             //using (var db = new ApplicationDbContext(options))
             //{

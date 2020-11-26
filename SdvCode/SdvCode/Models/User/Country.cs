@@ -13,15 +13,20 @@ namespace SdvCode.Models.User
 
     public class Country
     {
+        public Country()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [MaxLength(20)]
         public string Name { get; set; }
 
         [ForeignKey(nameof(CountryCode))]
         [Required]
-        public int CountryCodeId { get; set; }
+        public string CountryCodeId { get; set; }
 
         public CountryCode CountryCode { get; set; }
 

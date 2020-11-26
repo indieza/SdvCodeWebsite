@@ -103,7 +103,6 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     targetCountry = new Country
                     {
                         Name = this.ManageAccountBaseModel.ManageAccountInputModel.Country,
-                        CountryCode = targetCountryCode, // TODO
                     };
                     this.db.Countries.Add(targetCountry);
                 }
@@ -111,6 +110,27 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 if (user.CountryId != targetCountry.Id)
                 {
                     user.Country = targetCountry;
+                    isUpdatePersonalData = true;
+                }
+            }
+
+            if (this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode != null)
+            {
+                if (targetCountryCode == null)
+                {
+                    targetCountryCode = new CountryCode
+                    {
+                        Code = this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode,
+                        CountryId = targetCountry.Id,
+                    };
+
+                    targetCountry.CountryCodeId = targetCountryCode.Id;
+                    this.db.CountryCodes.Add(targetCountryCode);
+                }
+
+                if (user.CountryCodeId != targetCountryCode.Id)
+                {
+                    user.CountryCode = targetCountryCode;
                     isUpdatePersonalData = true;
                 }
             }
@@ -150,27 +170,6 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 if (user.CityId != targetCity.Id)
                 {
                     user.City = targetCity;
-                    isUpdatePersonalData = true;
-                }
-            }
-
-            if (this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode != null)
-            {
-                if (targetCountryCode == null)
-                {
-                    targetCountryCode = new CountryCode
-                    {
-                        Code = this.ManageAccountBaseModel.ManageAccountInputModel.CountryCode,
-                        Country = targetCountry, // TODO
-                    };
-
-                    targetCountry.CountryCode = targetCountryCode; // TODO
-                    this.db.CountryCodes.Add(targetCountryCode);
-                }
-
-                if (user.CountryCodeId != targetCountryCode.Id)
-                {
-                    user.CountryCode = targetCountryCode;
                     isUpdatePersonalData = true;
                 }
             }

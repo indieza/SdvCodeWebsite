@@ -6,6 +6,7 @@ namespace SdvCode.Models.User
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using AngleSharp.Common;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
@@ -14,10 +15,11 @@ namespace SdvCode.Models.User
         public UserAction()
         {
             this.ActionStatus = UserActionsStatus.Unread;
+            this.Id = Guid.NewGuid().ToString();
         }
 
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [ForeignKey(nameof(ApplicationUser))]
         [Required]
