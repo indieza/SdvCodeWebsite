@@ -188,7 +188,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
 
                 if (user.ZipCodeId != targetZipCode.Id)
                 {
-                    user.ZipCode.Id = targetZipCode.Id;
+                    user.ZipCodeId = targetZipCode.Id;
                     isUpdatePersonalData = true;
                 }
             }
