@@ -7,6 +7,52 @@ function updateScroll() {
     element.scrollTop = element.scrollHeight;
 }
 
+function userType(toUsername, fromUsername, fromUserImageUrl) {
+    connection.invoke("UserType", fromUsername, toUsername, fromUserImageUrl).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+function userStopType(toUsername) {
+    connection.invoke("UserStopType", toUsername).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
+connection.on("VisualizeUserType", function (fromUsername, fromUserImageUrl) {
+    let divElement = document.getElementById("typeMessage");
+
+    if (!divElement) {
+        document.getElementById("messagesList").innerHTML += `
+        <li class="mar-btm" id="typeMessage">
+            <div class="media-left">
+                <img src=${fromUserImageUrl} class="img-circle img-sm" alt="Profile Picture">
+            </div>
+            <div class="media-body pad-hor">
+                <div class="speech">
+                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="${fromUsername}" class="media-heading">${fromUsername}</a>
+                    <p>
+                        Typing
+                        <span class="jumping-dots">
+                            <span class="jumping-dot-1"></span>
+                            <span class="jumping-dot-2"></span>
+                            <span class="jumping-dot-3"></span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </li>`;
+        updateScroll();
+    }
+});
+
+connection.on("VisualizeUserStopType", function () {
+    let divElement = document.getElementById("typeMessage");
+
+    if (divElement) {
+        document.getElementById("messagesList").removeChild(divElement);
+    }
+})
+
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 

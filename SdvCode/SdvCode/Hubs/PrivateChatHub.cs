@@ -72,5 +72,15 @@ namespace SdvCode.Hubs
                     .SendAsync("ReceiveNotification", count, false);
             }
         }
+
+        public async Task UserType(string fromUsername, string toUsername, string fromUserImageUrl)
+        {
+            await this.privateChatService.UserType(fromUsername, toUsername, fromUserImageUrl);
+        }
+
+        public async Task UserStopType(string toUsername)
+        {
+            await this.privateChatService.UserStopType(toUsername);
+        }
     }
 }

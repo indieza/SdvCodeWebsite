@@ -341,5 +341,29 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 .SendAsync("ReceiveMessage", fromUsername, fromImage, messageContent.Trim());
             return messageContent;
         }
+
+        public async Task UserStopType(string toUsername)
+        {
+            var toId = await this.db.Users
+                .Where(x => x.UserName.ToUpper() == toUsername.ToUpper())
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+            await this.hubContext
+                .Clients
+                .User(toId)
+                .SendAsync("VisualizeUserStopType");
+        }
+
+        public async Task UserType(string fromUsername, string toUsername, string fromUserImageUrl)
+        {
+            var toId = await this.db.Users
+                .Where(x => x.UserName.ToUpper() == toUsername.ToUpper())
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+            await this.hubContext
+                .Clients
+                .User(toId)
+                .SendAsync("VisualizeUserType", fromUsername, fromUserImageUrl);
+        }
     }
 }
