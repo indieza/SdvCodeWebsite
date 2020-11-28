@@ -2,6 +2,18 @@
     margin-top: 20px;
 }
 
+.nano-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.nano-content::-webkit-scrollbar-track {
+    background: #f1f1f1
+}
+
+.nano-content::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
 .panel {
     border: 3px solid black;
     margin-bottom: 24px;
@@ -96,6 +108,7 @@
     display: inline-block;
     border-radius: 0;
     padding: 12px 20px;
+    border-radius: 15px;
 }
 
     .speech:before {
@@ -139,10 +152,10 @@
     }
 
 .speech-time {
-    /*margin-top: 20px;*/
+    margin-top: -5px;
     margin-bottom: 0;
-    font-size: .8em;
-    font-weight: 300;
+    font-size: .7em;
+    /*font-weight: 300;*/
 }
 
 .media-block .media-right {
@@ -163,6 +176,7 @@
     color: #a07617;
     text-align: right;
     max-width: 500px;
+    border-radius: 15px;
 }
 
     .speech-right > .speech .media-heading {

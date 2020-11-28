@@ -56,12 +56,6 @@ function addGroupThemeToDatabase(themeId) {
         headers: {
             RequestVerificationToken:
                 $('input:hidden[name="__RequestVerificationToken"]').val()
-        },
-        success: function (data) {
-            window.location.href = data;
-        },
-        error: function (msg) {
-            console.error(msg);
         }
     })
 }
