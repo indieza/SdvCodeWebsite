@@ -414,6 +414,10 @@
     display: none;
 }
 
+.input-file-box {
+    display: none;
+}
+
 .chat-theme-toolt-image {
     visibility: hidden;
     width: 58px;
@@ -501,6 +505,22 @@
     position: absolute;
     top: 14px;
     left: 62px;
+    text-align: center;
+    font-size: 10px;
+    line-height: 17.5px;
+    color: white;
+    font-weight: bold;
+}
+
+.select-file-badge {
+    height: 17px;
+    width: 17px;
+    background-color: deepskyblue;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 14px;
+    left: 93px;
     text-align: center;
     font-size: 10px;
     line-height: 17.5px;
@@ -627,6 +647,20 @@
     height: 19px;
     position: absolute;
     left: 61px;
+    top: 13px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+#fileSpinner {
+    display: none;
+    border: 2px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2px solid #B6290B;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    left: 92px;
     top: 13px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
