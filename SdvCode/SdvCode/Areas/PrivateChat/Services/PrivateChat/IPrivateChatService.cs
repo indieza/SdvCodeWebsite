@@ -34,7 +34,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
         Task ChangeChatTheme(string username, string group, string themeId);
 
-        Task<string> SendMessageWitFilesToUser(IList<IFormFile> images, IList<IFormFile> files, string group, string toUsername, string fromUsername, string message);
+        Task<string> SendMessageWitFilesToUser(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message);
 
         Task UserType(string fromUsername, string toUsername, string fromUserImageUrl);
 

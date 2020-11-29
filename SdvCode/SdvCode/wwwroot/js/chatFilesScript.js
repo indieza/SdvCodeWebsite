@@ -3,7 +3,7 @@
 });
 
 $('#uploadFile').on('change', function () {
-    const fileExtensions = ["TXT", "TEXT", "DOCX", "DOC", "PDF", "PPT", "XLS", "XLSX"];
+    const fileExtensions = ["TXT", "TEXT", "DOCX", "DOC", "PDF", "PPT", "XLS", "XLSX", "ZIP", "RAR"];
     let files = document.getElementById("uploadFile").files;
     const dtFiles = new DataTransfer();
     const dtImages = new DataTransfer();
@@ -36,7 +36,7 @@ $('#uploadFile').on('change', function () {
 });
 
 function transferFiles(dtFiles) {
-    const fileExtensions = ["TXT", "TEXT", "DOCX", "DOC", "PDF", "PPT", "XLS", "XLSX"];
+    const fileExtensions = ["TXT", "TEXT", "DOCX", "DOC", "PDF", "PPT", "XLS", "XLSX", "ZIP", "RAR"];
     let files = document.getElementById("uploadFile").files;
     const dt = new DataTransfer();
 

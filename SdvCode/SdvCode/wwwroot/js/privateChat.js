@@ -163,14 +163,14 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     let data = new FormData();
 
     for (var i = 0; i < images.length; i++) {
-        data.append('images', images[i]);
+        data.append('files', images[i]);
     }
 
     for (var i = 0; i < files.length; i++) {
         data.append('files', files[i]);
     }
 
-    if (message && images.length == 0) {
+    if (message && images.length == 0 && files.length == 0) {
         connection.invoke("SendMessage", fromUser, toUser, message, group).catch(function (err) {
             return console.error(err.toString());
         });
@@ -187,15 +187,19 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         data.append('message', message);
 
         if (images.length > 0 || files.length > 0) {
-            document.getElementById("imageSpinner").style.display = "block";
-            document.querySelector("#imageButton i").classList = "";
-            document.querySelector("#imageButton i").classList.add("fas", "fa-cloud-upload-alt");
-            document.getElementById("uploadImage").disabled = true;
+            if (images.length > 0) {
+                document.getElementById("imageSpinner").style.display = "block";
+                document.querySelector("#imageButton i").classList = "";
+                document.querySelector("#imageButton i").classList.add("fas", "fa-cloud-upload-alt");
+                document.getElementById("uploadImage").disabled = true;
+            }
 
-            document.getElementById("fileSpinner").style.display = "block";
-            document.querySelector("#fileButton i").classList = "";
-            document.querySelector("#fileButton i").classList.add("fas", "fa-thumbtack");
-            document.getElementById("uploadFile").disabled = true;
+            if (files.length > 0) {
+                document.getElementById("fileSpinner").style.display = "block";
+                document.querySelector("#fileButton i").classList = "";
+                document.querySelector("#fileButton i").classList.add("fas", "fa-thumbtack");
+                document.getElementById("uploadFile").disabled = true;
+            }
 
             $.ajax({
                 url: `/PrivateChat/With/${toUser}/Group/${group}/SendFiles`,
