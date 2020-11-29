@@ -129,9 +129,13 @@ connection.on("SendMessage", function (user, image, message) {
     updateScroll();
 });
 
-connection.on("UpdateFilesUploadCount", function (count) {
+connection.on("UpdateImagesUploadCount", function (count) {
     document.querySelector(".select-image-badge").innerHTML = count;
-})
+});
+
+connection.on("UpdateFilesUploadCount", function (count) {
+    document.querySelector(".select-file-badge").innerHTML = count;
+});
 
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
@@ -154,14 +158,19 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     let fromUser = document.getElementById("fromUser").textContent;
     let message = document.getElementById("messageInput").innerHTML;
     let group = document.getElementById("groupName").textContent;
-    let files = document.getElementById("uploadImage").files;
+    let images = document.getElementById("uploadImage").files;
+    let files = document.getElementById("uploadFile").files;
     let data = new FormData();
+
+    for (var i = 0; i < images.length; i++) {
+        data.append('images', images[i]);
+    }
 
     for (var i = 0; i < files.length; i++) {
         data.append('files', files[i]);
     }
 
-    if (message && files.length == 0) {
+    if (message && images.length == 0) {
         connection.invoke("SendMessage", fromUser, toUser, message, group).catch(function (err) {
             return console.error(err.toString());
         });
@@ -177,14 +186,19 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         data.append('group', group);
         data.append('message', message);
 
-        if (files.length > 0) {
+        if (images.length > 0 || files.length > 0) {
             document.getElementById("imageSpinner").style.display = "block";
             document.querySelector("#imageButton i").classList = "";
             document.querySelector("#imageButton i").classList.add("fas", "fa-cloud-upload-alt");
             document.getElementById("uploadImage").disabled = true;
 
+            document.getElementById("fileSpinner").style.display = "block";
+            document.querySelector("#fileButton i").classList = "";
+            document.querySelector("#fileButton i").classList.add("fas", "fa-thumbtack");
+            document.getElementById("uploadFile").disabled = true;
+
             $.ajax({
-                url: `/PrivateChat/With/${toUser}/Group/${group}/SendImages`,
+                url: `/PrivateChat/With/${toUser}/Group/${group}/SendFiles`,
                 processData: false,
                 contentType: false,
                 type: "POST",
@@ -195,6 +209,12 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                     document.querySelector("#imageButton i").classList.add("far", "fa-images");
                     document.querySelector(".select-image-badge").innerHTML = "0";
                     document.getElementById("uploadImage").disabled = false;
+
+                    document.getElementById("fileSpinner").style.display = "none";
+                    document.querySelector("#fileButton i").classList = "";
+                    document.querySelector("#fileButton i").classList.add("fas", "fa-paperclip");
+                    document.querySelector(".select-file-badge").innerHTML = "0";
+                    document.getElementById("uploadFile").disabled = false;
                 },
                 error: function (err) {
                     console.log(err.statusText);
@@ -202,11 +222,17 @@ document.getElementById("sendButton").addEventListener("click", function (event)
             });
 
             document.getElementById("uploadImage").value = "";
+            document.getElementById("uploadFile").value = "";
 
-            let badge = document.querySelector(".select-image-badge");
-            badge.style.boxShadow = "";
-            badge.style.animation = "";
-            badge.textContent = "0";
+            let imageBadge = document.querySelector(".select-image-badge");
+            imageBadge.style.boxShadow = "";
+            imageBadge.style.animation = "";
+            imageBadge.textContent = "0";
+
+            let fileBadge = document.querySelector(".select-file-badge");
+            fileBadge.style.boxShadow = "";
+            fileBadge.style.animation = "";
+            fileBadge.textContent = "0";
         }
     }
 

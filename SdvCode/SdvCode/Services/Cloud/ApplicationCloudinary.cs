@@ -34,7 +34,7 @@ namespace SdvCode.Services.Cloud
                     name = name.Replace(">", "greater");
                     name = name.Replace("<", "lower");
 
-                    var uploadParams = new ImageUploadParams()
+                    var uploadParams = new RawUploadParams()
                     {
                         File = new FileDescription(name, ms),
                         PublicId = $"{folderName}/{name}",
@@ -54,6 +54,7 @@ namespace SdvCode.Services.Cloud
             {
                 PublicIds = new List<string>() { $"{folderName}/{name}" },
                 Invalidate = true,
+                ResourceType = ResourceType.Raw,
             };
 
             cloudinary.DeleteResources(delParams);

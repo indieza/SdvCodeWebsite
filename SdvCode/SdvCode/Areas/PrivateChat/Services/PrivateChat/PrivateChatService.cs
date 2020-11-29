@@ -5,6 +5,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
@@ -281,8 +282,8 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             return toId;
         }
 
-        public async Task<string> SendMessageWitImagesToUser(
-            IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
+        public async Task<string> SendMessageWitFilesToUser(
+             IList<IFormFile> images, IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
         {
             var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
             var toId = toUser.Id;
@@ -304,9 +305,13 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             string messageContent =
                 message == null ? string.Empty : $"{new HtmlSanitizer().Sanitize(message.Trim())}<hr style=\"margin-bottom: 8px !important;\" />";
 
-            var count = files.Count;
+            var imagesCount = images.Count;
+            await this.hubContext.Clients.User(fromId).SendAsync("UpdateImagesUploadCount", imagesCount);
 
-            foreach (var file in files)
+            var filesCount = files.Count;
+            await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", filesCount);
+
+            foreach (var image in images)
             {
                 var chatImage = new ChatImage
                 {
@@ -316,7 +321,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
                 string imageUrl = await ApplicationCloudinary.UploadImage(
                     this.cloudinary,
-                    file,
+                    image,
                     string.Format(GlobalConstants.ChatFileName, chatImage.Id),
                     GlobalConstants.PrivateChatImagesFolder);
 
@@ -327,8 +332,46 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 messageContent +=
                     $"<span onclick=\"zoomChatImage('{imageUrl}')\"><img src=\"{imageUrl}\" style=\"margin-right: 10px; width: 27px; height: 35px; margin-top: 5px;\"></span>";
 
-                await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", count);
-                count--;
+                await this.hubContext.Clients.User(fromId).SendAsync("UpdateImagesUploadCount", imagesCount);
+                imagesCount--;
+            }
+
+            await this.hubContext.Clients.User(fromId).SendAsync("UpdateImagesUploadCount", imagesCount);
+
+            if (files.Count > 0)
+            {
+                messageContent += "<hr style=\"margin-bottom: 8px !important;\" />";
+
+                for (int i = 0; i < files.Count; i++)
+                {
+                    var file = files[i];
+
+                    var chatFile = new ChatImage
+                    {
+                        ChatMessageId = newMessage.Id,
+                        GroupId = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()).Id,
+                    };
+
+                    var fileExtension = Path.GetExtension(file.FileName);
+
+                    string fileUrl = await ApplicationCloudinary.UploadImage(
+                    this.cloudinary,
+                    file,
+                    string.Format(GlobalConstants.ChatFileName, $"{chatFile.Id}") + fileExtension,
+                    GlobalConstants.PrivateChatImagesFolder);
+
+                    chatFile.Url = fileUrl;
+                    chatFile.Name = string.Format(GlobalConstants.ChatFileName, $"{chatFile.Id}{fileExtension}");
+                    newMessage.ChatImages.Add(chatFile);
+
+                    messageContent +=
+                    $"<p><a href=\"{fileUrl}\"><i class=\"fas fa-download\"></i> File {i + 1}{fileExtension}</a></p>";
+
+                    await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", filesCount);
+                    filesCount--;
+                }
+
+                await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", filesCount);
             }
 
             newMessage.Content = messageContent;
