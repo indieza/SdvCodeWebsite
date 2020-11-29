@@ -197,7 +197,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
             if (files.length > 0) {
                 document.getElementById("fileSpinner").style.display = "block";
                 document.querySelector("#fileButton i").classList = "";
-                document.querySelector("#fileButton i").classList.add("fas", "fa-thumbtack");
+                document.querySelector("#fileButton i").classList.add("fas", "fa-file-upload");
                 document.getElementById("uploadFile").disabled = true;
             }
 

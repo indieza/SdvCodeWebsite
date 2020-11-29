@@ -63,7 +63,7 @@
                                     @user.Email
                                 </td>
                                 <td>
-                                    (@user.CountryCode.ToString()) @user.PhoneNumber
+                                    (@user.CountryCode?.Code.ToString()) @user.PhoneNumber
                                 </td>
                                 <td>
                                     @user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy hh:mm:ss tt")

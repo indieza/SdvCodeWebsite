@@ -100,7 +100,7 @@
                                     @user.Email - @user.EmailConfirmed.ToString().ToUpper()
                                 </td>
                                 <td height="125px">
-                                    (@user.CountryCode.ToString()) @user.PhoneNumber - @user.PhoneNumberConfirmed.ToString().ToUpper()
+                                    (@user.CountryCode?.Code.ToString()) @user.PhoneNumber - @user.PhoneNumberConfirmed.ToString().ToUpper()
                                 </td>
                                 <td height="125px">
                                     @user.RegisteredOn.ToLocalTime().ToString("dd-MMMM-yyyy hh:mm:ss tt")
