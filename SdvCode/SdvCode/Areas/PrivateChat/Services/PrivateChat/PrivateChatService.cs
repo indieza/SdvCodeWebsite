@@ -358,7 +358,18 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                     filesCount--;
                     await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", filesCount);
 
-                    filesContent.AppendLine($"<p><a href=\"{fileUrl}\"><i class=\"fas fa-download\"></i> {file.FileName}</a></p>");
+                    string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+                    double fileLength = file.Length;
+                    int order = 0;
+                    while (fileLength >= 1024 && order < sizes.Length - 1)
+                    {
+                        order++;
+                        fileLength /= 1024;
+                    }
+
+                    string fileSize = string.Format("{0:0.##} {1}", fileLength, sizes[order]);
+
+                    filesContent.AppendLine($"<p><a href=\"{fileUrl}\"><i class=\"fas fa-download\"></i> {file.FileName} - ({fileSize})</a></p>");
                 }
 
                 chatFile.Url = fileUrl;

@@ -11,8 +11,18 @@ $('#uploadFile').on('change', function () {
     for (let file of files) {
         let fileExtension = file.name.split('.').pop();
         if (fileExtensions.includes(fileExtension.toUpperCase())) {
+            let sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+            if (sizeInMB > 15) {
+                continue;
+            }
+
             dtFiles.items.add(file);
         } else {
+            let sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+            if (sizeInMB > 15) {
+                continue;
+            }
+
             dtImages.items.add(file);
         }
     }
