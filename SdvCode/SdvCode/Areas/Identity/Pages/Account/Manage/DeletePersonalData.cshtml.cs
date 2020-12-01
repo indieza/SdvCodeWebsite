@@ -117,6 +117,23 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var chatMessages = this.db.ChatMessages
                 .Where(x => x.ReceiverUsername == user.UserName || x.ApplicationUserId == user.Id)
                 .ToList();
+
+            foreach (var chatMessage in chatMessages)
+            {
+                var targetImages = this.db.ChatImages.Where(x => x.ChatMessageId == chatMessage.Id).ToList();
+
+                foreach (var targetImage in targetImages)
+                {
+                    ApplicationCloudinary.DeleteImage(
+                        this.cloudinary,
+                        targetImage.Name,
+                        GlobalConstants.PrivateChatImagesFolder);
+                }
+
+                this.db.ChatImages.RemoveRange(targetImages);
+                this.db.SaveChanges();
+            }
+
             var ratings = this.db.UserRatings
                 .Where(x => x.RaterUsername == user.UserName || x.Username == user.UserName)
                 .ToList();
