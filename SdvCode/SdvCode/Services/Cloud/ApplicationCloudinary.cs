@@ -50,14 +50,18 @@ namespace SdvCode.Services.Cloud
 
         public static void DeleteImage(Cloudinary cloudinary, string name, string folderName)
         {
-            var delParams = new DelResParams()
+            /*var delParams = new DelResParams()
             {
                 PublicIds = new List<string>() { $"{folderName}/{name}" },
                 Invalidate = true,
                 ResourceType = ResourceType.Raw,
             };
 
-            cloudinary.DeleteResources(delParams);
+            cloudinary.DeleteResources(delParams);*/
+
+            var delParams = new DeletionParams($"{folderName}/{name}");
+
+            cloudinary.Destroy(delParams);
         }
     }
 }
