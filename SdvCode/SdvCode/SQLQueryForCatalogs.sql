@@ -9,3 +9,7 @@ CREATE FULLTEXT INDEX ON [Posts]([Title], [Content], [ShortContent]) KEY INDEX P
 /*Catalog for Products*/
 CREATE FULLTEXT CATALOG ProductsCatalog AS DEFAULT;
 CREATE FULLTEXT INDEX ON [Products]([Description], [Name], [SpecificationsDescription]) KEY INDEX PK_Products;
+
+/*Catalog for Recommended Users*/
+CREATE FULLTEXT CATALOG RecommendedUsersCatalog AS DEFAULT;
+CREATE FULLTEXT INDEX ON [RecommendedFriends]([RecommendedFirstName], [RecommendedLastName], [RecommendedUsername]) KEY INDEX PK_RecommendedFriends;

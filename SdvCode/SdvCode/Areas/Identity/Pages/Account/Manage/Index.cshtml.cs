@@ -124,6 +124,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                         Name = this.ManageAccountBaseModel.ManageAccountInputModel.Country,
                         CountryCode = targetCountryCode,
                     };
+
                     this.db.Countries.Add(targetCountry);
                 }
 
@@ -143,6 +144,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                         Name = this.ManageAccountBaseModel.ManageAccountInputModel.State,
                         Country = targetCountry,
                     };
+
                     this.db.States.Add(targetState);
                 }
 
@@ -163,6 +165,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                         Country = targetCountry,
                         State = targetState,
                     };
+
                     this.db.Cities.Add(targetCity);
                 }
 

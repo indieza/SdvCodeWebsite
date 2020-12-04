@@ -35,6 +35,15 @@ namespace SdvCode.Migrations
             migrationBuilder.Sql(
                 sql: "CREATE FULLTEXT INDEX ON [Products]([Description], [Name], [SpecificationsDescription]) KEY INDEX PK_Products;",
                 suppressTransaction: true);
+
+            // Recommended Users Catalog
+            migrationBuilder.Sql(
+                sql: "CREATE FULLTEXT CATALOG RecommendedUsersCatalog AS DEFAULT;",
+                suppressTransaction: true);
+
+            migrationBuilder.Sql(
+                sql: "CREATE FULLTEXT INDEX ON [RecommendedFriends]([RecommendedFirstName], [RecommendedLastName], [RecommendedUsername]) KEY INDEX PK_RecommendedFriends;",
+                suppressTransaction: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
