@@ -35,9 +35,9 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.AllUsersTab
             else
             {
                 targetUsers = await this.db.Users
-                     .Where(x => EF.Functions.Contains(x.UserName, search) ||
-                     EF.Functions.Contains(x.FirstName, search) ||
-                     EF.Functions.Contains(x.LastName, search))
+                     .Where(x => EF.Functions.FreeText(x.UserName, search) ||
+                     EF.Functions.FreeText(x.FirstName, search) ||
+                     EF.Functions.FreeText(x.LastName, search))
                      .ToListAsync();
             }
 

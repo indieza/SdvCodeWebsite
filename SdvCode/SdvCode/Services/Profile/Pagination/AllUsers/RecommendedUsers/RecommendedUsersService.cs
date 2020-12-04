@@ -37,9 +37,9 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.RecommendedUsers
             else
             {
                 targetUsers = await this.db.RecommendedFriends
-                     .Where(x => (EF.Functions.Contains(x.RecommendedUsername, search) ||
-                     EF.Functions.Contains(x.RecommendedFirstName, search) ||
-                     EF.Functions.Contains(x.RecommendedLastName, search)) &&
+                     .Where(x => (EF.Functions.FreeText(x.RecommendedUsername, search) ||
+                     EF.Functions.FreeText(x.RecommendedFirstName, search) ||
+                     EF.Functions.FreeText(x.RecommendedLastName, search)) &&
                      x.ApplicationUserId == user.Id)
                      .ToListAsync();
             }

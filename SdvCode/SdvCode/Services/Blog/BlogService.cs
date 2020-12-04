@@ -348,9 +348,9 @@ namespace SdvCode.Services.Blog
             else
             {
                 posts = await this.db.Posts
-                    .Where(x => EF.Functions.Contains(x.Title, search) ||
-                    EF.Functions.Contains(x.ShortContent, search) ||
-                    EF.Functions.Contains(x.Content, search))
+                    .Where(x => EF.Functions.FreeText(x.Title, search) ||
+                    EF.Functions.FreeText(x.ShortContent, search) ||
+                    EF.Functions.FreeText(x.Content, search))
                     .OrderByDescending(x => x.UpdatedOn)
                     .ToListAsync();
             }
