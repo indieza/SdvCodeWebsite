@@ -152,7 +152,7 @@
                             <p>
                                 <i class="fas fa-phone"></i> (@Model.ApplicationUser.CountryCode?.Code) @Model.ApplicationUser.PhoneNumber
 
-                                @if (User.Identity.Name == Model.ApplicationUser.Username && Model.ApplicationUser.PhoneNumberConfirmed == false)
+                                @if (User.Identity.Name == Model.ApplicationUser.Username && Model.ApplicationUser.PhoneNumberConfirmed == false && Model.ApplicationUser.CountryCode?.Id != null)
                                 {
                                     <a asp-area="Identity" asp-page="/Account/VerifyPhone">Verify Phone</a>
                                 }
