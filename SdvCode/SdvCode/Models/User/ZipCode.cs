@@ -23,8 +23,8 @@ namespace SdvCode.Models.User
         [Required]
         public int Code { get; set; }
 
+        // [Required]
         [ForeignKey(nameof(City))]
-        [Required]
         public string CityId { get; set; }
 
         public City City { get; set; }

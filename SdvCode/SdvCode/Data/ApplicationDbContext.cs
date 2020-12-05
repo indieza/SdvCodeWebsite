@@ -131,8 +131,7 @@ namespace SdvCode.Data
                 entity.HasMany(x => x.ZipCodes)
                     .WithOne(x => x.City)
                     .HasForeignKey(x => x.CityId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired(true);
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             builder.Entity<ApplicationUser>(entity =>
@@ -232,8 +231,7 @@ namespace SdvCode.Data
                 .HasOne(x => x.CountryCode)
                 .WithMany(x => x.Coutries)
                 .HasForeignKey(x => x.CountryCodeId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired(true);
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

@@ -21,11 +21,12 @@ namespace SdvCode.Models.User
         [Key]
         public string Id { get; set; }
 
+        [Required]
         [MaxLength(20)]
         public string Name { get; set; }
 
+        // [Required]
         [ForeignKey(nameof(CountryCode))]
-        [Required]
         public string CountryCodeId { get; set; }
 
         public CountryCode CountryCode { get; set; }
