@@ -219,6 +219,7 @@
     max-height: 51px;
     overflow-x: hidden;
     background: #f1f1f1;
+    border-radius: 6px;
 }
 
     .chat-input::-webkit-scrollbar {
@@ -226,10 +227,12 @@
     }
 
     .chat-input::-webkit-scrollbar-track {
-        background: #f1f1f1
+        background: transparent;
     }
 
     .chat-input::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background-clip: padding-box;
         background: #888;
     }
 
@@ -268,7 +271,7 @@
         background-color: #555;
         color: #fff;
         /*text-align: center;*/
-        /*border-radius: 6px;*/
+        border-radius: 6px;
         padding: 8px 0px 2px 2px;
         position: absolute;
         z-index: 1;
@@ -283,10 +286,12 @@
         }
 
         .pop-up-emoji .popupEmojiBox::-webkit-scrollbar-track {
-            background: #f1f1f1
+            background: transparent;
         }
 
         .pop-up-emoji .popupEmojiBox::-webkit-scrollbar-thumb {
+            border-radius: 6px;
+            background-clip: padding-box;
             background: #888;
         }
 
