@@ -6,7 +6,8 @@
 .singleEmoji {
     display: inline-flex;
     align-items: center;
-    width: 1.4em;
+    width: 30.7px;
+    border-radius: 2px;
 }
 
 .hasEmojiSkin:hover {
@@ -17,7 +18,8 @@
 .hasEmojiSkin {
     display: inline-flex;
     align-items: center;
-    width: 1.4em;
+    /*width: 1.4em;*/
+    width: 30px;
 }
 
 .singleEmojiForTab:hover {
@@ -28,7 +30,8 @@
 .singleEmojiForTab {
     display: inline-flex;
     align-items: center;
-    width: 1.4em;
+    width: 25px;
+    border-radius: 2px;
 }
 
 .singleEmojiForDelete {
@@ -75,3 +78,27 @@
     .singleEmojiForDeleteTooltip:hover .singleEmojiSkinForDelete {
         visibility: visible;
     }
+
+.tab-section {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 160px;
+}
+
+    .tab-section::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .tab-section::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .tab-section::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background-clip: padding-box;
+        background: #888;
+    }
+
+.emojiTabIcon {
+    margin: 4px;
+}

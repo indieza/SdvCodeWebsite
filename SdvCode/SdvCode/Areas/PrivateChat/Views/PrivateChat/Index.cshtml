@@ -108,26 +108,26 @@
                             @*<input autocomplete="off" type="text" placeholder="Enter your text" class="form-control chat-input" id="messageInput">*@
                             <div class="chat-emoji-icon pop-up-emoji" id="emojiButton">
                                 <i class="far fa-smile"></i>
-                                <span class="popupEmojiBox" id="popupEmoji">
+                                <div class="popupEmojiBox" id="popupEmoji">
                                     @*<input autocomplete="off" class="filter-emoji-input" type="text" placeholder="Filter Emojis" />*@
-                                    <span class="emojiTypesTabs">
+                                    <div class="emojiTypesTabs">
                                         @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                         {
-                                            <span style="margin: 0px 3px 0px 3px">
+                                            <span class="emojiTabIcon">
                                                 <img onclick="changeEmojisTabs('@this.Model.Emojis.Keys.ElementAt(i).ToString()')" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab" class="singleEmojiForTab emoji-type-tab" style="background-color: @(i == 0 ? "#727272" : "");" src="@icons[this.Model.Emojis.Keys.ElementAt(i)]" />
                                             </span>
                                         }
-                                    </span>
+                                    </div>
                                     @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                     {
-                                        <span class="tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
+                                        <div class="tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
                                             @for (int j = 0; j < this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].Count; j++)
                                             {
                                                 <span class="tooltipEmoji" style="position: relative; display: inline-block;">
                                                     <img class="@(this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0 ? "hasEmojiSkin" : "singleEmoji")" src="@this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).Url" />
                                                     @if (this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0)
                                                     {
-                                                        <span class="@(j % 10 < 5 ? "tooltipEmojiSpanRight" : "tooltipEmojiSpanLeft")">
+                                                        <span class="@(j % 10 <= 3 ? "tooltipEmojiSpanLeft" : "tooltipEmojiSpanRight")">
                                                             @foreach (var skinUrl in this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls)
                                                             {
                                                                 <img class="singleEmoji" src="@skinUrl" />
@@ -136,9 +136,9 @@
                                                     }
                                                 </span>
                                             }
-                                        </span>
+                                        </div>
                                     }
-                                </span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-2 col-xs-3">

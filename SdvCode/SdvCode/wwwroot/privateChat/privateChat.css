@@ -265,35 +265,16 @@
     .pop-up-emoji .popupEmojiBox {
         visibility: hidden;
         width: 294px;
-        height: 160px;
-        overflow-y: auto;
-        overflow-x: hidden;
         background-color: #555;
         color: #fff;
         /*text-align: center;*/
         border-radius: 6px;
-        padding: 8px 0px 2px 2px;
+        padding-top: 4px;
         position: absolute;
         z-index: 1;
-        /*bottom: -684%;
-        left: 20%;*/
         margin-left: -189px;
         transform: translate(0%,4%);
     }
-
-        .pop-up-emoji .popupEmojiBox::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .pop-up-emoji .popupEmojiBox::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .pop-up-emoji .popupEmojiBox::-webkit-scrollbar-thumb {
-            border-radius: 6px;
-            background-clip: padding-box;
-            background: #888;
-        }
 
     /* Toggle this class - hide and show the popup */
     .pop-up-emoji .show {
@@ -344,38 +325,39 @@
 }
 
 .emojiTypesTabs {
-    border: 1px solid whitesmoke;
+    border-bottom: 1.8px solid whitesmoke;
+    border-radius: 6px;
     padding-bottom: 4px;
+    text-align: center;
+    box-shadow: 0px 10px 18px -8px #8888FE;
 }
 
 .tooltipEmojiSpanRight {
     visibility: hidden;
-    width: 150px;
-    bottom: 100%;
-    left: 230%;
-    margin-left: -60px;
+    width: 179px;
+    bottom: 87%;
+    left: 8%;
     background-color: black;
     color: #fff;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    /* Position the tooltip */
+    box-shadow: 0px 10px 18px -8px #8888C5;
     position: absolute;
     z-index: 1;
 }
 
 .tooltipEmojiSpanLeft {
     visibility: hidden;
-    width: 150px;
-    bottom: 100%;
-    left: -250%;
-    margin-left: -60px;
+    width: 179px;
+    bottom: 87%;
+    right: 8%;
     background-color: black;
     color: #fff;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    /* Position the tooltip */
+    box-shadow: 0px 10px 18px -8px #8888C5;
     position: absolute;
     z-index: 1;
 }
@@ -767,4 +749,8 @@
     40% {
         bottom: 0px;
     }
+}
+
+.tooltipEmoji {
+    padding: 7px;
 }
