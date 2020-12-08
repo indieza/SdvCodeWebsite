@@ -8,6 +8,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
     using Ganss.XSS;
@@ -26,6 +27,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using SdvCode.Hubs;
     using SdvCode.Models.User;
     using SdvCode.Services.Cloud;
+    using Group = SdvCode.Areas.PrivateChat.Models.Group;
 
     public class PrivateChatService : IPrivateChatService
     {
@@ -157,6 +159,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         public Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> GetAllEmojis()
         {
             var result = new Dictionary<EmojiType, ICollection<ChatEmojiViewModel>>();
+            var pattern = new Regex(@"(\d+)\.\s{1}(.*)\.?(png|jpg|jpeg)?");
 
             foreach (var emojiType in Enum.GetValues(typeof(EmojiType)))
             {
@@ -171,7 +174,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                     result[(EmojiType)emojiType].Add(new ChatEmojiViewModel
                     {
                         Id = emoji.Id,
-                        Name = emoji.Name,
+                        Name = pattern.Match(emoji.Name).Groups[2].Value,
                         Position = emoji.Position,
                         Url = emoji.Url,
                         SkinsUrls = this.db.EmojiSkins.Where(x => x.EmojiId == emoji.Id).OrderBy(x => x.Position).Select(x => x.Url).ToList(),

@@ -123,7 +123,7 @@
                                         <div class="tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
                                             @for (int j = 0; j < this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].Count; j++)
                                             {
-                                                <span class="tooltipEmoji" style="position: relative; display: inline-block;">
+                                                <span title="@this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).Name" class="tooltipEmoji" style="position: relative; display: inline-block;">
                                                     <img class="@(this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0 ? "hasEmojiSkin" : "singleEmoji")" src="@this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).Url" />
                                                     @if (this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0)
                                                     {
@@ -138,9 +138,12 @@
                                             }
                                         </div>
                                     }
-                                    <div class="emojiSearchTab">
-                                        <input class="form-control emojiSearchInput" type="text" autocomplete="off" placeholder="Search emoji..." />
+                                    <div class="emojiSearchTab" style="display: none;">
+                                        <input oninput="filterEmojis(this, false)" class="form-control emojiSearchInput" type="text" autocomplete="off" placeholder="Search emoji..." />
                                     </div>
+                                    <span onclick="toggleSearchEmojiInput(this)" class="hideSearchEmojiIcon">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>

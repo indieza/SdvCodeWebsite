@@ -16,6 +16,78 @@
     });
 });
 
+function toggleSearchEmojiInput(element) {
+    let searchDiv = document.querySelector('.emojiSearchTab');
+
+    if (searchDiv.style.display == "none") {
+        searchDiv.style.display = "block";
+        element.innerHTML = '<i class="fas fa-chevron-up"></i>';
+    } else {
+        searchDiv.style.display = "none";
+        element.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        let inputField = document.querySelector('.emojiSearchInput');
+        inputField.value = "";
+        filterEmojis(inputField, false);
+    }
+}
+
+function filterEmojis(inputField, isComesFromTabs) {
+    let activeTabSection = [...document.querySelectorAll('.tab-section')].filter(x => x.style.display == "block").shift();
+    let allTabsSections = document.querySelectorAll('.tab-section');
+
+    if (isComesFromTabs) {
+        if (activeTabSection) {
+            let allChildren = activeTabSection.children;
+
+            for (let tabChild of allChildren) {
+                if (tabChild.getAttribute('title').toUpperCase().includes(inputField.value.toUpperCase())) {
+                    tabChild.style.display = "inline-block";
+                    isFind = true;
+                } else {
+                    tabChild.style.display = "none";
+                }
+            }
+        }
+    } else if (!inputField.value) {
+        if (activeTabSection) {
+            let allChildren = activeTabSection.children;
+
+            for (let tabChild of allChildren) {
+                tabChild.style.display = "inline-block";
+            }
+        }
+    } else {
+        let isFind = false;
+
+        if (allTabsSections) {
+            for (let currentTab of allTabsSections) {
+                let allChildren = currentTab.children;
+                if (!isFind) {
+                    for (let tabChild of allChildren) {
+                        if (tabChild.getAttribute('title').toUpperCase().includes(inputField.value.toUpperCase())) {
+                            tabChild.style.display = "inline-block";
+                            isFind = true;
+                        } else {
+                            tabChild.style.display = "none";
+                        }
+                    }
+                }
+
+                if (isFind) {
+                    let tabIcons = [...document.querySelectorAll('.emoji-type-tab')];
+
+                    activeTabSection.style.display = "none";
+                    tabIcons.filter(x => activeTabSection.id.includes(x.id)).shift().style.backgroundColor = "";
+
+                    currentTab.style.display = "block";
+                    tabIcons.filter(x => currentTab.id.includes(x.id)).shift().style.backgroundColor = "#727272";
+                    break;
+                }
+            }
+        }
+    }
+}
+
 function popUpEmoji() {
     let popup = document.getElementById("popupEmoji");
     popup.classList.add("show");
@@ -37,6 +109,7 @@ function changeEmojisTabs(emojiType) {
     for (let tabSection of tabsSections) {
         if (tabSection.id == `${emojiType}-Tab-Section`) {
             tabSection.style.display = "block";
+            filterEmojis(document.querySelector('.emojiSearchInput'), true);
         } else {
             tabSection.style.display = "none";
         }
@@ -117,7 +190,7 @@ $(function () {
 });
 
 function resetEmojiSkins(emojisWithSkins) {
-    for (var skin of emojisWithSkins) {
+    for (let skin of emojisWithSkins) {
         if (skin.parentNode.children[1].style.visibility == "visible") {
             skin.parentNode.children[1].style.visibility = "";
         }
