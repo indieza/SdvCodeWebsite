@@ -102,3 +102,16 @@
 .emojiTabIcon {
     margin: 4px;
 }
+
+.emojiSearchTab {
+    padding: 10px 6px 6px 6px;
+    border-top: 1.5px solid whitesmoke;
+    box-shadow: 0px -19px 36px -10px #8887BC;
+    border-radius: 6px;
+}
+
+.emojiSearchInput {
+    height: 25px;
+    border-radius: 6px;
+    padding: 10px;
+}
