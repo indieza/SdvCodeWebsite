@@ -405,7 +405,7 @@
     display: none;
 }
 
-.chat-theme-toolt-image {
+.chat-theme-tooltip-image {
     visibility: hidden;
     width: 58px;
     background-color: black;
@@ -416,26 +416,65 @@
     position: absolute;
     z-index: 1;
     top: 110%;
-    left: 125%;
-    margin-left: -60px;
+    left: -70%;
     overflow-y: auto;
     max-height: 140px;
     overflow-x: hidden;
 }
 
-    .chat-theme-toolt-image::-webkit-scrollbar {
+    .chat-theme-tooltip-image::-webkit-scrollbar {
         width: 4px;
     }
 
-    .chat-theme-toolt-image::-webkit-scrollbar-track {
+    .chat-theme-tooltip-image::-webkit-scrollbar-track {
         background: #f1f1f1
     }
 
-    .chat-theme-toolt-image::-webkit-scrollbar-thumb {
+    .chat-theme-tooltip-image::-webkit-scrollbar-thumb {
         background: #888;
     }
 
-    .chat-theme-toolt-image::after {
+    .chat-theme-tooltip-image::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent black transparent;
+    }
+
+.chat-sticker-tooltip {
+    visibility: hidden;
+    width: 213px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: 0%;
+    overflow-y: auto;
+    max-height: 140px;
+    overflow-x: hidden;
+}
+
+    .chat-sticker-tooltip::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .chat-sticker-tooltip::-webkit-scrollbar-track {
+        background: #f1f1f1
+    }
+
+    .chat-sticker-tooltip::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    .chat-sticker-tooltip::after {
         content: "";
         position: absolute;
         bottom: 100%;
@@ -491,7 +530,7 @@
     display: inline-block;
     position: absolute;
     top: 14px;
-    left: 62px;
+    left: 100px;
     text-align: center;
     font-size: 10px;
     line-height: 17.5px;
@@ -507,7 +546,7 @@
     display: inline-block;
     position: absolute;
     top: 14px;
-    left: 93px;
+    left: 130px;
     text-align: center;
     font-size: 10px;
     line-height: 17.5px;
@@ -633,7 +672,7 @@
     width: 19px;
     height: 19px;
     position: absolute;
-    left: 61px;
+    left: 99px;
     top: 13px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
@@ -647,7 +686,7 @@
     width: 19px;
     height: 19px;
     position: absolute;
-    left: 92px;
+    left: 129px;
     top: 13px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;

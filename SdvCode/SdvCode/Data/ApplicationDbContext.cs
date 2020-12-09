@@ -86,6 +86,10 @@ namespace SdvCode.Data
 
         public DbSet<EmojiSkin> EmojiSkins { get; set; }
 
+        public DbSet<StickerType> StickerTypes { get; set; }
+
+        public DbSet<Sticker> Stickers { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -232,6 +236,13 @@ namespace SdvCode.Data
                 .WithMany(x => x.Coutries)
                 .HasForeignKey(x => x.CountryCodeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Sticker>()
+                .HasOne(x => x.StickerType)
+                .WithMany(x => x.Stickers)
+                .HasForeignKey(x => x.StickerTypeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(true);
 
             base.OnModelCreating(builder);
         }

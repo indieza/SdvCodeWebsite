@@ -153,11 +153,16 @@
                     </div>
                     <div class="row" style="margin-top: 5px">
                         <div class="col-md-10 col-xs-9">
+                            <span class="chat-action-icon" id="stickersButton">
+                                <i class="fas fa-theater-masks"></i>
+                                <span id="chatStickerSpan" class="chat-sticker-tooltip">
+                                </span>
+                            </span>
                             <span class="chat-action-icon" id="themeButton">
                                 <i class="fas fa-paint-brush"></i>
                                 @if (this.Model.AllChatThemes.Count > 0)
                                 {
-                                    <span id="themeSpan" class="chat-theme-toolt-image">
+                                    <span id="themeSpan" class="chat-theme-tooltip-image">
                                         @foreach (var theme in this.Model.AllChatThemes)
                                         {
                                             <span class="theme-image">
@@ -216,4 +221,5 @@
     <script src="~/js/chatThemesScript.js"></script>
     <script src="~/js/chatImagesScript.js"></script>
     <script src="~/js/chatFilesScript.js"></script>
+    <script src="~/js/chatStickersScript.js"></script>
 }
