@@ -39,15 +39,15 @@ namespace SdvCode.Areas.Administration.Controllers
                 if (!result.Item1)
                 {
                     this.TempData["Error"] = result.Item2;
-                    return this.RedirectToAction("Index", "AddNewStickerType", model);
+                    return this.RedirectToAction("Index", "AddChatStickerType", model);
                 }
 
                 this.TempData["Success"] = result.Item2;
-                return this.RedirectToAction("Index", "AddNewStickerType");
+                return this.RedirectToAction("Index", "AddChatStickerType");
             }
 
             this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            return this.RedirectToAction("Index", "AddNewStickerType", model);
+            return this.RedirectToAction("Index", "AddChatStickerType", model);
         }
     }
 }
