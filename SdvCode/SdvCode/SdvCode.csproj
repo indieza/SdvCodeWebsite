@@ -1906,7 +1906,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\ViewModels\AddChatStickerType\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddChatStickerType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteChatStickerType\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteChatStickerType\ViewModels\" />

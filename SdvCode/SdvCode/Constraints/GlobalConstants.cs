@@ -102,5 +102,9 @@ namespace SdvCode.Constraints
         public const string ChatFileName = "{0}-PrivateChatFile";
 
         public const string PrivateChatImagesFolder = "Private Chat Files";
+
+        public const string StickerTypeName = "{0}-StickerType";
+
+        public const string StickerTypeFolder = "Stickers Types";
     }
 }

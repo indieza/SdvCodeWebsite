@@ -98,7 +98,7 @@ namespace SdvCode.Constraints
 
         public const string SuccessfullyEditEmojisPosition = "Successfully edit \"{0}\" emojis positions.";
 
-        public const string SuccessfullyAddedChatTheme = "Successfully add a new chat theme - \"{0}\".";
+        public const string SuccessfullyAddedChatTheme = "Successfully add \"{0}\" chat theme.";
 
         public const string SuccessfullyDeleteChatTheme = "Successfully delete \"{0}\" chat theme.";
 
@@ -112,5 +112,7 @@ namespace SdvCode.Constraints
 
         public const string SuccessfullyDeletedEmojisByType =
             "Successfully delete \"{0}\" emojis of type \"{1}\".";
+
+        public const string SuccessfullyAddedStickerType = "Successfully add \"{0}\" sticker type.";
     }
 }

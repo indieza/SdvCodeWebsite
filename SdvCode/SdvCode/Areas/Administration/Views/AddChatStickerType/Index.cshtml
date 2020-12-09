@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Emojis addons";
+}
+
+@model AddChatStickerTypeInputModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chat Sticker Type Addons - Add new sticker type</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Add new sticker type</h1>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="row" method="post" enctype="multipart/form-data">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.Name"></label>
+                <input autocomplete="off" asp-for="@this.Model.Name" class="form-control" placeholder="Sticker type name" />
+                <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.Image"></label>
+                <input class="form-control-file" asp-for="@this.Model.Image" type="file" />
+                <span class="text-danger" asp-validation-for="@this.Model.Image"></span>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="AddChatStickerType" asp-action="AddNewStickerType" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Add Sticker Type</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

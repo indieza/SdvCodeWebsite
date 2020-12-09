@@ -25,6 +25,7 @@ namespace SdvCode
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.ML;
     using OfficeOpenXml;
+    using SdvCode.Areas.Administration.Services.AddChatStickerType;
     using SdvCode.Areas.Administration.Services.AddChatTheme;
     using SdvCode.Areas.Administration.Services.AddEmoji;
     using SdvCode.Areas.Administration.Services.AddEmojis;
@@ -197,6 +198,7 @@ namespace SdvCode
             services.AddTransient<IAddEmojisService, AddEmojisService>();
             services.AddTransient<IAddEmojiWithSkinService, AddEmojiWithSkinService>();
             services.AddTransient<IDeleteEmojisByTypeService, DeleteEmojisByTypeService>();
+            services.AddTransient<IAddChatStickerTypeService, AddChatStickerTypeService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();

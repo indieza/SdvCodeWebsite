@@ -1,5 +1,6 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 namespace SdvCode.Constraints
 {
     public static class ErrorMessages
@@ -75,5 +76,7 @@ namespace SdvCode.Constraints
         public const string ChatThemeAlreadyExist = "\"{0}\" chat theme name already exist.";
 
         public const string ChatThemeDoesNotAlreadyExist = "Chat theme does not exist.";
+
+        public const string StickerTypeAlreadyExist = "\"{0}\" sticker type already exist.";
     }
 }
