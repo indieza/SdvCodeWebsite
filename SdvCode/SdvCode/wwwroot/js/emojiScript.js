@@ -32,8 +32,8 @@ function toggleSearchEmojiInput(element) {
 }
 
 function filterEmojis(inputField, isComesFromTabs) {
-    let activeTabSection = [...document.querySelectorAll('.tab-section')].filter(x => x.style.display == "block").shift();
-    let allTabsSections = document.querySelectorAll('.tab-section');
+    let activeTabSection = [...document.querySelectorAll('.emoji-tab-section')].filter(x => x.style.display == "block").shift();
+    let allTabsSections = document.querySelectorAll('.emoji-tab-section');
 
     if (isComesFromTabs) {
         if (activeTabSection) {
@@ -104,7 +104,7 @@ function changeEmojisTabs(emojiType) {
         }
     }
 
-    let tabsSections = document.querySelectorAll(".tab-section");
+    let tabsSections = document.querySelectorAll(".emoji-tab-section");
 
     for (let tabSection of tabsSections) {
         if (tabSection.id == `${emojiType}-Tab-Section`) {

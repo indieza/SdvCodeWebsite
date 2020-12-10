@@ -1,0 +1,346 @@
+﻿.chat-emoji-icon {
+    float: right;
+    margin-right: 10px;
+    top: -28px;
+    position: relative;
+    font-size: large;
+    float: right;
+    margin-right: 10px;
+    font-size: large;
+    position: absolute;
+    top: 50%;
+    right: 1%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+.pop-up-emoji {
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    /* The actual popup */
+    .pop-up-emoji .popupEmojiBox {
+        visibility: hidden;
+        width: 294px;
+        background-color: #555;
+        color: #fff;
+        /*text-align: center;*/
+        border-radius: 6px;
+        padding-top: 4px;
+        position: absolute;
+        z-index: 1;
+        margin-left: -189px;
+        transform: translate(0%,4%);
+    }
+
+    /* Toggle this class - hide and show the popup */
+    .pop-up-emoji .show {
+        visibility: visible;
+        -webkit-animation: fadeIn 1s;
+        animation: fadeIn 1s;
+    }
+
+.emoji-type-tab {
+    display: inline-flex;
+    align-items: center;
+}
+
+    .emoji-type-tab:hover {
+        background-color: #727272;
+        padding: 1px 1px 1px 1px;
+    }
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.filter-emoji-input {
+    width: 145px;
+    padding: 1px 3px 1px 3px;
+    font-size: 10px;
+    border-style: none;
+}
+
+.emoji-bar-icon {
+    padding: 0px 1px 0px 1px;
+}
+
+.emojiTypesTabs {
+    border-bottom: 1.8px solid whitesmoke;
+    border-radius: 6px;
+    padding-bottom: 4px;
+    text-align: center;
+    box-shadow: 0px 10px 18px -8px #8888FE;
+}
+
+.tooltipEmojiSpanRight {
+    visibility: hidden;
+    width: 179px;
+    bottom: 87%;
+    left: 8%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    box-shadow: 0px 10px 18px -8px #8888C5;
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltipEmojiSpanLeft {
+    visibility: hidden;
+    width: 179px;
+    bottom: 87%;
+    right: 8%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    box-shadow: 0px 10px 18px -8px #8888C5;
+    position: absolute;
+    z-index: 1;
+}
+
+    .tooltipEmojiSpanLeft::after {
+        content: " ";
+        position: absolute;
+        top: 100%; /* At the bottom of the tooltip */
+        left: 90%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+
+.tooltipEmojiSpanRight::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 10%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.singleEmoji:hover {
+    background-color: #727272;
+    padding: 1px 1px 1px 1px;
+}
+
+.singleEmoji {
+    display: inline-flex;
+    align-items: center;
+    width: 30.7px;
+    border-radius: 2px;
+}
+
+.hasEmojiSkin:hover {
+    background-color: #727272;
+    padding: 1px 1px 1px 1px;
+}
+
+.hasEmojiSkin {
+    display: inline-flex;
+    align-items: center;
+    /*width: 1.4em;*/
+    width: 30px;
+}
+
+.singleEmojiForTab:hover {
+    background-color: #727272;
+    padding: 1px 1px 1px 1px;
+}
+
+.singleEmojiForTab {
+    display: inline-flex;
+    align-items: center;
+    width: 25px;
+    border-radius: 2px;
+}
+
+.singleEmojiForDelete {
+    width: 2.3em;
+    margin: 1px 1px 1px 1px;
+}
+
+    .singleEmojiForDelete:hover {
+        background-color: #727272;
+        padding: 1px 1px 1px 1px;
+    }
+
+.singleEmojiForDeleteTooltip {
+    position: relative;
+    display: inline-block;
+}
+
+    .singleEmojiForDeleteTooltip .singleEmojiSkinForDelete {
+        visibility: hidden;
+        width: 46px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 10;
+        bottom: 96%;
+        left: 275%;
+        margin-left: -111px;
+    }
+
+        .singleEmojiForDeleteTooltip .singleEmojiSkinForDelete::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+        }
+
+    .singleEmojiForDeleteTooltip:hover .singleEmojiSkinForDelete {
+        visibility: visible;
+    }
+
+.emoji-tab-section {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 160px;
+}
+
+    .emoji-tab-section::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .emoji-tab-section::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .emoji-tab-section::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background-clip: padding-box;
+        background: #888;
+    }
+
+.emojiTabIcon {
+    margin: 4px;
+}
+
+.emojiSearchTab {
+    padding: 10px 6px 6px 6px;
+    border-top: 1.5px solid whitesmoke;
+    box-shadow: 0px -19px 36px -10px #8887BC;
+    border-radius: 6px;
+    position: relative;
+    -webkit-animation: slide-down .3s ease-out;
+    -moz-animation: slide-down .3s ease-out;
+}
+
+@-webkit-keyframes slide-down {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+    }
+}
+
+@-moz-keyframes slide-down {
+    0% {
+        opacity: 0;
+        -moz-transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        -moz-transform: translateY(0);
+    }
+}
+
+.emojiSearchInput {
+    height: 25px;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.hideSearchEmojiIcon {
+    position: absolute;
+    top: 184px;
+    right: 13px;
+    background-color: grey;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+    .hideSearchEmojiIcon:hover {
+        background-color: darkgrey
+    }
+
+.stickersTypesTabs {
+    border-bottom: 1.8px solid slategray;
+    border-radius: 6px;
+    padding-bottom: 3px;
+    text-align: center;
+    box-shadow: 0px 10px 18px -8px #8888FE;
+}
+
+.stickerTypeTabIcon {
+    padding: 6px;
+}
+
+.singleStickerTypeForTab {
+    border-radius: 4px;
+}
+
+.singleStickerTypeForTab {
+    display: inline-flex;
+    align-items: center;
+    width: 35px;
+}
+
+    .singleStickerTypeForTab:hover {
+        background-color: lightgrey;
+        padding: 1px 1px 1px 1px;
+    }
+
+.single-sticker {
+    width: 60px;
+    margin: 8px;
+    border-radius: 4px;
+}
+
+    .single-sticker:hover {
+        background-color: lightgrey;
+        padding: 1px 1px 1px 1px;
+    }

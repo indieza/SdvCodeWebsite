@@ -1911,8 +1911,6 @@
     <Folder Include="Areas\Administration\ViewModels\DeleteChatStickerType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\EditChatStickerType\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\EditChatStickerType\ViewModels\" />
-    <Folder Include="Areas\Administration\ViewModels\AddChatSticker\InputModels\" />
-    <Folder Include="Areas\Administration\ViewModels\AddChatSticker\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddChatTheme\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmojiWithSkin\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmojis\ViewModels\" />
@@ -1926,6 +1924,7 @@
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="ViewModels\AllCategories\InputModels\" />
+    <Folder Include="wwwroot\css\sticker\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 

@@ -109,7 +109,6 @@
                             <div class="chat-emoji-icon pop-up-emoji" id="emojiButton">
                                 <i class="far fa-smile"></i>
                                 <div class="popupEmojiBox" id="popupEmoji">
-                                    @*<input autocomplete="off" class="filter-emoji-input" type="text" placeholder="Filter Emojis" />*@
                                     <div class="emojiTypesTabs">
                                         @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                         {
@@ -120,7 +119,7 @@
                                     </div>
                                     @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                     {
-                                        <div class="tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
+                                        <div class="emoji-tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
                                             @for (int j = 0; j < this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].Count; j++)
                                             {
                                                 <span title="@this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).Name" class="tooltipEmoji" style="position: relative; display: inline-block;">
@@ -153,12 +152,29 @@
                     </div>
                     <div class="row" style="margin-top: 5px">
                         <div class="col-md-10 col-xs-9">
-                            <span class="chat-action-icon" id="stickersButton">
+                            <div class="chat-action-icon" id="stickersButton">
                                 <i class="fas fa-theater-masks"></i>
-                                <span id="chatStickerSpan" class="chat-sticker-tooltip">
-                                </span>
-                            </span>
-                            <span class="chat-action-icon" id="themeButton">
+                                <div id="chatStickerSpan" class="chat-sticker-tooltip">
+                                    <div class="stickersTypesTabs">
+                                        @for (int i = 0; i < this.Model.AllStickers.Count; i++)
+                                        {
+                                            <span class="stickerTypeTabIcon">
+                                                <img class="singleStickerTypeForTab" style="background-color: @(i == 0 ? "lightgrey" : "");" src="@this.Model.AllStickers.ElementAt(i).Url" />
+                                            </span>
+                                        }
+                                    </div>
+                                    @for (int i = 0; i < this.Model.AllStickers.Count; i++)
+                                    {
+                                        <span class="sticker-tab-section" style="display: @(i == 0 ? "block" : "none")">
+                                            @for (int j = 0; j < this.Model.AllStickers.ElementAt(i).Stickers.Count; j++)
+                                            {
+                                                <img class="single-sticker" src="@this.Model.AllStickers.ElementAt(i).Stickers.ElementAt(j).Url" />
+                                            }
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="chat-action-icon" id="themeButton">
                                 <i class="fas fa-paint-brush"></i>
                                 @if (this.Model.AllChatThemes.Count > 0)
                                 {
@@ -179,23 +195,23 @@
                                         }
                                     </span>
                                 }
-                            </span>
-                            <span class="chat-action-icon" id="imageButton">
+                            </div>
+                            <div class="chat-action-icon" id="imageButton">
                                 <i class="far fa-images"></i>
                                 <span class="input-image-box">
                                     <input accept=".jpg, .jpeg, .png" type="file" multiple id="uploadImage">
                                 </span>
-                            </span>
+                            </div>
                             <span class="select-image-badge">
                                 0
                             </span>
                             <div id="imageSpinner"></div>
-                            <span class="chat-action-icon" id="fileButton">
+                            <div class="chat-action-icon" id="fileButton">
                                 <i class="fas fa-paperclip"></i>
                                 <span class="input-file-box">
                                     <input accept=".zip, .rar, .docx, .xlsx, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" type="file" multiple id="uploadFile">
                                 </span>
-                            </span>
+                            </div>
                             <span class="select-file-badge">
                                 0
                             </span>

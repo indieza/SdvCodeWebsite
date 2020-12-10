@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Stickers addons";
+}
+
+@model AddChatStickerBaseModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chat Stickers Addons - Add new sticker</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Add new sticker</h1>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="row" method="post" enctype="multipart/form-data">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.AddChatStickerInputModel.Name"></label>
+                <input id="stickerName" autocomplete="off" asp-for="@this.Model.AddChatStickerInputModel.Name" class="form-control" placeholder="Sticker name" />
+                <span class="text-danger" asp-validation-for="@this.Model.AddChatStickerInputModel.Name"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.AddChatStickerInputModel.StickerTypeId"></label>
+                <select class="form-control" asp-for="@this.Model.AddChatStickerInputModel.StickerTypeId">
+                    <option selected disabled>Select sticker type...</option>
+                    @foreach (var item in this.Model.AddChatStickerViewModels)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@this.Model.AddChatStickerInputModel.StickerTypeId"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.AddChatStickerInputModel.Image"></label>
+                <input onchange="selectedImage(this)" class="form-control-file" asp-for="@this.Model.AddChatStickerInputModel.Image" type="file" />
+                <span class="text-danger" asp-validation-for="@this.Model.AddChatStickerInputModel.Image"></span>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="AddChatSticker" asp-action="AddNewSticker" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Add Sticker</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/administration/js/addStickerScript.js"></script>
+}

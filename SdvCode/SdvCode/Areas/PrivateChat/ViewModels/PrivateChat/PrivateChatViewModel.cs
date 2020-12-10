@@ -20,10 +20,14 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
 
         public string GroupName { get; set; }
 
-        public Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> Emojis { get; set; } = new Dictionary<EmojiType, ICollection<ChatEmojiViewModel>>();
+        public Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> Emojis { get; set; } =
+            new Dictionary<EmojiType, ICollection<ChatEmojiViewModel>>();
 
         public ChatThemeViewModel ChatThemeViewModel { get; set; } = new ChatThemeViewModel();
 
         public ICollection<ChatThemeViewModel> AllChatThemes { get; set; } = new HashSet<ChatThemeViewModel>();
+
+        public ICollection<ChatStickerTypeViewModel> AllStickers { get; set; } =
+            new HashSet<ChatStickerTypeViewModel>();
     }
 }

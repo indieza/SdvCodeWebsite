@@ -42,9 +42,9 @@ namespace SdvCode.Areas.PrivateChat.Controllers
         public async Task<IActionResult> Index(string username, string group)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            bool isAbaleToChat = await this.privateChatService.IsUserAbleToChat(username, group, currentUser);
+            bool isAvailableToChat = await this.privateChatService.IsUserAbleToChat(username, group, currentUser);
 
-            if (!isAbaleToChat)
+            if (!isAvailableToChat)
             {
                 this.TempData["Error"] = ErrorMessages.NotAbleToChat;
                 return this.RedirectToAction("Index", "Profile", new { username });
@@ -59,6 +59,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
                 Emojis = this.privateChatService.GetAllEmojis(),
                 AllChatThemes = this.privateChatService.GetAllThemes(),
                 ChatThemeViewModel = this.privateChatService.GetGroupTheme(group),
+                AllStickers = this.privateChatService.GetAllStickers(),
             };
 
             return this.View(model);

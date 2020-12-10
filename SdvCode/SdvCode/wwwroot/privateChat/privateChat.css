@@ -236,154 +236,6 @@
         background: #888;
     }
 
-.chat-emoji-icon {
-    float: right;
-    margin-right: 10px;
-    top: -28px;
-    position: relative;
-    font-size: large;
-    float: right;
-    margin-right: 10px;
-    font-size: large;
-    position: absolute;
-    top: 50%;
-    right: 1%;
-    transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-.pop-up-emoji {
-    display: inline-block;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-    /* The actual popup */
-    .pop-up-emoji .popupEmojiBox {
-        visibility: hidden;
-        width: 294px;
-        background-color: #555;
-        color: #fff;
-        /*text-align: center;*/
-        border-radius: 6px;
-        padding-top: 4px;
-        position: absolute;
-        z-index: 1;
-        margin-left: -189px;
-        transform: translate(0%,4%);
-    }
-
-    /* Toggle this class - hide and show the popup */
-    .pop-up-emoji .show {
-        visibility: visible;
-        -webkit-animation: fadeIn 1s;
-        animation: fadeIn 1s;
-    }
-
-.emoji-type-tab {
-    display: inline-flex;
-    align-items: center;
-}
-
-    .emoji-type-tab:hover {
-        background-color: #727272;
-        padding: 1px 1px 1px 1px;
-    }
-/* Add animation (fade in the popup) */
-@-webkit-keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.filter-emoji-input {
-    width: 145px;
-    padding: 1px 3px 1px 3px;
-    font-size: 10px;
-    border-style: none;
-}
-
-.emoji-bar-icon {
-    padding: 0px 1px 0px 1px;
-}
-
-.emojiTypesTabs {
-    border-bottom: 1.8px solid whitesmoke;
-    border-radius: 6px;
-    padding-bottom: 4px;
-    text-align: center;
-    box-shadow: 0px 10px 18px -8px #8888FE;
-}
-
-.tooltipEmojiSpanRight {
-    visibility: hidden;
-    width: 179px;
-    bottom: 87%;
-    left: 8%;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    box-shadow: 0px 10px 18px -8px #8888C5;
-    position: absolute;
-    z-index: 1;
-}
-
-.tooltipEmojiSpanLeft {
-    visibility: hidden;
-    width: 179px;
-    bottom: 87%;
-    right: 8%;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    box-shadow: 0px 10px 18px -8px #8888C5;
-    position: absolute;
-    z-index: 1;
-}
-
-    .tooltipEmojiSpanLeft::after {
-        content: " ";
-        position: absolute;
-        top: 100%; /* At the bottom of the tooltip */
-        left: 90%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: black transparent transparent transparent;
-    }
-
-.tooltipEmojiSpanRight::after {
-    content: " ";
-    position: absolute;
-    top: 100%; /* At the bottom of the tooltip */
-    left: 10%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
-}
-
 .chat-action-icon {
     font-size: 1.4em;
     color: floralwhite;
@@ -447,8 +299,8 @@
 
 .chat-sticker-tooltip {
     visibility: hidden;
-    width: 213px;
-    background-color: black;
+    width: 330px;
+    background-color: whitesmoke;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -456,10 +308,7 @@
     position: absolute;
     z-index: 1;
     top: 110%;
-    left: 0%;
-    overflow-y: auto;
-    max-height: 140px;
-    overflow-x: hidden;
+    left: -50%;
 }
 
     .chat-sticker-tooltip::-webkit-scrollbar {
@@ -478,11 +327,11 @@
         content: "";
         position: absolute;
         bottom: 100%;
-        left: 50%;
+        left: 10%;
         margin-left: -5px;
         border-width: 5px;
         border-style: solid;
-        border-color: transparent transparent black transparent;
+        border-color: transparent transparent whitesmoke transparent;
     }
 
 .theme-image img {
@@ -793,3 +642,23 @@
 .tooltipEmoji {
     padding: 7px;
 }
+
+.sticker-tab-section {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100px;
+}
+
+    .sticker-tab-section::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .sticker-tab-section::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sticker-tab-section::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background-clip: padding-box;
+        background: #888;
+    }

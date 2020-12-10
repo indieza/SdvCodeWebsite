@@ -185,6 +185,44 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             return result;
         }
 
+        public ICollection<ChatStickerTypeViewModel> GetAllStickers()
+        {
+            var result = new List<ChatStickerTypeViewModel>();
+
+            var stickersTypes = this.db.StickerTypes.OrderBy(x => x.Position).ToList();
+
+            foreach (var stickerType in stickersTypes)
+            {
+                var targetStickerType = new ChatStickerTypeViewModel
+                {
+                    Id = stickerType.Id,
+                    Name = stickerType.Name,
+                    Position = stickerType.Position,
+                    Url = stickerType.Url,
+                    Stickers = new HashSet<ChatStickerViewModel>(),
+                };
+
+                var stickers = this.db.Stickers
+                    .Where(x => x.StickerTypeId == stickerType.Id)
+                    .OrderBy(x => x.Position).ToList();
+
+                foreach (var sticker in stickers)
+                {
+                    targetStickerType.Stickers.Add(new ChatStickerViewModel
+                    {
+                        Id = sticker.Id,
+                        Name = sticker.Name,
+                        Position = sticker.Position,
+                        Url = sticker.Url,
+                    });
+                }
+
+                result.Add(targetStickerType);
+            }
+
+            return result;
+        }
+
         public ICollection<ChatThemeViewModel> GetAllThemes()
         {
             var result = new List<ChatThemeViewModel>();

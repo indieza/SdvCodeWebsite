@@ -114,5 +114,7 @@ namespace SdvCode.Constraints
             "Successfully delete \"{0}\" emojis of type \"{1}\".";
 
         public const string SuccessfullyAddedStickerType = "Successfully add \"{0}\" sticker type.";
+
+        public const string SuccessfullyAddedSticker = "Successfully add \"{0}\" sticker.";
     }
 }
