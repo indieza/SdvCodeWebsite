@@ -2,20 +2,38 @@
     $('#stickersButton').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
-        let span = document.getElementById("chatStickerSpan");
-        if (span) {
-            if (span.style.visibility == "visible") {
-                span.style.visibility = "";
-            } else {
-                span.style.visibility = "visible";
-            }
-        }
+        $('#chatStickerSpan').toggleClass("show");
+        $('#popupEmoji').removeClass("show");
+        $('#themeSpan').removeClass("show");
+    });
+
+    $('#chatStickerSpan').click(function (e) {
+        e.stopPropagation();
     });
 
     $('body').click(function () {
-        let span = document.getElementById("chatStickerSpan");
-        if (span) {
-            span.style.visibility = "";
-        }
+        $('#chatStickerSpan').removeClass("show");
     });
 });
+
+function changeStickersTabs(tabSectionId) {
+    let tabs = document.querySelectorAll(".singleStickerTypeForTab");
+
+    for (let tab of tabs) {
+        if (tab.id == `${tabSectionId}-Tab`) {
+            tab.style.backgroundColor = "lightgrey";
+        } else {
+            tab.style.backgroundColor = "";
+        }
+    }
+
+    let tabsSections = document.querySelectorAll(".sticker-tab-section");
+
+    for (let tabSection of tabsSections) {
+        if (tabSection.id == `${tabSectionId}-Tab-Section`) {
+            tabSection.style.display = "block";
+        } else {
+            tabSection.style.display = "none";
+        }
+    }
+}

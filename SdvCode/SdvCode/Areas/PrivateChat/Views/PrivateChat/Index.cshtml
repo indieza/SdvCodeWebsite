@@ -152,20 +152,20 @@
                     </div>
                     <div class="row" style="margin-top: 5px">
                         <div class="col-md-10 col-xs-9">
-                            <div class="chat-action-icon" id="stickersButton">
+                            <div class="chat-action-icon stickers-icon" id="stickersButton">
                                 <i class="fas fa-theater-masks"></i>
                                 <div id="chatStickerSpan" class="chat-sticker-tooltip">
                                     <div class="stickersTypesTabs">
                                         @for (int i = 0; i < this.Model.AllStickers.Count; i++)
                                         {
                                             <span class="stickerTypeTabIcon">
-                                                <img class="singleStickerTypeForTab" style="background-color: @(i == 0 ? "lightgrey" : "");" src="@this.Model.AllStickers.ElementAt(i).Url" />
+                                                <img id="@this.Model.AllStickers.ElementAt(i).Id-Tab" style="background-color: @(i == 0 ? "lightgrey" : "");" onclick="changeStickersTabs('@this.Model.AllStickers.ElementAt(i).Id')" class="singleStickerTypeForTab" src="@this.Model.AllStickers.ElementAt(i).Url" />
                                             </span>
                                         }
                                     </div>
                                     @for (int i = 0; i < this.Model.AllStickers.Count; i++)
                                     {
-                                        <span class="sticker-tab-section" style="display: @(i == 0 ? "block" : "none")">
+                                        <span class="sticker-tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.AllStickers.ElementAt(i).Id-Tab-Section">
                                             @for (int j = 0; j < this.Model.AllStickers.ElementAt(i).Stickers.Count; j++)
                                             {
                                                 <img class="single-sticker" src="@this.Model.AllStickers.ElementAt(i).Stickers.ElementAt(j).Url" />
@@ -174,26 +174,28 @@
                                     }
                                 </div>
                             </div>
-                            <div class="chat-action-icon" id="themeButton">
+                            <div class="chat-action-icon themes-icon" id="themeButton">
                                 <i class="fas fa-paint-brush"></i>
                                 @if (this.Model.AllChatThemes.Count > 0)
                                 {
-                                    <span id="themeSpan" class="chat-theme-tooltip-image">
-                                        @foreach (var theme in this.Model.AllChatThemes)
-                                        {
-                                            <span class="theme-image">
-                                                <span style="position: relative">
-                                                    <img onclick="changeTheme(this, '@theme.Id', '@theme.Name', '@theme.Url')" src="@theme.Url" />
-                                                    @if (this.Model.ChatThemeViewModel.Id == theme.Id)
-                                                    {
-                                                        <span class="select-theme-badge">
-                                                            <i class="fas fa-check"></i>
-                                                        </span>
-                                                    }
-                                                </span>
-                                            </span>
-                                        }
-                                    </span>
+                                    <div class="chat-theme-tooltip-image">
+                                        <div id="themeSpan" class="theme-span">
+                                            @foreach (var theme in this.Model.AllChatThemes)
+                                            {
+                                                <div class="theme-image">
+                                                    <span style="position: relative">
+                                                        <img onclick="changeTheme(this, '@theme.Id', '@theme.Name', '@theme.Url')" src="@theme.Url" />
+                                                        @if (this.Model.ChatThemeViewModel.Id == theme.Id)
+                                                        {
+                                                            <span class="select-theme-badge">
+                                                                <i class="fas fa-check"></i>
+                                                            </span>
+                                                        }
+                                                    </span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
                                 }
                             </div>
                             <div class="chat-action-icon" id="imageButton">

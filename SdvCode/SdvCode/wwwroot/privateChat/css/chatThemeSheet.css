@@ -1,42 +1,52 @@
-﻿.chat-theme-tooltip-image {
-    visibility: hidden;
-    width: 58px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    top: 110%;
-    left: -70%;
+﻿.theme-span {
     overflow-y: auto;
     max-height: 140px;
     overflow-x: hidden;
+    background-color: black;
+    border-radius: 6px;
+    text-align: center;
+    padding: 5px 0;
 }
 
-    .chat-theme-tooltip-image::-webkit-scrollbar {
-        width: 4px;
-    }
+.chat-theme-tooltip-image {
+    visibility: hidden;
+    width: 58px;
+    color: #fff;
+    position: absolute;
+    z-index: 1;
+    top: 140%;
+    left: -70%;
+}
 
-    .chat-theme-tooltip-image::-webkit-scrollbar-track {
-        background: #f1f1f1
-    }
+.theme-span::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 43%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
 
-    .chat-theme-tooltip-image::-webkit-scrollbar-thumb {
-        background: #888;
-    }
+.themes-icon .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
 
-    .chat-theme-tooltip-image::after {
-        content: "";
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent black transparent;
-    }
+.theme-span::-webkit-scrollbar {
+    width: 4px;
+}
+
+.theme-span::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.theme-span::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-clip: padding-box;
+    background: #888;
+}
 
 .theme-image img {
     border-radius: 50%;

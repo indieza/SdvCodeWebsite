@@ -2,21 +2,17 @@
     $('#themeButton').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
-        let span = document.getElementById("themeSpan");
-        if (span) {
-            if (span.style.visibility == "visible") {
-                span.style.visibility = "";
-            } else {
-                span.style.visibility = "visible";
-            }
-        }
+        $('#themeSpan').toggleClass("show");
+        $('#popupEmoji').removeClass("show");
+        $('#chatStickerSpan').removeClass("show");
+    });
+
+    $('#themeSpan').click(function (e) {
+        e.stopPropagation();
     });
 
     $('body').click(function () {
-        let span = document.getElementById("themeSpan");
-        if (span) {
-            span.style.visibility = "";
-        }
+        $('#themeSpan').removeClass("show");
     });
 });
 

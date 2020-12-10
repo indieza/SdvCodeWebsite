@@ -8,21 +8,9 @@
     padding: 5px 0;
     position: absolute;
     z-index: 1;
-    top: 110%;
+    top: 138%;
     left: -50%;
 }
-
-    .chat-sticker-tooltip::-webkit-scrollbar {
-        width: 4px;
-    }
-
-    .chat-sticker-tooltip::-webkit-scrollbar-track {
-        background: #f1f1f1
-    }
-
-    .chat-sticker-tooltip::-webkit-scrollbar-thumb {
-        background: #888;
-    }
 
     .chat-sticker-tooltip::after {
         content: "";
@@ -35,10 +23,28 @@
         border-color: transparent transparent whitesmoke transparent;
     }
 
+.stickers-icon .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+.chat-sticker-tooltip::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-sticker-tooltip::-webkit-scrollbar-track {
+    background: #f1f1f1
+}
+
+.chat-sticker-tooltip::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
 .sticker-tab-section {
     overflow-y: auto;
     overflow-x: hidden;
-    height: 100px;
+    height: 300px;
 }
 
     .sticker-tab-section::-webkit-scrollbar {
