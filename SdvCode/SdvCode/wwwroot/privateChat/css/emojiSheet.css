@@ -1,4 +1,8 @@
-﻿.chat-emoji-icon {
+﻿.tooltipEmoji {
+    padding: 7px;
+}
+
+.chat-emoji-icon {
     float: right;
     margin-right: 10px;
     top: -28px;

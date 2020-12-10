@@ -1,0 +1,56 @@
+﻿.chat-sticker-tooltip {
+    visibility: hidden;
+    width: 330px;
+    background-color: whitesmoke;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: -50%;
+}
+
+    .chat-sticker-tooltip::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .chat-sticker-tooltip::-webkit-scrollbar-track {
+        background: #f1f1f1
+    }
+
+    .chat-sticker-tooltip::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    .chat-sticker-tooltip::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 10%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent whitesmoke transparent;
+    }
+
+.sticker-tab-section {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100px;
+}
+
+    .sticker-tab-section::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .sticker-tab-section::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sticker-tab-section::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background-clip: padding-box;
+        background: #888;
+    }
