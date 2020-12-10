@@ -1924,8 +1924,6 @@
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="ViewModels\AllCategories\InputModels\" />
-    <Folder Include="wwwroot\css\blog\" />
-    <Folder Include="wwwroot\privateChat\js\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 
