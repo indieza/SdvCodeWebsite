@@ -1,6 +1,5 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-using System;
 
 namespace SdvCode.Constraints
 {
@@ -118,5 +117,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyAddedSticker = "Successfully add \"{0}\" sticker.";
 
         public const string SuccessfullyEditChatStickerType = "Successfully edit \"{0}\" chat sticker type.";
+
+        public const string SuccessfullyEditChatSticker = "Successfully edit \"{0}\" chat sticker.";
     }
 }

@@ -14,7 +14,7 @@ namespace SdvCode.Areas.Administration.Services.EditChatStickerType
     {
         ICollection<EditChatStickerTypeViewModel> GetAllChatStickerTypes();
 
-        Task<GetEditChaStickerTypeDataViewModel> GetEmojiById(string stickerTypeId);
+        Task<GetEditChatStickerTypeDataViewModel> GetStickerTypeById(string stickerTypeId);
 
         Task<Tuple<bool, string>> EditStickerType(EditChatStickerTypeInputModel model);
     }

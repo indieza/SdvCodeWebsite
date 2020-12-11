@@ -40,8 +40,8 @@ namespace SdvCode.Areas.Administration.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStickerTypeData(string stickerTypeId)
         {
-            GetEditChaStickerTypeDataViewModel section =
-                await this.editChatStickerTypeService.GetEmojiById(stickerTypeId);
+            GetEditChatStickerTypeDataViewModel section =
+                await this.editChatStickerTypeService.GetStickerTypeById(stickerTypeId);
             return new JsonResult(section);
         }
 

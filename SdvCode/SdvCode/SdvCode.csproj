@@ -1917,8 +1917,6 @@
     <Folder Include="Areas\Administration\ViewModels\DeleteChatSticker\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteChatSticker\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteEmojisByType\ViewModels\" />
-    <Folder Include="Areas\Administration\ViewModels\EditChatSticker\InputModels\" />
-    <Folder Include="Areas\Administration\ViewModels\EditChatSticker\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="ViewModels\AllCategories\InputModels\" />

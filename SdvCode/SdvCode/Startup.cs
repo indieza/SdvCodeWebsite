@@ -38,6 +38,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.DeleteChatTheme;
     using SdvCode.Areas.Administration.Services.DeleteEmoji;
     using SdvCode.Areas.Administration.Services.DeleteEmojisByType;
+    using SdvCode.Areas.Administration.Services.EditChatSticker;
     using SdvCode.Areas.Administration.Services.EditChatStickerType;
     using SdvCode.Areas.Administration.Services.EditChatTheme;
     using SdvCode.Areas.Administration.Services.EditEmoji;
@@ -203,6 +204,7 @@ namespace SdvCode
             services.AddTransient<IAddChatStickerTypeService, AddChatStickerTypeService>();
             services.AddTransient<IAddChatStickerService, AddChatStickerService>();
             services.AddTransient<IEditChatStickerTypeService, EditChatStickerTypeService>();
+            services.AddTransient<IEditChatStickerService, EditChatStickerService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();

@@ -84,5 +84,9 @@ namespace SdvCode.Constraints
         public const string StickerTypeDoesNotExist = "Sticker type does not exist.";
 
         public const string StickerAlreadyExist = "\"{0}\" sticker already exist.";
+
+        public const string StickerDoesNotExist = "Sticker does not exist.";
+
+        public const string StickerAlreadyTypeExist = "\"{0}\" sticker type already exist.";
     }
 }

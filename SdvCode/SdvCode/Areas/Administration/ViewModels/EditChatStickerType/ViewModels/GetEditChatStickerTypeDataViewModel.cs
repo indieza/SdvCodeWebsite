@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SdvCode.Areas.Administration.ViewModels.EditChatStickerType.ViewModels
 {
-    public class GetEditChaStickerTypeDataViewModel
+    public class GetEditChatStickerTypeDataViewModel
     {
         public string Name { get; set; }
 

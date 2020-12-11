@@ -29,6 +29,11 @@ namespace SdvCode.Areas.Administration.Services.EditChatStickerType
 
         public async Task<Tuple<bool, string>> EditStickerType(EditChatStickerTypeInputModel model)
         {
+            if (this.db.StickerTypes.Any(x => x.Name.ToUpper() == model.Name.ToUpper()))
+            {
+                return Tuple.Create(false, string.Format(ErrorMessages.StickerAlreadyTypeExist, model.Name.ToUpper()));
+            }
+
             var targetStickerType = await this.db.StickerTypes.FirstOrDefaultAsync(x => x.Id == model.Id);
 
             if (targetStickerType != null)
@@ -75,10 +80,10 @@ namespace SdvCode.Areas.Administration.Services.EditChatStickerType
             return result;
         }
 
-        public async Task<GetEditChaStickerTypeDataViewModel> GetEmojiById(string stickerTypeId)
+        public async Task<GetEditChatStickerTypeDataViewModel> GetStickerTypeById(string stickerTypeId)
         {
             var targetStickerType = await this.db.StickerTypes.FirstOrDefaultAsync(x => x.Id == stickerTypeId);
-            return new GetEditChaStickerTypeDataViewModel
+            return new GetEditChatStickerTypeDataViewModel
             {
                 Name = targetStickerType.Name,
                 Url = targetStickerType.Url,
