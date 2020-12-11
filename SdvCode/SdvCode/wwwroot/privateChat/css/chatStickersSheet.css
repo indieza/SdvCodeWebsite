@@ -16,8 +16,7 @@
         content: "";
         position: absolute;
         bottom: 100%;
-        left: 10%;
-        margin-left: -5px;
+        left: 25px;
         border-width: 5px;
         border-style: solid;
         border-color: transparent transparent whitesmoke transparent;

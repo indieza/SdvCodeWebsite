@@ -182,7 +182,7 @@
                                         <div id="themeSpan" class="theme-span">
                                             @foreach (var theme in this.Model.AllChatThemes)
                                             {
-                                                <div class="theme-image">
+                                                <span class="theme-image">
                                                     <span style="position: relative">
                                                         <img onclick="changeTheme(this, '@theme.Id', '@theme.Name', '@theme.Url')" src="@theme.Url" />
                                                         @if (this.Model.ChatThemeViewModel.Id == theme.Id)
@@ -192,7 +192,7 @@
                                                             </span>
                                                         }
                                                     </span>
-                                                </div>
+                                                </span>
                                             }
                                         </div>
                                     </div>

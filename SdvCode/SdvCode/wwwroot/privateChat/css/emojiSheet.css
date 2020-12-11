@@ -42,12 +42,21 @@
         transform: translate(0%,4%);
     }
 
-    /* Toggle this class - hide and show the popup */
-    .pop-up-emoji .show {
-        visibility: visible;
-        -webkit-animation: fadeIn 1s;
-        animation: fadeIn 1s;
-    }
+.popupEmojiBox::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 193px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+}
+/* Toggle this class - hide and show the popup */
+.pop-up-emoji .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
 
 .emoji-type-tab {
     display: inline-flex;
