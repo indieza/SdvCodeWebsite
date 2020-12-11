@@ -1909,8 +1909,6 @@
     <Folder Include="Areas\Administration\ViewModels\AddChatStickerType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteChatStickerType\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteChatStickerType\ViewModels\" />
-    <Folder Include="Areas\Administration\ViewModels\EditChatStickerType\InputModels\" />
-    <Folder Include="Areas\Administration\ViewModels\EditChatStickerType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddChatTheme\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmojiWithSkin\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmojis\ViewModels\" />

@@ -13,10 +13,12 @@ namespace SdvCode.Areas.Administration.ViewModels.AddChatSticker.InputModels
     public class AddChatStickerInputModel
     {
         [Required]
-        [MaxLength(30)]
+        [MaxLength(120)]
+        [Display(Name = "Sticker Name")]
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Sticker Image")]
         public IFormFile Image { get; set; }
 
         [Required]

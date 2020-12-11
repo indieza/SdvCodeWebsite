@@ -25,6 +25,7 @@
     <link href="~/administration/css/DropDownStyle.css" rel="stylesheet">
     <link href="~/administration/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="~/privateChat/css/emojiSheet.css" rel="stylesheet" />
+    <link href="~/privateChat/css/chatStickersSheet.css" rel="stylesheet" />
 </head>
 <body>
     <div id="wrapper">
@@ -189,6 +190,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Sticker Actions:</h6>
                         <a asp-area="Administration" asp-controller="AddChatStickerType" asp-action="Index" class="collapse-item">Add Sticker Type</a>
+                        <a asp-area="Administration" asp-controller="EditChatStickerType" asp-action="Index" class="collapse-item">Edit Sticker Type</a>
                         <a asp-area="Administration" asp-controller="AddChatSticker" asp-action="Index" class="collapse-item">Add Sticker</a>
                     </div>
                 </div>

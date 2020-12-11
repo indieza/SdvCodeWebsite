@@ -114,3 +114,7 @@
         background-clip: padding-box;
         background: #888;
     }
+
+.editStickerTypeImage {
+    width: 100px;
+}

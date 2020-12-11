@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Edit Sticker Type";
+}
+
+@model EditChatStickerTypeBaseModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chat Sticker Type Addons - Edit sticker type</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Edit sticker type - please select the sticker type and edit it</h1>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.EditChatStickerTypeInputModel.Id"></label>
+                <select asp-for="@this.Model.EditChatStickerTypeInputModel.Id" class="form-control" onchange="selectedName(this)">
+                    <option value="" disabled selected>Select sticker type...</option>
+                    @foreach (var stickerType in this.Model.EditChatStickerTypeViewModels)
+                    {
+                        <option value=@stickerType.Id>@stickerType.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@this.Model.EditChatStickerTypeInputModel.Id" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row" id="contentForm" style="display: none">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <img class="editStickerTypeImage" id="stickerTypeImage" />
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@Model.EditChatStickerTypeInputModel.Name"></label>
+                <input asp-for="@Model.EditChatStickerTypeInputModel.Name" class="form-control" placeholder="Name" id="stickerTypeName" autocomplete="off" />
+                <span asp-validation-for="@Model.EditChatStickerTypeInputModel.Name" class="text-danger"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.EditChatStickerTypeInputModel.Image"></label>
+                <input class="form-control-file" asp-for="@Model.EditChatStickerTypeInputModel.Image" type="file" />
+                <span asp-validation-for="@Model.EditChatStickerTypeInputModel.Image" class="text-danger"></span>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="EditChatStickerType" asp-action="EditStickerType" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span class="text">Edit Sticker Type</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+    <input type="hidden" />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/administration/js/editStickerTypeScript.js"></script>
+}

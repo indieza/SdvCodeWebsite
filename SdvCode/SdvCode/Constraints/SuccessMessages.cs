@@ -116,5 +116,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyAddedStickerType = "Successfully add \"{0}\" sticker type.";
 
         public const string SuccessfullyAddedSticker = "Successfully add \"{0}\" sticker.";
+
+        public const string SuccessfullyEditChatStickerType = "Successfully edit \"{0}\" chat sticker type.";
     }
 }
