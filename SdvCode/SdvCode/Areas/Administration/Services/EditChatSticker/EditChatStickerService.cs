@@ -33,7 +33,7 @@ namespace SdvCode.Areas.Administration.Services.EditChatSticker
 
             if (targetStickerType != null)
             {
-                if (this.db.Stickers.Any(x => x.Name.ToUpper() == model.Name.ToUpper()))
+                if (this.db.Stickers.Any(x => x.Name.ToUpper() == model.Name.ToUpper() && x.StickerTypeId == model.StickerTypeId))
                 {
                     return Tuple.Create(
                         false,
