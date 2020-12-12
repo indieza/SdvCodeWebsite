@@ -125,5 +125,8 @@ namespace SdvCode.Constraints
         public const string SuccessfullyDeleteChatSticker = "Successfully delete \"{0}\" chat sticker.";
         public const string SuccessfullyDeleteChatStickerType =
             "Successfully delete \"{0}\" chat sticker type with \"{1}\" stickers.";
+
+        public const string SuccessfullyAddedStickers =
+            "Successfully add \"{0}\" stickers, \"{1}\" of them already exist.";
     }
 }

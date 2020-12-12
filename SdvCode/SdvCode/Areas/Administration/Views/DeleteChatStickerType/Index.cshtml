@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Stickers addons";
+    ViewData["Title"] = "Sticker addons";
 }
 
 @model DeleteChatStickerTypeBaseModel
@@ -20,7 +20,7 @@
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.DeleteChatStickerTypeInputModel.Id"></label>
                 <select id="stickersOptions" onchange="selectedName(this)" class="form-control" asp-for="@this.Model.DeleteChatStickerTypeInputModel.Id">
-                    <option disabled selected>Select sticker name...</option>
+                    <option disabled selected>Select sticker type name...</option>
                     @foreach (var stickerType in this.Model.DeleteChatStickerTypeViewModel)
                     {
                         <option value="@stickerType.Id">@stickerType.Name</option>

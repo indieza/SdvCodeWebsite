@@ -57,7 +57,7 @@ namespace SdvCode.Areas.Administration.Services.DeleteChatStickerType
 
                 return Tuple.Create(
                     true,
-                    string.Format(SuccessMessages.SuccessfullyDeleteChatStickerType, name, count));
+                    string.Format(SuccessMessages.SuccessfullyDeleteChatStickerType, name.ToUpper(), count));
             }
 
             return Tuple.Create(false, ErrorMessages.StickerTypeDoesNotExist);

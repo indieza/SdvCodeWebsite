@@ -40,7 +40,7 @@ namespace SdvCode.Areas.Administration.Services.AddEmojis
 
             foreach (var file in model.Images)
             {
-                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                string fileName = Path.GetFileNameWithoutExtension(file.FileName);
 
                 if (this.db.Emojis.Any(x => x.Name.ToUpper() == fileName.ToUpper() && x.EmojiType == model.EmojiType))
                 {
@@ -50,7 +50,7 @@ namespace SdvCode.Areas.Administration.Services.AddEmojis
                 {
                     var emoji = new Emoji
                     {
-                        Name = fileName,
+                        Name = fileName.Length > 120 ? file.ToString().Substring(0, 120) : fileName,
                         Position = lastNumber + 1,
                         EmojiType = model.EmojiType,
                     };
