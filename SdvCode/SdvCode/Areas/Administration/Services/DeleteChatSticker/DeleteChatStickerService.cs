@@ -30,10 +30,10 @@ namespace SdvCode.Areas.Administration.Services.DeleteChatSticker
         public async Task<Tuple<bool, string>> DeleteChatSticker(DeleteChatStickerInputModel model)
         {
             var targetSticker = await this.db.Stickers.FirstOrDefaultAsync(x => x.Id == model.Id);
-            string name = targetSticker.Name;
 
             if (targetSticker != null)
             {
+                string name = targetSticker.Name;
                 ApplicationCloudinary.DeleteImage(
                         this.cloudinary,
                         string.Format(GlobalConstants.StickerName, model.Id),

@@ -33,7 +33,7 @@
             <div class="col-xl-12 col-md-12 mb-4">
                 @foreach (var sticker in this.Model.DeleteChatStickerViewModel)
                 {
-                    <span onclick="selectedEmoji('@sticker.Id')">
+                    <span onclick="selectedSticker('@sticker.Id')">
                         <img class="singleStickerForDelete" src="@sticker.Url" />
                     </span>
                 }

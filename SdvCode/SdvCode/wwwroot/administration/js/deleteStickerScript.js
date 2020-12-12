@@ -23,7 +23,7 @@
     });
 }
 
-function selectedEmoji(emojiId) {
-    document.getElementById("stickersOptions").value = emojiId;
+function selectedSticker(stickerId) {
+    document.getElementById("stickersOptions").value = stickerId;
     selectedName(document.getElementById("stickersOptions"));
 }
