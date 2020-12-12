@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Stickers addons";
+}
+
+@model DeleteChatStickerBaseModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Stickers Addons - Delete existing sticker</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Delete existing sticker</h1>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.DeleteChatStickerInputModel.Id"></label>
+                <select id="stickersOptions" onchange="selectedName(this)" class="form-control" asp-for="@this.Model.DeleteChatStickerInputModel.Id">
+                    <option disabled selected>Select sticker name...</option>
+                    @foreach (var sticker in this.Model.DeleteChatStickerViewModel)
+                    {
+                        <option value="@sticker.Id">@sticker.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@this.Model.DeleteChatStickerInputModel.Id"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mb-4">
+                @foreach (var sticker in this.Model.DeleteChatStickerViewModel)
+                {
+                    <span onclick="selectedEmoji('@sticker.Id')">
+                        <img class="singleStickerForDelete" src="@sticker.Url" />
+                    </span>
+                }
+            </div>
+        </div>
+        <div class="row" id="stickerSection" style="display: none">
+            <div class="col-xl-1 col-md-1 mb-4">
+                <img class="singleStickerForDelete" id="stickerImage" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="DeleteChatSticker" asp-action="DeleteChatSticker" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash-alt"></i>
+                    </span>
+                    <span class="text">Delete Sticker</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+</div>
+<input type="hidden" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/administration/js/deleteStickerScript.js"></script>
+}

@@ -1914,8 +1914,6 @@
     <Folder Include="Areas\Administration\ViewModels\AddEmojis\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmoji\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AllEmojis\InputModels\" />
-    <Folder Include="Areas\Administration\ViewModels\DeleteChatSticker\InputModels\" />
-    <Folder Include="Areas\Administration\ViewModels\DeleteChatSticker\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteEmojisByType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />

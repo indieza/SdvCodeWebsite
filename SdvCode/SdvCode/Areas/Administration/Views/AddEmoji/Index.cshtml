@@ -19,7 +19,7 @@
         <div class="row" method="post" enctype="multipart/form-data">
             <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.Name"></label>
-                <input readonly id="emojiName" autocomplete="off" asp-for="@this.Model.Name" class="form-control" placeholder="Emoji name" />
+                <input id="emojiName" autocomplete="off" asp-for="@this.Model.Name" class="form-control" placeholder="Emoji name" />
                 <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">

@@ -112,3 +112,13 @@
 .editStickerImage {
     width: 100px;
 }
+
+.singleStickerForDelete {
+    width: 70px;
+    padding: 4px;
+}
+
+    .singleStickerForDelete:hover {
+        background-color: lightgrey;
+        padding: 1px 1px 1px 1px;
+    }

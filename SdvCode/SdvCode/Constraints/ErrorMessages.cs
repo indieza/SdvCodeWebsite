@@ -77,15 +77,15 @@ namespace SdvCode.Constraints
 
         public const string ChatThemeAlreadyExist = "\"{0}\" chat theme name already exist.";
 
-        public const string ChatThemeDoesNotAlreadyExist = "Chat theme does not exist.";
+        public const string ChatThemeDoesNotAlreadyExist = "Chat theme ID does not exist.";
 
         public const string StickerTypeAlreadyExist = "\"{0}\" sticker type already exist.";
 
-        public const string StickerTypeDoesNotExist = "Sticker type does not exist.";
+        public const string StickerTypeDoesNotExist = "Sticker type ID does not exist.";
 
         public const string StickerAlreadyExist = "\"{0}\" sticker already exist.";
 
-        public const string StickerDoesNotExist = "Sticker does not exist.";
+        public const string StickerDoesNotExist = "Sticker ID does not exist.";
 
         public const string StickerAlreadyTypeExist = "\"{0}\" sticker type already exist.";
     }

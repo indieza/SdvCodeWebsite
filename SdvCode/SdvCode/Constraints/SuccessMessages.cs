@@ -119,5 +119,7 @@ namespace SdvCode.Constraints
         public const string SuccessfullyEditChatStickerType = "Successfully edit \"{0}\" chat sticker type.";
 
         public const string SuccessfullyEditChatSticker = "Successfully edit \"{0}\" chat sticker.";
+
+        public const string SuccessfullyDeleteChatSticker = "Successfully delete \"{0}\" chat sticker.";
     }
 }
