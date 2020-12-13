@@ -160,6 +160,9 @@
                                         {
                                             <span class="stickerTypeTabIcon">
                                                 <img id="@this.Model.AllStickers.ElementAt(i).Id-Tab" style="background-color: @(i == 0 ? "lightgrey" : "");" onclick="changeStickersTabs('@this.Model.AllStickers.ElementAt(i).Id')" class="singleStickerTypeForTab" src="@this.Model.AllStickers.ElementAt(i).Url" />
+                                                <span class="remove-sticker-type-icon">
+                                                    <i class="fas fa-times-circle"></i>
+                                                </span>
                                             </span>
                                         }
                                     </div>
