@@ -1,5 +1,4 @@
 ﻿@{
-    var currentUser = UserManager.FindByNameAsync(User.Identity.Name);
     ViewData["Title"] = "Collect Stickers";
 }
 
@@ -11,7 +10,7 @@
             <h2>Collect Chat Stickers</h2>
             <ul class="breadcrumb">
                 <li>Home</li>
-                <li><a asp-area="" asp-controller="CollectStickers" asp-action="Index"> Collect Stickers</a></li>
+                <li><a asp-area="PrivateChat" asp-controller="CollectStickers" asp-action="Index"> Collect Stickers</a></li>
             </ul>
         </div>
     </div>
