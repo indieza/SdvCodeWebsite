@@ -14,6 +14,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
     using SdvCode.Areas.PrivateChat.ViewModels.CollectStickers.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Models.User;
+    using X.PagedList;
 
     [Authorize]
     [Area(GlobalConstants.PrivateChatArea)]
@@ -30,13 +31,17 @@ namespace SdvCode.Areas.PrivateChat.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        [Route("PrivateChat/CollectStickers/{page?}")]
+        public async Task<IActionResult> Index(int? page)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
+            var pageNumber = page ?? 1;
 
             var model = new CollectStickersBaseModel
             {
-                AllStickerTypes = this.collectStickersService.GetAllStickers(currentUser),
+                AllStickerTypes = this.collectStickersService
+                    .GetAllStickers(currentUser)
+                    .ToPagedList(pageNumber, GlobalConstants.CollectStickersOnPage),
             };
 
             return this.View(model);

@@ -22,47 +22,14 @@
         <partial name="_TempDataPartial" />
         @foreach (var stickerType in this.Model.AllStickerTypes)
         {
-            <div class="row">
-                <div class="col-md-12 col-xl-12">
-                    <span data-toggle="collapse" href="#@stickerType.Id" class="collapseIconSticker">
-                        <i class="fas fa-chevron-down"></i>
-                    </span>
-                    <span>
-                        <img class="collectStickerType" src="@stickerType.Url" />
-                    </span>
-                    <span>
-                        @stickerType.Name
-                    </span>
-                </div>
-            </div>
-            <div class="row collapse" id="@stickerType.Id">
-                <div class="col-md-12 col-xl-12">
-                    @foreach (var sticker in stickerType.AllStickers)
-                    {
-                        <span>
-                            <img class="collectSticker" src="@sticker.Url" />
-                        </span>
-                    }
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-xl-12">
-                    @if (stickerType.HaveIt)
-                    {
-                        <button class="btn btn-danger addStickerTypeButton">
-                            <i class="fas fa-minus"></i> Remove From Favourite
-                        </button>
-                    }
-                    else
-                    {
-                        <button class="btn btn-success addStickerTypeButton">
-                            <i class="fas fa-plus"></i> Add To Favourite
-                        </button>
-                    }
-                </div>
-            </div>
-            <hr />
+            @await Html.PartialAsync("_CollectStickersPartial", stickerType)
         }
+        <div class="row" style="text-align: center">
+            @Html.PagedListPager((IPagedList)Model.AllStickerTypes,
+                    page => Url.Action("Index", "CollectStickers",
+            new { page = page, Area = "PrivateChat" }),
+            PagedListRenderOptions.OnlyShowFivePagesAtATime)
+        </div>
     </div>
 </section>
 @section Scripts {

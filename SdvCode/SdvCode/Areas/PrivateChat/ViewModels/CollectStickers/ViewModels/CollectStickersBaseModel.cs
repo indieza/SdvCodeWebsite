@@ -10,7 +10,7 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.CollectStickers.ViewModels
 
     public class CollectStickersBaseModel
     {
-        public ICollection<CollectStickersStickerTypeViewModel> AllStickerTypes { get; set; } =
+        public IEnumerable<CollectStickersStickerTypeViewModel> AllStickerTypes { get; set; } =
             new HashSet<CollectStickersStickerTypeViewModel>();
     }
 }

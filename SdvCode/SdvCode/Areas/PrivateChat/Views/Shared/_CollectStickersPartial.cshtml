@@ -1,0 +1,42 @@
+﻿@model CollectStickersStickerTypeViewModel
+
+<div class="row">
+    <div class="col-md-12 col-xl-12">
+        <span data-toggle="collapse" href="#@this.Model.Id" class="collapseIconSticker">
+            <i class="fas fa-chevron-down"></i>
+        </span>
+        <span>
+            <img class="collectStickerType" src="@this.Model.Url" />
+        </span>
+        <span>
+            @this.Model.Name
+        </span>
+    </div>
+</div>
+<div class="row collapse" id="@this.Model.Id">
+    <div class="col-md-12 col-xl-12">
+        @foreach (var sticker in this.Model.AllStickers)
+        {
+            <span>
+                <img class="collectSticker" src="@sticker.Url" />
+            </span>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-xl-12">
+        @if (this.Model.HaveIt)
+        {
+            <button class="btn btn-danger addStickerTypeButton">
+                <i class="fas fa-minus"></i> Remove From Favourite
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-success addStickerTypeButton">
+                <i class="fas fa-plus"></i> Add To Favourite
+            </button>
+        }
+    </div>
+</div>
+<hr />
