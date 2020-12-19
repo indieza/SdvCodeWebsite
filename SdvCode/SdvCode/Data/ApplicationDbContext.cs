@@ -90,6 +90,8 @@ namespace SdvCode.Data
 
         public DbSet<Sticker> Stickers { get; set; }
 
+        public DbSet<FavouriteStickers> FavouriteStickers { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -203,6 +205,12 @@ namespace SdvCode.Data
             {
                 k.OrderId,
                 k.ProductId,
+            });
+
+            builder.Entity<FavouriteStickers>().HasKey(k => new
+            {
+                k.ApplicationUserId,
+                k.StickerTypeId,
             });
 
             builder.Entity<Group>(entity =>

@@ -28,11 +28,18 @@ namespace SdvCode.Areas.PrivateChat.Services.CollectStickers
 
             foreach (var stickerType in allStickerTypes)
             {
+                var haveIt = this.db.FavouriteStickers
+                    .FirstOrDefault(x => x.StickerTypeId == stickerType.Id &&
+                        x.IsFavourite &&
+                        x.ApplicationUserId == currentUser.Id)
+                    .IsFavourite;
+
                 var targetStickerType = new CollectStickersStickerTypeViewModel
                 {
                     Id = stickerType.Id,
                     Name = stickerType.Name,
                     Url = stickerType.Url,
+                    HaveIt = haveIt,
                 };
 
                 var allStickers = this.db.Stickers
