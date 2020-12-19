@@ -8,20 +8,38 @@ namespace SdvCode.Areas.PrivateChat.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.PrivateChat.Services.CollectStickers;
+    using SdvCode.Areas.PrivateChat.ViewModels.CollectStickers.ViewModels;
     using SdvCode.Constraints;
+    using SdvCode.Models.User;
 
     [Authorize]
     [Area(GlobalConstants.PrivateChatArea)]
     public class CollectStickersController : Controller
     {
-        public CollectStickersController()
+        private readonly ICollectStickersService collectStickersService;
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public CollectStickersController(
+            ICollectStickersService collectStickersService,
+            UserManager<ApplicationUser> userManager)
         {
+            this.collectStickersService = collectStickersService;
+            this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return this.View();
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            var model = new CollectStickersBaseModel
+            {
+                AllStickerTypes = this.collectStickersService.GetAllStickers(currentUser),
+            };
+
+            return this.View(model);
         }
     }
 }

@@ -1916,6 +1916,7 @@
     <Folder Include="Areas\Administration\ViewModels\DeleteEmojisByType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />
+    <Folder Include="Areas\PrivateChat\ViewModels\CollectStickers\InputModels\" />
     <Folder Include="ViewModels\AllCategories\InputModels\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>

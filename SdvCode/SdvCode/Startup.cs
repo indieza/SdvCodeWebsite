@@ -59,6 +59,7 @@ namespace SdvCode
     using SdvCode.Areas.Editor.Services.Comment;
     using SdvCode.Areas.Editor.Services.Post;
     using SdvCode.Areas.PrivateChat.Services.ChatMessagesDbUsage;
+    using SdvCode.Areas.PrivateChat.Services.CollectStickers;
     using SdvCode.Areas.PrivateChat.Services.PrivateChat;
     using SdvCode.Areas.SdvShop.Services.Category;
     using SdvCode.Areas.SdvShop.Services.Order;
@@ -228,6 +229,7 @@ namespace SdvCode
             services.AddTransient<IPrivateChatService, PrivateChatService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IAllCategoriesService, AllCategoriesService>();
+            services.AddTransient<ICollectStickersService, CollectStickersService>();
 
             // Register User Notification Services
             services.AddTransient<INotificationService, NotificationService>();
