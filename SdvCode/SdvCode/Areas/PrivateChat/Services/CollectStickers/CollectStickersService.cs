@@ -7,6 +7,7 @@ namespace SdvCode.Areas.PrivateChat.Services.CollectStickers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.ML.Transforms;
     using SdvCode.Areas.PrivateChat.ViewModels.CollectStickers.ViewModels;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -28,19 +29,29 @@ namespace SdvCode.Areas.PrivateChat.Services.CollectStickers
 
             foreach (var stickerType in allStickerTypes)
             {
-                var haveIt = this.db.FavouriteStickers
-                    .FirstOrDefault(x => x.StickerTypeId == stickerType.Id &&
-                        x.IsFavourite &&
-                        x.ApplicationUserId == currentUser.Id)
-                    .IsFavourite;
-
                 var targetStickerType = new CollectStickersStickerTypeViewModel
                 {
                     Id = stickerType.Id,
                     Name = stickerType.Name,
                     Url = stickerType.Url,
-                    HaveIt = haveIt,
                 };
+
+                if (this.db.FavouriteStickers
+                    .Any(x => x.StickerTypeId == stickerType.Id &&
+                        x.IsFavourite &&
+                        x.ApplicationUserId == currentUser.Id))
+                {
+                    var haveIt = this.db.FavouriteStickers
+                        .FirstOrDefault(x => x.StickerTypeId == stickerType.Id &&
+                            x.IsFavourite &&
+                            x.ApplicationUserId == currentUser.Id)
+                        .IsFavourite;
+                    targetStickerType.HaveIt = haveIt;
+                }
+                else
+                {
+                    targetStickerType.HaveIt = false;
+                }
 
                 var allStickers = this.db.Stickers
                     .Where(x => x.StickerTypeId == stickerType.Id)

@@ -23,16 +23,19 @@
         @foreach (var stickerType in this.Model.AllStickerTypes)
         {
             <div class="row">
-                <img src="@stickerType.Url" />
-                @stickerType.HaveIt
+                <img data-toggle="collapse" href="#@stickerType.Id" class="collectStickerType" src="@stickerType.Url" />
+                @stickerType.Name
             </div>
 
-            @foreach (var sticker in stickerType.AllStickers)
-            {
-                <div class="row">
-                    <img src="@sticker.Url" />
-                </div>
-            }
+            <div class="row collapse" id="@stickerType.Id">
+                @foreach (var sticker in stickerType.AllStickers)
+                {
+                    <span>
+                        <img class="collectSticker" src="@sticker.Url" />
+                    </span>
+                }
+            </div>
+            <hr />
         }
     </div>
 </section>
