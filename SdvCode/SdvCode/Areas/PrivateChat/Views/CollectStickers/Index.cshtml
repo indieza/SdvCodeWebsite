@@ -23,19 +23,49 @@
         @foreach (var stickerType in this.Model.AllStickerTypes)
         {
             <div class="row">
-                <img data-toggle="collapse" href="#@stickerType.Id" class="collectStickerType" src="@stickerType.Url" />
-                @stickerType.Name
-            </div>
-
-            <div class="row collapse" id="@stickerType.Id">
-                @foreach (var sticker in stickerType.AllStickers)
-                {
-                    <span>
-                        <img class="collectSticker" src="@sticker.Url" />
+                <div class="col-md-12 col-xl-12">
+                    <span data-toggle="collapse" href="#@stickerType.Id" class="collapseIconSticker">
+                        <i class="fas fa-chevron-down"></i>
                     </span>
-                }
+                    <span>
+                        <img class="collectStickerType" src="@stickerType.Url" />
+                    </span>
+                    <span>
+                        @stickerType.Name
+                    </span>
+                </div>
+            </div>
+            <div class="row collapse" id="@stickerType.Id">
+                <div class="col-md-12 col-xl-12">
+                    @foreach (var sticker in stickerType.AllStickers)
+                    {
+                        <span>
+                            <img class="collectSticker" src="@sticker.Url" />
+                        </span>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xl-12">
+                    @if (stickerType.HaveIt)
+                    {
+                        <button class="btn btn-danger addStickerTypeButton">
+                            <i class="fas fa-minus"></i> Remove From Favourite
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success addStickerTypeButton">
+                            <i class="fas fa-plus"></i> Add To Favourite
+                        </button>
+                    }
+                </div>
             </div>
             <hr />
         }
     </div>
 </section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/privateChat/js/collectStickersScript.js"></script>
+}

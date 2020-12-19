@@ -1,0 +1,39 @@
+﻿.collectSticker {
+    width: 80px;
+    margin: 6px;
+}
+
+    .collectSticker:hover {
+        padding: 1px 1px 1px 1px;
+        background-color: lightgray;
+        border-radius: 7%;
+    }
+
+.collectStickerType {
+    width: 100px;
+}
+
+.collapseIconSticker {
+    height: 25px;
+    width: 25px;
+    background: mediumseagreen;
+    border-radius: 50%;
+    color: white;
+    display: inline-block;
+    text-align: center;
+}
+
+    .collapseIconSticker.activeCollapse {
+        height: 25px;
+        width: 25px;
+        background: red;
+        border-radius: 50%;
+        color: white;
+        display: inline-block;
+        text-align: center;
+    }
+
+.addStickerTypeButton {
+    float: right;
+    border-radius: 20px;
+}

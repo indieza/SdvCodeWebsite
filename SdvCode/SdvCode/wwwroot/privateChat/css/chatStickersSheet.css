@@ -143,17 +143,3 @@
         font-weight: lighter;
         font-size: 13px;
     }
-
-.collectSticker {
-    width: 80px;
-}
-
-.collectStickerType {
-    width: 100px;
-}
-
-    .collectStickerType:hover {
-        background-color: whitesmoke;
-        padding: 1px 1px 1px 1px;
-        border-radius: 17%;
-    }
