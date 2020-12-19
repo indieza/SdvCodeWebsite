@@ -59,7 +59,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
                 Emojis = this.privateChatService.GetAllEmojis(),
                 AllChatThemes = this.privateChatService.GetAllThemes(),
                 ChatThemeViewModel = this.privateChatService.GetGroupTheme(group),
-                AllStickers = this.privateChatService.GetAllStickers(),
+                AllStickers = this.privateChatService.GetAllStickers(currentUser),
             };
 
             return this.View(model);

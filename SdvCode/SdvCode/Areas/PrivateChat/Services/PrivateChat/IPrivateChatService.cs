@@ -39,6 +39,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         Task UserType(string fromUsername, string toUsername, string fromUserImageUrl);
 
         Task UserStopType(string toUsername);
-        ICollection<ChatStickerTypeViewModel> GetAllStickers();
+
+        ICollection<ChatStickerTypeViewModel> GetAllStickers(ApplicationUser currentUser);
     }
 }

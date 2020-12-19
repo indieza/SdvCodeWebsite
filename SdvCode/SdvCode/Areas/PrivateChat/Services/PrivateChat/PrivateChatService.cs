@@ -185,11 +185,19 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             return result;
         }
 
-        public ICollection<ChatStickerTypeViewModel> GetAllStickers()
+        public ICollection<ChatStickerTypeViewModel> GetAllStickers(ApplicationUser currentUser)
         {
             var result = new List<ChatStickerTypeViewModel>();
 
-            var stickersTypes = this.db.StickerTypes.OrderBy(x => x.Position).ToList();
+            var stickersTypesIds = this.db.FavouriteStickers
+                .Where(x => x.ApplicationUserId == currentUser.Id && x.IsFavourite)
+                .Select(x => x.StickerTypeId)
+                .ToList();
+
+            var stickersTypes = this.db.StickerTypes
+                .Where(x => stickersTypesIds.Contains(x.Id))
+                .OrderBy(x => x.Position)
+                .ToList();
 
             foreach (var stickerType in stickersTypes)
             {
