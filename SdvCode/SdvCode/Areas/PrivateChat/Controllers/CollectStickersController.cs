@@ -46,5 +46,38 @@ namespace SdvCode.Areas.PrivateChat.Controllers
 
             return this.View(model);
         }
+
+        [HttpPost]
+        [Route("PrivateChat/CollectStickers/AddStickerToFavourite")]
+        public async Task<IActionResult> AddStickerToFavourite(string stickerTypeId)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            if (stickerTypeId == null || stickerTypeId == string.Empty)
+            {
+                return new JsonResult(new { isAdded = false });
+            }
+
+            bool result = await this.collectStickersService.AddStickerToFavourite(currentUser, stickerTypeId);
+
+            return new JsonResult(new { isAdded = result });
+        }
+
+        [HttpPost]
+        [Route("PrivateChat/CollectStickers/RemoveStickerFromFavourite")]
+        public async Task<IActionResult> RemoveStickerFromFavourite(string stickerTypeId)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            if (stickerTypeId == null || stickerTypeId == string.Empty)
+            {
+                return new JsonResult(new { isRemoved = false });
+            }
+
+            bool result = await this.collectStickersService
+                .RemoveStickerFromFavourite(currentUser, stickerTypeId);
+
+            return new JsonResult(new { isRemoved = result });
+        }
     }
 }

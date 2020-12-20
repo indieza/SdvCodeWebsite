@@ -13,5 +13,7 @@ namespace SdvCode.Areas.PrivateChat.Services.CollectStickers
     public interface ICollectStickersService
     {
         ICollection<CollectStickersStickerTypeViewModel> GetAllStickers(ApplicationUser currentUser);
+        Task<bool> AddStickerToFavourite(ApplicationUser currentUser, string stickerTypeId);
+        Task<bool> RemoveStickerFromFavourite(ApplicationUser currentUser, string stickerTypeId);
     }
 }

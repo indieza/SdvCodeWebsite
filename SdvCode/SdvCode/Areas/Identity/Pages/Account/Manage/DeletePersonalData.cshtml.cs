@@ -176,6 +176,13 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             this.db.UserRatings.RemoveRange(ratings);
             await this.db.SaveChangesAsync();
 
+            var favouriteStickerTypes = this.db.FavouriteStickers
+                .Where(x => x.ApplicationUserId == user.Id)
+                .ToList();
+
+            this.db.FavouriteStickers.RemoveRange(favouriteStickerTypes);
+            this.db.SaveChanges();
+
             var result = await this.userManager.DeleteAsync(user);
             var userId = await this.userManager.GetUserIdAsync(user);
             if (!result.Succeeded)

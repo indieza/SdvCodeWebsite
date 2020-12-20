@@ -24,16 +24,16 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12 col-xl-12">
+    <div class="col-md-12 col-xl-12" id="@this.Model.Id-button-section">
         @if (this.Model.HaveIt)
         {
-            <button class="btn btn-danger addStickerTypeButton">
+            <button class="btn btn-danger addStickerTypeButton" onclick="removeStickerType('@this.Model.Id')">
                 <i class="fas fa-minus"></i> Remove From Favourite
             </button>
         }
         else
         {
-            <button class="btn btn-success addStickerTypeButton">
+            <button class="btn btn-success addStickerTypeButton" onclick="addStickerType('@this.Model.Id')">
                 <i class="fas fa-plus"></i> Add To Favourite
             </button>
         }

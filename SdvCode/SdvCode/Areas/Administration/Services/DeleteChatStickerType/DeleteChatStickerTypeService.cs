@@ -32,6 +32,10 @@ namespace SdvCode.Areas.Administration.Services.DeleteChatStickerType
 
             if (targetStickerType != null)
             {
+                var favouriteStickerTypes = this.db.FavouriteStickers
+                    .Where(x => x.StickerTypeId == targetStickerType.Id)
+                    .ToList();
+
                 string name = targetStickerType.Name;
                 int count = 0;
 
@@ -51,6 +55,7 @@ namespace SdvCode.Areas.Administration.Services.DeleteChatStickerType
                     string.Format(GlobalConstants.StickerTypeName, targetStickerType.Id),
                     GlobalConstants.StickerTypeFolder);
 
+                this.db.FavouriteStickers.RemoveRange(favouriteStickerTypes);
                 this.db.Stickers.RemoveRange(allStickers);
                 this.db.StickerTypes.Remove(targetStickerType);
                 await this.db.SaveChangesAsync();

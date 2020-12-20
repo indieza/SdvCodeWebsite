@@ -6,8 +6,11 @@ namespace SdvCode.Areas.PrivateChat.Services.CollectStickers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.WebSockets;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.ML.Transforms;
+    using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.PrivateChat.ViewModels.CollectStickers.ViewModels;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -19,6 +22,37 @@ namespace SdvCode.Areas.PrivateChat.Services.CollectStickers
         public CollectStickersService(ApplicationDbContext db)
         {
             this.db = db;
+        }
+
+        public async Task<bool> AddStickerToFavourite(ApplicationUser currentUser, string stickerTypeId)
+        {
+            var targetStickerType = await this.db.StickerTypes.FirstOrDefaultAsync(x => x.Id == stickerTypeId);
+
+            if (targetStickerType != null)
+            {
+                var targetFavourite = await this.db.FavouriteStickers.FirstOrDefaultAsync(x => x.ApplicationUserId == currentUser.Id &&
+                    x.StickerTypeId == stickerTypeId);
+
+                if (targetFavourite != null)
+                {
+                    targetFavourite.IsFavourite = true;
+                    this.db.FavouriteStickers.Update(targetFavourite);
+                    await this.db.SaveChangesAsync();
+                    return true;
+                }
+
+                this.db.FavouriteStickers.Add(new FavouriteStickers
+                {
+                    ApplicationUserId = currentUser.Id,
+                    StickerTypeId = targetStickerType.Id,
+                    IsFavourite = true,
+                });
+
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
 
         public ICollection<CollectStickersStickerTypeViewModel> GetAllStickers(ApplicationUser currentUser)
@@ -72,6 +106,24 @@ namespace SdvCode.Areas.PrivateChat.Services.CollectStickers
             }
 
             return result;
+        }
+
+        public async Task<bool> RemoveStickerFromFavourite(ApplicationUser currentUser, string stickerTypeId)
+        {
+            var targetConnection = await this.db.FavouriteStickers
+                .FirstOrDefaultAsync(x => x.ApplicationUserId == currentUser.Id &&
+                    x.StickerTypeId == stickerTypeId &&
+                    x.IsFavourite == true);
+
+            if (targetConnection != null)
+            {
+                targetConnection.IsFavourite = false;
+                this.db.FavouriteStickers.Update(targetConnection);
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
     }
 }
