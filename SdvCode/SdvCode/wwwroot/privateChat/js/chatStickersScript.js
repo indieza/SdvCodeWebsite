@@ -57,12 +57,22 @@ function removeStickerType(stickerTypeId) {
 
                 if (removeIcon) {
                     removeIcon.parentElement.removeChild(removeIcon);
+                    let newIcon = document.querySelector(".stickersTypesTabs").firstElementChild;
+
+                    if (newIcon) {
+                        newIcon.firstElementChild.style.backgroundColor = "lightgrey";
+                    }
                 }
 
                 let removeTab = document.getElementById(`${stickerTypeId}-Tab-Section`);
 
                 if (removeTab) {
                     removeTab.parentElement.removeChild(removeTab);
+                    let newTab = document.querySelector(".stickers-tab-container").firstElementChild;
+
+                    if (newTab) {
+                        newTab.style.display = "block";
+                    }
                 }
             }
         },

@@ -166,15 +166,17 @@
                                             </span>
                                         }
                                     </div>
-                                    @for (int i = 0; i < this.Model.AllStickers.Count; i++)
-                                    {
-                                        <span class="sticker-tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.AllStickers.ElementAt(i).Id-Tab-Section">
-                                            @for (int j = 0; j < this.Model.AllStickers.ElementAt(i).Stickers.Count; j++)
-                                            {
-                                                <img class="single-sticker" src="@this.Model.AllStickers.ElementAt(i).Stickers.ElementAt(j).Url" />
-                                            }
-                                        </span>
-                                    }
+                                    <div class="stickers-tab-container">
+                                        @for (int i = 0; i < this.Model.AllStickers.Count; i++)
+                                        {
+                                            <span class="sticker-tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.AllStickers.ElementAt(i).Id-Tab-Section">
+                                                @for (int j = 0; j < this.Model.AllStickers.ElementAt(i).Stickers.Count; j++)
+                                                {
+                                                    <img class="single-sticker" src="@this.Model.AllStickers.ElementAt(i).Stickers.ElementAt(j).Url" />
+                                                }
+                                            </span>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                             <div class="chat-action-icon themes-icon" id="themeButton">
