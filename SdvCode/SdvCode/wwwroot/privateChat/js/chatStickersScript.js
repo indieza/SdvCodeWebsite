@@ -37,3 +37,37 @@ function changeStickersTabs(tabSectionId) {
         }
     }
 }
+
+function removeStickerType(stickerTypeId) {
+    $.ajax({
+        type: "POST",
+        url: `/PrivateChat/CollectStickers/RemoveStickerFromFavourite`,
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        data: {
+            'stickerTypeId': stickerTypeId
+        },
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            if (data.isRemoved) {
+                let removeIcon = document.getElementById(stickerTypeId);
+
+                if (removeIcon) {
+                    removeIcon.parentElement.removeChild(removeIcon);
+                }
+
+                let removeTab = document.getElementById(`${stickerTypeId}-Tab-Section`);
+
+                if (removeTab) {
+                    removeTab.parentElement.removeChild(removeTab);
+                }
+            }
+        },
+        error: function (msg) {
+            console.error(msg);
+        }
+    })
+}
