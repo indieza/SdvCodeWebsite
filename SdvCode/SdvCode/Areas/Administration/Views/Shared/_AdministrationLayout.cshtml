@@ -214,6 +214,20 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHolidayAddons" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-gift"></i>
+                    <span>Holiday Addons</span>
+                </a>
+                <div id="collapseHolidayAddons" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Holiday Themes Actions:</h6>
+                        <a asp-area="Administration" asp-controller="AddHolidayTheme" asp-action="Index" class="collapse-item">Add Holiday Theme</a>
+                        <a asp-area="Administration" asp-controller="EditHolidayTheme" asp-action="Index" class="collapse-item">Edit Holiday Theme</a>
+                        <a asp-area="Administration" asp-controller="DeleteHolidayTheme" asp-action="Index" class="collapse-item">Delete Holiday Theme</a>
+                    </div>
+                </div>
+            </li>
             <li>
                 <hr class="sidebar-divider d-none d-md-block">
             </li>

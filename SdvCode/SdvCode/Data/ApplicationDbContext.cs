@@ -5,6 +5,7 @@ namespace SdvCode.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using SdvCode.Areas.Administration.Models.HolidayTheme;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Areas.UserNotifications.Models;
@@ -91,6 +92,10 @@ namespace SdvCode.Data
         public DbSet<Sticker> Stickers { get; set; }
 
         public DbSet<FavouriteStickers> FavouriteStickers { get; set; }
+
+        public DbSet<HolidayTheme> HolidayThemes { get; set; }
+
+        public DbSet<HolidayIcon> HolidayIcons { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -249,6 +254,13 @@ namespace SdvCode.Data
                 .HasOne(x => x.StickerType)
                 .WithMany(x => x.Stickers)
                 .HasForeignKey(x => x.StickerTypeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(true);
+
+            builder.Entity<HolidayIcon>()
+                .HasOne(x => x.HolidayTheme)
+                .WithMany(x => x.HolidayIcons)
+                .HasForeignKey(x => x.HolidayThemeId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(true);
 
