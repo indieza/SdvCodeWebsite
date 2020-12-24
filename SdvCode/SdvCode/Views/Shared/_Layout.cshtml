@@ -42,6 +42,7 @@
     <link href="~/privateChat/css/chatThemeSheet.css" rel="stylesheet" />
     <link href="~/privateChat/css/chatStickersSheet.css" rel="stylesheet" />
     <link href="~/privateChat/css/collectStickersSheet.css" rel="stylesheet" />
+    <link href="~/css/website/snowSheet.css" rel="stylesheet" />
 </head>
 <body onload="setSiteTheme(); getLatestBlogPosts();">
     <audio id="notificationAudio">
@@ -105,6 +106,10 @@
                 </div>
             </div>
         </header>
+        @if (DateTime.UtcNow.Month == 12)
+        {
+            <partial name="_SnowPartial" />
+        }
         @*<section class="renderBodySection">*@
         @RenderBody()
         @*</section>*@
