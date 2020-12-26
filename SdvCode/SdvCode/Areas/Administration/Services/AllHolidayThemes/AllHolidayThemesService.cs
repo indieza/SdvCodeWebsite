@@ -7,19 +7,23 @@ namespace SdvCode.Areas.Administration.Services.AllHolidayThemes
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Microsoft.EntityFrameworkCore;
     using OfficeOpenXml.ConditionalFormatting;
     using SdvCode.Areas.Administration.ViewModels.AllHolidayThemes.ViewModels;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Services.Cloud;
 
     public class AllHolidayThemesService : IAllHolidayThemesService
     {
         private readonly ApplicationDbContext db;
+        private readonly Cloudinary cloudinary;
 
-        public AllHolidayThemesService(ApplicationDbContext db)
+        public AllHolidayThemesService(ApplicationDbContext db, Cloudinary cloudinary)
         {
             this.db = db;
+            this.cloudinary = cloudinary;
         }
 
         public async Task<Tuple<bool, string>> ChangeHolidayThemeStatus(string id, bool status)
@@ -38,6 +42,36 @@ namespace SdvCode.Areas.Administration.Services.AllHolidayThemes
                         SuccessMessages.SuccessfullyEditHolidayThemeStatus,
                         targetTheme.Name.ToUpper(),
                         status.ToString().ToUpper()));
+            }
+
+            return Tuple.Create(false, ErrorMessages.HolidayThemeDoesNotExist);
+        }
+
+        public async Task<Tuple<bool, string>> DeleteHolidayTheme(string id)
+        {
+            var targetTheme = await this.db.HolidayThemes.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (targetTheme != null)
+            {
+                var themeName = targetTheme.Name;
+
+                var allThemeIcons = this.db.HolidayIcons.Where(x => x.HolidayThemeId == targetTheme.Id).ToList();
+
+                foreach (var icon in allThemeIcons)
+                {
+                    ApplicationCloudinary.DeleteImage(
+                        this.cloudinary,
+                        string.Format(GlobalConstants.HolidayIconName, icon.Id),
+                        GlobalConstants.HolidayThemesFolder);
+                }
+
+                this.db.HolidayIcons.RemoveRange(allThemeIcons);
+                this.db.HolidayThemes.Remove(targetTheme);
+                await this.db.SaveChangesAsync();
+
+                return Tuple.Create(
+                    true,
+                    string.Format(SuccessMessages.SuccessfullyDeleteHolidayTheme, themeName.ToUpper()));
             }
 
             return Tuple.Create(false, ErrorMessages.HolidayThemeDoesNotExist);

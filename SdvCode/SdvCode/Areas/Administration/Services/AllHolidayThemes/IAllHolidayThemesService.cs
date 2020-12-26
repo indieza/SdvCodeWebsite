@@ -14,5 +14,6 @@ namespace SdvCode.Areas.Administration.Services.AllHolidayThemes
         ICollection<AllHolidayThemesViewModel> GetAllHolidayThemes();
 
         Task<Tuple<bool, string>> ChangeHolidayThemeStatus(string id, bool status);
+        Task<Tuple<bool, string>> DeleteHolidayTheme(string id);
     }
 }

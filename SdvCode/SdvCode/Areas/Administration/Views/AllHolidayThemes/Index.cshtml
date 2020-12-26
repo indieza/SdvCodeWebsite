@@ -78,6 +78,12 @@
                                             </button>
                                         </form>
                                     }
+                                    <br />
+                                    <form method="post">
+                                        <button asp-area="Administration" asp-controller="AllHolidayThemes" asp-action="DeleteHolidayTheme" asp-route-id="@theme.Id" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }

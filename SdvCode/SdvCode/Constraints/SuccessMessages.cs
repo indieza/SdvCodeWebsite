@@ -130,7 +130,10 @@ namespace SdvCode.Constraints
             "Successfully add \"{0}\" stickers, \"{1}\" of them already exist.";
 
         public const string SuccessfullyAddedHolidayTheme = "Successfully add \"{0}\" holiday theme.";
+
         public const string SuccessfullyEditHolidayThemeStatus =
             "Successfully change \"{0}\" holiday theme status to \"{1}\"";
+
+        public const string SuccessfullyDeleteHolidayTheme = "Successfully delete \"{0}\" holiday theme.";
     }
 }

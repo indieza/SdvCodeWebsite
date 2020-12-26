@@ -45,5 +45,21 @@ namespace SdvCode.Areas.Administration.Controllers
 
             return this.RedirectToAction("Index", "AllHolidayThemes");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteHolidayTheme(string id)
+        {
+            Tuple<bool, string> result = await this.allHolidayThemesService.DeleteHolidayTheme(id);
+            if (!result.Item1)
+            {
+                this.TempData["Error"] = result.Item2;
+            }
+            else
+            {
+                this.TempData["Success"] = result.Item2;
+            }
+
+            return this.RedirectToAction("Index", "AllHolidayThemes");
+        }
     }
 }
