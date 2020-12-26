@@ -5,6 +5,10 @@
     text-shadow: 0 0 5px #000;
 }
 
+.singleThemeIcon {
+    width: 40px;
+}
+
 @-webkit-keyframes snowflakes-fall {
     0% {
         top: -10%;

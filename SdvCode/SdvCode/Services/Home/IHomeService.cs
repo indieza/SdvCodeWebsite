@@ -3,6 +3,7 @@
 
 namespace SdvCode.Services.Home
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
@@ -22,5 +23,7 @@ namespace SdvCode.Services.Home
         int GetPostsCount();
 
         int GetPorductsCount();
+
+        Task<ICollection<string>> GetHolidayThemeIcons(DateTime date);
     }
 }

@@ -51,6 +51,13 @@ namespace SdvCode.Controllers
             return new JsonResult(latestPosts);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetHolidayTheme()
+        {
+            ICollection<string> icons = await this.homeService.GetHolidayThemeIcons(DateTime.UtcNow);
+            return new JsonResult(icons);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

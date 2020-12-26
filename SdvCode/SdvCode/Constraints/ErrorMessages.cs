@@ -1,8 +1,6 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-
 namespace SdvCode.Constraints
 {
     public static class ErrorMessages
@@ -88,5 +86,7 @@ namespace SdvCode.Constraints
         public const string StickerDoesNotExist = "Sticker ID does not exist.";
 
         public const string StickerAlreadyTypeExist = "\"{0}\" sticker type already exist.";
+
+        public const string HolidayThemeAlreadyExist = "\"{0}\" holiday theme already exist.";
     }
 }

@@ -42,9 +42,9 @@
     <link href="~/privateChat/css/chatThemeSheet.css" rel="stylesheet" />
     <link href="~/privateChat/css/chatStickersSheet.css" rel="stylesheet" />
     <link href="~/privateChat/css/collectStickersSheet.css" rel="stylesheet" />
-    <link href="~/css/website/snowSheet.css" rel="stylesheet" />
+    <link href="~/css/website/holidayThemeSheet.css" rel="stylesheet" />
 </head>
-<body onload="setSiteTheme(); getLatestBlogPosts();">
+<body onload="setSiteTheme(); getLatestBlogPosts(); setHolidayTheme();">
     <audio id="notificationAudio">
         <source id="targetAudio" src="~/NotificationSound1.mp3" type="audio/mpeg">
     </audio>
@@ -106,10 +106,7 @@
                 </div>
             </div>
         </header>
-        @if (DateTime.UtcNow.Month == 12)
-        {
-            <partial name="_SnowPartial" />
-        }
+        <partial name="_HolidayPartial" />
         @*<section class="renderBodySection">*@
         @RenderBody()
         @*</section>*@
@@ -241,6 +238,7 @@
         <script type="text/javascript" src="~/notification/js/notification.js"></script>
         <script type="text/javascript" src="~/userStatus/js/userStatus.js"></script>
         <script src="~/js/blog/imageModalScript.js"></script>
+        <script src="~/js/website/holidayThemeScript.js"></script>
         @RenderSection("Scripts", required: false)
     </div>
 </body>

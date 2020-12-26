@@ -1,6 +1,8 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace SdvCode.Constraints
 {
     public static class GlobalConstants
@@ -110,5 +112,9 @@ namespace SdvCode.Constraints
         public const string StickerName = "{0}-StickerName";
 
         public const string StickersFolder = "Private Chat Stickers";
+
+        public const string HolidayIconName = "{0}-Holiday Theme Icon";
+
+        public const string HolidayThemesFolder = "Holiday Theme Icon";
     }
 }

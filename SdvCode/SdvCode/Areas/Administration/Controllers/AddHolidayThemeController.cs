@@ -9,6 +9,7 @@ namespace SdvCode.Areas.Administration.Controllers
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SdvCode.Areas.Administration.Services.AddHolidayTheme;
     using SdvCode.Areas.Administration.ViewModels.AddHolidayTheme.InputModels;
     using SdvCode.Constraints;
 
@@ -16,8 +17,11 @@ namespace SdvCode.Areas.Administration.Controllers
     [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class AddHolidayThemeController : Controller
     {
-        public AddHolidayThemeController()
+        private readonly IAddHolidayThemeService addHolidayThemeService;
+
+        public AddHolidayThemeController(IAddHolidayThemeService addHolidayThemeService)
         {
+            this.addHolidayThemeService = addHolidayThemeService;
         }
 
         public IActionResult Index()
@@ -30,7 +34,16 @@ namespace SdvCode.Areas.Administration.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                return null;
+                Tuple<bool, string> result = await this.addHolidayThemeService.AddNewHolidayTheme(model);
+
+                if (!result.Item1)
+                {
+                    this.TempData["Error"] = result.Item2;
+                    return this.View();
+                }
+
+                this.TempData["Success"] = result.Item2;
+                return this.RedirectToAction("Index", "AddHolidayTheme");
             }
 
             return this.View();

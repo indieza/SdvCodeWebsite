@@ -51,6 +51,29 @@ namespace SdvCode.Services.Home
             return users;
         }
 
+        public async Task<ICollection<string>> GetHolidayThemeIcons(DateTime date)
+        {
+            var themeId = await this.db.HolidayThemes
+                .Where(x => x.StartDate.Day <= date.Day &&
+                    x.StartDate.Month <= date.Month &&
+                    x.EndDate.Day >= date.Day &&
+                    x.EndDate.Month >= date.Month)
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            var result = new List<string>();
+
+            if (themeId != null)
+            {
+                result.AddRange(this.db.HolidayIcons
+                    .Where(x => x.HolidayThemeId == themeId)
+                    .Select(x => x.Url)
+                    .ToList());
+            }
+
+            return result;
+        }
+
         public async Task<ICollection<LatestPostViewModel>> GetLatestPosts()
         {
             var result = new List<LatestPostViewModel>();
