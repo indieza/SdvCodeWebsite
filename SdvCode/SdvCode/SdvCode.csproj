@@ -1911,6 +1911,7 @@
     <Folder Include="Areas\Administration\ViewModels\AddEmojiWithSkin\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmojis\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmoji\ViewModels\" />
+    <Folder Include="Areas\Administration\ViewModels\AddHolidayTheme\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AllChatStickers\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\AllEmojis\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteEmojisByType\ViewModels\" />

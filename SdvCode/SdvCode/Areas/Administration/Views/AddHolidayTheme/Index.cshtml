@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Holiday addons";
+}
+
+@model AddHolidayThemeInputModel
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Holiday Addons - Add new holiday theme</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">Add new holiday theme</h1>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="row" method="post" enctype="multipart/form-data">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.Name"></label>
+                <input autocomplete="off" asp-for="@this.Model.Name" class="form-control" placeholder="Theme name" />
+                <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.StartDate"></label>
+                <input autocomplete="off" asp-for="@this.Model.StartDate" class="form-control" placeholder="Theme start date" type="date" />
+                <span class="text-danger" asp-validation-for="@this.Model.StartDate"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.EndDate"></label>
+                <input autocomplete="off" asp-for="@this.Model.EndDate" class="form-control" placeholder="Theme end date" type="date" />
+                <span class="text-danger" asp-validation-for="@this.Model.EndDate"></span>
+            </div>
+            <div class="col-xl-12 col-md-12 mb-4">
+                <label asp-for="@this.Model.Icons"></label>
+                <input asp-for="@this.Model.Icons" class="form-control-file" type="file" multiple />
+                <span class="text-danger" asp-validation-for="@this.Model.Icons"></span>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <button asp-area="Administration" asp-controller="AddHolidayTheme" asp-action="Index" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Add Holiday Theme</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/administration/js/addEmojiScript.js"></script>
+}
