@@ -37,8 +37,6 @@ namespace SdvCode.Areas.Administration.Services.AddHolidayTheme
                 targetTheme = new HolidayTheme
                 {
                     Name = model.Name,
-                    StartDate = model.StartDate,
-                    EndDate = model.EndDate,
                     IsActive = false,
                 };
 

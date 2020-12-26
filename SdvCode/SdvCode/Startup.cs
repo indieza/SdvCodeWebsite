@@ -35,6 +35,7 @@ namespace SdvCode
     using SdvCode.Areas.Administration.Services.AddHolidayTheme;
     using SdvCode.Areas.Administration.Services.AllChatStickers;
     using SdvCode.Areas.Administration.Services.AllEmojis;
+    using SdvCode.Areas.Administration.Services.AllHolidayThemes;
     using SdvCode.Areas.Administration.Services.BlogAddons;
     using SdvCode.Areas.Administration.Services.Dashboard;
     using SdvCode.Areas.Administration.Services.DbUsage;
@@ -216,6 +217,7 @@ namespace SdvCode
             services.AddTransient<IAddChatStickersService, AddChatStickersService>();
             services.AddTransient<IAllChatStickersService, AllChatStickersService>();
             services.AddTransient<IAddHolidayThemeService, AddHolidayThemeService>();
+            services.AddTransient<IAllHolidayThemesService, AllHolidayThemesService>();
 
             // Register Logic Services
             services.AddScoped<IContactService, ContactService>();

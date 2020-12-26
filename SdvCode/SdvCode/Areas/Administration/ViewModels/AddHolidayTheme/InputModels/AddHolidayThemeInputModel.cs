@@ -18,14 +18,6 @@ namespace SdvCode.Areas.Administration.ViewModels.AddHolidayTheme.InputModels
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Start Date")]
-        public DateTime StartDate { get; set; }
-
-        [Required]
-        [Display(Name = "End Date")]
-        public DateTime EndDate { get; set; }
-
-        [Required]
         [FilesCollectionRange(1, 14)]
         public ICollection<IFormFile> Icons { get; set; } = new HashSet<IFormFile>();
     }

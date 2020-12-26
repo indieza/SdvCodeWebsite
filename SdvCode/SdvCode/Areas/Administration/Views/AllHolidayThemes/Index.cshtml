@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Holiday Theme addons";
+}
+
+@model ICollection<AllHolidayThemesViewModel>
+
+<link href="~/administration/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<partial name="_TempDataPartial" />
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Holiday Themes Information</h1>
+    </div>
+    <hr />
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h5 mb-0 text-gray-800">All Holiday Themes</h1>
+    </div>
+
+    @foreach (var theme in this.Model)
+    {
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Information For Each Holiday Theme</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Is Active</th>
+                                <th>Icons</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Is Active</th>
+                                <th>Icons</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr onmouseover="markTableRow()">
+                                <td>
+                                    @theme.Name
+                                </td>
+                                <td>
+                                    <span style="color: @(theme.IsActive ? "green" : "red"); font-weight: bold">
+                                        @theme.IsActive.ToString().ToUpper()
+                                    </span>
+                                </td>
+                                <td>
+                                    @foreach (var iconUrl in theme.IconsUrls)
+                                    {
+                                        <span>
+                                            <img style="width: 2.4em;" src="@iconUrl" />
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (theme.IsActive)
+                                    {
+                                        <form method="post">
+                                            <button asp-area="Administration" asp-controller="AllHolidayThemes" asp-action="ChangeThemeStatus" asp-route-id="@theme.Id" asp-route-status="@false" class="btn btn-danger">
+                                                <i class="fas fa-times"></i> Deactivate
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form method="post">
+                                            <button asp-area="Administration" asp-controller="AllHolidayThemes" asp-action="ChangeThemeStatus" asp-route-id="@theme.Id" asp-route-status="@true" class="btn btn-success">
+                                                <i class="fas fa-check"></i> Activate
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script src="~/administration/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/administration/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/administration/js/demo/datatables-demo.js"></script>
+    <script src="~/administration/js/dataTableScripts.js"></script>
+}

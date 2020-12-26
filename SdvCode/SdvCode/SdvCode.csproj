@@ -1914,6 +1914,7 @@
     <Folder Include="Areas\Administration\ViewModels\AddHolidayTheme\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AllChatStickers\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\AllEmojis\InputModels\" />
+    <Folder Include="Areas\Administration\ViewModels\AllHolidayThemes\InputModels\" />
     <Folder Include="Areas\Administration\ViewModels\DeleteEmojisByType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\ShopView\InputModels\" />
     <Folder Include="Areas\Editor\Models\" />

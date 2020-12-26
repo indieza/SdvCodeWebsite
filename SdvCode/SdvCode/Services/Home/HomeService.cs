@@ -51,13 +51,10 @@ namespace SdvCode.Services.Home
             return users;
         }
 
-        public async Task<ICollection<string>> GetHolidayThemeIcons(DateTime date)
+        public async Task<ICollection<string>> GetHolidayThemeIcons()
         {
             var themeId = await this.db.HolidayThemes
-                .Where(x => x.StartDate.Day <= date.Day &&
-                    x.StartDate.Month <= date.Month &&
-                    x.EndDate.Day >= date.Day &&
-                    x.EndDate.Month >= date.Month)
+                .Where(x => x.IsActive)
                 .Select(x => x.Id)
                 .FirstOrDefaultAsync();
 

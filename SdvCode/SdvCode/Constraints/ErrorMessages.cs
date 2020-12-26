@@ -88,5 +88,7 @@ namespace SdvCode.Constraints
         public const string StickerAlreadyTypeExist = "\"{0}\" sticker type already exist.";
 
         public const string HolidayThemeAlreadyExist = "\"{0}\" holiday theme already exist.";
+
+        public const string HolidayThemeDoesNotExist = "Holiday theme does not exist.";
     }
 }

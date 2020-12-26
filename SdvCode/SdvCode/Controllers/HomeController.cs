@@ -54,7 +54,7 @@ namespace SdvCode.Controllers
         [HttpGet]
         public async Task<IActionResult> GetHolidayTheme()
         {
-            ICollection<string> icons = await this.homeService.GetHolidayThemeIcons(DateTime.UtcNow);
+            ICollection<string> icons = await this.homeService.GetHolidayThemeIcons();
             return new JsonResult(icons);
         }
 

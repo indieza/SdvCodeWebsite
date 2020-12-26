@@ -23,16 +23,6 @@
                 <span class="text-danger" asp-validation-for="@this.Model.Name"></span>
             </div>
             <div class="col-xl-12 col-md-12 mb-4">
-                <label asp-for="@this.Model.StartDate"></label>
-                <input autocomplete="off" asp-for="@this.Model.StartDate" class="form-control" placeholder="Theme start date" type="date" />
-                <span class="text-danger" asp-validation-for="@this.Model.StartDate"></span>
-            </div>
-            <div class="col-xl-12 col-md-12 mb-4">
-                <label asp-for="@this.Model.EndDate"></label>
-                <input autocomplete="off" asp-for="@this.Model.EndDate" class="form-control" placeholder="Theme end date" type="date" />
-                <span class="text-danger" asp-validation-for="@this.Model.EndDate"></span>
-            </div>
-            <div class="col-xl-12 col-md-12 mb-4">
                 <label asp-for="@this.Model.Icons"></label>
                 <input asp-for="@this.Model.Icons" class="form-control-file" type="file" multiple />
                 <span class="text-danger" asp-validation-for="@this.Model.Icons"></span>

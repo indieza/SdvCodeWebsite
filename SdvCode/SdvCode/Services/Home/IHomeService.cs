@@ -24,6 +24,6 @@ namespace SdvCode.Services.Home
 
         int GetPorductsCount();
 
-        Task<ICollection<string>> GetHolidayThemeIcons(DateTime date);
+        Task<ICollection<string>> GetHolidayThemeIcons();
     }
 }

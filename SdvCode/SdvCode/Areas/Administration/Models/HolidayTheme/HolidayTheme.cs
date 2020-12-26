@@ -26,12 +26,6 @@ namespace SdvCode.Areas.Administration.Models.HolidayTheme
         public string Name { get; set; }
 
         [Required]
-        public DateTime StartDate { get; set; }
-
-        [Required]
-        public DateTime EndDate { get; set; }
-
-        [Required]
         public bool IsActive { get; set; }
 
         public ICollection<HolidayIcon> HolidayIcons { get; set; } = new HashSet<HolidayIcon>();
