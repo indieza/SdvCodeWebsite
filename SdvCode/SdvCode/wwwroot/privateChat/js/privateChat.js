@@ -257,3 +257,19 @@ function zoomChatImage(imageUrl) {
 function closeChatZoomedImage() {
     document.querySelector(".modalChatImage").style.display = "none";
 }
+
+function sendStickerMessage(stickerUrl) {
+    let toUser = document.getElementById("toUser").textContent;
+    let fromUser = document.getElementById("fromUser").textContent;
+    let group = document.getElementById("groupName").textContent;
+
+    if (toUser && fromUser && group && stickerUrl) {
+        connection.invoke("SendStickerMessage", fromUser, toUser, group, stickerUrl).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        connection.invoke("ReceiveStickerMessage", fromUser, group, stickerUrl).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
+}

@@ -306,6 +306,17 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             await this.hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, message.Trim());
         }
 
+        public async Task ReceiveStickerMessage(string fromUsername, string group, string stickerUrl)
+        {
+            var fromUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            var message = $"<span><img style=\"width: 127px;\" src=\"{stickerUrl}\" /></span>";
+
+            await this.hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, message.Trim());
+        }
+
         public async Task<string> SendMessageToUser(string fromUsername, string toUsername, string message, string group)
         {
             var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
@@ -452,6 +463,31 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 .User(toId)
                 .SendAsync("ReceiveMessage", fromUsername, fromImage, messageContent.ToString().Trim());
             return messageContent.ToString().Trim();
+        }
+
+        public async Task SendStickerMessageToUser(string fromUsername, string toUsername, string group, string stickerUrl)
+        {
+            var toUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == toUsername);
+            var toId = toUser.Id;
+            var toImage = toUser.ImageUrl;
+
+            var fromUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == fromUsername);
+            var fromId = fromUser.Id;
+            var fromImage = fromUser.ImageUrl;
+
+            var newMessage = new ChatMessage
+            {
+                ApplicationUser = fromUser,
+                Group = this.db.Groups.FirstOrDefault(x => x.Name.ToLower() == group.ToLower()),
+                SendedOn = DateTime.UtcNow,
+                ReceiverUsername = toUser.UserName,
+                RecieverImageUrl = toUser.ImageUrl,
+                Content = $"<span><img style=\"width: 127px;\" src=\"{stickerUrl}\" /></span>",
+            };
+
+            this.db.ChatMessages.Add(newMessage);
+            await this.db.SaveChangesAsync();
+            await this.hubContext.Clients.User(toId).SendAsync("ReceiveMessage", fromUsername, fromImage, newMessage.Content);
         }
 
         public async Task UserStopType(string toUsername)

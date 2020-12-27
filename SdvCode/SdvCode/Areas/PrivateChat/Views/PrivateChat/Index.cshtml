@@ -172,7 +172,7 @@
                                             <span class="sticker-tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.AllStickers.ElementAt(i).Id-Tab-Section">
                                                 @for (int j = 0; j < this.Model.AllStickers.ElementAt(i).Stickers.Count; j++)
                                                 {
-                                                    <img class="single-sticker" src="@this.Model.AllStickers.ElementAt(i).Stickers.ElementAt(j).Url" />
+                                                    <img onclick="sendStickerMessage('@this.Model.AllStickers.ElementAt(i).Stickers.ElementAt(j).Url')" class="single-sticker" src="@this.Model.AllStickers.ElementAt(i).Stickers.ElementAt(j).Url" />
                                                 }
                                             </span>
                                         }

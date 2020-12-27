@@ -55,9 +55,23 @@ namespace SdvCode.Hubs
                 .SendAsync("VisualizeNotification", notification);
         }
 
+        public async Task SendStickerMessage(string fromUsername, string toUsername, string group, string stickerUrl)
+        {
+            await this.privateChatService.SendStickerMessageToUser(
+                fromUsername,
+                toUsername,
+                group,
+                stickerUrl);
+        }
+
         public async Task ReceiveMessage(string fromUsername, string message, string group)
         {
             await this.privateChatService.ReceiveNewMessage(fromUsername, message, group);
+        }
+
+        public async Task ReceiveStickerMessage(string fromUsername, string group, string stickerUrl)
+        {
+            await this.privateChatService.ReceiveStickerMessage(fromUsername, group, stickerUrl);
         }
 
         public async Task UpdateMessageNotifications(string fromUsername, string username)
