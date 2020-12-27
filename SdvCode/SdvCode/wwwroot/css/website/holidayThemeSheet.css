@@ -152,3 +152,15 @@
         -webkit-animation-delay: 4s, 2.5s;
         animation-delay: 4s, 2.5s;
     }
+
+    .snowflake:nth-of-type(12) {
+        left: 55%;
+        -webkit-animation-delay: 4s, 2.5s;
+        animation-delay: 4s, 2.5s;
+    }
+
+    .snowflake:nth-of-type(13) {
+        left: 15%;
+        -webkit-animation-delay: 4s, 2.5s;
+        animation-delay: 4s, 2.5s;
+    }
