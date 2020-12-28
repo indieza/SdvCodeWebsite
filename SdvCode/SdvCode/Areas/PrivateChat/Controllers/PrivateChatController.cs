@@ -74,11 +74,12 @@ namespace SdvCode.Areas.PrivateChat.Controllers
 
         [HttpPost]
         [Route("PrivateChat/With/{toUsername?}/Group/{group?}/SendFiles")]
-        public async Task SendFiles(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
+        public async Task<IActionResult> SendFiles(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
         {
-            string resultMessage = await this.privateChatService
+            var result = await this.privateChatService
                 .SendMessageWitFilesToUser(files, group, toUsername, fromUsername, message);
-            await this.privateChatService.ReceiveNewMessage(fromUsername, resultMessage, group);
+
+            return new JsonResult(result);
         }
     }
 }

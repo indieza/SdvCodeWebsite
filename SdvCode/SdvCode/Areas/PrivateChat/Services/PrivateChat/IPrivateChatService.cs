@@ -34,7 +34,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
         Task ChangeChatTheme(string username, string group, string themeId);
 
-        Task<string> SendMessageWitFilesToUser(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message);
+        Task<SendFilesResponseViewModel> SendMessageWitFilesToUser(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message);
 
         Task UserType(string fromUsername, string toUsername, string fromUserImageUrl);
 
@@ -43,6 +43,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         ICollection<ChatStickerTypeViewModel> GetAllStickers(ApplicationUser currentUser);
 
         Task SendStickerMessageToUser(string fromUsername, string toUsername, string group, string stickerUrl);
+
         Task ReceiveStickerMessage(string fromUsername, string group, string stickerUrl);
     }
 }

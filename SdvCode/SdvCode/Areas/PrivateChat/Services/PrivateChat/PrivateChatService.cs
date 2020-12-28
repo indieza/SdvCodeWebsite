@@ -344,7 +344,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             return toId;
         }
 
-        public async Task<string> SendMessageWitFilesToUser(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
+        public async Task<SendFilesResponseViewModel> SendMessageWitFilesToUser(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
         {
             var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
             var toId = toUser.Id;
@@ -373,11 +373,29 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             StringBuilder imagesContent = new StringBuilder();
             StringBuilder filesContent = new StringBuilder();
 
-            var imagesCount = files.Where(x => x.ContentType.Contains("image", StringComparison.CurrentCultureIgnoreCase)).Count();
-            await this.hubContext.Clients.User(fromId).SendAsync("UpdateImagesUploadCount", imagesCount);
+            var imagesCount = files
+                .Where(x => x.ContentType
+                    .Contains("image", StringComparison.CurrentCultureIgnoreCase))
+                .Count();
 
-            var filesCount = files.Where(x => !x.ContentType.Contains("image", StringComparison.CurrentCultureIgnoreCase)).Count();
-            await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", filesCount);
+            var result = new SendFilesResponseViewModel();
+
+            if (imagesCount > 0)
+            {
+                await this.hubContext.Clients.User(fromId).SendAsync("UpdateImagesUploadCount", imagesCount);
+                result.HaveImages = true;
+            }
+
+            var filesCount = files
+                .Where(x => !x.ContentType
+                    .Contains("image", StringComparison.CurrentCultureIgnoreCase))
+                .Count();
+
+            if (filesCount > 0)
+            {
+                await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", filesCount);
+                result.HaveFiles = true;
+            }
 
             foreach (var file in files)
             {
@@ -436,8 +454,15 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 newMessage.ChatImages.Add(chatFile);
             }
 
-            await this.hubContext.Clients.User(fromId).SendAsync("UpdateImagesUploadCount", imagesCount);
-            await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", filesCount);
+            if (imagesCount > 0)
+            {
+                await this.hubContext.Clients.User(fromId).SendAsync("UpdateImagesUploadCount", imagesCount);
+            }
+
+            if (filesCount > 0)
+            {
+                await this.hubContext.Clients.User(fromId).SendAsync("UpdateFilesUploadCount", filesCount);
+            }
 
             if (imagesContent.Length == 0)
             {
@@ -462,7 +487,9 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 .Clients
                 .User(toId)
                 .SendAsync("ReceiveMessage", fromUsername, fromImage, messageContent.ToString().Trim());
-            return messageContent.ToString().Trim();
+            await this.ReceiveNewMessage(fromUsername, messageContent.ToString().Trim(), group);
+
+            return result;
         }
 
         public async Task SendStickerMessageToUser(string fromUsername, string toUsername, string group, string stickerUrl)

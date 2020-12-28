@@ -208,17 +208,27 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                 type: "POST",
                 data: data,
                 success: function (result) {
-                    document.getElementById("imageSpinner").style.display = "none";
-                    document.querySelector("#imageButton i").classList = "";
-                    document.querySelector("#imageButton i").classList.add("far", "fa-images");
-                    document.querySelector(".select-image-badge").innerHTML = "0";
-                    document.getElementById("uploadImage").disabled = false;
+                    if (result.haveImages) {
+                        document.getElementById("imageSpinner").style.display = "none";
+                        document.querySelector("#imageButton i").classList = "";
+                        document.querySelector("#imageButton i").classList.add("far", "fa-images");
+                        let imageBadge = document.querySelector(".select-image-badge");
+                        imageBadge.style.boxShadow = "";
+                        imageBadge.style.animation = "";
+                        imageBadge.textContent = "0";
+                        document.getElementById("uploadImage").disabled = false;
+                    }
 
-                    document.getElementById("fileSpinner").style.display = "none";
-                    document.querySelector("#fileButton i").classList = "";
-                    document.querySelector("#fileButton i").classList.add("fas", "fa-paperclip");
-                    document.querySelector(".select-file-badge").innerHTML = "0";
-                    document.getElementById("uploadFile").disabled = false;
+                    if (result.haveFiles) {
+                        document.getElementById("fileSpinner").style.display = "none";
+                        document.querySelector("#fileButton i").classList = "";
+                        document.querySelector("#fileButton i").classList.add("fas", "fa-paperclip");
+                        let fileBadge = document.querySelector(".select-file-badge");
+                        fileBadge.style.boxShadow = "";
+                        fileBadge.style.animation = "";
+                        fileBadge.textContent = "0";
+                        document.getElementById("uploadFile").disabled = false;
+                    }
                 },
                 error: function (err) {
                     console.log(err.statusText);
@@ -227,16 +237,6 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
             document.getElementById("uploadImage").value = "";
             document.getElementById("uploadFile").value = "";
-
-            let imageBadge = document.querySelector(".select-image-badge");
-            imageBadge.style.boxShadow = "";
-            imageBadge.style.animation = "";
-            imageBadge.textContent = "0";
-
-            let fileBadge = document.querySelector(".select-file-badge");
-            fileBadge.style.boxShadow = "";
-            fileBadge.style.animation = "";
-            fileBadge.textContent = "0";
         }
     }
 
