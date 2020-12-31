@@ -119,6 +119,8 @@
                                     </div>
                                     @for (int i = 0; i < this.Model.Emojis.Keys.Count; i++)
                                     {
+                                        var indicator = 1;
+
                                         <div class="emoji-tab-section" style="display: @(i == 0 ? "block" : "none")" id="@this.Model.Emojis.Keys.ElementAt(i).ToString()-Tab-Section">
                                             @for (int j = 0; j < this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].Count; j++)
                                             {
@@ -126,7 +128,7 @@
                                                     <img class="@(this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0 ? "hasEmojiSkin" : "singleEmoji")" src="@this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).Url" />
                                                     @if (this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls.Count > 0)
                                                     {
-                                                        <span class="@(j % 10 <= 3 ? "tooltipEmojiSpanLeft" : "tooltipEmojiSpanRight")">
+                                                        <span class="@(indicator <= 3 ? "tooltipEmojiSpanRight" : "tooltipEmojiSpanLeft")">
                                                             @foreach (var skinUrl in this.Model.Emojis[this.Model.Emojis.Keys.ElementAt(i)].ElementAt(j).SkinsUrls)
                                                             {
                                                                 <img class="singleEmoji" src="@skinUrl" />
@@ -134,6 +136,13 @@
                                                         </span>
                                                     }
                                                 </span>
+
+                                                if (indicator >= 6)
+                                                {
+                                                    indicator = 0;
+                                                }
+
+                                                indicator++;
                                             }
                                         </div>
                                     }
