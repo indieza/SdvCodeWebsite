@@ -94,6 +94,7 @@
                             }
                             @*Here Goose your messages*@
                         </ul>
+                        <input id="messagesSkipCount" type="hidden" value="@this.Model.ChatMessages.Count" />
                     </div>
                     <div class="nano-pane">
                         <div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div>
@@ -254,4 +255,5 @@
     <script src="~/privateChat/js/chatImagesScript.js"></script>
     <script src="~/privateChat/js/chatFilesScript.js"></script>
     <script src="~/privateChat/js/chatStickersScript.js"></script>
+    <script src="~/privateChat/js/chatPerformanceScript.js"></script>
 }

@@ -113,36 +113,10 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             {
                 var messages = this.db.ChatMessages
                     .Where(x => x.GroupId == targetGroup.Id)
+                    .OrderByDescending(x => x.SendedOn)
+                    .Take(GlobalConstants.MessagesCountPerScroll)
                     .OrderBy(x => x.SendedOn)
                     .ToList();
-
-                if (messages.Count > GlobalConstants.SavedChatMessagesCount)
-                {
-                    var oldMessages = messages.Take(GlobalConstants.SavedChatMessagesCount);
-
-                    foreach (var oldMessageId in oldMessages.Select(x => x.Id).ToList())
-                    {
-                        var oldImages = this.db.ChatImages.Where(x => x.ChatMessageId == oldMessageId).ToList();
-
-                        foreach (var oldImage in oldImages)
-                        {
-                            ApplicationCloudinary.DeleteImage(
-                                this.cloudinary,
-                                oldImage.Name,
-                                GlobalConstants.PrivateChatImagesFolder);
-                        }
-
-                        this.db.ChatImages.RemoveRange(oldImages);
-                    }
-
-                    this.db.ChatMessages.RemoveRange(oldMessages);
-                    await this.db.SaveChangesAsync();
-
-                    messages = this.db.ChatMessages
-                        .Where(x => x.GroupId == targetGroup.Id)
-                        .OrderBy(x => x.SendedOn)
-                        .ToList();
-                }
 
                 foreach (var message in messages)
                 {
@@ -297,6 +271,44 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             return true;
         }
 
+        public async Task<ICollection<LoadMoreMessagesViewModel>> LoadMoreMessages(string group, int messagesSkipCount)
+        {
+            var result = new List<LoadMoreMessagesViewModel>();
+
+            var targetGroup = await this.db.Groups.FirstOrDefaultAsync(x => x.Name.ToLower() == group.ToLower());
+
+            if (targetGroup != null)
+            {
+                var messages = this.db.ChatMessages
+                    .Where(x => x.GroupId == targetGroup.Id)
+                    .OrderByDescending(x => x.SendedOn)
+                    .Skip(messagesSkipCount)
+                    .Take(GlobalConstants.MessagesCountPerScroll)
+                    .OrderBy(x => x.SendedOn)
+                    .ToList();
+
+                foreach (var message in messages)
+                {
+                    var currentMessageModel = new LoadMoreMessagesViewModel
+                    {
+                        Id = message.Id,
+                        Content = message.Content,
+                        SendedOn = message.SendedOn,
+                    };
+
+                    var messageUser = await this.db.Users
+                        .FirstOrDefaultAsync(x => x.Id == message.ApplicationUserId);
+
+                    currentMessageModel.Username = messageUser.UserName;
+                    currentMessageModel.ImageUrl = messageUser.ImageUrl;
+
+                    result.Add(currentMessageModel);
+                }
+            }
+
+            return result;
+        }
+
         public async Task ReceiveNewMessage(string fromUsername, string message, string group)
         {
             var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
@@ -327,6 +339,8 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             var fromId = fromUser.Id;
             var fromImage = fromUser.ImageUrl;
 
+            await this.DeleteOldMessage(group);
+
             var newMessage = new ChatMessage
             {
                 ApplicationUser = fromUser,
@@ -353,6 +367,8 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             var fromUser = this.db.Users.FirstOrDefault(x => x.UserName == fromUsername);
             var fromId = fromUser.Id;
             var fromImage = fromUser.ImageUrl;
+
+            await this.DeleteOldMessage(group);
 
             var newMessage = new ChatMessage
             {
@@ -502,6 +518,8 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             var fromId = fromUser.Id;
             var fromImage = fromUser.ImageUrl;
 
+            await this.DeleteOldMessage(group);
+
             var newMessage = new ChatMessage
             {
                 ApplicationUser = fromUser,
@@ -539,6 +557,42 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 .Clients
                 .User(toId)
                 .SendAsync("VisualizeUserType", fromUsername, fromUserImageUrl);
+        }
+
+        private async Task DeleteOldMessage(string group)
+        {
+            var targetGroup = await this.db.Groups.FirstOrDefaultAsync(x => x.Name.ToLower() == group.ToLower());
+
+            if (targetGroup != null)
+            {
+                var messages = this.db.ChatMessages
+                    .Where(x => x.GroupId == targetGroup.Id)
+                    .OrderBy(x => x.SendedOn)
+                    .ToList();
+
+                if (messages.Count > GlobalConstants.SavedChatMessagesCount)
+                {
+                    var oldMessages = messages.Take(GlobalConstants.SavedChatMessagesCount);
+
+                    foreach (var oldMessageId in oldMessages.Select(x => x.Id).ToList())
+                    {
+                        var oldImages = this.db.ChatImages.Where(x => x.ChatMessageId == oldMessageId).ToList();
+
+                        foreach (var oldImage in oldImages)
+                        {
+                            ApplicationCloudinary.DeleteImage(
+                                this.cloudinary,
+                                oldImage.Name,
+                                GlobalConstants.PrivateChatImagesFolder);
+                        }
+
+                        this.db.ChatImages.RemoveRange(oldImages);
+                    }
+
+                    this.db.ChatMessages.RemoveRange(oldMessages);
+                    await this.db.SaveChangesAsync();
+                }
+            }
         }
     }
 }

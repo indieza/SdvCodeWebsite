@@ -12,6 +12,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
+    using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.PrivateChat.Services;
     using SdvCode.Areas.PrivateChat.Services.PrivateChat;
     using SdvCode.Areas.PrivateChat.ViewModels.PrivateChat;
@@ -63,6 +64,20 @@ namespace SdvCode.Areas.PrivateChat.Controllers
             };
 
             return this.View(model);
+        }
+
+        [HttpGet]
+        [Route("PrivateChat/With/{username?}/Group/{group?}/LoadMoreMessages/{messagesSkipCount?}")]
+        public async Task<IActionResult> LoadMoreMessages(string username, string group, int? messagesSkipCount)
+        {
+            if (messagesSkipCount == null)
+            {
+                messagesSkipCount = 0;
+            }
+
+            ICollection<LoadMoreMessagesViewModel> data =
+                await this.privateChatService.LoadMoreMessages(group, (int)messagesSkipCount);
+            return new JsonResult(data);
         }
 
         [HttpPost]

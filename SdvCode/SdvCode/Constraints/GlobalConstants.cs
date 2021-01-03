@@ -116,5 +116,7 @@ namespace SdvCode.Constraints
         public const string HolidayIconName = "{0}-Holiday Theme Icon";
 
         public const string HolidayThemesFolder = "Holiday Theme Icon";
+
+        public const int MessagesCountPerScroll = 10;
     }
 }

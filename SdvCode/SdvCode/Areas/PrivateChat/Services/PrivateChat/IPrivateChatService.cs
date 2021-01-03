@@ -45,5 +45,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         Task SendStickerMessageToUser(string fromUsername, string toUsername, string group, string stickerUrl);
 
         Task ReceiveStickerMessage(string fromUsername, string group, string stickerUrl);
+
+        Task<ICollection<LoadMoreMessagesViewModel>> LoadMoreMessages(string group, int messagesSkipCount);
     }
 }
