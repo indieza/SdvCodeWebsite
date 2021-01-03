@@ -271,7 +271,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             return true;
         }
 
-        public async Task<ICollection<LoadMoreMessagesViewModel>> LoadMoreMessages(string group, int messagesSkipCount)
+        public async Task<ICollection<LoadMoreMessagesViewModel>> LoadMoreMessages(string group, int messagesSkipCount, ApplicationUser currentUser)
         {
             var result = new List<LoadMoreMessagesViewModel>();
 
@@ -294,13 +294,20 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                         Id = message.Id,
                         Content = message.Content,
                         SendedOn = message.SendedOn,
+                        CurrentUsername = currentUser.UserName,
                     };
 
-                    var messageUser = await this.db.Users
+                    var messageFromUser = await this.db.Users
                         .FirstOrDefaultAsync(x => x.Id == message.ApplicationUserId);
 
-                    currentMessageModel.Username = messageUser.UserName;
-                    currentMessageModel.ImageUrl = messageUser.ImageUrl;
+                    currentMessageModel.FromUsername = messageFromUser.UserName;
+                    currentMessageModel.FromImageUrl = messageFromUser.ImageUrl;
+
+                    var messageToUser = await this.db.Users
+                        .FirstOrDefaultAsync(x => x.UserName == message.ReceiverUsername);
+
+                    currentMessageModel.ToUsername = messageToUser.UserName;
+                    currentMessageModel.ToImageUrl = messageToUser.ImageUrl;
 
                     result.Add(currentMessageModel);
                 }

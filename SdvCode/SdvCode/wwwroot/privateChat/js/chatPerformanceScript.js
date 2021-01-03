@@ -21,9 +21,17 @@
                             $('input:hidden[name="__RequestVerificationToken"]').val()
                     },
                     success: function (data) {
-                        let oldCount = parseInt(document.getElementById("messagesSkipCount").value)
-                        document.getElementById("messagesSkipCount").value = oldCount + data.length;
-                        console.log(document.getElementById("messagesSkipCount").value);
+                        if (data.length > 0) {
+                            let oldCount = parseInt(document.getElementById("messagesSkipCount").value)
+                            document.getElementById("messagesSkipCount").value = oldCount + data.length;
+                            console.log(document.getElementById("messagesSkipCount").value);
+
+                            for (var message of data) {
+                                let oldMessageList = document.getElementById("messagesList").innerHTML;
+                                let newMessage = `<h1>El</h1>`;
+                                document.getElementById("messagesList").innerHTML = newMessage + oldMessageList;
+                            }
+                        }
                     },
                     error: function (msg) {
                         console.error(msg);

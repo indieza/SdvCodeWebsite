@@ -70,13 +70,15 @@ namespace SdvCode.Areas.PrivateChat.Controllers
         [Route("PrivateChat/With/{username?}/Group/{group?}/LoadMoreMessages/{messagesSkipCount?}")]
         public async Task<IActionResult> LoadMoreMessages(string username, string group, int? messagesSkipCount)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
             if (messagesSkipCount == null)
             {
                 messagesSkipCount = 0;
             }
 
             ICollection<LoadMoreMessagesViewModel> data =
-                await this.privateChatService.LoadMoreMessages(group, (int)messagesSkipCount);
+                await this.privateChatService.LoadMoreMessages(group, (int)messagesSkipCount, currentUser);
             return new JsonResult(data);
         }
 

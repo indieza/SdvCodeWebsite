@@ -17,8 +17,14 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
 
         public DateTime SendedOn { get; set; }
 
-        public string Username { get; set; }
+        public string CurrentUsername { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string FromUsername { get; set; }
+
+        public string FromImageUrl { get; set; }
+
+        public string ToUsername { get; set; }
+
+        public string ToImageUrl { get; set; }
     }
 }
