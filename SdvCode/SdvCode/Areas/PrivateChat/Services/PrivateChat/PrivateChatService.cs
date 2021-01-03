@@ -572,7 +572,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
                 if (messages.Count > GlobalConstants.SavedChatMessagesCount)
                 {
-                    var oldMessages = messages.Take(GlobalConstants.SavedChatMessagesCount);
+                    var oldMessages = messages.Take(messages.Count - GlobalConstants.SavedChatMessagesCount);
 
                     foreach (var oldMessageId in oldMessages.Select(x => x.Id).ToList())
                     {
