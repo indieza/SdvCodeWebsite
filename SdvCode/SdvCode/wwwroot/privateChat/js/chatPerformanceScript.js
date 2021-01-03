@@ -24,13 +24,49 @@
                         if (data.length > 0) {
                             let oldCount = parseInt(document.getElementById("messagesSkipCount").value)
                             document.getElementById("messagesSkipCount").value = oldCount + data.length;
-                            console.log(document.getElementById("messagesSkipCount").value);
+                            let oldScrollHeight = document.getElementById("demo-chat-body").scrollHeight;
 
                             for (var message of data) {
-                                let oldMessageList = document.getElementById("messagesList").innerHTML;
-                                let newMessage = `<h1>El</h1>`;
-                                document.getElementById("messagesList").innerHTML = newMessage + oldMessageList;
+                                let newMessage = document.createElement("li");
+                                newMessage.classList.add(["mar-btm"]);
+                                newMessage.id = message.id;
+                                if (message.fromUsername == message.currentUsername) {
+                                    newMessage.innerHTML += `
+                                            <div class="media-right">
+                                                <img src=${message.fromImageUrl} class="img-circle img-sm" alt="Profile Picture">
+                                            </div>
+                                            <div class="media-body pad-hor speech-right">
+                                                <div class="speech">
+                                                    <a href="/Profile/${message.fromUsername}" class="media-heading">${message.fromUsername}</a>
+                                                    <p>${message.content}</p>
+                                                    <p class="speech-time">
+                                                        <i class="fa fa-clock-o fa-fw"></i> ${message.sendedOn}
+                                                    </p>
+                                                </div>
+                                            </div>`;
+                                } else {
+                                    newMessage.innerHTML += `
+                                                <div class="media-left">
+                                                    <img src=${message.fromImageUrl} class="img-circle img-sm" alt="Profile Picture">
+                                                </div>
+                                                <div class="media-body pad-hor">
+                                                    <div class="speech">
+                                                        <a href="/Profile/${message.fromUsername}" class="media-heading">${message.fromUsername}</a>
+                                                        <p>${message.content}</p>
+                                                        <p class="speech-time">
+                                                            <i class="fa fa-clock-o fa-fw"></i> ${message.sendedOn}
+                                                        </p>
+                                                    </div>
+                                                </div>`
+                                }
+
+                                let firstMessage = document.getElementById("messagesList").firstChild;
+                                document.getElementById("messagesList").insertBefore(newMessage, firstMessage);
                             }
+
+                            let scroll = document.getElementById("demo-chat-body");
+                            let newScrollTop = scroll.scrollHeight - oldScrollHeight;
+                            scroll.scrollTop = newScrollTop;
                         }
                     },
                     error: function (msg) {

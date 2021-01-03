@@ -284,7 +284,6 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                     .OrderByDescending(x => x.SendedOn)
                     .Skip(messagesSkipCount)
                     .Take(GlobalConstants.MessagesCountPerScroll)
-                    .OrderBy(x => x.SendedOn)
                     .ToList();
 
                 foreach (var message in messages)
@@ -293,7 +292,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                     {
                         Id = message.Id,
                         Content = message.Content,
-                        SendedOn = message.SendedOn,
+                        SendedOn = message.SendedOn.ToLocalTime().ToString("dd/mm/yyyy hh:mm:ss tt"),
                         CurrentUsername = currentUser.UserName,
                     };
 
@@ -302,12 +301,6 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
                     currentMessageModel.FromUsername = messageFromUser.UserName;
                     currentMessageModel.FromImageUrl = messageFromUser.ImageUrl;
-
-                    var messageToUser = await this.db.Users
-                        .FirstOrDefaultAsync(x => x.UserName == message.ReceiverUsername);
-
-                    currentMessageModel.ToUsername = messageToUser.UserName;
-                    currentMessageModel.ToImageUrl = messageToUser.ImageUrl;
 
                     result.Add(currentMessageModel);
                 }
