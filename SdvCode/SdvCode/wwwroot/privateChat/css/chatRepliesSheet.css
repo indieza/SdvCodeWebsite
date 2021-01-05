@@ -1,0 +1,49 @@
+﻿.savedReplies-span {
+    overflow-y: auto;
+    max-height: 140px;
+    overflow-x: hidden;
+    background-color: black;
+    border-radius: 6px;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.chat-savedReplies-tooltip-image {
+    visibility: hidden;
+    width: 329px;
+    color: #fff;
+    position: absolute;
+    z-index: 1;
+    top: 140%;
+    left: -352%;
+}
+
+.savedReplies-span::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 94px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+.savedReplies-icon .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+.savedReplies-span::-webkit-scrollbar {
+    width: 4px;
+}
+
+.savedReplies-span::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.savedReplies-span::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-clip: padding-box;
+    background: #888;
+}

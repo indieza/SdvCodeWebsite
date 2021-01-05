@@ -3,6 +3,7 @@
         e.preventDefault();
         e.stopPropagation();
         $('#themeSpan').toggleClass("show");
+        $('#savedRepliesSpan').removeClass("show");
         $('#popupEmoji').removeClass("show");
         $('#chatStickerSpan').removeClass("show");
     });
