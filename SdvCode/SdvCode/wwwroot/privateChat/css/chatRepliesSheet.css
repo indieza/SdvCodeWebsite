@@ -5,7 +5,6 @@
     background-color: black;
     border-radius: 6px;
     text-align: center;
-    padding: 5px 0;
 }
 
 .chat-savedReplies-tooltip-image {
@@ -46,4 +45,41 @@
     border-radius: 6px;
     background-clip: padding-box;
     background: #888;
+}
+
+.savedReplies-badge {
+    font-size: 12px;
+    background-color: white;
+    color: black;
+    border-radius: 6px;
+    margin: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 4px 30px 4px 4px;
+    text-shadow: none;
+}
+
+.savedReplies-frame {
+    position: relative;
+}
+
+.savedReplies-badge:hover {
+    font-size: 15px;
+    background-color: lightgray;
+    color: black;
+    padding: 4px;
+    font-weight: bold;
+}
+
+.delete-savedRelies-icon {
+    position: absolute;
+    top: 4px;
+    right: 13px;
+    font-size: 15px;
+    background-color: red;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
 }
