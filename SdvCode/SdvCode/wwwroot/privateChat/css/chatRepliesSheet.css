@@ -69,6 +69,7 @@
     background-color: lightgray;
     color: black;
     padding: 4px;
+    padding: 4px 30px 4px 4px;
     font-weight: bold;
 }
 
@@ -83,3 +84,8 @@
     height: 24px;
     text-align: center;
 }
+
+    .delete-savedRelies-icon:hover {
+        color: red;
+        background-color: darkgray;
+    }
