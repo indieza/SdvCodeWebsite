@@ -265,7 +265,7 @@
     display: inline-block;
     position: absolute;
     top: 14px;
-    left: 100px;
+    left: 130px;
     text-align: center;
     font-size: 10px;
     line-height: 17.5px;
@@ -281,7 +281,7 @@
     display: inline-block;
     position: absolute;
     top: 14px;
-    left: 130px;
+    left: 160px;
     text-align: center;
     font-size: 10px;
     line-height: 17.5px;
@@ -407,7 +407,7 @@
     width: 19px;
     height: 19px;
     position: absolute;
-    left: 99px;
+    left: 129px;
     top: 13px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
@@ -421,7 +421,7 @@
     width: 19px;
     height: 19px;
     position: absolute;
-    left: 129px;
+    left: 159px;
     top: 13px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
