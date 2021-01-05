@@ -79,6 +79,8 @@ connection.on("ReceiveMessage", function (user, image, message) {
                                     </div>`;
     document.getElementById("messagesList").appendChild(li);
     updateScroll();
+    let oldCount = parseInt(document.getElementById("messagesSkipCount").value)
+    document.getElementById("messagesSkipCount").value = oldCount + 1;
 });
 
 connection.on("ReceiveThemeUpdate", function (themeUrl) {
@@ -126,7 +128,8 @@ connection.on("SendMessage", function (user, image, message) {
                                         </div>
                                     </div>`;
     document.getElementById("messagesList").appendChild(li);
-    updateScroll();
+    updateScroll(); let oldCount = parseInt(document.getElementById("messagesSkipCount").value)
+    document.getElementById("messagesSkipCount").value = oldCount + 1;
 });
 
 connection.on("UpdateImagesUploadCount", function (count) {
