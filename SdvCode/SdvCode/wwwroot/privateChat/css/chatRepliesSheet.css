@@ -65,12 +65,13 @@
 }
 
 .savedReplies-badge:hover {
-    font-size: 15px;
+    font-size: 12px;
     background-color: lightgray;
     color: black;
     padding: 4px;
     padding: 4px 30px 4px 4px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .delete-savedRelies-icon {
