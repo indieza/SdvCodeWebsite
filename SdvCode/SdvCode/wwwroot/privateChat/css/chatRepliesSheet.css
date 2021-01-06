@@ -90,3 +90,16 @@
         color: red;
         background-color: darkgray;
     }
+
+.quick-replies-badge {
+    position: absolute;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 7px;
+    left: 1.5px;
+    top: -1px;
+    text-shadow: none;
+    width: 11px;
+    height: 11px;
+}

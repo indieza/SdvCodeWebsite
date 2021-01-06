@@ -16,3 +16,7 @@
         $('#savedRepliesSpan').removeClass("show");
     });
 });
+
+function addQuickReply(element) {
+    document.getElementById("messageInput").innerHTML += element.innerHTML;
+}
