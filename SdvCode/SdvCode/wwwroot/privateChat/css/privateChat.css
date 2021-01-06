@@ -526,6 +526,7 @@
 }
 
 .back-to-bottom-chat-body {
+    visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -535,7 +536,7 @@
     background-color: darkgray;
     border-radius: 50%;
     bottom: 10px;
-    right: 50%;
+    right: 20px;
     z-index: 1;
     width: 30px;
     height: 30px;

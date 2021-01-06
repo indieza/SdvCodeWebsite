@@ -3,8 +3,10 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/privateChatHub").build();
 
 function updateScroll() {
-    var element = document.getElementById("demo-chat-body");
-    element.scrollTop = element.scrollHeight;
+    if (document.getElementById("scrollBottomButton").style.visibility != "visible") {
+        let element = document.getElementById("demo-chat-body");
+        element.scrollTop = element.scrollHeight;
+    }
 }
 
 function userType(toUsername, fromUsername, fromUserImageUrl) {

@@ -1,5 +1,15 @@
 ﻿$(document).ready(function () {
     $("#demo-chat-body").scroll(function () {
+        let scrollHeight = document.getElementById("demo-chat-body").scrollHeight;
+        let scrollDistanceToTop = document.getElementById("demo-chat-body").scrollTop;
+        let chatBoyHeight = document.getElementById("demo-chat-body").offsetHeight;
+        let distanceToBottom = scrollHeight - scrollDistanceToTop - chatBoyHeight;
+
+        if (distanceToBottom > 400) {
+            document.getElementById("scrollBottomButton").style.visibility = "visible";
+        } else if (distanceToBottom >= 0 && distanceToBottom <= 100) {
+            document.getElementById("scrollBottomButton").style.visibility = "hidden";
+        }
         if ($("#demo-chat-body").scrollTop() == 0) {
             let messagesSkipCount = document.getElementById("messagesSkipCount").value;
             let username = document.getElementById("toUser").textContent;
@@ -77,3 +87,9 @@
         }
     });
 });
+
+function scrollChatToBottom() {
+    $("#demo-chat-body").animate({
+        scrollTop: document.getElementById("demo-chat-body").scrollHeight
+    }, 800);
+}
