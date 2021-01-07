@@ -56,18 +56,18 @@
                                             </div>`;
                                 } else {
                                     newMessage.innerHTML += `
-                                                <div class="media-left">
-                                                    <img src=${message.fromImageUrl} class="img-circle img-sm" alt="Profile Picture">
+                                            <div class="media-left">
+                                                <img src=${message.fromImageUrl} class="img-circle img-sm" alt="Profile Picture">
+                                            </div>
+                                            <div class="media-body pad-hor">
+                                                <div class="speech">
+                                                    <a href="/Profile/${message.fromUsername}" class="media-heading">${message.fromUsername}</a>
+                                                    <p>${message.content}</p>
+                                                    <p class="speech-time">
+                                                        <i class="fa fa-clock-o fa-fw"></i> ${message.sendedOn}
+                                                    </p>
                                                 </div>
-                                                <div class="media-body pad-hor">
-                                                    <div class="speech">
-                                                        <a href="/Profile/${message.fromUsername}" class="media-heading">${message.fromUsername}</a>
-                                                        <p>${message.content}</p>
-                                                        <p class="speech-time">
-                                                            <i class="fa fa-clock-o fa-fw"></i> ${message.sendedOn}
-                                                        </p>
-                                                    </div>
-                                                </div>`
+                                            </div>`
                                 }
 
                                 let firstMessage = document.getElementById("messagesList").firstChild;

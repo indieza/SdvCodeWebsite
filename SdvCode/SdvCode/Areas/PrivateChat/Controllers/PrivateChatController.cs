@@ -26,16 +26,13 @@ namespace SdvCode.Areas.PrivateChat.Controllers
     public class PrivateChatController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext db;
         private readonly IPrivateChatService privateChatService;
 
         public PrivateChatController(
             UserManager<ApplicationUser> userManager,
-            ApplicationDbContext db,
             IPrivateChatService privateChatService)
         {
             this.userManager = userManager;
-            this.db = db;
             this.privateChatService = privateChatService;
         }
 
@@ -54,7 +51,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
             var model = new PrivateChatViewModel
             {
                 FromUser = await this.userManager.GetUserAsync(this.HttpContext.User),
-                ToUser = this.db.Users.FirstOrDefault(x => x.UserName == username),
+                ToUser = await this.userManager.FindByNameAsync(username),
                 ChatMessages = await this.privateChatService.ExtractAllMessages(group),
                 GroupName = group,
                 Emojis = this.privateChatService.GetAllEmojis(),
