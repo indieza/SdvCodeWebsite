@@ -68,6 +68,13 @@ namespace SdvCode.Areas.PrivateChat.Controllers
         public async Task<IActionResult> LoadMoreMessages(string username, string group, int? messagesSkipCount)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isAvailableToChat = await this.privateChatService.IsUserAbleToChat(username, group, currentUser);
+
+            if (!isAvailableToChat)
+            {
+                this.TempData["Error"] = ErrorMessages.NotAbleToChat;
+                return this.RedirectToAction("Index", "Profile", new { username });
+            }
 
             if (messagesSkipCount == null)
             {
@@ -83,13 +90,28 @@ namespace SdvCode.Areas.PrivateChat.Controllers
         [Route("PrivateChat/With/{username?}/Group/{group?}/ChangeChatTheme")]
         public async Task ChangeChatTheme(string username, string group, string themeId)
         {
-            await this.privateChatService.ChangeChatTheme(username, group, themeId);
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isAvailableToChat = await this.privateChatService.IsUserAbleToChat(username, group, currentUser);
+
+            if (isAvailableToChat)
+            {
+                await this.privateChatService.ChangeChatTheme(username, group, themeId);
+            }
         }
 
         [HttpPost]
         [Route("PrivateChat/With/{toUsername?}/Group/{group?}/SendFiles")]
         public async Task<IActionResult> SendFiles(IList<IFormFile> files, string group, string toUsername, string fromUsername, string message)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isAvailableToChat = await this.privateChatService.IsUserAbleToChat(toUsername, group, currentUser);
+
+            if (!isAvailableToChat)
+            {
+                this.TempData["Error"] = ErrorMessages.NotAbleToChat;
+                return this.RedirectToAction("Index", "Profile", new { Username = toUsername });
+            }
+
             var result = await this.privateChatService
                 .SendMessageWitFilesToUser(files, group, toUsername, fromUsername, message);
 

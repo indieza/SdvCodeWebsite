@@ -107,5 +107,7 @@ namespace SdvCode.Models.User
         public ICollection<ProductReview> ProductReviews { get; set; } = new HashSet<ProductReview>();
 
         public ICollection<UserNotification> UserNotifications { get; set; } = new HashSet<UserNotification>();
+
+        public ICollection<QuickChatReply> QuickChatReplies { get; set; } = new HashSet<QuickChatReply>();
     }
 }

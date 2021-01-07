@@ -97,6 +97,8 @@ namespace SdvCode.Data
 
         public DbSet<HolidayIcon> HolidayIcons { get; set; }
 
+        public DbSet<QuickChatReply> QuickChatReplies { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -261,6 +263,13 @@ namespace SdvCode.Data
                 .HasOne(x => x.HolidayTheme)
                 .WithMany(x => x.HolidayIcons)
                 .HasForeignKey(x => x.HolidayThemeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(true);
+
+            builder.Entity<QuickChatReply>()
+                .HasOne(x => x.ApplicationUser)
+                .WithMany(x => x.QuickChatReplies)
+                .HasForeignKey(x => x.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(true);
 
