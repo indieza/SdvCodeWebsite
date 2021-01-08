@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    $("#messageInput").on('input', function () {
+        document.getElementById("messageInput").style.paddingLeft = "28px !important";
+        document.getElementById("quickRepliesAddBadge").style.visibility = "visible";
+    });
+
     $("#demo-chat-body").scroll(function () {
         let scrollHeight = document.getElementById("demo-chat-body").scrollHeight;
         let scrollDistanceToTop = document.getElementById("demo-chat-body").scrollTop;

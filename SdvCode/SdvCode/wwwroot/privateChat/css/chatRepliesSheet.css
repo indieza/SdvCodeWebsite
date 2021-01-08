@@ -103,3 +103,30 @@
     width: 11px;
     height: 11px;
 }
+
+.quick-replies-add-badge {
+    visibility: hidden;
+    background-color: green;
+    position: absolute;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    color: white;
+    top: 9px;
+    left: 22px;
+    text-align: center;
+    cursor: pointer;
+}
+
+    .quick-replies-add-badge:hover {
+        background-color: limegreen;
+        color: white;
+    }
+
+    .quick-replies-add-badge i {
+        display: block;
+        height: 100%;
+        width: 100%;
+        margin-top: 5px;
+    }

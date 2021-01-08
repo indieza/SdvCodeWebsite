@@ -209,8 +209,8 @@
 }
 
 .chat-input {
-    padding-right: 35px !important;
-    padding-left: 10px !important;
+    padding-right: 35px;
+    padding-left: 10px;
     height: auto !important;
     border: 1px solid #808080;
     line-height: 33px;

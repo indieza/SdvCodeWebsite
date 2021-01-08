@@ -108,6 +108,9 @@
                 <div class="panel-chat-footer">
                     <div class="row">
                         <div class="col-md-10 col-xs-9">
+                            <span class="quick-replies-add-badge" id="quickRepliesAddBadge">
+                                <i class="fas fa-plus"></i>
+                            </span>
                             <div class="chat-input" onclick="userType('@this.Model.ToUser.UserName', '@this.Model.FromUser.UserName', '@this.Model.FromUser.ImageUrl')" onblur="userStopType('@this.Model.ToUser.UserName')" contenteditable="true" id="messageInput" oninput="updateInputScroller()"></div>
                             @*<input autocomplete="off" type="text" placeholder="Enter your text" class="form-control chat-input" id="messageInput">*@
                             <div class="chat-emoji-icon pop-up-emoji" id="emojiButton">
