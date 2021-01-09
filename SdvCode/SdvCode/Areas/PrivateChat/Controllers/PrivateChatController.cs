@@ -58,6 +58,7 @@ namespace SdvCode.Areas.PrivateChat.Controllers
                 AllChatThemes = this.privateChatService.GetAllThemes(),
                 ChatThemeViewModel = this.privateChatService.GetGroupTheme(group),
                 AllStickers = this.privateChatService.GetAllStickers(currentUser),
+                AllQuickChatReplies = this.privateChatService.GetAllQuickReplies(currentUser),
             };
 
             return this.View(model);

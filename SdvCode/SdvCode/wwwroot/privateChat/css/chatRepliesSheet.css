@@ -113,10 +113,12 @@
     height: 18px;
     font-size: 10px;
     color: white;
-    top: 9px;
     left: 22px;
     text-align: center;
     cursor: pointer;
+    top: 50%;
+    transform: translate(0%,-50%);
+    z-index: 2;
 }
 
     .quick-replies-add-badge:hover {

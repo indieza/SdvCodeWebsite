@@ -108,7 +108,7 @@
                 <div class="panel-chat-footer">
                     <div class="row">
                         <div class="col-md-10 col-xs-9">
-                            <span class="quick-replies-add-badge" id="quickRepliesAddBadge">
+                            <span onclick="addQuickReply()" class="quick-replies-add-badge" id="quickRepliesAddBadge">
                                 <i class="fas fa-plus"></i>
                             </span>
                             <div class="chat-input" onclick="userType('@this.Model.ToUser.UserName', '@this.Model.FromUser.UserName', '@this.Model.FromUser.ImageUrl')" onblur="userStopType('@this.Model.ToUser.UserName')" contenteditable="true" id="messageInput" oninput="updateInputScroller()"></div>
@@ -222,18 +222,21 @@
                             <div class="chat-action-icon savedReplies-icon" id="savedRepliesButton">
                                 <i class="fas fa-bookmark"></i>
                                 <span class="quick-replies-badge">
-                                    100
+                                    @this.Model.AllQuickChatReplies.Count()
                                 </span>
                                 <div class="chat-savedReplies-tooltip-image">
                                     <div id="savedRepliesSpan" class="savedReplies-span">
-                                        <div class="savedReplies-frame">
-                                            <div class="savedReplies-badge" onclick="addQuickReply(this)">
-                                                Some short quick reply here!
+                                        @foreach (var reply in this.Model.AllQuickChatReplies)
+                                        {
+                                            <div class="savedReplies-frame">
+                                                <div class="savedReplies-badge" onclick="pasteQuickReply(this)">
+                                                    @reply.Reply
+                                                </div>
+                                                <span class="delete-savedRelies-icon">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </span>
                                             </div>
-                                            <span class="delete-savedRelies-icon">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </span>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>

@@ -29,5 +29,8 @@ namespace SdvCode.Areas.PrivateChat.ViewModels.PrivateChat
 
         public ICollection<ChatStickerTypeViewModel> AllStickers { get; set; } =
             new HashSet<ChatStickerTypeViewModel>();
+
+        public ICollection<QuickChatReplyViewModel> AllQuickChatReplies { get; set; } =
+            new HashSet<QuickChatReplyViewModel>();
     }
 }

@@ -17,6 +17,11 @@
     });
 });
 
-function addQuickReply(element) {
+function pasteQuickReply(element) {
     document.getElementById("messageInput").innerHTML += element.innerHTML;
+}
+
+function addQuickReply() {
+    let quickReplyText = document.getElementById('messageInput').innerHTML;
+    alert(quickReplyText);
 }

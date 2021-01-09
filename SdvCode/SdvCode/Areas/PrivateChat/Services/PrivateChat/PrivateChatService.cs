@@ -159,6 +159,22 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             return result;
         }
 
+        public ICollection<QuickChatReplyViewModel> GetAllQuickReplies(ApplicationUser currentUser)
+        {
+            var result = new List<QuickChatReplyViewModel>();
+
+            foreach (var reply in this.db.QuickChatReplies.OrderBy(x => x.Reply).ToList())
+            {
+                result.Add(new QuickChatReplyViewModel
+                {
+                    Id = reply.Id,
+                    Reply = reply.Reply,
+                });
+            }
+
+            return result;
+        }
+
         public ICollection<ChatStickerTypeViewModel> GetAllStickers(ApplicationUser currentUser)
         {
             var result = new List<ChatStickerTypeViewModel>();

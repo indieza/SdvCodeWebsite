@@ -1,7 +1,13 @@
 ﻿$(document).ready(function () {
     $("#messageInput").on('input', function () {
-        document.getElementById("messageInput").style.paddingLeft = "28px !important";
-        document.getElementById("quickRepliesAddBadge").style.visibility = "visible";
+        $('#messageInput').css('padding-left', '30px');
+        if (document.getElementById('messageInput').innerHTML) {
+            $('#messageInput').css('padding-left', '30px');
+            document.getElementById("quickRepliesAddBadge").style.visibility = "visible";
+        } else {
+            $('#messageInput').css('padding-left', '10px');
+            document.getElementById("quickRepliesAddBadge").style.visibility = "hidden";
+        }
     });
 
     $("#demo-chat-body").scroll(function () {
