@@ -50,16 +50,18 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
         public async Task<QuickChatReplyViewModel> AddQuickChatReply(ApplicationUser currentUser, string quickReplyText)
         {
+            var sanitizedContent = new HtmlSanitizer().Sanitize(quickReplyText);
+
             var targetReply = await this.db.QuickChatReplies
                 .FirstOrDefaultAsync(x => x.ApplicationUserId == currentUser.Id &&
-                    x.Reply.Trim().ToUpper() == quickReplyText.Trim().ToUpper());
+                    x.Reply.Trim().ToUpper() == sanitizedContent.Trim().ToUpper());
 
             if (targetReply == null)
             {
                 targetReply = new QuickChatReply
                 {
                     ApplicationUserId = currentUser.Id,
-                    Reply = new HtmlSanitizer().Sanitize(quickReplyText),
+                    Reply = sanitizedContent,
                 };
 
                 this.db.QuickChatReplies.Add(targetReply);
