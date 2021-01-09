@@ -118,5 +118,30 @@ namespace SdvCode.Areas.PrivateChat.Controllers
 
             return new JsonResult(result);
         }
+
+        [HttpPost]
+        [Route("PrivateChat/With/{username?}/Group/{group?}/AddChatQuickReply")]
+        public async Task<IActionResult> AddChatQuickReply(string username, string group, string quickReplyText)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isAvailableToChat = await this.privateChatService.IsUserAbleToChat(username, group, currentUser);
+
+            if (!isAvailableToChat)
+            {
+                this.TempData["Error"] = ErrorMessages.NotAbleToChat;
+                return this.RedirectToAction("Index", "Profile", new { Username = username });
+            }
+
+            if (quickReplyText == string.Empty || quickReplyText == null)
+            {
+                this.TempData["Error"] = ErrorMessages.CannotAddEmptyQuickReply;
+                return this.RedirectToAction("Index", "Profile", new { Username = username });
+            }
+
+            QuickChatReplyViewModel result =
+                await this.privateChatService.AddQuickChatReply(currentUser, quickReplyText);
+
+            return new JsonResult(result);
+        }
     }
 }

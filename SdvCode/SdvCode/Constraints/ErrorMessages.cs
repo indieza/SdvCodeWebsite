@@ -90,5 +90,7 @@ namespace SdvCode.Constraints
         public const string HolidayThemeAlreadyExist = "\"{0}\" holiday theme already exist.";
 
         public const string HolidayThemeDoesNotExist = "Holiday theme does not exist.";
+
+        public const string CannotAddEmptyQuickReply = "You cannot add NULL or EMPTY quick chat reply.";
     }
 }

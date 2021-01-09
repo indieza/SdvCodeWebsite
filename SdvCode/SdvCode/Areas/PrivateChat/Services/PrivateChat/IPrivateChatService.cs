@@ -48,5 +48,6 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
 
         Task<ICollection<LoadMoreMessagesViewModel>> LoadMoreMessages(string group, int messagesSkipCount, ApplicationUser currentUser);
         ICollection<QuickChatReplyViewModel> GetAllQuickReplies(ApplicationUser currentUser);
+        Task<QuickChatReplyViewModel> AddQuickChatReply(ApplicationUser currentUser, string quickReplyText);
     }
 }

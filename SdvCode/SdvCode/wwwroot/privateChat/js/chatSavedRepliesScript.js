@@ -23,5 +23,28 @@ function pasteQuickReply(element) {
 
 function addQuickReply() {
     let quickReplyText = document.getElementById('messageInput').innerHTML;
-    alert(quickReplyText);
+    let group = document.getElementById("groupName").textContent;
+    let toUser = document.getElementById("toUser").textContent;
+
+    $.ajax({
+        type: "POST",
+        url: `/PrivateChat/With/${toUser}/Group/${group}/AddChatQuickReply`,
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        data: {
+            'username': toUser,
+            'group': group,
+            'quickReplyText': quickReplyText
+        },
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (msg) {
+            console.error(msg);
+        }
+    })
 }

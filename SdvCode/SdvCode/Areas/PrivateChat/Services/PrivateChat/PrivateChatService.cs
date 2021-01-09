@@ -48,6 +48,31 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             this.cloudinary = cloudinary;
         }
 
+        public async Task<QuickChatReplyViewModel> AddQuickChatReply(ApplicationUser currentUser, string quickReplyText)
+        {
+            var targetReply = await this.db.QuickChatReplies
+                .FirstOrDefaultAsync(x => x.ApplicationUserId == currentUser.Id &&
+                    x.Reply.Trim().ToUpper() == quickReplyText.Trim().ToUpper());
+
+            if (targetReply == null)
+            {
+                targetReply = new QuickChatReply
+                {
+                    ApplicationUserId = currentUser.Id,
+                    Reply = new HtmlSanitizer().Sanitize(quickReplyText),
+                };
+
+                this.db.QuickChatReplies.Add(targetReply);
+                await this.db.SaveChangesAsync();
+            }
+
+            return new QuickChatReplyViewModel
+            {
+                Id = targetReply.Id,
+                Reply = targetReply.Reply,
+            };
+        }
+
         public async Task AddUserToGroup(string groupName, string toUsername, string fromUsername)
         {
             var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);
