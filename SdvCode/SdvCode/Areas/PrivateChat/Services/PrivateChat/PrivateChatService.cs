@@ -62,6 +62,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 {
                     ApplicationUserId = currentUser.Id,
                     Reply = sanitizedContent,
+                    CreatedOn = DateTime.UtcNow,
                 };
 
                 this.db.QuickChatReplies.Add(targetReply);
@@ -190,7 +191,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
         {
             var result = new List<QuickChatReplyViewModel>();
 
-            foreach (var reply in this.db.QuickChatReplies.OrderBy(x => x.Reply).ToList())
+            foreach (var reply in this.db.QuickChatReplies.OrderByDescending(x => x.CreatedOn).ToList())
             {
                 result.Add(new QuickChatReplyViewModel
                 {

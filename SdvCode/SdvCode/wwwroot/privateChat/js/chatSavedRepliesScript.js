@@ -41,7 +41,25 @@ function addQuickReply() {
                 $('input:hidden[name="__RequestVerificationToken"]').val()
         },
         success: function (data) {
-            console.log(data);
+            let isExist = document.getElementById(`${data.id}`);
+            if (!isExist) {
+                let collectionReplies = document.getElementById('savedRepliesSpan');
+                let firstChild = collectionReplies.firstChild;
+                let newReply = document.createElement('div');
+                newReply.classList.add(['savedReplies-frame'])
+                newReply.id = data.id;
+                newReply.innerHTML = `
+                    <div class="savedReplies-badge" onclick="pasteQuickReply(this)">
+                        ${data.reply}
+                    </div>
+                    <span class="delete-savedRelies-icon" onclick="deleteWuickReply('${data.id}')">
+                        <i class="fas fa-trash-alt"></i>
+                    </span>`;
+
+                collectionReplies.insertBefore(newReply, firstChild);
+                let newCount = parseInt(document.getElementById('quickRepliesCount').innerText) + 1;
+                document.getElementById('quickRepliesCount').innerText = newCount;
+            }
         },
         error: function (msg) {
             console.error(msg);

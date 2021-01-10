@@ -26,6 +26,9 @@ namespace SdvCode.Areas.PrivateChat.Models
         public string Reply { get; set; }
 
         [Required]
+        public DateTime CreatedOn { get; set; }
+
+        [Required]
         [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }
 
