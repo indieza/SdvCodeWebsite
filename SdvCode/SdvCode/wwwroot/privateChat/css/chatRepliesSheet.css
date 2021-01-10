@@ -2,8 +2,6 @@
     overflow-y: auto;
     max-height: 140px;
     overflow-x: hidden;
-    background-color: black;
-    border-radius: 6px;
     text-align: center;
 }
 
@@ -13,8 +11,10 @@
     color: #fff;
     position: absolute;
     z-index: 1;
+    background-color: black;
     top: 140%;
     left: -352%;
+    border-radius: 6px;
 }
 
 .savedReplies-span::after {
@@ -132,3 +132,18 @@
         width: 100%;
         margin-top: 5px;
     }
+
+.quickRepliesSearchTab {
+    border-bottom: 1.8px solid slategray;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0px 10px 18px -8px #8888FE;
+    position: relative;
+}
+
+.quick-replies-search-input {
+    height: 25px;
+    border-radius: 6px;
+    padding: 10px;
+}

@@ -224,8 +224,11 @@
                                 <span class="quick-replies-badge" id="quickRepliesCount">
                                     @this.Model.AllQuickChatReplies.Count()
                                 </span>
-                                <div class="chat-savedReplies-tooltip-image">
-                                    <div id="savedRepliesSpan" class="savedReplies-span">
+                                <div class="chat-savedReplies-tooltip-image" id="savedRepliesSpan">
+                                    <div class="quickRepliesSearchTab">
+                                        <input class="form-control quick-replies-search-input" autocomplete="off" placeholder="Search quick reply..." type="text" />
+                                    </div>
+                                    <div class="savedReplies-span" id="repliesCollection">
                                         @foreach (var reply in this.Model.AllQuickChatReplies)
                                         {
                                             <div class="savedReplies-frame" id="@reply.Id">

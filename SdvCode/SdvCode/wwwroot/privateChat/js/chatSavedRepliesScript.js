@@ -43,7 +43,7 @@ function addQuickReply() {
         success: function (data) {
             let isExist = document.getElementById(`${data.id}`);
             if (!isExist) {
-                let collectionReplies = document.getElementById('savedRepliesSpan');
+                let collectionReplies = document.getElementById('repliesCollection');
                 let firstChild = collectionReplies.firstChild;
                 let newReply = document.createElement('div');
                 newReply.classList.add(['savedReplies-frame'])
@@ -88,7 +88,7 @@ function deleteWuickReply(id) {
         success: function (data) {
             if (data.item1) {
                 let oldReply = document.getElementById(data.item2);
-                document.getElementById("savedRepliesSpan").removeChild(oldReply);
+                document.getElementById("repliesCollection").removeChild(oldReply);
                 let newCount = parseInt(document.getElementById('quickRepliesCount').innerText) - 1;
                 document.getElementById('quickRepliesCount').innerText = newCount;
             }

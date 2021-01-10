@@ -246,6 +246,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     }
 
     document.getElementById("messageInput").innerHTML = "";
+    $('#messageInput').css('padding-left', '10px');
+    document.getElementById("quickRepliesAddBadge").style.visibility = "hidden";
     event.preventDefault();
 });
 
