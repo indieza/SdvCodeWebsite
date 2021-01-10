@@ -143,5 +143,29 @@ namespace SdvCode.Areas.PrivateChat.Controllers
 
             return new JsonResult(result);
         }
+
+        [HttpPost]
+        [Route("PrivateChat/With/{username?}/Group/{group?}/RemoveChatQuickReply")]
+        public async Task<IActionResult> RemoveChatQuickReply(string username, string group, string id)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            bool isAvailableToChat = await this.privateChatService.IsUserAbleToChat(username, group, currentUser);
+
+            if (!isAvailableToChat)
+            {
+                this.TempData["Error"] = ErrorMessages.NotAbleToChat;
+                return this.RedirectToAction("Index", "Profile", new { Username = username });
+            }
+
+            if (id == string.Empty || id == null)
+            {
+                this.TempData["Error"] = ErrorMessages.ChatQuickReplyDoesNotExist;
+                return this.RedirectToAction("Index", "Profile", new { Username = username });
+            }
+
+            Tuple<bool, string> result = await this.privateChatService.RemoveQuickChatReply(currentUser, id);
+
+            return new JsonResult(result);
+        }
     }
 }

@@ -372,6 +372,21 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
             await this.hubContext.Clients.User(fromId).SendAsync("SendMessage", fromUsername, fromImage, message.Trim());
         }
 
+        public async Task<Tuple<bool, string>> RemoveQuickChatReply(ApplicationUser currentUser, string id)
+        {
+            var targetReply = await this.db.QuickChatReplies
+                .FirstOrDefaultAsync(x => x.ApplicationUserId == currentUser.Id && x.Id == id);
+
+            if (targetReply != null)
+            {
+                this.db.QuickChatReplies.Remove(targetReply);
+                await this.db.SaveChangesAsync();
+                return Tuple.Create(true, id);
+            }
+
+            return Tuple.Create(false, string.Empty);
+        }
+
         public async Task<string> SendMessageToUser(string fromUsername, string toUsername, string message, string group)
         {
             var toUser = this.db.Users.FirstOrDefault(x => x.UserName == toUsername);

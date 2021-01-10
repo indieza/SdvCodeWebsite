@@ -221,18 +221,18 @@
                             </div>
                             <div class="chat-action-icon savedReplies-icon" id="savedRepliesButton">
                                 <i class="fas fa-bookmark"></i>
-                                <span class="quick-replies-badge">
+                                <span class="quick-replies-badge" id="quickRepliesCount">
                                     @this.Model.AllQuickChatReplies.Count()
                                 </span>
                                 <div class="chat-savedReplies-tooltip-image">
                                     <div id="savedRepliesSpan" class="savedReplies-span">
                                         @foreach (var reply in this.Model.AllQuickChatReplies)
                                         {
-                                            <div class="savedReplies-frame">
+                                            <div class="savedReplies-frame" id="@reply.Id">
                                                 <div class="savedReplies-badge" onclick="pasteQuickReply(this)">
                                                     @Html.Raw(reply.Reply)
                                                 </div>
-                                                <span class="delete-savedRelies-icon">
+                                                <span class="delete-savedRelies-icon" onclick="deleteWuickReply('@reply.Id')">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </span>
                                             </div>

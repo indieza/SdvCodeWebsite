@@ -48,3 +48,35 @@ function addQuickReply() {
         }
     })
 }
+
+function deleteWuickReply(id) {
+    let group = document.getElementById("groupName").textContent;
+    let toUser = document.getElementById("toUser").textContent;
+
+    $.ajax({
+        type: "POST",
+        url: `/PrivateChat/With/${toUser}/Group/${group}/RemoveChatQuickReply`,
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        data: {
+            'username': toUser,
+            'group': group,
+            'id': id
+        },
+        headers: {
+            RequestVerificationToken:
+                $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        success: function (data) {
+            if (data.item1) {
+                let oldReply = document.getElementById(data.item2);
+                document.getElementById("savedRepliesSpan").removeChild(oldReply);
+                let newCount = parseInt(document.getElementById('quickRepliesCount').innerText) - 1;
+                document.getElementById('quickRepliesCount').innerText = newCount;
+            }
+        },
+        error: function (msg) {
+            console.error(msg);
+        }
+    })
+}

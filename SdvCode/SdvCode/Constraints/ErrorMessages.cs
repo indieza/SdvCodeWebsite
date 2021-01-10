@@ -92,5 +92,7 @@ namespace SdvCode.Constraints
         public const string HolidayThemeDoesNotExist = "Holiday theme does not exist.";
 
         public const string CannotAddEmptyQuickReply = "You cannot add NULL or EMPTY quick chat reply.";
+
+        public const string ChatQuickReplyDoesNotExist = "Chat quick reply does not exist.";
     }
 }
