@@ -15,6 +15,19 @@
     $('body').click(function () {
         $('#savedRepliesSpan').removeClass("show");
     });
+
+    $("#quickRepliesSearchInputFiled").on('input', function () {
+        let searchField = document.getElementById("quickRepliesSearchInputFiled");
+        let replies = document.querySelectorAll('.savedReplies-badge');
+
+        for (var reply of replies) {
+            if (reply.innerText.toUpperCase().includes(searchField.value.toUpperCase())) {
+                reply.parentElement.style.display = "block";
+            } else {
+                reply.parentElement.style.display = "none";
+            }
+        }
+    });
 });
 
 function pasteQuickReply(element) {
