@@ -69,8 +69,8 @@
                 </div>
             </div>
             @if (this.User.IsInRole(SdvCode.Constraints.GlobalConstants.AdministratorRole) ||
-            this.User.IsInRole(SdvCode.Constraints.GlobalConstants.EditorRole) ||
-            this.User.IsInRole(SdvCode.Constraints.GlobalConstants.AuthorRole))
+           this.User.IsInRole(SdvCode.Constraints.GlobalConstants.EditorRole) ||
+           this.User.IsInRole(SdvCode.Constraints.GlobalConstants.AuthorRole))
             {
                 <div class="form-group col-md-4">
                     <label asp-for="@this.Model.PostInputModel.PostImages"></label>
