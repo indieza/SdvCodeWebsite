@@ -8,8 +8,12 @@ namespace SdvCode.ViewModels.Blog.InputModels
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Ganss.XSS;
+
     using Microsoft.AspNetCore.Http;
+
+    using SdvCode.ApplicationAttributes;
 
     public class CreatePostInputModel
     {

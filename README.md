@@ -19,6 +19,7 @@
 - Blazored.LocalStorage
 - ASP.NET CORE view components
 - ASP.NET Core areas
+- Customize Data Field Validation in the Data Model Using Custom Attributes
 - MSSQL full text searching
 - MSSQL Server
 - ML.NET

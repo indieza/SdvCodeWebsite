@@ -3,13 +3,14 @@
 
 namespace SdvCode.ApplicationAttributes
 {
-    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Http;
 
     public class FilesCollectionRange : ValidationAttribute
     {
@@ -24,7 +25,7 @@ namespace SdvCode.ApplicationAttributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var collection = value as HashSet<IFormFile>;
+            var collection = (HashSet<IFormFile>)value;
 
             if (collection.Count >= this.minLength && collection.Count <= this.maxLength)
             {
