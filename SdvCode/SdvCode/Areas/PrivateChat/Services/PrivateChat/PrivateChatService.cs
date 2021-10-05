@@ -10,14 +10,19 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet;
+
     using Ganss.XSS;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+
     using MoreLinq;
+
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.PrivateChat.Models.Enums;
     using SdvCode.Areas.PrivateChat.ViewModels.ChatTheme;
@@ -27,6 +32,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
     using SdvCode.Hubs;
     using SdvCode.Models.User;
     using SdvCode.Services.Cloud;
+
     using Group = SdvCode.Areas.PrivateChat.Models.Group;
 
     public class PrivateChatService : IPrivateChatService
@@ -155,7 +161,7 @@ namespace SdvCode.Areas.PrivateChat.Services.PrivateChat
                 return messages;
             }
 
-            return null;
+            return new List<ChatMessage>();
         }
 
         public Dictionary<EmojiType, ICollection<ChatEmojiViewModel>> GetAllEmojis()
