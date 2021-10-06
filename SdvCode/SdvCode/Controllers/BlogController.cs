@@ -64,8 +64,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [ServiceFilter(typeof(IsUserBannedAttribute))]
-        [ServiceFilter(typeof(IsUserInBlogPostRoleAttribute))]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> CreatePost()
         {
             var model = new CreatePostIndexModel
@@ -79,8 +79,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [ServiceFilter(typeof(IsUserBannedAttribute))]
-        [ServiceFilter(typeof(IsUserInBlogPostRoleAttribute))]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> DeletePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -91,8 +91,8 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
-        [ServiceFilter(typeof(IsUserBannedAttribute))]
-        [ServiceFilter(typeof(IsUserInBlogPostRoleAttribute))]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -112,8 +112,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [ServiceFilter(typeof(IsUserBannedAttribute))]
-        [ServiceFilter(typeof(IsUserInBlogPostRoleAttribute))]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> EditPost(string id)
         {
             if (!await this.blogService.IsPostExist(id))
@@ -138,7 +138,7 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
-        [ServiceFilter(typeof(IsUserBannedAttribute))]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
         public async Task<IActionResult> EditPost(EditPostInputModel model)
         {
             if (this.ModelState.IsValid)

@@ -14,11 +14,11 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
     using SdvCode.Constraints;
     using SdvCode.Data;
 
-    public class IsUserBannedAttribute : ActionFilterAttribute
+    public class IsUserBlockedAttribute : ActionFilterAttribute
     {
         private readonly ApplicationDbContext db;
 
-        public IsUserBannedAttribute(ApplicationDbContext db)
+        public IsUserBlockedAttribute(ApplicationDbContext db)
         {
             this.db = db;
         }

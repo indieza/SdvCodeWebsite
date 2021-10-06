@@ -273,8 +273,8 @@ namespace SdvCode
             services.AddScoped<FavoriteProductsState>();
 
             // Register Attributes
-            services.AddScoped<IsUserBannedAttribute>();
-            services.AddScoped<IsUserInBlogPostRoleAttribute>();
+            services.AddScoped<IsUserBlockedAttribute>();
+            services.AddScoped<IsUserInBlogRoleAttribute>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()

@@ -5,8 +5,10 @@ namespace SdvCode.Services
 {
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
     using SdvCode.Models.Enums;
@@ -28,23 +30,23 @@ namespace SdvCode.Services
             this.db = db;
         }
 
-        public virtual bool IsBlocked(ApplicationUser user)
-        {
-            return user.IsBlocked;
-        }
+        //public virtual bool IsBlocked(ApplicationUser user)
+        //{
+        //    return user.IsBlocked;
+        //}
 
-        public virtual async Task<bool> IsInBlogRole(ApplicationUser user)
-        {
-            if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
-                await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()) ||
-                await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()) ||
-                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()))
-            {
-                return true;
-            }
+        //public virtual async Task<bool> IsInBlogRole(ApplicationUser user)
+        //{
+        //    if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
+        //        await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()) ||
+        //        await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()) ||
+        //        await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()))
+        //    {
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         public virtual async Task<bool> IsInPostRole(ApplicationUser user, string id)
         {

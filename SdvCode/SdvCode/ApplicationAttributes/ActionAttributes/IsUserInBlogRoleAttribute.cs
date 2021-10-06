@@ -17,29 +17,29 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
     using SdvCode.Data;
     using SdvCode.Models.User;
 
-    public class IsUserInBlogPostRoleAttribute : ActionFilterAttribute
+    public class IsUserInBlogRoleAttribute : ActionFilterAttribute
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public IsUserInBlogPostRoleAttribute(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public IsUserInBlogRoleAttribute(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
             this.userManager = userManager;
         }
 
-        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
             var username = context.HttpContext.User.Identity.Name;
             var user = this.db.Users.FirstOrDefault(x => x.UserName == username);
             var controller = context.Controller as Controller;
 
-            if (!(await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
-                await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()) ||
-                await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()) ||
-                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString())))
+            if (!(this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()).Result ||
+                 this.userManager.IsInRoleAsync(user, Roles.Author.ToString()).Result ||
+                 this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()).Result ||
+                 this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()).Result))
             {
-                controller.TempData["Error"] = ErrorMessages.NotInDeletePostRoles;
+                controller.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor); ;
                 context.Result = new RedirectToActionResult("Index", "Blog", null);
             }
         }
