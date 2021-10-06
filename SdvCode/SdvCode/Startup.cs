@@ -6,14 +6,20 @@ namespace SdvCode
     using System;
     using System.Linq;
     using System.Net.Http;
+
     using AutoMapper;
+
     using Blazored.LocalStorage;
     using Blazored.SessionStorage;
+
     using BlazorStrap;
+
     using CloudinaryDotNet;
+
     using Hangfire;
     using Hangfire.Dashboard;
     using Hangfire.SqlServer;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Hosting;
@@ -24,7 +30,10 @@ namespace SdvCode
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.ML;
+
     using OfficeOpenXml;
+
+    using SdvCode.ApplicationAttributes.ActionAttributes;
     using SdvCode.Areas.Administration.Services.AddChatSticker;
     using SdvCode.Areas.Administration.Services.AddChatStickers;
     using SdvCode.Areas.Administration.Services.AddChatStickerType;
@@ -99,6 +108,7 @@ namespace SdvCode
     using SdvCode.Services.UserActivitesDbUsage.AllActivities;
     using SdvCode.Services.UserActivitesDbUsage.FollowActivities;
     using SdvCode.Services.UserPosts;
+
     using Twilio;
 
     public class Startup
@@ -261,6 +271,10 @@ namespace SdvCode
             services.AddTransient<ITrackOrder, TrackOrder>();
             services.AddScoped<ShoppingCartState>();
             services.AddScoped<FavoriteProductsState>();
+
+            // Register Attributes
+            services.AddScoped<IsUserBannedAttribute>();
+            services.AddScoped<IsUserInBlogPostRoleAttribute>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()

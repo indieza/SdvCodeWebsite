@@ -5,6 +5,7 @@ namespace SdvCode.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.Models.HolidayTheme;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.SdvShop.Models;

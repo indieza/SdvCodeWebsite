@@ -6,11 +6,15 @@ namespace SdvCode.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet.Actions;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
+    using SdvCode.ApplicationAttributes.ActionAttributes;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -20,7 +24,9 @@ namespace SdvCode.Controllers
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
     using SdvCode.ViewModels.Post.InputModels;
+
     using Twilio.Rest.Api.V2010.Account.Usage;
+
     using X.PagedList;
 
     public class BlogController : Controller
@@ -58,23 +64,10 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
+        [ServiceFilter(typeof(IsUserBannedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogPostRoleAttribute))]
         public async Task<IActionResult> CreatePost()
         {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.blogService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
-            var isInRole = await this.blogService.IsInBlogRole(currentUser);
-            if (!isInRole)
-            {
-                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
-                return this.RedirectToAction("Index", "Blog");
-            }
-
             var model = new CreatePostIndexModel
             {
                 Categories = await this.blogService.ExtractAllCategoryNames(),
@@ -86,23 +79,11 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
+        [ServiceFilter(typeof(IsUserBannedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogPostRoleAttribute))]
         public async Task<IActionResult> DeletePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.blogService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
-            var isInRole = await this.blogService.IsInPostRole(currentUser, id);
-            if (isInRole == false)
-            {
-                this.TempData["Error"] = ErrorMessages.NotInDeletePostRoles;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
             var tuple = await this.blogService.DeletePost(id, currentUser);
             this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Blog");
@@ -110,22 +91,11 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
+        [ServiceFilter(typeof(IsUserBannedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogPostRoleAttribute))]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.blogService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
-            var isInRole = await this.blogService.IsInBlogRole(currentUser);
-            if (!isInRole)
-            {
-                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             if (this.ModelState.IsValid)
             {
@@ -142,6 +112,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
+        [ServiceFilter(typeof(IsUserBannedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogPostRoleAttribute))]
         public async Task<IActionResult> EditPost(string id)
         {
             if (!await this.blogService.IsPostExist(id))
@@ -150,24 +122,10 @@ namespace SdvCode.Controllers
             }
 
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.blogService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
             var isApproved = await this.blogService.IsPostBlocked(id, currentUser);
             if (isApproved)
             {
                 this.TempData["Error"] = ErrorMessages.CannotEditBlogPost;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
-            var isInRole = await this.blogService.IsInPostRole(currentUser, id);
-            if (!isInRole)
-            {
-                this.TempData["Error"] = ErrorMessages.NotInEditPostRoles;
                 return this.RedirectToAction("Index", "Blog");
             }
 
@@ -180,18 +138,12 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
+        [ServiceFilter(typeof(IsUserBannedAttribute))]
         public async Task<IActionResult> EditPost(EditPostInputModel model)
         {
             if (this.ModelState.IsValid)
             {
                 var currentUser = await this.userManager.GetUserAsync(this.User);
-                var isBlocked = this.blogService.IsBlocked(currentUser);
-                if (isBlocked)
-                {
-                    this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                    return this.RedirectToAction("Index", "Blog");
-                }
-
                 var tuple = await this.blogService.EditPost(model, currentUser);
                 this.TempData[tuple.Item1] = tuple.Item2;
                 return this.RedirectToAction("Index", "Post", new { model.Id });
