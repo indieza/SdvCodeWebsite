@@ -38,7 +38,8 @@ namespace SdvCode.Controllers
         [Authorize]
         [Route("/Blog/Post/{id}")]
         [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
+        [IsUserInBlogRole("Index", "Blog", null)]
+        [IsPostApproved("Index", "Blog")]
         public async Task<IActionResult> Index(string id)
         {
             if (!await this.postService.IsPostExist(id))
@@ -48,13 +49,6 @@ namespace SdvCode.Controllers
 
             var currentUser = await this.userManager.GetUserAsync(this.User);
 
-            var isApproved = await this.postService.IsPostApproved(id, currentUser);
-            if (!isApproved)
-            {
-                this.TempData["Error"] = ErrorMessages.NotApprovedBlogPost;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
             PostViewModel model = await this.postService.ExtractCurrentPost(id, currentUser);
             return this.View(model);
         }
@@ -62,7 +56,7 @@ namespace SdvCode.Controllers
         [Authorize]
         [Route("/Blog/Post/Like/{id}")]
         [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
+        [IsUserInBlogRole("Index", "Blog", null)]
         public async Task<IActionResult> LikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);

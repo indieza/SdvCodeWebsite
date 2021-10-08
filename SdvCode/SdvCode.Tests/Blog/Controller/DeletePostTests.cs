@@ -68,44 +68,44 @@
         //    Assert.Equal(ErrorMessages.YouAreBlock, controller.TempData["Error"]);
         //}
 
-        [Fact]
-        public async Task ViewShouldRedirectCorrectForNoInRoleUser()
-        {
-            var currentUser = new ApplicationUser { UserName = "gogo" };
+        //[Fact]
+        //public async Task ViewShouldRedirectCorrectForNoInRoleUser()
+        //{
+        //    var currentUser = new ApplicationUser { UserName = "gogo" };
 
-            var mockService = new Mock<IBlogService>();
-            mockService.Setup(x => x.IsInPostRole(currentUser, Guid.NewGuid().ToString()))
-                .ReturnsAsync(false);
+        //    var mockService = new Mock<IBlogService>();
+        //    mockService.Setup(x => x.IsInPostRole(currentUser, Guid.NewGuid().ToString()))
+        //        .ReturnsAsync(false);
 
-            var mockUserManager = new Mock<UserManager<ApplicationUser>>(
-                    new Mock<IUserStore<ApplicationUser>>().Object,
-                    new Mock<IOptions<IdentityOptions>>().Object,
-                    new Mock<IPasswordHasher<ApplicationUser>>().Object,
-                    new IUserValidator<ApplicationUser>[0],
-                    new IPasswordValidator<ApplicationUser>[0],
-                    new Mock<ILookupNormalizer>().Object,
-                    new Mock<IdentityErrorDescriber>().Object,
-                    new Mock<IServiceProvider>().Object,
-                    new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
-            mockUserManager.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                 .ReturnsAsync(currentUser);
+        //    var mockUserManager = new Mock<UserManager<ApplicationUser>>(
+        //            new Mock<IUserStore<ApplicationUser>>().Object,
+        //            new Mock<IOptions<IdentityOptions>>().Object,
+        //            new Mock<IPasswordHasher<ApplicationUser>>().Object,
+        //            new IUserValidator<ApplicationUser>[0],
+        //            new IPasswordValidator<ApplicationUser>[0],
+        //            new Mock<ILookupNormalizer>().Object,
+        //            new Mock<IdentityErrorDescriber>().Object,
+        //            new Mock<IServiceProvider>().Object,
+        //            new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
+        //    mockUserManager.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
+        //         .ReturnsAsync(currentUser);
 
-            var httpContext = new DefaultHttpContext();
-            var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
-            var controller = new BlogController(mockService.Object, mockUserManager.Object)
-            {
-                TempData = tempData,
-            };
+        //    var httpContext = new DefaultHttpContext();
+        //    var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
+        //    var controller = new BlogController(mockService.Object, mockUserManager.Object)
+        //    {
+        //        TempData = tempData,
+        //    };
 
-            var result = await controller.DeletePost(Guid.NewGuid().ToString());
-            Assert.IsType<RedirectToActionResult>(result);
+        //    var result = await controller.DeletePost(Guid.NewGuid().ToString());
+        //    Assert.IsType<RedirectToActionResult>(result);
 
-            var redirect = result as RedirectToActionResult;
-            Assert.Equal($"Index", redirect.ActionName);
-            Assert.Equal($"Blog", redirect.ControllerName);
+        //    var redirect = result as RedirectToActionResult;
+        //    Assert.Equal($"Index", redirect.ActionName);
+        //    Assert.Equal($"Blog", redirect.ControllerName);
 
-            Assert.True(controller.TempData.ContainsKey("Error"));
-            Assert.Equal(ErrorMessages.NotInDeletePostRoles, controller.TempData["Error"]);
-        }
+        //    Assert.True(controller.TempData.ContainsKey("Error"));
+        //    Assert.Equal(ErrorMessages.NotInDeletePostRoles, controller.TempData["Error"]);
+        //}
     }
 }

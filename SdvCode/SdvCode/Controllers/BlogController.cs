@@ -113,7 +113,8 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
+        [IsUserInBlogRole("Index", "Blog", null)]
+        [IsPostBlocked("Index", "Post")]
         public async Task<IActionResult> EditPost(string id)
         {
             if (!await this.blogService.IsPostExist(id))
@@ -122,12 +123,6 @@ namespace SdvCode.Controllers
             }
 
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isApproved = await this.blogService.IsPostBlocked(id, currentUser);
-            if (isApproved)
-            {
-                this.TempData["Error"] = ErrorMessages.CannotEditBlogPost;
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             EditPostInputModel model = await this.blogService.ExtractPost(id, currentUser);
             model.Categories = await this.blogService.ExtractAllCategoryNames();

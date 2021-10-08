@@ -12,14 +12,8 @@ namespace SdvCode.Services
 
     public interface IUserValidationService
     {
-        Task<bool> IsInPostRole(ApplicationUser user, string id);
-
         Task<bool> IsInCommentRole(ApplicationUser user, string id);
 
-        Task<bool> IsPostApproved(string id, ApplicationUser user);
-
         Task<bool> IsPostBlockedOrPending(string id);
-
-        Task<bool> IsPostBlocked(string id, ApplicationUser user);
     }
 }
