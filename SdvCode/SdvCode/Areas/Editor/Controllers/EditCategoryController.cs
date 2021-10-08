@@ -25,22 +25,15 @@ namespace SdvCode.Areas.Editor.Controllers
     public class EditCategoryController : Controller
     {
         private readonly IEditCategoryService editCategoryService;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IHttpContextAccessor contextAccessor;
 
-        public EditCategoryController(
-            IEditCategoryService editCategoryService,
-            UserManager<ApplicationUser> userManager,
-            IHttpContextAccessor contextAccessor)
+        public EditCategoryController(IEditCategoryService editCategoryService)
         {
             this.editCategoryService = editCategoryService;
-            this.userManager = userManager;
-            this.contextAccessor = contextAccessor;
         }
 
         [Route("Editor/EditCategory/{id?}")]
         [HttpGet]
-        [IsUserBlocked("Index", "Blog", null)]
+        [IsUserBlocked("Index", "Profile")]
         public async Task<IActionResult> Index(string id)
         {
             EditCategoryInputModel model = await this.editCategoryService.ExtractCategoryById(id);
@@ -49,7 +42,7 @@ namespace SdvCode.Areas.Editor.Controllers
 
         [Route("Editor/EditCategory/{id?}")]
         [HttpPost]
-        [IsUserBlocked("Index", "Blog", null)]
+        [IsUserBlocked("Index", "Profile")]
         public async Task<IActionResult> Index(EditCategoryInputModel model)
         {
             bool isEdited = await this.editCategoryService.EditCategory(model);

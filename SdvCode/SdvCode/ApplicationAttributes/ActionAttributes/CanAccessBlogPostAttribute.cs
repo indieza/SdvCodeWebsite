@@ -18,18 +18,19 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
-    public class IsPostBlockedAttribute : ActionFilterAttribute
+    public class CanAccessBlogPostAttribute : ActionFilterAttribute
     {
         private readonly string redirectActionName;
         private readonly string redirectControllerName;
+        private readonly string message;
 
-        public IsPostBlockedAttribute(string redirectActionName, string redirectControllerName)
+        public CanAccessBlogPostAttribute(string redirectActionName, string redirectControllerName, string message)
         {
             this.redirectActionName = redirectActionName;
             this.redirectControllerName = redirectControllerName;
+            this.message = message;
         }
 
-        // TODO
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var db = context
@@ -45,14 +46,16 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
             var username = context.HttpContext.User.Identity.Name;
             var user = userManager.FindByNameAsync(username).Result;
 
-            var postId = context.RouteData.Values["id"].ToString();
+            var postId = context.ActionArguments["id"].ToString();
             var post = db.Posts.FirstOrDefault(x => x.Id == postId);
+
+            var userPostsIds = db.Posts.Where(x => x.ApplicationUserId == user.Id).Select(x => x.Id).ToList();
 
             var controller = context.Controller as Controller;
 
             if (post == null)
             {
-                controller.TempData["Error"] = "My Message";
+                controller.TempData["Error"] = ErrorMessages.NotExistingPost;
                 context.Result = new RedirectToActionResult(
                     this.redirectActionName,
                     this.redirectControllerName,
@@ -62,7 +65,17 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
                      !userManager.IsInRoleAsync(user, Roles.Administrator.ToString()).Result &&
                      !userManager.IsInRoleAsync(user, Roles.Editor.ToString()).Result)
             {
-                controller.TempData["Error"] = ErrorMessages.CannotEditBlogPost;
+                controller.TempData["Error"] = this.message;
+                context.Result = new RedirectToActionResult(
+                    this.redirectActionName,
+                    this.redirectControllerName,
+                    null);
+            }
+            else if (post.PostStatus == PostStatus.Banned ||
+                     post.PostStatus == PostStatus.Pending ||
+                     userPostsIds.Contains(postId))
+            {
+                controller.TempData["Error"] = this.message;
                 context.Result = new RedirectToActionResult(
                     this.redirectActionName,
                     this.redirectControllerName,

@@ -37,9 +37,9 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/{id}")]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRole("Index", "Blog", null)]
-        [IsPostApproved("Index", "Blog")]
+        [IsUserBlocked("Index", "Profile")]
+        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlogPost("Index", "Blog", ErrorMessages.NotApprovedBlogPost)]
         public async Task<IActionResult> Index(string id)
         {
             if (!await this.postService.IsPostExist(id))
@@ -55,9 +55,9 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/Like/{id}")]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRole("Index", "Blog", null)]
-        [IsPostBlockedOrPending("Index", "Blog")]
+        [IsUserBlocked("Index", "Profile")]
+        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlogPost("Index", "Blog", ErrorMessages.CanLikeNotApprovedBlogPost)]
         public async Task<IActionResult> LikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -68,9 +68,9 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/unlike/{id}")]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRole("Index", "Blog", null)]
-        [IsPostBlockedOrPending("Index", "Blog")]
+        [IsUserBlocked("Index", "Profile")]
+        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotUnlikeNotApprovedBlogPost)]
         public async Task<IActionResult> UnlikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -80,8 +80,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsPostBlockedOrPending("Index", "Blog")]
+        [IsUserBlocked("Index", "Profile")]
+        [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost)]
         public async Task<IActionResult> AddToFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -91,8 +91,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsPostBlockedOrPending("Index", "Blog")]
+        [IsUserBlocked("Index", "Profile")]
+        [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost)]
         public async Task<IActionResult> RemoveFromFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);

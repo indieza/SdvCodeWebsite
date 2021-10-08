@@ -64,8 +64,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
+        [IsUserBlocked("Index", "Profile")]
+        [IsUserInBlogRole("Index", "Blog")]
         public async Task<IActionResult> CreatePost()
         {
             var model = new CreatePostIndexModel
@@ -79,8 +79,8 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
+        [IsUserBlocked("Index", "Profile")]
+        [IsUserInBlogRole("Index", "Blog")]
         public async Task<IActionResult> DeletePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -91,8 +91,8 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
+        [IsUserBlocked("Index", "Profile")]
+        [IsUserInBlogRole("Index", "Blog")]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -112,9 +112,9 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRole("Index", "Blog", null)]
-        [IsPostBlocked("Index", "Post")]
+        [IsUserBlocked("Index", "Profile")]
+        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlogPost("Index", "Post", ErrorMessages.CannotEditBlogPost)]
         public async Task<IActionResult> EditPost(string id)
         {
             if (!await this.blogService.IsPostExist(id))
@@ -133,7 +133,7 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
-        [IsUserBlocked("Index", "Blog", null)]
+        [IsUserBlocked("Index", "Profile")]
         public async Task<IActionResult> EditPost(EditPostInputModel model)
         {
             if (this.ModelState.IsValid)

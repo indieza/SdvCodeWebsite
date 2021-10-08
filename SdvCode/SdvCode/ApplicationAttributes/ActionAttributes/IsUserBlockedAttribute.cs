@@ -20,13 +20,11 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
     {
         private readonly string redirectActionName;
         private readonly string redirectControllerName;
-        private readonly object routValues;
 
-        public IsUserBlockedAttribute(string redirectActionName, string redirectControllerName, object routValues)
+        public IsUserBlockedAttribute(string redirectActionName, string redirectControllerName)
         {
             this.redirectActionName = redirectActionName;
             this.redirectControllerName = redirectControllerName;
-            this.routValues = routValues;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -43,7 +41,10 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
             if (user.IsBlocked)
             {
                 controller.TempData["Error"] = ErrorMessages.YouAreBlock;
-                context.Result = new RedirectToActionResult(this.redirectActionName, this.redirectControllerName, this.routValues);
+                context.Result = new RedirectToActionResult(
+                    this.redirectActionName,
+                    this.redirectControllerName,
+                    new { username });
             }
         }
     }

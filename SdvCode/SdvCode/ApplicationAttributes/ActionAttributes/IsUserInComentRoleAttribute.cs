@@ -53,7 +53,7 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
 
             if (comment == null)
             {
-                controller.TempData["Error"] = "My Message";
+                controller.TempData["Error"] = ErrorMessages.NotExistingComment;
                 context.Result = new RedirectToActionResult(
                     this.redirectActionName,
                     this.redirectControllerName,
@@ -63,7 +63,7 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
                        userManager.IsInRoleAsync(user, Roles.Editor.ToString()).Result ||
                        comment.ApplicationUserId == user.Id))
             {
-                controller.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                controller.TempData["Error"] = ErrorMessages.NoPermissionToDeleteComment;
                 context.Result = new RedirectToActionResult(
                     this.redirectActionName,
                     this.redirectControllerName,

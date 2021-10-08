@@ -5,9 +5,11 @@ namespace SdvCode.Controllers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Models.Enums;
@@ -16,6 +18,7 @@ namespace SdvCode.Controllers
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users;
     using SdvCode.ViewModels.Users.ViewModels;
+
     using X.PagedList;
 
     [Authorize]

@@ -36,8 +36,8 @@ namespace SdvCode.Controllers
         }
 
         [HttpPost]
-        [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
+        [IsUserBlocked("Index", "Profile")]
+        [IsUserInBlogRole("Index", "Blog")]
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {
             if (this.ModelState.IsValid)

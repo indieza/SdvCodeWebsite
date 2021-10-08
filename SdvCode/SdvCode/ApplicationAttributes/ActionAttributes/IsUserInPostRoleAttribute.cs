@@ -13,6 +13,7 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
     using Microsoft.AspNetCore.Mvc.Filters;
 
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
 
@@ -50,7 +51,7 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
 
             if (post == null)
             {
-                controller.TempData["Error"] = "My Message";
+                controller.TempData["Error"] = ErrorMessages.NotExistingPost;
                 context.Result = new RedirectToActionResult(
                     this.redirectActionName,
                     this.redirectControllerName,
