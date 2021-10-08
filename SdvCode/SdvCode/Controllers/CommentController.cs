@@ -5,9 +5,12 @@ namespace SdvCode.Controllers
 {
     using System;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
+    using SdvCode.ApplicationAttributes.ActionAttributes;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -33,6 +36,8 @@ namespace SdvCode.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {
             if (this.ModelState.IsValid)
@@ -55,19 +60,6 @@ namespace SdvCode.Controllers
                 }
 
                 var currentUser = await this.userManager.GetUserAsync(this.User);
-                var isBlocked = this.commentsService.IsBlocked(currentUser);
-                if (isBlocked)
-                {
-                    this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                    return this.RedirectToAction("Index", "Post", new { id = input.PostId });
-                }
-
-                var isInRole = await this.commentsService.IsInBlogRole(currentUser);
-                if (!isInRole)
-                {
-                    this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
-                    return this.RedirectToAction("Index", "Post", new { id = input.PostId });
-                }
 
                 Post currentPost = await this.commentsService.ExtractCurrentPost(input.PostId);
                 if (currentPost.PostStatus == PostStatus.Banned || currentPost.PostStatus == PostStatus.Pending)

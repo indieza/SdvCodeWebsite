@@ -7,13 +7,14 @@ namespace SdvCode.Services
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.Models.User;
 
     public interface IUserValidationService
     {
-        bool IsBlocked(ApplicationUser user);
+        //bool IsBlocked(ApplicationUser user);
 
-        Task<bool> IsInBlogRole(ApplicationUser user);
+        //Task<bool> IsInBlogRole(ApplicationUser user);
 
         Task<bool> IsInPostRole(ApplicationUser user, string id);
 

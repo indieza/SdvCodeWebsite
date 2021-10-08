@@ -7,10 +7,13 @@ namespace SdvCode.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
+    using SdvCode.ApplicationAttributes.ActionAttributes;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -34,6 +37,8 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/{id}")]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> Index(string id)
         {
             if (!await this.postService.IsPostExist(id))
@@ -42,19 +47,6 @@ namespace SdvCode.Controllers
             }
 
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.postService.IsBlocked(currentUser);
-            if (isBlocked == true)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
-            var isInRole = await this.postService.IsInBlogRole(currentUser);
-            if (!isInRole)
-            {
-                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             var isApproved = await this.postService.IsPostApproved(id, currentUser);
             if (!isApproved)
@@ -69,22 +61,11 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/Like/{id}")]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> LikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.postService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
-            var isInRole = await this.postService.IsInBlogRole(currentUser);
-            if (!isInRole)
-            {
-                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             var isApproved = await this.postService.IsPostBlockedOrPending(id);
             if (isApproved)
@@ -100,22 +81,11 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/unlike/{id}")]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> UnlikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.postService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
-            var isInRole = await this.postService.IsInBlogRole(currentUser);
-            if (!isInRole)
-            {
-                this.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             var isApproved = await this.postService.IsPostBlockedOrPending(id);
             if (isApproved)
@@ -129,15 +99,11 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
+        [Authorize]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
         public async Task<IActionResult> AddToFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.postService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             var isApproved = await this.postService.IsPostBlockedOrPending(id);
             if (isApproved)
@@ -151,15 +117,11 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
+        [Authorize]
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
         public async Task<IActionResult> RemoveFromFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isBlocked = this.postService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             var isApproved = await this.postService.IsPostBlockedOrPending(id);
             if (isApproved)

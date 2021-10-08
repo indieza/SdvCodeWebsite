@@ -7,10 +7,13 @@ namespace SdvCode.Areas.Editor.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
+    using SdvCode.ApplicationAttributes.ActionAttributes;
     using SdvCode.Areas.Editor.Services;
     using SdvCode.Areas.Editor.Services.Post;
     using SdvCode.Constraints;
@@ -35,15 +38,10 @@ namespace SdvCode.Areas.Editor.Controllers
             this.contextAccessor = contextAccessor;
         }
 
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
         public async Task<IActionResult> ApprovePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
-            var isBlocked = this.postService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             bool isApproved = await this.postService.ApprovePost(id, currentUser);
             if (isApproved)
@@ -58,15 +56,10 @@ namespace SdvCode.Areas.Editor.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
         public async Task<IActionResult> UnbanPost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
-            var isBlocked = this.postService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             bool isUnbanned = await this.postService.UnbannPost(id, currentUser);
             if (isUnbanned)
@@ -81,15 +74,10 @@ namespace SdvCode.Areas.Editor.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
+        [ServiceFilter(typeof(IsUserBlockedAttribute))]
         public async Task<IActionResult> BanPost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
-            var isBlocked = this.postService.IsBlocked(currentUser);
-            if (isBlocked)
-            {
-                this.TempData["Error"] = ErrorMessages.YouAreBlock;
-                return this.RedirectToAction("Index", "Blog");
-            }
 
             bool isBanned = await this.postService.BannPost(id, currentUser);
             if (isBanned)

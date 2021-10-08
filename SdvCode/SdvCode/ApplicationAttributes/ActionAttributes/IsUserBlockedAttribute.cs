@@ -8,31 +8,42 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.Models.User;
 
     public class IsUserBlockedAttribute : ActionFilterAttribute
     {
-        private readonly ApplicationDbContext db;
+        private readonly string redirectActionName;
+        private readonly string redirectControllerName;
+        private readonly object routValues;
 
-        public IsUserBlockedAttribute(ApplicationDbContext db)
+        public IsUserBlockedAttribute(string redirectActionName, string redirectControllerName, object routValues)
         {
-            this.db = db;
+            this.redirectActionName = redirectActionName;
+            this.redirectControllerName = redirectControllerName;
+            this.routValues = routValues;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            var userManager = context
+                .HttpContext
+                .RequestServices
+                .GetService(typeof(UserManager<ApplicationUser>)) as UserManager<ApplicationUser>;
+
             var username = context.HttpContext.User.Identity.Name;
-            var user = this.db.Users.FirstOrDefault(x => x.UserName == username);
+            var user = userManager.FindByNameAsync(username).Result;
             var controller = context.Controller as Controller;
 
             if (user.IsBlocked)
             {
                 controller.TempData["Error"] = ErrorMessages.YouAreBlock;
-                context.Result = new RedirectToActionResult("Index", "Blog", null);
+                context.Result = new RedirectToActionResult(this.redirectActionName, this.redirectControllerName, this.routValues);
             }
         }
     }
