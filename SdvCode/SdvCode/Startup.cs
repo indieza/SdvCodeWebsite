@@ -25,6 +25,7 @@ namespace SdvCode
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -271,10 +272,6 @@ namespace SdvCode
             services.AddTransient<ITrackOrder, TrackOrder>();
             services.AddScoped<ShoppingCartState>();
             services.AddScoped<FavoriteProductsState>();
-
-            // Register Attributes
-            services.AddScoped<IsUserBlockedAttribute>();
-            services.AddScoped<IsUserInBlogRoleAttribute>();
 
             // Register ML Models
             services.AddPredictionEnginePool<BlogPostModelInput, BlogPostModelOutput>()

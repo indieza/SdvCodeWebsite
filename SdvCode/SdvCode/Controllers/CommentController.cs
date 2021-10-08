@@ -36,7 +36,7 @@ namespace SdvCode.Controllers
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
         [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {

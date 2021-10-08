@@ -38,7 +38,7 @@ namespace SdvCode.Areas.Editor.Controllers
             this.contextAccessor = contextAccessor;
         }
 
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
         public async Task<IActionResult> ApprovePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
@@ -56,7 +56,7 @@ namespace SdvCode.Areas.Editor.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
         public async Task<IActionResult> UnbanPost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);
@@ -74,7 +74,7 @@ namespace SdvCode.Areas.Editor.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
         public async Task<IActionResult> BanPost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.contextAccessor.HttpContext.User);

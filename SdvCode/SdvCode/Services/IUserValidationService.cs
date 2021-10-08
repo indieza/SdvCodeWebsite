@@ -12,10 +12,6 @@ namespace SdvCode.Services
 
     public interface IUserValidationService
     {
-        //bool IsBlocked(ApplicationUser user);
-
-        //Task<bool> IsInBlogRole(ApplicationUser user);
-
         Task<bool> IsInPostRole(ApplicationUser user, string id);
 
         Task<bool> IsInCommentRole(ApplicationUser user, string id);

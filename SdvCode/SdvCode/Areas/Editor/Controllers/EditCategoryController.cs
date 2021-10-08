@@ -40,7 +40,7 @@ namespace SdvCode.Areas.Editor.Controllers
 
         [Route("Editor/EditCategory/{id?}")]
         [HttpGet]
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
         public async Task<IActionResult> Index(string id)
         {
             EditCategoryInputModel model = await this.editCategoryService.ExtractCategoryById(id);
@@ -49,7 +49,7 @@ namespace SdvCode.Areas.Editor.Controllers
 
         [Route("Editor/EditCategory/{id?}")]
         [HttpPost]
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
         public async Task<IActionResult> Index(EditCategoryInputModel model)
         {
             bool isEdited = await this.editCategoryService.EditCategory(model);

@@ -30,24 +30,6 @@ namespace SdvCode.Services
             this.db = db;
         }
 
-        //public virtual bool IsBlocked(ApplicationUser user)
-        //{
-        //    return user.IsBlocked;
-        //}
-
-        //public virtual async Task<bool> IsInBlogRole(ApplicationUser user)
-        //{
-        //    if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
-        //        await this.userManager.IsInRoleAsync(user, Roles.Author.ToString()) ||
-        //        await this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()) ||
-        //        await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()))
-        //    {
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
-
         public virtual async Task<bool> IsInPostRole(ApplicationUser user, string id)
         {
             var post = this.db.Posts.FirstOrDefault(x => x.Id == id);

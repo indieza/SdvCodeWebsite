@@ -19,28 +19,35 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
 
     public class IsUserInBlogRoleAttribute : ActionFilterAttribute
     {
-        private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly string redirectActionName;
+        private readonly string redirectControllerName;
+        private readonly object routValues;
 
-        public IsUserInBlogRoleAttribute(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public IsUserInBlogRoleAttribute(string redirectActionName, string redirectControllerName, object routValues)
         {
-            this.db = db;
-            this.userManager = userManager;
+            this.redirectActionName = redirectActionName;
+            this.redirectControllerName = redirectControllerName;
+            this.routValues = routValues;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            var userManager = context
+                .HttpContext
+                .RequestServices
+                .GetService(typeof(UserManager<ApplicationUser>)) as UserManager<ApplicationUser>;
+
             var username = context.HttpContext.User.Identity.Name;
-            var user = this.db.Users.FirstOrDefault(x => x.UserName == username);
+            var user = userManager.FindByNameAsync(username).Result;
             var controller = context.Controller as Controller;
 
-            if (!(this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()).Result ||
-                 this.userManager.IsInRoleAsync(user, Roles.Author.ToString()).Result ||
-                 this.userManager.IsInRoleAsync(user, Roles.Contributor.ToString()).Result ||
-                 this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()).Result))
+            if (!(userManager.IsInRoleAsync(user, Roles.Administrator.ToString()).Result ||
+                 userManager.IsInRoleAsync(user, Roles.Author.ToString()).Result ||
+                 userManager.IsInRoleAsync(user, Roles.Contributor.ToString()).Result ||
+                 userManager.IsInRoleAsync(user, Roles.Editor.ToString()).Result))
             {
-                controller.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor); ;
-                context.Result = new RedirectToActionResult("Index", "Blog", null);
+                controller.TempData["Error"] = string.Format(ErrorMessages.NotInBlogRoles, Roles.Contributor);
+                context.Result = new RedirectToActionResult(this.redirectActionName, this.redirectControllerName, this.routValues);
             }
         }
     }

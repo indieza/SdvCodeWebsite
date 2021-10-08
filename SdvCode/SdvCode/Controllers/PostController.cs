@@ -37,8 +37,8 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/{id}")]
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
-        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
+        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
         public async Task<IActionResult> Index(string id)
         {
             if (!await this.postService.IsPostExist(id))
@@ -61,8 +61,8 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/Like/{id}")]
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
-        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
+        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
         public async Task<IActionResult> LikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -81,8 +81,8 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [Route("/Blog/Post/unlike/{id}")]
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
-        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
+        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
         public async Task<IActionResult> UnlikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -100,7 +100,7 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
         public async Task<IActionResult> AddToFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -118,7 +118,7 @@ namespace SdvCode.Controllers
         }
 
         [Authorize]
-        [ServiceFilter(typeof(IsUserBlockedAttribute))]
+        [IsUserBlocked("Index", "Blog", null)]
         public async Task<IActionResult> RemoveFromFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
