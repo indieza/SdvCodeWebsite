@@ -7,15 +7,18 @@ namespace SdvCode.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
+
     using SdvCode.Constraints;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.UserPosts;
     using SdvCode.ViewModels.UserPosts;
+
     using X.PagedList;
 
     public class UserPostsController : Controller
@@ -29,6 +32,7 @@ namespace SdvCode.Controllers
             this.userManager = userManager;
         }
 
+        [HttpGet]
         [Authorize]
         [Route("Blog/UserPosts/{username}/{filter}/{page?}")]
         public async Task<IActionResult> Index(string username, string filter, int? page)

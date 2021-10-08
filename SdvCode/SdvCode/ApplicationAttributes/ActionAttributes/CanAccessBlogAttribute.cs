@@ -17,12 +17,12 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
     using SdvCode.Data;
     using SdvCode.Models.User;
 
-    public class IsUserInBlogRoleAttribute : ActionFilterAttribute
+    public class CanAccessBlogAttribute : ActionFilterAttribute
     {
         private readonly string redirectActionName;
         private readonly string redirectControllerName;
 
-        public IsUserInBlogRoleAttribute(string redirectActionName, string redirectControllerName)
+        public CanAccessBlogAttribute(string redirectActionName, string redirectControllerName)
         {
             this.redirectActionName = redirectActionName;
             this.redirectControllerName = redirectControllerName;

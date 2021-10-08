@@ -4,6 +4,7 @@
 namespace SdvCode.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+
     using SdvCode.Constraints;
     using SdvCode.Services.Contact;
     using SdvCode.ViewModels.Contacts;
@@ -20,6 +21,7 @@ namespace SdvCode.Controllers
         [BindProperty]
         public ContactInputModel Contact { get; set; }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return this.View();

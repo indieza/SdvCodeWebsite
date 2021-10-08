@@ -7,11 +7,14 @@ namespace SdvCode.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using SdvCode.Constraints;
     using SdvCode.Services.AllCategories;
     using SdvCode.ViewModels.AllCategories.ViewModels;
+
     using X.PagedList;
 
     [Authorize]
@@ -24,6 +27,7 @@ namespace SdvCode.Controllers
             this.allCategoriesService = allCategoriesService;
         }
 
+        [HttpGet]
         [Route("AllCategories/{page?}")]
         public IActionResult Index(int? page)
         {

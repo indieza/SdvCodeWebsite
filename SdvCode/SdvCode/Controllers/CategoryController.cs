@@ -7,13 +7,16 @@ namespace SdvCode.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.Services.Category;
     using SdvCode.ViewModels.Category;
+
     using X.PagedList;
 
     public class CategoryController : Controller
@@ -27,6 +30,7 @@ namespace SdvCode.Controllers
             this.userManager = userManager;
         }
 
+        [HttpGet]
         [Authorize]
         [Route("Blog/Category/{id}/{page?}")]
         public async Task<IActionResult> Index(string id, int? page)

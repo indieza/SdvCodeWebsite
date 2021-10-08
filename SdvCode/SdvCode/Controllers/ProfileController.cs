@@ -38,6 +38,7 @@ namespace SdvCode.Controllers
             this.profileService = profileService;
         }
 
+        [HttpGet]
         [Route("Profile/{username}/{tab?}/{page?}")]
         public async Task<IActionResult> Index(string username, ProfileTab tab, int? page)
         {
@@ -106,6 +107,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Users", new { tab = vm });
         }
 
+        [HttpPost]
         [Route("/Follow/{username}")]
         public async Task<IActionResult> Follow(string username)
         {
@@ -116,6 +118,7 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{user.UserName}");
         }
 
+        [HttpPost]
         [Route("/Unfollow/{username}")]
         public async Task<IActionResult> Unfollow(string username)
         {
@@ -126,6 +129,7 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{user.UserName}");
         }
 
+        [HttpGet]
         [Route("/Profile/Users/{tab?}/{page?}/{search?}")]
         public IActionResult Users(AllUsersTab tab, int? page, string search)
         {
@@ -155,6 +159,7 @@ namespace SdvCode.Controllers
             return $"{rateUser:F2}/5";
         }
 
+        [HttpPost]
         [Route("/DeleteActivityHistory/{username}")]
         public async Task<IActionResult> DeleteActivityHistory(string username)
         {
@@ -165,6 +170,7 @@ namespace SdvCode.Controllers
             return this.Redirect($"/Profile/{username}");
         }
 
+        [HttpPost]
         [Route("/DeleteActivityById/{username}/{activityId}")]
         public async Task<IActionResult> DeleteActivityById(string username, string activityId)
         {
@@ -183,6 +189,7 @@ namespace SdvCode.Controllers
             return newStatus;
         }
 
+        [HttpPost]
         public IActionResult MakeYourselfAdmin(string username)
         {
             this.profileService.MakeYourselfAdmin(username);

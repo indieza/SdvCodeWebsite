@@ -35,10 +35,11 @@ namespace SdvCode.Controllers
             this.userManager = userManager;
         }
 
+        [HttpGet]
         [Authorize]
         [Route("/Blog/Post/{id}")]
         [IsUserBlocked("Index", "Profile")]
-        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlog("Index", "Blog")]
         [CanAccessBlogPost("Index", "Blog", ErrorMessages.NotApprovedBlogPost)]
         public async Task<IActionResult> Index(string id)
         {
@@ -53,10 +54,11 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
+        [HttpPost]
         [Authorize]
         [Route("/Blog/Post/Like/{id}")]
         [IsUserBlocked("Index", "Profile")]
-        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlog("Index", "Blog")]
         [CanAccessBlogPost("Index", "Blog", ErrorMessages.CanLikeNotApprovedBlogPost)]
         public async Task<IActionResult> LikePost(string id)
         {
@@ -66,10 +68,11 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
+        [HttpPost]
         [Authorize]
         [Route("/Blog/Post/unlike/{id}")]
         [IsUserBlocked("Index", "Profile")]
-        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlog("Index", "Blog")]
         [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotUnlikeNotApprovedBlogPost)]
         public async Task<IActionResult> UnlikePost(string id)
         {
@@ -79,6 +82,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
+        [HttpPost]
         [Authorize]
         [IsUserBlocked("Index", "Profile")]
         [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost)]
@@ -90,6 +94,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
+        [HttpPost]
         [Authorize]
         [IsUserBlocked("Index", "Profile")]
         [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost)]

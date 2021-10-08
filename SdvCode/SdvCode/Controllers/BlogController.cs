@@ -42,6 +42,7 @@ namespace SdvCode.Controllers
             this.userManager = userManager;
         }
 
+        [HttpGet]
         [Route("Blog/{page?}/{search?}")]
         public async Task<IActionResult> Index(int? page, string search)
         {
@@ -63,9 +64,10 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
+        [HttpGet]
         [Authorize]
         [IsUserBlocked("Index", "Profile")]
-        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlog("Index", "Blog")]
         public async Task<IActionResult> CreatePost()
         {
             var model = new CreatePostIndexModel
@@ -78,21 +80,10 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
-        [Authorize]
-        [IsUserBlocked("Index", "Profile")]
-        [IsUserInBlogRole("Index", "Blog")]
-        public async Task<IActionResult> DeletePost(string id)
-        {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            var tuple = await this.blogService.DeletePost(id, currentUser);
-            this.TempData[tuple.Item1] = tuple.Item2;
-            return this.RedirectToAction("Index", "Blog");
-        }
-
         [HttpPost]
         [Authorize]
         [IsUserBlocked("Index", "Profile")]
-        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlog("Index", "Blog")]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -111,9 +102,23 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Blog", model);
         }
 
+        [HttpPost]
         [Authorize]
         [IsUserBlocked("Index", "Profile")]
-        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlog("Index", "Blog")]
+        [CanAccessBlogPost("Index", "Post", ErrorMessages.NotInDeletePostRoles)]
+        public async Task<IActionResult> DeletePost(string id)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            var tuple = await this.blogService.DeletePost(id, currentUser);
+            this.TempData[tuple.Item1] = tuple.Item2;
+            return this.RedirectToAction("Index", "Blog");
+        }
+
+        [HttpGet]
+        [Authorize]
+        [IsUserBlocked("Index", "Profile")]
+        [CanAccessBlog("Index", "Blog")]
         [CanAccessBlogPost("Index", "Post", ErrorMessages.CannotEditBlogPost)]
         public async Task<IActionResult> EditPost(string id)
         {
@@ -134,6 +139,8 @@ namespace SdvCode.Controllers
         [HttpPost]
         [Authorize]
         [IsUserBlocked("Index", "Profile")]
+        [CanAccessBlog("Index", "Blog")]
+        [CanAccessBlogPost("Index", "Post", ErrorMessages.CannotEditBlogPost)]
         public async Task<IActionResult> EditPost(EditPostInputModel model)
         {
             if (this.ModelState.IsValid)

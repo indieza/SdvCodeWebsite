@@ -37,7 +37,7 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [IsUserBlocked("Index", "Profile")]
-        [IsUserInBlogRole("Index", "Blog")]
+        [CanAccessBlog("Index", "Blog")]
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {
             if (this.ModelState.IsValid)
@@ -79,6 +79,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Blog");
         }
 
+        [HttpPost]
         [IsUserInComentRole("Index", "Post")]
         public async Task<IActionResult> DeleteById(string commentId, string postId)
         {
@@ -87,6 +88,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id = postId });
         }
 
+        [HttpGet]
         [IsUserInComentRole("Index", "Post")]
         public async Task<IActionResult> EditComment(string commentId, string postId)
         {

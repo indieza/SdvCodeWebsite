@@ -71,9 +71,7 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
                     this.redirectControllerName,
                     null);
             }
-            else if (post.PostStatus == PostStatus.Banned ||
-                     post.PostStatus == PostStatus.Pending ||
-                     userPostsIds.Contains(postId))
+            else if (post.PostStatus != PostStatus.Approved && !userPostsIds.Contains(postId))
             {
                 controller.TempData["Error"] = this.message;
                 context.Result = new RedirectToActionResult(
