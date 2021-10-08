@@ -7,7 +7,9 @@ namespace SdvCode.Services.Blog
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Http;
+
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.InputModels;
@@ -15,7 +17,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.ViewModels.Post.InputModels;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public interface IBlogService : IUserValidationService
+    public interface IBlogService
     {
         Task<ICollection<string>> ExtractAllCategoryNames();
 

@@ -7,19 +7,20 @@ namespace SdvCode.Areas.Editor.Services.Category
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Editor.ViewModels;
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.Services;
 
-    public class EditCategoryService : UserValidationService, IEditCategoryService
+    public class EditCategoryService : IEditCategoryService
     {
         private readonly ApplicationDbContext db;
 
         public EditCategoryService(ApplicationDbContext db)
-            : base(db)
         {
             this.db = db;
         }

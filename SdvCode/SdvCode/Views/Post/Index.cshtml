@@ -220,7 +220,7 @@
                             </div>
                         </div>
                         <div class="author-info">
-                            <h3>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName<span>@Model.ApplicationUser.CountryCode.ToString().Split("_")[0], @Model.ApplicationUser.City</span></h3>
+                            @*<h3>@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName<span>@Model.ApplicationUser.CountryCode.ToString().Split("_")[0], @Model.ApplicationUser.City</span></h3>*@
                             <p>@Model.ApplicationUser.AboutMe</p>
                             <p class="author-url">Profile: <span><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.ApplicationUser.UserName">@@@Model.ApplicationUser.UserName</a></span></p>
                         </div>

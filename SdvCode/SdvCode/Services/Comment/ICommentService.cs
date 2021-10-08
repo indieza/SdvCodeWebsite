@@ -5,11 +5,12 @@ namespace SdvCode.Services.Comment
 {
     using System;
     using System.Threading.Tasks;
+
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Comment.ViewModels;
 
-    public interface ICommentService : IUserValidationService
+    public interface ICommentService
     {
         Task<Tuple<string, string>> Create(string postId, ApplicationUser user, string content, string parentId);
 

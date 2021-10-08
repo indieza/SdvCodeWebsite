@@ -7,10 +7,12 @@ namespace SdvCode.Services.Comment
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
@@ -21,7 +23,7 @@ namespace SdvCode.Services.Comment
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Comment.ViewModels;
 
-    public class CommentService : UserValidationService, ICommentService
+    public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
@@ -33,7 +35,6 @@ namespace SdvCode.Services.Comment
             UserManager<ApplicationUser> userManager,
             IHubContext<NotificationHub> notificationHubContext,
             INotificationService notificationService)
-            : base(userManager, db)
         {
             this.db = db;
             this.userManager = userManager;

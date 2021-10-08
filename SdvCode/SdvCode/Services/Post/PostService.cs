@@ -7,10 +7,12 @@ namespace SdvCode.Services.Post
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
@@ -21,7 +23,7 @@ namespace SdvCode.Services.Post
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public class PostService : UserValidationService, IPostService
+    public class PostService : IPostService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
@@ -34,7 +36,6 @@ namespace SdvCode.Services.Post
             UserManager<ApplicationUser> userManager,
             IHubContext<NotificationHub> notificationHubContext,
             INotificationService notificationService)
-            : base(userManager, db)
         {
             this.db = db;
             this.userManager = userManager;

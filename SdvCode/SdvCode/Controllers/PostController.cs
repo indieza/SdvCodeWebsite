@@ -57,17 +57,10 @@ namespace SdvCode.Controllers
         [Route("/Blog/Post/Like/{id}")]
         [IsUserBlocked("Index", "Blog", null)]
         [IsUserInBlogRole("Index", "Blog", null)]
+        [IsPostBlockedOrPending("Index", "Blog")]
         public async Task<IActionResult> LikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-
-            var isApproved = await this.postService.IsPostBlockedOrPending(id);
-            if (isApproved)
-            {
-                this.TempData["Error"] = ErrorMessages.CannotLikeNotApprovedBlogPost;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
             var tuple = await this.postService.LikePost(id, currentUser);
             this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id });
@@ -76,18 +69,11 @@ namespace SdvCode.Controllers
         [Authorize]
         [Route("/Blog/Post/unlike/{id}")]
         [IsUserBlocked("Index", "Blog", null)]
-        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
+        [IsUserInBlogRole("Index", "Blog", null)]
+        [IsPostBlockedOrPending("Index", "Blog")]
         public async Task<IActionResult> UnlikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-
-            var isApproved = await this.postService.IsPostBlockedOrPending(id);
-            if (isApproved)
-            {
-                this.TempData["Error"] = ErrorMessages.CannotUnlikeNotApprovedBlogPost;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
             var tuple = await this.postService.UnlikePost(id, currentUser);
             this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id });
@@ -95,17 +81,10 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [IsUserBlocked("Index", "Blog", null)]
+        [IsPostBlockedOrPending("Index", "Blog")]
         public async Task<IActionResult> AddToFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-
-            var isApproved = await this.postService.IsPostBlockedOrPending(id);
-            if (isApproved)
-            {
-                this.TempData["Error"] = ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
             var tuple = await this.postService.AddToFavorite(currentUser, id);
             this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id });
@@ -113,17 +92,10 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [IsUserBlocked("Index", "Blog", null)]
+        [IsPostBlockedOrPending("Index", "Blog")]
         public async Task<IActionResult> RemoveFromFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-
-            var isApproved = await this.postService.IsPostBlockedOrPending(id);
-            if (isApproved)
-            {
-                this.TempData["Error"] = ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost;
-                return this.RedirectToAction("Index", "Blog");
-            }
-
             var tuple = await this.postService.RemoveFromFavorite(currentUser, id);
             this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id });

@@ -7,8 +7,10 @@ namespace SdvCode.Areas.Editor.Services.Post
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Data;
@@ -17,7 +19,7 @@ namespace SdvCode.Areas.Editor.Services.Post
     using SdvCode.Models.User;
     using SdvCode.Services;
 
-    public class EditorPostService : UserValidationService, IEditorPostService
+    public class EditorPostService : IEditorPostService
     {
         private readonly ApplicationDbContext db;
         private readonly INotificationService notificationService;
@@ -40,7 +42,6 @@ namespace SdvCode.Areas.Editor.Services.Post
             ApplicationDbContext db,
             INotificationService notificationService,
             IHubContext<NotificationHub> notificationHubContext)
-            : base(db)
         {
             this.db = db;
             this.notificationService = notificationService;

@@ -37,7 +37,7 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [IsUserBlocked("Index", "Blog", null)]
-        [ServiceFilter(typeof(IsUserInBlogRoleAttribute))]
+        [IsUserInBlogRoleAttribute("Index", "Blog", null)]
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {
             if (this.ModelState.IsValid)
@@ -79,32 +79,17 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Blog");
         }
 
+        [IsUserInComentRole("Index", "Post")]
         public async Task<IActionResult> DeleteById(string commentId, string postId)
         {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isInCommentRole = await this.commentsService.IsInCommentRole(currentUser, commentId);
-
-            if (!isInCommentRole)
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            }
-
             var tuple = await this.commentsService.DeleteCommentById(commentId);
             this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Post", new { id = postId });
         }
 
+        [IsUserInComentRole("Index", "Post")]
         public async Task<IActionResult> EditComment(string commentId, string postId)
         {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-            var isInCommentRole = await this.commentsService.IsInCommentRole(currentUser, commentId);
-
-            if (!isInCommentRole)
-            {
-                this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-                return this.RedirectToAction("Index", "Post", new { id = postId });
-            }
-
             var isCommentIdCorrect = await this.commentsService.IsCommentIdCorrect(commentId, postId);
 
             if (!isCommentIdCorrect)
@@ -119,19 +104,11 @@ namespace SdvCode.Controllers
         }
 
         [HttpPost]
+        [IsUserInComentRole("Index", "Post")]
         public async Task<IActionResult> EditComment(EditCommentViewModel model)
         {
             if (this.ModelState.IsValid)
             {
-                var currentUser = await this.userManager.GetUserAsync(this.User);
-                var isInCommentRole = await this.commentsService.IsInCommentRole(currentUser, model.CommentId);
-
-                if (!isInCommentRole)
-                {
-                    this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-                    return this.RedirectToAction("Index", "Post", new { id = model.PostId });
-                }
-
                 var isCommentIdCorrect = await this.commentsService.IsCommentIdCorrect(model.CommentId, model.PostId);
 
                 if (!isCommentIdCorrect)

@@ -9,12 +9,16 @@ namespace SdvCode.Services.Blog
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet;
+
     using Ganss.XSS;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
@@ -29,7 +33,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.ViewModels.Post.InputModels;
     using SdvCode.ViewModels.Post.ViewModels;
 
-    public class BlogService : UserValidationService, IBlogService
+    public class BlogService : IBlogService
     {
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;
@@ -46,7 +50,6 @@ namespace SdvCode.Services.Blog
             UserManager<ApplicationUser> userManager,
             INotificationService notificationService,
             IHubContext<NotificationHub> notificationHubContext)
-            : base(userManager, db)
         {
             this.db = db;
             this.cloudinary = cloudinary;

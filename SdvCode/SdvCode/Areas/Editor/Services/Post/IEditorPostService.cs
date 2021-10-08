@@ -7,10 +7,11 @@ namespace SdvCode.Areas.Editor.Services.Post
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.Models.User;
     using SdvCode.Services;
 
-    public interface IEditorPostService : IUserValidationService
+    public interface IEditorPostService
     {
         Task<bool> ApprovePost(string id, ApplicationUser currentUser);
 
