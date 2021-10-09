@@ -80,6 +80,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Blog");
         }
 
+        [HttpPost]
         [Route("/Comment/DeleteById/{commentId}/{postId}")]
         [UserBlocked("Index", "Profile")]
         [CommentCrudOperations("Index", "Blog", null, ErrorMessages.NoPermissionToDeleteComment)]
@@ -101,7 +102,7 @@ namespace SdvCode.Controllers
             if (!isCommentIdCorrect)
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-                return this.RedirectToAction("Index", "Post", new { postId = postId });
+                return this.RedirectToAction("Index", "Post", new { postId });
             }
 
             EditCommentViewModel model = await this.commentsService.ExtractCurrentComment(commentId);
@@ -110,24 +111,25 @@ namespace SdvCode.Controllers
         }
 
         [HttpPost]
+        [Route("/Comment/EditComment/{commentId}/{postId}")]
         [UserBlocked("Index", "Profile")]
         [CommentCrudOperations("Index", "Blog", null, ErrorMessages.NoPermissionToEditComment)]
-        public async Task<IActionResult> EditComment(EditCommentViewModel model)
+        public async Task<IActionResult> EditComment(string commentId, string postId, EditCommentViewModel model)
         {
             if (this.ModelState.IsValid)
             {
-                var isCommentIdCorrect = await this.commentsService.IsCommentIdCorrect(model.CommentId, model.PostId);
+                var isCommentIdCorrect = await this.commentsService.IsCommentIdCorrect(commentId, postId);
 
                 if (!isCommentIdCorrect)
                 {
                     this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-                    return this.RedirectToAction("Index", "Post", new { postId = model.PostId });
+                    return this.RedirectToAction("Index", "Post", new { postId });
                 }
 
                 Tuple<string, string> tuple = await this.commentsService.EditComment(model);
                 this.TempData[tuple.Item1] = tuple.Item2;
 
-                return this.RedirectToAction("Index", "Post", new { postId = model.PostId });
+                return this.RedirectToAction("Index", "Post", new { postId });
             }
 
             this.TempData["Error"] = ErrorMessages.InvalidInputModel;

@@ -1,0 +1,16 @@
+﻿.transparentCommentButton {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.deleteEditCommentButton {
+    float: left;
+    margin-right: 8px;
+}
+
+.approveCommentButton {
+    float: left;
+}

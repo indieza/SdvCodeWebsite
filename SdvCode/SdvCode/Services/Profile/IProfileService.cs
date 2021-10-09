@@ -5,7 +5,9 @@ namespace SdvCode.Services.Profile
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Http;
+
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
@@ -24,6 +26,8 @@ namespace SdvCode.Services.Profile
         Task<string> DeleteActivityById(ApplicationUser user, string activityId);
 
         Task<bool> HasAdmin(ApplicationRole role);
+
+        Task<bool> HasAdministrator();
 
         void MakeYourselfAdmin(string username);
 

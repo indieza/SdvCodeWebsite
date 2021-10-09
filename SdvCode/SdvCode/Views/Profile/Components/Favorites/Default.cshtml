@@ -6,21 +6,25 @@
         <div class="activity-attachment">
             @if (post.IsFavorite)
             {
-                <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-postId="@post.PostId" type="button" class="btn btn-sm btn-danger" style="float: right">
-                    <i class="fas fa-eraser"></i>
-                    <span>
-                        Remove
-                    </span>
-                </a>
+                <form asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-postId="@post.PostId" method="post">
+                    <button type="submit" class="btn btn-sm btn-danger" style="float: right">
+                        <i class="fas fa-eraser"></i>
+                        <span>
+                            Remove from favorite
+                        </span>
+                    </button>
+                </form>
             }
             else
             {
-                <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-postId="@post.PostId" type="button" class="btn btn-sm btn-success" style="float: right">
-                    <i class="far fa-heart"></i>
-                    <span>
-                        Add to favorite
-                    </span>
-                </a>
+                <form asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-postId="@post.PostId" method="post">
+                    <button type="submit" class="btn btn-sm btn-success" style="float: right">
+                        <i class="far fa-heart"></i>
+                        <span>
+                            Add to favorite
+                        </span>
+                    </button>
+                </form>
             }
             <h4>
                 <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId">

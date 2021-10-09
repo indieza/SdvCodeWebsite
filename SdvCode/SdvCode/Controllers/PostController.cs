@@ -47,6 +47,7 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
+        [HttpPost]
         [Authorize]
         [Route("/Blog/Post/LikePost/{postId}")]
         [UserBlocked("Index", "Profile")]
@@ -59,6 +60,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { postId });
         }
 
+        [HttpPost]
         [Authorize]
         [Route("/Blog/Post/UnlikePost/{postId}")]
         [UserBlocked("Index", "Profile")]
@@ -71,6 +73,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { postId });
         }
 
+        [HttpPost]
         [Authorize]
         [UserBlocked("Index", "Profile")]
         [PostActions("Index", "Blog", null, ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost)]
@@ -82,6 +85,7 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { postId });
         }
 
+        [HttpPost]
         [Authorize]
         [UserBlocked("Index", "Profile")]
         [PostActions("Index", "Blog", null, ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost)]

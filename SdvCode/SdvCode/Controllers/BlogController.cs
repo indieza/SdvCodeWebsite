@@ -93,13 +93,15 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Blog", model);
         }
 
+        [HttpPost]
         [Authorize]
+        [Route("/Blog/DeletePost/{postId}")]
         [UserBlocked("Index", "Profile")]
         [PostCrudOperations("Index", "Blog", null, ErrorMessages.NoPermissionsToDeleteBlogPost)]
-        public async Task<IActionResult> DeletePost(string id)
+        public async Task<IActionResult> DeletePost(string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var tuple = await this.blogService.DeletePost(id, currentUser);
+            var tuple = await this.blogService.DeletePost(postId, currentUser);
             this.TempData[tuple.Item1] = tuple.Item2;
             return this.RedirectToAction("Index", "Blog");
         }

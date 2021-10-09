@@ -30,6 +30,7 @@ namespace SdvCode.Areas.Editor.Controllers
             this.userManager = userManager;
         }
 
+        [HttpPost]
         public async Task<IActionResult> ApproveComment(string commentId, string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);

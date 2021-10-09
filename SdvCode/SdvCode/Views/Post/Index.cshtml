@@ -35,24 +35,34 @@
                 <div class="text-right weight-600">
                     @if (User.Identity.Name == comment.ApplicationUser.UserName || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
                     {
-                        <a asp-area="" asp-controller="Comment" asp-action="EditComment" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left; margin-right: 8px" class="comment-reply">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
+                        <form asp-area="" asp-controller="Comment" asp-action="EditComment"
+                              asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" method="get">
+                            <button class="comment-reply transparentCommentButton deleteEditCommentButton">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </form>
                     }
                     @if (comment.ApplicationUser.UserName == User.Identity.Name || User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
                     {
-                        <a asp-area="" asp-controller="Comment" asp-action="DeleteById" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left; margin-right: 8px" class="comment-reply">
-                            <i class="fas fa-trash-alt"></i> Delete
-                        </a>
+                        <form asp-area="" asp-controller="Comment" asp-action="DeleteById"
+                              asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" method="post">
+                            <button type="submit" class="comment-reply transparentCommentButton deleteEditCommentButton">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </button>
+                        </form>
                     }
                     @if (comment.CommentStatus == CommentStatus.Pending)
                     {
                         @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
                         {
-                            <a asp-area="Editor" asp-controller="Comment" asp-action="ApproveComment" asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" style="float: left" class="comment-reply">
-                                <i class="far fa-check-circle"></i> Approve
-                            </a>
+                            <form asp-area="Editor" asp-controller="Comment" asp-action="ApproveComment"
+                                  asp-route-commentId="@comment.Id" asp-route-postId="@comment.PostId" method="post">
+                                <button class="comment-reply transparentCommentButton approveCommentButton">
+                                    <i class="far fa-check-circle"></i> Approve
+                                </button>
+                            </form>
                         }
+
                     }
                     <a class="comment-reply" onclick="showAddCommentForm('@comment.Id')">
                         <i class="fa fa-mail-reply"></i> Reply
@@ -162,21 +172,27 @@
                                 }
                             </span>
                             <div class="pull-right">
-                                <span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> @Model.Comments.Count</a></span>
-                                <span class="post-meta-hits">
+                                <div class="post-meta-comments" style="display: inline-block">
+                                    <a href="#"><i class="fa fa-comment-o"></i> @Model.Comments.Count</a>
+                                </div>
+                                <div class="post-meta-hits" style="display: inline-block">
                                     @if (Model.IsLiked == true)
                                     {
-                                        <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-postId="@Model.Id">
-                                            <i class="fas fa-thumbs-down"></i> Unlike
-                                        </a>
+                                        <form asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-postId="@Model.Id" method="post">
+                                            <button type="submit" class="transparentCommentButton">
+                                                <i class="fas fa-thumbs-down"></i> Unlike
+                                            </button>
+                                        </form>
                                     }
                                     else
                                     {
-                                        <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-postId="@Model.Id">
-                                            <i class="fas fa-thumbs-up"></i> Like
-                                        </a>
+                                        <form asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-postId="@Model.Id" method="post">
+                                            <button type="submit" class="transparentCommentButton">
+                                                <i class="fas fa-thumbs-up"></i> Like
+                                            </button>
+                                        </form>
                                     }
-                                </span>
+                                </div>
                             </div>
                         </div><!-- post meta end -->
                     </div><!-- post heading end -->
@@ -253,15 +269,19 @@
 
                     @if (!Model.IsFavourite)
                     {
-                        <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-postId="@Model.Id" class="btn btn-success" style="float: right">
-                            <i class="far fa-heart"></i> Add to favorite
-                        </a>
+                        <form asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-postId="@Model.Id" method="post">
+                            <button class="btn btn-success" style="float: right" type="submit">
+                                <i class="far fa-heart"></i> Add to favorite
+                            </button>
+                        </form>
                     }
                     else
                     {
-                        <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-postId="@Model.Id" class="btn btn-info" style="float: right">
-                            <i class="fas fa-eraser"></i> Remove from favorite
-                        </a>
+                        <form asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-postId="@Model.Id" method="post">
+                            <button type="submit" class="btn btn-info" style="float: right">
+                                <i class="fas fa-eraser"></i> Remove from favorite
+                            </button>
+                        </form>
                     }
                     <!-- Author info end -->
 
@@ -312,8 +332,13 @@
             </div>
             <div class="modal-body">Select "Delete" below if you are ready to delete the post.</div>
             <div class="modal-footer">
-                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-                <a asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-id="@Model.Id" class="btn btn-danger">Delete Post</a>
+                <button style="display: inline-block" class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                <form asp-area="" asp-controller="Blog" asp-action="DeletePost" asp-route-postId="@Model.Id"
+                      method="post" style="display: inline-block">
+                    <button class="btn btn-danger">
+                        Delete Post
+                    </button>
+                </form>
             </div>
         </div>
     </div>

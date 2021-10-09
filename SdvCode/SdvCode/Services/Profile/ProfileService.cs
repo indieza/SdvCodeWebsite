@@ -30,16 +30,19 @@ namespace SdvCode.Services.Profile
         private readonly ApplicationDbContext db;
         private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly INotificationService notificationService;
+        private readonly RoleManager<ApplicationRole> roleManager;
 
         public ProfileService(
             ApplicationDbContext db,
             IHubContext<NotificationHub> notificationHubContext,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            RoleManager<ApplicationRole> roleManager)
             : base(db)
         {
             this.db = db;
             this.notificationHubContext = notificationHubContext;
             this.notificationService = notificationService;
+            this.roleManager = roleManager;
         }
 
         public async Task DeleteActivity(ApplicationUser user)
@@ -156,6 +159,26 @@ namespace SdvCode.Services.Profile
             }
 
             return false;
+        }
+
+        public async Task<bool> HasAdministrator()
+        {
+            var isAdminRoleExist = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
+            if (isAdminRoleExist == null)
+            {
+                await this.roleManager.CreateAsync(new ApplicationRole
+                {
+                    Name = GlobalConstants.AdministratorRole,
+                    RoleLevel = 1,
+                });
+            }
+
+            var adminRole = await this.db.Roles
+                .FirstOrDefaultAsync(x => x.Name == GlobalConstants.AdministratorRole);
+            var adminsCount = await this.db.UserRoles
+                .CountAsync(x => x.RoleId == adminRole.Id && x.UserId != null);
+
+            return adminsCount != 0;
         }
 
         public void MakeYourselfAdmin(string username)

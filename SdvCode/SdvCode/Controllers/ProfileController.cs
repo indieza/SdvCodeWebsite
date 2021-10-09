@@ -190,8 +190,15 @@ namespace SdvCode.Controllers
         }
 
         [HttpPost]
-        public IActionResult MakeYourselfAdmin(string username)
+        public async Task<IActionResult> MakeYourselfAdmin(string username)
         {
+            var hasAdmin = await this.profileService.HasAdministrator();
+
+            if (hasAdmin)
+            {
+                return this.BadRequest();
+            }
+
             this.profileService.MakeYourselfAdmin(username);
             return this.Redirect($"/Profile/{username}");
         }
