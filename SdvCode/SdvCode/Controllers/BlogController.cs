@@ -3,29 +3,19 @@
 
 namespace SdvCode.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
-    using CloudinaryDotNet.Actions;
-
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     using SdvCode.ApplicationAttributes.ActionAttributes;
-    using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
-    using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.Services.Blog;
-    using SdvCode.Services.Post;
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels;
     using SdvCode.ViewModels.Post.InputModels;
-
-    using Twilio.Rest.Api.V2010.Account.Usage;
 
     using X.PagedList;
 
@@ -66,8 +56,7 @@ namespace SdvCode.Controllers
 
         [HttpGet]
         [Authorize]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlog("Index", "Blog")]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> CreatePost()
         {
             var model = new CreatePostIndexModel
@@ -82,8 +71,7 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlog("Index", "Blog")]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -104,9 +92,7 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlog("Index", "Blog")]
-        [CanAccessBlogPost("Index", "Post", ErrorMessages.NotInDeletePostRoles)]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> DeletePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -117,9 +103,7 @@ namespace SdvCode.Controllers
 
         [HttpGet]
         [Authorize]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlog("Index", "Blog")]
-        [CanAccessBlogPost("Index", "Post", ErrorMessages.CannotEditBlogPost)]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> EditPost(string id)
         {
             if (!await this.blogService.IsPostExist(id))
@@ -138,9 +122,7 @@ namespace SdvCode.Controllers
 
         [HttpPost]
         [Authorize]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlog("Index", "Blog")]
-        [CanAccessBlogPost("Index", "Post", ErrorMessages.CannotEditBlogPost)]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> EditPost(EditPostInputModel model)
         {
             if (this.ModelState.IsValid)

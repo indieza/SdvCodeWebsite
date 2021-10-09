@@ -45,15 +45,11 @@ namespace SdvCode.Constraints
 
         public const string NoPermissionToDeleteComment = "You don't have a permissions to delete the comment!";
 
-        public const string NotInDeletePostRoles = "You don't have permissions to delete post.";
+        public const string NoPermissionsToDeleteBlogPost = "You don't have permissions to delete post.";
 
-        public const string NotInEditPostRoles = "You don't have permissions to edit post.";
+        public const string NoPermissionToEditBlogPost = "You don't have permissions to edit post.";
 
         public const string NotApprovedBlogPost = "You cannot see not approved post.";
-
-        public const string CanLikeNotApprovedBlogPost = "You cannot like not approved post.";
-
-        public const string CanUnlikeNotApprovedBlogPost = "You cannot unlike not approved post.";
 
         public const string CannotLikeNotApprovedBlogPost = "You cannot like not approved post.";
 

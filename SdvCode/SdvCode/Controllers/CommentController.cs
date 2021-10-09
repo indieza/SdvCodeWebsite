@@ -36,7 +36,7 @@ namespace SdvCode.Controllers
         }
 
         [HttpPost]
-        [IsUserBlocked("Index", "Profile")]
+        [UserBlocked("Index", "Profile")]
         [CanAccessBlog("Index", "Blog")]
         public async Task<IActionResult> Create(CreateCommentInputModel input)
         {

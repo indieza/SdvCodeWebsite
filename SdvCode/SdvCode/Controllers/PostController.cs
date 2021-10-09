@@ -3,21 +3,13 @@
 
 namespace SdvCode.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     using SdvCode.ApplicationAttributes.ActionAttributes;
-    using SdvCode.Areas.Administration.Models.Enums;
-    using SdvCode.Constraints;
-    using SdvCode.Data;
-    using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Services.Post;
     using SdvCode.ViewModels.Post.ViewModels;
@@ -38,9 +30,7 @@ namespace SdvCode.Controllers
         [HttpGet]
         [Authorize]
         [Route("/Blog/Post/{id}")]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlog("Index", "Blog")]
-        [CanAccessBlogPost("Index", "Blog", ErrorMessages.NotApprovedBlogPost)]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> Index(string id)
         {
             if (!await this.postService.IsPostExist(id))
@@ -54,12 +44,9 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
-        [HttpPost]
         [Authorize]
-        [Route("/Blog/Post/Like/{id}")]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlog("Index", "Blog")]
-        [CanAccessBlogPost("Index", "Blog", ErrorMessages.CanLikeNotApprovedBlogPost)]
+        [Route("/Blog/Post/LikePost/{id}")]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> LikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -68,12 +55,9 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
-        [HttpPost]
         [Authorize]
-        [Route("/Blog/Post/unlike/{id}")]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlog("Index", "Blog")]
-        [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotUnlikeNotApprovedBlogPost)]
+        [Route("/Blog/Post/UnlikePost/{id}")]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> UnlikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -82,10 +66,8 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
-        [HttpPost]
         [Authorize]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost)]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> AddToFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -94,10 +76,8 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Post", new { id });
         }
 
-        [HttpPost]
         [Authorize]
-        [IsUserBlocked("Index", "Profile")]
-        [CanAccessBlogPost("Index", "Blog", ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost)]
+        [UserBlocked("Index", "Profile")]
         public async Task<IActionResult> RemoveFromFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);

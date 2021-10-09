@@ -16,12 +16,12 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
     using SdvCode.Data;
     using SdvCode.Models.User;
 
-    public class IsUserBlockedAttribute : ActionFilterAttribute
+    public class UserBlockedAttribute : ActionFilterAttribute
     {
         private readonly string redirectActionName;
         private readonly string redirectControllerName;
 
-        public IsUserBlockedAttribute(string redirectActionName, string redirectControllerName)
+        public UserBlockedAttribute(string redirectActionName, string redirectControllerName)
         {
             this.redirectActionName = redirectActionName;
             this.redirectControllerName = redirectControllerName;
