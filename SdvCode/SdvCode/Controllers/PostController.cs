@@ -10,6 +10,9 @@ namespace SdvCode.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     using SdvCode.ApplicationAttributes.ActionAttributes;
+    using SdvCode.ApplicationAttributes.ActionAttributes.Blog;
+    using SdvCode.ApplicationAttributes.ActionAttributes.Blog.Post;
+    using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.Services.Post;
     using SdvCode.ViewModels.Post.ViewModels;
@@ -31,6 +34,7 @@ namespace SdvCode.Controllers
         [Authorize]
         [Route("/Blog/Post/{id}")]
         [UserBlocked("Index", "Profile")]
+        [BlogRole("Index", "Blog")]
         public async Task<IActionResult> Index(string id)
         {
             if (!await this.postService.IsPostExist(id))
@@ -47,6 +51,7 @@ namespace SdvCode.Controllers
         [Authorize]
         [Route("/Blog/Post/LikePost/{id}")]
         [UserBlocked("Index", "Profile")]
+        [PostActions("Index", "Blog", null, ErrorMessages.CannotLikeNotApprovedBlogPost)]
         public async Task<IActionResult> LikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -58,6 +63,7 @@ namespace SdvCode.Controllers
         [Authorize]
         [Route("/Blog/Post/UnlikePost/{id}")]
         [UserBlocked("Index", "Profile")]
+        [PostActions("Index", "Blog", null, ErrorMessages.CannotUnlikeNotApprovedBlogPost)]
         public async Task<IActionResult> UnlikePost(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -68,6 +74,7 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [UserBlocked("Index", "Profile")]
+        [PostActions("Index", "Blog", null, ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost)]
         public async Task<IActionResult> AddToFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
@@ -78,6 +85,7 @@ namespace SdvCode.Controllers
 
         [Authorize]
         [UserBlocked("Index", "Profile")]
+        [PostActions("Index", "Blog", null, ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost)]
         public async Task<IActionResult> RemoveFromFavorite(string id)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);

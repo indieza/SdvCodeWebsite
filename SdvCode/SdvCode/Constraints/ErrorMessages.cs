@@ -43,7 +43,9 @@ namespace SdvCode.Constraints
 
         public const string NotExistingComment = "There is no such comment!";
 
-        public const string NoPermissionToDeleteComment = "You don't have a permissions to delete the comment!";
+        public const string NoPermissionsToCreateBlogPost = "You don't have permissions to create post!";
+
+        public const string NoPermissionToDeleteComment = "You don't have permissions to delete the comment!";
 
         public const string NoPermissionsToDeleteBlogPost = "You don't have permissions to delete post.";
 
