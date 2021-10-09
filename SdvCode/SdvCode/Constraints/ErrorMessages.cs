@@ -45,7 +45,11 @@ namespace SdvCode.Constraints
 
         public const string NoPermissionsToCreateBlogPost = "You don't have permissions to create post!";
 
-        public const string NoPermissionToDeleteComment = "You don't have permissions to delete the comment!";
+        public const string NoPermissionToDeleteComment = "You don't have permissions to delete a comment!";
+
+        public const string NoPermissionToEditComment = "You don't have permissions to edit a comment!";
+
+        public const string NoPermissionToCreateComment = "You don't have permissions to create a comment!";
 
         public const string NoPermissionsToDeleteBlogPost = "You don't have permissions to delete post.";
 

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.ApplicationAttributes.ActionAttributes.Blog.Post
+namespace SdvCode.ApplicationAttributes.ActionAttributes.Blog.Comment
 {
     using System;
     using System.Collections.Generic;
@@ -12,21 +12,17 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes.Blog.Post
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
+    using SdvCode.ApplicationAttributes.ActionAttributes.Blog.Post;
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.User;
 
-    public class PostCrudOperationsAttribute : BlogRoleAttribute
+    public class CommentCrudOperationsAttribute : PostActionsAttribute
     {
-        private readonly object routValues;
-        private readonly string message;
-
-        public PostCrudOperationsAttribute(string actionName, string controllerName, object routValues, string message)
-            : base(actionName, controllerName)
+        public CommentCrudOperationsAttribute(string actionName, string controllerName, object routValues, string message)
+            : base(actionName, controllerName, routValues, message)
         {
-            this.routValues = routValues;
-            this.message = message;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -46,33 +42,34 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes.Blog.Post
             var username = context.HttpContext.User.Identity.Name;
             var user = userManager.FindByNameAsync(username).Result;
 
-            if (context.ActionArguments.ContainsKey("postId"))
+            if (context.ActionArguments.ContainsKey("commentId"))
             {
-                var postId = context.ActionArguments["postId"]?.ToString();
-                var post = db.Posts.FirstOrDefault(x => x.Id == postId);
-                var userPostsIds = db.Posts.Where(x => x.ApplicationUserId == user.Id).Select(x => x.Id).ToList();
+                var commentId = context.ActionArguments["commentId"].ToString();
+
+                var comment = db.Comments.FirstOrDefault(x => x.Id == commentId);
+                var userCommentsIds = db.Comments.Where(x => x.ApplicationUserId == user.Id).Select(x => x.Id).ToList();
 
                 var controller = context.Controller as Controller;
 
-                var isOwnPost = userPostsIds.Contains(postId);
+                var isOwnComment = userCommentsIds.Contains(commentId);
                 var hasFullControl = userManager.IsInRoleAsync(user, Roles.Administrator.ToString()).Result ||
                     userManager.IsInRoleAsync(user, Roles.Editor.ToString()).Result;
 
-                if (post == null)
+                if (comment == null)
                 {
-                    controller.TempData["Error"] = ErrorMessages.NotExistingPost;
+                    controller.TempData["Error"] = ErrorMessages.NotExistingComment;
                     context.Result = new RedirectToActionResult(
                         this.ActionName,
                         this.ControllerName,
-                        this.routValues);
+                        this.RoutValues);
                 }
-                else if (!isOwnPost && !hasFullControl)
+                else if (!isOwnComment && !hasFullControl)
                 {
-                    controller.TempData["Error"] = this.message;
+                    controller.TempData["Error"] = this.Message;
                     context.Result = new RedirectToActionResult(
                         this.ActionName,
                         this.ControllerName,
-                        this.routValues);
+                        this.RoutValues);
                 }
             }
         }

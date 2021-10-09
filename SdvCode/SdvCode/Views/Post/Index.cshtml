@@ -76,7 +76,7 @@
                 <li>Home</li>
                 <li><a asp-area="" asp-controller="Blog" asp-action="Index"> Blog</a></li>
                 <li>
-                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
+                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@Model.Id">
                         @Model.Title
                     </a>
                 </li>
@@ -97,14 +97,14 @@
                     <div class="post-image-wrapper">
                         <img src=@Model.ImageUrl class="img-responsive" alt="" />
                         <span class="blog-date">
-                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@Model.Id">
                                 <i class="fas fa-clock"></i> @Model.CreatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
                             </a>
                         </span>
                     </div><!-- post image end -->
                     <div class="post-header clearfix">
                         <h2 class="post-title">
-                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">@Model.Title</a>
+                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@Model.Id">@Model.Title</a>
                         </h2>
                         @if ((User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || Model.IsAuthor == true) && Model.ApplicationUser.IsBlocked == false)
                         {
@@ -166,13 +166,13 @@
                                 <span class="post-meta-hits">
                                     @if (Model.IsLiked == true)
                                     {
-                                        <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-id="@Model.Id">
+                                        <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-postId="@Model.Id">
                                             <i class="fas fa-thumbs-down"></i> Unlike
                                         </a>
                                     }
                                     else
                                     {
-                                        <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@Model.Id">
+                                        <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-postId="@Model.Id">
                                             <i class="fas fa-thumbs-up"></i> Like
                                         </a>
                                     }
@@ -253,13 +253,13 @@
 
                     @if (!Model.IsFavourite)
                     {
-                        <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-id="@Model.Id" class="btn btn-success" style="float: right">
+                        <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-postId="@Model.Id" class="btn btn-success" style="float: right">
                             <i class="far fa-heart"></i> Add to favorite
                         </a>
                     }
                     else
                     {
-                        <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-id="@Model.Id" class="btn btn-info" style="float: right">
+                        <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-postId="@Model.Id" class="btn btn-info" style="float: right">
                             <i class="fas fa-eraser"></i> Remove from favorite
                         </a>
                     }

@@ -7,9 +7,11 @@ namespace SdvCode.Areas.Editor.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Editor.Services.Comment;
     using SdvCode.Constraints;
@@ -48,7 +50,7 @@ namespace SdvCode.Areas.Editor.Controllers
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return this.RedirectToAction("Index", "Post", new { id = postId });
+            return this.RedirectToAction("Index", "Post", new { postId = postId });
         }
     }
 }

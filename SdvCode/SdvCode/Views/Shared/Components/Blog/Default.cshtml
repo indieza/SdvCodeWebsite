@@ -33,13 +33,13 @@
                         {
                             <li>
                                 <div class="posts-thumb pull-left">
-                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">
                                         <img alt="img" src=@post.ImageUrl>
                                     </a>
                                 </div>
                                 <div class="post-content">
                                     <h4 class="entry-title">
-                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
+                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">@post.Title</a>
                                     </h4>
                                     <p class="post-meta">
                                         <span class="post-meta-author">
@@ -50,7 +50,7 @@
                                         </span>
                                         <br />
                                         <span class="post-meta-date">
-                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">
                                                 <i class="fas fa-clock-o"></i>
                                                 @post.CreatedOn.ToLocalTime().ToString("MMMM dd")
                                             </a>
@@ -87,13 +87,13 @@
                         {
                             <li>
                                 <div class="posts-thumb pull-left">
-                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">
                                         <img alt="img" src=@post.ImageUrl>
                                     </a>
                                 </div>
                                 <div class="post-content">
                                     <h4 class="entry-title">
-                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
+                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">@post.Title</a>
                                     </h4>
                                     <p class="post-meta">
                                         <span class="post-meta-author">
@@ -104,7 +104,7 @@
                                         </span>
                                         <br />
                                         <span class="post-meta-date">
-                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">
                                                 <i class="fas fa-clock-o"></i>
                                                 @post.CreatedOn.ToLocalTime().ToString("MMMM dd")
                                             </a>
@@ -146,13 +146,13 @@
                                 </div>
                                 <div class="post-content">
                                     <h4 class="entry-title">
-                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@comment.PostId">
+                                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@comment.PostId">
                                             @Html.Raw(@comment.ShortContent)
                                         </a>
                                     </h4>
                                     <p class="post-meta">
                                         <span class="post-meta-date">
-                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@comment.PostId">
+                                            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@comment.PostId">
                                                 <i class="fas fa-clock-o"></i>
                                                 @comment.CreatedOn.ToLocalTime().ToString("MMMM dd")
                                             </a>

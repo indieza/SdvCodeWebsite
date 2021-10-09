@@ -27,14 +27,14 @@
                             @post.AuthorUsername
                         </b>
                     </a> pending blog
-                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.PostId">
+                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId">
                         <b>post</b>
                     </a>
                 </p>
                 <small class="text-muted">@post.CreatedOn.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 <div class="activity-attachment">
                     <h4>
-                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@post.PostId">
+                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId">
                             @post.PostTitle
                         </a>
                     </h4>

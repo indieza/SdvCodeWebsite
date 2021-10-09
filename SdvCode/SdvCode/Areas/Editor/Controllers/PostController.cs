@@ -53,7 +53,7 @@ namespace SdvCode.Areas.Editor.Controllers
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return this.RedirectToAction("Index", "Post", new { id });
+            return this.RedirectToAction("Index", "Post", new { postId = id });
         }
 
         [UserBlocked("Index", "Profile")]
@@ -71,7 +71,7 @@ namespace SdvCode.Areas.Editor.Controllers
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return this.RedirectToAction("Index", "Post", new { id });
+            return this.RedirectToAction("Index", "Post", new { postId = id });
         }
 
         [UserBlocked("Index", "Profile")]
@@ -89,7 +89,7 @@ namespace SdvCode.Areas.Editor.Controllers
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
             }
 
-            return this.RedirectToAction("Index", "Post", new { id });
+            return this.RedirectToAction("Index", "Post", new { postId = id });
         }
     }
 }

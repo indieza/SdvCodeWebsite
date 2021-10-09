@@ -1906,7 +1906,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationAttributes\ActionAttributes\Blog\Comment\" />
     <Folder Include="Areas\Administration\ViewModels\AddChatStickerType\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddChatTheme\ViewModels\" />
     <Folder Include="Areas\Administration\ViewModels\AddEmojiWithSkin\ViewModels\" />

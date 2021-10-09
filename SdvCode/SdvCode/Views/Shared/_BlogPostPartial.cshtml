@@ -4,14 +4,14 @@
     <div class="post-image-wrapper">
         <img src=@Model.ImageUrl class="img-responsive" alt="post cover image" />
         <span class="blog-date">
-            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">
+            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@Model.Id">
                 <i class="fas fa-edit"></i> @Model.UpdatedOn.ToLocalTime().ToString("MMMM dd, yyyy")
             </a>
         </span>
     </div>
     <div class="post-header clearfix">
         <h2 class="post-title">
-            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id">@Model.Title</a>
+            <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@Model.Id">@Model.Title</a>
         </h2>
 
         @if ((User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || Model.IsAuthor == true) && Model.ApplicationUser.IsBlocked == false)
@@ -110,7 +110,7 @@
                 <span class="post-meta-hits">
                     @if (Model.IsLiked == true)
                     {
-                        <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-id="@Model.Id">
+                        <a asp-area="" asp-controller="Post" asp-action="UnlikePost" asp-route-postId="@Model.Id">
                             <i class="fas fa-thumbs-down"></i> Unlike
                         </a>
                     }
@@ -118,7 +118,7 @@
                     {
                         @if (Model.IsLiked == false && SignInManager.IsSignedIn(User))
                         {
-                            <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-id="@Model.Id">
+                            <a asp-area="" asp-controller="Post" asp-action="LikePost" asp-route-postId="@Model.Id">
                                 <i class="fas fa-thumbs-up"></i> Like
                             </a>
                         }
@@ -135,20 +135,20 @@
         <p>@Html.Raw(Model.ShortContent)</p>
     </div>
     <div class="post-footer row" style="padding: 0px 7px 0px 7px">
-        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-primary">
+        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@Model.Id" class="btn btn-primary">
             Continue Reading <i class="fas fa-angle-double-right">&nbsp;</i>
         </a>
         @if (SignInManager.IsSignedIn(User))
         {
             @if (!Model.IsFavourite)
             {
-                <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-id="@Model.Id" class="btn btn-primary pull-right">
+                <a asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-postId="@Model.Id" class="btn btn-primary pull-right">
                     <i class="far fa-heart"></i> Add to favorite
                 </a>
             }
             else
             {
-                <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-id="@Model.Id" style="float: right" class="btn btn-primary">
+                <a asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-postId="@Model.Id" style="float: right" class="btn btn-primary">
                     <i class="fas fa-eraser"></i> Remove from favorite
                 </a>
             }

@@ -32,66 +32,65 @@ namespace SdvCode.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("/Blog/Post/{id}")]
+        [Route("/Blog/Post/{postId}")]
         [UserBlocked("Index", "Profile")]
         [BlogRole("Index", "Blog")]
-        public async Task<IActionResult> Index(string id)
+        public async Task<IActionResult> Index(string postId)
         {
-            if (!await this.postService.IsPostExist(id))
+            if (!await this.postService.IsPostExist(postId))
             {
                 return this.NotFound();
             }
 
             var currentUser = await this.userManager.GetUserAsync(this.User);
-
-            PostViewModel model = await this.postService.ExtractCurrentPost(id, currentUser);
+            PostViewModel model = await this.postService.ExtractCurrentPost(postId, currentUser);
             return this.View(model);
         }
 
         [Authorize]
-        [Route("/Blog/Post/LikePost/{id}")]
+        [Route("/Blog/Post/LikePost/{postId}")]
         [UserBlocked("Index", "Profile")]
         [PostActions("Index", "Blog", null, ErrorMessages.CannotLikeNotApprovedBlogPost)]
-        public async Task<IActionResult> LikePost(string id)
+        public async Task<IActionResult> LikePost(string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var tuple = await this.postService.LikePost(id, currentUser);
+            var tuple = await this.postService.LikePost(postId, currentUser);
             this.TempData[tuple.Item1] = tuple.Item2;
-            return this.RedirectToAction("Index", "Post", new { id });
+            return this.RedirectToAction("Index", "Post", new { postId });
         }
 
         [Authorize]
-        [Route("/Blog/Post/UnlikePost/{id}")]
+        [Route("/Blog/Post/UnlikePost/{postId}")]
         [UserBlocked("Index", "Profile")]
         [PostActions("Index", "Blog", null, ErrorMessages.CannotUnlikeNotApprovedBlogPost)]
-        public async Task<IActionResult> UnlikePost(string id)
+        public async Task<IActionResult> UnlikePost(string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var tuple = await this.postService.UnlikePost(id, currentUser);
+            var tuple = await this.postService.UnlikePost(postId, currentUser);
             this.TempData[tuple.Item1] = tuple.Item2;
-            return this.RedirectToAction("Index", "Post", new { id });
+            return this.RedirectToAction("Index", "Post", new { postId });
         }
 
         [Authorize]
         [UserBlocked("Index", "Profile")]
         [PostActions("Index", "Blog", null, ErrorMessages.CannotAddToFavoriteNotApprovedBlogPost)]
-        public async Task<IActionResult> AddToFavorite(string id)
+        public async Task<IActionResult> AddToFavorite(string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var tuple = await this.postService.AddToFavorite(currentUser, id);
+            var tuple = await this.postService.AddToFavorite(currentUser, postId);
             this.TempData[tuple.Item1] = tuple.Item2;
-            return this.RedirectToAction("Index", "Post", new { id });
+            return this.RedirectToAction("Index", "Post", new { postId });
         }
 
         [Authorize]
         [UserBlocked("Index", "Profile")]
         [PostActions("Index", "Blog", null, ErrorMessages.CannotRemoveFromFavoriteNotApprovedBlogPost)]
-        public async Task<IActionResult> RemoveFromFavorite(string id)
+        public async Task<IActionResult> RemoveFromFavorite(string postId)
         {
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            var tuple = await this.postService.RemoveFromFavorite(currentUser, id);
+            var tuple = await this.postService.RemoveFromFavorite(currentUser, postId);
             this.TempData[tuple.Item1] = tuple.Item2;
-            return this.RedirectToAction("Index", "Post", new { id });
+            return this.RedirectToAction("Index", "Post", new { postId });
         }
     }
 }
