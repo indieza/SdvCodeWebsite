@@ -38,6 +38,7 @@ namespace SdvCode.Services.Blog
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly INotificationService notificationService;
         private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly GlobalPostsExtractor postExtractor;
@@ -48,12 +49,14 @@ namespace SdvCode.Services.Blog
             ApplicationDbContext db,
             Cloudinary cloudinary,
             UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager,
             INotificationService notificationService,
             IHubContext<NotificationHub> notificationHubContext)
         {
             this.db = db;
             this.cloudinary = cloudinary;
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.notificationService = notificationService;
             this.notificationHubContext = notificationHubContext;
             this.postExtractor = new GlobalPostsExtractor(this.db);
@@ -121,10 +124,8 @@ namespace SdvCode.Services.Blog
                 });
             }
 
-            var adminRole =
-                await this.db.Roles.FirstOrDefaultAsync(x => x.Name == Roles.Administrator.ToString());
-            var editorRole =
-                await this.db.Roles.FirstOrDefaultAsync(x => x.Name == Roles.Editor.ToString());
+            var adminRole = await this.roleManager.FindByNameAsync(Roles.Administrator.ToString());
+            var editorRole = await this.roleManager.FindByNameAsync(Roles.Editor.ToString());
 
             var allAdminIds = this.db.UserRoles
                 .Where(x => x.RoleId == adminRole.Id)
