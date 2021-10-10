@@ -11,6 +11,8 @@ namespace SdvCode.Models.User
     using System.Reflection;
     using System.Threading.Tasks;
 
+    using SdvCode.Constraints;
+
     public class Country
     {
         public Country()
@@ -19,13 +21,13 @@ namespace SdvCode.Models.User
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(ModelConstraints.CountryNameMaxLength)]
         public string Name { get; set; }
 
-        // [Required]
         [ForeignKey(nameof(CountryCode))]
         public string CountryCodeId { get; set; }
 

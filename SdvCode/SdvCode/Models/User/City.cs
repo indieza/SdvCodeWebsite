@@ -10,6 +10,8 @@ namespace SdvCode.Models.User
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.Constraints;
+
     public class City
     {
         public City()
@@ -18,19 +20,18 @@ namespace SdvCode.Models.User
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(ModelConstraints.CityNameMaxLength)]
         public string Name { get; set; }
 
-        // [Required]
         [ForeignKey(nameof(State))]
         public string StateId { get; set; }
 
         public State State { get; set; }
 
-        // [Required]
         [ForeignKey(nameof(Country))]
         public string CountryId { get; set; }
 

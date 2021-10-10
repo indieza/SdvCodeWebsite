@@ -6,7 +6,9 @@ namespace SdvCode.Models.User
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using AngleSharp.Common;
+
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
@@ -19,15 +21,17 @@ namespace SdvCode.Models.User
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
-        [ForeignKey(nameof(ApplicationUser))]
         [Required]
+        [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
+        [EnumDataType(typeof(UserActionsType))]
         public UserActionsType Action { get; set; }
 
         [Required]

@@ -7,8 +7,10 @@ namespace SdvCode.ViewComponents
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using SdvCode.Models.User;
     using SdvCode.Services.Blog;
     using SdvCode.ViewModels.Blog.ViewModels;
@@ -30,9 +32,9 @@ namespace SdvCode.ViewComponents
             BlogComponentViewModel components = new BlogComponentViewModel
             {
                 RecentPosts = this.blogComponentService.ExtractRecentPosts(currentUser),
-                TopCategories = await this.blogComponentService.ExtractTopCategories(),
+                TopCategories = this.blogComponentService.ExtractTopCategories(),
                 TopPosts = await this.blogComponentService.ExtractTopPosts(currentUser),
-                TopTags = await this.blogComponentService.ExtractTopTags(),
+                TopTags = this.blogComponentService.ExtractTopTags(),
                 RecentComments = await this.blogComponentService.ExtractRecentComments(currentUser),
                 Search = search,
             };

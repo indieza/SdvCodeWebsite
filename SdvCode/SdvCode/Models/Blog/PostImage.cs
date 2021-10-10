@@ -10,6 +10,8 @@ namespace SdvCode.Models.Blog
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.Constraints;
+
     public class PostImage
     {
         public PostImage()
@@ -18,15 +20,17 @@ namespace SdvCode.Models.Blog
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(25)]
+        [MaxLength(ModelConstraints.PostImageNameMaxLength)]
         public string Name { get; set; }
 
         [Required]
         public string Url { get; set; }
 
+        [Required]
         [ForeignKey(nameof(Post))]
         public string PostId { get; set; }
 

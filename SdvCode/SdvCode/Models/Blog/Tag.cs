@@ -10,6 +10,10 @@ namespace SdvCode.Models.Blog
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+    using SdvCode.Constraints;
+
     public class Tag
     {
         public Tag()
@@ -17,11 +21,12 @@ namespace SdvCode.Models.Blog
             this.Id = Guid.NewGuid().ToString();
         }
 
+        [Key]
         [Required]
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(15)]
+        [MaxLength(ModelConstraints.BlogPostTagNameMaxLength)]
         public string Name { get; set; }
 
         [Required]

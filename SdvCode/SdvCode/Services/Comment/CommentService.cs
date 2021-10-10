@@ -198,7 +198,7 @@ namespace SdvCode.Services.Comment
                     Content = x.Content,
                     PostId = x.PostId,
                 })
-                .FirstOrDefaultAsync(x => x.Id == commentId);
+                .FirstOrDefaultAsync(x => x.CommentId == commentId);
         }
 
         public async Task<Tuple<string, string>> EditComment(EditCommentViewModel model)

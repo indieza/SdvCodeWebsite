@@ -10,6 +10,8 @@ namespace SdvCode.Models.User
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.Constraints;
+
     public class RecommendedFriend
     {
         public RecommendedFriend()
@@ -18,15 +20,16 @@ namespace SdvCode.Models.User
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
         public string RecommendedUsername { get; set; }
 
-        [MaxLength(15)]
+        [MaxLength(ModelConstraints.ApplicationUserFirstNameMaxLength)]
         public string RecommendedFirstName { get; set; }
 
-        [MaxLength(15)]
+        [MaxLength(ModelConstraints.ApplicationUserLastNameMaxLength)]
         public string RecommendedLastName { get; set; }
 
         [Required]

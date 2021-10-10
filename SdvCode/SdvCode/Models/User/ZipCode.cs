@@ -18,12 +18,12 @@ namespace SdvCode.Models.User
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
         public int Code { get; set; }
 
-        // [Required]
         [ForeignKey(nameof(City))]
         public string CityId { get; set; }
 

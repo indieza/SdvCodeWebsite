@@ -10,6 +10,8 @@ namespace SdvCode.Models.User
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.Constraints;
+
     public class CountryCode
     {
         public CountryCode()
@@ -22,7 +24,7 @@ namespace SdvCode.Models.User
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(10)]
+        [MaxLength(ModelConstraints.CountryCodeMaxLength)]
         public string Code { get; set; }
 
         public ICollection<Country> Coutries { get; set; } = new HashSet<Country>();

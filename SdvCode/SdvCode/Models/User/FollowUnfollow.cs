@@ -13,6 +13,7 @@ namespace SdvCode.Models.User
         [Required]
         public string FollowerId { get; set; }
 
+        [Required]
         public bool IsFollowed { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace SdvCode.Models.User
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.Constraints;
+
     public class State
     {
         public State()
@@ -18,13 +20,13 @@ namespace SdvCode.Models.User
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(ModelConstraints.StateNamemaxLength)]
         public string Name { get; set; }
 
-        // [Required]
         [ForeignKey(nameof(Country))]
         public string CountryId { get; set; }
 

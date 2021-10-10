@@ -10,7 +10,10 @@ namespace SdvCode.Models.Blog
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc.Formatters;
+
+    using SdvCode.Constraints;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
@@ -22,17 +25,18 @@ namespace SdvCode.Models.Blog
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(150)]
+        [MaxLength(ModelConstraints.BlogPostTitleMaxLength)]
         public string Title { get; set; }
 
         [Required]
         public string Content { get; set; }
 
         [Required]
-        [MaxLength(350)]
+        [MaxLength(ModelConstraints.BlogPostShortContentMaxLength)]
         public string ShortContent { get; set; }
 
         [Required]
@@ -45,6 +49,7 @@ namespace SdvCode.Models.Blog
         public int Likes { get; set; }
 
         [Required]
+        [EnumDataType(typeof(PostStatus))]
         public PostStatus PostStatus { get; set; }
 
         [Required]

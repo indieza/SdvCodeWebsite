@@ -9,6 +9,7 @@ namespace SdvCode.Models.Blog
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
 
@@ -20,10 +21,10 @@ namespace SdvCode.Models.Blog
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(1500)]
         public string Content { get; set; }
 
         [Required]

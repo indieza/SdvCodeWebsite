@@ -7,10 +7,13 @@ namespace SdvCode.Models.User
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using Microsoft.AspNetCore.Identity;
+
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Areas.UserNotifications.Models;
+    using SdvCode.Constraints;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
@@ -51,13 +54,13 @@ namespace SdvCode.Models.User
 
         public CountryCode CountryCode { get; set; }
 
-        [MaxLength(600)]
+        [MaxLength(ModelConstraints.ApplicationUserAboutMeMaxLength)]
         public string AboutMe { get; set; }
 
-        [MaxLength(15)]
+        [MaxLength(ModelConstraints.ApplicationUserFirstNameMaxLength)]
         public string FirstName { get; set; }
 
-        [MaxLength(15)]
+        [MaxLength(ModelConstraints.ApplicationUserLastNameMaxLength)]
         public string LastName { get; set; }
 
         public string ImageUrl { get; set; }
@@ -76,19 +79,19 @@ namespace SdvCode.Models.User
 
         public string InstagramUrl { get; set; }
 
+        [Required]
         public bool IsBlocked { get; set; }
 
-        [MaxLength(200)]
+        [MaxLength(ModelConstraints.ApplicationUserReasonToBeBlockedMaxLength)]
         public string ReasonToBeBlocked { get; set; }
 
-        // public ICollection<FavouriteProduct> FavouriteProducts { get; set; } = new HashSet<FavouriteProduct>();
-
-        // public ICollection<WishlistProduct> WishlistProducts { get; set; } = new HashSet<WishlistProduct>();
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
 
         public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+
+        public ICollection<PostLike> PostLikes { get; set; } = new HashSet<PostLike>();
 
         public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
 
@@ -100,6 +103,8 @@ namespace SdvCode.Models.User
 
         public ICollection<ChatMessage> ChatMessages { get; set; } = new HashSet<ChatMessage>();
 
+        public ICollection<ChatImage> ChatImages { get; set; } = new HashSet<ChatImage>();
+
         public ICollection<RecommendedFriend> RecommendedFriends { get; set; } = new HashSet<RecommendedFriend>();
 
         public ICollection<ProductComment> ProductComments { get; set; } = new HashSet<ProductComment>();
@@ -109,5 +114,7 @@ namespace SdvCode.Models.User
         public ICollection<UserNotification> UserNotifications { get; set; } = new HashSet<UserNotification>();
 
         public ICollection<QuickChatReply> QuickChatReplies { get; set; } = new HashSet<QuickChatReply>();
+
+        public ICollection<FavouriteStickers> FavouriteStickers { get; set; } = new HashSet<FavouriteStickers>();
     }
 }

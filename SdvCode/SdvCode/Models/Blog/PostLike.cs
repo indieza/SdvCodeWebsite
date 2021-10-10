@@ -5,6 +5,7 @@ namespace SdvCode.Models.Blog
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using SdvCode.Models.User;
 
     public class PostLike
@@ -21,6 +22,7 @@ namespace SdvCode.Models.Blog
 
         public Post Post { get; set; }
 
+        [Required]
         public bool IsLiked { get; set; }
     }
 }

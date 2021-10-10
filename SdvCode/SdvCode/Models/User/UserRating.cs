@@ -9,6 +9,8 @@ namespace SdvCode.Models.User
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.Constraints;
+
     public class UserRating
     {
         [Required]
@@ -17,7 +19,8 @@ namespace SdvCode.Models.User
         [Required]
         public string RaterUsername { get; set; }
 
-        [MaxLength(5)]
+        [Required]
+        [MaxLength(ModelConstraints.RatingStarsMaxValue)]
         public int Stars { get; set; }
     }
 }

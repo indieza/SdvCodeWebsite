@@ -9,6 +9,8 @@ namespace SdvCode.Models.Blog
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.Constraints;
+
     public class Category
     {
         public Category()
@@ -17,10 +19,11 @@ namespace SdvCode.Models.Blog
         }
 
         [Key]
+        [Required]
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(30)]
+        [MaxLength(ModelConstraints.BlogCategoryNameMaxLength)]
         public string Name { get; set; }
 
         [Required]

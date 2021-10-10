@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
 namespace SdvCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211010160642_UpdateDataModelConstraints")]
+    partial class UpdateDataModelConstraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,9 +173,6 @@ namespace SdvCode.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ChatMessageId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -192,8 +191,6 @@ namespace SdvCode.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ChatMessageId");
 
@@ -1105,8 +1102,8 @@ namespace SdvCode.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ReasonToBeBlocked")
-                        .HasColumnType("nvarchar(300)")
-                        .HasMaxLength(300);
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<DateTime>("RegisteredOn")
                         .HasColumnType("datetime2");
@@ -1435,10 +1432,6 @@ namespace SdvCode.Migrations
 
             modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.ChatImage", b =>
                 {
-                    b.HasOne("SdvCode.Models.User.ApplicationUser", null)
-                        .WithMany("ChatImages")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("SdvCode.Areas.PrivateChat.Models.ChatMessage", "ChatMessage")
                         .WithMany("ChatImages")
                         .HasForeignKey("ChatMessageId")
@@ -1478,7 +1471,7 @@ namespace SdvCode.Migrations
             modelBuilder.Entity("SdvCode.Areas.PrivateChat.Models.FavouriteStickers", b =>
                 {
                     b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
-                        .WithMany("FavouriteStickers")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1700,7 +1693,7 @@ namespace SdvCode.Migrations
                         .IsRequired();
 
                     b.HasOne("SdvCode.Models.User.ApplicationUser", "ApplicationUser")
-                        .WithMany("PostLikes")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
