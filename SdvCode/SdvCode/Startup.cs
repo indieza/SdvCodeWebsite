@@ -398,7 +398,7 @@ namespace SdvCode
             recurringJobManager
                 .AddOrUpdate<RecommendedFriends>(
                 "RecommendedFriends",
-                x => x.AddRecomendedFrinds(),
+                x => x.AddRecomendedFriends(),
                 Cron.Weekly);
 
             // Delete all follow-unfollow activities

@@ -163,7 +163,7 @@ namespace SdvCode.Services.Comment
         public async Task<bool> IsParentCommentApproved(string parentId)
         {
             var comment = await this.db.Comments.FirstOrDefaultAsync(x => x.Id == parentId);
-            return comment.CommentStatus == CommentStatus.Approved ? true : false;
+            return comment.CommentStatus == CommentStatus.Approved;
         }
 
         public async Task<Post> ExtractCurrentPost(string postId)
@@ -190,15 +190,15 @@ namespace SdvCode.Services.Comment
 
         public async Task<EditCommentViewModel> ExtractCurrentComment(string commentId)
         {
-            var comment = await this.db.Comments.FirstOrDefaultAsync(x => x.Id == commentId);
-
-            return new EditCommentViewModel
-            {
-                CommentId = comment.Id,
-                ParentId = comment.ParentCommentId,
-                Content = comment.Content,
-                PostId = comment.PostId,
-            };
+            return await this.db.Comments
+                .Select(x => new EditCommentViewModel
+                {
+                    CommentId = x.Id,
+                    ParentId = x.ParentCommentId,
+                    Content = x.Content,
+                    PostId = x.PostId,
+                })
+                .FirstOrDefaultAsync(x => x.Id == commentId);
         }
 
         public async Task<Tuple<string, string>> EditComment(EditCommentViewModel model)

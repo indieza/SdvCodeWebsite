@@ -8,6 +8,8 @@ namespace SdvCode.ViewModels.AllCategories.ViewModels
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.ViewModels.Post.ViewModels;
+
     public class AllCategoriesViewModel
     {
         public string Id { get; set; }
@@ -26,6 +28,6 @@ namespace SdvCode.ViewModels.AllCategories.ViewModels
 
         public int ApprovedPostsCount { get; set; }
 
-        public Dictionary<string, string> PostsImages { get; set; } = new Dictionary<string, string>();
+        public ICollection<PostViewModel> Posts { get; set; } = new HashSet<PostViewModel>();
     }
 }

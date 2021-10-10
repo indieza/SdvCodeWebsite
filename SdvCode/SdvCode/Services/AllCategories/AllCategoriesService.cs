@@ -7,9 +7,13 @@ namespace SdvCode.Services.AllCategories
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Data;
     using SdvCode.Models.Enums;
     using SdvCode.ViewModels.AllCategories.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public class AllCategoriesService : IAllCategoriesService
     {
@@ -22,40 +26,36 @@ namespace SdvCode.Services.AllCategories
 
         public ICollection<AllCategoriesViewModel> GetAllBlogCategories()
         {
-            var categories = this.db.Categories.OrderBy(x => x.Name).ToList();
-            var result = new List<AllCategoriesViewModel>();
-
-            foreach (var category in categories)
-            {
-                var posts = this.db.Posts
-                    .Where(x => x.CategoryId == category.Id && x.PostStatus == PostStatus.Approved)
-                    .ToList()
-                    .Take(10);
-                var postsImages = new Dictionary<string, string>();
-
-                foreach (var post in posts)
+            return this.db.Categories
+                .Include(x => x.Posts)
+                .ThenInclude(x => x.ApplicationUser)
+                .OrderBy(x => x.Name)
+                .Select(x => new AllCategoriesViewModel
                 {
-                    postsImages.Add(post.ImageUrl, post.Title);
-                }
-
-                result.Add(new AllCategoriesViewModel
-                {
-                    Id = category.Id,
-                    Name = category.Name,
-                    Description = category.Description,
-                    CreatedOn = category.CreatedOn,
-                    UpdatedOn = category.UpdatedOn,
-                    ApprovedPostsCount = this.db.Posts
-                        .Count(x => x.CategoryId == category.Id && x.PostStatus == PostStatus.Approved),
-                    PendingPostsCount = this.db.Posts
-                        .Count(x => x.CategoryId == category.Id && x.PostStatus == PostStatus.Pending),
-                    BannedPostsCount = this.db.Posts
-                        .Count(x => x.CategoryId == category.Id && x.PostStatus == PostStatus.Banned),
-                    PostsImages = postsImages,
-                });
-            }
-
-            return result;
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    CreatedOn = x.CreatedOn,
+                    UpdatedOn = x.UpdatedOn,
+                    ApprovedPostsCount = x.Posts.Count(y => y.PostStatus == PostStatus.Approved),
+                    PendingPostsCount = x.Posts.Count(y => y.PostStatus == PostStatus.Pending),
+                    BannedPostsCount = x.Posts.Count(y => y.PostStatus == PostStatus.Banned),
+                    Posts = x.Posts
+                        .Where(y => y.PostStatus == PostStatus.Approved)
+                        .OrderBy(z => z.CreatedOn)
+                        .Take(10)
+                        .Select(m => new PostViewModel
+                        {
+                            Id = m.Id,
+                            ImageUrl = m.ImageUrl,
+                            Title = m.Title,
+                            CreatedOn = m.CreatedOn,
+                            UpdatedOn = m.UpdatedOn,
+                            ApplicationUser = m.ApplicationUser,
+                        })
+                        .ToList(),
+                })
+                .ToList();
         }
     }
 }

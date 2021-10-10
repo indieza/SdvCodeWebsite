@@ -320,24 +320,19 @@ namespace SdvCode.Services.Blog
 
         public async Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user)
         {
-            var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
-            post.Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId);
-            var postTagsNames = new List<string>();
-
-            foreach (var tag in post.PostsTags)
-            {
-                postTagsNames.Add(this.db.Tags.FirstOrDefault(x => x.Id == tag.TagId).Name);
-            }
-
-            return new EditPostInputModel
-            {
-                Id = post.Id,
-                Title = post.Title,
-                CategoryName = post.Category.Name,
-                Content = post.Content,
-                TagsNames = postTagsNames,
-                Tags = postTagsNames,
-            };
+            return await this.db.Posts
+                .Include(x => x.Category)
+                .Include(x => x.PostsTags)
+                .ThenInclude(x => x.Tag)
+                .Select(x => new EditPostInputModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    CategoryName = x.Category.Name,
+                    Content = x.Content,
+                    TagsNames = x.PostsTags.Select(y => y.Tag.Name).ToList(),
+                })
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search)

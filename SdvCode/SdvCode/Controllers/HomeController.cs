@@ -48,9 +48,9 @@ namespace SdvCode.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetLatestBlogPosts()
+        public IActionResult GetLatestBlogPosts()
         {
-            ICollection<LatestPostViewModel> latestPosts = await this.homeService.GetLatestPosts();
+            ICollection<LatestPostViewModel> latestPosts = this.homeService.GetLatestPosts();
             return new JsonResult(latestPosts);
         }
 

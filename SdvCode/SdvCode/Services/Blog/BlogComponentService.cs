@@ -8,15 +8,18 @@ namespace SdvCode.Services.Blog
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels;
+
     using X.PagedList;
 
     public class BlogComponentService : IBlogComponentService
@@ -33,11 +36,13 @@ namespace SdvCode.Services.Blog
         public async Task<ICollection<RecentCommentsViewModel>> ExtractRecentComments(ApplicationUser currentUser)
         {
             List<Comment> comments = new List<Comment>();
+
             if (currentUser != null &&
                 (await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) ||
                 await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
             {
                 comments = this.db.Comments
+                    .Include(x => x.ApplicationUser)
                     .OrderByDescending(x => x.UpdatedOn)
                     .ToList();
             }
@@ -46,6 +51,7 @@ namespace SdvCode.Services.Blog
                 if (currentUser != null)
                 {
                     comments = this.db.Comments
+                        .Include(x => x.ApplicationUser)
                         .Where(x => x.CommentStatus == CommentStatus.Approved ||
                         x.ApplicationUserId == currentUser.Id)
                         .ToList();
@@ -53,6 +59,7 @@ namespace SdvCode.Services.Blog
                 else
                 {
                     comments = this.db.Comments
+                        .Include(x => x.ApplicationUser)
                         .Where(x => x.CommentStatus == CommentStatus.Approved)
                         .OrderByDescending(x => x.UpdatedOn)
                         .ToList();
@@ -63,11 +70,10 @@ namespace SdvCode.Services.Blog
 
             foreach (var comment in comments.Take(35))
             {
-                var user = this.db.Users.FirstOrDefault(x => x.Id == comment.ApplicationUserId);
                 var contentWithoutTags = Regex.Replace(comment.Content, "<.*?>", string.Empty);
                 recentComments.Add(new RecentCommentsViewModel
                 {
-                    User = user,
+                    User = comment.ApplicationUser,
                     CreatedOn = comment.CreatedOn,
                     CommentStatus = comment.CommentStatus,
                     ShortContent = contentWithoutTags.Length < 95 ?
@@ -83,11 +89,13 @@ namespace SdvCode.Services.Blog
         public List<RecentPostsViewModel> ExtractRecentPosts(ApplicationUser currentUser)
         {
             List<Post> posts = new List<Post>();
+
             if (currentUser != null &&
                 (this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()).GetAwaiter().GetResult() ||
                 this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString()).GetAwaiter().GetResult()))
             {
                 posts = this.db.Posts
+                    .Include(x => x.ApplicationUser)
                     .OrderByDescending(x => x.UpdatedOn)
                     .ToList();
             }
@@ -96,6 +104,7 @@ namespace SdvCode.Services.Blog
                 if (currentUser != null)
                 {
                     posts = this.db.Posts
+                        .Include(x => x.ApplicationUser)
                         .Where(x => x.PostStatus == PostStatus.Approved ||
                         x.ApplicationUserId == currentUser.Id)
                         .ToList();
@@ -103,46 +112,38 @@ namespace SdvCode.Services.Blog
                 else
                 {
                     posts = this.db.Posts
+                        .Include(x => x.ApplicationUser)
                         .Where(x => x.PostStatus == PostStatus.Approved)
                         .ToList();
                 }
             }
 
-            var recentPosts = new List<RecentPostsViewModel>();
-
-            foreach (var post in posts.Take(20))
-            {
-                var user = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
-                recentPosts.Add(new RecentPostsViewModel
+            return posts
+                .Select(x => new RecentPostsViewModel
                 {
-                    Id = post.Id,
-                    Title = post.Title,
-                    CreatedOn = post.CreatedOn,
-                    ImageUrl = post.ImageUrl,
-                    ApplicationUser = user,
-                    PostStatus = post.PostStatus,
-                });
-            }
-
-            return recentPosts;
+                    Id = x.Id,
+                    Title = x.Title,
+                    CreatedOn = x.CreatedOn,
+                    ImageUrl = x.ImageUrl,
+                    ApplicationUser = x.ApplicationUser,
+                    PostStatus = x.PostStatus,
+                })
+                .Take(20)
+                .ToList();
         }
 
-        public async Task<List<TopCategoriesViewModel>> ExtractTopCategories()
+        public List<TopCategoriesViewModel> ExtractTopCategories()
         {
-            var categories = this.db.Categories.ToList();
-            var topCategories = new List<TopCategoriesViewModel>();
-
-            foreach (var category in categories.Take(10))
-            {
-                topCategories.Add(new TopCategoriesViewModel
+            return this.db.Categories
+                .Include(x => x.Posts)
+                .Select(x => new TopCategoriesViewModel
                 {
-                    Id = category.Id,
-                    Name = category.Name,
-                    PostsCount = await this.db.Posts.CountAsync(x => x.CategoryId == category.Id),
-                });
-            }
-
-            return topCategories.OrderByDescending(x => x.PostsCount).ToList();
+                    Id = x.Id,
+                    Name = x.Name,
+                    PostsCount = x.Posts.Count(),
+                })
+                .Take(10)
+                .ToList();
         }
 
         public async Task<List<TopPostsViewModel>> ExtractTopPosts(ApplicationUser currentUser)
@@ -154,6 +155,7 @@ namespace SdvCode.Services.Blog
                 await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
             {
                 posts = this.db.Posts
+                    .Include(x => x.ApplicationUser)
                     .OrderByDescending(x => x.Comments.Count + x.Likes)
                     .ToList();
             }
@@ -162,6 +164,7 @@ namespace SdvCode.Services.Blog
                 if (currentUser != null)
                 {
                     posts = this.db.Posts
+                        .Include(x => x.ApplicationUser)
                         .Where(x => x.PostStatus == PostStatus.Approved ||
                         x.ApplicationUserId == currentUser.Id)
                         .OrderByDescending(x => x.Comments.Count + x.Likes)
@@ -170,47 +173,39 @@ namespace SdvCode.Services.Blog
                 else
                 {
                     posts = this.db.Posts
+                        .Include(x => x.ApplicationUser)
                         .Where(x => x.PostStatus == PostStatus.Approved)
                         .OrderByDescending(x => x.Comments.Count + x.Likes)
                         .ToList();
                 }
             }
 
-            var topPosts = new List<TopPostsViewModel>();
-
-            foreach (var post in posts.Take(10))
-            {
-                var user = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
-                topPosts.Add(new TopPostsViewModel
+            return posts
+                .Select(x => new TopPostsViewModel
                 {
-                    Id = post.Id,
-                    Title = post.Title,
-                    CreatedOn = post.CreatedOn,
-                    ImageUrl = post.ImageUrl,
-                    ApplicationUser = user,
-                    PostStatus = post.PostStatus,
-                });
-            }
-
-            return topPosts;
+                    Id = x.Id,
+                    Title = x.Title,
+                    CreatedOn = x.CreatedOn,
+                    ImageUrl = x.ImageUrl,
+                    ApplicationUser = x.ApplicationUser,
+                    PostStatus = x.PostStatus,
+                })
+                .Take(10)
+                .ToList();
         }
 
-        public async Task<List<TopTagsViewModel>> ExtractTopTags()
+        public List<TopTagsViewModel> ExtractTopTags()
         {
-            var tags = this.db.Tags.ToList();
-            var topTags = new List<TopTagsViewModel>();
-
-            foreach (var tag in tags)
-            {
-                topTags.Add(new TopTagsViewModel
+            return this.db.Tags
+                .Include(x => x.TagsPosts)
+                .Select(x => new TopTagsViewModel
                 {
-                    Id = tag.Id,
-                    Name = tag.Name,
-                    Count = await this.db.PostsTags.CountAsync(x => x.TagId == tag.Id),
-                });
-            }
-
-            return topTags.OrderByDescending(x => x.Count).Take(10).ToList();
+                    Id = x.Id,
+                    Name = x.Name,
+                    Count = x.TagsPosts.Count(),
+                })
+                .Take(10)
+                .ToList();
         }
     }
 }

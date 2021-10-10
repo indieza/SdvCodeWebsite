@@ -7,7 +7,9 @@ namespace SdvCode.Services.RecommendedFriends
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Data;
     using SdvCode.Models.User;
 
@@ -20,7 +22,7 @@ namespace SdvCode.Services.RecommendedFriends
             this.db = db;
         }
 
-        public void AddRecomendedFrinds()
+        public void AddRecomendedFriends()
         {
             var trash = this.db.RecommendedFriends.ToList();
             this.db.RemoveRange(trash);

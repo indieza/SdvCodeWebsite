@@ -10,6 +10,6 @@ namespace SdvCode.Services.RecommendedFriends
 
     public interface IRecommendedFriends
     {
-        void AddRecomendedFrinds();
+        void AddRecomendedFriends();
     }
 }

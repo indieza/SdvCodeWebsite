@@ -6,7 +6,9 @@ namespace SdvCode.Services.Home
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
+
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Home;
 
@@ -18,7 +20,7 @@ namespace SdvCode.Services.Home
 
         Task<ICollection<ApplicationUser>> GetAllAdministrators();
 
-        Task<ICollection<LatestPostViewModel>> GetLatestPosts();
+        ICollection<LatestPostViewModel> GetLatestPosts();
 
         int GetPostsCount();
 

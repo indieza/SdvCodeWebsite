@@ -7,9 +7,12 @@ namespace SdvCode.Services.Home
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+
     using OfficeOpenXml.ConditionalFormatting;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -71,10 +74,12 @@ namespace SdvCode.Services.Home
             return result;
         }
 
-        public async Task<ICollection<LatestPostViewModel>> GetLatestPosts()
+        public ICollection<LatestPostViewModel> GetLatestPosts()
         {
             var result = new List<LatestPostViewModel>();
             var targetPosts = this.db.Posts
+                .Include(x => x.Category)
+                .Include(x => x.ApplicationUser)
                 .Where(x => x.PostStatus == PostStatus.Approved)
                 .OrderByDescending(x => x.CreatedOn)
                 .Take(GlobalConstants.LatestLayoutPostsCount)
@@ -82,9 +87,6 @@ namespace SdvCode.Services.Home
 
             foreach (var targetPost in targetPosts)
             {
-                var user = await this.db.Users.FirstOrDefaultAsync(x => x.Id == targetPost.ApplicationUserId);
-                var category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == targetPost.CategoryId);
-
                 result.Add(new LatestPostViewModel
                 {
                     Id = targetPost.Id,
@@ -92,8 +94,8 @@ namespace SdvCode.Services.Home
                     Title = targetPost.Title,
                     ImageUrl = targetPost.ImageUrl,
                     CategoryId = targetPost.CategoryId,
-                    CategoryName = category.Name,
-                    CreatorUsername = user.UserName,
+                    CategoryName = targetPost.Category.Name,
+                    CreatorUsername = targetPost.ApplicationUser.UserName,
                 });
             }
 

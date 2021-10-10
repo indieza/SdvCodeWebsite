@@ -39,14 +39,14 @@
                     <div class="portfolio-slider">
                         <div class="flexportfolio flexslider">
                             <ul class="slides" style="position: relative">
-                                @if (category.PostsImages.Count > 0)
+                                @if (category.Posts.Count > 0)
                                 {
-                                    @foreach (var image in category.PostsImages)
+                                    @foreach (var post in category.Posts)
                                     {
                                         <li>
-                                            <img style="width: 100%; height: 350px; object-fit: cover; object-position: 50% 50%;" src="@image.Key" alt="">
+                                            <img style="width: 100%; height: 350px; object-fit: cover; object-position: 50% 50%;" src="@post.ImageUrl" alt="">
                                             <div class="all-categories-float-heading">
-                                                <p>@image.Value</p>
+                                                <p>@post.Title</p>
                                             </div>
                                         </li>
                                     }
