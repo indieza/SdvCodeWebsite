@@ -7,9 +7,13 @@ namespace SdvCode.ViewModels.Post.ViewModels
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Comment.ViewModels;
+    using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Users.ViewModels;
 
     public class PostViewModel
     {
@@ -29,32 +33,28 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
         public int Likes { get; set; }
 
+        public PostStatus PostStatus { get; set; }
+
         public string ApplicationUserId { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUserViewModel ApplicationUser { get; set; }
 
         public string CategoryId { get; set; }
 
         public Category Category { get; set; }
 
-        public PostStatus PostStatus { get; set; }
+        public ICollection<CommentViewModel> Comments { get; set; } = new HashSet<CommentViewModel>();
 
-        public bool IsFavourite { get; set; }
-
-        public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
-
-        public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+        public ICollection<TagViewModel> Tags { get; set; } = new HashSet<TagViewModel>();
 
         public bool IsAuthor { get; set; }
 
         public bool IsLiked { get; set; }
 
-        public ICollection<ApplicationUser> Likers { get; set; } = new HashSet<ApplicationUser>();
-
-        public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
-
-        public ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
+        public ICollection<ApplicationUserViewModel> Likers { get; set; } = new HashSet<ApplicationUserViewModel>();
 
         public ICollection<PostImageViewModel> AllPostImages { get; set; } = new HashSet<PostImageViewModel>();
+
+        public bool IsFavourite { get; set; }
     }
 }

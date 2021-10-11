@@ -15,5 +15,9 @@ namespace SdvCode.ViewModels.Post.ViewModels
         public string Name { get; set; }
 
         public string Url { get; set; }
+
+        public string PostId { get; set; }
+
+        public PostViewModel Post { get; set; }
     }
 }

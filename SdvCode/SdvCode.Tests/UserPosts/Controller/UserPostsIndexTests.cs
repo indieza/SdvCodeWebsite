@@ -4,19 +4,23 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+
     using Moq;
+
     using SdvCode.Controllers;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.UserPosts;
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.UserPosts;
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
+
     using Xunit;
 
     public class UserPostsIndexTests
@@ -33,7 +37,7 @@
                 {
                     new PostViewModel
                     {
-                        ApplicationUser = currentUser,
+                        //ApplicationUser = currentUser,
                     }
                 });
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
@@ -73,7 +77,7 @@
                 {
                     new PostViewModel
                     {
-                        ApplicationUser = currentUser,
+                        //ApplicationUser = currentUser,
                     }
                 });
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(

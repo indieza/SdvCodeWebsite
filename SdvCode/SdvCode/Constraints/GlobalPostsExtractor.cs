@@ -7,7 +7,9 @@ namespace SdvCode.Constraints
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
@@ -40,13 +42,13 @@ namespace SdvCode.Constraints
                     CreatedOn = post.CreatedOn,
                     Title = post.Title,
                     UpdatedOn = post.UpdatedOn,
-                    ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId),
+                    //ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId),
                     Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId),
                     Likes = post.Likes,
                     PostStatus = post.PostStatus,
-                    Comments = this.db.Comments
-                    .Where(x => x.PostId == post.Id && x.CommentStatus == CommentStatus.Approved)
-                    .ToList(),
+                    //Comments = this.db.Comments
+                    //    .Where(x => x.PostId == post.Id && x.CommentStatus == CommentStatus.Approved)
+                    //    .ToList(),
                 };
 
                 if (user != null)
@@ -64,18 +66,18 @@ namespace SdvCode.Constraints
 
                 foreach (var userId in usersIds)
                 {
-                    currentPostModel.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
+                    //currentPostModel.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
                 }
 
                 foreach (var tag in post.PostsTags)
                 {
                     var curretnTag = this.db.Tags.FirstOrDefault(x => x.Id == tag.TagId);
-                    currentPostModel.Tags.Add(new Tag
-                    {
-                        Id = curretnTag.Id,
-                        CreatedOn = curretnTag.CreatedOn,
-                        Name = curretnTag.Name,
-                    });
+                    //currentPostModel.Tags.Add(new Tag
+                    //{
+                    //    Id = curretnTag.Id,
+                    //    CreatedOn = curretnTag.CreatedOn,
+                    //    Name = curretnTag.Name,
+                    //});
                 }
 
                 postsModel.Add(currentPostModel);

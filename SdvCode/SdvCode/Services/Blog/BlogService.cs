@@ -10,6 +10,8 @@ namespace SdvCode.Services.Blog
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using CloudinaryDotNet;
 
     using Ganss.XSS;
@@ -336,22 +338,30 @@ namespace SdvCode.Services.Blog
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search)
+        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, IMapper mapper)
         {
             var posts = new List<Post>();
 
             if (search == null)
             {
-                posts = await this.db.Posts.OrderByDescending(x => x.UpdatedOn).ToListAsync();
+                posts = this.db.Posts
+                    .Include(x => x.ApplicationUser)
+                    .Include(x => x.Category)
+                    .Include(x => x.Comments)
+                    .OrderByDescending(x => x.UpdatedOn)
+                    .ToList();
             }
             else
             {
-                posts = await this.db.Posts
+                posts = this.db.Posts
+                    .Include(x => x.ApplicationUser)
+                    .Include(x => x.Category)
+                    .Include(x => x.Comments)
                     .Where(x => EF.Functions.FreeText(x.Title, search) ||
                     EF.Functions.FreeText(x.ShortContent, search) ||
                     EF.Functions.FreeText(x.Content, search))
                     .OrderByDescending(x => x.UpdatedOn)
-                    .ToListAsync();
+                    .ToList();
             }
 
             if (user != null &&
@@ -379,7 +389,8 @@ namespace SdvCode.Services.Blog
                 }
             }
 
-            List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
+            var postsModel = mapper.Map<List<PostViewModel>>(posts);
+            //List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
             return postsModel;
         }
 

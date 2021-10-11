@@ -69,7 +69,7 @@ namespace SdvCode.Services.Profile
             var model = new ApplicationUserViewModel
             {
                 Id = user.Id,
-                Username = user.UserName,
+                UserName = user.UserName,
                 RegisteredOn = user.RegisteredOn,
                 PhoneNumber = user.PhoneNumber,
                 PhoneNumberConfirmed = user.PhoneNumberConfirmed,

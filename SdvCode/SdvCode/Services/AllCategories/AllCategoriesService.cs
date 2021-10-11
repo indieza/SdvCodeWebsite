@@ -51,7 +51,7 @@ namespace SdvCode.Services.AllCategories
                             Title = m.Title,
                             CreatedOn = m.CreatedOn,
                             UpdatedOn = m.UpdatedOn,
-                            ApplicationUser = m.ApplicationUser,
+                            //ApplicationUser = m.ApplicationUser,
                         })
                         .ToList(),
                 })

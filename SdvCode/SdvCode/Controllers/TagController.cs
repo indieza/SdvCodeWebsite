@@ -41,8 +41,8 @@ namespace SdvCode.Controllers
 
             TagViewModel model = new TagViewModel
             {
-                Tag = await this.tagService.ExtractTagById(id),
-                Posts = post.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
+                //Tag = await this.tagService.ExtractTagById(id),
+                //Posts = post.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
             };
 
             return this.View(model);

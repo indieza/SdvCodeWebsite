@@ -25,7 +25,7 @@ namespace SdvCode.Services.Blog
 
         Task<Tuple<string, string>> CreatePost(CreatePostIndexModel model, ApplicationUser user);
 
-        Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search);
+        Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, AutoMapper.IMapper mapper);
 
         Task<Tuple<string, string>> DeletePost(string id, ApplicationUser user);
 

@@ -140,7 +140,7 @@ namespace SdvCode.Services.Post
                 Content = post.Content,
                 CreatedOn = post.CreatedOn,
                 UpdatedOn = post.UpdatedOn,
-                Comments = post.Comments,
+                //Comments = post.Comments,
                 ImageUrl = post.ImageUrl,
                 IsLiked = this.db.PostsLikes.Any(x => x.PostId == id && x.UserId == user.Id && x.IsLiked == true),
                 IsAuthor = post.ApplicationUserId == user.Id,
@@ -148,18 +148,18 @@ namespace SdvCode.Services.Post
                 PostStatus = post.PostStatus,
             };
 
-            model.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
+            //model.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
             model.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
 
             foreach (var tag in post.PostsTags)
             {
                 var curretnTag = this.db.Tags.FirstOrDefault(x => x.Id == tag.TagId);
-                model.Tags.Add(new Tag
-                {
-                    Id = curretnTag.Id,
-                    CreatedOn = curretnTag.CreatedOn,
-                    Name = curretnTag.Name,
-                });
+                //model.Tags.Add(new Tag
+                //{
+                //    Id = curretnTag.Id,
+                //    CreatedOn = curretnTag.CreatedOn,
+                //    Name = curretnTag.Name,
+                //});
             }
 
             var usersIds = this.db.PostsLikes
@@ -168,7 +168,7 @@ namespace SdvCode.Services.Post
                 .ToList();
             foreach (var userId in usersIds)
             {
-                model.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
+                //model.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
             }
 
             var allPostImages = this.db.PostImages

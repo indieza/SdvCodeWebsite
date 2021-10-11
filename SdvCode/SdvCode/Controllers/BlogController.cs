@@ -5,6 +5,8 @@ namespace SdvCode.Controllers
 {
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -24,13 +26,16 @@ namespace SdvCode.Controllers
     {
         private readonly IBlogService blogService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMapper mapper;
 
         public BlogController(
             IBlogService blogService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper)
         {
             this.blogService = blogService;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -45,7 +50,7 @@ namespace SdvCode.Controllers
                 pageNumber = 1;
             }
 
-            var posts = await this.blogService.ExtraxtAllPosts(currentUser, search);
+            var posts = await this.blogService.ExtraxtAllPosts(currentUser, search, this.mapper);
             var model = new BlogViewModel
             {
                 Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),

@@ -28,8 +28,7 @@ namespace SdvCode.Services.RecommendedFriends
             this.db.RemoveRange(trash);
             this.db.SaveChanges();
 
-            this.db.Database.ExecuteSqlRaw("DBCC CHECKIDENT('[dbo].[RecommendedFriends]', RESEED, 0);");
-
+            // this.db.Database.ExecuteSqlRaw("DBCC CHECKIDENT('[dbo].[RecommendedFriends]', RESEED, 0);");
             var users = this.db.Users.Where(x => x.IsBlocked == false).ToList();
 
             foreach (var user in users)

@@ -40,7 +40,7 @@ namespace SdvCode.Areas.Administration.Services.UsersInformation
                 var currentModel = new ApplicationUserViewModel
                 {
                     Id = user.Id,
-                    Username = user.UserName,
+                    UserName = user.UserName,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
@@ -82,7 +82,7 @@ namespace SdvCode.Areas.Administration.Services.UsersInformation
                 var currentModel = new ApplicationUserViewModel
                 {
                     Id = user.Id,
-                    Username = user.UserName,
+                    UserName = user.UserName,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
