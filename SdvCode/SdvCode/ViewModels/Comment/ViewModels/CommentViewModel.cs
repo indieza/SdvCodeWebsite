@@ -11,6 +11,7 @@ namespace SdvCode.ViewModels.Comment.ViewModels
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Users.ViewModels;
 
     public class CommentViewModel
     {
@@ -26,7 +27,7 @@ namespace SdvCode.ViewModels.Comment.ViewModels
 
         public string ApplicationUserId { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUserViewModel ApplicationUser { get; set; }
 
         public string PostId { get; set; }
 

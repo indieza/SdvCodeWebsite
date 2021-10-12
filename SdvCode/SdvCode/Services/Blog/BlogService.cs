@@ -9,6 +9,7 @@ namespace SdvCode.Services.Blog
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using System.Xml;
 
     using AutoMapper;
 
@@ -43,6 +44,7 @@ namespace SdvCode.Services.Blog
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly INotificationService notificationService;
         private readonly IHubContext<NotificationHub> notificationHubContext;
+        private readonly IMapper mapper;
         private readonly GlobalPostsExtractor postExtractor;
         private readonly AddCyclicActivity cyclicActivity;
         private readonly AddNonCyclicActivity nonCyclicActivity;
@@ -53,7 +55,8 @@ namespace SdvCode.Services.Blog
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             INotificationService notificationService,
-            IHubContext<NotificationHub> notificationHubContext)
+            IHubContext<NotificationHub> notificationHubContext,
+            IMapper mapper)
         {
             this.db = db;
             this.cloudinary = cloudinary;
@@ -61,6 +64,7 @@ namespace SdvCode.Services.Blog
             this.roleManager = roleManager;
             this.notificationService = notificationService;
             this.notificationHubContext = notificationHubContext;
+            this.mapper = mapper;
             this.postExtractor = new GlobalPostsExtractor(this.db);
             this.cyclicActivity = new AddCyclicActivity(this.db);
             this.nonCyclicActivity = new AddNonCyclicActivity(this.db);
@@ -338,9 +342,31 @@ namespace SdvCode.Services.Blog
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, IMapper mapper)
+        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, int skipCount)
         {
             var posts = new List<Post>();
+            Func<Post, bool> filterFunction;
+
+            if (user != null &&
+                (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
+                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString())))
+            {
+                filterFunction = new Func<Post, bool>(x => x.PostStatus == PostStatus.Banned ||
+                    x.PostStatus == PostStatus.Pending ||
+                    x.PostStatus == PostStatus.Approved);
+            }
+            else
+            {
+                if (user != null)
+                {
+                    filterFunction = new Func<Post, bool>(x => x.PostStatus == PostStatus.Approved ||
+                        x.ApplicationUserId == user.Id);
+                }
+                else
+                {
+                    filterFunction = new Func<Post, bool>(x => x.PostStatus == PostStatus.Approved);
+                }
+            }
 
             if (search == null)
             {
@@ -348,7 +374,12 @@ namespace SdvCode.Services.Blog
                     .Include(x => x.ApplicationUser)
                     .Include(x => x.Category)
                     .Include(x => x.Comments)
+                    .Include(x => x.FavouritePosts)
+                    .Include(x => x.PostLikes)
+                    .Where(filterFunction)
                     .OrderByDescending(x => x.UpdatedOn)
+                    .Skip(skipCount)
+                    .Take(GlobalConstants.BlogPostsOnPage)
                     .ToList();
             }
             else
@@ -357,40 +388,18 @@ namespace SdvCode.Services.Blog
                     .Include(x => x.ApplicationUser)
                     .Include(x => x.Category)
                     .Include(x => x.Comments)
+                    .Include(x => x.FavouritePosts)
+                    .Include(x => x.PostLikes)
                     .Where(x => EF.Functions.FreeText(x.Title, search) ||
                     EF.Functions.FreeText(x.ShortContent, search) ||
                     EF.Functions.FreeText(x.Content, search))
                     .OrderByDescending(x => x.UpdatedOn)
+                    .Skip(skipCount)
+                    .Take(GlobalConstants.BlogPostsOnPage)
                     .ToList();
             }
 
-            if (user != null &&
-                (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
-                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString())))
-            {
-                posts = posts
-                    .Where(x => x.PostStatus == PostStatus.Banned || x.PostStatus == PostStatus.Pending || x.PostStatus == PostStatus.Approved)
-                    .ToList();
-            }
-            else
-            {
-                if (user != null)
-                {
-                    posts = posts
-                        .Where(x => x.PostStatus == PostStatus.Approved ||
-                        x.ApplicationUserId == user.Id)
-                        .ToList();
-                }
-                else
-                {
-                    posts = posts
-                        .Where(x => x.PostStatus == PostStatus.Approved)
-                        .ToList();
-                }
-            }
-
-            var postsModel = mapper.Map<List<PostViewModel>>(posts);
-            //List<PostViewModel> postsModel = await this.postExtractor.ExtractPosts(user, posts);
+            var postsModel = this.mapper.Map<List<PostViewModel>>(posts);
             return postsModel;
         }
 

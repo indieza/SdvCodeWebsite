@@ -149,7 +149,7 @@ namespace SdvCode.Services.Post
             };
 
             //model.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
-            model.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
+            //model.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
 
             foreach (var tag in post.PostsTags)
             {
@@ -177,7 +177,7 @@ namespace SdvCode.Services.Post
                     .ToList();
             foreach (var postImage in allPostImages)
             {
-                model.AllPostImages.Add(new PostImageViewModel
+                model.PostImages.Add(new PostImageViewModel
                 {
                     Id = postImage.Id,
                     Name = postImage.Name,

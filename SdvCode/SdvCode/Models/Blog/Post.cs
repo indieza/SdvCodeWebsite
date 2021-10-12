@@ -77,5 +77,7 @@ namespace SdvCode.Models.Blog
         public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
 
         public ICollection<PostImage> PostImages { get; set; } = new HashSet<PostImage>();
+
+        public ICollection<PostLike> PostLikes { get; set; }
     }
 }

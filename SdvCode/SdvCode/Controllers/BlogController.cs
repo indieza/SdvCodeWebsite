@@ -26,16 +26,13 @@ namespace SdvCode.Controllers
     {
         private readonly IBlogService blogService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IMapper mapper;
 
         public BlogController(
             IBlogService blogService,
-            UserManager<ApplicationUser> userManager,
-            IMapper mapper)
+            UserManager<ApplicationUser> userManager)
         {
             this.blogService = blogService;
             this.userManager = userManager;
-            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -50,7 +47,7 @@ namespace SdvCode.Controllers
                 pageNumber = 1;
             }
 
-            var posts = await this.blogService.ExtraxtAllPosts(currentUser, search, this.mapper);
+            var posts = await this.blogService.ExtraxtAllPosts(currentUser, search, (pageNumber - 1) * GlobalConstants.BlogPostsOnPage);
             var model = new BlogViewModel
             {
                 Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),

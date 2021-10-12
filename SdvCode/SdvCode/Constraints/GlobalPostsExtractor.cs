@@ -43,7 +43,7 @@ namespace SdvCode.Constraints
                     Title = post.Title,
                     UpdatedOn = post.UpdatedOn,
                     //ApplicationUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId),
-                    Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId),
+                    //Category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == post.CategoryId),
                     Likes = post.Likes,
                     PostStatus = post.PostStatus,
                     //Comments = this.db.Comments

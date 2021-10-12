@@ -11,6 +11,7 @@ namespace SdvCode.ViewModels.Post.ViewModels
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Category;
     using SdvCode.ViewModels.Comment.ViewModels;
     using SdvCode.ViewModels.Tag;
     using SdvCode.ViewModels.Users.ViewModels;
@@ -41,19 +42,29 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
         public string CategoryId { get; set; }
 
-        public Category Category { get; set; }
+        public CategoryViewModel Category { get; set; }
 
         public ICollection<CommentViewModel> Comments { get; set; } = new HashSet<CommentViewModel>();
 
         public ICollection<TagViewModel> Tags { get; set; } = new HashSet<TagViewModel>();
 
-        public bool IsAuthor { get; set; }
+        public ICollection<FavouritePostViewModel> FavouritePosts { get; set; } = new HashSet<FavouritePostViewModel>();
 
-        public bool IsLiked { get; set; }
+        public ICollection<PendingPostViewModel> PendingPosts { get; set; } = new HashSet<PendingPostViewModel>();
+
+        public ICollection<BlockedPostViewModel> BlockedPosts { get; set; } = new HashSet<BlockedPostViewModel>();
+
+        public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
+
+        public ICollection<PostImageViewModel> PostImages { get; set; } = new HashSet<PostImageViewModel>();
+
+        public ICollection<PostLikeViewModel> PostLikes { get; set; }
 
         public ICollection<ApplicationUserViewModel> Likers { get; set; } = new HashSet<ApplicationUserViewModel>();
 
-        public ICollection<PostImageViewModel> AllPostImages { get; set; } = new HashSet<PostImageViewModel>();
+        public bool IsAuthor { get; set; }
+
+        public bool IsLiked { get; set; }
 
         public bool IsFavourite { get; set; }
     }

@@ -200,7 +200,7 @@
                         <p>@Html.Raw(Model.Content)</p>
                     </div>
                     <div class="row">
-                        @foreach (var image in Model.AllPostImages)
+                        @foreach (var image in Model.PostImages)
                         {
                             <div class="col-md-4">
                                 <div class="modalText" onclick="openImage('@image.Id', this)">

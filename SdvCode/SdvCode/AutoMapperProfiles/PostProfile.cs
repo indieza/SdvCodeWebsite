@@ -11,6 +11,7 @@ namespace SdvCode.AutoMapperProfiles
     using AutoMapper;
 
     using SdvCode.Models.Blog;
+    using SdvCode.ViewModels.Category;
     using SdvCode.ViewModels.Comment.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Tag;
@@ -19,10 +20,14 @@ namespace SdvCode.AutoMapperProfiles
     {
         public PostProfile()
         {
+            this.CreateMap<Category, CategoryViewModel>();
+            this.CreateMap<FavouritePost, FavouritePostViewModel>();
+            this.CreateMap<PendingPost, PendingPostViewModel>();
+            this.CreateMap<BlockedPost, BlockedPostViewModel>();
+            this.CreateMap<PostLike, PostLikeViewModel>();
             this.CreateMap<Comment, CommentViewModel>();
             this.CreateMap<PostImage, PostImageViewModel>();
             this.CreateMap<Post, PostViewModel>();
-            //this.CreateMap<List<Post>, List<PostViewModel>>();
         }
     }
 }

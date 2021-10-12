@@ -87,13 +87,13 @@ namespace SdvCode.ViewModels.Users.ViewModels
 
         public ICollection<CommentViewModel> Comments { get; set; } = new HashSet<CommentViewModel>();
 
-        public ICollection<PostLike> PostLikes { get; set; } = new HashSet<PostLike>();
+        public ICollection<PostLikeViewModel> PostLikes { get; set; } = new HashSet<PostLikeViewModel>();
 
-        public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
+        public ICollection<FavouritePostViewModel> FavouritePosts { get; set; } = new HashSet<FavouritePostViewModel>();
 
-        public ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
+        public ICollection<PendingPostViewModel> PendingPosts { get; set; } = new HashSet<PendingPostViewModel>();
 
-        public ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
+        public ICollection<BlockedPostViewModel> BlockedPosts { get; set; } = new HashSet<BlockedPostViewModel>();
 
         public ICollection<UserGroup> UsersGroups { get; set; } = new HashSet<UserGroup>();
 
