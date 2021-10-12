@@ -31,19 +31,19 @@ namespace SdvCode.ViewModels.Users.ViewModels
 
         public string ZipCodeId { get; set; }
 
-        public ZipCode ZipCode { get; set; }
+        public ZipCodeViewModel ZipCode { get; set; }
 
         public string CountryId { get; set; }
 
-        public Country Country { get; set; }
+        public CountryViewModel Country { get; set; }
 
         public string StateId { get; set; }
 
-        public State State { get; set; }
+        public StateViewModel State { get; set; }
 
         public string CityId { get; set; }
 
-        public City City { get; set; }
+        public CityViewModel City { get; set; }
 
         public DateTime BirthDate { get; set; }
 
@@ -53,7 +53,7 @@ namespace SdvCode.ViewModels.Users.ViewModels
 
         public string CountryCodeId { get; set; }
 
-        public CountryCode CountryCode { get; set; }
+        public CountryCodeViewModel CountryCode { get; set; }
 
         public string AboutMe { get; set; }
 

@@ -7,8 +7,10 @@ namespace SdvCode.Areas.Administration.Services.UsersInformation
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.ViewModels.UsersInformation;
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -48,15 +50,15 @@ namespace SdvCode.Areas.Administration.Services.UsersInformation
                     EmailConfirmed = user.EmailConfirmed,
                     IsBlocked = user.IsBlocked,
                     PhoneNumber = user.PhoneNumber,
-                    Country = await this.db.Countries.FirstOrDefaultAsync(x => x.Id == user.CountryId),
-                    City = await this.db.Cities.FirstOrDefaultAsync(x => x.Id == user.CityId),
-                    State = await this.db.States.FirstOrDefaultAsync(x => x.Id == user.StateId),
+                    //Country = await this.db.Countries.FirstOrDefaultAsync(x => x.Id == user.CountryId),
+                    //City = await this.db.Cities.FirstOrDefaultAsync(x => x.Id == user.CityId),
+                    //State = await this.db.States.FirstOrDefaultAsync(x => x.Id == user.StateId),
                     AboutMe = user.AboutMe,
-                    CountryCode = await this.db.CountryCodes.FirstOrDefaultAsync(x => x.Id == user.CountryCodeId),
+                    //CountryCode = await this.db.CountryCodes.FirstOrDefaultAsync(x => x.Id == user.CountryCodeId),
                     BirthDate = user.BirthDate,
                     Gender = user.Gender,
                     PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                    ZipCode = await this.db.ZipCodes.FirstOrDefaultAsync(x => x.Id == user.ZipCodeId),
+                    //ZipCode = await this.db.ZipCodes.FirstOrDefaultAsync(x => x.Id == user.ZipCodeId),
                     ReasonToBeBlocked = user.ReasonToBeBlocked,
                 };
 
@@ -90,15 +92,15 @@ namespace SdvCode.Areas.Administration.Services.UsersInformation
                     EmailConfirmed = user.EmailConfirmed,
                     IsBlocked = user.IsBlocked,
                     PhoneNumber = user.PhoneNumber,
-                    Country = await this.db.Countries.FirstOrDefaultAsync(x => x.Id == user.CountryId),
-                    City = await this.db.Cities.FirstOrDefaultAsync(x => x.Id == user.CityId),
-                    State = await this.db.States.FirstOrDefaultAsync(x => x.Id == user.StateId),
+                    //Country = await this.db.Countries.FirstOrDefaultAsync(x => x.Id == user.CountryId),
+                    //City = await this.db.Cities.FirstOrDefaultAsync(x => x.Id == user.CityId),
+                    //State = await this.db.States.FirstOrDefaultAsync(x => x.Id == user.StateId),
                     AboutMe = user.AboutMe,
-                    CountryCode = await this.db.CountryCodes.FirstOrDefaultAsync(x => x.Id == user.CountryCodeId),
+                    //CountryCode = await this.db.CountryCodes.FirstOrDefaultAsync(x => x.Id == user.CountryCodeId),
                     BirthDate = user.BirthDate,
                     Gender = user.Gender,
                     PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                    ZipCode = await this.db.ZipCodes.FirstOrDefaultAsync(x => x.Id == user.ZipCodeId),
+                    //ZipCode = await this.db.ZipCodes.FirstOrDefaultAsync(x => x.Id == user.ZipCodeId),
                 };
 
                 var userRoleNames = await this.userManager.GetRolesAsync(user);

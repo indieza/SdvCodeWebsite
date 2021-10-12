@@ -23,6 +23,7 @@ namespace SdvCode
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc.Filters;
@@ -83,6 +84,7 @@ namespace SdvCode
     using SdvCode.Areas.SdvShop.Services.TrackOrder;
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Areas.UserNotifications.Services.NotificationDbUsage;
+    using SdvCode.AutoMapperProfiles;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -322,6 +324,13 @@ namespace SdvCode
 
             // Register OfficeOpenXml License
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+			// Setup AutoMapper Profiles Configurations
+            services.AddScoped(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new PostProfile(provider.GetService<IHttpContextAccessor>()));
+                cfg.AddProfile(new UserProfile(provider.GetService<ApplicationDbContext>()));
+            }).CreateMapper());
 
             // Add Blazor Session and Local Storages
             services.AddBlazoredSessionStorage();

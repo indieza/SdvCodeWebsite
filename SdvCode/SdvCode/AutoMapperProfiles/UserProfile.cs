@@ -6,17 +6,30 @@ namespace SdvCode.AutoMapperProfiles
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Http;
+
+    using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class UserProfile : Profile
     {
-        public UserProfile()
+        private readonly ApplicationDbContext db;
+
+        public UserProfile(ApplicationDbContext db)
         {
+            this.db = db;
+
+            this.CreateMap<ZipCode, ZipCodeViewModel>();
+            this.CreateMap<CountryCode, CountryCodeViewModel>();
+            this.CreateMap<State, StateViewModel>();
+            this.CreateMap<City, CityViewModel>();
+            this.CreateMap<Country, CountryViewModel>();
             this.CreateMap<ApplicationUser, ApplicationUserViewModel>();
         }
     }
