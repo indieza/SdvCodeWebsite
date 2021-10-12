@@ -7,16 +7,18 @@ namespace SdvCode.Areas.Administration.Services.AddEmoji
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet;
+
     using Microsoft.AspNetCore.Server.IIS.Core;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.ViewModels.AddEmoji.InputModels;
     using SdvCode.Areas.Administration.ViewModels.EditEmoji.InputModels;
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Services.Cloud;
-    using Twilio.Rest.Authy.V1.Service.Entity.Factor;
 
     public class AddEmojiService : IAddEmojiService
     {

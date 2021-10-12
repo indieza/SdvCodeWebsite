@@ -7,6 +7,7 @@ namespace SdvCode.Services.Blog
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Xml;
@@ -345,26 +346,26 @@ namespace SdvCode.Services.Blog
         public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, int skipCount)
         {
             var posts = new List<Post>();
-            Func<Post, bool> filterFunction;
+            Expression<Func<Post, bool>> filterFunction;
 
             if (user != null &&
                 (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString())))
             {
-                filterFunction = new Func<Post, bool>(x => x.PostStatus == PostStatus.Banned ||
+                filterFunction = x => x.PostStatus == PostStatus.Banned ||
                     x.PostStatus == PostStatus.Pending ||
-                    x.PostStatus == PostStatus.Approved);
+                    x.PostStatus == PostStatus.Approved;
             }
             else
             {
                 if (user != null)
                 {
-                    filterFunction = new Func<Post, bool>(x => x.PostStatus == PostStatus.Approved ||
-                        x.ApplicationUserId == user.Id);
+                    filterFunction = x => x.PostStatus == PostStatus.Approved ||
+                        x.ApplicationUserId == user.Id;
                 }
                 else
                 {
-                    filterFunction = new Func<Post, bool>(x => x.PostStatus == PostStatus.Approved);
+                    filterFunction = x => x.PostStatus == PostStatus.Approved;
                 }
             }
 
@@ -378,8 +379,6 @@ namespace SdvCode.Services.Blog
                     .Include(x => x.PostLikes)
                     .Where(filterFunction)
                     .OrderByDescending(x => x.UpdatedOn)
-                    .Skip(skipCount)
-                    .Take(GlobalConstants.BlogPostsOnPage)
                     .ToList();
             }
             else
@@ -394,8 +393,6 @@ namespace SdvCode.Services.Blog
                     EF.Functions.FreeText(x.ShortContent, search) ||
                     EF.Functions.FreeText(x.Content, search))
                     .OrderByDescending(x => x.UpdatedOn)
-                    .Skip(skipCount)
-                    .Take(GlobalConstants.BlogPostsOnPage)
                     .ToList();
             }
 
