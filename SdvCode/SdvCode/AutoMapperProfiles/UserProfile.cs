@@ -16,6 +16,7 @@ namespace SdvCode.AutoMapperProfiles
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
+    using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class UserProfile : Profile
@@ -27,6 +28,9 @@ namespace SdvCode.AutoMapperProfiles
             this.db = db;
 
             this.CreateMap<ApplicationUser, BlogPostCardApplicationUserViewModel>();
+            this.CreateMap<ApplicationUser, BlogPostCardLikerViewModel>();
+            this.CreateMap<ApplicationUser, PostApplicationUserViewModel>();
+            this.CreateMap<ApplicationUser, PostLikerViewModel>();
         }
     }
 }

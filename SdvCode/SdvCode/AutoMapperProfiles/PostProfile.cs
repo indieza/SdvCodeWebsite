@@ -15,9 +15,11 @@ namespace SdvCode.AutoMapperProfiles
 
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.AllCategories.ViewModels;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Category;
     using SdvCode.ViewModels.Comment.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Tag;
 
     public class PostProfile : Profile
@@ -29,8 +31,6 @@ namespace SdvCode.AutoMapperProfiles
             this.httpContextAccessor = httpContextAccessor;
             var userId = this.httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            this.CreateMap<Category, BlogPostCardCategoryViewModel>();
-            this.CreateMap<ApplicationUser, BlogPostCardLikerViewModel>();
             this.CreateMap<Post, BlogPostCardViewModel>()
                 .ForMember(
                     dm => dm.CommentsCount,
@@ -46,7 +46,26 @@ namespace SdvCode.AutoMapperProfiles
                     mo => mo.MapFrom(x => userId != null && x.FavouritePosts.Any(z => z.ApplicationUserId == userId && z.IsFavourite)))
                 .ForMember(
                     dm => dm.Likers,
-                    mo => mo.MapFrom(x => x.PostLikes.Select(x => x.ApplicationUser).ToList()));
+                    mo => mo.MapFrom(x => x.PostLikes.Where(x => x.IsLiked).Select(x => x.ApplicationUser).ToList()));
+
+            this.CreateMap<Post, PostViewModel>()
+                .ForMember(
+                    dm => dm.IsLiked,
+                    mo => mo.MapFrom(x => userId != null && x.PostLikes.Any(y => y.UserId == userId && y.IsLiked)))
+                .ForMember(
+                    dm => dm.IsAuthor,
+                    mo => mo.MapFrom(x => userId != null && userId == x.ApplicationUserId))
+                .ForMember(
+                    dm => dm.IsFavourite,
+                    mo => mo.MapFrom(x => userId != null && x.FavouritePosts.Any(z => z.ApplicationUserId == userId && z.IsFavourite)))
+                .ForMember(
+                    dm => dm.Likers,
+                    mo => mo.MapFrom(x => x.PostLikes.Where(x => x.IsLiked).Select(x => x.ApplicationUser)))
+                .ForMember(
+                    dm => dm.Tags,
+                    mo => mo.MapFrom(x => x.PostsTags.Select(x => x.Tag).ToList()));
+
+            this.CreateMap<Post, AllCategoriesPostViewModel>();
         }
     }
 }

@@ -6,6 +6,8 @@ namespace SdvCode.Services.AllCategories
     using System.Collections.Generic;
     using System.Linq;
 
+    using AutoMapper;
+
     using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Data;
@@ -16,44 +18,24 @@ namespace SdvCode.Services.AllCategories
     public class AllCategoriesService : IAllCategoriesService
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
 
-        public AllCategoriesService(ApplicationDbContext db)
+        public AllCategoriesService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
-        public ICollection<AllCategoriesViewModel> GetAllBlogCategories()
+        public ICollection<AllCategoriesCategoryViewModel> GetAllBlogCategories()
         {
-            return this.db.Categories
+            var categories = this.db.Categories
                 .Include(x => x.Posts)
                 .ThenInclude(x => x.ApplicationUser)
                 .OrderBy(x => x.Name)
-                .Select(x => new AllCategoriesViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    CreatedOn = x.CreatedOn,
-                    UpdatedOn = x.UpdatedOn,
-                    ApprovedPostsCount = x.Posts.Count(y => y.PostStatus == PostStatus.Approved),
-                    PendingPostsCount = x.Posts.Count(y => y.PostStatus == PostStatus.Pending),
-                    BannedPostsCount = x.Posts.Count(y => y.PostStatus == PostStatus.Banned),
-                    Posts = x.Posts
-                        .Where(y => y.PostStatus == PostStatus.Approved)
-                        .OrderBy(z => z.CreatedOn)
-                        .Take(10)
-                        .Select(m => new PostViewModel
-                        {
-                            Id = m.Id,
-                            ImageUrl = m.ImageUrl,
-                            Title = m.Title,
-                            CreatedOn = m.CreatedOn,
-                            UpdatedOn = m.UpdatedOn,
-                            //ApplicationUser = m.ApplicationUser,
-                        })
-                        .ToList(),
-                })
                 .ToList();
+
+            var model = this.mapper.Map<List<AllCategoriesCategoryViewModel>>(categories);
+            return model;
         }
     }
 }

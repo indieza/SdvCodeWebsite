@@ -10,7 +10,7 @@ namespace SdvCode.ViewModels.AllCategories.ViewModels
 
     using SdvCode.DataViewModels.Blog;
 
-    public class AllCategoriesViewModel
+    public class AllCategoriesCategoryViewModel
     {
         public string Id { get; set; }
 
@@ -28,6 +28,6 @@ namespace SdvCode.ViewModels.AllCategories.ViewModels
 
         public int ApprovedPostsCount { get; set; }
 
-        public ICollection<PostViewModel> Posts { get; set; } = new HashSet<PostViewModel>();
+        public ICollection<AllCategoriesPostViewModel> Posts { get; set; } = new HashSet<AllCategoriesPostViewModel>();
     }
 }

@@ -9,6 +9,6 @@ namespace SdvCode.Services.AllCategories
 
     public interface IAllCategoriesService
     {
-        ICollection<AllCategoriesViewModel> GetAllBlogCategories();
+        ICollection<AllCategoriesCategoryViewModel> GetAllBlogCategories();
     }
 }

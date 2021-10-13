@@ -4,9 +4,11 @@
 namespace SdvCode.Services.Post
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
+
+    using AutoMapper;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SignalR;
@@ -16,30 +18,30 @@ namespace SdvCode.Services.Post
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Hubs;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public class PostService : IPostService
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly INotificationService notificationService;
+        private readonly IMapper mapper;
         private readonly AddCyclicActivity cyclicActivity;
 
         public PostService(
             ApplicationDbContext db,
-            UserManager<ApplicationUser> userManager,
             IHubContext<NotificationHub> notificationHubContext,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IMapper mapper)
         {
             this.db = db;
-            this.userManager = userManager;
             this.notificationHubContext = notificationHubContext;
             this.notificationService = notificationService;
+            this.mapper = mapper;
             this.cyclicActivity = new AddCyclicActivity(this.db);
         }
 
@@ -90,100 +92,24 @@ namespace SdvCode.Services.Post
             return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
-        public async Task<PostViewModel> ExtractCurrentPost(string id, ApplicationUser user)
+        public async Task<PostViewModel> ExtractCurrentPost(string postId, ApplicationUser user)
         {
-            var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == id);
+            var post = await this.db.Posts
+                .Include(x => x.Category)
+                .Include(x => x.ApplicationUser)
+                .Include(x => x.PostLikes.Where(x => x.IsLiked))
+                .ThenInclude(x => x.ApplicationUser)
+                .Include(x => x.PostImages)
+                .Include(x => x.Comments
+                    .Where(x => (x.CommentStatus == CommentStatus.Pending && x.ApplicationUserId == user.Id) ||
+                                 x.CommentStatus == CommentStatus.Approved)
+                    .OrderBy(x => x.CreatedOn).AsQueryable())
+                .Include(x => x.PostsTags)
+                .ThenInclude(x => x.Tag)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(x => x.Id == postId);
 
-            if (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
-                await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString()))
-            {
-                post.Comments = this.db.Comments.Where(x => x.PostId == post.Id).OrderBy(x => x.CreatedOn).ToList();
-            }
-            else
-            {
-                var targetComments = this.db.Comments
-                    .Where(x => x.PostId == post.Id)
-                    .OrderBy(x => x.CreatedOn)
-                    .ToList();
-                List<Comment> comments = new List<Comment>();
-
-                foreach (var comment in targetComments)
-                {
-                    if (comment.CommentStatus == CommentStatus.Pending && comment.ApplicationUserId == user.Id)
-                    {
-                        comments.Add(comment);
-                    }
-                    else
-                    {
-                        if (comment.CommentStatus == CommentStatus.Approved)
-                        {
-                            comments.Add(comment);
-                        }
-                    }
-                }
-
-                post.Comments = comments;
-            }
-
-            foreach (var comment in post.Comments)
-            {
-                comment.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == comment.ApplicationUserId);
-            }
-
-            post.PostsTags = this.db.PostsTags.Where(x => x.PostId == post.Id).ToList();
-            PostViewModel model = new PostViewModel
-            {
-                Id = post.Id,
-                Title = post.Title,
-                Likes = post.Likes,
-                Content = post.Content,
-                CreatedOn = post.CreatedOn,
-                UpdatedOn = post.UpdatedOn,
-                //Comments = post.Comments,
-                ImageUrl = post.ImageUrl,
-                IsLiked = this.db.PostsLikes.Any(x => x.PostId == id && x.UserId == user.Id && x.IsLiked == true),
-                IsAuthor = post.ApplicationUserId == user.Id,
-                IsFavourite = this.db.FavouritePosts.Any(x => x.ApplicationUserId == user.Id && x.PostId == post.Id && x.IsFavourite == true),
-                PostStatus = post.PostStatus,
-            };
-
-            //model.ApplicationUser = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
-            //model.Category = this.db.Categories.FirstOrDefault(x => x.Id == post.CategoryId);
-
-            foreach (var tag in post.PostsTags)
-            {
-                var curretnTag = this.db.Tags.FirstOrDefault(x => x.Id == tag.TagId);
-                //model.Tags.Add(new Tag
-                //{
-                //    Id = curretnTag.Id,
-                //    CreatedOn = curretnTag.CreatedOn,
-                //    Name = curretnTag.Name,
-                //});
-            }
-
-            var usersIds = this.db.PostsLikes
-                .Where(x => x.PostId == post.Id && x.IsLiked == true)
-                .Select(x => x.UserId)
-                .ToList();
-            foreach (var userId in usersIds)
-            {
-                //model.Likers.Add(this.db.Users.FirstOrDefault(x => x.Id == userId));
-            }
-
-            var allPostImages = this.db.PostImages
-                    .Where(x => x.PostId == post.Id)
-                    .OrderBy(x => x.Name)
-                    .ToList();
-            foreach (var postImage in allPostImages)
-            {
-                model.PostImages.Add(new PostImageViewModel
-                {
-                    Id = postImage.Id,
-                    Name = postImage.Name,
-                    Url = postImage.Url,
-                });
-            }
-
+            var model = this.mapper.Map<PostViewModel>(post);
             return model;
         }
 

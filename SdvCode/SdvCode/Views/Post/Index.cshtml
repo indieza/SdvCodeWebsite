@@ -11,7 +11,7 @@
             return;
         }
 
-        @foreach (var comment in comments)
+        @foreach (PostCommentViewModel comment in comments)
         {
             <div class="comment">
                 <img class="comment-avatar pull-left" alt="avatar" src=@comment.ApplicationUser.ImageUrl>

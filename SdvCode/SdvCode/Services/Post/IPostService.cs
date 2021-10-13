@@ -6,14 +6,14 @@ namespace SdvCode.Services.Post
     using System;
     using System.Threading.Tasks;
 
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Post.ViewModels;
 
     public interface IPostService
     {
         Task<Tuple<string, string>> LikePost(string id, ApplicationUser user);
 
-        Task<PostViewModel> ExtractCurrentPost(string id, ApplicationUser user);
+        Task<PostViewModel> ExtractCurrentPost(string postId, ApplicationUser user);
 
         Task<Tuple<string, string>> UnlikePost(string id, ApplicationUser user);
 

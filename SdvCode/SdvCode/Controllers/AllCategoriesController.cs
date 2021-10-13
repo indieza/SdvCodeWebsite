@@ -32,7 +32,7 @@ namespace SdvCode.Controllers
         public IActionResult Index(int? page)
         {
             var pageNumber = page ?? 1;
-            IEnumerable<AllCategoriesViewModel> model = this.allCategoriesService.GetAllBlogCategories();
+            IEnumerable<AllCategoriesCategoryViewModel> model = this.allCategoriesService.GetAllBlogCategories();
 
             return this.View(model.ToPagedList(pageNumber, GlobalConstants.BlogCategoriesOnPage));
         }

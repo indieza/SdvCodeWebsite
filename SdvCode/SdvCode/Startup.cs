@@ -330,6 +330,10 @@ namespace SdvCode
             {
                 cfg.AddProfile(new PostProfile(provider.GetService<IHttpContextAccessor>()));
                 cfg.AddProfile(new UserProfile(provider.GetService<ApplicationDbContext>()));
+                cfg.AddProfile(new CategoryProfile());
+                cfg.AddProfile(new CommentProfile());
+                cfg.AddProfile(new PostImageProfile());
+                cfg.AddProfile(new PostTagProfile());
             }).CreateMapper());
 
             // Add Blazor Session and Local Storages
