@@ -372,6 +372,7 @@ namespace SdvCode.Services.Blog
                     .Include(x => x.Comments)
                     .Include(x => x.FavouritePosts)
                     .Include(x => x.PostLikes)
+                    .AsSplitQuery()
                     .Where(filterFunction)
                     .OrderByDescending(x => x.UpdatedOn)
                     .ToList();
@@ -384,6 +385,7 @@ namespace SdvCode.Services.Blog
                     .Include(x => x.Comments)
                     .Include(x => x.FavouritePosts)
                     .Include(x => x.PostLikes)
+                    .AsSplitQuery()
                     .Where(x => EF.Functions.FreeText(x.Title, search) ||
                     EF.Functions.FreeText(x.ShortContent, search) ||
                     EF.Functions.FreeText(x.Content, search))
