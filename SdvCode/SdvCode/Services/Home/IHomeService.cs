@@ -3,7 +3,6 @@
 
 namespace SdvCode.Services.Home
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 

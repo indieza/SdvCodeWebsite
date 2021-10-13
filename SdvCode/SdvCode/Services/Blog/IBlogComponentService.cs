@@ -3,12 +3,8 @@
 
 namespace SdvCode.Services.Blog
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
-
-    using Microsoft.AspNetCore.Http;
 
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels;

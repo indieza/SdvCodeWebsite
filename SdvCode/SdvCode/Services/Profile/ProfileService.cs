@@ -8,10 +8,7 @@ namespace SdvCode.Services.Profile
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Razor.Language.Intermediate;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +19,6 @@ namespace SdvCode.Services.Profile
     using SdvCode.Hubs;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class ProfileService : AddCyclicActivity, IProfileService

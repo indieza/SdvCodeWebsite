@@ -14,9 +14,10 @@ namespace SdvCode.AutoMapperProfiles
     using Microsoft.AspNetCore.Http;
 
     using SdvCode.Models.Blog;
+    using SdvCode.Models.User;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Category;
     using SdvCode.ViewModels.Comment.ViewModels;
-    using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Tag;
 
     public class PostProfile : Profile
@@ -28,14 +29,12 @@ namespace SdvCode.AutoMapperProfiles
             this.httpContextAccessor = httpContextAccessor;
             var userId = this.httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            this.CreateMap<Category, CategoryViewModel>();
-            this.CreateMap<FavouritePost, FavouritePostViewModel>();
-            this.CreateMap<PendingPost, PendingPostViewModel>();
-            this.CreateMap<BlockedPost, BlockedPostViewModel>();
-            this.CreateMap<PostLike, PostLikeViewModel>();
-            this.CreateMap<Comment, CommentViewModel>();
-            this.CreateMap<PostImage, PostImageViewModel>();
-            this.CreateMap<Post, PostViewModel>()
+            this.CreateMap<Category, BlogPostCardCategoryViewModel>();
+            this.CreateMap<ApplicationUser, BlogPostCardLikerViewModel>();
+            this.CreateMap<Post, BlogPostCardViewModel>()
+                .ForMember(
+                    dm => dm.CommentsCount,
+                    mo => mo.MapFrom(x => x.Comments.Count))
                 .ForMember(
                     dm => dm.IsLiked,
                     mo => mo.MapFrom(x => userId != null && x.PostLikes.Any(y => y.UserId == userId && y.IsLiked)))

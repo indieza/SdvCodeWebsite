@@ -4,19 +4,23 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+
     using Moq;
+
     using SdvCode.Controllers;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Services.Category;
     using SdvCode.Services.Tag;
-    using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Tag;
+
     using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
+
     using Xunit;
 
     public class TagIndexTests

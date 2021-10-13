@@ -3,14 +3,9 @@
 
 namespace SdvCode.Services.Profile
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
-
-    using SdvCode.Models.Enums;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public interface IProfileService

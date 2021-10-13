@@ -3,17 +3,15 @@
 
 namespace SdvCode.Services.AllCategories
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Data;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.ViewModels.AllCategories.ViewModels;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public class AllCategoriesService : IAllCategoriesService
     {

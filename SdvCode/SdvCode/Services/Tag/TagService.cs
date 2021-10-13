@@ -3,21 +3,20 @@
 
 namespace SdvCode.Services.Tag
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Hosting.Internal;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public class TagService : GlobalPostsExtractor, ITagService
     {

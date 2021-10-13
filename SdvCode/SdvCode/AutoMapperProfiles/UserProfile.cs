@@ -15,6 +15,7 @@ namespace SdvCode.AutoMapperProfiles
 
     using SdvCode.Data;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class UserProfile : Profile
@@ -25,12 +26,7 @@ namespace SdvCode.AutoMapperProfiles
         {
             this.db = db;
 
-            this.CreateMap<ZipCode, ZipCodeViewModel>();
-            this.CreateMap<CountryCode, CountryCodeViewModel>();
-            this.CreateMap<State, StateViewModel>();
-            this.CreateMap<City, CityViewModel>();
-            this.CreateMap<Country, CountryViewModel>();
-            this.CreateMap<ApplicationUser, ApplicationUserViewModel>();
+            this.CreateMap<ApplicationUser, BlogPostCardApplicationUserViewModel>();
         }
     }
 }

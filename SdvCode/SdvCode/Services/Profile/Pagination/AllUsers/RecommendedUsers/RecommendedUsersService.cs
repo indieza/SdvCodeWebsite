@@ -3,11 +3,12 @@
 
 namespace SdvCode.Services.Profile.Pagination.AllUsers.RecommendedUsers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Users.ViewModels;

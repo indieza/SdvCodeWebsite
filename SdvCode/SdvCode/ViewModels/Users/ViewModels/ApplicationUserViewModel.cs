@@ -9,11 +9,11 @@ namespace SdvCode.ViewModels.Users.ViewModels
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Areas.UserNotifications.Models;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Comment.ViewModels;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public class ApplicationUserViewModel
     {

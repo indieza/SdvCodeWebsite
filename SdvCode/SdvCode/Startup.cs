@@ -325,7 +325,7 @@ namespace SdvCode
             // Register OfficeOpenXml License
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-			// Setup AutoMapper Profiles Configurations
+            // Setup AutoMapper Profiles Configurations
             services.AddScoped(provider => new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new PostProfile(provider.GetService<IHttpContextAccessor>()));

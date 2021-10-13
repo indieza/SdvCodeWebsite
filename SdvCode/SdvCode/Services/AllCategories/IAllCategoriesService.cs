@@ -3,10 +3,8 @@
 
 namespace SdvCode.Services.AllCategories
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+
     using SdvCode.ViewModels.AllCategories.ViewModels;
 
     public interface IAllCategoriesService

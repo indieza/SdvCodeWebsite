@@ -7,8 +7,9 @@ namespace SdvCode.ViewModels.UserPosts
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public class UserPostsViewModel
     {

@@ -3,10 +3,9 @@
 
 namespace SdvCode.Services.Profile.Pagination.AllUsers.AllAdministrators
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.ViewModels.Users.ViewModels;
 
     public interface IAllAdministratorsService

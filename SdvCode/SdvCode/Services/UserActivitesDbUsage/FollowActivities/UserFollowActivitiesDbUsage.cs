@@ -4,6 +4,7 @@
 namespace SdvCode.Services.UserActivitesDbUsage.FollowActivities
 {
     using System.Linq;
+
     using SdvCode.Data;
     using SdvCode.Models.Enums;
 

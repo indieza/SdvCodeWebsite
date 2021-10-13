@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.ViewModels.Post.ViewModels
+namespace SdvCode.DataViewModels.Blog
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
     using SdvCode.ViewModels.Users.ViewModels;
 
-    public class FavouritePostViewModel
+    public class PendingPostViewModel
     {
         public string PostId { get; set; }
 
@@ -20,6 +20,6 @@ namespace SdvCode.ViewModels.Post.ViewModels
 
         public ApplicationUserViewModel ApplicationUser { get; set; }
 
-        public bool IsFavourite { get; set; }
+        public bool IsPending { get; set; }
     }
 }

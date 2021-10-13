@@ -8,7 +8,6 @@ namespace SdvCode.Services.Post
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
@@ -17,11 +16,11 @@ namespace SdvCode.Services.Post
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Constraints;
     using SdvCode.Data;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Hubs;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public class PostService : IPostService
     {

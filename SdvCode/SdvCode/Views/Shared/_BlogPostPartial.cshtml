@@ -1,4 +1,4 @@
-﻿@model PostViewModel
+﻿@model BlogPostCardViewModel
 
 <div class="post">
     <div class="post-image-wrapper">
@@ -99,12 +99,12 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <a>
-                            <i class="fa fa-comment-o"></i> @Model.Comments.Count
+                            <i class="fa fa-comment-o"></i> @Model.CommentsCount
                         </a>
                     }
                     else
                     {
-                        <h><i class="fa fa-comment-o"></i> @Model.Comments.Count comments</h>
+                        <h><i class="fa fa-comment-o"></i> @Model.CommentsCount comments</h>
                     }
                 </div>
                 <div class="post-meta-hits" style="display: inline-block">

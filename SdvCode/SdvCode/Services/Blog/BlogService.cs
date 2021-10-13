@@ -5,20 +5,15 @@ namespace SdvCode.Services.Blog
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using System.Xml;
 
     using AutoMapper;
 
     using CloudinaryDotNet;
 
-    using Ganss.XSS;
-
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
@@ -33,9 +28,8 @@ namespace SdvCode.Services.Blog
     using SdvCode.Models.User;
     using SdvCode.Services.Cloud;
     using SdvCode.ViewModels.Blog.InputModels;
-    using SdvCode.ViewModels.Blog.ViewModels;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Post.InputModels;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public class BlogService : IBlogService
     {
@@ -326,6 +320,7 @@ namespace SdvCode.Services.Blog
             return await this.db.Tags.Select(x => x.Name).OrderBy(x => x).ToListAsync();
         }
 
+        // TODO
         public async Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user)
         {
             return await this.db.Posts
@@ -343,7 +338,7 @@ namespace SdvCode.Services.Blog
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<ICollection<PostViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, int skipCount)
+        public async Task<ICollection<BlogPostCardViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, int skipCount)
         {
             var posts = new List<Post>();
             Expression<Func<Post, bool>> filterFunction;
@@ -396,7 +391,7 @@ namespace SdvCode.Services.Blog
                     .ToList();
             }
 
-            var postsModel = this.mapper.Map<List<PostViewModel>>(posts);
+            var postsModel = this.mapper.Map<List<BlogPostCardViewModel>>(posts);
             return postsModel;
         }
 

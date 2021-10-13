@@ -8,9 +8,9 @@ namespace SdvCode.ViewModels.Comment.ViewModels
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class CommentViewModel

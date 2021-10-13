@@ -13,9 +13,9 @@ namespace SdvCode.Controllers
     using SdvCode.ApplicationAttributes.ActionAttributes.Blog;
     using SdvCode.ApplicationAttributes.ActionAttributes.Blog.Post;
     using SdvCode.Constraints;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.User;
     using SdvCode.Services.Post;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public class PostController : Controller
     {

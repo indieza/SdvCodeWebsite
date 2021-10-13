@@ -12,7 +12,6 @@
     using SdvCode.Models.User;
     using SdvCode.Services.Blog;
     using SdvCode.ViewModels.Blog.ViewModels;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     using System;
     using System.Collections.Generic;

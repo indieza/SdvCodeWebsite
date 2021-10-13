@@ -8,11 +8,11 @@
     using Moq;
 
     using SdvCode.Controllers;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Services.Category;
     using SdvCode.ViewModels.Category;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     using System;
     using System.Collections.Generic;

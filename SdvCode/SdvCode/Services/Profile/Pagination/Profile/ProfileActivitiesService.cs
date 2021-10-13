@@ -3,11 +3,12 @@
 
 namespace SdvCode.Services.Profile.Pagination.Profile
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
+
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;

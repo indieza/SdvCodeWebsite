@@ -8,7 +8,7 @@ namespace SdvCode.ViewModels.AllCategories.ViewModels
     using System.Linq;
     using System.Threading.Tasks;
 
-    using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.DataViewModels.Blog;
 
     public class AllCategoriesViewModel
     {

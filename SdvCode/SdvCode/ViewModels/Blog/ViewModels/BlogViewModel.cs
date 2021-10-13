@@ -7,13 +7,14 @@ namespace SdvCode.ViewModels.Blog.ViewModels
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.Models.Blog;
-    using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
 
     public class BlogViewModel
     {
         public string Search { get; set; }
 
-        public IEnumerable<PostViewModel> Posts { get; set; } = new HashSet<PostViewModel>();
+        public IEnumerable<BlogPostCardViewModel> Posts { get; set; } = new HashSet<BlogPostCardViewModel>();
     }
 }

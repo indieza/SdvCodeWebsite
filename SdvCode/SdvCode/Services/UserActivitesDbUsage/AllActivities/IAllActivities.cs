@@ -3,11 +3,6 @@
 
 namespace SdvCode.Services.UserActivitesDbUsage.AllActivities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     public interface IAllActivities
     {
         void DeleteAllActivites();

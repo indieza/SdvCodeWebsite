@@ -11,10 +11,10 @@ namespace SdvCode.Constraints
     using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Data;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public class GlobalPostsExtractor
     {

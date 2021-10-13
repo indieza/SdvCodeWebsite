@@ -8,10 +8,10 @@
     using Moq;
 
     using SdvCode.Controllers;
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.UserPosts;
-    using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.UserPosts;
 
     using System;

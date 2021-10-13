@@ -3,12 +3,7 @@
 
 namespace SdvCode.Services.RecommendedFriends
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
-
-    using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Data;
     using SdvCode.Models.User;

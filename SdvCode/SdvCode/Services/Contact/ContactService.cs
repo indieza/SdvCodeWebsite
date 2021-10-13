@@ -4,8 +4,11 @@
 namespace SdvCode.Services.Contact
 {
     using System.Threading.Tasks;
+
     using Microsoft.Extensions.Configuration;
+
     using SdvCode.ViewModels.Contacts;
+
     using SendGrid;
     using SendGrid.Helpers.Mail;
 

@@ -3,10 +3,9 @@
 
 namespace SdvCode.Services.Profile.Pagination.Profile
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.ViewModels.Profile;
 
     public interface IProfileActivitiesService

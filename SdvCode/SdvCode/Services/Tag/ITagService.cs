@@ -3,14 +3,12 @@
 
 namespace SdvCode.Services.Tag
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
+
+    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
-    using SdvCode.ViewModels.Post.ViewModels;
 
     public interface ITagService
     {
