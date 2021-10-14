@@ -42,7 +42,7 @@ namespace SdvCode.DataViewModels.Blog
 
         public string CategoryId { get; set; }
 
-        public CategoryViewModel Category { get; set; }
+        //public CategoryViewModel Category { get; set; }
 
         public ICollection<CommentViewModel> Comments { get; set; } = new HashSet<CommentViewModel>();
 

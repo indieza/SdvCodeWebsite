@@ -318,22 +318,17 @@ namespace SdvCode.Services.Blog
             return await this.db.Tags.Select(x => x.Name).OrderBy(x => x).ToListAsync();
         }
 
-        // TODO
         public async Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user)
         {
-            return await this.db.Posts
+            var post = await this.db.Posts
                 .Include(x => x.Category)
                 .Include(x => x.PostsTags)
                 .ThenInclude(x => x.Tag)
-                .Select(x => new EditPostInputModel
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    CategoryName = x.Category.Name,
-                    Content = x.Content,
-                    TagsNames = x.PostsTags.Select(y => y.Tag.Name).ToList(),
-                })
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            var model = this.mapper.Map<EditPostInputModel>(post);
+            return model;
         }
 
         public async Task<ICollection<BlogPostCardViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, int skipCount)

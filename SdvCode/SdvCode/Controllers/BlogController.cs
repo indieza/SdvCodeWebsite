@@ -109,6 +109,7 @@ namespace SdvCode.Controllers
         }
 
         [HttpGet]
+        [Route("/Blog/EditPost/{id}")]
         [Authorize]
         [UserBlocked("Index", "Profile")]
         [PostCrudOperations("Index", "Blog", null, ErrorMessages.NoPermissionToEditBlogPost)]
@@ -139,7 +140,7 @@ namespace SdvCode.Controllers
                 var currentUser = await this.userManager.GetUserAsync(this.User);
                 var tuple = await this.blogService.EditPost(model, currentUser);
                 this.TempData[tuple.Item1] = tuple.Item2;
-                return this.RedirectToAction("Index", "Post", new { model.Id });
+                return this.RedirectToAction("Index", "Post", new { postId = model.Id });
             }
 
             this.TempData["Error"] = ErrorMessages.InvalidInputModel;

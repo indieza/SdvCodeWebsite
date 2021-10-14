@@ -1,15 +1,12 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.ViewModels.Category
+namespace SdvCode.ViewModels.Category.ViewModels.CategoryPage
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using SdvCode.DataViewModels.Blog;
-    using SdvCode.Models.Blog;
 
     public class CategoryViewModel
     {
@@ -22,10 +19,5 @@ namespace SdvCode.ViewModels.Category
         public DateTime UpdatedOn { get; set; }
 
         public string Description { get; set; }
-
-        // TODO
-        public Category Category { get; set; }
-
-        public IEnumerable<PostViewModel> Posts { get; set; } = new HashSet<PostViewModel>();
     }
 }

@@ -16,10 +16,11 @@
 
         @if ((User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || Model.IsAuthor == true) && Model.ApplicationUser.IsBlocked == false)
         {
-            <a asp-area="" asp-controller="Blog" asp-action="EditPost" asp-route-id="@Model.Id" class="btn btn-info"><i class="fas fa-edit"></i> Edit Post</a>
+            <a asp-area="" asp-controller="Blog" asp-action="EditPost" asp-route-id="@Model.Id" class="btn btn-info">
+                <i class="fas fa-edit"></i> Edit Post
+            </a>
             <a class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">
-                <i class="fas fa-trash-alt"></i>
-                Delete Post
+                <i class="fas fa-trash-alt"></i> Delete Post
             </a>
         }
 

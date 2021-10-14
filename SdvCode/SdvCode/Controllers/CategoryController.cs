@@ -16,6 +16,7 @@ namespace SdvCode.Controllers
     using SdvCode.Models.User;
     using SdvCode.Services.Category;
     using SdvCode.ViewModels.Category;
+    using SdvCode.ViewModels.Category.ViewModels.CategoryPage;
 
     using X.PagedList;
 
@@ -39,7 +40,7 @@ namespace SdvCode.Controllers
             var pageNumber = page ?? 1;
             var posts = await this.categoryService.ExtractPostsByCategoryId(id, currentUser);
 
-            CategoryViewModel model = new CategoryViewModel
+            CategoryPageViewModel model = new CategoryPageViewModel
             {
                 Category = await this.categoryService.ExtractCategoryById(id),
                 Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),

@@ -16,6 +16,7 @@ namespace SdvCode.AutoMapperProfiles
     using SdvCode.ViewModels.Blog.ViewModels;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Category.ViewModels;
+    using SdvCode.ViewModels.Category.ViewModels.CategoryPage;
     using SdvCode.ViewModels.Category.ViewModels.TopCategory;
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels.PostPage;
@@ -42,6 +43,8 @@ namespace SdvCode.AutoMapperProfiles
                 .ForMember(
                     dm => dm.PostsCount,
                     mo => mo.MapFrom(x => x.Posts.Count(x => x.PostStatus == PostStatus.Approved)));
+
+            this.CreateMap<Category, CategoryViewModel>();
         }
     }
 }
