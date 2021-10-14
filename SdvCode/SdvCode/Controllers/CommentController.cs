@@ -62,8 +62,7 @@ namespace SdvCode.Controllers
 
                 var currentUser = await this.userManager.GetUserAsync(this.User);
 
-                Post currentPost = await this.commentsService.ExtractCurrentPost(input.PostId);
-                if (currentPost.PostStatus == PostStatus.Banned || currentPost.PostStatus == PostStatus.Pending)
+                if (await this.commentsService.IsPostApproved(input.PostId))
                 {
                     this.TempData["Error"] = ErrorMessages.CannotCommentNotApprovedBlogPost;
                     return this.RedirectToAction("Index", "Post", new { postId = input.PostId });
@@ -105,7 +104,7 @@ namespace SdvCode.Controllers
                 return this.RedirectToAction("Index", "Post", new { postId });
             }
 
-            EditCommentViewModel model = await this.commentsService.ExtractCurrentComment(commentId);
+            EditCommentInputModel model = await this.commentsService.GetCommentById(commentId);
 
             return this.View(model);
         }
@@ -114,7 +113,7 @@ namespace SdvCode.Controllers
         [Route("/Comment/EditComment/{commentId}/{postId}")]
         [UserBlocked("Index", "Profile")]
         [CommentCrudOperations("Index", "Blog", null, ErrorMessages.NoPermissionToEditComment)]
-        public async Task<IActionResult> EditComment(string commentId, string postId, EditCommentViewModel model)
+        public async Task<IActionResult> EditComment(string commentId, string postId, EditCommentInputModel model)
         {
             if (this.ModelState.IsValid)
             {

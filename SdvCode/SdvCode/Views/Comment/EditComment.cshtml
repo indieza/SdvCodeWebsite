@@ -2,7 +2,7 @@
     ViewData["Title"] = "Edit Comment";
 }
 
-@model EditCommentViewModel
+@model EditCommentInputModel
 
 <div id="banner-area">
     <img src="~/images/banner/banner2.jpg" alt="" />
@@ -27,12 +27,12 @@
         <form asp-area=""
               asp-controller="Comment"
               asp-action="EditComment"
-              asp-route-commentId="@Model.CommentId"
+              asp-route-commentId="@Model.Id"
               asp-route-postId="@Model.PostId"
               method="post">
-            <input type="hidden" name="PostId" value="@Model.PostId" />
-            <input type="hidden" name="CommentId" value="@Model.CommentId" />
-            <input type="hidden" name="ParentId" value=@Model.ParentId />
+            <input type="hidden" asp-for="@Model.PostId" />
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.ParentCommentId" />
             <div class="row">
                 <h3>Edit a comment</h3>
             </div>

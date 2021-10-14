@@ -50,7 +50,7 @@ namespace SdvCode.Controllers
         [HttpGet]
         public IActionResult GetLatestBlogPosts()
         {
-            ICollection<LatestPostViewModel> latestPosts = this.homeService.GetLatestPosts();
+            ICollection<HomeLatestPostViewModel> latestPosts = this.homeService.GetLatestPosts();
             return new JsonResult(latestPosts);
         }
 

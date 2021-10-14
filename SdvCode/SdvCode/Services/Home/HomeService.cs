@@ -8,6 +8,8 @@ namespace SdvCode.Services.Home
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
@@ -22,13 +24,16 @@ namespace SdvCode.Services.Home
     {
         private readonly ApplicationDbContext db;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly IMapper mapper;
 
         public HomeService(
             ApplicationDbContext db,
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager,
+            IMapper mapper)
         {
             this.db = db;
             this.roleManager = roleManager;
+            this.mapper = mapper;
         }
 
         public async Task<IdentityResult> CreateRole(string role)
@@ -44,60 +49,46 @@ namespace SdvCode.Services.Home
             return result;
         }
 
-        public async Task<ICollection<ApplicationUser>> GetAllAdministrators()
+        public async Task<ICollection<HomeAdministratorUserViewModel>> GetAllAdministrators()
         {
             var role = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
             var administratorsIds = this.db.UserRoles.Where(x => x.RoleId == role.Id).Select(x => x.UserId).ToList();
             var users = this.db.Users.Where(x => administratorsIds.Contains(x.Id)).ToList();
-            return users;
+            var model = this.mapper.Map<List<HomeAdministratorUserViewModel>>(users);
+            return model;
         }
 
         public async Task<ICollection<string>> GetHolidayThemeIcons()
         {
-            var themeId = await this.db.HolidayThemes
+            var theme = await this.db.HolidayThemes
+                .Include(x => x.HolidayIcons)
                 .Where(x => x.IsActive)
-                .Select(x => x.Id)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync();
 
             var result = new List<string>();
 
-            if (themeId != null)
+            if (theme != null)
             {
-                result.AddRange(this.db.HolidayIcons
-                    .Where(x => x.HolidayThemeId == themeId)
-                    .Select(x => x.Url)
-                    .ToList());
+                result.AddRange(theme.HolidayIcons.Select(x => x.Url).ToList());
             }
 
             return result;
         }
 
-        public ICollection<LatestPostViewModel> GetLatestPosts()
+        public ICollection<HomeLatestPostViewModel> GetLatestPosts()
         {
-            var result = new List<LatestPostViewModel>();
-            var targetPosts = this.db.Posts
+            var posts = this.db.Posts
                 .Include(x => x.Category)
                 .Include(x => x.ApplicationUser)
+                .AsSplitQuery()
                 .Where(x => x.PostStatus == PostStatus.Approved)
                 .OrderByDescending(x => x.CreatedOn)
                 .Take(GlobalConstants.LatestLayoutPostsCount)
                 .ToList();
 
-            foreach (var targetPost in targetPosts)
-            {
-                result.Add(new LatestPostViewModel
-                {
-                    Id = targetPost.Id,
-                    CreatedOn = targetPost.CreatedOn,
-                    Title = targetPost.Title,
-                    ImageUrl = targetPost.ImageUrl,
-                    CategoryId = targetPost.CategoryId,
-                    CategoryName = targetPost.Category.Name,
-                    CreatorUsername = targetPost.ApplicationUser.UserName,
-                });
-            }
-
-            return result;
+            var model = this.mapper.Map<List<HomeLatestPostViewModel>>(posts);
+            return model;
         }
 
         public int GetPorductsCount()

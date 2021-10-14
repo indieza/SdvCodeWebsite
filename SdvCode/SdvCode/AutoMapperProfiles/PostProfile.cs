@@ -19,6 +19,7 @@ namespace SdvCode.AutoMapperProfiles
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Category;
     using SdvCode.ViewModels.Comment.ViewModels;
+    using SdvCode.ViewModels.Home;
     using SdvCode.ViewModels.Post.InputModels;
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels.PostPage;
@@ -74,6 +75,14 @@ namespace SdvCode.AutoMapperProfiles
             this.CreateMap<Post, RecentPostViewModel>();
 
             this.CreateMap<Post, EditPostInputModel>()
+                .ForMember(
+                    dm => dm.CategoryName,
+                    mo => mo.MapFrom(x => x.Category.Name));
+
+            this.CreateMap<Post, HomeLatestPostViewModel>()
+                .ForMember(
+                    dm => dm.AuthorUsername,
+                    mo => mo.MapFrom(x => x.ApplicationUser.UserName))
                 .ForMember(
                     dm => dm.CategoryName,
                     mo => mo.MapFrom(x => x.Category.Name));

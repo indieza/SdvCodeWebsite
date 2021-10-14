@@ -8,7 +8,7 @@ namespace SdvCode.ViewModels.Home
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class LatestPostViewModel
+    public class HomeLatestPostViewModel
     {
         public string Id { get; set; }
 
@@ -16,7 +16,7 @@ namespace SdvCode.ViewModels.Home
 
         public string ImageUrl { get; set; }
 
-        public string CreatorUsername { get; set; }
+        public string AuthorUsername { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

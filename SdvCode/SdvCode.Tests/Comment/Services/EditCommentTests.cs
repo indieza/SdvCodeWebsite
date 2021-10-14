@@ -4,7 +4,9 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+
     using Moq;
+
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
@@ -12,11 +14,13 @@
     using SdvCode.Models.User;
     using SdvCode.Services.Comment;
     using SdvCode.ViewModels.Comment.ViewModels;
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
     using Xunit;
 
     public class EditCommentTests
@@ -24,25 +28,25 @@
         [Fact]
         public async Task EditCommentNullComment()
         {
-            EditCommentViewModel model = new EditCommentViewModel
-            {
-                CommentId = Guid.NewGuid().ToString(),
-                Content = "Test",
-            };
+            //EditCommentInputModel model = new EditCommentInputModel
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    Content = "Test",
+            //};
 
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            //var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            //    .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
-            var mockUserManager = new Mock<UserManager<ApplicationUser>>(
-                    new Mock<IUserStore<ApplicationUser>>().Object,
-                    new Mock<IOptions<IdentityOptions>>().Object,
-                    new Mock<IPasswordHasher<ApplicationUser>>().Object,
-                    new IUserValidator<ApplicationUser>[0],
-                    new IPasswordValidator<ApplicationUser>[0],
-                    new Mock<ILookupNormalizer>().Object,
-                    new Mock<IdentityErrorDescriber>().Object,
-                    new Mock<IServiceProvider>().Object,
-                    new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
+            //var mockUserManager = new Mock<UserManager<ApplicationUser>>(
+            //        new Mock<IUserStore<ApplicationUser>>().Object,
+            //        new Mock<IOptions<IdentityOptions>>().Object,
+            //        new Mock<IPasswordHasher<ApplicationUser>>().Object,
+            //        new IUserValidator<ApplicationUser>[0],
+            //        new IPasswordValidator<ApplicationUser>[0],
+            //        new Mock<ILookupNormalizer>().Object,
+            //        new Mock<IdentityErrorDescriber>().Object,
+            //        new Mock<IServiceProvider>().Object,
+            //        new Mock<ILogger<UserManager<ApplicationUser>>>().Object);
 
             //using (var db = new ApplicationDbContext(options))
             //{
@@ -65,11 +69,11 @@
                 Content = "Test1",
                 CreatedOn = DateTime.UtcNow,
             };
-            EditCommentViewModel model = new EditCommentViewModel
-            {
-                CommentId = comment.Id,
-                Content = "Test",
-            };
+            //EditCommentInputModel model = new EditCommentInputModel
+            //{
+            //    Id = comment.Id,
+            //    Content = "Test",
+            //};
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;

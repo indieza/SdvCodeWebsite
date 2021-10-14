@@ -4,6 +4,7 @@
 namespace SdvCode.ViewModels.Home
 {
     using System.Collections.Generic;
+
     using SdvCode.Models.User;
 
     public class HomeViewModel
@@ -14,6 +15,6 @@ namespace SdvCode.ViewModels.Home
 
         public int TotalShopProducts { get; set; }
 
-        public ICollection<ApplicationUser> Administrators { get; set; } = new HashSet<ApplicationUser>();
+        public ICollection<HomeAdministratorUserViewModel> Administrators { get; set; } = new HashSet<HomeAdministratorUserViewModel>();
     }
 }

@@ -13,6 +13,8 @@ namespace SdvCode.AutoMapperProfiles
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using SdvCode.Models.Blog;
+    using SdvCode.ViewModels.Comment.InputModels;
+    using SdvCode.ViewModels.Comment.ViewModels;
     using SdvCode.ViewModels.Comment.ViewModels.RecentComment;
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels.PostPage;
@@ -23,6 +25,7 @@ namespace SdvCode.AutoMapperProfiles
         {
             this.CreateMap<Comment, PostCommentViewModel>();
             this.CreateMap<Comment, RecentCommentViewModel>();
+            this.CreateMap<Comment, EditCommentInputModel>();
         }
     }
 }

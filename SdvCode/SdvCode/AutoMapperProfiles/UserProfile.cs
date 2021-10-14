@@ -17,6 +17,7 @@ namespace SdvCode.AutoMapperProfiles
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Comment.ViewModels.RecentComment;
+    using SdvCode.ViewModels.Home;
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels.PostPage;
     using SdvCode.ViewModels.Post.ViewModels.RecentPost;
@@ -38,6 +39,7 @@ namespace SdvCode.AutoMapperProfiles
             this.CreateMap<ApplicationUser, TopPostApplicationUserViewMdoel>();
             this.CreateMap<ApplicationUser, RecentPostApplicationUserViewModel>();
             this.CreateMap<ApplicationUser, RecentCommentApplicationUserViewModel>();
+            this.CreateMap<ApplicationUser, HomeAdministratorUserViewModel>();
         }
     }
 }

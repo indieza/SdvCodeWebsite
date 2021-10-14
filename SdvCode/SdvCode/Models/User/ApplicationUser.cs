@@ -85,36 +85,36 @@ namespace SdvCode.Models.User
         [MaxLength(ModelConstraints.ApplicationUserReasonToBeBlockedMaxLength)]
         public string ReasonToBeBlocked { get; set; }
 
-        public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
+        public virtual ICollection<UserAction> UserActions { get; set; }
 
-        public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+        public virtual ICollection<Post> Posts { get; set; }
 
-        public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+        public virtual ICollection<Comment> Comments { get; set; }
 
-        public ICollection<PostLike> PostLikes { get; set; } = new HashSet<PostLike>();
+        public virtual ICollection<PostLike> PostLikes { get; set; }
 
-        public ICollection<FavouritePost> FavouritePosts { get; set; } = new HashSet<FavouritePost>();
+        public virtual ICollection<FavouritePost> FavouritePosts { get; set; }
 
-        public ICollection<PendingPost> PendingPosts { get; set; } = new HashSet<PendingPost>();
+        public virtual ICollection<PendingPost> PendingPosts { get; set; }
 
-        public ICollection<BlockedPost> BlockedPosts { get; set; } = new HashSet<BlockedPost>();
+        public virtual ICollection<BlockedPost> BlockedPosts { get; set; }
 
-        public ICollection<UserGroup> UsersGroups { get; set; } = new HashSet<UserGroup>();
+        public virtual ICollection<UserGroup> UsersGroups { get; set; }
 
-        public ICollection<ChatMessage> ChatMessages { get; set; } = new HashSet<ChatMessage>();
+        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
 
-        public ICollection<ChatImage> ChatImages { get; set; } = new HashSet<ChatImage>();
+        public virtual ICollection<ChatImage> ChatImages { get; set; }
 
-        public ICollection<RecommendedFriend> RecommendedFriends { get; set; } = new HashSet<RecommendedFriend>();
+        public virtual ICollection<RecommendedFriend> RecommendedFriends { get; set; }
 
-        public ICollection<ProductComment> ProductComments { get; set; } = new HashSet<ProductComment>();
+        public virtual ICollection<ProductComment> ProductComments { get; set; }
 
-        public ICollection<ProductReview> ProductReviews { get; set; } = new HashSet<ProductReview>();
+        public virtual ICollection<ProductReview> ProductReviews { get; set; }
 
-        public ICollection<UserNotification> UserNotifications { get; set; } = new HashSet<UserNotification>();
+        public virtual ICollection<UserNotification> UserNotifications { get; set; }
 
-        public ICollection<QuickChatReply> QuickChatReplies { get; set; } = new HashSet<QuickChatReply>();
+        public virtual ICollection<QuickChatReply> QuickChatReplies { get; set; }
 
-        public ICollection<FavouriteStickers> FavouriteStickers { get; set; } = new HashSet<FavouriteStickers>();
+        public virtual ICollection<FavouriteStickers> FavouriteStickers { get; set; }
     }
 }
