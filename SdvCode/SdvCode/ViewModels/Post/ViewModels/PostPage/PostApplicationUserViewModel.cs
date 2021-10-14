@@ -1,16 +1,14 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.ViewModels.Post.ViewModels
+namespace SdvCode.ViewModels.Post.ViewModels.PostPage
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using GiphyDotNet.Model.Parameters;
-
-    public class PostLikerViewModel
+    public class PostApplicationUserViewModel
     {
         public string Id { get; set; }
 
@@ -21,5 +19,9 @@ namespace SdvCode.ViewModels.Post.ViewModels
         public string LastName { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public string AboutMe { get; set; }
+
+        public bool IsBlocked { get; set; }
     }
 }

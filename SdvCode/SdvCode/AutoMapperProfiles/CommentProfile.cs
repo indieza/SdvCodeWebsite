@@ -13,13 +13,16 @@ namespace SdvCode.AutoMapperProfiles
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using SdvCode.Models.Blog;
+    using SdvCode.ViewModels.Comment.ViewModels.RecentComment;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels.PostPage;
 
     public class CommentProfile : Profile
     {
         public CommentProfile()
         {
             this.CreateMap<Comment, PostCommentViewModel>();
+            this.CreateMap<Comment, RecentCommentViewModel>();
         }
     }
 }

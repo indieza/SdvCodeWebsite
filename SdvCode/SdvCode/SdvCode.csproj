@@ -1920,6 +1920,7 @@
     <Folder Include="Areas\Editor\Models\" />
     <Folder Include="Areas\PrivateChat\ViewModels\CollectStickers\InputModels\" />
     <Folder Include="ViewModels\AllCategories\InputModels\" />
+    <Folder Include="ViewModels\Category\InputModels\" />
     <Folder Include="wwwroot\shop\img\blog\latest-post\" />
   </ItemGroup>
 

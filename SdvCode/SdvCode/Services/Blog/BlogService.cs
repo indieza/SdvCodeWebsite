@@ -40,7 +40,6 @@ namespace SdvCode.Services.Blog
         private readonly INotificationService notificationService;
         private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly IMapper mapper;
-        private readonly GlobalPostsExtractor postExtractor;
         private readonly AddCyclicActivity cyclicActivity;
         private readonly AddNonCyclicActivity nonCyclicActivity;
 
@@ -60,7 +59,6 @@ namespace SdvCode.Services.Blog
             this.notificationService = notificationService;
             this.notificationHubContext = notificationHubContext;
             this.mapper = mapper;
-            this.postExtractor = new GlobalPostsExtractor(this.db);
             this.cyclicActivity = new AddCyclicActivity(this.db);
             this.nonCyclicActivity = new AddNonCyclicActivity(this.db);
         }

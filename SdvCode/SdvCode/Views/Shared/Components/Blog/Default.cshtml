@@ -140,8 +140,8 @@
                         {
                             <li>
                                 <div class="posts-avator pull-left">
-                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.User.UserName">
-                                        <img alt="avatar" src=@comment.User.ImageUrl>
+                                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.ApplicationUser.UserName">
+                                        <img alt="avatar" src=@comment.ApplicationUser.ImageUrl>
                                     </a>
                                 </div>
                                 <div class="post-content">
@@ -159,8 +159,8 @@
                                         </span>
                                         <span class="post-meta-author">
                                             by
-                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.User.UserName">
-                                                @comment.User.UserName
+                                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@comment.ApplicationUser.UserName">
+                                                @comment.ApplicationUser.UserName
                                             </a>
                                         </span>
                                         <span class="post-meta-date">

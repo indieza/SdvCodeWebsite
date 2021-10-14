@@ -1,16 +1,16 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.ViewModels.Blog.ViewModels
+namespace SdvCode.ViewModels.Post.ViewModels.TopPost
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using SdvCode.Models.Enums;
-    using SdvCode.Models.User;
 
-    public class TopPostsViewModel
+    using SdvCode.Models.Enums;
+
+    public class TopPostViewModel
     {
         public string Id { get; set; }
 
@@ -22,6 +22,6 @@ namespace SdvCode.ViewModels.Blog.ViewModels
 
         public PostStatus PostStatus { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public TopPostApplicationUserViewMdoel ApplicationUser { get; set; }
     }
 }

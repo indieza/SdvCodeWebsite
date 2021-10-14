@@ -23,6 +23,7 @@ namespace SdvCode.Services.Post
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels.PostPage;
 
     public class PostService : IPostService
     {

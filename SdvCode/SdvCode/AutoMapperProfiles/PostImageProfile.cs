@@ -12,6 +12,7 @@ namespace SdvCode.AutoMapperProfiles
 
     using SdvCode.Models.Blog;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels.PostPage;
 
     public class PostImageProfile : Profile
     {

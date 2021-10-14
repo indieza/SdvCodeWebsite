@@ -20,6 +20,9 @@ namespace SdvCode.AutoMapperProfiles
     using SdvCode.ViewModels.Category;
     using SdvCode.ViewModels.Comment.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels.PostPage;
+    using SdvCode.ViewModels.Post.ViewModels.RecentPost;
+    using SdvCode.ViewModels.Post.ViewModels.TopPost;
     using SdvCode.ViewModels.Tag;
 
     public class PostProfile : Profile
@@ -66,6 +69,8 @@ namespace SdvCode.AutoMapperProfiles
                     mo => mo.MapFrom(x => x.PostsTags.Select(x => x.Tag).ToList()));
 
             this.CreateMap<Post, AllCategoriesPostViewModel>();
+            this.CreateMap<Post, TopPostViewModel>();
+            this.CreateMap<Post, RecentPostViewModel>();
         }
     }
 }

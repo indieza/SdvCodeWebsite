@@ -8,18 +8,26 @@ namespace SdvCode.ViewModels.Blog.ViewModels
     using System.Linq;
     using System.Threading.Tasks;
 
+    using SdvCode.ViewModels.Category.ViewModels;
+    using SdvCode.ViewModels.Category.ViewModels.TopCategory;
+    using SdvCode.ViewModels.Comment.ViewModels.RecentComment;
+    using SdvCode.ViewModels.Post.ViewModels.RecentPost;
+    using SdvCode.ViewModels.Post.ViewModels.TopPost;
+    using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Tag.TopTag;
+
     public class BlogComponentViewModel
     {
         public string Search { get; set; }
 
-        public ICollection<RecentPostsViewModel> RecentPosts { get; set; } = new HashSet<RecentPostsViewModel>();
+        public ICollection<RecentPostViewModel> RecentPosts { get; set; } = new HashSet<RecentPostViewModel>();
 
-        public ICollection<TopCategoriesViewModel> TopCategories { get; set; } = new HashSet<TopCategoriesViewModel>();
+        public ICollection<TopCategoryViewModel> TopCategories { get; set; } = new HashSet<TopCategoryViewModel>();
 
-        public ICollection<TopTagsViewModel> TopTags { get; set; } = new HashSet<TopTagsViewModel>();
+        public ICollection<TopTagViewModel> TopTags { get; set; } = new HashSet<TopTagViewModel>();
 
-        public ICollection<TopPostsViewModel> TopPosts { get; set; } = new HashSet<TopPostsViewModel>();
+        public ICollection<TopPostViewModel> TopPosts { get; set; } = new HashSet<TopPostViewModel>();
 
-        public ICollection<RecentCommentsViewModel> RecentComments { get; set; } = new HashSet<RecentCommentsViewModel>();
+        public ICollection<RecentCommentViewModel> RecentComments { get; set; } = new HashSet<RecentCommentViewModel>();
     }
 }

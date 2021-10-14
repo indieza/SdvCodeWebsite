@@ -16,6 +16,7 @@ namespace SdvCode.Controllers
     using SdvCode.Models.User;
     using SdvCode.Services.Post;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels.PostPage;
 
     public class PostController : Controller
     {

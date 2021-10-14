@@ -8,17 +8,24 @@ namespace SdvCode.Services.Blog
 
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels;
+    using SdvCode.ViewModels.Category.ViewModels;
+    using SdvCode.ViewModels.Category.ViewModels.TopCategory;
+    using SdvCode.ViewModels.Comment.ViewModels.RecentComment;
+    using SdvCode.ViewModels.Post.ViewModels.RecentPost;
+    using SdvCode.ViewModels.Post.ViewModels.TopPost;
+    using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Tag.TopTag;
 
     public interface IBlogComponentService
     {
-        List<TopCategoriesViewModel> ExtractTopCategories();
+        List<TopCategoryViewModel> ExtractTopCategories();
 
-        List<TopTagsViewModel> ExtractTopTags();
+        List<TopTagViewModel> ExtractTopTags();
 
-        Task<List<TopPostsViewModel>> ExtractTopPosts(ApplicationUser user);
+        Task<List<TopPostViewModel>> ExtractTopPosts(ApplicationUser user);
 
-        List<RecentPostsViewModel> ExtractRecentPosts(ApplicationUser user);
+        Task<List<RecentPostViewModel>> ExtractRecentPosts(ApplicationUser user);
 
-        Task<ICollection<RecentCommentsViewModel>> ExtractRecentComments(ApplicationUser currentUser);
+        Task<ICollection<RecentCommentViewModel>> ExtractRecentComments(ApplicationUser currentUser);
     }
 }

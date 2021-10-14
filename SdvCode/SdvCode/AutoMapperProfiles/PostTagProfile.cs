@@ -12,12 +12,20 @@ namespace SdvCode.AutoMapperProfiles
 
     using SdvCode.Models.Blog;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels.PostPage;
+    using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Tag.TopTag;
 
     public class PostTagProfile : Profile
     {
         public PostTagProfile()
         {
             this.CreateMap<Tag, PostTagViewModel>();
+
+            this.CreateMap<Tag, TopTagViewModel>()
+                .ForMember(
+                    dm => dm.Count,
+                    mo => mo.MapFrom(x => x.TagsPosts.Count));
         }
     }
 }

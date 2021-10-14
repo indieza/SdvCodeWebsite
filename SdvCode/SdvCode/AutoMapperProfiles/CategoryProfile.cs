@@ -13,8 +13,12 @@ namespace SdvCode.AutoMapperProfiles
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.ViewModels.AllCategories.ViewModels;
+    using SdvCode.ViewModels.Blog.ViewModels;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
+    using SdvCode.ViewModels.Category.ViewModels;
+    using SdvCode.ViewModels.Category.ViewModels.TopCategory;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels.PostPage;
 
     public class CategoryProfile : Profile
     {
@@ -22,6 +26,7 @@ namespace SdvCode.AutoMapperProfiles
         {
             this.CreateMap<Category, BlogPostCardCategoryViewModel>();
             this.CreateMap<Category, PostCategoryViewModel>();
+
             this.CreateMap<Category, AllCategoriesCategoryViewModel>()
                 .ForMember(
                     dm => dm.ApprovedPostsCount,
@@ -32,6 +37,11 @@ namespace SdvCode.AutoMapperProfiles
                 .ForMember(
                     dm => dm.PendingPostsCount,
                     mo => mo.MapFrom(x => x.Posts.Count(x => x.PostStatus == PostStatus.Pending)));
+
+            this.CreateMap<Category, TopCategoryViewModel>()
+                .ForMember(
+                    dm => dm.PostsCount,
+                    mo => mo.MapFrom(x => x.Posts.Count(x => x.PostStatus == PostStatus.Approved)));
         }
     }
 }

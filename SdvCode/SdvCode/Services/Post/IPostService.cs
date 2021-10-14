@@ -8,6 +8,7 @@ namespace SdvCode.Services.Post
 
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Post.ViewModels;
+    using SdvCode.ViewModels.Post.ViewModels.PostPage;
 
     public interface IPostService
     {
