@@ -19,7 +19,7 @@
             <a asp-area="" asp-controller="Blog" asp-action="EditPost" asp-route-id="@Model.Id" class="btn btn-info">
                 <i class="fas fa-edit"></i> Edit Post
             </a>
-            <a class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">
+            <a class="btn btn-danger" data-toggle="modal" data-target="#modal-@Model.Id">
                 <i class="fas fa-trash-alt"></i> Delete Post
             </a>
         }
@@ -171,7 +171,7 @@
         }
     </div>
 </div>
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-@Model.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

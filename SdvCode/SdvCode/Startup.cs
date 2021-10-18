@@ -331,7 +331,9 @@ namespace SdvCode
             services.AddScoped(provider => new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new PostProfile(provider.GetService<IHttpContextAccessor>()));
-                cfg.AddProfile(new UserProfile(provider.GetService<ApplicationDbContext>()));
+                cfg.AddProfile(new UserProfile(
+                    provider.GetService<ApplicationDbContext>(),
+                    provider.GetService<IHttpContextAccessor>()));
                 cfg.AddProfile(new CategoryProfile());
                 cfg.AddProfile(new CommentProfile());
                 cfg.AddProfile(new PostImageProfile());

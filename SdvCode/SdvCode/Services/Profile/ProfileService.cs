@@ -8,6 +8,8 @@ namespace SdvCode.Services.Profile
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
@@ -28,17 +30,20 @@ namespace SdvCode.Services.Profile
         private readonly IHubContext<NotificationHub> notificationHubContext;
         private readonly INotificationService notificationService;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly IMapper mapper;
 
         public ProfileService(
             ApplicationDbContext db,
             IHubContext<NotificationHub> notificationHubContext,
             INotificationService notificationService,
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager,
+            IMapper mapper)
             : base(db)
         {
             this.db = db;
             this.notificationHubContext = notificationHubContext;
             this.notificationService = notificationService;
+            this.mapper = mapper;
             this.roleManager = roleManager;
         }
 
@@ -60,42 +65,22 @@ namespace SdvCode.Services.Profile
 
         public async Task<ProfileApplicationUserViewModel> ExtractUserInfo(string username, ApplicationUser currentUser)
         {
-            var user = await this.db.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            var user = await this.db.Users
+                .Include(x => x.City)
+                .Include(x => x.CountryCode)
+                .Include(x => x.Country)
+                .Include(x => x.State)
+                .Include(x => x.ZipCode)
+                .Include(x => x.Comments.Where(y => y.CommentStatus == CommentStatus.Approved))
+                .Include(x => x.Posts.Where(y => y.PostStatus == PostStatus.Approved))
+                .Include(x => x.PostLikes)
+                .Include(x => x.UserActions)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(u => u.UserName == username);
             var group = new List<string>() { username, currentUser.UserName };
             var groupName = string.Join(GlobalConstants.ChatGroupNameSeparator, group.OrderBy(x => x));
 
-            var model = new ApplicationUserViewModel
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                RegisteredOn = user.RegisteredOn,
-                PhoneNumber = user.PhoneNumber,
-                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                Email = user.Email,
-                EmailConfirmed = user.EmailConfirmed,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                BirthDate = user.BirthDate,
-                Gender = user.Gender,
-                AboutMe = user.AboutMe,
-                ImageUrl = user.ImageUrl,
-                CoverImageUrl = user.CoverImageUrl,
-                IsBlocked = user.IsBlocked,
-                //State = this.db.States.FirstOrDefault(x => x.Id == user.StateId),
-                //Country = this.db.Countries.FirstOrDefault(x => x.Id == user.CountryId),
-                //City = this.db.Cities.FirstOrDefault(x => x.Id == user.CityId),
-                //ZipCode = this.db.ZipCodes.FirstOrDefault(x => x.Id == user.ZipCodeId),
-                //CountryCode = this.db.CountryCodes.FirstOrDefault(x => x.Id == user.CountryCodeId),
-                ActionsCount = this.db.UserActions.Count(x => x.ApplicationUserId == user.Id),
-                IsFollowed = this.db.FollowUnfollows
-                    .Any(x => x.FollowerId == currentUser.Id && x.PersonId == user.Id && x.IsFollowed == true),
-                GitHubUrl = user.GitHubUrl,
-                FacebookUrl = user.FacebookUrl,
-                InstagramUrl = user.InstagramUrl,
-                LinkedinUrl = user.LinkedinUrl,
-                TwitterUrl = user.TwitterUrl,
-                StackoverflowUrl = user.StackoverflowUrl,
-            };
+            var model = this.mapper.Map<ProfileApplicationUserViewModel>(user);
 
             var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
             var roles = this.db.Roles.Where(x => rolesIds.Contains(x.Id)).OrderBy(x => x.Name).ToList();
@@ -200,22 +185,6 @@ namespace SdvCode.Services.Profile
             });
 
             this.db.SaveChanges();
-        }
-
-        public async Task<int> TakeCreatedPostsCountByUsername(string username)
-        {
-            return await this.db.Posts.CountAsync(x => x.ApplicationUser.UserName == username);
-        }
-
-        public async Task<int> TakeLikedPostsCountByUsername(string username)
-        {
-            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
-            return await this.db.PostsLikes.CountAsync(x => x.UserId == user.Id && x.IsLiked == true);
-        }
-
-        public async Task<int> TakeCommentsCountByUsername(string username)
-        {
-            return await this.db.Comments.CountAsync(x => x.ApplicationUser.UserName == username);
         }
 
         public async Task<double> RateUser(ApplicationUser currentUser, string username, int rate)

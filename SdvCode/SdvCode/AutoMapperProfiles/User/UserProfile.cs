@@ -22,15 +22,20 @@ namespace SdvCode.AutoMapperProfiles.User
     using SdvCode.ViewModels.Post.ViewModels.PostPage;
     using SdvCode.ViewModels.Post.ViewModels.RecentPost;
     using SdvCode.ViewModels.Post.ViewModels.TopPost;
+    using SdvCode.ViewModels.Profile.UserProfile;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class UserProfile : Profile
     {
         private readonly ApplicationDbContext db;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UserProfile(ApplicationDbContext db)
+        public UserProfile(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             this.db = db;
+            this.httpContextAccessor = httpContextAccessor;
+
+            var userId = this.httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             this.CreateMap<ApplicationUser, BlogPostCardApplicationUserViewModel>();
             this.CreateMap<ApplicationUser, BlogPostCardLikerViewModel>();
@@ -40,6 +45,24 @@ namespace SdvCode.AutoMapperProfiles.User
             this.CreateMap<ApplicationUser, RecentPostApplicationUserViewModel>();
             this.CreateMap<ApplicationUser, RecentCommentApplicationUserViewModel>();
             this.CreateMap<ApplicationUser, HomeAdministratorUserViewModel>();
+
+            this.CreateMap<ApplicationUser, ProfileApplicationUserViewModel>()
+                .ForMember(
+                    dm => dm.IsFollowed,
+                    mo => mo.MapFrom(x => this.db.FollowUnfollows
+                        .Any(y => y.FollowerId == userId && y.PersonId == x.Id && y.IsFollowed == true)))
+                .ForMember(
+                    dm => dm.ActionsCount,
+                    mo => mo.MapFrom(x => x.UserActions.Count))
+                .ForMember(
+                    dm => dm.CreatedPosts,
+                    mo => mo.MapFrom(x => x.Posts.Count))
+                .ForMember(
+                    dm => dm.LikedPosts,
+                    mo => mo.MapFrom(x => x.PostLikes.Count))
+                .ForMember(
+                    dm => dm.CommentsCount,
+                    mo => mo.MapFrom(x => x.Comments.Count));
         }
     }
 }

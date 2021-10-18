@@ -27,12 +27,6 @@ namespace SdvCode.Services.Profile
 
         void MakeYourselfAdmin(string username);
 
-        Task<int> TakeCreatedPostsCountByUsername(string username);
-
-        Task<int> TakeLikedPostsCountByUsername(string username);
-
-        Task<int> TakeCommentsCountByUsername(string username);
-
         Task<double> RateUser(ApplicationUser currentUser, string username, int rate);
 
         double ExtractUserRatingScore(string username);

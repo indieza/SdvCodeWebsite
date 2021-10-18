@@ -59,19 +59,11 @@ namespace SdvCode.Controllers
             {
                 ApplicationUser = user,
                 HasAdmin = hasAdmin,
-                CreatedPosts = await this.profileService.TakeCreatedPostsCountByUsername(username),
-                LikedPosts = await this.profileService.TakeLikedPostsCountByUsername(username),
-                CommentsCount = await this.profileService.TakeCommentsCountByUsername(username),
                 RatingScore = this.profileService.ExtractUserRatingScore(username),
                 LatestScore = await this.profileService.GetLatestScore(currentUser, username),
+                ActiveTab = tab,
+                Page = pageNumber,
             };
-
-            // if (tab == 0)
-            // {
-            //    tab = ProfileTab.Activities;
-            // }
-            model.ActiveTab = tab;
-            model.Page = pageNumber;
 
             return this.View(model);
         }
