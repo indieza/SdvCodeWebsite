@@ -4,7 +4,9 @@
 namespace SdvCode.ViewModels.Pagination.Profile
 {
     using System.Collections.Generic;
+
     using SdvCode.ViewModels.Profile;
+    using SdvCode.ViewModels.Profile.UserViewComponents;
 
     public class BannedPostsPaginationViewModel
     {

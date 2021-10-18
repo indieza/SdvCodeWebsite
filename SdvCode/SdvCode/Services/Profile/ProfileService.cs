@@ -19,6 +19,7 @@ namespace SdvCode.Services.Profile
     using SdvCode.Hubs;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Profile.UserProfile;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class ProfileService : AddCyclicActivity, IProfileService
@@ -57,10 +58,11 @@ namespace SdvCode.Services.Profile
             return activityName;
         }
 
-        public async Task<ApplicationUserViewModel> ExtractUserInfo(string username, ApplicationUser currentUser)
+        public async Task<ProfileApplicationUserViewModel> ExtractUserInfo(string username, ApplicationUser currentUser)
         {
             var user = await this.db.Users.FirstOrDefaultAsync(u => u.UserName == username);
             var group = new List<string>() { username, currentUser.UserName };
+            var groupName = string.Join(GlobalConstants.ChatGroupNameSeparator, group.OrderBy(x => x));
 
             var model = new ApplicationUserViewModel
             {
@@ -93,7 +95,6 @@ namespace SdvCode.Services.Profile
                 LinkedinUrl = user.LinkedinUrl,
                 TwitterUrl = user.TwitterUrl,
                 StackoverflowUrl = user.StackoverflowUrl,
-                GroupName = string.Join(GlobalConstants.ChatGroupNameSeparator, group.OrderBy(x => x)),
             };
 
             var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();

@@ -14,6 +14,7 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
+    using SdvCode.ViewModels.Profile.UserViewComponents;
 
     public class ProfilePendingPostsService : IProfilePendingPostsService
     {

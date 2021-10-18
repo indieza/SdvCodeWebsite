@@ -6,11 +6,12 @@ namespace SdvCode.Services.Profile
     using System.Threading.Tasks;
 
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Profile.UserProfile;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public interface IProfileService
     {
-        Task<ApplicationUserViewModel> ExtractUserInfo(string username, ApplicationUser user);
+        Task<ProfileApplicationUserViewModel> ExtractUserInfo(string username, ApplicationUser user);
 
         Task<ApplicationUser> FollowUser(string username, ApplicationUser user);
 

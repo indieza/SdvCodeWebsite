@@ -48,7 +48,7 @@ namespace SdvCode.Controllers
             }
 
             var currentUser = await this.userManager.GetUserAsync(this.User);
-            ApplicationUserViewModel user = await this.profileService.ExtractUserInfo(username, currentUser);
+            var user = await this.profileService.ExtractUserInfo(username, currentUser);
 
             var adminRole = await this.roleManager.FindByNameAsync(Roles.Administrator.ToString());
             bool hasAdmin = await this.profileService.HasAdmin(adminRole);

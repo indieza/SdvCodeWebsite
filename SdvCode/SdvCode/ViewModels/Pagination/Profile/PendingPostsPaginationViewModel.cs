@@ -7,8 +7,10 @@ namespace SdvCode.ViewModels.Pagination.Profile
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.ViewComponents;
     using SdvCode.ViewModels.Profile;
+    using SdvCode.ViewModels.Profile.UserViewComponents;
 
     public class PendingPostsPaginationViewModel
     {

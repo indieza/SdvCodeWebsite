@@ -85,6 +85,8 @@ namespace SdvCode
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Areas.UserNotifications.Services.NotificationDbUsage;
     using SdvCode.AutoMapperProfiles;
+    using SdvCode.AutoMapperProfiles.Blog;
+    using SdvCode.AutoMapperProfiles.User;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -334,6 +336,11 @@ namespace SdvCode
                 cfg.AddProfile(new CommentProfile());
                 cfg.AddProfile(new PostImageProfile());
                 cfg.AddProfile(new PostTagProfile());
+                cfg.AddProfile(new CountryCodeProfile());
+                cfg.AddProfile(new CountryProfile());
+                cfg.AddProfile(new StateProfile());
+                cfg.AddProfile(new CityProfile());
+                cfg.AddProfile(new ZipCodeProfile());
             }).CreateMapper());
 
             // Add Blazor Session and Local Storages

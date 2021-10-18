@@ -12,6 +12,7 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     using SdvCode.Data;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
+    using SdvCode.ViewModels.Profile.UserViewComponents;
 
     public class ProfileFavoritesService : IProfileFavoritesService
     {

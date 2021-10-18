@@ -7,6 +7,7 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     using System.Threading.Tasks;
 
     using SdvCode.ViewModels.Profile;
+    using SdvCode.ViewModels.Profile.UserViewComponents;
 
     public interface IProfileActivitiesService
     {

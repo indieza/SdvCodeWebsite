@@ -5,23 +5,18 @@ namespace SdvCode.ViewModels.Profile
 {
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Profile.UserProfile;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class ProfileViewModel
     {
         public ProfileTab ActiveTab { get; set; }
 
-        public ApplicationUserViewModel ApplicationUser { get; set; }
+        public ProfileApplicationUserViewModel ApplicationUser { get; set; }
 
         public bool HasAdmin { get; set; }
 
         public int Page { get; set; }
-
-        public int CreatedPosts { get; set; }
-
-        public int LikedPosts { get; set; }
-
-        public int CommentsCount { get; set; }
 
         public double RatingScore { get; set; }
 

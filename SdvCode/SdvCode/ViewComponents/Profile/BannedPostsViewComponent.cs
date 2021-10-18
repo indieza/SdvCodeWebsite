@@ -7,8 +7,10 @@ namespace SdvCode.ViewComponents.Profile
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using SdvCode.Constraints;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile.Pagination;
@@ -16,6 +18,8 @@ namespace SdvCode.ViewComponents.Profile
     using SdvCode.ViewModels.Pagination;
     using SdvCode.ViewModels.Pagination.Profile;
     using SdvCode.ViewModels.Profile;
+    using SdvCode.ViewModels.Profile.UserViewComponents;
+
     using X.PagedList;
 
     public class BannedPostsViewComponent : ViewComponent
