@@ -11,6 +11,6 @@ namespace SdvCode.ViewModels.Pagination.AllUsers
 
     public class RecommendedUsersPaginationViewModel
     {
-        public IEnumerable<UserCardViewModel> AllUsers { get; set; } = new HashSet<UserCardViewModel>();
+        public IEnumerable<AllUsersUserCardViewModel> AllUsers { get; set; } = new HashSet<AllUsersUserCardViewModel>();
     }
 }

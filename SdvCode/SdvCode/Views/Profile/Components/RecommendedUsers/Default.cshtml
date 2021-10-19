@@ -15,19 +15,19 @@
 
                 <div class="user">
                     <img src=@user.ImageUrl>
-                    <div class='status-circle' id="@(user.Username)allUsersStatus">
-                        <input type="hidden" value="@user.Username" />
+                    <div class='status-circle' id="@(user.UserName)allUsersStatus">
+                        <input type="hidden" value="@user.UserName" />
                         @*Here go the dot status*@
                     </div>
                     <p>@user.FirstName @user.LastName</p>
-                    <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" class="allUsersUsername">@@@user.Username</a></p>
-                    @if (User.Identity.Name == user.Username)
+                    <p><a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.UserName" class="allUsersUsername">@@@user.UserName</a></p>
+                    @if (User.Identity.Name == user.UserName)
                     {
                         <div class="col-xs-6">
                             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-info btn-block"><i class="fas fa-edit"></i> Edit Profile</a>
                         </div>
                         <div class="col-xs-6">
-                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" type="button" class="btn btn-warning btn-block"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
+                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.UserName" type="button" class="btn btn-warning btn-block"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
                         </div>
                     }
                     else
@@ -36,15 +36,15 @@
                             @if (user.HasFollowed == true)
                             {
 
-                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@user.Username" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
+                                <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@user.UserName" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
                             }
                             else
                             {
-                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@user.Username" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
+                                <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@user.UserName" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
                             }
                         </div>
                         <div class="col-xs-6">
-                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.Username" type="button" class="btn btn-info btn-block"><i class="fas fa-user"></i> <span>View Profile</span></a>
+                            <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@user.UserName" type="button" class="btn btn-info btn-block"><i class="fas fa-user"></i> <span>View Profile</span></a>
                         </div>
                     }
                 </div>

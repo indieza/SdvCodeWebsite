@@ -28,7 +28,7 @@ namespace SdvCode.ViewComponents.AllUsers
 
         public async Task<IViewComponentResult> InvokeAsync(string username, int page, string search)
         {
-            List<UserCardViewModel> allActivities = await this.bannedUsersService.ExtractAllUsers(username, search);
+            List<AllUsersUserCardViewModel> allActivities = await this.bannedUsersService.ExtractAllUsers(username, search);
 
             BannedUsersPaginationViewModel model = new BannedUsersPaginationViewModel
             {

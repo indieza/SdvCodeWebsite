@@ -72,6 +72,21 @@ namespace SdvCode.AutoMapperProfiles.User
 
             this.CreateMap<ApplicationUser, ActivitiesApplicationUserViewModel>();
             this.CreateMap<ApplicationUser, BlogComponentApplicationUserViewModel>();
+
+            this.CreateMap<ApplicationUser, AllUsersUserCardViewModel>()
+                .ForMember(
+                    dm => dm.Activities,
+                    mo => mo.MapFrom(x => x.UserActions.Count))
+                .ForMember(
+                    dm => dm.FollowersCount,
+                    mo => mo.MapFrom(x => this.db.FollowUnfollows.Count(y => y.PersonId == x.Id && y.IsFollowed == true)))
+                .ForMember(
+                    dm => dm.FollowingsCount,
+                    mo => mo.MapFrom(x => this.db.FollowUnfollows.Count(y => y.FollowerId == x.Id && y.IsFollowed == true)))
+                .ForMember(
+                    dm => dm.HasFollowed,
+                    mo => mo.MapFrom(x => this.db.FollowUnfollows
+                        .Any(y => y.FollowerId == userId && y.PersonId == x.Id && y.IsFollowed == true)));
         }
     }
 }

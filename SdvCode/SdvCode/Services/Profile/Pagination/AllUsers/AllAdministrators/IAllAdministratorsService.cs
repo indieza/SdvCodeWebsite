@@ -10,6 +10,6 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.AllAdministrators
 
     public interface IAllAdministratorsService
     {
-        Task<List<UserCardViewModel>> ExtractAllUsers(string username, string search);
+        Task<List<AllUsersUserCardViewModel>> ExtractAllUsers(string username, string search);
     }
 }

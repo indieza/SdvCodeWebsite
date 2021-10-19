@@ -22,9 +22,9 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.RecommendedUsers
             this.db = db;
         }
 
-        public async Task<List<UserCardViewModel>> ExtractAllUsers(string username, string search)
+        public async Task<List<AllUsersUserCardViewModel>> ExtractAllUsers(string username, string search)
         {
-            List<UserCardViewModel> allUsers = new List<UserCardViewModel>();
+            List<AllUsersUserCardViewModel> allUsers = new List<AllUsersUserCardViewModel>();
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
             var targetUsers = new List<RecommendedFriend>();
@@ -48,10 +48,10 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.RecommendedUsers
             foreach (var targetUser in targetUsers)
             {
                 var recommendedUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == targetUser.RecommendedUsername);
-                allUsers.Add(new UserCardViewModel
+                allUsers.Add(new AllUsersUserCardViewModel
                 {
-                    UserId = recommendedUser.Id,
-                    Username = targetUser.RecommendedUsername,
+                    Id = recommendedUser.Id,
+                    UserName = targetUser.RecommendedUsername,
                     FirstName = targetUser.RecommendedFirstName,
                     LastName = targetUser.RecommendedLastName,
                     ImageUrl = targetUser.RecommendedImageUrl,
@@ -62,16 +62,16 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.RecommendedUsers
             foreach (var targetUser in allUsers)
             {
                 targetUser.FollowingsCount = await this.db.FollowUnfollows
-                    .CountAsync(x => x.FollowerId == targetUser.UserId && x.IsFollowed == true);
+                    .CountAsync(x => x.FollowerId == targetUser.Id && x.IsFollowed == true);
 
                 targetUser.FollowersCount = await this.db.FollowUnfollows
-                    .CountAsync(x => x.PersonId == targetUser.UserId && x.IsFollowed == true);
+                    .CountAsync(x => x.PersonId == targetUser.Id && x.IsFollowed == true);
 
                 targetUser.HasFollowed = await this.db.FollowUnfollows
-                    .AnyAsync(x => x.FollowerId == user.Id && x.PersonId == targetUser.UserId && x.IsFollowed == true);
+                    .AnyAsync(x => x.FollowerId == user.Id && x.PersonId == targetUser.Id && x.IsFollowed == true);
 
                 targetUser.Activities = await this.db.UserActions
-                    .CountAsync(x => x.ApplicationUserId == targetUser.UserId);
+                    .CountAsync(x => x.ApplicationUserId == targetUser.Id);
             }
 
             return allUsers;

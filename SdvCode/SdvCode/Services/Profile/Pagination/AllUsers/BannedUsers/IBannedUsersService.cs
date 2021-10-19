@@ -10,6 +10,6 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.BannedUsers
 
     public interface IBannedUsersService
     {
-        Task<List<UserCardViewModel>> ExtractAllUsers(string username, string search);
+        Task<List<AllUsersUserCardViewModel>> ExtractAllUsers(string username, string search);
     }
 }

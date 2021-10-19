@@ -10,6 +10,6 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.RecommendedUsers
 
     public interface IRecommendedUsersService
     {
-        Task<List<UserCardViewModel>> ExtractAllUsers(string username, string search);
+        Task<List<AllUsersUserCardViewModel>> ExtractAllUsers(string username, string search);
     }
 }

@@ -3,9 +3,13 @@
 
 namespace SdvCode.Services.Profile.Pagination.AllUsers.AllUsersTab
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
+
+    using AutoMapper;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -16,61 +20,41 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.AllUsersTab
     public class AllUsersService : IAllUsersService
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
 
-        public AllUsersService(ApplicationDbContext db)
+        public AllUsersService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
-        public async Task<List<UserCardViewModel>> ExtractAllUsers(string username, string search)
+        public async Task<List<AllUsersUserCardViewModel>> ExtractAllUsers(string username, string search)
         {
-            List<UserCardViewModel> allUsers = new List<UserCardViewModel>();
+            Expression<Func<ApplicationUser, bool>> usersFilter;
             var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
             var targetUsers = new List<ApplicationUser>();
 
             if (search == null)
             {
-                targetUsers = await this.db.Users.ToListAsync();
+                usersFilter = x => !x.IsBlocked;
             }
             else
             {
-                targetUsers = await this.db.Users
-                     .Where(x => EF.Functions.FreeText(x.UserName, search) ||
-                     EF.Functions.FreeText(x.FirstName, search) ||
-                     EF.Functions.FreeText(x.LastName, search))
-                     .ToListAsync();
+                usersFilter = x => (EF.Functions.FreeText(x.UserName, search) ||
+                      EF.Functions.FreeText(x.FirstName, search) ||
+                      EF.Functions.FreeText(x.LastName, search)) && !x.IsBlocked;
             }
 
-            foreach (var targetUser in targetUsers)
-            {
-                allUsers.Add(new UserCardViewModel
-                {
-                    UserId = targetUser.Id,
-                    Username = targetUser.UserName,
-                    FirstName = targetUser.FirstName,
-                    LastName = targetUser.LastName,
-                    ImageUrl = targetUser.ImageUrl,
-                    CoverImageUrl = targetUser.CoverImageUrl,
-                });
-            }
+            var users = this.db.Users
+                .Where(usersFilter)
+                .Include(x => x.UserRoles)
+                .Include(x => x.UserActions)
+                .AsSplitQuery()
+                .ToList();
 
-            foreach (var targetUser in allUsers)
-            {
-                targetUser.FollowingsCount = await this.db.FollowUnfollows
-                    .CountAsync(x => x.FollowerId == targetUser.UserId && x.IsFollowed == true);
-
-                targetUser.FollowersCount = await this.db.FollowUnfollows
-                    .CountAsync(x => x.PersonId == targetUser.UserId && x.IsFollowed == true);
-
-                targetUser.HasFollowed = await this.db.FollowUnfollows
-                    .AnyAsync(x => x.FollowerId == user.Id && x.PersonId == targetUser.UserId && x.IsFollowed == true);
-
-                targetUser.Activities = await this.db.UserActions
-                    .CountAsync(x => x.ApplicationUserId == targetUser.UserId);
-            }
-
-            return allUsers;
+            var model = this.mapper.Map<List<AllUsersUserCardViewModel>>(users);
+            return model;
         }
     }
 }

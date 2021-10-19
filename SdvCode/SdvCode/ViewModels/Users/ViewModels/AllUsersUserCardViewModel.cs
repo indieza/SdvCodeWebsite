@@ -3,11 +3,11 @@
 
 namespace SdvCode.ViewModels.Users.ViewModels
 {
-    public class UserCardViewModel
+    public class AllUsersUserCardViewModel
     {
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         public string FirstName { get; set; }
 

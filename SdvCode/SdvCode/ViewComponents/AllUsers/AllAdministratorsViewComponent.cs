@@ -26,7 +26,7 @@ namespace SdvCode.ViewComponents.AllUsers
 
         public async Task<IViewComponentResult> InvokeAsync(string username, int page, string search)
         {
-            List<UserCardViewModel> allUsers = await this.allAdministratorsService.ExtractAllUsers(username, search);
+            List<AllUsersUserCardViewModel> allUsers = await this.allAdministratorsService.ExtractAllUsers(username, search);
 
             AllAdministratorsPaginationViewModel model = new AllAdministratorsPaginationViewModel
             {

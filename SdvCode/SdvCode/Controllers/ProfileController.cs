@@ -87,9 +87,11 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", new { username = user.UserName, tab = tabEnum, page });
         }
 
-        public IActionResult SwitchToAllUsersTabs(string tab)
+        [HttpGet]
+        [Route("/Profile/SwitchToAllUsersTabs/{tab}/{page}")]
+        public IActionResult SwitchToAllUsersTabs(string tab, int page)
         {
-            var vm = tab switch
+            var tabEnum = tab switch
             {
                 "AllUsers" => AllUsersTab.AllUsers,
                 "RecommendedUsers" => AllUsersTab.RecommendedUsers,
@@ -98,7 +100,7 @@ namespace SdvCode.Controllers
                 _ => AllUsersTab.AllUsers,
             };
 
-            return this.RedirectToAction("Users", new { tab = vm });
+            return this.RedirectToAction("Users", new { tab = tabEnum, page });
         }
 
         [HttpPost]
