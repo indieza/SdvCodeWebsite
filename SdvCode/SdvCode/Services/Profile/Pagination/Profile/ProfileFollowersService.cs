@@ -13,6 +13,7 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.ActivitiesComponent;
 
     public class ProfileFollowersService : IProfileFollowersService
     {

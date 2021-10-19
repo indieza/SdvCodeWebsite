@@ -7,6 +7,7 @@ namespace SdvCode.ViewModels.Pagination.Profile
 
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.ActivitiesComponent;
 
     public class ActivitiesPaginationViewModel
     {

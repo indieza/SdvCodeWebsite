@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.ViewModels.Profile.UserViewComponents
+namespace SdvCode.ViewModels.Profile.UserViewComponents.ActivitiesComponent
 {
     using System;
     using System.Collections.Generic;
@@ -16,9 +16,7 @@ namespace SdvCode.ViewModels.Profile.UserViewComponents
     {
         public string Id { get; set; }
 
-        public string ApplicationUserId { get; set; }
-
-        public ApplicationUser ApplicationUser { get; set; }
+        public ActivitiesApplicationUserViewModel ApplicationUser { get; set; }
 
         public UserActionsType Action { get; set; }
 

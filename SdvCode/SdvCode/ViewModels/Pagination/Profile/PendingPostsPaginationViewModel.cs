@@ -11,11 +11,12 @@ namespace SdvCode.ViewModels.Pagination.Profile
     using SdvCode.ViewComponents;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
     public class PendingPostsPaginationViewModel
     {
         public string Username { get; set; }
 
-        public IEnumerable<PendingPostsViewModel> PendingPosts { get; set; } = new HashSet<PendingPostsViewModel>();
+        public IEnumerable<PendingPostViewModel> PendingPosts { get; set; } = new HashSet<PendingPostViewModel>();
     }
 }

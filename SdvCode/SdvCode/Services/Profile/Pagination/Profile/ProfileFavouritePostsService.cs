@@ -14,37 +14,36 @@ namespace SdvCode.Services.Profile.Pagination.Profile
 
     using SdvCode.Data;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Post.ViewModels.TopPost;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
-    using SdvCode.ViewModels.Profile.UserViewComponents.ActivitiesComponent;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
-    public class ProfileActivitiesService : IProfileActivitiesService
+    public class ProfileFavouritePostsService : IProfileFavoritesService
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IMapper mapper;
 
-        public ProfileActivitiesService(
+        public ProfileFavouritePostsService(
             ApplicationDbContext db,
-            UserManager<ApplicationUser> userManager,
             IMapper mapper)
         {
             this.db = db;
-            this.userManager = userManager;
             this.mapper = mapper;
         }
 
-        public async Task<List<ActivitiesViewModel>> ExtractActivities(string username)
+        public List<FavouritePostViewModel> ExtractFavorites(ApplicationUser user, ApplicationUser currentUser)
         {
-            var user = await this.userManager.FindByNameAsync(username);
-            var activities = this.db.UserActions
-                .Where(x => x.ApplicationUserId == user.Id)
+            var favorites = this.db.FavouritePosts
+                .Where(x => x.ApplicationUserId == user.Id && x.IsFavourite == true)
+                .Include(x => x.Post)
+                .ThenInclude(x => x.Category)
                 .Include(x => x.ApplicationUser)
-                .OrderByDescending(x => x.ActionDate)
+                .OrderByDescending(x => x.Post.CreatedOn)
                 .AsSplitQuery()
                 .ToList();
 
-            var model = this.mapper.Map<List<ActivitiesViewModel>>(activities);
+            var model = this.mapper.Map<List<FavouritePostViewModel>>(favorites);
             return model;
         }
     }

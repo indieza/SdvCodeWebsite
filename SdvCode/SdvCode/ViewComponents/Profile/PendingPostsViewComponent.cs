@@ -19,6 +19,7 @@ namespace SdvCode.ViewComponents.Profile
     using SdvCode.ViewModels.Pagination.Profile;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
     using X.PagedList;
 
@@ -37,7 +38,7 @@ namespace SdvCode.ViewComponents.Profile
         {
             var user = await this.userManager.FindByNameAsync(username);
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            List<PendingPostsViewModel> allPendingPosts = await this.pendingPostsService.ExtractPendingPosts(user, currentUserId);
+            List<PendingPostViewModel> allPendingPosts = await this.pendingPostsService.ExtractPendingPosts(user, currentUserId);
 
             PendingPostsPaginationViewModel model = new PendingPostsPaginationViewModel
             {

@@ -9,9 +9,10 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
     public interface IProfilePendingPostsService
     {
-        Task<List<PendingPostsViewModel>> ExtractPendingPosts(ApplicationUser user, string currentUserId);
+        Task<List<PendingPostViewModel>> ExtractPendingPosts(ApplicationUser user, string currentUserId);
     }
 }

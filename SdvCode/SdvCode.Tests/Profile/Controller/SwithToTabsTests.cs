@@ -4,16 +4,20 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+
     using Moq;
+
     using SdvCode.Controllers;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.Profile;
+
     using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
+
     using Xunit;
 
     public class SwithToTabsTests
@@ -47,7 +51,7 @@
 
             var controller =
                 new ProfileController(mockUserManager.Object, roleManagerMock.Object, mockService.Object);
-            var result = (RedirectToActionResult)await controller.SwitchToAllActivitiesTabs("indieza", "Activities");
+            var result = (RedirectToActionResult)await controller.SwitchToAllActivitiesTabs("indieza", "Activities", 1);
 
             Assert.Equal("Index", result.ActionName);
             Assert.Equal(2, result.RouteValues.Count);

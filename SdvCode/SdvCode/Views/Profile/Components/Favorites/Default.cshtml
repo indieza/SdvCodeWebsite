@@ -4,9 +4,9 @@
 {
     <div class="media activity-item">
         <div class="activity-attachment">
-            @if (post.IsFavorite)
+            @if (post.IsFavourite)
             {
-                <form asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-postId="@post.PostId" method="post">
+                <form asp-area="" asp-controller="Post" asp-action="RemoveFromFavorite" asp-route-postId="@post.Id" method="post">
                     <button type="submit" class="btn btn-sm btn-danger" style="float: right">
                         <i class="fas fa-eraser"></i>
                         <span>
@@ -17,7 +17,7 @@
             }
             else
             {
-                <form asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-postId="@post.PostId" method="post">
+                <form asp-area="" asp-controller="Post" asp-action="AddToFavorite" asp-route-postId="@post.Id" method="post">
                     <button type="submit" class="btn btn-sm btn-success" style="float: right">
                         <i class="far fa-heart"></i>
                         <span>
@@ -27,13 +27,13 @@
                 </form>
             }
             <h4>
-                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId">
-                    @post.PostTitle
+                <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">
+                    @post.Title
                 </a>
             </h4>
             <small>@post.CreatedOn.ToString("dd-MMMM-yyyy")</small>
             <div class="well well-sm">
-                @Html.Raw(post.PostContent)
+                @Html.Raw(post.ShortContent)
             </div>
         </div>
     </div>

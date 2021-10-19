@@ -87,6 +87,7 @@ namespace SdvCode
     using SdvCode.AutoMapperProfiles;
     using SdvCode.AutoMapperProfiles.Blog;
     using SdvCode.AutoMapperProfiles.User;
+    using SdvCode.AutoMapperProfiles.ViewComponents;
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Hubs;
@@ -257,7 +258,7 @@ namespace SdvCode
             services.AddTransient<IProfileActivitiesService, ProfileActivitiesService>();
             services.AddTransient<IProfileFollowersService, ProfileFollowersService>();
             services.AddTransient<IProfileFollowingService, ProfileFollowingService>();
-            services.AddTransient<IProfileFavoritesService, ProfileFavoritesService>();
+            services.AddTransient<IProfileFavoritesService, ProfileFavouritePostsService>();
             services.AddTransient<IProfilePendingPostsService, ProfilePendingPostsService>();
             services.AddTransient<IProfileBannedPostsService, ProfileBannedPostsService>();
             services.AddTransient<IAllUsersService, AllUsersService>();
@@ -344,6 +345,10 @@ namespace SdvCode
                 cfg.AddProfile(new StateProfile());
                 cfg.AddProfile(new CityProfile());
                 cfg.AddProfile(new ZipCodeProfile());
+                cfg.AddProfile(new UserActionProfile());
+                cfg.AddProfile(new BannedPostProfile());
+                cfg.AddProfile(new FavouritePostProfile());
+                cfg.AddProfile(new PendingPostProfile());
             }).CreateMapper());
 
             // Add Blazor Session and Local Storages

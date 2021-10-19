@@ -68,10 +68,12 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
-        public async Task<IActionResult> SwitchToAllActivitiesTabs(string username, string tab)
+        [HttpGet]
+        [Route("/Profile/SwitchToAllActivitiesTabs/{username}/{tab}/{page}")]
+        public async Task<IActionResult> SwitchToAllActivitiesTabs(string username, string tab, int page)
         {
             var user = await this.userManager.FindByNameAsync(username);
-            var vm = tab switch
+            var tabEnum = tab switch
             {
                 "Activities" => ProfileTab.Activities,
                 "Following" => ProfileTab.Following,
@@ -82,7 +84,7 @@ namespace SdvCode.Controllers
                 _ => ProfileTab.Activities,
             };
 
-            return this.RedirectToAction("Index", new { username = user.UserName, tab = vm });
+            return this.RedirectToAction("Index", new { username = user.UserName, tab = tabEnum, page });
         }
 
         public IActionResult SwitchToAllUsersTabs(string tab)

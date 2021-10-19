@@ -19,6 +19,7 @@ namespace SdvCode.ViewComponents.Profile
     using SdvCode.ViewModels.Pagination.Profile;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
     using X.PagedList;
 
@@ -37,7 +38,7 @@ namespace SdvCode.ViewComponents.Profile
         {
             var user = await this.userManager.FindByNameAsync(username);
             var currentUser = await this.userManager.GetUserAsync(this.HttpContext.User);
-            List<FavoritesViewModel> allFollowers = await this.favoritesService.ExtractFavorites(user, currentUser);
+            List<FavouritePostViewModel> allFollowers = this.favoritesService.ExtractFavorites(user, currentUser);
 
             FavoritesPaginationViewModel model = new FavoritesPaginationViewModel
             {

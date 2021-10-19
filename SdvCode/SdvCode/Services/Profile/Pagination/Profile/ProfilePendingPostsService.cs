@@ -3,11 +3,18 @@
 
 namespace SdvCode.Services.Profile.Pagination.Profile
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
+    using CloudinaryDotNet;
+
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
@@ -15,54 +22,51 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
     public class ProfilePendingPostsService : IProfilePendingPostsService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMapper mapper;
 
-        public ProfilePendingPostsService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public ProfilePendingPostsService(
+            ApplicationDbContext db,
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper)
         {
             this.db = db;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
-        public async Task<List<PendingPostsViewModel>> ExtractPendingPosts(ApplicationUser user, string currentUserId)
+        public async Task<List<PendingPostViewModel>> ExtractPendingPosts(ApplicationUser user, string currentUserId)
         {
             var currentUser = await this.userManager.FindByIdAsync(currentUserId);
-            List<PendingPostsViewModel> pendingPostsModel = new List<PendingPostsViewModel>();
-            List<PendingPost> pendingPosts = new List<PendingPost>();
+            Expression<Func<PendingPost, bool>> postsFilter;
 
             if (currentUser.UserName == user.UserName &&
                 (await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) ||
                  await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
             {
-                pendingPosts = this.db.PendingPosts.Where(x => x.IsPending == true).ToList();
+                postsFilter = x => x.IsPending == true;
             }
             else
             {
-                pendingPosts = this.db.PendingPosts.Where(x => x.IsPending == true && x.ApplicationUserId == user.Id).ToList();
+                postsFilter = x => x.IsPending == true && x.ApplicationUserId == user.Id;
             }
 
-            foreach (var item in pendingPosts)
-            {
-                var currentPost = this.db.Posts.FirstOrDefault(x => x.Id == item.PostId);
-                var currentCategoryName = this.db.Categories.FirstOrDefault(x => x.Id == currentPost.CategoryId);
-                var author = await this.userManager.FindByIdAsync(currentPost.ApplicationUserId);
+            var posts = this.db.PendingPosts
+                .Where(postsFilter)
+                .Include(x => x.Post)
+                .ThenInclude(x => x.Category)
+                .Include(x => x.ApplicationUser)
+                .OrderByDescending(x => x.Post.CreatedOn)
+                .AsSplitQuery()
+                .ToList();
 
-                pendingPostsModel.Add(new PendingPostsViewModel
-                {
-                    PostId = item.PostId,
-                    CreatedOn = currentPost.CreatedOn,
-                    PostContent = currentPost.ShortContent,
-                    PostTitle = currentPost.Title,
-                    Category = currentCategoryName,
-                    AuthorUsername = author.UserName,
-                    ImageUrl = author.ImageUrl,
-                });
-            }
-
-            return pendingPostsModel.OrderByDescending(x => x.CreatedOn).ToList();
+            var model = this.mapper.Map<List<PendingPostViewModel>>(posts);
+            return model;
         }
     }
 }

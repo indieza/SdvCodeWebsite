@@ -223,24 +223,24 @@
                 <div class="profile-info-right">
                     <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom" id="myTab">
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Activities ? "active" : string.Empty )">
-                            <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Activities" asp-route-page="@Model.Page" asp-action="SwitchToAllActivitiesTabs">ACTIVITIES</a>
+                            <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Activities" asp-route-page="@Model.Page" asp-area="" asp-controller="Profile" asp-action="SwitchToAllActivitiesTabs">ACTIVITIES</a>
                         </li>
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Followers ? "active" : string.Empty )">
-                            <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Followers" asp-route-page="@Model.Page" asp-action="SwitchToAllActivitiesTabs">FOLLOWERS</a>
+                            <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Followers" asp-route-page="@Model.Page" asp-area="" asp-controller="Profile" asp-action="SwitchToAllActivitiesTabs">FOLLOWERS</a>
                         </li>
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Following ? "active" : string.Empty )">
-                            <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Following" asp-route-page="@Model.Page" asp-action="SwitchToAllActivitiesTabs">FOLLOWING</a>
+                            <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Following" asp-route-page="@Model.Page" asp-area="" asp-controller="Profile" asp-action="SwitchToAllActivitiesTabs">FOLLOWING</a>
                         </li>
                         <li role="presentation" class="@(Model.ActiveTab == ProfileTab.Favorites ? "active" : string.Empty )">
-                            <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Favorites" asp-route-page="@Model.Page" asp-action="SwitchToAllActivitiesTabs">FAVORITES</a>
+                            <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="Favorites" asp-route-page="@Model.Page" asp-area="" asp-controller="Profile" asp-action="SwitchToAllActivitiesTabs">FAVORITES</a>
                         </li>
                         @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()) || User.Identity.Name == Model.ApplicationUser.UserName)
                         {
                             <li role="presentation" class="@(Model.ActiveTab == ProfileTab.PendingPosts ? "active" : string.Empty )">
-                                <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="PendingPosts" asp-route-page="@Model.Page" asp-action="SwitchToAllActivitiesTabs">PENDING</a>
+                                <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="PendingPosts" asp-route-page="@Model.Page" asp-area="" asp-controller="Profile" asp-action="SwitchToAllActivitiesTabs">PENDING</a>
                             </li>
                             <li role="presentation" class="@(Model.ActiveTab == ProfileTab.BannedPosts ? "active" : string.Empty )">
-                                <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="BannedPosts" asp-route-page="@Model.Page" asp-action="SwitchToAllActivitiesTabs">BANNED</a>
+                                <a asp-route-username="@Model.ApplicationUser.UserName" asp-route-tab="BannedPosts" asp-route-page="@Model.Page" asp-area="" asp-controller="Profile" asp-action="SwitchToAllActivitiesTabs">BANNED</a>
                             </li>
                         }
                     </ul>

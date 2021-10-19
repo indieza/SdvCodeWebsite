@@ -1,7 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SdvCode.ViewModels.Profile.UserViewComponents
+namespace SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent
 {
     using System;
     using System.Collections.Generic;
@@ -11,20 +11,18 @@ namespace SdvCode.ViewModels.Profile.UserViewComponents
 
     using SdvCode.Models.Blog;
 
-    public class BannedPostsViewModel
+    public class BannedPostViewModel
     {
-        public string PostId { get; set; }
+        public string Id { get; set; }
 
-        public string PostTitle { get; set; }
+        public string Title { get; set; }
 
-        public string PostContent { get; set; }
+        public string ShortContent { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
-        public Category Category { get; set; }
+        public BlogComponentCategoryViewModel Category { get; set; }
 
-        public string AuthorUsername { get; set; }
-
-        public string ImageUrl { get; set; }
+        public BlogComponentApplicationUserViewModel ApplicationUser { get; set; }
     }
 }

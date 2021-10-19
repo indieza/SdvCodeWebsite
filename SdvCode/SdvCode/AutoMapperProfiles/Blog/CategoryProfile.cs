@@ -20,6 +20,7 @@ namespace SdvCode.AutoMapperProfiles.Blog
     using SdvCode.ViewModels.Category.ViewModels.TopCategory;
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels.PostPage;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
     public class CategoryProfile : Profile
     {
@@ -45,6 +46,7 @@ namespace SdvCode.AutoMapperProfiles.Blog
                     mo => mo.MapFrom(x => x.Posts.Count(x => x.PostStatus == PostStatus.Approved)));
 
             this.CreateMap<Category, CategoryViewModel>();
+            this.CreateMap<Category, BlogComponentCategoryViewModel>();
         }
     }
 }

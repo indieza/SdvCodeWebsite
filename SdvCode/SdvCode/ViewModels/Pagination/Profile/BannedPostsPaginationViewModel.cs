@@ -7,11 +7,12 @@ namespace SdvCode.ViewModels.Pagination.Profile
 
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
     public class BannedPostsPaginationViewModel
     {
         public string Username { get; set; }
 
-        public IEnumerable<BannedPostsViewModel> BannedPosts { get; set; } = new HashSet<BannedPostsViewModel>();
+        public IEnumerable<BannedPostViewModel> BannedPosts { get; set; } = new HashSet<BannedPostViewModel>();
     }
 }

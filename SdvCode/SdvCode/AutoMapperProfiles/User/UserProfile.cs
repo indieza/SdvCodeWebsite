@@ -23,6 +23,9 @@ namespace SdvCode.AutoMapperProfiles.User
     using SdvCode.ViewModels.Post.ViewModels.RecentPost;
     using SdvCode.ViewModels.Post.ViewModels.TopPost;
     using SdvCode.ViewModels.Profile.UserProfile;
+    using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.ActivitiesComponent;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
     using SdvCode.ViewModels.Users.ViewModels;
 
     public class UserProfile : Profile
@@ -66,6 +69,9 @@ namespace SdvCode.AutoMapperProfiles.User
                 .ForMember(
                     dm => dm.Roles,
                     mo => mo.MapFrom(x => x.UserRoles.Select(y => y.Role)));
+
+            this.CreateMap<ApplicationUser, ActivitiesApplicationUserViewModel>();
+            this.CreateMap<ApplicationUser, BlogComponentApplicationUserViewModel>();
         }
     }
 }

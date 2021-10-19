@@ -3,11 +3,18 @@
 
 namespace SdvCode.Services.Profile.Pagination.Profile
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
+    using CloudinaryDotNet;
+
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Data;
@@ -15,54 +22,50 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Profile;
     using SdvCode.ViewModels.Profile.UserViewComponents;
+    using SdvCode.ViewModels.Profile.UserViewComponents.BlogComponent;
 
     public class ProfileBannedPostsService : IProfileBannedPostsService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMapper mapper;
 
-        public ProfileBannedPostsService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public ProfileBannedPostsService(
+            ApplicationDbContext db,
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper)
         {
             this.db = db;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
-        public async Task<List<BannedPostsViewModel>> ExtractBannedPosts(ApplicationUser user, string currentUserId)
+        public async Task<List<BannedPostViewModel>> ExtractBannedPosts(ApplicationUser user, string currentUserId)
         {
             var currentUser = await this.userManager.FindByIdAsync(currentUserId);
-            List<BannedPostsViewModel> bannedPostsModel = new List<BannedPostsViewModel>();
-            List<BlockedPost> bannedPosts = new List<BlockedPost>();
+            Expression<Func<BlockedPost, bool>> postsFilter;
 
             if (currentUser.UserName == user.UserName &&
                 (await this.userManager.IsInRoleAsync(currentUser, Roles.Administrator.ToString()) ||
                  await this.userManager.IsInRoleAsync(currentUser, Roles.Editor.ToString())))
             {
-                bannedPosts = this.db.BlockedPosts.Where(x => x.IsBlocked == true).ToList();
+                postsFilter = x => x.IsBlocked == true;
             }
             else
             {
-                bannedPosts = this.db.BlockedPosts.Where(x => x.IsBlocked == true && x.ApplicationUserId == user.Id).ToList();
+                postsFilter = x => x.IsBlocked == true && x.ApplicationUserId == user.Id;
             }
 
-            foreach (var item in bannedPosts)
-            {
-                var currentPost = this.db.Posts.FirstOrDefault(x => x.Id == item.PostId);
-                var currentCategoryName = this.db.Categories.FirstOrDefault(x => x.Id == currentPost.CategoryId);
-                var author = await this.userManager.FindByIdAsync(currentPost.ApplicationUserId);
+            var posts = this.db.BlockedPosts
+                .Include(x => x.Post)
+                .ThenInclude(x => x.Category)
+                .Include(x => x.ApplicationUser)
+                .Where(postsFilter)
+                .AsSplitQuery()
+                .ToList();
 
-                bannedPostsModel.Add(new BannedPostsViewModel
-                {
-                    PostId = item.PostId,
-                    CreatedOn = currentPost.CreatedOn,
-                    PostContent = currentPost.ShortContent,
-                    PostTitle = currentPost.Title,
-                    Category = currentCategoryName,
-                    AuthorUsername = author.UserName,
-                    ImageUrl = author.ImageUrl,
-                });
-            }
-
-            return bannedPostsModel.OrderByDescending(x => x.CreatedOn).ToList();
+            var model = this.mapper.Map<List<BannedPostViewModel>>(posts);
+            return model;
         }
     }
 }

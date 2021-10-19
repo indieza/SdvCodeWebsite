@@ -10,7 +10,7 @@
         <div class="media activity-item">
             @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Editor.ToString()))
             {
-                <a asp-area="Editor" asp-controller="Post" asp-action="ApprovePost" asp-route-id="@post.PostId" class="btn btn-info" style="float: right;">
+                <a asp-area="Editor" asp-controller="Post" asp-action="ApprovePost" asp-route-id="@post.Id" class="btn btn-info" style="float: right;">
                     <i class="fas fa-check"></i>
                     <span>
                         Approve
@@ -18,28 +18,28 @@
                 </a>
             }
             <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Username" class="pull-left">
-                <img src=@post.ImageUrl alt="Avatar" class="media-object avatar">
+                <img src=@post.ApplicationUser.ImageUrl alt="Avatar" class="media-object avatar">
             </a>
             <div class="media-body">
                 <p class="activity-title">
-                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@post.AuthorUsername">
+                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@post.ApplicationUser.UserName">
                         <b>
-                            @post.AuthorUsername
+                            @post.ApplicationUser.UserName
                         </b>
                     </a> pending blog
-                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId">
+                    <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">
                         <b>post</b>
                     </a>
                 </p>
                 <small class="text-muted">@post.CreatedOn.ToString("dd-MMMM-yyyy HH:mm tt")</small>
                 <div class="activity-attachment">
                     <h4>
-                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId">
-                            @post.PostTitle
+                        <a asp-area="" asp-controller="Post" asp-action="Index" asp-route-postId="@post.Id">
+                            @post.Title
                         </a>
                     </h4>
                     <div class="well well-sm">
-                        @Html.Raw(post.PostContent)
+                        @Html.Raw(post.ShortContent)
                     </div>
                 </div>
             </div>
