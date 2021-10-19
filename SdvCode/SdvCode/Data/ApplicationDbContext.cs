@@ -3,6 +3,7 @@
 
 namespace SdvCode.Data
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,9 @@ namespace SdvCode.Data
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string,
+        IdentityUserClaim<string>, ApplicationUserRole, IdentityUserLogin<string>,
+        IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -107,6 +110,8 @@ namespace SdvCode.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<Post>(entity =>
             {
                 entity.HasOne(x => x.ApplicationUser)
@@ -159,6 +164,19 @@ namespace SdvCode.Data
                     .WithMany(x => x.ApplicationUsers)
                     .HasForeignKey(x => x.CountryCodeId)
                     .IsRequired(false);
+
+                entity.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.User)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+            });
+
+            builder.Entity<ApplicationRole>(b =>
+            {
+                b.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.Role)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
             });
 
             builder.Entity<PostTag>().HasKey(k => new
@@ -273,8 +291,6 @@ namespace SdvCode.Data
                 .HasForeignKey(x => x.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(true);
-
-            base.OnModelCreating(builder);
         }
     }
 }

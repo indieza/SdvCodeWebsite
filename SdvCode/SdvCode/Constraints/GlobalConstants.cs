@@ -116,5 +116,7 @@ namespace SdvCode.Constraints
         public const string HolidayThemesFolder = "Holiday Theme Icon";
 
         public const int MessagesCountPerScroll = 10;
+
+        public const int RoldeDescriptionMaxLength = 250;
     }
 }

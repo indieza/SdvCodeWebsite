@@ -178,7 +178,7 @@ namespace SdvCode.Services.Profile
                 return;
             }
 
-            this.db.UserRoles.Add(new IdentityUserRole<string>
+            this.db.UserRoles.Add(new ApplicationUserRole()
             {
                 RoleId = role.Id,
                 UserId = user.Id,

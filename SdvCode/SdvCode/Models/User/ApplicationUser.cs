@@ -85,6 +85,8 @@ namespace SdvCode.Models.User
         [MaxLength(ModelConstraints.ApplicationUserReasonToBeBlockedMaxLength)]
         public string ReasonToBeBlocked { get; set; }
 
+        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
+
         public virtual ICollection<UserAction> UserActions { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }

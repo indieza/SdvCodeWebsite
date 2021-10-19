@@ -70,7 +70,7 @@
             {
                 db.Users.Add(user);
                 db.Roles.Add(role);
-                db.UserRoles.Add(new IdentityUserRole<string>
+                db.UserRoles.Add(new ApplicationUserRole()
                 {
                     RoleId = role.Id,
                     UserId = user.Id,

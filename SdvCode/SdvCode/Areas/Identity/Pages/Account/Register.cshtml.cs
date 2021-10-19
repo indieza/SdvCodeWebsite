@@ -9,6 +9,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -17,6 +18,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
@@ -111,7 +113,7 @@ namespace SdvCode.Areas.Identity.Pages.Account
 
                     if (!isExist)
                     {
-                        this.db.UserRoles.Add(new IdentityUserRole<string>
+                        this.db.UserRoles.Add(new ApplicationUserRole()
                         {
                             RoleId = role.Id,
                             UserId = user.Id,

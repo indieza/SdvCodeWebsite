@@ -11,9 +11,16 @@ namespace SdvCode.Models.User
 
     using Microsoft.AspNetCore.Identity;
 
+    using SdvCode.Constraints;
+
     public class ApplicationRole : IdentityRole
     {
         [Required]
         public int RoleLevel { get; set; }
+
+        [MaxLength(GlobalConstants.RoldeDescriptionMaxLength)]
+        public string Description { get; set; }
+
+        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }

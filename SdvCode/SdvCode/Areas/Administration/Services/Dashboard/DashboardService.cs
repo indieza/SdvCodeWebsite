@@ -6,8 +6,10 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Areas.Administration.ViewModels.Dashboard;
     using SdvCode.Data;
@@ -93,7 +95,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
 
             if (!isExist)
             {
-                this.db.UserRoles.Add(new IdentityUserRole<string>
+                this.db.UserRoles.Add(new ApplicationUserRole()
                 {
                     RoleId = role.Id,
                     UserId = user.Id,
