@@ -97,7 +97,7 @@
                     </div>
                     <div class="section">
                         <h3>Roles</h3>
-                        @foreach (var role in Model.ApplicationUser.Roles)
+                        @foreach (var role in Model.ApplicationUser.Roles.OrderBy(x => x.RoleLevel))
                         {
                             @if (role.Name == Roles.Administrator.ToString())
                             {

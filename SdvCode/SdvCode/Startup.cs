@@ -334,6 +334,7 @@ namespace SdvCode
                 cfg.AddProfile(new UserProfile(
                     provider.GetService<ApplicationDbContext>(),
                     provider.GetService<IHttpContextAccessor>()));
+                cfg.AddProfile(new RoleProfile());
                 cfg.AddProfile(new CategoryProfile());
                 cfg.AddProfile(new CommentProfile());
                 cfg.AddProfile(new PostImageProfile());

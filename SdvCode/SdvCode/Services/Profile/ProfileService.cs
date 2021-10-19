@@ -75,17 +75,14 @@ namespace SdvCode.Services.Profile
                 .Include(x => x.Posts.Where(y => y.PostStatus == PostStatus.Approved))
                 .Include(x => x.PostLikes)
                 .Include(x => x.UserActions)
+                .Include(x => x.UserRoles)
+                    .ThenInclude(x => x.Role)
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(u => u.UserName == username);
             var group = new List<string>() { username, currentUser.UserName };
             var groupName = string.Join(GlobalConstants.ChatGroupNameSeparator, group.OrderBy(x => x));
 
             var model = this.mapper.Map<ProfileApplicationUserViewModel>(user);
-
-            var rolesIds = this.db.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
-            var roles = this.db.Roles.Where(x => rolesIds.Contains(x.Id)).OrderBy(x => x.Name).ToList();
-            model.Roles = roles.OrderBy(x => x.RoleLevel).ToList();
-
             return model;
         }
 

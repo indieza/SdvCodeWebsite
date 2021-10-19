@@ -66,6 +66,8 @@ namespace SdvCode.ViewModels.Profile.UserProfile
 
         public string ReasonToBeBlocked { get; set; }
 
+        public ICollection<ProfileRoleViewModel> Roles { get; set; } = new HashSet<ProfileRoleViewModel>();
+
         public string GroupName { get; set; }
 
         public bool IsFollowed { get; set; }

@@ -62,7 +62,10 @@ namespace SdvCode.AutoMapperProfiles.User
                     mo => mo.MapFrom(x => x.PostLikes.Count))
                 .ForMember(
                     dm => dm.CommentsCount,
-                    mo => mo.MapFrom(x => x.Comments.Count));
+                    mo => mo.MapFrom(x => x.Comments.Count))
+                .ForMember(
+                    dm => dm.Roles,
+                    mo => mo.MapFrom(x => x.UserRoles.Select(y => y.Role)));
         }
     }
 }
