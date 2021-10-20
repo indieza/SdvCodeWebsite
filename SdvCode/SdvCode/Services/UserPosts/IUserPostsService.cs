@@ -8,11 +8,12 @@ namespace SdvCode.Services.UserPosts
 
     using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
 
     public interface IUserPostsService
     {
-        Task<ICollection<PostViewModel>> ExtractLikedPostsByUsername(string username, ApplicationUser user);
+        Task<ICollection<BlogPostCardViewModel>> ExtractLikedPostsByUsername(string username, ApplicationUser user);
 
-        Task<ICollection<PostViewModel>> ExtractCreatedPostsByUsername(string username, ApplicationUser user);
+        Task<ICollection<BlogPostCardViewModel>> ExtractCreatedPostsByUsername(string username, ApplicationUser user);
     }
 }

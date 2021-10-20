@@ -10,10 +10,11 @@ namespace SdvCode.ViewModels.UserPosts
 
     using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
 
     public class UserPostsViewModel
     {
-        public IEnumerable<PostViewModel> Posts { get; set; } = new HashSet<PostViewModel>();
+        public IEnumerable<BlogPostCardViewModel> Posts { get; set; } = new HashSet<BlogPostCardViewModel>();
 
         public string Action { get; set; }
 
