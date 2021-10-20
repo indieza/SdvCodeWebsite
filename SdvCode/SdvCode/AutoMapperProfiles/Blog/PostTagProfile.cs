@@ -11,6 +11,7 @@ namespace SdvCode.AutoMapperProfiles.Blog
     using AutoMapper;
 
     using SdvCode.Models.Blog;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels.PostPage;
     using SdvCode.ViewModels.Tag;
@@ -26,6 +27,9 @@ namespace SdvCode.AutoMapperProfiles.Blog
                 .ForMember(
                     dm => dm.Count,
                     mo => mo.MapFrom(x => x.TagsPosts.Count));
+
+            this.CreateMap<Tag, BlogPostCardTagViewModel>();
+            this.CreateMap<Tag, TagPageTagViewModel>();
         }
     }
 }

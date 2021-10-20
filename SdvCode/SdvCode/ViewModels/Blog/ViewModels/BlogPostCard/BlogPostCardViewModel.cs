@@ -41,5 +41,7 @@ namespace SdvCode.ViewModels.Blog.ViewModels.BlogPostCard
         public bool IsFavourite { get; set; }
 
         public ICollection<BlogPostCardLikerViewModel> Likers { get; set; } = new HashSet<BlogPostCardLikerViewModel>();
+
+        public ICollection<BlogPostCardTagViewModel> Tags { get; set; } = new HashSet<BlogPostCardTagViewModel>();
     }
 }

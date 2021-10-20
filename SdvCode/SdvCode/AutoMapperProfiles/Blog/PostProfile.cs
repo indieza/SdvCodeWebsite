@@ -51,7 +51,10 @@ namespace SdvCode.AutoMapperProfiles.Blog
                     mo => mo.MapFrom(x => userId != null && x.FavouritePosts.Any(z => z.ApplicationUserId == userId && z.IsFavourite)))
                 .ForMember(
                     dm => dm.Likers,
-                    mo => mo.MapFrom(x => x.PostLikes.Where(x => x.IsLiked).Select(x => x.ApplicationUser).ToList()));
+                    mo => mo.MapFrom(x => x.PostLikes.Where(x => x.IsLiked).Select(x => x.ApplicationUser).ToList()))
+                .ForMember(
+                    dm => dm.Tags,
+                    mo => mo.MapFrom(x => x.PostsTags.Select(y => y.Tag)));
 
             this.CreateMap<Post, PostViewModel>()
                 .ForMember(

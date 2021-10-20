@@ -9,11 +9,13 @@ namespace SdvCode.Services.Tag
     using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
+    using SdvCode.ViewModels.Tag;
 
     public interface ITagService
     {
-        Task<Tag> ExtractTagById(string id);
+        Task<TagPageTagViewModel> ExtractTagById(string id);
 
-        Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, ApplicationUser user);
+        Task<ICollection<BlogPostCardViewModel>> ExtractPostsByTagId(string id, ApplicationUser user);
     }
 }

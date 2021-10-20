@@ -3,9 +3,15 @@
 
 namespace SdvCode.Services.Tag
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
+
+    using AutoMapper;
+
+    using CloudinaryDotNet;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -17,64 +23,69 @@ namespace SdvCode.Services.Tag
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
+    using SdvCode.ViewModels.Tag;
 
-    public class TagService : GlobalPostsExtractor, ITagService
+    public class TagService : ITagService
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMapper mapper;
 
-        public TagService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
-            : base(db)
+        public TagService(ApplicationDbContext db, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             this.db = db;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
-        public async Task<ICollection<PostViewModel>> ExtractPostsByTagId(string id, ApplicationUser user)
+        public async Task<ICollection<BlogPostCardViewModel>> ExtractPostsByTagId(string id, ApplicationUser user)
         {
-            var postsIds = this.db.PostsTags.Where(x => x.TagId == id).Select(x => x.PostId).ToList();
-            List<Post> posts = new List<Post>();
-
-            foreach (var postId in postsIds)
-            {
-                posts.Add(this.db.Posts.FirstOrDefault(x => x.Id == postId));
-            }
+            Expression<Func<Post, bool>> postsFilter;
 
             if (user != null &&
                 (await this.userManager.IsInRoleAsync(user, Roles.Administrator.ToString()) ||
                 await this.userManager.IsInRoleAsync(user, Roles.Editor.ToString())))
             {
-                posts = posts
-                    .OrderByDescending(x => x.Comments.Count + x.Likes)
-                    .ToList();
+                postsFilter = x => (x.PostStatus == PostStatus.Approved ||
+                    x.PostStatus == PostStatus.Banned ||
+                    x.PostStatus == PostStatus.Pending) && x.PostsTags.Any(y => y.TagId == id);
             }
             else
             {
                 if (user != null)
                 {
-                    posts = posts
-                        .Where(x => x.PostStatus == PostStatus.Approved ||
-                        x.ApplicationUserId == user.Id)
-                        .OrderByDescending(x => x.Comments.Count + x.Likes)
-                        .ToList();
+                    postsFilter = x => (x.PostStatus == PostStatus.Approved ||
+                        x.ApplicationUserId == user.Id) && x.PostsTags.Any(y => y.TagId == id);
                 }
                 else
                 {
-                    posts = posts
-                        .Where(x => x.PostStatus == PostStatus.Approved)
-                        .OrderByDescending(x => x.Comments.Count + x.Likes)
-                        .ToList();
+                    postsFilter = x => x.PostStatus == PostStatus.Approved && x.PostsTags.Any(y => y.TagId == id);
                 }
             }
 
-            List<PostViewModel> postsModel = await this.ExtractPosts(user, posts);
+            var posts = this.db.Posts
+                .Include(x => x.PostsTags)
+                .ThenInclude(x => x.Tag)
+                .Include(x => x.ApplicationUser)
+                .Include(x => x.Category)
+                .Include(x => x.Comments)
+                .Include(x => x.FavouritePosts)
+                .Include(x => x.PostLikes)
+                .AsSplitQuery()
+                .Where(postsFilter)
+                .OrderByDescending(x => x.Comments.Count + x.Likes)
+                .ToList();
 
-            return postsModel;
+            var model = this.mapper.Map<List<BlogPostCardViewModel>>(posts);
+            return model;
         }
 
-        public async Task<Tag> ExtractTagById(string id)
+        public async Task<TagPageTagViewModel> ExtractTagById(string id)
         {
-            return await this.db.Tags.FirstOrDefaultAsync(x => x.Id == id);
+            var tag = await this.db.Tags.FirstOrDefaultAsync(x => x.Id == id);
+            var model = this.mapper.Map<TagPageTagViewModel>(tag);
+            return model;
         }
     }
 }
