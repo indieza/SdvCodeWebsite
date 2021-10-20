@@ -8,8 +8,6 @@ namespace SdvCode.ViewModels.AllCategories.ViewModels
     using System.Linq;
     using System.Threading.Tasks;
 
-    using SdvCode.DataViewModels.Blog;
-
     public class AllCategoriesCategoryViewModel
     {
         public string Id { get; set; }

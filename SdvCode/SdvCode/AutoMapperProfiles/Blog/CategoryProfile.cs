@@ -45,7 +45,7 @@ namespace SdvCode.AutoMapperProfiles.Blog
                     dm => dm.PostsCount,
                     mo => mo.MapFrom(x => x.Posts.Count(x => x.PostStatus == PostStatus.Approved)));
 
-            this.CreateMap<Category, CategoryViewModel>();
+            this.CreateMap<Category, CategoryPageCategoryViewModel>();
             this.CreateMap<Category, BlogComponentCategoryViewModel>();
         }
     }

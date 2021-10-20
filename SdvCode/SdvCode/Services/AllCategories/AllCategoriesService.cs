@@ -11,7 +11,6 @@ namespace SdvCode.Services.AllCategories
     using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Data;
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.ViewModels.AllCategories.ViewModels;
 

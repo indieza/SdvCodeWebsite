@@ -15,6 +15,7 @@ namespace SdvCode.AutoMapperProfiles.Blog
     using SdvCode.ViewModels.Post.ViewModels;
     using SdvCode.ViewModels.Post.ViewModels.PostPage;
     using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Tag.TagPage;
     using SdvCode.ViewModels.Tag.TopTag;
 
     public class PostTagProfile : Profile

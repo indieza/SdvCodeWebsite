@@ -8,7 +8,6 @@
     using Moq;
 
     using SdvCode.Controllers;
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.Services.UserPosts;
@@ -31,15 +30,15 @@
             var user = new ApplicationUser { UserName = "pesho" };
             var currentUser = new ApplicationUser { UserName = "gogo" };
             var mockService = new Mock<IUserPostsService>();
-            mockService
-                .Setup(x => x.ExtractLikedPostsByUsername(user.UserName, currentUser))
-                .ReturnsAsync(new List<PostViewModel>
-                {
-                    new PostViewModel
-                    {
-                        //ApplicationUser = currentUser,
-                    }
-                });
+            //mockService
+            //    .Setup(x => x.ExtractLikedPostsByUsername(user.UserName, currentUser))
+            //    .ReturnsAsync(new List<PostViewModel>
+            //    {
+            //        new PostViewModel
+            //        {
+            //            //ApplicationUser = currentUser,
+            //        }
+            //    });
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                    new Mock<IUserStore<ApplicationUser>>().Object,
                    new Mock<IOptions<IdentityOptions>>().Object,
@@ -71,15 +70,15 @@
             var user = new ApplicationUser { UserName = "pesho" };
             var currentUser = new ApplicationUser { UserName = "gogo" };
             var mockService = new Mock<IUserPostsService>();
-            mockService
-                .Setup(x => x.ExtractCreatedPostsByUsername(user.UserName, currentUser))
-                .ReturnsAsync(new List<PostViewModel>
-                {
-                    new PostViewModel
-                    {
-                        //ApplicationUser = currentUser,
-                    }
-                });
+            //mockService
+            //    .Setup(x => x.ExtractCreatedPostsByUsername(user.UserName, currentUser))
+            //    .ReturnsAsync(new List<PostViewModel>
+            //    {
+            //        new PostViewModel
+            //        {
+            //            //ApplicationUser = currentUser,
+            //        }
+            //    });
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                    new Mock<IUserStore<ApplicationUser>>().Object,
                    new Mock<IOptions<IdentityOptions>>().Object,

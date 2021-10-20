@@ -19,12 +19,12 @@ namespace SdvCode.Services.Tag
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Tag.TagPage;
 
     public class TagService : ITagService
     {

@@ -12,7 +12,7 @@ namespace SdvCode.ViewModels.Category.ViewModels.CategoryPage
 
     public class CategoryPageViewModel
     {
-        public CategoryViewModel Category { get; set; }
+        public CategoryPageCategoryViewModel Category { get; set; }
 
         public IEnumerable<BlogPostCardViewModel> Posts { get; set; } = new HashSet<BlogPostCardViewModel>();
     }

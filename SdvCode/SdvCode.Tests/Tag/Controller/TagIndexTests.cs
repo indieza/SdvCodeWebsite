@@ -8,12 +8,12 @@
     using Moq;
 
     using SdvCode.Controllers;
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Services.Category;
     using SdvCode.Services.Tag;
     using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Tag.TagPage;
 
     using System;
     using System.Collections.Generic;
@@ -31,15 +31,15 @@
             var currentUser = new ApplicationUser { UserName = "gogo" };
             var tag = new Tag { Id = Guid.NewGuid().ToString() };
             var mockService = new Mock<ITagService>();
-            mockService.Setup(x => x.ExtractPostsByTagId(tag.Id, currentUser))
-                .ReturnsAsync(new List<PostViewModel>
-                {
-                   new PostViewModel
-                   {
-                       Id = Guid.NewGuid().ToString(),
-                       Title = "Test Title",
-                   }
-                });
+            //mockService.Setup(x => x.ExtractPostsByTagId(tag.Id, currentUser))
+            //    .ReturnsAsync(new List<PostViewModel>
+            //    {
+            //       new PostViewModel
+            //       {
+            //           Id = Guid.NewGuid().ToString(),
+            //           Title = "Test Title",
+            //       }
+            //    });
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                    new Mock<IUserStore<ApplicationUser>>().Object,
                    new Mock<IOptions<IdentityOptions>>().Object,
@@ -59,9 +59,9 @@
             Assert.IsType<ViewResult>(result);
 
             var viewResult = result as ViewResult;
-            Assert.IsType<TagViewModel>(viewResult.Model);
+            Assert.IsType<TagPageViewModel>(viewResult.Model);
 
-            var viewModel = viewResult.Model as TagViewModel;
+            var viewModel = viewResult.Model as TagPageViewModel;
             Assert.Single(viewModel.Posts);
         }
     }

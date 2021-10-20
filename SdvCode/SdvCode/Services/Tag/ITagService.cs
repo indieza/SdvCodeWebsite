@@ -6,11 +6,11 @@ namespace SdvCode.Services.Tag
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
     using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Tag.TagPage;
 
     public interface ITagService
     {

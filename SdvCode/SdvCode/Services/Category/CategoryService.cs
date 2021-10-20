@@ -17,7 +17,6 @@ namespace SdvCode.Services.Category
     using SdvCode.Areas.Administration.Models.Enums;
     using SdvCode.Constraints;
     using SdvCode.Data;
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
@@ -40,10 +39,10 @@ namespace SdvCode.Services.Category
             this.mapper = mapper;
         }
 
-        public async Task<CategoryViewModel> ExtractCategoryById(string id)
+        public async Task<CategoryPageCategoryViewModel> ExtractCategoryById(string id)
         {
             var category = await this.db.Categories.FirstOrDefaultAsync(x => x.Id == id);
-            var model = this.mapper.Map<CategoryViewModel>(category);
+            var model = this.mapper.Map<CategoryPageCategoryViewModel>(category);
             return model;
         }
 

@@ -9,7 +9,6 @@ namespace SdvCode.ViewModels.Users.ViewModels
     using SdvCode.Areas.PrivateChat.Models;
     using SdvCode.Areas.SdvShop.Models;
     using SdvCode.Areas.UserNotifications.Models;
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
@@ -81,44 +80,6 @@ namespace SdvCode.ViewModels.Users.ViewModels
 
         public string ReasonToBeBlocked { get; set; }
 
-        public ICollection<UserAction> UserActions { get; set; } = new HashSet<UserAction>();
-
-        public ICollection<PostViewModel> Posts { get; set; } = new HashSet<PostViewModel>();
-
-        public ICollection<CommentViewModel> Comments { get; set; } = new HashSet<CommentViewModel>();
-
-        public ICollection<PostLikeViewModel> PostLikes { get; set; } = new HashSet<PostLikeViewModel>();
-
-        public ICollection<FavouritePostViewModel> FavouritePosts { get; set; } = new HashSet<FavouritePostViewModel>();
-
-        public ICollection<PendingPostViewModel> PendingPosts { get; set; } = new HashSet<PendingPostViewModel>();
-
-        public ICollection<BlockedPostViewModel> BlockedPosts { get; set; } = new HashSet<BlockedPostViewModel>();
-
-        public ICollection<UserGroup> UsersGroups { get; set; } = new HashSet<UserGroup>();
-
-        public ICollection<ChatMessage> ChatMessages { get; set; } = new HashSet<ChatMessage>();
-
-        public ICollection<ChatImage> ChatImages { get; set; } = new HashSet<ChatImage>();
-
-        public ICollection<RecommendedFriend> RecommendedFriends { get; set; } = new HashSet<RecommendedFriend>();
-
-        public ICollection<ProductComment> ProductComments { get; set; } = new HashSet<ProductComment>();
-
-        public ICollection<ProductReview> ProductReviews { get; set; } = new HashSet<ProductReview>();
-
-        public ICollection<UserNotification> UserNotifications { get; set; } = new HashSet<UserNotification>();
-
-        public ICollection<QuickChatReply> QuickChatReplies { get; set; } = new HashSet<QuickChatReply>();
-
-        public ICollection<FavouriteStickers> FavouriteStickers { get; set; } = new HashSet<FavouriteStickers>();
-
-        public int ActionsCount { get; set; }
-
         public ICollection<ApplicationRole> Roles { get; set; } = new HashSet<ApplicationRole>();
-
-        public bool IsFollowed { get; set; }
-
-        public string GroupName { get; set; }
     }
 }

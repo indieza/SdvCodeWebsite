@@ -6,7 +6,6 @@ namespace SdvCode.Services.UserPosts
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.User;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
 

@@ -16,6 +16,7 @@ namespace SdvCode.Controllers
     using SdvCode.Models.User;
     using SdvCode.Services.Tag;
     using SdvCode.ViewModels.Tag;
+    using SdvCode.ViewModels.Tag.TagPage;
 
     using X.PagedList;
 
@@ -39,7 +40,7 @@ namespace SdvCode.Controllers
             var pageNumber = page ?? 1;
             var post = await this.tagService.ExtractPostsByTagId(id, currentUser);
 
-            TagViewModel model = new TagViewModel
+            TagPageViewModel model = new TagPageViewModel
             {
                 Tag = await this.tagService.ExtractTagById(id),
                 Posts = post.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),

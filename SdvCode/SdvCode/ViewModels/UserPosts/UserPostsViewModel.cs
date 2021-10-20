@@ -8,7 +8,6 @@ namespace SdvCode.ViewModels.UserPosts
     using System.Linq;
     using System.Threading.Tasks;
 
-    using SdvCode.DataViewModels.Blog;
     using SdvCode.Models.Blog;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
 
