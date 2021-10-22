@@ -73,7 +73,7 @@ namespace SdvCode.Areas.Editor.Services.Post
                         .Select(x => x.UserId)
                         .ToList();
                     var followerIds = this.db.FollowUnfollows
-                    .Where(x => x.PersonId == post.ApplicationUserId && !specialIds.Contains(x.FollowerId))
+                    .Where(x => x.ApplicationUserId == post.ApplicationUserId && !specialIds.Contains(x.FollowerId))
                     .Select(x => x.FollowerId)
                     .ToList();
 

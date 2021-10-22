@@ -142,7 +142,7 @@ namespace SdvCode.Services.Blog
             {
                 post.PostStatus = PostStatus.Approved;
                 var followerIds = this.db.FollowUnfollows
-                    .Where(x => x.PersonId == user.Id && !specialIds.Contains(x.FollowerId))
+                    .Where(x => x.ApplicationUserId == user.Id && !specialIds.Contains(x.FollowerId))
                     .Select(x => x.FollowerId)
                     .ToList();
                 specialIds = specialIds.Union(followerIds).ToList();

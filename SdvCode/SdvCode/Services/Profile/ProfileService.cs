@@ -90,18 +90,18 @@ namespace SdvCode.Services.Profile
         {
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
 
-            if (!this.db.FollowUnfollows.Any(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id))
+            if (!this.db.FollowUnfollows.Any(x => x.ApplicationUserId == user.Id && x.FollowerId == currentUser.Id))
             {
                 this.db.FollowUnfollows.Add(new FollowUnfollow
                 {
-                    PersonId = user.Id,
+                    ApplicationUserId = user.Id,
                     FollowerId = currentUser.Id,
                     IsFollowed = true,
                 });
             }
             else
             {
-                this.db.FollowUnfollows.FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
+                this.db.FollowUnfollows.FirstOrDefault(x => x.ApplicationUserId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
             }
 
             this.AddUserAction(user, UserActionsType.Follow, currentUser);
@@ -115,10 +115,10 @@ namespace SdvCode.Services.Profile
         {
             var user = this.db.Users.FirstOrDefault(u => u.UserName == username);
 
-            if (this.db.FollowUnfollows.Any(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true))
+            if (this.db.FollowUnfollows.Any(x => x.ApplicationUserId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true))
             {
                 this.db.FollowUnfollows
-                    .FirstOrDefault(x => x.PersonId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true)
+                    .FirstOrDefault(x => x.ApplicationUserId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true)
                     .IsFollowed = false;
 
                 this.AddUserAction(user, UserActionsType.Unfollow, currentUser);

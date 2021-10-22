@@ -89,6 +89,10 @@ namespace SdvCode.Models.User
 
         public virtual ICollection<UserAction> UserActions { get; set; }
 
+        public virtual ICollection<FollowUnfollow> Following { get; set; }
+
+        public virtual ICollection<FollowUnfollow> Followers { get; set; }
+
         public virtual ICollection<Post> Posts { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }

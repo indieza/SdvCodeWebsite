@@ -35,7 +35,7 @@ namespace SdvCode.Services.RecommendedFriends
                 foreach (var recommendedUser in recommendedUsers)
                 {
                     var followInfollow = this.db.FollowUnfollows
-                        .FirstOrDefault(x => x.FollowerId == user.Id && x.PersonId == recommendedUser.Id && x.IsFollowed == true);
+                        .FirstOrDefault(x => x.FollowerId == user.Id && x.ApplicationUserId == recommendedUser.Id && x.IsFollowed == true);
 
                     if (followInfollow == null)
                     {

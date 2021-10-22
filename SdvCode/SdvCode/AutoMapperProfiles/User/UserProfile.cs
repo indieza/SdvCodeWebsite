@@ -53,7 +53,7 @@ namespace SdvCode.AutoMapperProfiles.User
                 .ForMember(
                     dm => dm.IsFollowed,
                     mo => mo.MapFrom(x => this.db.FollowUnfollows
-                        .Any(y => y.FollowerId == userId && y.PersonId == x.Id && y.IsFollowed == true)))
+                        .Any(y => y.FollowerId == userId && y.ApplicationUserId == x.Id && y.IsFollowed == true)))
                 .ForMember(
                     dm => dm.ActionsCount,
                     mo => mo.MapFrom(x => x.UserActions.Count))
@@ -79,14 +79,14 @@ namespace SdvCode.AutoMapperProfiles.User
                     mo => mo.MapFrom(x => x.UserActions.Count))
                 .ForMember(
                     dm => dm.FollowersCount,
-                    mo => mo.MapFrom(x => this.db.FollowUnfollows.Count(y => y.PersonId == x.Id && y.IsFollowed == true)))
+                    mo => mo.MapFrom(x => this.db.FollowUnfollows.Count(y => y.ApplicationUserId == x.Id && y.IsFollowed == true)))
                 .ForMember(
                     dm => dm.FollowingsCount,
                     mo => mo.MapFrom(x => this.db.FollowUnfollows.Count(y => y.FollowerId == x.Id && y.IsFollowed == true)))
                 .ForMember(
                     dm => dm.HasFollowed,
                     mo => mo.MapFrom(x => this.db.FollowUnfollows
-                        .Any(y => y.FollowerId == userId && y.PersonId == x.Id && y.IsFollowed == true)));
+                        .Any(y => y.FollowerId == userId && y.ApplicationUserId == x.Id && y.IsFollowed == true)));
         }
     }
 }

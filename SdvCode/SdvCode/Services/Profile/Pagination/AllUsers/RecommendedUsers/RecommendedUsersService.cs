@@ -65,10 +65,10 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.RecommendedUsers
                     .CountAsync(x => x.FollowerId == targetUser.Id && x.IsFollowed == true);
 
                 targetUser.FollowersCount = await this.db.FollowUnfollows
-                    .CountAsync(x => x.PersonId == targetUser.Id && x.IsFollowed == true);
+                    .CountAsync(x => x.ApplicationUserId == targetUser.Id && x.IsFollowed == true);
 
                 targetUser.HasFollowed = await this.db.FollowUnfollows
-                    .AnyAsync(x => x.FollowerId == user.Id && x.PersonId == targetUser.Id && x.IsFollowed == true);
+                    .AnyAsync(x => x.FollowerId == user.Id && x.ApplicationUserId == targetUser.Id && x.IsFollowed == true);
 
                 targetUser.Activities = await this.db.UserActions
                     .CountAsync(x => x.ApplicationUserId == targetUser.Id);

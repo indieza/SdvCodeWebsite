@@ -29,14 +29,14 @@ namespace SdvCode.Services.Profile.Pagination.Profile
         public async Task<List<FollowersViewModel>> ExtractFollowers(ApplicationUser user, string currentUserId)
         {
             List<FollowersViewModel> allFollowers = new List<FollowersViewModel>();
-            var followers = this.db.FollowUnfollows.Where(x => x.PersonId == user.Id && x.IsFollowed == true).ToList();
+            var followers = this.db.FollowUnfollows.Where(x => x.ApplicationUserId == user.Id && x.IsFollowed == true).ToList();
 
             foreach (var item in followers)
             {
                 var follower = await this.userManager.FindByIdAsync(item.FollowerId);
                 var hasFollow = this.db.FollowUnfollows
                     .Any(x => x.FollowerId == currentUserId &&
-                    x.PersonId == follower.Id && x.IsFollowed == true);
+                    x.ApplicationUserId == follower.Id && x.IsFollowed == true);
 
                 allFollowers.Add(new FollowersViewModel
                 {

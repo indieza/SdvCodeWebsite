@@ -132,7 +132,7 @@ namespace SdvCode.Areas.Administration.Services.Dashboard
         {
             var usersIds = this.db.Users.Select(x => x.Id).ToList();
             var targetNoneActiveRelations = this.db.FollowUnfollows
-                .Where(x => !usersIds.Contains(x.FollowerId) || !usersIds.Contains(x.PersonId))
+                .Where(x => !usersIds.Contains(x.FollowerId) || !usersIds.Contains(x.ApplicationUserId))
                 .ToList();
 
             if (targetNoneActiveRelations.Count() > 0)

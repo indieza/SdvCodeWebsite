@@ -4,14 +4,21 @@
 namespace SdvCode.Models.User
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class FollowUnfollow
     {
         [Required]
-        public string PersonId { get; set; }
+        //[ForeignKey(nameof(ApplicationUser))]
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
+        //[ForeignKey(nameof(ApplicationUser))]
         public string FollowerId { get; set; }
+
+        public ApplicationUser Follower { get; set; }
 
         [Required]
         public bool IsFollowed { get; set; }
