@@ -13,6 +13,6 @@ namespace SdvCode.Services.Profile.Pagination.Profile
 
     public interface IProfileFollowersService
     {
-        Task<List<FollowersViewModel>> ExtractFollowers(ApplicationUser user, string currentUserId);
+        List<FollowersViewModel> ExtractFollowers(ApplicationUser user, string currentUserId);
     }
 }

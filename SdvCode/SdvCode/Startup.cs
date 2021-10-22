@@ -349,6 +349,9 @@ namespace SdvCode
                 cfg.AddProfile(new BannedPostProfile());
                 cfg.AddProfile(new FavouritePostProfile());
                 cfg.AddProfile(new PendingPostProfile());
+                cfg.AddProfile(new FollowUnfollowProfile(
+                    provider.GetService<ApplicationDbContext>(),
+                    provider.GetService<IHttpContextAccessor>()));
             }).CreateMapper());
 
             // Add Blazor Session and Local Storages

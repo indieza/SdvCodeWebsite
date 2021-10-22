@@ -39,7 +39,7 @@ namespace SdvCode.ViewComponents.Profile
         {
             var user = await this.userManager.FindByNameAsync(username);
             var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            List<FollowingViewModel> allFollowing = await this.followingService.ExtractFollowing(user, currentUserId);
+            List<FollowingViewModel> allFollowing = this.followingService.ExtractFollowing(user, currentUserId);
 
             FollowingPaginationViewModel model = new FollowingPaginationViewModel
             {

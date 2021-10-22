@@ -9,13 +9,11 @@ namespace SdvCode.Models.User
     public class FollowUnfollow
     {
         [Required]
-        //[ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
-        //[ForeignKey(nameof(ApplicationUser))]
         public string FollowerId { get; set; }
 
         public ApplicationUser Follower { get; set; }

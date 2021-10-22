@@ -7,7 +7,10 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Data;
     using SdvCode.Models.User;
@@ -18,38 +21,25 @@ namespace SdvCode.Services.Profile.Pagination.Profile
     public class ProfileFollowersService : IProfileFollowersService
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMapper mapper;
 
-        public ProfileFollowersService(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public ProfileFollowersService(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
-            this.userManager = userManager;
+            this.mapper = mapper;
         }
 
-        public async Task<List<FollowersViewModel>> ExtractFollowers(ApplicationUser user, string currentUserId)
+        public List<FollowersViewModel> ExtractFollowers(ApplicationUser user, string currentUserId)
         {
-            List<FollowersViewModel> allFollowers = new List<FollowersViewModel>();
-            var followers = this.db.FollowUnfollows.Where(x => x.ApplicationUserId == user.Id && x.IsFollowed == true).ToList();
+            var followers = this.db.FollowUnfollows
+                .Where(x => x.ApplicationUserId == user.Id && x.IsFollowed == true)
+                .Include(x => x.Follower)
+                .Select(x => x.Follower)
+                .AsSplitQuery()
+                .ToList();
 
-            foreach (var item in followers)
-            {
-                var follower = await this.userManager.FindByIdAsync(item.FollowerId);
-                var hasFollow = this.db.FollowUnfollows
-                    .Any(x => x.FollowerId == currentUserId &&
-                    x.ApplicationUserId == follower.Id && x.IsFollowed == true);
-
-                allFollowers.Add(new FollowersViewModel
-                {
-                    Username = follower.UserName,
-                    FirstName = follower.FirstName,
-                    LastName = follower.LastName,
-                    ImageUrl = follower.ImageUrl,
-                    IsBlocked = follower.IsBlocked,
-                    HasFollow = hasFollow,
-                });
-            }
-
-            return allFollowers;
+            var model = this.mapper.Map<List<FollowersViewModel>>(followers);
+            return model;
         }
     }
 }
