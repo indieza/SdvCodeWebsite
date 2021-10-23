@@ -14,34 +14,14 @@ namespace SdvCode.Models.User
 
     public class RecommendedFriend
     {
-        public RecommendedFriend()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
-        [Key]
         [Required]
-        public string Id { get; set; }
-
-        [Required]
-        public string RecommendedUsername { get; set; }
-
-        [MaxLength(ModelConstraints.ApplicationUserFirstNameMaxLength)]
-        public string RecommendedFirstName { get; set; }
-
-        [MaxLength(ModelConstraints.ApplicationUserLastNameMaxLength)]
-        public string RecommendedLastName { get; set; }
-
-        [Required]
-        public string RecommendedImageUrl { get; set; }
-
-        [Required]
-        public string RecommendedCoverImage { get; set; }
-
-        [Required]
-        [ForeignKey(nameof(ApplicationUser))]
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
+
+        [Required]
+        public string RecommendedApplicationUserId { get; set; }
+
+        public ApplicationUser RecommendedApplicationUser { get; set; }
     }
 }

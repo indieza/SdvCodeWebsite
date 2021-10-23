@@ -38,24 +38,24 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.RecommendedUsers
             else
             {
                 targetUsers = await this.db.RecommendedFriends
-                     .Where(x => (EF.Functions.FreeText(x.RecommendedUsername, search) ||
-                     EF.Functions.FreeText(x.RecommendedFirstName, search) ||
-                     EF.Functions.FreeText(x.RecommendedLastName, search)) &&
+                     .Where(x => (EF.Functions.FreeText(x.RecommendedApplicationUser.UserName, search) ||
+                     EF.Functions.FreeText(x.RecommendedApplicationUser.FirstName, search) ||
+                     EF.Functions.FreeText(x.RecommendedApplicationUser.LastName, search)) &&
                      x.ApplicationUserId == user.Id)
                      .ToListAsync();
             }
 
             foreach (var targetUser in targetUsers)
             {
-                var recommendedUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == targetUser.RecommendedUsername);
+                var recommendedUser = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == targetUser.RecommendedApplicationUser.UserName);
                 allUsers.Add(new AllUsersUserCardViewModel
                 {
                     Id = recommendedUser.Id,
-                    UserName = targetUser.RecommendedUsername,
-                    FirstName = targetUser.RecommendedFirstName,
-                    LastName = targetUser.RecommendedLastName,
-                    ImageUrl = targetUser.RecommendedImageUrl,
-                    CoverImageUrl = targetUser.RecommendedCoverImage,
+                    UserName = targetUser.RecommendedApplicationUser.UserName,
+                    FirstName = targetUser.RecommendedApplicationUser.FirstName,
+                    LastName = targetUser.RecommendedApplicationUser.LastName,
+                    ImageUrl = targetUser.RecommendedApplicationUser.ImageUrl,
+                    CoverImageUrl = targetUser.RecommendedApplicationUser.CoverImageUrl,
                 });
             }
 

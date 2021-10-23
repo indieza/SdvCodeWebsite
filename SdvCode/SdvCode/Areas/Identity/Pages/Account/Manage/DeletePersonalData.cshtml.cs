@@ -112,7 +112,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 .Where(x => x.UserId == user.Id)
                 .ToList();
             var recommendedFriends = this.db.RecommendedFriends
-                .Where(x => x.ApplicationUserId == user.Id || x.RecommendedUsername == user.UserName)
+                .Where(x => x.ApplicationUserId == user.Id || x.RecommendedApplicationUser.UserName == user.UserName)
                 .ToList();
             var chatGroups = this.db.Groups
                 .Where(x => x.Name.ToLower().Contains(user.UserName.ToLower()))

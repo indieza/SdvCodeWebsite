@@ -112,6 +112,12 @@ namespace SdvCode.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<ApplicationUser>().ToTable("ApplicationUsers");
+
+            builder.Entity<ApplicationRole>().ToTable("ApplicationRoles");
+
+            builder.Entity<ApplicationUserRole>().ToTable("ApplicationUsersRoles");
+
             builder.Entity<Post>(entity =>
             {
                 entity.HasOne(e => e.ApplicationUser)
@@ -195,6 +201,22 @@ namespace SdvCode.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
+            builder.Entity<RecommendedFriend>(b =>
+            {
+                b.HasOne(e => e.ApplicationUser)
+                    .WithMany(e => e.RecommendedFriends)
+                    .HasForeignKey(e => e.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<RecommendedFriend>(b =>
+            {
+                b.HasOne(e => e.RecommendedApplicationUser)
+                    .WithMany(e => e.UserRecommendations)
+                    .HasForeignKey(e => e.RecommendedApplicationUserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
             builder.Entity<PostTag>().HasKey(k => new
             {
                 k.TagId,
@@ -211,6 +233,12 @@ namespace SdvCode.Data
             {
                 k.ApplicationUserId,
                 k.FollowerId,
+            });
+
+            builder.Entity<RecommendedFriend>().HasKey(k => new
+            {
+                k.ApplicationUserId,
+                k.RecommendedApplicationUserId,
             });
 
             builder.Entity<FavouritePost>().HasKey(k => new

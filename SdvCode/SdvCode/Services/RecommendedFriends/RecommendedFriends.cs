@@ -41,11 +41,11 @@ namespace SdvCode.Services.RecommendedFriends
                     {
                         user.RecommendedFriends.Add(new RecommendedFriend
                         {
-                            RecommendedUsername = recommendedUser.UserName,
-                            RecommendedFirstName = recommendedUser.FirstName,
-                            RecommendedLastName = recommendedUser.LastName,
-                            RecommendedImageUrl = recommendedUser.ImageUrl,
-                            RecommendedCoverImage = recommendedUser.CoverImageUrl,
+                            //RecommendedUsername = recommendedUser.UserName,
+                            //RecommendedFirstName = recommendedUser.FirstName,
+                            //RecommendedLastName = recommendedUser.LastName,
+                            //RecommendedImageUrl = recommendedUser.ImageUrl,
+                            //RecommendedCoverImage = recommendedUser.CoverImageUrl,
                         });
                     }
                 }

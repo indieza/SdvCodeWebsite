@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SdvCode.Data;
 
 namespace SdvCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211023212940_UpdateRecommendedFriendsDataTable")]
+    partial class UpdateRecommendedFriendsDataTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1000,7 +1002,7 @@ namespace SdvCode.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("ApplicationRoles");
+                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.ApplicationUser", b =>
@@ -1142,7 +1144,7 @@ namespace SdvCode.Migrations
 
                     b.HasIndex("ZipCodeId");
 
-                    b.ToTable("ApplicationUsers");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.ApplicationUserRole", b =>
@@ -1157,7 +1159,7 @@ namespace SdvCode.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("ApplicationUsersRoles");
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("SdvCode.Models.User.City", b =>

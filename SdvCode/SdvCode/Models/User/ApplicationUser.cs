@@ -113,6 +113,8 @@ namespace SdvCode.Models.User
 
         public virtual ICollection<RecommendedFriend> RecommendedFriends { get; set; }
 
+        public virtual ICollection<RecommendedFriend> UserRecommendations { get; set; }
+
         public virtual ICollection<ProductComment> ProductComments { get; set; }
 
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
