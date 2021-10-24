@@ -44,11 +44,19 @@
                                 {
                                     @if (!Model.ApplicationUser.IsFollowed)
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.ApplicationUser.UserName" class="btn btn-success btn-block"><i class="fas fa-plus-circle"></i> Follow</a>
+                                        <form asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@Model.ApplicationUser.UserName" method="post">
+                                            <button type="submit" class="btn btn-success btn-block">
+                                                <i class="fas fa-plus-circle"></i> Follow
+                                            </button>
+                                        </form>
                                     }
                                     else
                                     {
-                                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.ApplicationUser.UserName" class="btn btn-danger btn-block"><i class="fas fa-minus-circle"></i> Unfollow</a>
+                                        <form asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@Model.ApplicationUser.UserName" method="post">
+                                            <button type="submit" class="btn btn-danger btn-block">
+                                                <i class="fas fa-minus-circle"></i> Unfollow
+                                            </button>
+                                        </form>
                                     }
                                 }
                             </div>

@@ -33,7 +33,6 @@ namespace SdvCode.Controllers
         {
             var pageNumber = page ?? 1;
             IEnumerable<AllCategoriesCategoryViewModel> model = this.allCategoriesService.GetAllBlogCategories();
-
             return this.View(model.ToPagedList(pageNumber, GlobalConstants.BlogCategoriesOnPage));
         }
     }

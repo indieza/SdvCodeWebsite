@@ -13,18 +13,29 @@
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.Username">@following.Username<br><span class="text-muted username">@following.FirstName @following.LastName</span></a>
                 @if (User.Identity.Name == following.Username)
                 {
-                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.Username" type="button" class="btn btn-sm btn-info pull-right"><i class="fas fa-check-circle"></i> <span>It's You</span></a>
+                    <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@following.Username" type="button" class="btn btn-sm btn-info pull-right">
+                        <i class="fas fa-check-circle"></i> <span>It's You</span>
+                    </a>
                 }
                 else
                 {
                     @if (following.HasFollow)
                     {
-                        <a asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.Username" type="button" class="btn btn-sm btn-danger pull-right"><i class="fas fa-minus-circle"></i> <span>Unfollow</span></a>
+                        <form asp-area="" asp-controller="Profile" asp-action="Unfollow" asp-route-username="@following.Username" method="post">
+                            <button type="submit" class="btn btn-sm btn-danger pull-right">
+                                <i class="fas fa-minus-circle"></i> <span>Unfollow</span>
+                            </button>
+                        </form>
                     }
                     else
                     {
-                        <a asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@following.Username" type="button" class="btn btn-sm btn-success pull-right"><i class="fas fa-plus-circle"></i> <span>Follow</span></a>
+                        <form asp-area="" asp-controller="Profile" asp-action="Follow" asp-route-username="@following.Username" method="post">
+                            <button type="submit" class="btn btn-sm btn-success pull-right">
+                                <i class="fas fa-plus-circle"></i> <span>Follow</span>
+                            </button>
+                        </form>
                     }
+
                 }
             </div>
         </div>
