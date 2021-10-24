@@ -35,16 +35,20 @@ namespace SdvCode.ApplicationAttributes.ActionAttributes
                 .GetService(typeof(UserManager<ApplicationUser>)) as UserManager<ApplicationUser>;
 
             var username = context.HttpContext.User.Identity.Name;
-            var user = userManager.FindByNameAsync(username).Result;
-            var controller = context.Controller as Controller;
 
-            if (user.IsBlocked)
+            if (!string.IsNullOrEmpty(username))
             {
-                controller.TempData["Error"] = ErrorMessages.YouAreBlock;
-                context.Result = new RedirectToActionResult(
-                    this.redirectActionName,
-                    this.redirectControllerName,
-                    new { username });
+                var user = userManager.FindByNameAsync(username).Result;
+                var controller = context.Controller as Controller;
+
+                if (user.IsBlocked)
+                {
+                    controller.TempData["Error"] = ErrorMessages.YouAreBlock;
+                    context.Result = new RedirectToActionResult(
+                        this.redirectActionName,
+                        this.redirectControllerName,
+                        new { username });
+                }
             }
         }
     }

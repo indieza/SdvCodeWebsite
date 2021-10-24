@@ -120,9 +120,7 @@ namespace SdvCode.Controllers
                 return this.NotFound();
             }
 
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-
-            EditPostInputModel model = await this.blogService.ExtractPost(id, currentUser);
+            EditPostInputModel model = await this.blogService.ExtractPost(id);
             model.Categories = await this.blogService.ExtractAllCategoryNames();
             model.Tags = await this.blogService.ExtractAllTagNames();
 

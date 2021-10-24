@@ -118,5 +118,15 @@ namespace SdvCode.Constraints
         public const int MessagesCountPerScroll = 10;
 
         public const int RoldeDescriptionMaxLength = 250;
+
+        public const int RecentCommentsCount = 35;
+
+        public const int RecentPostsCount = 20;
+
+        public const int TopCategoriesCount = 10;
+
+        public const int TopPostsCount = 10;
+
+        public const int TopTagsCount = 10;
     }
 }

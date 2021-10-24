@@ -16,6 +16,7 @@ namespace SdvCode.Services.Blog
     using Microsoft.EntityFrameworkCore;
 
     using SdvCode.Areas.Administration.Models.Enums;
+    using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
@@ -31,6 +32,9 @@ namespace SdvCode.Services.Blog
 
     using X.PagedList;
 
+    /// <summary>
+    /// This service contains the logic to get all Blog information for Blog Component.
+    /// </summary>
     public class BlogComponentService : IBlogComponentService
     {
         private readonly ApplicationDbContext db;
@@ -47,6 +51,12 @@ namespace SdvCode.Services.Blog
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// This function will return the most recent comments made in the Blog Part of the application.
+        /// It contains filter logic relate to the current website visitor. Is it a visitor, a creator or user with higher priority roles.
+        /// </summary>
+        /// <param name="currentUser">Current logged in user.</param>
+        /// <returns>Returns a Collection of Recent Comments.</returns>
         public async Task<ICollection<RecentCommentViewModel>> ExtractRecentComments(ApplicationUser currentUser)
         {
             Expression<Func<Comment, bool>> filterFunction;
@@ -74,8 +84,8 @@ namespace SdvCode.Services.Blog
                 .Include(x => x.ApplicationUser)
                 .Where(filterFunction)
                 .OrderByDescending(x => x.UpdatedOn)
+                .Take(GlobalConstants.RecentCommentsCount)
                 .AsSplitQuery()
-                .Take(35)
                 .ToList();
 
             var model = this.mapper.Map<List<RecentCommentViewModel>>(comments);
@@ -92,6 +102,12 @@ namespace SdvCode.Services.Blog
             return model;
         }
 
+        /// <summary>
+        /// This function will return the most recent posts made in the Blog Part of the application.
+        /// It contains filter logic relate to the current website visitor. Is it a visitor, a creator or user with higher priority roles.
+        /// </summary>
+        /// <param name="currentUser">Current logged in user.</param>
+        /// <returns>Returns a Collection of Recent Posts.</returns>
         public async Task<List<RecentPostViewModel>> ExtractRecentPosts(ApplicationUser currentUser)
         {
             Expression<Func<Post, bool>> filterFunction;
@@ -121,26 +137,34 @@ namespace SdvCode.Services.Blog
                 .Include(x => x.ApplicationUser)
                 .Where(filterFunction)
                 .OrderByDescending(x => x.UpdatedOn)
+                .Take(GlobalConstants.RecentPostsCount)
                 .AsSplitQuery()
-                .Take(20)
                 .ToList();
 
             var model = this.mapper.Map<List<RecentPostViewModel>>(posts);
             return model;
         }
 
+        /// <summary>
+        /// This function will return TOP Categories in the Blog Part of the application.
+        /// </summary>
+        /// <returns>Returns a Collection of TOP Categories.</returns>
         public List<TopCategoryViewModel> ExtractTopCategories()
         {
             var categories = this.db.Categories
                 .Include(x => x.Posts)
+                .Take(GlobalConstants.TopCategoriesCount)
                 .AsSplitQuery()
-                .Take(10)
                 .ToList();
 
             var model = this.mapper.Map<List<TopCategoryViewModel>>(categories);
             return model;
         }
 
+        /// <summary>
+        /// This function will return TOP Posts in the Blog Part of the application.
+        /// </summary>
+        /// <returns>Returns a Collection of TOP Posts.</returns>
         public async Task<List<TopPostViewModel>> ExtractTopPosts(ApplicationUser currentUser)
         {
             Expression<Func<Post, bool>> filterFunction;
@@ -170,20 +194,24 @@ namespace SdvCode.Services.Blog
                 .Include(x => x.ApplicationUser)
                 .Where(filterFunction)
                 .OrderByDescending(x => x.Comments.Count + x.Likes)
+                .Take(GlobalConstants.TopPostsCount)
                 .AsSplitQuery()
-                .Take(10)
                 .ToList();
 
             var model = this.mapper.Map<List<TopPostViewModel>>(posts);
             return model;
         }
 
+        /// <summary>
+        /// This function will return TOP Tags in the Blog Part of the application.
+        /// </summary>
+        /// <returns>Returns a Collection of TOP Tags.</returns>
         public List<TopTagViewModel> ExtractTopTags()
         {
             var tags = this.db.Tags
                 .Include(x => x.TagsPosts)
+                .Take(GlobalConstants.TopTagsCount)
                 .AsSplitQuery()
-                .Take(10)
                 .ToList();
 
             var model = this.mapper.Map<List<TopTagViewModel>>(tags);

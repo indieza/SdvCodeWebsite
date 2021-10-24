@@ -24,7 +24,7 @@ namespace SdvCode.Services.Blog
 
         Task<Tuple<string, string>> DeletePost(string id, ApplicationUser user);
 
-        Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user);
+        Task<EditPostInputModel> ExtractPost(string id);
 
         Task<Tuple<string, string>> EditPost(EditPostInputModel model, ApplicationUser user);
 

@@ -308,17 +308,30 @@ namespace SdvCode.Services.Blog
             return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
         }
 
+        /// <summary>
+        /// This function get all Categories Names from the Database.
+        /// </summary>
+        /// <returns>Returns a Collection of Strings including all Categories Names.</returns>
         public async Task<ICollection<string>> ExtractAllCategoryNames()
         {
             return await this.db.Categories.Select(x => x.Name).OrderBy(x => x).ToListAsync();
         }
 
+        /// <summary>
+        /// This function get all Tag Names from the Database.
+        /// </summary>
+        /// <returns>Returns a Collection of Strings including all Tags Names.</returns>
         public async Task<ICollection<string>> ExtractAllTagNames()
         {
             return await this.db.Tags.Select(x => x.Name).OrderBy(x => x).ToListAsync();
         }
 
-        public async Task<EditPostInputModel> ExtractPost(string id, ApplicationUser user)
+        /// <summary>
+        /// This function will return a target post for editing by its ID from the database.
+        /// </summary>
+        /// <param name="id">ID of the current accessed Blog Post.</param>
+        /// <returns>Returns a input model.</returns>
+        public async Task<EditPostInputModel> ExtractPost(string id)
         {
             var post = await this.db.Posts
                 .Include(x => x.Category)
@@ -365,9 +378,9 @@ namespace SdvCode.Services.Blog
                     .Include(x => x.Comments)
                     .Include(x => x.FavouritePosts)
                     .Include(x => x.PostLikes)
-                    .AsSplitQuery()
                     .Where(filterFunction)
                     .OrderByDescending(x => x.UpdatedOn)
+                    .AsSplitQuery()
                     .ToList();
             }
             else
@@ -378,11 +391,11 @@ namespace SdvCode.Services.Blog
                     .Include(x => x.Comments)
                     .Include(x => x.FavouritePosts)
                     .Include(x => x.PostLikes)
-                    .AsSplitQuery()
                     .Where(x => EF.Functions.FreeText(x.Title, search) ||
                     EF.Functions.FreeText(x.ShortContent, search) ||
                     EF.Functions.FreeText(x.Content, search))
                     .OrderByDescending(x => x.UpdatedOn)
+                    .AsSplitQuery()
                     .ToList();
             }
 
@@ -390,6 +403,11 @@ namespace SdvCode.Services.Blog
             return postsModel;
         }
 
+        /// <summary>
+        /// This function will check is a target post exist by its ID in the database.
+        /// </summary>
+        /// <param name="id">ID of the current accessed Blog Post.</param>
+        /// <returns>Returns a boolean value, is the Blog Post exist.</returns>
         public async Task<bool> IsPostExist(string id)
         {
             return await this.db.Posts.AnyAsync(x => x.Id == id);
