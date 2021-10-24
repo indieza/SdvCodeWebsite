@@ -23,8 +23,7 @@ namespace SdvCode.Services.RecommendedFriends
             this.db.RemoveRange(trash);
             this.db.SaveChanges();
 
-            // this.db.Database.ExecuteSqlRaw("DBCC CHECKIDENT('[dbo].[RecommendedFriends]', RESEED, 0);");
-            var users = this.db.Users.Where(x => x.IsBlocked == false).ToList();
+            var users = this.db.Users.Where(x => !x.IsBlocked).ToList();
 
             foreach (var user in users)
             {
@@ -41,11 +40,8 @@ namespace SdvCode.Services.RecommendedFriends
                     {
                         user.RecommendedFriends.Add(new RecommendedFriend
                         {
-                            //RecommendedUsername = recommendedUser.UserName,
-                            //RecommendedFirstName = recommendedUser.FirstName,
-                            //RecommendedLastName = recommendedUser.LastName,
-                            //RecommendedImageUrl = recommendedUser.ImageUrl,
-                            //RecommendedCoverImage = recommendedUser.CoverImageUrl,
+                            ApplicationUserId = user.Id,
+                            RecommendedApplicationUserId = recommendedUser.Id,
                         });
                     }
                 }

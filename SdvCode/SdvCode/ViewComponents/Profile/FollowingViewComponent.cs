@@ -37,9 +37,7 @@ namespace SdvCode.ViewComponents.Profile
 
         public async Task<IViewComponentResult> InvokeAsync(string username, int page)
         {
-            var user = await this.userManager.FindByNameAsync(username);
-            var currentUserId = this.userManager.GetUserId(this.HttpContext.User);
-            List<FollowingViewModel> allFollowing = this.followingService.ExtractFollowing(user, currentUserId);
+            List<FollowingViewModel> allFollowing = await this.followingService.ExtractFollowing(username);
 
             FollowingPaginationViewModel model = new FollowingPaginationViewModel
             {

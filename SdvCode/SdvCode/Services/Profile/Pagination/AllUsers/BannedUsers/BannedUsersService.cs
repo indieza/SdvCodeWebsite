@@ -31,9 +31,6 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.BannedUsers
         public async Task<List<AllUsersUserCardViewModel>> ExtractAllUsers(string username, string search)
         {
             Expression<Func<ApplicationUser, bool>> usersFilter;
-            var user = await this.db.Users.FirstOrDefaultAsync(x => x.UserName == username);
-
-            var targetUsers = new List<ApplicationUser>();
 
             if (search == null)
             {
@@ -46,12 +43,11 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.BannedUsers
                       EF.Functions.FreeText(x.LastName, search)) && x.IsBlocked;
             }
 
-            var users = this.db.Users
+            var users = await this.db.Users
                 .Where(usersFilter)
-                .Include(x => x.UserRoles)
                 .Include(x => x.UserActions)
                 .AsSplitQuery()
-                .ToList();
+                .ToListAsync();
 
             var model = this.mapper.Map<List<AllUsersUserCardViewModel>>(users);
             return model;

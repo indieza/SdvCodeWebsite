@@ -24,41 +24,37 @@ namespace SdvCode.Services.Profile.Pagination.AllUsers.AllAdministrators
     public class AllAdministratorsService : IAllAdministratorsService
     {
         private readonly ApplicationDbContext db;
-        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IMapper mapper;
 
         public AllAdministratorsService(
             ApplicationDbContext db,
-            RoleManager<ApplicationRole> roleManager,
             IMapper mapper)
         {
             this.db = db;
-            this.roleManager = roleManager;
             this.mapper = mapper;
         }
 
         public async Task<List<AllUsersUserCardViewModel>> ExtractAllUsers(string username, string search)
         {
             Expression<Func<ApplicationUser, bool>> usersFilter;
-            var role = await this.roleManager.FindByNameAsync(GlobalConstants.AdministratorRole);
 
             if (search == null)
             {
-                usersFilter = x => x.UserRoles.Any(x => x.RoleId == role.Id);
+                usersFilter = x => x.UserRoles.Any(x => x.Role.Name == GlobalConstants.AdministratorRole);
             }
             else
             {
                 usersFilter = x => (EF.Functions.FreeText(x.UserName, search) ||
                      EF.Functions.FreeText(x.FirstName, search) ||
-                     EF.Functions.FreeText(x.LastName, search)) && x.UserRoles.Any(y => y.RoleId == role.Id);
+                     EF.Functions.FreeText(x.LastName, search)) &&
+                     x.UserRoles.Any(y => y.Role.Name == GlobalConstants.AdministratorRole);
             }
 
-            var users = this.db.Users
+            var users = await this.db.Users
                 .Where(usersFilter)
-                .Include(x => x.UserRoles)
                 .Include(x => x.UserActions)
                 .AsSplitQuery()
-                .ToList();
+                .ToListAsync();
 
             var model = this.mapper.Map<List<AllUsersUserCardViewModel>>(users);
             return model;

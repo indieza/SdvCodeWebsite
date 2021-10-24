@@ -7,12 +7,15 @@ namespace SdvCode.ViewComponents.AllUsers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
+
     using SdvCode.Constraints;
     using SdvCode.Services.Profile.Pagination.AllUsers;
     using SdvCode.Services.Profile.Pagination.AllUsers.AllAdministrators;
     using SdvCode.ViewModels.Pagination.AllUsers;
     using SdvCode.ViewModels.Users.ViewModels;
+
     using X.PagedList;
 
     public class AllAdministratorsViewComponent : ViewComponent

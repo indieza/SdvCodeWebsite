@@ -13,6 +13,6 @@ namespace SdvCode.Services.Profile.Pagination.Profile
 
     public interface IProfileFollowingService
     {
-        List<FollowingViewModel> ExtractFollowing(ApplicationUser user, string currentUserId);
+        Task<List<FollowingViewModel>> ExtractFollowing(string username);
     }
 }

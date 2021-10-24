@@ -29,14 +29,14 @@ namespace SdvCode.Services.Profile.Pagination.Profile
             this.mapper = mapper;
         }
 
-        public List<FollowersViewModel> ExtractFollowers(ApplicationUser user, string currentUserId)
+        public async Task<List<FollowersViewModel>> ExtractFollowers(string username)
         {
-            var followers = this.db.FollowUnfollows
-                .Where(x => x.ApplicationUserId == user.Id && x.IsFollowed == true)
+            var followers = await this.db.FollowUnfollows
+                .Where(x => x.ApplicationUser.UserName == username && x.IsFollowed == true)
                 .Include(x => x.Follower)
                 .Select(x => x.Follower)
                 .AsSplitQuery()
-                .ToList();
+                .ToListAsync();
 
             var model = this.mapper.Map<List<FollowersViewModel>>(followers);
             return model;
