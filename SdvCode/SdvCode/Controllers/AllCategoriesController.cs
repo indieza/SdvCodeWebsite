@@ -27,6 +27,11 @@ namespace SdvCode.Controllers
             this.allCategoriesService = allCategoriesService;
         }
 
+        /// <summary>
+        /// This function will return a list of all Categories with there TOP Blog Posts.
+        /// </summary>
+        /// <param name="page">Current page number.</param>
+        /// <returns>Returns a view with a collection of all Categories with there Posts.</returns>
         [HttpGet]
         [Route("AllCategories/{page?}")]
         public IActionResult Index(int? page)

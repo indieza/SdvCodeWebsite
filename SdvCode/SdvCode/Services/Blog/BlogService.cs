@@ -344,7 +344,7 @@ namespace SdvCode.Services.Blog
             return model;
         }
 
-        public async Task<ICollection<BlogPostCardViewModel>> ExtraxtAllPosts(ApplicationUser user, string search, int skipCount)
+        public async Task<ICollection<BlogPostCardViewModel>> ExtraxtAllPosts(ApplicationUser user, string search)
         {
             var posts = new List<Post>();
             Expression<Func<Post, bool>> filterFunction;

@@ -35,6 +35,12 @@ namespace SdvCode.Controllers
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// This function will return a list of all Blog Posts.
+        /// </summary>
+        /// <param name="page">Current page number.</param>
+        /// <param name="search">Current search text which will filter all Blog Posts.</param>
+        /// <returns>Returns a view with a collection with all BLog Posts.</returns>
         [HttpGet]
         [Route("Blog/{page?}/{search?}")]
         public async Task<IActionResult> Index(int? page, string search)
@@ -42,21 +48,25 @@ namespace SdvCode.Controllers
             var currentUser = await this.userManager.GetUserAsync(this.User);
             var pageNumber = page ?? 1;
 
-            if (search != null)
+            if (!string.IsNullOrEmpty(search.Trim()))
             {
                 pageNumber = 1;
             }
 
-            var posts = await this.blogService.ExtraxtAllPosts(currentUser, search, (pageNumber - 1) * GlobalConstants.BlogPostsOnPage);
+            var posts = await this.blogService.ExtraxtAllPosts(currentUser, search);
             var model = new BlogViewModel
             {
                 Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
-                Search = search,
+                Search = search.Trim(),
             };
 
             return this.View(model);
         }
 
+        /// <summary>
+        ///  This function will return a View with needed information for a Blog Post creation.
+        /// </summary>
+        /// <returns>Returns a view with data which is needed to create a Blog Post.</returns>
         [HttpGet]
         [Authorize]
         [UserBlocked("Index", "Profile")]
@@ -73,6 +83,11 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
+        /// <summary>
+        /// This function will create a new Blog Post.
+        /// </summary>
+        /// <param name="model">Data Input Model for Blog Post Creation Data.</param>
+        /// <returns>Redirect to Page based on IF-ELSE statement over the Input Model.</returns>
         [HttpPost]
         [Authorize]
         [UserBlocked("Index", "Profile")]
@@ -90,11 +105,15 @@ namespace SdvCode.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
+                return this.RedirectToAction("Index", "Blog", model);
             }
-
-            return this.RedirectToAction("Index", "Blog", model);
         }
 
+        /// <summary>
+        /// This function will delete a Blog Post by its ID.
+        /// </summary>
+        /// <param name="postId">The target Blog Post ID.</param>
+        /// <returns>Redirect to Page based on some IF-ELSE statements over the Input Model.</returns>
         [HttpPost]
         [Authorize]
         [Route("/Blog/DeletePost/{postId}")]
@@ -108,6 +127,11 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Blog");
         }
 
+        /// <summary>
+        /// This function will extract a target Blog Post information.
+        /// </summary>
+        /// <param name="id">ID of the target Blog Post for editing.</param>
+        /// <returns>Returns a View with a data for the target Blog Post.</returns>
         [HttpGet]
         [Route("/Blog/EditPost/{id}")]
         [Authorize]
