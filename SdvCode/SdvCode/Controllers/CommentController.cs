@@ -79,6 +79,12 @@ namespace SdvCode.Controllers
             return this.RedirectToAction("Index", "Blog");
         }
 
+        /// <summary>
+        /// This function will delete a comment for a target Blog Post.
+        /// </summary>
+        /// <param name="commentId">Target comment ID.</param>
+        /// <param name="postId">Target post ID related to the comment ID.</param>
+        /// <returns>Redirect to Action based on IF-ELSE statements.</returns>
         [HttpPost]
         [Route("/Comment/DeleteById/{commentId}/{postId}")]
         [UserBlocked("Index", "Profile")]

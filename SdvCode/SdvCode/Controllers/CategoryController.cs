@@ -31,6 +31,12 @@ namespace SdvCode.Controllers
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// This function will get all categories with there related Blog Posts.
+        /// </summary>
+        /// <param name="id">Target Category ID.</param>
+        /// <param name="page">Target page for displayed items.</param>
+        /// <returns>Return a View with a View Model with all Categories and there Blog Posts.</returns>
         [HttpGet]
         [Authorize]
         [Route("Blog/Category/{id}/{page?}")]

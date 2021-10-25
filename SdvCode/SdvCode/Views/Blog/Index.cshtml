@@ -19,7 +19,9 @@
                     @if (User.IsInRole(Roles.Administrator.ToString()) || User.IsInRole(Roles.Author.ToString()) || User.IsInRole(Roles.Contributor.ToString()) || User.IsInRole(Roles.Editor.ToString()))
                     {
                         <li>
-                            <a asp-area="" asp-controller="Blog" asp-action="CreatePost" class="btn btn-primary solid square">Create Post</a>
+                            <a asp-area="" asp-controller="Blog" asp-action="CreatePost" class="btn btn-primary solid square">
+                                Create Post
+                            </a>
                         </li>
                     }
                 }

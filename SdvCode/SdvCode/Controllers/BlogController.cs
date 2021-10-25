@@ -48,7 +48,7 @@ namespace SdvCode.Controllers
             var currentUser = await this.userManager.GetUserAsync(this.User);
             var pageNumber = page ?? 1;
 
-            if (!string.IsNullOrEmpty(search.Trim()))
+            if (!string.IsNullOrEmpty(search))
             {
                 pageNumber = 1;
             }
@@ -57,7 +57,7 @@ namespace SdvCode.Controllers
             var model = new BlogViewModel
             {
                 Posts = posts.ToPagedList(pageNumber, GlobalConstants.BlogPostsOnPage),
-                Search = search.Trim(),
+                Search = search,
             };
 
             return this.View(model);
@@ -69,6 +69,7 @@ namespace SdvCode.Controllers
         /// <returns>Returns a view with data which is needed to create a Blog Post.</returns>
         [HttpGet]
         [Authorize]
+        [Route("/Blog/CreatePost")]
         [UserBlocked("Index", "Profile")]
         [PostCrudOperations("Index", "Blog", null, ErrorMessages.NoPermissionsToCreateBlogPost)]
         public async Task<IActionResult> CreatePost()
@@ -105,7 +106,7 @@ namespace SdvCode.Controllers
             else
             {
                 this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-                return this.RedirectToAction("Index", "Blog", model);
+                return this.View(model);
             }
         }
 
@@ -151,6 +152,11 @@ namespace SdvCode.Controllers
             return this.View(model);
         }
 
+        /// <summary>
+        /// This function will edit an existing Blog Post.
+        /// </summary>
+        /// <param name="model">Data Input Model for Blog Post Editing Data.</param>
+        /// <returns>Redirect to Page based on IF-ELSE statement over the Input Model.</returns>
         [HttpPost]
         [Authorize]
         [UserBlocked("Index", "Profile")]
@@ -166,7 +172,7 @@ namespace SdvCode.Controllers
             }
 
             this.TempData["Error"] = ErrorMessages.InvalidInputModel;
-            return this.RedirectToAction("Index", "Blog");
+            return this.View(model);
         }
     }
 }
