@@ -9,7 +9,7 @@ namespace SdvCode.Areas.Administration.Services.DbUsage
 
     public interface IDbUsageService
     {
-        Task<bool> RemoveActivitiesByName(UserActionsType actionValue);
+        Task<bool> RemoveActivitiesByName(UserActionType actionValue);
 
         Task<int> RemoveAllActivities();
 

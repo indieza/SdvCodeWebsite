@@ -106,7 +106,7 @@
 
             UserAction userAction = new UserAction
             {
-                Action = UserActionsType.CreatePost,
+                ActionType = UserActionType.CreatePost,
                 PostId = post.Id,
             };
 

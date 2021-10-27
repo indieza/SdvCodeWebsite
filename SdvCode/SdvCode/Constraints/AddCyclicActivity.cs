@@ -21,61 +21,61 @@ namespace SdvCode.Constraints
             this.db = db;
         }
 
-        public void AddUserAction(ApplicationUser user, UserActionsType action, ApplicationUser userPost)
+        public void AddUserAction(ApplicationUser user, UserActionType action, ApplicationUser userPost)
         {
             if (this.db.UserActions
-                    .Any(x => x.Action == action &&
+                    .Any(x => x.ActionType == action &&
                     x.ApplicationUserId == userPost.Id &&
                     x.PersonUsername == userPost.UserName &&
                     x.FollowerUsername == user.UserName))
             {
                 var targetAction = this.db.UserActions
-                    .FirstOrDefault(x => x.Action == action &&
+                    .FirstOrDefault(x => x.ActionType == action &&
                     x.ApplicationUserId == userPost.Id &&
                     x.PersonUsername == userPost.UserName &&
                     x.FollowerUsername == user.UserName);
                 targetAction.ActionDate = DateTime.UtcNow;
-                targetAction.ActionStatus = UserActionsStatus.Unread;
+                targetAction.ActionStatus = UserActionStatus.Unread;
             }
             else
             {
                 this.db.UserActions.Add(new UserAction
                 {
-                    Action = action,
-                    ActionDate = DateTime.UtcNow,
+                    ActionType = action,
+                    CreatedOn = DateTime.UtcNow,
                     ApplicationUserId = userPost.Id,
                     PersonUsername = userPost.UserName,
                     FollowerUsername = user.UserName,
                     ProfileImageUrl = user.ImageUrl,
-                    ActionStatus = UserActionsStatus.Unread,
+                    ActionStatus = UserActionStatus.Unread,
                 });
             }
         }
 
-        public void AddLikeUnlikeActivity(ApplicationUser user, Post post, UserActionsType action, ApplicationUser postUser)
+        public void AddLikeUnlikeActivity(ApplicationUser user, Post post, UserActionType action, ApplicationUser postUser)
         {
             if (this.db.UserActions
                 .Any(x => x.PostId == post.Id &&
                 x.ApplicationUserId == user.Id &&
                 x.PersonUsername == user.UserName &&
                 x.FollowerUsername == postUser.UserName &&
-                x.Action == action))
+                x.ActionType == action))
             {
                 var targetAction = this.db.UserActions
                     .FirstOrDefault(x => x.PostId == post.Id &&
                     x.ApplicationUserId == user.Id &&
                     x.PersonUsername == user.UserName &&
                     x.FollowerUsername == postUser.UserName &&
-                    x.Action == action);
+                    x.ActionType == action);
                 targetAction.ActionDate = DateTime.UtcNow;
-                targetAction.ActionStatus = UserActionsStatus.Unread;
+                targetAction.ActionStatus = UserActionStatus.Unread;
             }
             else
             {
                 this.db.UserActions.Add(new UserAction
                 {
-                    Action = action,
-                    ActionDate = DateTime.UtcNow,
+                    ActionType = action,
+                    CreatedOn = DateTime.UtcNow,
                     ApplicationUserId = user.Id,
                     PersonUsername = user.UserName,
                     FollowerUsername = postUser.UserName,
@@ -83,7 +83,7 @@ namespace SdvCode.Constraints
                     PostId = post.Id,
                     PostTitle = post.Title,
                     PostContent = post.ShortContent,
-                    ActionStatus = UserActionsStatus.Unread,
+                    ActionStatus = UserActionStatus.Unread,
                 });
             }
         }

@@ -240,8 +240,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             {
                 user.UserActions.Add(new UserAction
                 {
-                    Action = UserActionsType.EditPersonalData,
-                    ActionDate = DateTime.UtcNow,
+                    ActionType = UserActionType.EditPersonalData,
+                    CreatedOn = DateTime.UtcNow,
                     PersonUsername = user.UserName,
                     ProfileImageUrl = user.ImageUrl,
                     ApplicationUserId = user.Id,
@@ -252,8 +252,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             {
                 user.UserActions.Add(new UserAction
                 {
-                    Action = UserActionsType.ChangeCoverImage,
-                    ActionDate = DateTime.UtcNow,
+                    ActionType = UserActionType.ChangeCoverImage,
+                    CreatedOn = DateTime.UtcNow,
                     PersonUsername = user.UserName,
                     ProfileImageUrl = user.ImageUrl,
                     CoverImageUrl = coverImageUrl,
@@ -265,8 +265,8 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             {
                 user.UserActions.Add(new UserAction
                 {
-                    Action = UserActionsType.ChangeProfilePicture,
-                    ActionDate = DateTime.UtcNow,
+                    ActionType = UserActionType.ChangeProfilePicture,
+                    CreatedOn = DateTime.UtcNow,
                     PersonUsername = user.UserName,
                     ProfileImageUrl = profileImageUrl,
                     ApplicationUserId = user.Id,

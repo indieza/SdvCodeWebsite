@@ -150,12 +150,12 @@ namespace SdvCode.Services.Post
 
                 if (post.ApplicationUserId == user.Id)
                 {
-                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionsType.LikeOwnPost, user);
+                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionType.LikeOwnPost, user);
                 }
                 else
                 {
-                    this.cyclicActivity.AddLikeUnlikeActivity(post.ApplicationUser, post, UserActionsType.LikedPost, user);
-                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionsType.LikePost, post.ApplicationUser);
+                    this.cyclicActivity.AddLikeUnlikeActivity(post.ApplicationUser, post, UserActionType.LikedPost, user);
+                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionType.LikePost, post.ApplicationUser);
                 }
 
                 await this.db.SaveChangesAsync();
@@ -198,12 +198,12 @@ namespace SdvCode.Services.Post
 
                 if (post.ApplicationUserId == user.Id)
                 {
-                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionsType.UnlikeOwnPost, user);
+                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionType.UnlikeOwnPost, user);
                 }
                 else
                 {
-                    this.cyclicActivity.AddLikeUnlikeActivity(post.ApplicationUser, post, UserActionsType.UnlikedPost, user);
-                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionsType.UnlikePost, post.ApplicationUser);
+                    this.cyclicActivity.AddLikeUnlikeActivity(post.ApplicationUser, post, UserActionType.UnlikedPost, user);
+                    this.cyclicActivity.AddLikeUnlikeActivity(user, post, UserActionType.UnlikePost, post.ApplicationUser);
                 }
 
                 await this.db.SaveChangesAsync();

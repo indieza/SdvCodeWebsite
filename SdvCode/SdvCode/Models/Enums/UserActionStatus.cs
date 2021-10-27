@@ -3,7 +3,7 @@
 
 namespace SdvCode.Models.Enums
 {
-    public enum UserActionsStatus
+    public enum UserActionStatus
     {
         Unread = 1,
         Read = 2,

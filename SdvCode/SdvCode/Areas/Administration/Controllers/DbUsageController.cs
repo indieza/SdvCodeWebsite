@@ -49,7 +49,7 @@ namespace SdvCode.Areas.Administration.Controllers
                 string activityText = model.ActivityName;
                 string activityName = string.Join(string.Empty, activityText.Split(" "));
 
-                UserActionsType actionValue = (UserActionsType)Enum.Parse(typeof(UserActionsType), activityName);
+                UserActionType actionValue = (UserActionType)Enum.Parse(typeof(UserActionType), activityName);
                 bool isRemoved = await this.dbUsageService.RemoveActivitiesByName(actionValue);
 
                 if (isRemoved)

@@ -21,7 +21,7 @@
                 <div class="card border-left-danger shadow h-100 py-4">
                     <input asp-for="@Model.ActivityName" class="chosen-value clearUserActionValue" type="text" value="" placeholder="Type to filter" autocomplete="off" required />
                     <ul class="value-list clearActionsList">
-                        @foreach (var action in @Html.GetEnumSelectList<UserActionsType>())
+                        @foreach (var action in @Html.GetEnumSelectList<UserActionType>())
                         {
                             <li id="addActions">@action.Text</li>
                         }

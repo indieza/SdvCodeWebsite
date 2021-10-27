@@ -57,7 +57,7 @@ namespace SdvCode.Services.Profile
         public async Task<string> DeleteActivityById(ApplicationUser user, string activityId)
         {
             var trash = this.db.UserActions.FirstOrDefault(x => x.ApplicationUserId == user.Id && x.Id == activityId);
-            var activityName = trash.Action.ToString();
+            var activityName = trash.ActionType.ToString();
             this.db.UserActions.Remove(trash);
             await this.db.SaveChangesAsync();
             return activityName;
@@ -104,8 +104,8 @@ namespace SdvCode.Services.Profile
                 this.db.FollowUnfollows.FirstOrDefault(x => x.ApplicationUserId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
             }
 
-            this.AddUserAction(user, UserActionsType.Follow, currentUser);
-            this.AddUserAction(currentUser, UserActionsType.Followed, user);
+            this.AddUserAction(user, UserActionType.Follow, currentUser);
+            this.AddUserAction(currentUser, UserActionType.Followed, user);
             await this.db.SaveChangesAsync();
 
             return currentUser;
@@ -121,8 +121,8 @@ namespace SdvCode.Services.Profile
                     .FirstOrDefault(x => x.ApplicationUserId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true)
                     .IsFollowed = false;
 
-                this.AddUserAction(user, UserActionsType.Unfollow, currentUser);
-                this.AddUserAction(currentUser, UserActionsType.Unfollowed, user);
+                this.AddUserAction(user, UserActionType.Unfollow, currentUser);
+                this.AddUserAction(currentUser, UserActionType.Unfollowed, user);
                 await this.db.SaveChangesAsync();
             }
 
@@ -252,7 +252,7 @@ namespace SdvCode.Services.Profile
 
             if (action != null)
             {
-                action.ActionStatus = (UserActionsStatus)Enum.Parse(typeof(UserActionsStatus), newStatus);
+                action.ActionStatus = (UserActionStatus)Enum.Parse(typeof(UserActionStatus), newStatus);
                 this.db.UserActions.Update(action);
                 await this.db.SaveChangesAsync();
             }

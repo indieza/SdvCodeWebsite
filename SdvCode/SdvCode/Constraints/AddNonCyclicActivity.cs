@@ -21,12 +21,12 @@ namespace SdvCode.Constraints
             this.db = db;
         }
 
-        public void AddUserAction(ApplicationUser user, Post post, UserActionsType action, ApplicationUser postUser)
+        public void AddUserAction(ApplicationUser user, Post post, UserActionType action, ApplicationUser postUser)
         {
             this.db.UserActions.Add(new UserAction
             {
-                Action = action,
-                ActionDate = DateTime.UtcNow,
+                ActionType = action,
+                CreatedOn = DateTime.UtcNow,
                 ApplicationUserId = user.Id,
                 PersonUsername = user.UserName,
                 FollowerUsername = postUser.UserName,

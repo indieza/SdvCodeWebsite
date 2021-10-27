@@ -18,7 +18,7 @@ namespace SdvCode.ViewModels.Profile.UserViewComponents.ActivitiesComponent
 
         public ActivitiesApplicationUserViewModel ApplicationUser { get; set; }
 
-        public UserActionsType Action { get; set; }
+        public UserActionType Action { get; set; }
 
         public DateTime ActionDate { get; set; }
 
@@ -36,6 +36,6 @@ namespace SdvCode.ViewModels.Profile.UserViewComponents.ActivitiesComponent
 
         public string PostContent { get; set; }
 
-        public UserActionsStatus ActionStatus { get; set; }
+        public UserActionStatus ActionStatus { get; set; }
     }
 }

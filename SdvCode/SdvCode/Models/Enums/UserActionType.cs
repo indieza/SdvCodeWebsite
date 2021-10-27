@@ -5,7 +5,7 @@ namespace SdvCode.Models.Enums
 {
     using System.ComponentModel.DataAnnotations;
 
-    public enum UserActionsType
+    public enum UserActionType
     {
         [Display(Name = "Follow")]
         Follow = 1,

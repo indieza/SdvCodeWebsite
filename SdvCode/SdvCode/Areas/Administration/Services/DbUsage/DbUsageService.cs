@@ -90,9 +90,9 @@ namespace SdvCode.Areas.Administration.Services.DbUsage
             return this.db.Users.Select(x => x.UserName).ToList();
         }
 
-        public async Task<bool> RemoveActivitiesByName(UserActionsType actionValue)
+        public async Task<bool> RemoveActivitiesByName(UserActionType actionValue)
         {
-            var allActions = this.db.UserActions.Where(x => x.Action == actionValue).ToList();
+            var allActions = this.db.UserActions.Where(x => x.ActionType == actionValue).ToList();
 
             if (allActions.Count() == 0)
             {

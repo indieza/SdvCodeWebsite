@@ -20,11 +20,11 @@ namespace SdvCode.Services.UserActivitesDbUsage.FollowActivities
         public void DeleteFollowActivites()
         {
             var target = this.db.UserActions
-                .Where(x => (x.Action == UserActionsType.Follow ||
-                x.Action == UserActionsType.Followed ||
-                x.Action == UserActionsType.Unfollow ||
-                x.Action == UserActionsType.Unfollowed) &&
-                x.ActionStatus == UserActionsStatus.Read)
+                .Where(x => (x.ActionType == UserActionType.Follow ||
+                x.ActionType == UserActionType.Followed ||
+                x.ActionType == UserActionType.Unfollow ||
+                x.ActionType == UserActionType.Unfollowed) &&
+                x.ActionStatus == UserActionStatus.Read)
                 .ToList();
 
             this.db.UserActions.RemoveRange(target);

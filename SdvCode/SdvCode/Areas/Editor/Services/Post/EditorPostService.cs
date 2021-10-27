@@ -24,18 +24,18 @@ namespace SdvCode.Areas.Editor.Services.Post
         private readonly ApplicationDbContext db;
         private readonly INotificationService notificationService;
         private readonly IHubContext<NotificationHub> notificationHubContext;
-        private readonly List<UserActionsType> actionsForBann = new List<UserActionsType>()
+        private readonly List<UserActionType> actionsForBann = new List<UserActionType>()
         {
-            UserActionsType.LikedPost,
-            UserActionsType.LikePost,
-            UserActionsType.LikeOwnPost,
-            UserActionsType.EditedPost,
-            UserActionsType.EditPost,
-            UserActionsType.EditOwnPost,
-            UserActionsType.CreatePost,
-            UserActionsType.UnlikedPost,
-            UserActionsType.UnlikePost,
-            UserActionsType.UnlikeOwnPost,
+            UserActionType.LikedPost,
+            UserActionType.LikePost,
+            UserActionType.LikeOwnPost,
+            UserActionType.EditedPost,
+            UserActionType.EditPost,
+            UserActionType.EditOwnPost,
+            UserActionType.CreatePost,
+            UserActionType.UnlikedPost,
+            UserActionType.UnlikePost,
+            UserActionType.UnlikeOwnPost,
         };
 
         public EditorPostService(
@@ -150,7 +150,7 @@ namespace SdvCode.Areas.Editor.Services.Post
                     }
 
                     var actions = this.db.UserActions
-                        .Where(x => x.PostId == id && this.actionsForBann.Contains(x.Action));
+                        .Where(x => x.PostId == id && this.actionsForBann.Contains(x.ActionType));
 
                     this.db.FavouritePosts.UpdateRange(favorites);
                     this.db.PostsLikes.UpdateRange(likes);

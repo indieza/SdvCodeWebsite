@@ -40,7 +40,7 @@ namespace SdvCode.Services.Profile.Pagination.Profile
             var activities = this.db.UserActions
                 .Where(x => x.ApplicationUserId == user.Id)
                 .Include(x => x.ApplicationUser)
-                .OrderByDescending(x => x.ActionDate)
+                .OrderByDescending(x => x.CreatedOn)
                 .AsSplitQuery()
                 .ToList();
 
