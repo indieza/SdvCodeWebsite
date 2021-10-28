@@ -74,7 +74,6 @@ namespace SdvCode.Areas.Identity.Pages.Account
                 {
                     UserName = this.Input.Username,
                     Email = this.Input.Email,
-                    RegisteredOn = DateTime.UtcNow,
                     ImageUrl = GlobalConstants.NoAvatarImageLocation,
                     CoverImageUrl = GlobalConstants.NoCoverImageLocation,
                 };

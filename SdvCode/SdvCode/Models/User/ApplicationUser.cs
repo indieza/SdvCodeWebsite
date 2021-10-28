@@ -21,6 +21,7 @@ namespace SdvCode.Models.User
     {
         public ApplicationUser()
         {
+            this.RegisteredOn = DateTime.UtcNow;
         }
 
         [ForeignKey(nameof(ZipCode))]
