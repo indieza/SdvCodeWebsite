@@ -18,6 +18,7 @@ namespace SdvCode.Models.User
         {
             this.Id = Guid.NewGuid().ToString();
             this.ActionStatus = UserActionStatus.Unread;
+            this.CreatedOn = DateTime.UtcNow;
         }
 
         [Key]
