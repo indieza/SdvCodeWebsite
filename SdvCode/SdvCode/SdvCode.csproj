@@ -32,7 +32,7 @@
     <PackageReference Include="EPPlus" Version="5.7.5" />
     <PackageReference Include="GiphyDotNet" Version="2.0.0" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.25" />
-    <PackageReference Include="Hangfire.Core" Version="1.7.25" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.26" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.25" />
     <PackageReference Include="HtmlSanitizer" Version="6.0.441" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.11" />
