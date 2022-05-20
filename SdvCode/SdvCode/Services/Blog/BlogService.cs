@@ -65,7 +65,8 @@ namespace SdvCode.Services.Blog
 
         public async Task<Tuple<string, string>> CreatePost(CreatePostIndexModel model, ApplicationUser user)
         {
-            var category = this.db.Categories.FirstOrDefault(x => x.Name == model.PostInputModel.CategoryName);
+            var category = await this.db.Categories
+                .FirstOrDefaultAsync(x => x.Name.ToUpper() == model.PostInputModel.CategoryName.ToUpper());
             var contentWithoutTags = Regex.Replace(model.PostInputModel.SanitizeContent, "<.*?>", string.Empty);
 
             var post = new Post
@@ -115,7 +116,7 @@ namespace SdvCode.Services.Blog
 
             foreach (var tagName in model.PostInputModel.TagsNames)
             {
-                var tag = this.db.Tags.FirstOrDefault(x => x.Name.ToLower() == tagName.ToLower());
+                var tag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToLower() == tagName.ToLower());
                 post.PostsTags.Add(new PostTag
                 {
                     PostId = post.Id,

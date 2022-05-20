@@ -4,6 +4,7 @@
 namespace SdvCode.Areas.Identity.Pages.Account.Manage
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -114,100 +115,118 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                 this.ManageAccountBaseModel.ManageAccountInputModel.ZipCode,
                 targetCity);
 
+            var personalDataContent = new List<string>();
+
             if (user.CountryCodeId != targetCountryCode?.Id)
             {
                 user.CountryCodeId = targetCountryCode?.Id;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Country Code");
             }
 
             if (user.CountryId != targetCountry?.Id)
             {
                 user.CountryId = targetCountry?.Id;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Country");
             }
 
             if (user.StateId != targetState?.Id)
             {
                 user.StateId = targetState?.Id;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("State");
             }
 
             if (user.CityId != targetCity?.Id)
             {
                 user.CityId = targetCity?.Id;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("City");
             }
 
             if (user.ZipCodeId != targetZipCode?.Id)
             {
                 user.ZipCodeId = targetZipCode?.Id;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Zip Code");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.BirthDate != user.BirthDate)
             {
                 user.BirthDate = this.ManageAccountBaseModel.ManageAccountInputModel.BirthDate;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Birth Date");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.Gender != user.Gender)
             {
                 user.Gender = this.ManageAccountBaseModel.ManageAccountInputModel.Gender;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Gender");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.AboutMe != user.AboutMe)
             {
                 user.AboutMe = this.ManageAccountBaseModel.ManageAccountInputModel.AboutMe;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Bio");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.FirstName != user.FirstName)
             {
                 user.FirstName = this.ManageAccountBaseModel.ManageAccountInputModel.FirstName;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("First Name");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.LastName != user.LastName)
             {
                 user.LastName = this.ManageAccountBaseModel.ManageAccountInputModel.LastName;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Last Name");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.GitHubUrl != user.GitHubUrl)
             {
                 user.GitHubUrl = this.ManageAccountBaseModel.ManageAccountInputModel.GitHubUrl;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("GitHub URL");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.StackoverflowUrl != user.StackoverflowUrl)
             {
                 user.StackoverflowUrl = this.ManageAccountBaseModel.ManageAccountInputModel.StackoverflowUrl;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Stackoverflow URL");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.FacebookUrl != user.FacebookUrl)
             {
                 user.FacebookUrl = this.ManageAccountBaseModel.ManageAccountInputModel.FacebookUrl;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Facebook URL");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.LinkedinUrl != user.LinkedinUrl)
             {
                 user.LinkedinUrl = this.ManageAccountBaseModel.ManageAccountInputModel.LinkedinUrl;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("LinkedIn URL");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.TwitterUrl != user.TwitterUrl)
             {
                 user.TwitterUrl = this.ManageAccountBaseModel.ManageAccountInputModel.TwitterUrl;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Twitter URL");
             }
 
             if (this.ManageAccountBaseModel.ManageAccountInputModel.InstagramUrl != user.InstagramUrl)
             {
                 user.InstagramUrl = this.ManageAccountBaseModel.ManageAccountInputModel.InstagramUrl;
                 isUpdatePersonalData = true;
+                personalDataContent.Add("Instagram URL");
             }
 
             var profileImageUrl = await ApplicationCloudinary.UploadImage(
@@ -248,7 +267,7 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
                     {
                         ApplicationUser = user,
                         ApplicationUserId = user.Id,
-                        Content = "Some content!!!",
+                        Content = $"User has changed his {string.Join(", ", personalDataContent)}.",
                     },
                 });
             }
