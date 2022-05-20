@@ -7,10 +7,12 @@ namespace SdvCode.Constraints
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.Models.User.UserActions;
 
     public class AddNonCyclicActivity
     {
@@ -21,20 +23,12 @@ namespace SdvCode.Constraints
             this.db = db;
         }
 
-        public void AddUserAction(ApplicationUser user, Post post, UserActionType action, ApplicationUser postUser)
-        {
-            this.db.UserActions.Add(new UserAction
-            {
-                ActionType = action,
-                CreatedOn = DateTime.UtcNow,
-                ApplicationUserId = user.Id,
-                PersonUsername = user.UserName,
-                FollowerUsername = postUser.UserName,
-                ProfileImageUrl = postUser.ImageUrl,
-                PostId = post.Id,
-                PostTitle = post.Title,
-                PostContent = post.ShortContent,
-            });
-        }
+        //public void AddUserAction(ApplicationUser user, Post post, BaseUserAction action, ApplicationUser postUser)
+        //{
+        //    this.db.UserActions.Add(new UserAction
+        //    {
+        //        BaseUserAction = action,
+        //    });
+        //}
     }
 }

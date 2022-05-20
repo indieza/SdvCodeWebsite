@@ -13,6 +13,9 @@ namespace SdvCode.Data
     using SdvCode.Areas.UserNotifications.Models;
     using SdvCode.Models.Blog;
     using SdvCode.Models.User;
+    using SdvCode.Models.User.UserActions;
+    using SdvCode.Models.User.UserActions.BlogActions;
+    using SdvCode.Models.User.UserActions.ProfileActions;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string,
         IdentityUserClaim<string>, ApplicationUserRole, IdentityUserLogin<string>,
@@ -26,6 +29,8 @@ namespace SdvCode.Data
         public DbSet<FollowUnfollow> FollowUnfollows { get; set; }
 
         public DbSet<UserAction> UserActions { get; set; }
+
+        public DbSet<BaseUserAction> BaseUserActions { get; set; }
 
         public DbSet<Post> Posts { get; set; }
 
@@ -117,6 +122,27 @@ namespace SdvCode.Data
             builder.Entity<ApplicationRole>().ToTable("ApplicationRoles");
 
             builder.Entity<ApplicationUserRole>().ToTable("ApplicationUsersRoles");
+            builder.Entity<UnfollowUserAction>().ToTable("UnfollowUserActions");
+            builder.Entity<UnfollowedUserAction>().ToTable("UnfollowedUserActions");
+            builder.Entity<FollowUserAction>().ToTable("FollowUserActions");
+            builder.Entity<FollowedUserAction>().ToTable("FollowedUserActions");
+            builder.Entity<ChangeCoverImageUserAction>().ToTable("ChangeCoverImageUserActions");
+            builder.Entity<ChangeProfilePictureUserAction>().ToTable("ChangeProfilePictureUserActions");
+            builder.Entity<EditPersonalDataUserAction>().ToTable("EditPersonalDataUserActions");
+
+            builder.Entity<CreatePostUserAction>().ToTable("CreatePostUserActions");
+            builder.Entity<DeletedPostUserAction>().ToTable("DeletedPostUserActions");
+            builder.Entity<DeleteOwnPostUserAction>().ToTable("DeleteOwnPostUserActions");
+            builder.Entity<DeletePostUserAction>().ToTable("DeletePostUserActions");
+            builder.Entity<EditedPostUserAction>().ToTable("EditedPostUserActions");
+            builder.Entity<EditOwnPostUserAction>().ToTable("EditOwnPostUserActions");
+            builder.Entity<EditPostUserAction>().ToTable("EditPostUserActions");
+            builder.Entity<LikedPostUserAction>().ToTable("LikedPostUserActions");
+            builder.Entity<LikeOwnPostUserAction>().ToTable("LikeOwnPostUserActions");
+            builder.Entity<LikePostUserAction>().ToTable("LikePostUserActions");
+            builder.Entity<UnlikedPostUserAction>().ToTable("UnlikedPostUserActions");
+            builder.Entity<UnlikeOwnPostUserAction>().ToTable("UnlikeOwnPostUserActions");
+            builder.Entity<UnlikePostUserAction>().ToTable("UnlikePostUserActions");
 
             builder.Entity<Post>(entity =>
             {
@@ -335,6 +361,12 @@ namespace SdvCode.Data
                 .HasForeignKey(e => e.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(true);
+
+            builder.Entity<UserAction>()
+               .HasOne(x => x.BaseUserAction)
+               .WithOne(x => x.UserAction)
+               .HasForeignKey<UserAction>(x => x.BaseUserActionId)
+               .IsRequired(true);
         }
     }
 }

@@ -6,7 +6,9 @@ namespace SdvCode.Areas.Administration.Services.DbUsage
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet;
+
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Enums;
@@ -92,7 +94,7 @@ namespace SdvCode.Areas.Administration.Services.DbUsage
 
         public async Task<bool> RemoveActivitiesByName(UserActionType actionValue)
         {
-            var allActions = this.db.UserActions.Where(x => x.ActionType == actionValue).ToList();
+            var allActions = this.db.UserActions.Where(x => x.BaseUserAction.ActionType == actionValue).ToList();
 
             if (allActions.Count() == 0)
             {

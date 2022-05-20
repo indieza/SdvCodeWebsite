@@ -10,10 +10,13 @@ namespace SdvCode.Models.User.UserActions
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class FollowedUserAction
+    using SdvCode.Models.Enums;
+
+    public class FollowedUserAction : BaseUserAction
     {
         public FollowedUserAction()
         {
+            this.ActionType = UserActionType.Followed;
         }
 
         [Required]

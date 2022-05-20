@@ -49,15 +49,15 @@ namespace SdvCode.Services.Profile
 
         public async Task DeleteActivity(ApplicationUser user)
         {
-            var trash = this.db.UserActions.Where(x => x.ApplicationUserId == user.Id).ToList();
+            var trash = this.db.UserActions.Where(x => x.BaseUserAction.ApplicationUserId == user.Id).ToList();
             this.db.UserActions.RemoveRange(trash);
             await this.db.SaveChangesAsync();
         }
 
         public async Task<string> DeleteActivityById(ApplicationUser user, string activityId)
         {
-            var trash = this.db.UserActions.FirstOrDefault(x => x.ApplicationUserId == user.Id && x.Id == activityId);
-            var activityName = trash.ActionType.ToString();
+            var trash = this.db.UserActions.FirstOrDefault(x => x.BaseUserAction.ApplicationUserId == user.Id && x.Id == activityId);
+            var activityName = trash.BaseUserAction.ActionType.ToString();
             this.db.UserActions.Remove(trash);
             await this.db.SaveChangesAsync();
             return activityName;
@@ -104,8 +104,8 @@ namespace SdvCode.Services.Profile
                 this.db.FollowUnfollows.FirstOrDefault(x => x.ApplicationUserId == user.Id && x.FollowerId == currentUser.Id).IsFollowed = true;
             }
 
-            this.AddUserAction(user, UserActionType.Follow, currentUser);
-            this.AddUserAction(currentUser, UserActionType.Followed, user);
+            //this.AddUserAction(user, UserActionType.Follow, currentUser);
+            //this.AddUserAction(currentUser, UserActionType.Followed, user);
             await this.db.SaveChangesAsync();
 
             return currentUser;
@@ -121,8 +121,8 @@ namespace SdvCode.Services.Profile
                     .FirstOrDefault(x => x.ApplicationUserId == user.Id && x.FollowerId == currentUser.Id && x.IsFollowed == true)
                     .IsFollowed = false;
 
-                this.AddUserAction(user, UserActionType.Unfollow, currentUser);
-                this.AddUserAction(currentUser, UserActionType.Unfollowed, user);
+                //this.AddUserAction(user, UserActionType.Unfollow, currentUser);
+                //this.AddUserAction(currentUser, UserActionType.Unfollowed, user);
                 await this.db.SaveChangesAsync();
             }
 
@@ -248,11 +248,11 @@ namespace SdvCode.Services.Profile
         public async Task ChangeActionStatus(string username, string id, string newStatus)
         {
             var action = await this.db.UserActions
-                .FirstOrDefaultAsync(x => x.Id == id && x.PersonUsername == username);
+                .FirstOrDefaultAsync(x => x.Id == id && x.BaseUserAction.ApplicationUser.UserName == username);
 
             if (action != null)
             {
-                action.ActionStatus = (UserActionStatus)Enum.Parse(typeof(UserActionStatus), newStatus);
+                action.BaseUserAction.ActionStatus = (UserActionStatus)Enum.Parse(typeof(UserActionStatus), newStatus);
                 this.db.UserActions.Update(action);
                 await this.db.SaveChangesAsync();
             }

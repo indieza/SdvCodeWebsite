@@ -11,14 +11,13 @@ namespace SdvCode.Models.User
 
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User.UserActions;
 
     public class UserAction
     {
         public UserAction()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.ActionStatus = UserActionStatus.Unread;
-            this.CreatedOn = DateTime.UtcNow;
         }
 
         [Key]
@@ -26,20 +25,10 @@ namespace SdvCode.Models.User
         public string Id { get; set; }
 
         [Required]
-        [ForeignKey(nameof(ApplicationUser))]
-        public string ApplicationUserId { get; set; }
+        [ForeignKey(nameof(BaseUserAction))]
+        public string BaseUserActionId { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
-
-        [Required]
-        public DateTime CreatedOn { get; set; }
-
-        [Required]
-        public UserActionStatus ActionStatus { get; set; }
-
-        [Required]
-        [EnumDataType(typeof(UserActionType))]
-        public UserActionType ActionType { get; set; }
+        public BaseUserAction BaseUserAction { get; set; }
 
         //public string PersonUsername { get; set; }
 

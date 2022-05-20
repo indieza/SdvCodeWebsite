@@ -9,13 +9,13 @@ namespace SdvCode.Models.User.UserActions.ProfileActions
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class ChangeCoverImageUserAction
+    using SdvCode.Models.Enums;
+
+    public class ChangeCoverImageUserAction : BaseUserAction
     {
         public ChangeCoverImageUserAction()
         {
+            this.ActionType = UserActionType.ChangeCoverImage;
         }
-
-        [Required]
-        public string CoverImageUrl { get; set; }
     }
 }

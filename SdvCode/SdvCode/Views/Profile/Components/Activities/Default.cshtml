@@ -2,9 +2,9 @@
     ViewData["Title"] = "Activities";
     var colors = new Dictionary<string, string>()
 {
-        { UserActionsStatus.Unread.ToString(), "red" },
-        { UserActionsStatus.Read.ToString(), "green"},
-        { UserActionsStatus.Pinned.ToString(), "blue"},
+        { UserActionStatus.Unread.ToString(), "red" },
+        { UserActionStatus.Read.ToString(), "green"},
+        { UserActionStatus.Pinned.ToString(), "blue"},
     };
 }
 
@@ -13,7 +13,7 @@
 <div class="tab-pane fade in active">
     @foreach (var action in Model.Activities)
     {
-        @if (action.Action == UserActionsType.Follow)
+        @if (action.Action == UserActionType.Follow)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -50,7 +50,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -64,7 +64,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.Followed)
+        @if (action.Action == UserActionType.Followed)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -101,7 +101,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -115,7 +115,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.Unfollow)
+        @if (action.Action == UserActionType.Unfollow)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -152,7 +152,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -166,7 +166,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.Unfollowed)
+        @if (action.Action == UserActionType.Unfollowed)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -203,7 +203,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -217,7 +217,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.EditPersonalData)
+        @if (action.Action == UserActionType.EditPersonalData)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -251,7 +251,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -265,7 +265,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.ChangeCoverImage)
+        @if (action.Action == UserActionType.ChangeCoverImage)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -304,7 +304,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -318,7 +318,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.ChangeProfilePicture)
+        @if (action.Action == UserActionType.ChangeProfilePicture)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -357,7 +357,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -371,7 +371,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.CreatePost)
+        @if (action.Action == UserActionType.CreatePost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -420,7 +420,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -434,7 +434,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.LikeOwnPost)
+        @if (action.Action == UserActionType.LikeOwnPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -483,7 +483,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -497,7 +497,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.LikePost)
+        @if (action.Action == UserActionType.LikePost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -551,7 +551,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -565,7 +565,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.LikedPost)
+        @if (action.Action == UserActionType.LikedPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -619,7 +619,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -633,7 +633,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.UnlikeOwnPost)
+        @if (action.Action == UserActionType.UnlikeOwnPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -672,7 +672,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -686,7 +686,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.UnlikePost)
+        @if (action.Action == UserActionType.UnlikePost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -730,7 +730,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -744,7 +744,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.UnlikedPost)
+        @if (action.Action == UserActionType.UnlikedPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -788,7 +788,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -802,7 +802,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.DeleteOwnPost)
+        @if (action.Action == UserActionType.DeleteOwnPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -836,7 +836,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -850,7 +850,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.DeletePost)
+        @if (action.Action == UserActionType.DeletePost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -887,7 +887,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -901,7 +901,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.DeletedPost)
+        @if (action.Action == UserActionType.DeletedPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -938,7 +938,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -952,7 +952,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.EditPost)
+        @if (action.Action == UserActionType.EditPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -1006,7 +1006,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -1020,7 +1020,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.EditedPost)
+        @if (action.Action == UserActionType.EditedPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.FollowerUsername" class="pull-left">
@@ -1074,7 +1074,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">
@@ -1088,7 +1088,7 @@
             </div>
         }
 
-        @if (action.Action == UserActionsType.EditOwnPost)
+        @if (action.Action == UserActionType.EditOwnPost)
         {
             <div class="media activity-item">
                 <a asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@action.PersonUsername" class="pull-left">
@@ -1137,7 +1137,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li><a asp-controller="Profile" asp-action="DeleteActivityById" asp-route-username="@User.Identity.Name" asp-route-activityId="@action.Id">I don't want to see this</a></li>
-                            @foreach (var status in Enum.GetValues(typeof(UserActionsStatus)))
+                            @foreach (var status in Enum.GetValues(typeof(UserActionStatus)))
                             {
                                 <li>
                                     <a onclick="changeActionStatus('@action.Id', '@action.ApplicationUser.UserName', '@status')">

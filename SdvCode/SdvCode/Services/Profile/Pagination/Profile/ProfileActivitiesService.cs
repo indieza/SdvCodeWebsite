@@ -38,9 +38,9 @@ namespace SdvCode.Services.Profile.Pagination.Profile
         {
             var user = await this.userManager.FindByNameAsync(username);
             var activities = this.db.UserActions
-                .Where(x => x.ApplicationUserId == user.Id)
-                .Include(x => x.ApplicationUser)
-                .OrderByDescending(x => x.CreatedOn)
+                .Where(x => x.BaseUserAction.ApplicationUserId == user.Id)
+                .Include(x => x.BaseUserAction.ApplicationUser)
+                .OrderByDescending(x => x.BaseUserAction.CreatedOn)
                 .AsSplitQuery()
                 .ToList();
 

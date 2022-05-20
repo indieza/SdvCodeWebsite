@@ -11,11 +11,13 @@ namespace SdvCode.Models.User.UserActions.BlogActions
     using System.Threading.Tasks;
 
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
 
-    public class LikeOwnPostUserAction
+    public class LikeOwnPostUserAction : BaseUserAction
     {
         public LikeOwnPostUserAction()
         {
+            this.ActionType = UserActionType.LikeOwnPost;
         }
 
         [Required]

@@ -93,15 +93,15 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             var posts = this.db.Posts.Where(x => x.ApplicationUserId == user.Id).ToList();
             foreach (var post in posts)
             {
-                var action = this.db.UserActions.Where(x => x.PostId == post.Id).ToList();
-                var postComments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
+                //var action = this.db.UserActions.Where(x => x.PostId == post.Id).ToList();
+                //var postComments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
 
-                foreach (var comment in postComments)
-                {
-                    await this.commentService.DeleteCommentById(comment.Id);
-                }
+                //foreach (var comment in postComments)
+                //{
+                //    await this.commentService.DeleteCommentById(comment.Id);
+                //}
 
-                this.db.UserActions.RemoveRange(action);
+                //this.db.UserActions.RemoveRange(action);
             }
 
             var followFollowed = this.db.FollowUnfollows

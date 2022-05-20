@@ -185,7 +185,7 @@ namespace SdvCode.Services.Blog
                 IsBlocked = false,
             });
 
-            this.nonCyclicActivity.AddUserAction(user, post, UserActionType.CreatePost, user);
+            //this.nonCyclicActivity.AddUserAction(user, post, UserActionType.CreatePost, user);
             await this.db.SaveChangesAsync();
             return Tuple.Create("Success", SuccessMessages.SuccessfullyCreatedPost);
         }
@@ -219,20 +219,20 @@ namespace SdvCode.Services.Blog
 
                 if (user.Id == post.ApplicationUserId)
                 {
-                    this.cyclicActivity.AddUserAction(user, UserActionType.DeleteOwnPost, user);
+                    //this.cyclicActivity.AddUserAction(user, UserActionType.DeleteOwnPost, user);
                 }
                 else
                 {
-                    this.cyclicActivity.AddUserAction(user, UserActionType.DeletedPost, userPost);
-                    this.cyclicActivity.AddUserAction(userPost, UserActionType.DeletePost, user);
+                    //this.cyclicActivity.AddUserAction(user, UserActionType.DeletedPost, userPost);
+                    //this.cyclicActivity.AddUserAction(userPost, UserActionType.DeletePost, user);
                 }
 
-                var postActivities = this.db.UserActions.Where(x => x.PostId == post.Id);
-                var comments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
-                this.db.Comments.RemoveRange(comments);
-                this.db.UserActions.RemoveRange(postActivities);
-                this.db.PostImages.RemoveRange(allPostImages);
-                this.db.Posts.Remove(post);
+                //var postActivities = this.db.UserActions.Where(x => x.PostId == post.Id);
+                //var comments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
+                //this.db.Comments.RemoveRange(comments);
+                //this.db.UserActions.RemoveRange(postActivities);
+                //this.db.PostImages.RemoveRange(allPostImages);
+                //this.db.Posts.Remove(post);
 
                 await this.db.SaveChangesAsync();
                 return Tuple.Create("Success", SuccessMessages.SuccessfullyDeletePost);
@@ -292,12 +292,12 @@ namespace SdvCode.Services.Blog
 
                 if (user.Id == postUser.Id)
                 {
-                    this.nonCyclicActivity.AddUserAction(user, post, UserActionType.EditOwnPost, user);
+                    //this.nonCyclicActivity.AddUserAction(user, post, UserActionType.EditOwnPost, user);
                 }
                 else
                 {
-                    this.nonCyclicActivity.AddUserAction(user, post, UserActionType.EditPost, postUser);
-                    this.nonCyclicActivity.AddUserAction(postUser, post, UserActionType.EditedPost, user);
+                    //this.nonCyclicActivity.AddUserAction(user, post, UserActionType.EditPost, postUser);
+                    //this.nonCyclicActivity.AddUserAction(postUser, post, UserActionType.EditedPost, user);
                 }
 
                 this.db.Posts.Update(post);

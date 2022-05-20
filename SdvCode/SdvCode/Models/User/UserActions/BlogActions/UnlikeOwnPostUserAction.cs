@@ -11,11 +11,13 @@ namespace SdvCode.Models.User.UserActions.BlogActions
     using System.Threading.Tasks;
 
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
 
-    public class UnlikeOwnPostUserAction
+    public class UnlikeOwnPostUserAction : BaseUserAction
     {
         public UnlikeOwnPostUserAction()
         {
+            this.ActionType = UserActionType.UnlikeOwnPost;
         }
 
         [Required]

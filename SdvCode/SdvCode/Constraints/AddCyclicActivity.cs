@@ -7,10 +7,12 @@ namespace SdvCode.Constraints
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using SdvCode.Data;
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.Models.User.UserActions;
 
     public class AddCyclicActivity
     {
@@ -21,71 +23,56 @@ namespace SdvCode.Constraints
             this.db = db;
         }
 
-        public void AddUserAction(ApplicationUser user, UserActionType action, ApplicationUser userPost)
-        {
-            if (this.db.UserActions
-                    .Any(x => x.ActionType == action &&
-                    x.ApplicationUserId == userPost.Id &&
-                    x.PersonUsername == userPost.UserName &&
-                    x.FollowerUsername == user.UserName))
-            {
-                var targetAction = this.db.UserActions
-                    .FirstOrDefault(x => x.ActionType == action &&
-                    x.ApplicationUserId == userPost.Id &&
-                    x.PersonUsername == userPost.UserName &&
-                    x.FollowerUsername == user.UserName);
-                targetAction.ActionDate = DateTime.UtcNow;
-                targetAction.ActionStatus = UserActionStatus.Unread;
-            }
-            else
-            {
-                this.db.UserActions.Add(new UserAction
-                {
-                    ActionType = action,
-                    CreatedOn = DateTime.UtcNow,
-                    ApplicationUserId = userPost.Id,
-                    PersonUsername = userPost.UserName,
-                    FollowerUsername = user.UserName,
-                    ProfileImageUrl = user.ImageUrl,
-                    ActionStatus = UserActionStatus.Unread,
-                });
-            }
-        }
+        //public void AddUserAction(ApplicationUser user, BaseUserAction action, ApplicationUser userPost)
+        //{
+        //    if (this.db.UserActions
+        //            .Any(x => x.BaseUserAction.ActionType == action.ActionType &&
+        //            x.BaseUserAction.ApplicationUserId == userPost.Id &&
+        //            x.BaseUserAction.ApplicationUser.UserName == userPost.UserName &&
+        //            x.BaseUserAction.FollowerUsername == user.UserName))
+        //    {
+        //        var targetAction = this.db.UserActions
+        //            .FirstOrDefault(x => x.BaseUserAction.ActionType == action.ActionType &&
+        //            x.BaseUserAction.ApplicationUserId == userPost.Id &&
+        //            x.BaseUserAction.ApplicationUser.UserName == userPost.UserName &&
+        //            x.BaseUserAction.FollowerUsername == user.UserName);
+        //        targetAction.ActionDate = DateTime.UtcNow;
+        //        targetAction.ActionStatus = UserActionStatus.Unread;
+        //    }
+        //    else
+        //    {
+        //        this.db.UserActions.Add(new UserAction
+        //        {
+        //            BaseUserAction = action,
+        //        });
+        //    }
+        //}
 
-        public void AddLikeUnlikeActivity(ApplicationUser user, Post post, UserActionType action, ApplicationUser postUser)
-        {
-            if (this.db.UserActions
-                .Any(x => x.PostId == post.Id &&
-                x.ApplicationUserId == user.Id &&
-                x.PersonUsername == user.UserName &&
-                x.FollowerUsername == postUser.UserName &&
-                x.ActionType == action))
-            {
-                var targetAction = this.db.UserActions
-                    .FirstOrDefault(x => x.PostId == post.Id &&
-                    x.ApplicationUserId == user.Id &&
-                    x.PersonUsername == user.UserName &&
-                    x.FollowerUsername == postUser.UserName &&
-                    x.ActionType == action);
-                targetAction.ActionDate = DateTime.UtcNow;
-                targetAction.ActionStatus = UserActionStatus.Unread;
-            }
-            else
-            {
-                this.db.UserActions.Add(new UserAction
-                {
-                    ActionType = action,
-                    CreatedOn = DateTime.UtcNow,
-                    ApplicationUserId = user.Id,
-                    PersonUsername = user.UserName,
-                    FollowerUsername = postUser.UserName,
-                    ProfileImageUrl = postUser.ImageUrl,
-                    PostId = post.Id,
-                    PostTitle = post.Title,
-                    PostContent = post.ShortContent,
-                    ActionStatus = UserActionStatus.Unread,
-                });
-            }
-        }
+        //public void AddLikeUnlikeActivity(ApplicationUser user, Post post, BaseUserAction action, ApplicationUser postUser)
+        //{
+        //    if (this.db.UserActions
+        //        .Any(x => x.PostId == post.Id &&
+        //        x.BaseUserAction.ApplicationUserId == user.Id &&
+        //        x.BaseUserAction.ApplicationUser.UserName == user.UserName &&
+        //        x.BaseUserAction.FollowerUsername == postUser.UserName &&
+        //        x.BaseUserAction.ActionType == action.ActionType))
+        //    {
+        //        var targetAction = this.db.UserActions
+        //            .FirstOrDefault(x => x.PostId == post.Id &&
+        //            x.BaseUserAction.ApplicationUserId == user.Id &&
+        //            x.BaseUserAction.ApplicationUser.UserName == user.UserName &&
+        //            x.BaseUserAction.FollowerUsername == postUser.UserName &&
+        //            x.BaseUserAction.ActionType == action.ActionType);
+        //        targetAction.ActionDate = DateTime.UtcNow;
+        //        targetAction.ActionStatus = UserActionStatus.Unread;
+        //    }
+        //    else
+        //    {
+        //        this.db.UserActions.Add(new UserAction
+        //        {
+        //            BaseUserAction = action,
+        //        });
+        //    }
+        //}
     }
 }

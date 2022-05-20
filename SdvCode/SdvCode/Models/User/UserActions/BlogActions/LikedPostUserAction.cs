@@ -11,11 +11,13 @@ namespace SdvCode.Models.User.UserActions.BlogActions
     using System.Threading.Tasks;
 
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
 
-    public class LikedPostUserAction
+    public class LikedPostUserAction : BaseUserAction
     {
         public LikedPostUserAction()
         {
+            this.ActionType = UserActionType.LikedPost;
         }
 
         [Required]

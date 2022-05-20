@@ -10,11 +10,13 @@ namespace SdvCode.Models.User.UserActions.BlogActions
     using System.Threading.Tasks;
 
     using SdvCode.Constraints;
+    using SdvCode.Models.Enums;
 
-    public class DeletePostUserAction
+    public class DeletePostUserAction : BaseUserAction
     {
         public DeletePostUserAction()
         {
+            this.ActionType = UserActionType.DeletePost;
         }
 
         [Required]

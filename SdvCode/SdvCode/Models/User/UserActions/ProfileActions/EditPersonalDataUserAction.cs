@@ -9,10 +9,13 @@ namespace SdvCode.Models.User.UserActions.ProfileActions
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class EditPersonalDataUserAction
+    using SdvCode.Models.Enums;
+
+    public class EditPersonalDataUserAction : BaseUserAction
     {
         public EditPersonalDataUserAction()
         {
+            this.ActionType = UserActionType.EditPersonalData;
         }
 
         [Required]

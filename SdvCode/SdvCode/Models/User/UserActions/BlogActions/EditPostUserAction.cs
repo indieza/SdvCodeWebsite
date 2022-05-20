@@ -11,11 +11,13 @@ namespace SdvCode.Models.User.UserActions.BlogActions
     using System.Threading.Tasks;
 
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Enums;
 
-    public class EditPostUserAction
+    public class EditPostUserAction : BaseUserAction
     {
         public EditPostUserAction()
         {
+            this.ActionType = UserActionType.EditPost;
         }
 
         [Required]

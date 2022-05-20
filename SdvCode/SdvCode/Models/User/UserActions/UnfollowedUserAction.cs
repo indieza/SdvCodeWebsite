@@ -10,10 +10,13 @@ namespace SdvCode.Models.User.UserActions
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class UnfollowedUserAction
+    using SdvCode.Models.Enums;
+
+    public class UnfollowedUserAction : BaseUserAction
     {
         public UnfollowedUserAction()
         {
+            this.ActionType = UserActionType.Unfollowed;
         }
 
         [Required]

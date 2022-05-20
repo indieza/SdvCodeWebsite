@@ -6,15 +6,19 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
+
     using SdvCode.Constraints;
     using SdvCode.Data;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.Models.User.UserActions.ProfileActions;
     using SdvCode.Services;
     using SdvCode.Services.Cloud;
     using SdvCode.ViewModels.Users.InputModels;
@@ -240,11 +244,12 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             {
                 user.UserActions.Add(new UserAction
                 {
-                    ActionType = UserActionType.EditPersonalData,
-                    CreatedOn = DateTime.UtcNow,
-                    PersonUsername = user.UserName,
-                    ProfileImageUrl = user.ImageUrl,
-                    ApplicationUserId = user.Id,
+                    BaseUserAction = new EditPersonalDataUserAction
+                    {
+                        ApplicationUser = user,
+                        ApplicationUserId = user.Id,
+                        Content = "Some content!!!",
+                    },
                 });
             }
 
@@ -252,12 +257,11 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             {
                 user.UserActions.Add(new UserAction
                 {
-                    ActionType = UserActionType.ChangeCoverImage,
-                    CreatedOn = DateTime.UtcNow,
-                    PersonUsername = user.UserName,
-                    ProfileImageUrl = user.ImageUrl,
-                    CoverImageUrl = coverImageUrl,
-                    ApplicationUserId = user.Id,
+                    BaseUserAction = new ChangeCoverImageUserAction
+                    {
+                        ApplicationUser = user,
+                        ApplicationUserId = user.Id,
+                    },
                 });
             }
 
@@ -265,11 +269,11 @@ namespace SdvCode.Areas.Identity.Pages.Account.Manage
             {
                 user.UserActions.Add(new UserAction
                 {
-                    ActionType = UserActionType.ChangeProfilePicture,
-                    CreatedOn = DateTime.UtcNow,
-                    PersonUsername = user.UserName,
-                    ProfileImageUrl = profileImageUrl,
-                    ApplicationUserId = user.Id,
+                    BaseUserAction = new ChangeProfilePictureUserAction
+                    {
+                        ApplicationUser = user,
+                        ApplicationUserId = user.Id,
+                    },
                 });
             }
 

@@ -3,7 +3,9 @@
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.SignalR;
     using Microsoft.EntityFrameworkCore;
+
     using Moq;
+
     using SdvCode.Areas.Editor.Services.Post;
     using SdvCode.Areas.UserNotifications.Services;
     using SdvCode.Data;
@@ -11,11 +13,13 @@
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
     using Xunit;
 
     public class BannPostTests
@@ -106,8 +110,8 @@
 
             UserAction userAction = new UserAction
             {
-                ActionType = UserActionType.CreatePost,
-                PostId = post.Id,
+                //ActionType = UserActionType.CreatePost,
+                //PostId = post.Id,
             };
 
             PostLike postLike = new PostLike

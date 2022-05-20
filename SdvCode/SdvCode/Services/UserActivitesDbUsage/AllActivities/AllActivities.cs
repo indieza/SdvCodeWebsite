@@ -20,7 +20,7 @@ namespace SdvCode.Services.UserActivitesDbUsage.AllActivities
         public void DeleteAllActivites()
         {
             var target = this.db.UserActions
-                .Where(x => x.ActionStatus != UserActionStatus.Pinned)
+                .Where(x => x.BaseUserAction.ActionStatus != UserActionStatus.Pinned)
                 .ToList();
             this.db.RemoveRange(target);
             this.db.SaveChanges();

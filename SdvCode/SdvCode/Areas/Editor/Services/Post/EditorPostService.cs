@@ -24,6 +24,7 @@ namespace SdvCode.Areas.Editor.Services.Post
         private readonly ApplicationDbContext db;
         private readonly INotificationService notificationService;
         private readonly IHubContext<NotificationHub> notificationHubContext;
+
         private readonly List<UserActionType> actionsForBann = new List<UserActionType>()
         {
             UserActionType.LikedPost,
@@ -149,15 +150,15 @@ namespace SdvCode.Areas.Editor.Services.Post
                         post.Likes--;
                     }
 
-                    var actions = this.db.UserActions
-                        .Where(x => x.PostId == id && this.actionsForBann.Contains(x.ActionType));
+                    //var actions = this.db.UserActions
+                    //    .Where(x => x.PostId == id && this.actionsForBann.Contains(x.ActionType));
 
-                    this.db.FavouritePosts.UpdateRange(favorites);
-                    this.db.PostsLikes.UpdateRange(likes);
-                    this.db.UserActions.RemoveRange(actions);
-                    this.db.BlockedPosts.Update(targetApprovedEntity);
-                    this.db.Posts.Update(post);
-                    await this.db.SaveChangesAsync();
+                    //this.db.FavouritePosts.UpdateRange(favorites);
+                    //this.db.PostsLikes.UpdateRange(likes);
+                    //this.db.UserActions.RemoveRange(actions);
+                    //this.db.BlockedPosts.Update(targetApprovedEntity);
+                    //this.db.Posts.Update(post);
+                    //await this.db.SaveChangesAsync();
 
                     var targetUser = await this.db.Users
                            .FirstOrDefaultAsync(x => x.Id == post.ApplicationUserId);
