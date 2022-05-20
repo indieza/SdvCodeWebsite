@@ -13,18 +13,18 @@ namespace SdvCode.Models.User.UserActions.BlogActions
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
-    public class UnlikedPostUserAction : BaseUserAction
+    public class UnlikedPostUserAction : BaseBlogAction
     {
         public UnlikedPostUserAction()
         {
             this.ActionType = UserActionType.UnlikedPost;
         }
 
-        [Required]
-        [ForeignKey(nameof(Post))]
-        public string PostId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(Post))]
+        //public string PostId { get; set; }
 
-        public Post Post { get; set; }
+        //public Post Post { get; set; }
 
         [Required]
         [ForeignKey(nameof(ApplicationUser))]

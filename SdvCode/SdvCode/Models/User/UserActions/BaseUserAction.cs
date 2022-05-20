@@ -8,6 +8,7 @@ namespace SdvCode.Models.User.UserActions
     using System.ComponentModel.DataAnnotations.Schema;
 
     using SdvCode.Models.Enums;
+    using SdvCode.Models.User.UserActions.BlogActions;
 
     public abstract class BaseUserAction
     {
@@ -43,5 +44,10 @@ namespace SdvCode.Models.User.UserActions
 
         [MaxLength(350)]
         public string SystemMessage { get; set; }
+
+        [ForeignKey(nameof(BaseBlogAction))]
+        public string? BaseBlogActionId { get; set; }
+
+        public BaseBlogAction BaseBlogAction { get; set; }
     }
 }

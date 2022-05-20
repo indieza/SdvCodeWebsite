@@ -268,10 +268,12 @@ namespace SdvCode.Services.Blog
                     });
                 }
 
-                //var postActivities = this.db.UserActions.Where(x => x.PostId == post.Id);
+                var postActivities = this.db.UserActions
+                    .Where(x => x.BaseUserAction.BaseBlogAction.PostId == post.Id)
+                    .ToList();
                 var comments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
                 this.db.Comments.RemoveRange(comments);
-                //this.db.UserActions.RemoveRange(postActivities);
+                this.db.UserActions.RemoveRange(postActivities);
                 this.db.PostImages.RemoveRange(allPostImages);
                 this.db.Posts.Remove(post);
 

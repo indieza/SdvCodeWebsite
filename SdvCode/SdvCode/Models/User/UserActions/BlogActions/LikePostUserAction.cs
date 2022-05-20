@@ -13,17 +13,17 @@ namespace SdvCode.Models.User.UserActions.BlogActions
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
 
-    public class LikePostUserAction : BaseUserAction
+    public class LikePostUserAction : BaseBlogAction
     {
         public LikePostUserAction()
         {
             this.ActionType = UserActionType.LikePost;
         }
 
-        [Required]
-        [ForeignKey(nameof(Post))]
-        public string PostId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(Post))]
+        //public string PostId { get; set; }
 
-        public Post Post { get; set; }
+        //public Post Post { get; set; }
     }
 }

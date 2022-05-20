@@ -32,6 +32,8 @@ namespace SdvCode.Data
 
         public DbSet<BaseUserAction> BaseUserActions { get; set; }
 
+        //public DbSet<BaseBlogAction> BaseBlogActions { get; set; }
+
         public DbSet<Post> Posts { get; set; }
 
         public DbSet<PostImage> PostImages { get; set; }
@@ -143,6 +145,8 @@ namespace SdvCode.Data
             builder.Entity<UnlikedPostUserAction>().ToTable("UnlikedPostUserActions");
             builder.Entity<UnlikeOwnPostUserAction>().ToTable("UnlikeOwnPostUserActions");
             builder.Entity<UnlikePostUserAction>().ToTable("UnlikePostUserActions");
+
+            builder.Entity<BaseBlogAction>().ToTable("BaseBlogActions");
 
             builder.Entity<Post>(entity =>
             {
@@ -367,6 +371,12 @@ namespace SdvCode.Data
                .WithOne(x => x.UserAction)
                .HasForeignKey<UserAction>(x => x.BaseUserActionId)
                .IsRequired(true);
+
+            builder.Entity<BaseBlogAction>()
+               .HasOne(x => x.BaseUserAction)
+               .WithOne(x => x.BaseBlogAction)
+               .HasForeignKey<BaseUserAction>(x => x.BaseBlogActionId)
+               .IsRequired(false);
         }
     }
 }
