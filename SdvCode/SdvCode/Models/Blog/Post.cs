@@ -22,6 +22,8 @@ namespace SdvCode.Models.Blog
         public Post()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Likes = 0;
+            this.CreatedOn = DateTime.UtcNow;
         }
 
         [Key]
@@ -42,8 +44,9 @@ namespace SdvCode.Models.Blog
         [Required]
         public DateTime CreatedOn { get; set; }
 
-        public DateTime UpdatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
 
+        [Required]
         public string ImageUrl { get; set; }
 
         public int Likes { get; set; }

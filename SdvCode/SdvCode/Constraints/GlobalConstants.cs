@@ -39,9 +39,9 @@ namespace SdvCode.Constraints
 
         public const int CollectStickersOnPage = 6;
 
-        public const string CloudinaryPostCoverImageName = "{0}PostCoverImage";
+        public const string CloudinaryPostCoverImageName = "{0}_PostCoverImage";
 
-        public const string CloudinaryPostImageName = "{0}PostImage";
+        public const string CloudinaryPostImageName = "{0}_PostImage";
 
         public const int PasswordRequiredLength = 7;
 
@@ -128,5 +128,7 @@ namespace SdvCode.Constraints
         public const int TopPostsCount = 10;
 
         public const int TopTagsCount = 10;
+
+        public const int BlogPostShortContentMaxLength = 347;
     }
 }

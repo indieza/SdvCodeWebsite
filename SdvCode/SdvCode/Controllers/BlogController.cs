@@ -41,6 +41,7 @@ namespace SdvCode.Controllers
         /// <param name="page">Current page number.</param>
         /// <param name="search">Current search text which will filter all Blog Posts.</param>
         /// <returns>Returns a view with a collection with all BLog Posts.</returns>
+        // DONE!
         [HttpGet]
         [Route("Blog/{page?}/{search?}")]
         public async Task<IActionResult> Index(int? page, string search)
@@ -67,6 +68,7 @@ namespace SdvCode.Controllers
         ///  This function will return a View with needed information for a Blog Post creation.
         /// </summary>
         /// <returns>Returns a view with data which is needed to create a Blog Post.</returns>
+        // DONE!
         [HttpGet]
         [Authorize]
         [Route("/Blog/CreatePost")]
@@ -89,16 +91,16 @@ namespace SdvCode.Controllers
         /// </summary>
         /// <param name="model">Data Input Model for Blog Post Creation Data.</param>
         /// <returns>Redirect to Page based on IF-ELSE statement over the Input Model.</returns>
+        // DONE!
         [HttpPost]
         [Authorize]
         [UserBlocked("Index", "Profile")]
         [PostCrudOperations("Index", "Blog", null, ErrorMessages.NoPermissionsToCreateBlogPost)]
         public async Task<IActionResult> CreatePost(CreatePostIndexModel model)
         {
-            var currentUser = await this.userManager.GetUserAsync(this.User);
-
             if (this.ModelState.IsValid)
             {
+                var currentUser = await this.userManager.GetUserAsync(this.User);
                 var tuple = await this.blogService.CreatePost(model, currentUser);
                 this.TempData[tuple.Item1] = tuple.Item2;
                 return this.RedirectToAction("Index", "Blog");

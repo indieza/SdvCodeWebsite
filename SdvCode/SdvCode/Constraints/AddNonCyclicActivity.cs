@@ -23,12 +23,12 @@ namespace SdvCode.Constraints
             this.db = db;
         }
 
-        //public void AddUserAction(ApplicationUser user, Post post, BaseUserAction action, ApplicationUser postUser)
-        //{
-        //    this.db.UserActions.Add(new UserAction
-        //    {
-        //        BaseUserAction = action,
-        //    });
-        //}
+        public void AddUserAction(BaseUserAction action)
+        {
+            this.db.UserActions.Add(new UserAction
+            {
+                BaseUserAction = action,
+            });
+        }
     }
 }

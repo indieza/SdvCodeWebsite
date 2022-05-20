@@ -26,6 +26,7 @@ namespace SdvCode.Services.Blog
     using SdvCode.Models.Blog;
     using SdvCode.Models.Enums;
     using SdvCode.Models.User;
+    using SdvCode.Models.User.UserActions.BlogActions;
     using SdvCode.Services.Cloud;
     using SdvCode.ViewModels.Blog.InputModels;
     using SdvCode.ViewModels.Blog.ViewModels.BlogPostCard;
@@ -67,6 +68,12 @@ namespace SdvCode.Services.Blog
         {
             var category = await this.db.Categories
                 .FirstOrDefaultAsync(x => x.Name.ToUpper() == model.PostInputModel.CategoryName.ToUpper());
+
+            if (category == null)
+            {
+                return Tuple.Create("Error", ErrorMessages.InvalidInputModel);
+            }
+
             var contentWithoutTags = Regex.Replace(model.PostInputModel.SanitizeContent, "<.*?>", string.Empty);
 
             var post = new Post
@@ -75,12 +82,10 @@ namespace SdvCode.Services.Blog
                 CategoryId = category.Id,
                 Content = model.PostInputModel.SanitizeContent,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedOn = DateTime.UtcNow,
-                ShortContent = contentWithoutTags.Length <= 347 ?
+                ShortContent = contentWithoutTags.Length <= GlobalConstants.BlogPostShortContentMaxLength ?
                     contentWithoutTags :
-                    $"{contentWithoutTags.Substring(0, 347)}...",
+                    $"{contentWithoutTags.Substring(0, GlobalConstants.BlogPostShortContentMaxLength)}...",
                 ApplicationUserId = user.Id,
-                Likes = 0,
             };
 
             var imageUrl = await ApplicationCloudinary.UploadImage(
@@ -89,24 +94,31 @@ namespace SdvCode.Services.Blog
                 string.Format(GlobalConstants.CloudinaryPostCoverImageName, post.Id),
                 GlobalConstants.PostBaseImageFolder);
 
-            for (int i = 0; i < model.PostInputModel.PostImages.Count; i++)
+            var canUploadPostImages = (await this.userManager.IsInRoleAsync(user, GlobalConstants.AdministratorRole)) ||
+                (await this.userManager.IsInRoleAsync(user, GlobalConstants.EditorRole)) ||
+                (await this.userManager.IsInRoleAsync(user, GlobalConstants.AuthorRole));
+
+            if (canUploadPostImages)
             {
-                var image = model.PostInputModel.PostImages.ElementAt(i);
-
-                var postImage = new PostImage
+                for (int i = 0; i < model.PostInputModel.PostImages.Count; i++)
                 {
-                    PostId = post.Id,
-                    Name = string.Format(GlobalConstants.BlogPostImageNameTemplate, i + 1),
-                };
+                    var image = model.PostInputModel.PostImages.ElementAt(i);
 
-                var postImageUrl = await ApplicationCloudinary.UploadImage(
-                    this.cloudinary,
-                    image,
-                    string.Format(GlobalConstants.CloudinaryPostImageName, postImage.Id),
-                    GlobalConstants.PostBaseImagesFolder);
+                    var postImage = new PostImage
+                    {
+                        PostId = post.Id,
+                        Name = string.Format(GlobalConstants.BlogPostImageNameTemplate, i + 1),
+                    };
 
-                postImage.Url = postImageUrl;
-                post.PostImages.Add(postImage);
+                    var postImageUrl = await ApplicationCloudinary.UploadImage(
+                        this.cloudinary,
+                        image,
+                        string.Format(GlobalConstants.CloudinaryPostImageName, postImage.Id),
+                        GlobalConstants.PostBaseImagesFolder);
+
+                    postImage.Url = postImageUrl ?? string.Empty;
+                    post.PostImages.Add(postImage);
+                }
             }
 
             if (imageUrl != null)
@@ -116,12 +128,17 @@ namespace SdvCode.Services.Blog
 
             foreach (var tagName in model.PostInputModel.TagsNames)
             {
-                var tag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToLower() == tagName.ToLower());
-                post.PostsTags.Add(new PostTag
+                var tag = await this.db.Tags
+                    .FirstOrDefaultAsync(x => x.Name.ToUpper() == tagName.ToUpper());
+
+                if (tag != null)
                 {
-                    PostId = post.Id,
-                    TagId = tag.Id,
-                });
+                    post.PostsTags.Add(new PostTag
+                    {
+                        PostId = post.Id,
+                        TagId = tag.Id,
+                    });
+                }
             }
 
             var adminRole = await this.roleManager.FindByNameAsync(Roles.Administrator.ToString());
@@ -162,7 +179,7 @@ namespace SdvCode.Services.Blog
 
             foreach (var specialId in specialIds)
             {
-                var toUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == specialId);
+                var toUser = await this.userManager.FindByIdAsync(specialId);
 
                 string notificationId =
                     await this.notificationService.AddBlogPostNotification(toUser, user, post.ShortContent, post.Id);
@@ -179,24 +196,27 @@ namespace SdvCode.Services.Blog
             }
 
             this.db.Posts.Add(post);
-            this.db.BlockedPosts.Add(new BlockedPost
-            {
-                ApplicationUserId = post.ApplicationUserId,
-                PostId = post.Id,
-                IsBlocked = false,
-            });
 
-            //this.nonCyclicActivity.AddUserAction(user, post, UserActionType.CreatePost, user);
+            this.nonCyclicActivity.AddUserAction(
+                new CreatePostUserAction
+                {
+                    ApplicationUser = user,
+                    ApplicationUserId = user.Id,
+                    PostId = post.Id,
+                    Post = post,
+                });
             await this.db.SaveChangesAsync();
             return Tuple.Create("Success", SuccessMessages.SuccessfullyCreatedPost);
         }
 
         public async Task<Tuple<string, string>> DeletePost(string id, ApplicationUser user)
         {
-            var post = this.db.Posts.FirstOrDefault(x => x.Id == id);
-            var userPost = this.db.Users.FirstOrDefault(x => x.Id == post.ApplicationUserId);
+            var post = this.db.Posts
+                .Include(x => x.ApplicationUser)
+                .AsSplitQuery()
+                .FirstOrDefault(x => x.Id == id);
 
-            if (post != null && userPost != null)
+            if (post != null)
             {
                 if (post.ImageUrl != null)
                 {
@@ -220,20 +240,40 @@ namespace SdvCode.Services.Blog
 
                 if (user.Id == post.ApplicationUserId)
                 {
-                    //this.cyclicActivity.AddUserAction(user, UserActionType.DeleteOwnPost, user);
+                    this.nonCyclicActivity.AddUserAction(new DeleteOwnPostUserAction
+                    {
+                        ApplicationUser = user,
+                        ApplicationUserId = user.Id,
+                        ShortContent = post.ShortContent,
+                        Title = post.Title,
+                    });
                 }
                 else
                 {
-                    //this.cyclicActivity.AddUserAction(user, UserActionType.DeletedPost, userPost);
-                    //this.cyclicActivity.AddUserAction(userPost, UserActionType.DeletePost, user);
+                    this.nonCyclicActivity.AddUserAction(new DeletedPostUserAction
+                    {
+                        DeleterApplicationUser = user,
+                        DeleterApplicationUserId = user.Id,
+                        ApplicationUser = post.ApplicationUser,
+                        ApplicationUserId = post.ApplicationUser.Id,
+                        ShortContent = post.ShortContent,
+                        Title = post.Title,
+                    });
+                    this.nonCyclicActivity.AddUserAction(new DeletePostUserAction
+                    {
+                        ApplicationUser = user,
+                        ApplicationUserId = user.Id,
+                        ShortContent = post.ShortContent,
+                        Title = post.Title,
+                    });
                 }
 
                 //var postActivities = this.db.UserActions.Where(x => x.PostId == post.Id);
-                //var comments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
-                //this.db.Comments.RemoveRange(comments);
+                var comments = this.db.Comments.Where(x => x.PostId == post.Id).ToList();
+                this.db.Comments.RemoveRange(comments);
                 //this.db.UserActions.RemoveRange(postActivities);
-                //this.db.PostImages.RemoveRange(allPostImages);
-                //this.db.Posts.Remove(post);
+                this.db.PostImages.RemoveRange(allPostImages);
+                this.db.Posts.Remove(post);
 
                 await this.db.SaveChangesAsync();
                 return Tuple.Create("Success", SuccessMessages.SuccessfullyDeletePost);
@@ -244,7 +284,10 @@ namespace SdvCode.Services.Blog
 
         public async Task<Tuple<string, string>> EditPost(EditPostInputModel model, ApplicationUser user)
         {
-            var post = await this.db.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
+            var post = await this.db.Posts
+                .Include(x => x.ApplicationUser)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
             var contentWithoutTags = Regex.Replace(model.SanitizeContent, "<.*?>", string.Empty);
 
             if (post != null)
@@ -259,7 +302,9 @@ namespace SdvCode.Services.Blog
                     contentWithoutTags :
                     $"{contentWithoutTags.Substring(0, 347)}...";
 
-                var imageUrl = await ApplicationCloudinary.UploadImage(
+                if (model.CoverImage != null)
+                {
+                    var imageUrl = await ApplicationCloudinary.UploadImage(
                     this.cloudinary,
                     model.CoverImage,
                     string.Format(
@@ -267,9 +312,10 @@ namespace SdvCode.Services.Blog
                         post.Id),
                     GlobalConstants.PostBaseImageFolder);
 
-                if (imageUrl != null)
-                {
-                    post.ImageUrl = imageUrl;
+                    if (imageUrl != null)
+                    {
+                        post.ImageUrl = imageUrl;
+                    }
                 }
 
                 if (model.TagsNames.Count > 0)
@@ -280,12 +326,15 @@ namespace SdvCode.Services.Blog
                     List<PostTag> postTags = new List<PostTag>();
                     foreach (var tagName in model.TagsNames)
                     {
-                        var tag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToLower() == tagName.ToLower());
-                        postTags.Add(new PostTag
+                        var tag = await this.db.Tags.FirstOrDefaultAsync(x => x.Name.ToUpper() == tagName.ToUpper());
+                        if (tag != null)
                         {
-                            PostId = post.Id,
-                            TagId = tag.Id,
-                        });
+                            postTags.Add(new PostTag
+                            {
+                                PostId = post.Id,
+                                TagId = tag.Id,
+                            });
+                        }
                     }
 
                     post.PostsTags = postTags;
@@ -293,12 +342,32 @@ namespace SdvCode.Services.Blog
 
                 if (user.Id == postUser.Id)
                 {
-                    //this.nonCyclicActivity.AddUserAction(user, post, UserActionType.EditOwnPost, user);
+                    this.nonCyclicActivity.AddUserAction(new EditOwnPostUserAction
+                    {
+                        ApplicationUser = user,
+                        ApplicationUserId = user.Id,
+                        Post = post,
+                        PostId = post.Id,
+                    });
                 }
                 else
                 {
-                    //this.nonCyclicActivity.AddUserAction(user, post, UserActionType.EditPost, postUser);
-                    //this.nonCyclicActivity.AddUserAction(postUser, post, UserActionType.EditedPost, user);
+                    this.nonCyclicActivity.AddUserAction(new EditPostUserAction
+                    {
+                        ApplicationUser = user,
+                        ApplicationUserId = user.Id,
+                        Post = post,
+                        PostId = post.Id,
+                    });
+                    this.nonCyclicActivity.AddUserAction(new EditedPostUserAction
+                    {
+                        EditorApplicationUser = user,
+                        EditorApplicationUserId = user.Id,
+                        ApplicationUser = post.ApplicationUser,
+                        ApplicationUserId = post.ApplicationUser.Id,
+                        Post = post,
+                        PostId = post.Id,
+                    });
                 }
 
                 this.db.Posts.Update(post);
@@ -313,6 +382,7 @@ namespace SdvCode.Services.Blog
         /// This function get all Categories Names from the Database.
         /// </summary>
         /// <returns>Returns a Collection of Strings including all Categories Names.</returns>
+        // DONE!
         public async Task<ICollection<string>> ExtractAllCategoryNames()
         {
             return await this.db.Categories.Select(x => x.Name).OrderBy(x => x).ToListAsync();
@@ -322,6 +392,7 @@ namespace SdvCode.Services.Blog
         /// This function get all Tag Names from the Database.
         /// </summary>
         /// <returns>Returns a Collection of Strings including all Tags Names.</returns>
+        // DONE!
         public async Task<ICollection<string>> ExtractAllTagNames()
         {
             return await this.db.Tags.Select(x => x.Name).OrderBy(x => x).ToListAsync();
@@ -345,6 +416,7 @@ namespace SdvCode.Services.Blog
             return model;
         }
 
+        // DONE!
         public async Task<ICollection<BlogPostCardViewModel>> ExtraxtAllPosts(ApplicationUser user, string search)
         {
             var posts = new List<Post>();

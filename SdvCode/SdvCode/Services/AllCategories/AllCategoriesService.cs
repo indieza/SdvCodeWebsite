@@ -1,6 +1,7 @@
 ﻿// Copyright (c) SDV Code Project. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+// DONE!
 namespace SdvCode.Services.AllCategories
 {
     using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace SdvCode.Services.AllCategories
                 .Include(x => x.Posts)
                 .ThenInclude(x => x.ApplicationUser)
                 .OrderBy(x => x.Name)
+                .AsSplitQuery()
                 .ToList();
 
             var model = this.mapper.Map<List<AllCategoriesCategoryViewModel>>(categories);
