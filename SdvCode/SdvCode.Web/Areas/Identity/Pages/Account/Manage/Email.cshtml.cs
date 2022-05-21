@@ -1,26 +1,28 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-
-using SdvCode.Models.User;
+﻿// <copyright file="Email.cshtml.cs" company="SDV Code">
+// Copyright (c) SDV Code. All rights reserved.
+// </copyright>
 
 namespace SdvCode.Web.Areas.Identity.Pages.Account.Manage
 {
+#nullable disable
+
+    using System.ComponentModel.DataAnnotations;
+    using System.Text;
+    using System.Text.Encodings.Web;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.AspNetCore.WebUtilities;
+
+    using SdvCode.Models.User;
+
     public class EmailModel : PageModel
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailSender emailSender;
 
         public EmailModel(
             UserManager<User> userManager,
@@ -29,7 +31,7 @@ namespace SdvCode.Web.Areas.Identity.Pages.Account.Manage
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            _emailSender = emailSender;
+            this.emailSender = emailSender;
         }
 
         /// <summary>
@@ -124,7 +126,7 @@ namespace SdvCode.Web.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
+                await emailSender.SendEmailAsync(
                     Input.NewEmail,
                     "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -160,7 +162,7 @@ namespace SdvCode.Web.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
+            await emailSender.SendEmailAsync(
                 email,
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
