@@ -1,4 +1,4 @@
-﻿// <copyright file="BaseDataModel.cs" company="SDV Code Data Models">
+﻿// <copyright file="BaseData.cs" company="SDV Code Data Models">
 // Copyright (c) SDV Code Data Models. All rights reserved.
 // </copyright>
 
@@ -9,11 +9,11 @@ namespace SdvCode.Models
 
     using SdvCode.Constraints;
 
-    public abstract class BaseDataModel
+    public abstract class BaseData
     {
-        protected BaseDataModel()
+        protected BaseData()
         {
-            this.ID = Guid.NewGuid().ToString();
+            this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
             this.SystemMessage = $"This record was created on ${this.CreatedOn.ToLocalTime():dd-MMMM-yyyy HH:mm:ss}";
             this.IsDeleted = false;
@@ -21,7 +21,7 @@ namespace SdvCode.Models
 
         [Key]
         [Required]
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public DateTime CreatedOn { get; set; }

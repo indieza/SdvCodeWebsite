@@ -8,27 +8,23 @@ namespace SdvCode.Data
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
+    using SdvCode.Models;
+    using SdvCode.Models.Blog;
     using SdvCode.Models.User;
     using SdvCode.Models.UserInformation;
+    using SdvCode.Models.WebsiteActions;
+    using SdvCode.Models.WebsiteActions.Post;
 
-    public class DbContext : IdentityDbContext<User, Role, string,
+    public class Context : IdentityDbContext<User, Role, string,
         IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>,
         IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
-        public DbContext(DbContextOptions<DbContext> options)
+        public Context(DbContextOptions<Context> options)
             : base(options)
         {
         }
 
-        public DbSet<City> Cities { get; set; }
-
-        public DbSet<Country> Countries { get; set; }
-
-        public DbSet<CountryCode> CountryCodes { get; set; }
-
-        public DbSet<State> States { get; set; }
-
-        public DbSet<ZipCode> ZipCodes { get; set; }
+        public DbSet<BaseData> BaseData { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,6 +38,19 @@ namespace SdvCode.Data
             builder.Entity<User>().ToTable("Users");
             builder.Entity<Role>().ToTable("Roles");
             builder.Entity<UserRole>().ToTable("UsersRoles");
+
+            builder.Entity<BaseWebsiteAction>().ToTable("BaseWebsiteActions");
+            builder.Entity<BasePostAction>().ToTable("BasePostActions");
+
+            builder.Entity<City>().ToTable("Cities");
+            builder.Entity<Country>().ToTable("Countries");
+            builder.Entity<CountryCode>().ToTable("CountryCodes");
+            builder.Entity<ZipCode>().ToTable("ZipCodes");
+            builder.Entity<State>().ToTable("States");
+            builder.Entity<Post>().ToTable("Posts");
+            builder.Entity<LikeOwnPostAction>().ToTable("LikeOwnPostActions");
+            builder.Entity<LikedPostAction>().ToTable("LikedPostActions");
+            builder.Entity<LikePostAction>().ToTable("LikePostActions");
 
             builder.Entity<City>(entity =>
             {
@@ -72,17 +81,25 @@ namespace SdvCode.Data
                 entity.HasOne(e => e.ZipCode)
                     .WithMany(e => e.ApplicationUsers)
                     .HasForeignKey(e => e.ZipCodeId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
 
                 entity.HasOne(e => e.CountryCode)
                     .WithMany(e => e.ApplicationUsers)
                     .HasForeignKey(e => e.CountryCodeId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
 
                 entity.HasMany(e => e.UserRoles)
                     .WithOne(e => e.User)
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
+
+                entity.HasOne(x => x.State)
+                    .WithMany(x => x.ApplicationUsers)
+                    .HasForeignKey(x => x.StateId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
             });
 
             builder.Entity<Role>(b =>

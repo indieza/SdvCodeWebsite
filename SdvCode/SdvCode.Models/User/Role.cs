@@ -25,6 +25,6 @@ namespace SdvCode.Models.User
         [MaxLength(DataModelConstants.RoleDescriptonMaxLength)]
         public string Description { get; set; }
 
-        public virtual ICollection<UserRole> UsersRoles { get; set; } = HashSet<UserRole>();
+        public virtual ICollection<UserRole> UsersRoles { get; set; } = new HashSet<UserRole>();
     }
 }

@@ -11,6 +11,8 @@ namespace SdvCode.Models.User
 
     using SdvCode.Constraints;
     using SdvCode.Models.UserInformation;
+    using SdvCode.Models.WebsiteActions;
+    using SdvCode.Models.WebsiteActions.Post;
 
     public class User : IdentityUser
     {
@@ -64,28 +66,32 @@ namespace SdvCode.Models.User
         [ForeignKey(nameof(ZipCode))]
         public string? ZipCodeId { get; set; }
 
-        public ZipCode ZipCode { get; set; }
+        public virtual ZipCode ZipCode { get; set; }
 
         [ForeignKey(nameof(Country))]
         public string? CountryId { get; set; }
 
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
 
         [ForeignKey(nameof(State))]
         public string? StateId { get; set; }
 
-        public State State { get; set; }
+        public virtual State State { get; set; }
 
         [ForeignKey(nameof(City))]
         public string? CityId { get; set; }
 
-        public City City { get; set; }
+        public virtual City City { get; set; }
 
         [ForeignKey(nameof(CountryCode))]
         public string? CountryCodeId { get; set; }
 
-        public CountryCode CountryCode { get; set; }
+        public virtual CountryCode CountryCode { get; set; }
 
         public virtual ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
+
+        public virtual ICollection<BaseWebsiteAction> Actions { get; set; } = new HashSet<BaseWebsiteAction>();
+
+        public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
     }
 }

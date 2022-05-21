@@ -10,11 +10,11 @@ using SdvCode.Models.User;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DbConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
-builder.Services.AddDbContext<global::SdvCode.Data.DbContext>((global::Microsoft.EntityFrameworkCore.DbContextOptionsBuilder options) =>
+builder.Services.AddDbContext<global::SdvCode.Data.Context>((global::Microsoft.EntityFrameworkCore.DbContextOptionsBuilder options) =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddIdentity<User, Role>((IdentityOptions options) => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<SdvCode.Data.DbContext>();
+    .AddEntityFrameworkStores<SdvCode.Data.Context>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddRazorPages();

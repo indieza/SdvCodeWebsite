@@ -26,4 +26,10 @@
     <ProjectReference Include="..\SdvCode.Constraints\SdvCode.Constraints.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="WebsiteActions\Blog\" />
+    <Folder Include="WebsiteActions\Profile\" />
+    <Folder Include="WebsiteActions\User\" />
+  </ItemGroup>
+
 </Project>
