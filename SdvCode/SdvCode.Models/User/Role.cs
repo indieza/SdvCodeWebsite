@@ -19,12 +19,12 @@ namespace SdvCode.Models.User
         }
 
         [Required]
-        [Range(1, 5)]
+        [Range(DataModelConstants.RoleMinLevel, DataModelConstants.RoleMaxLevel)]
         public int RoleLevel { get; set; }
 
         [MaxLength(DataModelConstants.RoleDescriptonMaxLength)]
         public string Description { get; set; }
 
-        public virtual ICollection<UserRole> UsersRoles { get; set; }
+        public virtual ICollection<UserRole> UsersRoles { get; set; } = HashSet<UserRole>();
     }
 }

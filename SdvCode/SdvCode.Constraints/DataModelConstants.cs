@@ -11,5 +11,25 @@ namespace SdvCode.Constraints
         public const int UserNamesMaxLength = 20;
 
         public const int RoleDescriptonMaxLength = 350;
+
+        public const int RoleMinLevel = 1;
+
+        public const int RoleMaxLevel = 5;
+
+        public const int CityNameMaxLength = 30;
+
+        public const int CountryNameMaxLength = 30;
+
+        public const int CountryCodeMaxLength = 6;
+
+        public const int StateNameMaxLength = 30;
+
+        public const int ZipCodeMaxLength = 10;
+
+        public const int UserAboutMeMaxLength = 500;
+
+        public const int UserSocialMediaLinkMaxLength = 120;
+
+        public const int UserReasonToBeBlockedMaxLength = 500;
     }
 }
