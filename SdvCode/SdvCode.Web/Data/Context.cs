@@ -47,10 +47,14 @@ namespace SdvCode.Data
             builder.Entity<CountryCode>().ToTable("CountryCodes");
             builder.Entity<ZipCode>().ToTable("ZipCodes");
             builder.Entity<State>().ToTable("States");
+
             builder.Entity<Post>().ToTable("Posts");
             builder.Entity<LikeOwnPostAction>().ToTable("LikeOwnPostActions");
             builder.Entity<LikedPostAction>().ToTable("LikedPostActions");
             builder.Entity<LikePostAction>().ToTable("LikePostActions");
+            builder.Entity<UnlikeOwnPostAction>().ToTable("UnlikeOwnPostActions");
+            builder.Entity<UnlikedPostAction>().ToTable("UnlikedPostActions");
+            builder.Entity<UnlikePostAction>().ToTable("UnlikePostActions");
 
             builder.Entity<City>(entity =>
             {
