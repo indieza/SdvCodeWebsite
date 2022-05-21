@@ -30,6 +30,8 @@ namespace SdvCode.Models
         [MaxLength(DataModelConstants.SystemMessageMaxLength)]
         public string SystemMessage { get; set; }
 
+        public DateTime? UpdatedOn { get; set; }
+
         public DateTime? DeletedOn { get; set; }
 
         public bool IsDeleted { get; set; }

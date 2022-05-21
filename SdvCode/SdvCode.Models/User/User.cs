@@ -92,8 +92,8 @@ namespace SdvCode.Models.User
 
         public virtual ICollection<BaseWebsiteAction> Actions { get; set; } = new HashSet<BaseWebsiteAction>();
 
-        public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
+        // public virtual ICollection<LikedPostAction> LikedPostActions { get; set; } = new HashSet<LikedPostAction>();
 
-        public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
+        // public virtual ICollection<UnlikedPostAction> UnlikedPostActions { get; set; } = new HashSet<UnlikedPostAction>();
     }
 }

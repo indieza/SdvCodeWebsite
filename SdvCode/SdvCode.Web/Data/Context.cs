@@ -10,6 +10,7 @@ namespace SdvCode.Data
 
     using SdvCode.Models;
     using SdvCode.Models.Blog;
+    using SdvCode.Models.Image;
     using SdvCode.Models.User;
     using SdvCode.Models.UserInformation;
     using SdvCode.Models.WebsiteActions;
@@ -55,6 +56,8 @@ namespace SdvCode.Data
             builder.Entity<UnlikeOwnPostAction>().ToTable("UnlikeOwnPostActions");
             builder.Entity<UnlikedPostAction>().ToTable("UnlikedPostActions");
             builder.Entity<UnlikePostAction>().ToTable("UnlikePostActions");
+
+            builder.Entity<BaseImage>().ToTable("BaseImages");
 
             builder.Entity<City>(entity =>
             {

@@ -31,5 +31,11 @@ namespace SdvCode.Constraints
         public const int UserSocialMediaLinkMaxLength = 120;
 
         public const int UserReasonToBeBlockedMaxLength = 500;
+
+        public const int ImageFrontNameMaxLength = 60;
+
+        public const int ImageSystemNameMaxLength = 120;
+
+        public const int ImageTypeMaxLength = 10;
     }
 }
