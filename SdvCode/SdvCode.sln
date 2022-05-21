@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.Web", "SdvCode.Web\SdvCode.Web.csproj", "{CFBF3219-3363-4EB9-A32A-3DBD84E1460E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.Web", "SdvCode.Web\SdvCode.Web.csproj", "{CFBF3219-3363-4EB9-A32A-3DBD84E1460E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.Models", "SdvCode.Models\SdvCode.Models.csproj", "{F4C0747A-4108-46DD-9C85-7D757A57B3D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.Models", "SdvCode.Models\SdvCode.Models.csproj", "{F4C0747A-4108-46DD-9C85-7D757A57B3D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.ViewModels", "SdvCode.ViewModels\SdvCode.ViewModels.csproj", "{7433EB2D-2601-4EF3-B278-1AE22C7FEA8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.ViewModels", "SdvCode.ViewModels\SdvCode.ViewModels.csproj", "{7433EB2D-2601-4EF3-B278-1AE22C7FEA8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.Services", "SdvCode.Services\SdvCode.Services.csproj", "{7852EEFD-1E40-4FC3-A17C-4EC06AEEBFB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SdvCode.Services", "SdvCode.Services\SdvCode.Services.csproj", "{7852EEFD-1E40-4FC3-A17C-4EC06AEEBFB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdvCode.Constraints", "SdvCode.Constraints\SdvCode.Constraints.csproj", "{E9F9DADA-709F-4A18-BCF1-E38F185A8EE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7852EEFD-1E40-4FC3-A17C-4EC06AEEBFB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7852EEFD-1E40-4FC3-A17C-4EC06AEEBFB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7852EEFD-1E40-4FC3-A17C-4EC06AEEBFB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9F9DADA-709F-4A18-BCF1-E38F185A8EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9F9DADA-709F-4A18-BCF1-E38F185A8EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9F9DADA-709F-4A18-BCF1-E38F185A8EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9F9DADA-709F-4A18-BCF1-E38F185A8EE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
