@@ -34,7 +34,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.25" />
     <PackageReference Include="Hangfire.Core" Version="1.7.25" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.25" />
-    <PackageReference Include="HtmlSanitizer" Version="6.0.441" />
+    <PackageReference Include="HtmlSanitizer" Version="8.0.723" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="5.0.11" />
